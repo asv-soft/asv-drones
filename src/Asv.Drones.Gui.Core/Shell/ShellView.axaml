@@ -1,0 +1,58 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:core="clr-namespace:Asv.Drones.Gui.Core"
+             xmlns:ui="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:CompileBindings="True"
+             x:Class="Asv.Drones.Gui.Core.ShellView"
+             x:DataType="core:ShellViewModel">
+    <UserControl.Resources>
+		<ui:FAPathIcon x:Key="MapIcon" Data="M15,19L9,16.89V5L15,7.11M20.5,3C20.44,3 20.39,3 20.34,3L15,5.1L9,3L3.36,4.9C3.15,4.97 3,5.15 3,5.38V20.5A0.5,0.5 0 0,0 3.5,21C3.55,21 3.61,21 3.66,20.97L9,18.9L15,21L20.64,19.1C20.85,19 21,18.85 21,18.62V3.5A0.5,0.5 0 0,0 20.5,3Z"/>
+		
+    </UserControl.Resources>
+    <Design.DataContext>
+		<core:ShellViewModel/>
+	</Design.DataContext>
+    <UserControl.Styles>
+        <Style Selector="ui|NavigationViewItem">
+            <Setter Property="Content" Value="{Binding Title}"/>
+        </Style>
+    </UserControl.Styles>
+	<DockPanel>
+        <Grid DockPanel.Dock="Top" Name="TitleBarHost" ColumnDefinitions="Auto,Auto,*" Background="Transparent">
+            <Image Margin="13 10"
+                   IsHitTestVisible="False"
+                   Source="/Assets/icon.ico"
+                   Width="25" Height="25"
+                   DockPanel.Dock="Left"
+                   Name="WindowIcon"/>
+            <Border Grid.Column="2" >
+				<StackPanel Orientation="Horizontal">
+                    
+				</StackPanel>
+            </Border>
+        </Grid>
+		<DockPanel Height="25" DockPanel.Dock="Bottom" Background="{DynamicResource InfoBarErrorSeverityBackgroundBrush}">
+            <avalonia:MaterialIcon Margin="3,0" Kind="Information" Width="15" Height="15" DockPanel.Dock="Left" Foreground="{DynamicResource InfoBarErrorSeverityIconBackground}"/>
+			<TextBlock Margin="3,0" VerticalAlignment="Center" Theme="{StaticResource CaptionTextBlockStyle}" Text="asdasdasd" />
+        </DockPanel>
+        <ui:NavigationView Classes="SampleAppNav"
+                           PaneDisplayMode="Left"
+                           IsPaneOpen="False"
+                           Name="NavView"
+                           IsSettingsVisible="False"
+                           SelectedItem="{Binding SelectedMenu}"
+                           MenuItems="{Binding MenuItems}" 
+                           FooterMenuItems="{Binding FooterMenuItems}"
+                           MenuItemTemplateSelector="{x:Static core:MenuItemTemplateSelector.Instance}">
+			<Panel>
+                <ContentControl Content="{CompiledBinding CurrentPage}"/>
+            </Panel>
+        </ui:NavigationView>
+	</DockPanel>
+	
+    
+</UserControl>

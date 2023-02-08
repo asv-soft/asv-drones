@@ -1,0 +1,36 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Asv.Avalonia.Map">
+  <Design.PreviewWith>
+    <controls:MapView />
+  </Design.PreviewWith>
+
+  <Style Selector="controls|MapView">
+	  <Setter Property="ItemsPanel">
+		  <ItemsPanelTemplate>
+			  <Canvas Name="MapCanvas"/>
+		  </ItemsPanelTemplate>
+	  </Setter>
+	  <Setter Property="Template">
+		  <ControlTemplate>
+			  <Grid>
+				  <StackPanel IsVisible="{TemplateBinding IsInDialogMode}" VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal">
+					  <Polygon Height="40" Width="40" Stretch="Fill" Points="0,0 10,0, 10,10" Fill="#870000" />
+					  <Border Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#870000">
+						  <TextBlock VerticalAlignment="Center" FontSize="18" Text="{TemplateBinding DialogText}"/>
+					  </Border>
+					  <Polygon Height="40" Width="40" Stretch="Fill" Points="0,0 10,0, 0,10" Fill="#870000" />
+				  </StackPanel>
+				  <Border IsVisible="{TemplateBinding IsInDialogMode}" BorderBrush="#870000" BorderThickness="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+				  <ItemsPresenter Name="PART_ItemsPresenter"
+								  Items="{TemplateBinding Items}"
+								  ItemsPanel="{TemplateBinding ItemsPanel}"
+								  ItemTemplate="{TemplateBinding ItemTemplate}"
+								  Margin="{TemplateBinding Padding}"/>
+			  </Grid>
+
+		  </ControlTemplate>
+	  </Setter>
+  </Style>
+</Styles>

@@ -1,0 +1,71 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:core="clr-namespace:Asv.Drones.Gui.Core"
+             xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:CompileBindings ="True"
+             x:Class="Asv.Drones.Gui.Core.SettingsView"
+             x:DataType="core:SettingsViewModel">
+    <Design.DataContext>
+		<core:SettingsViewModel/>
+    </Design.DataContext>
+    <ScrollViewer Padding="18">
+        <StackPanel Orientation="Vertical"
+                    VerticalAlignment="Stretch"
+                    Margin="10 0">
+			<Grid Margin="0 0 0 10"
+                  ColumnDefinitions="*,Auto" RowDefinitions="*,Auto">
+
+                <DockPanel>
+                    <Image Source="/Assets/icon.ico"
+                           DockPanel.Dock="Left"
+                           Height="78"/>
+
+                    <StackPanel Spacing="0" Margin="12 0">
+                        <TextBlock Text="{Binding AppName}"
+                                   Classes="TitleTextBlockStyle"/>
+
+                        <TextBlock Text="{Binding CurrentVersion}"
+                                   Classes="BodyTextBlockStyle"/>
+
+                        <TextBlock Text="{Binding AppLicense}"
+                                   Classes="CaptionTextBlockStyle"/>
+
+						<controls:HyperlinkButton Padding="3,3" Margin="-3,0,0,0" HorizontalContentAlignment="Left" Content="{Binding AppUrl}" NavigateUri="{Binding AppUrl}"/>
+                    </StackPanel>
+                </DockPanel>
+
+                <DockPanel Name="HeaderRightContent" Grid.Row="0" Grid.Column="1" Opacity="1">
+                    <DockPanel.RenderTransform>
+                        <TranslateTransform X="0" Y="0" />
+                    </DockPanel.RenderTransform>
+                    <Image Source="/Assets/avalonia-logo.ico"
+                           DockPanel.Dock="Left"
+                           Height="78"/>
+
+                    <StackPanel Margin="12 0"
+                                VerticalAlignment="Center">
+                        <TextBlock Text="Avalonia"
+                                   Classes="SubtitleTextBlockStyle"/>
+
+                        <TextBlock Text="{Binding CurrentAvaloniaVersion}"
+                                   Classes="CaptionTextBlockStyle"
+                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                        <controls:HyperlinkButton Padding="3,3" Margin="-3,0,0,0" HorizontalContentAlignment="Left" Content="https://github.com/AvaloniaUI/Avalonia" NavigateUri="https://github.com/AvaloniaUI/Avalonia"/>
+
+                    </StackPanel>
+                </DockPanel>
+			</Grid>
+            <ItemsControl Items="{Binding Items}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Spacing="8"></StackPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+			
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

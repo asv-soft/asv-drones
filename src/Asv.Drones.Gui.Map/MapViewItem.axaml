@@ -1,0 +1,30 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Asv.Avalonia.Map">
+  <Design.PreviewWith>
+    <controls:MapViewItem />
+  </Design.PreviewWith>
+
+  <Style Selector="controls|MapViewItem">
+    <!-- Set Defaults -->
+	  <Setter Property="Template">
+          <ControlTemplate>
+			  <Grid>
+				  <ContentControl Content="{TemplateBinding Shape}"/>
+				  <ContentPresenter Name="PART_ContentPresenter"
+                                  IsVisible="{TemplateBinding IsShapeNotAvailable}"
+                                  Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                  CornerRadius="{TemplateBinding CornerRadius}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  Content="{TemplateBinding Content}"
+                                  Padding="{TemplateBinding Padding}"
+                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" />
+			  </Grid>
+              
+          </ControlTemplate>
+      </Setter>
+  </Style>
+</Styles>
