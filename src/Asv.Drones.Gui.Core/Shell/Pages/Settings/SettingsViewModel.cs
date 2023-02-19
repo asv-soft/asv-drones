@@ -17,7 +17,7 @@ namespace Asv.Drones.Gui.Core
 
     [ExportShellPage(BaseUriString)]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class SettingsViewModel:DisposableViewModelBase,IShellPage
+    public class SettingsViewModel:ViewModelBase,IShellPage
     {
         public const string BaseUriString = "asv:shell.settings";
         public static readonly Uri BaseUri = new(BaseUriString);
@@ -25,7 +25,7 @@ namespace Asv.Drones.Gui.Core
         private readonly ReadOnlyObservableCollection<ISettingsPart> _items;
 
         // this is for designer
-        public SettingsViewModel()
+        public SettingsViewModel():base(BaseUri)
         {
             if (Design.IsDesignMode)
             {
@@ -34,6 +34,11 @@ namespace Asv.Drones.Gui.Core
                 AppLicense = "MIT License";
                 AppUrl = "https://github.com/asvol/asv-drones";
                 CurrentAvaloniaVersion = "0.0.0";
+                _items = new ReadOnlyObservableCollection<ISettingsPart>(new ObservableCollection<ISettingsPart>(
+                    new ISettingsPart[]
+                    {
+                        new SettingsThemeViewModel()
+                    }));
             }
         }
 
@@ -53,6 +58,7 @@ namespace Asv.Drones.Gui.Core
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(out _items)
                 .SortBy(_ => _.Order)
+                .DisposeMany()
                 .Subscribe()
                 .DisposeItWith(Disposable);
         }

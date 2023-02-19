@@ -1,9 +1,9 @@
 using System.Reactive.Disposables;
-using ReactiveUI;
+using ReactiveUI.Validation.Helpers;
 
 namespace Asv.Drones.Gui.Core
 {
-    public class DisposableViewModelBase : ReactiveObject
+    public class DisposableViewModelWithValidation : ReactiveValidationObject
     {
         private const int Disposed = 1;
         private const int NotDisposed = 0;

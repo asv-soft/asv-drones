@@ -1,0 +1,41 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+             xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
+             xmlns:core="clr-namespace:Asv.Drones.Gui.Core;assembly=Asv.Drones.Gui.Core"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:CompileBindings="True"
+             x:Class="Asv.Drones.Gui.Uav.ConnectionsPortView"
+             x:DataType="uav:ConnectionsPortsViewModel">
+    <Design.DataContext>
+        <uav:ConnectionsPortsViewModel/>
+    </Design.DataContext>
+	<core:OptionsDisplayItem
+                             Header="{x:Static uav:RS.ConnectionsPortsView_Header_Title}"
+                             Description="{x:Static uav:RS.ConnectionsPortsView_Header_Description}"
+                             Expands="True"
+                             IsExpanded="False"
+                             Icon="M21.4 7.5C22.2 8.3 22.2 9.6 21.4 10.3L18.6 13.1L10.8 5.3L13.6 2.5C14.4 1.7 15.7 1.7 16.4 2.5L18.2 4.3L21.2 1.3L22.6 2.7L19.6 5.7L21.4 7.5M15.6 13.3L14.2 11.9L11.4 14.7L9.3 12.6L12.1 9.8L10.7 8.4L7.9 11.2L6.4 9.8L3.6 12.6C2.8 13.4 2.8 14.7 3.6 15.4L5.4 17.2L1.4 21.2L2.8 22.6L6.8 18.6L8.6 20.4C9.4 21.2 10.7 21.2 11.4 20.4L14.2 17.6L12.8 16.2L15.6 13.3Z">
+
+        <core:OptionsDisplayItem.Content>
+			<DockPanel>
+                <StackPanel Spacing="8" Orientation="Horizontal" DockPanel.Dock="Top">
+                    <controls:CommandBarButton Padding="10" Width="100" Command="{Binding AddSerialPortCommand}" Label="{x:Static uav:RS.ConnectionsPortsView_AddSerialCommand_Title}" Icon="M7,3H17V5H19V8H16V14H8V8H5V5H7V3M17,9H19V14H17V9M11,15H13V22H11V15M5,9H7V14H5V9Z" />
+                    <controls:CommandBarButton Padding="10" Width="100" Command="{Binding AddTcpPortCommand}" Label="{x:Static uav:RS.ConnectionsPortsView_AddTcpCommand_Title}" Icon="M20.2,5.9L21,5.1C19.6,3.7 17.8,3 16,3C14.2,3 12.4,3.7 11,5.1L11.8,5.9C13,4.8 14.5,4.2 16,4.2C17.5,4.2 19,4.8 20.2,5.9M19.3,6.7C18.4,5.8 17.2,5.3 16,5.3C14.8,5.3 13.6,5.8 12.7,6.7L13.5,7.5C14.2,6.8 15.1,6.5 16,6.5C16.9,6.5 17.8,6.8 18.5,7.5L19.3,6.7M19,13H17V9H15V13H5A2,2 0 0,0 3,15V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V15A2,2 0 0,0 19,13M8,18H6V16H8V18M11.5,18H9.5V16H11.5V18M15,18H13V16H15V18Z" />
+                    <controls:CommandBarButton Padding="10" Width="100" Command="{Binding AddUdpPortCommand}" Label="{x:Static uav:RS.ConnectionsPortsView_AddUdpCommand_Title}" Icon="M15,20A1,1 0 0,0 14,19H13V17H17A2,2 0 0,0 19,15V5A2,2 0 0,0 17,3H7A2,2 0 0,0 5,5V15A2,2 0 0,0 7,17H11V19H10A1,1 0 0,0 9,20H2V22H9A1,1 0 0,0 10,23H14A1,1 0 0,0 15,22H22V20H15M7,15V5H17V15H7M10,6H8V14H10V6M14,6H11V14H13V12H14A2,2 0 0,0 16,10V8A2,2 0 0,0 14,6M14,10H13V8H14V10Z" />
+                </StackPanel>
+
+                <ItemsControl Padding="0" Items="{Binding Items}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Spacing="8"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </DockPanel>
+		</core:OptionsDisplayItem.Content>
+	</core:OptionsDisplayItem>
+
+</UserControl>

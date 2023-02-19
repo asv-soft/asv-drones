@@ -39,19 +39,32 @@
             <avalonia:MaterialIcon Margin="3,0" Kind="Information" Width="15" Height="15" DockPanel.Dock="Left" Foreground="{DynamicResource InfoBarErrorSeverityIconBackground}"/>
 			<TextBlock Margin="3,0" VerticalAlignment="Center" Theme="{StaticResource CaptionTextBlockStyle}" Text="asdasdasd" />
         </DockPanel>
-        <ui:NavigationView Classes="SampleAppNav"
+        <ui:NavigationView 
                            PaneDisplayMode="Left"
                            IsPaneOpen="False"
                            Name="NavView"
                            IsSettingsVisible="False"
                            SelectedItem="{Binding SelectedMenu}"
-                           MenuItems="{Binding MenuItems}" 
+                           MenuItems="{Binding MenuItems}"
                            FooterMenuItems="{Binding FooterMenuItems}"
                            MenuItemTemplateSelector="{x:Static core:MenuItemTemplateSelector.Instance}">
-			<Panel>
+            <Panel>
                 <ContentControl Content="{CompiledBinding CurrentPage}"/>
+                <ItemsControl Items="{Binding Messages}" Margin="10">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Spacing="8"></StackPanel>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ui:InfoBar Title="{Binding Title}" IsOpen="{Binding IsOpen}" Severity="{Binding Severity}" Message="{Binding Message}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </Panel>
         </ui:NavigationView>
+        
 	</DockPanel>
 	
     

@@ -21,7 +21,7 @@ namespace Asv.Drones.Gui.Core
             _cfgService = cfgService;
             Paths = defaultPaths;
             Info = info;
-            Cache.CacheFolder = Path.Combine(defaultPaths.ApplicationDataFolder, "map1");
+            Cache.CacheFolder = Path.Combine(defaultPaths.ApplicationDataFolder, "map");
         }
 
         public IAppInfo Info { get; }

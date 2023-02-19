@@ -36,5 +36,15 @@ namespace Asv.Drones.Gui.Core
         public Uri Id { get; }
     }
 
+    public class ViewModelBaseWithValidation : DisposableViewModelWithValidation, IViewModel
+    {
+        public ViewModelBaseWithValidation(Uri id)
+        {
+            Id = id;
+        }
+
+        public Uri Id { get; }
+    }
+
 
 }

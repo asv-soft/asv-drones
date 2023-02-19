@@ -11,7 +11,8 @@ namespace Asv.Avalonia.Map
     /// </summary>
     public class Cache
     {
-        
+        private static Cache? _cacheInstance;
+
         /// <summary>
         ///     abstract image cache
         /// </summary>
@@ -26,17 +27,17 @@ namespace Asv.Avalonia.Map
 
         public static string CacheFolder { get; set; } = "map";
 
-        public static Cache Instance { get; } = new Cache();
+        public static Cache Instance => _cacheInstance ??= new Cache();
 
         private Cache()
         {
             ImageCache = new FolderDbCache(CacheFolder);
-            
         }
 
         #region -- etc cache --
 
-        static readonly SHA1CryptoServiceProvider HashProvider = new SHA1CryptoServiceProvider();
+        static readonly SHA1 HashProvider = SHA1.Create();
+        
 
         void ConvertToHash(ref string s)
         {

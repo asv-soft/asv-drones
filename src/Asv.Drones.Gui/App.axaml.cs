@@ -15,6 +15,7 @@ using System.ComponentModel.Composition.Primitives;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using Asv.Drones.Gui.Uav;
 using FluentAvalonia.Styling;
 
 namespace Asv.Drones.Gui
@@ -116,6 +117,7 @@ namespace Asv.Drones.Gui
         private IEnumerable<Assembly> Assemblies()
         {
             yield return typeof(ExportViewAttribute).Assembly;
+            yield return typeof(IMavlinkDevicesService).Assembly;
 
         }
 

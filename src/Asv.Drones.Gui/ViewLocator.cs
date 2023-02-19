@@ -19,9 +19,9 @@ namespace Asv.Drones.Gui
             _container = container;
         }
 
-        public IControl Build(object data)
+        public IControl? Build(object? data)
         {
-            if (_isDisposed) return null;
+            if (_isDisposed || data == null) return null;
             var viewModelType = data.GetType();
             var defaultView = _container.GetExports<IControl, IViewMetadata>().FirstOrDefault(_ => _.Metadata.ViewModelType == viewModelType);
             if (defaultView != null) return defaultView.Value;
@@ -35,7 +35,7 @@ namespace Asv.Drones.Gui
             return (IControl)_container.GetExportedValue<object>(contract)!;
         }
 
-        public bool Match(object data)
+        public bool Match(object? data)
         {
             return data is ReactiveObject;
         }
