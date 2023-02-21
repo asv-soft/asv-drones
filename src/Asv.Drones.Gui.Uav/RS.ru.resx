@@ -216,13 +216,13 @@
   <data name="MavlinkDeviceView_Status_Name" xml:space="preserve">
     <value>Статус системы</value>
   </data>
-  <data name="TcpPortView_PortName" xml:space="preserve">
-    <value>Порт</value>
+  <data name="TcpPortView_TcpIpAddress" xml:space="preserve">
+	  <value>IP адрес </value>
   </data>
   <data name="TcpPortView_PortTitle" xml:space="preserve">
     <value>Название</value>
   </data>
-  <data name="TcpPortView_SerialBaudRate" xml:space="preserve">
-    <value>Скорость передачи данных</value>
+  <data name="TcpPortView_TcpIpPort" xml:space="preserve">
+	  <value>Номер порта</value>
   </data>
 </root>
