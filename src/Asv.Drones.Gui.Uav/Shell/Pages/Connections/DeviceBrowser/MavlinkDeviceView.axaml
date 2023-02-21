@@ -40,7 +40,7 @@
 			</StackPanel>
 
             <StackPanel Grid.Column="3" Margin="10,0" Spacing="3">
-                <TextBlock TextAlignment="Center" FontSize="16" Text="System status" />
+                <TextBlock TextAlignment="Center" FontSize="16" Text="{x:Static uav:RS.MavlinkDeviceView_Status_Name}" />
 				<Border Background="{DynamicResource InfoBadgeBackground}" Padding="5,3" CornerRadius="{DynamicResource ListViewItemCornerRadius}" >
 					<TextBlock Foreground="{DynamicResource InfoBadgeForeground}" TextAlignment="Center" FontSize="18" Text="{Binding SystemStatusText}"/>
 				</Border>
@@ -48,14 +48,14 @@
 			</StackPanel>
            
             <StackPanel Grid.Column="4" Margin="10,0" Spacing="3">
-                <TextBlock TextAlignment="Center" FontSize="16" Text="Custom mode"/>
+                <TextBlock TextAlignment="Center" FontSize="16" Text="{x:Static uav:RS.MavlinkDeviceView_Mode_Name}"/>
                 <Border Background="{DynamicResource InfoBadgeBackground}" Padding="5,3" CornerRadius="{DynamicResource ListViewItemCornerRadius}" >
                     <TextBlock Foreground="{DynamicResource InfoBadgeForeground}" TextAlignment="Center" FontSize="18" Text="{Binding CustomModeText}"/>
                 </Border>
             </StackPanel>
             <StackPanel Grid.Column="5" Margin="10,0" Spacing="3" >
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock TextAlignment="Center" FontSize="16" Text="Heartbeat rate"/>
+                    <TextBlock TextAlignment="Center" FontSize="16" Text="{x:Static uav:RS.MavlinkDeviceView_Rate_Name}"/>
                     
 				</StackPanel>
                 

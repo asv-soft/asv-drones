@@ -61,6 +61,60 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The rate at which the HEARTBEAT message must be transmitted to announce the existence of the system on the MAVLink network.
+        /// </summary>
+        public static string ConnectionsIdentificationView_HeartbeatRate_Description {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationView_HeartbeatRate_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heartbeat rate.
+        /// </summary>
+        public static string ConnectionsIdentificationView_HeartbeatRate_Header {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationView_HeartbeatRate_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to After that timeout of Heartbeat packet device will be removed from device list.
+        /// </summary>
+        public static string ConnectionsIdentificationView_HeartbeatTimeout_Description {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationView_HeartbeatTimeout_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heartbeat timeout.
+        /// </summary>
+        public static string ConnectionsIdentificationView_HeartbeatTimeout_Header {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationView_HeartbeatTimeout_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Each system has a network-unique system id, and each component has a system-unique component id that can be used for addressing/routing.
+        /// </summary>
+        public static string ConnectionsIdentificationView_SystemComponentId_Description {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationView_SystemComponentId_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System \ Component ID.
+        /// </summary>
+        public static string ConnectionsIdentificationView_SystemComponentId_Header {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationView_SystemComponentId_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Serial.
         /// </summary>
         public static string ConnectionsPortsView_AddSerialCommand_Title {
@@ -196,6 +250,33 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom mode.
+        /// </summary>
+        public static string MavlinkDeviceView_Mode_Name {
+            get {
+                return ResourceManager.GetString("MavlinkDeviceView_Mode_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heartbeat rate.
+        /// </summary>
+        public static string MavlinkDeviceView_Rate_Name {
+            get {
+                return ResourceManager.GetString("MavlinkDeviceView_Rate_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System status.
+        /// </summary>
+        public static string MavlinkDeviceView_Status_Name {
+            get {
+                return ResourceManager.GetString("MavlinkDeviceView_Status_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disabled.
         /// </summary>
         public static string PortView_ToggleButton_Disabled {
@@ -273,6 +354,33 @@ namespace Asv.Drones.Gui.Uav {
         public static string SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name {
             get {
                 return ResourceManager.GetString("SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port name.
+        /// </summary>
+        public static string TcpPortView_PortName {
+            get {
+                return ResourceManager.GetString("TcpPortView_PortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port title.
+        /// </summary>
+        public static string TcpPortView_PortTitle {
+            get {
+                return ResourceManager.GetString("TcpPortView_PortTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serial baud rate.
+        /// </summary>
+        public static string TcpPortView_SerialBaudRate {
+            get {
+                return ResourceManager.GetString("TcpPortView_SerialBaudRate", resourceCulture);
             }
         }
     }
