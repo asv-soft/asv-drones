@@ -12,11 +12,11 @@
     </Design.DataContext>
     <Panel>
         <StackPanel Spacing="10" Margin="10">
-            <TextBlock Text="Port title"/>
+            <TextBlock Text="{x:Static uav:RS.TcpPortView_PortTitle}"/>
             <TextBox Text="{Binding Title}"/>
-            <TextBlock Text="Port name"/>
+            <TextBlock Text="{x:Static uav:RS.TcpPortView_PortName}"/>
 			<TextBox Text="{Binding ServerIp}"/>
-            <TextBlock Text="Serial baud rate"/>
+            <TextBlock Text="{x:Static uav:RS.TcpPortView_SerialBaudRate}"/>
 			<TextBox Text="{Binding Port}"/>
         </StackPanel>
     </Panel>

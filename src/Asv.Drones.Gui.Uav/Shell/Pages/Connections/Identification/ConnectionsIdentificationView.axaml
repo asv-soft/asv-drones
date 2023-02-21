@@ -12,9 +12,9 @@
 		<uav:ConnectionsIdentificationViewModel/>
     </Design.DataContext>
     <StackPanel Spacing="8">
-		<core:OptionsDisplayItem Header="System \ Component ID"
+		<core:OptionsDisplayItem Header="{x:Static uav:RS.ConnectionsIdentificationView_SystemComponentId_Header}"
                                  Icon="M10 7V9H9V15H10V17H6V15H7V9H6V7H10M16 7C17.11 7 18 7.9 18 9V15C18 16.11 17.11 17 16 17H12V7M16 9H14V15H16V9Z"
-                                 Description="Each system has a network-unique system id, and each component has a system-unique component id that can be used for addressing/routing">
+                                 Description="{x:Static uav:RS.ConnectionsIdentificationView_SystemComponentId_Description}">
 
 			<core:OptionsDisplayItem.ActionButton>
                 <StackPanel Orientation="Horizontal" Spacing="8">
@@ -27,9 +27,9 @@
 
 		</core:OptionsDisplayItem >
 
-        <core:OptionsDisplayItem Header="Heartbeat rate"
+        <core:OptionsDisplayItem Header="{x:Static uav:RS.ConnectionsIdentificationView_HeartbeatRate_Header}"
                                  Icon="M7.5,4A5.5,5.5 0 0,0 2,9.5C2,10 2.09,10.5 2.22,11H6.3L7.57,7.63C7.87,6.83 9.05,6.75 9.43,7.63L11.5,13L12.09,11.58C12.22,11.25 12.57,11 13,11H21.78C21.91,10.5 22,10 22,9.5A5.5,5.5 0 0,0 16.5,4C14.64,4 13,4.93 12,6.34C11,4.93 9.36,4 7.5,4V4M3,12.5A1,1 0 0,0 2,13.5A1,1 0 0,0 3,14.5H5.44L11,20C12,20.9 12,20.9 13,20L18.56,14.5H21A1,1 0 0,0 22,13.5A1,1 0 0,0 21,12.5H13.4L12.47,14.8C12.07,15.81 10.92,15.67 10.55,14.83L8.5,9.5L7.54,11.83C7.39,12.21 7.05,12.5 6.6,12.5H3Z"
-                                 Description="The rate at which the HEARTBEAT message must be transmitted to announce the existence of the system on the MAVLink network">
+                                 Description="{x:Static uav:RS.ConnectionsIdentificationView_HeartbeatRate_Description}">
 
             <core:OptionsDisplayItem.ActionButton>
 
@@ -39,9 +39,9 @@
 
         </core:OptionsDisplayItem >
 
-        <core:OptionsDisplayItem Header="Heartbeat timeout"
+        <core:OptionsDisplayItem Header="{x:Static uav:RS.ConnectionsIdentificationView_HeartbeatTimeout_Header}"
                                  Icon="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.24,7.76C15.07,6.58 13.53,6 12,6V12L7.76,16.24C10.1,18.58 13.9,18.58 16.24,16.24C18.59,13.9 18.59,10.1 16.24,7.76Z"
-                                 Description="After that timeout of Heartbeat packet device will be removed from device list">
+                                 Description="{x:Static uav:RS.ConnectionsIdentificationView_HeartbeatTimeout_Description}">
 
             <core:OptionsDisplayItem.ActionButton>
 
