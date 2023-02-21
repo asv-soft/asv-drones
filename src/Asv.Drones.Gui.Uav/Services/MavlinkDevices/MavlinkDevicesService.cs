@@ -19,14 +19,14 @@ namespace Asv.Drones.Gui.Uav
     public class MavlinkDeviceServiceConfig
     {
         public MavlinkPortConfig[] Ports { get; set; } = {
-            new() { ConnectionString = "tcp://127.0.0.1:5762", IsEnabled = true, Name = "" },
-            new() { ConnectionString = "tcp://127.0.0.1:7341?srv=true", IsEnabled = true, Name = "Base station" },
+            new() { ConnectionString = "tcp://127.0.0.1:5762", IsEnabled = true, Name = "SITL connection" },
+            new() { ConnectionString = "tcp://172.16.0.1:7341", IsEnabled = true, Name = "Base station" },
         };
 
         public byte SystemId { get; set; } = 254;
         public byte ComponentId { get; set; } = 254;
         public int HeartbeatRateMs { get; set; } = 1000;
-        public int DeviceHeartbeatTimeoutMs { get; set; } = 30_000;
+        public int DeviceHeartbeatTimeoutMs { get; set; } = 60_000;
     }
 
     [Export(typeof(IMavlinkDevicesService))]

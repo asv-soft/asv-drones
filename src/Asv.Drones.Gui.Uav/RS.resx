@@ -196,7 +196,7 @@
     <value>Heartbeat rate</value>
   </data>
   <data name="ConnectionsIdentificationView_HeartbeatTimeout_Description" xml:space="preserve">
-    <value>After that timeout of Heartbeat packet device will be removed from device list</value>
+    <value>After that timeout of Heartbeat packet deviceService will be removed from deviceService list</value>
   </data>
   <data name="ConnectionsIdentificationView_HeartbeatTimeout_Header" xml:space="preserve">
     <value>Heartbeat timeout</value>

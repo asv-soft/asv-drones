@@ -15,9 +15,11 @@
             <TextBlock Text="{x:Static uav:RS.TcpPortView_PortTitle}"/>
             <TextBox Text="{Binding Title}"/>
             <TextBlock Text="{x:Static uav:RS.TcpPortView_TcpIpAddress}"/>
-			<TextBox Text="{Binding ServerIp}"/>
+			<TextBox Text="{Binding IpAddress}"/>
             <TextBlock Text="{x:Static uav:RS.TcpPortView_TcpIpPort}"/>
 			<TextBox Text="{Binding Port}"/>
+            <RadioButton IsChecked="{Binding IsTcpIpServer}" Content="TCP\IP server"/>
+            <RadioButton IsChecked="{Binding !IsTcpIpServer}" Content="TCP\IP client"/>
         </StackPanel>
     </Panel>
 </UserControl>

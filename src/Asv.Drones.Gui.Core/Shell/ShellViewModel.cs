@@ -9,7 +9,6 @@ using System.ComponentModel.Composition;
 using System.Drawing;
 using System.Reactive;
 using System.Reactive.Linq;
-using Asv.Cfg;
 using Asv.Common;
 using DynamicData.Binding;
 
@@ -19,17 +18,12 @@ namespace Asv.Drones.Gui.Core
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class ShellViewModel : DisposableViewModelBase, IShell
     {
-        private readonly IConfiguration _config;
-        private readonly IAppService _appService;
-        private readonly IThemeService _themeService;
-        private readonly INavigationService _navigation;
-        private readonly ILocalizationService _localization;
-        private readonly ILogService _logService;
-        private IShellMenuItem _selectedMenu;
-        private readonly ReadOnlyObservableCollection<IShellMenuItem> _menuItems;
-        private readonly ReadOnlyObservableCollection<IShellMenuItem> _footerMenuItems;
-        private readonly ReadOnlyObservableCollection<LogMessageViewModel> _messages;
-        private readonly SourceList<LogMessage> _messageCache;
+        private readonly INavigationService _navigation = null!;
+        private IShellMenuItem _selectedMenu = null!;
+        private readonly ReadOnlyObservableCollection<IShellMenuItem> _menuItems = null!;
+        private readonly ReadOnlyObservableCollection<IShellMenuItem> _footerMenuItems = null!;
+        private readonly ReadOnlyObservableCollection<LogMessageViewModel> _messages = null!;
+        private readonly SourceList<LogMessage> _messageCache = new();
 
         public ShellViewModel()
         {
@@ -59,43 +53,40 @@ namespace Asv.Drones.Gui.Core
 
         [ImportingConstructor]
         public ShellViewModel(
-            IConfiguration config,
-            IAppService appService,
-            IThemeService themeService,
-            INavigationService navigation,
-            ILocalizationService localization,
-            ILogService logService,
-            [ImportMany] IEnumerable<IViewModelProvider<IShellMenuItem>> menuItems
-            ) : this()
+            INavigationService navigation, 
+            ILogService logService, 
+            [ImportMany] IEnumerable<IViewModelProvider<IShellMenuItem>> menuItems) : this()    
         {
             if (menuItems == null) throw new ArgumentNullException(nameof(menuItems));
-            _config = config ?? throw new ArgumentNullException(nameof(config));
-            _appService = appService ?? throw new ArgumentNullException(nameof(appService));
-            _themeService = themeService;
-            _localization = localization ?? throw new ArgumentNullException(nameof(localization));
-            _logService = logService ?? throw new ArgumentNullException(nameof(logService));
+            var logService1 = logService ?? throw new ArgumentNullException(nameof(logService));
             _navigation = navigation ?? throw new ArgumentNullException(nameof(navigation));
             _navigation.Init(this);
 
+            #region Subscribe to notifications
 
-            _messageCache = new SourceList<LogMessage>();
             _messageCache
                 .Connect()
                 .ObserveOn(RxApp.MainThreadScheduler)
-                .Transform(_=>new LogMessageViewModel(_messageCache,_))
+                .Transform(_ => new LogMessageViewModel(_messageCache, _))
                 .Bind(out _messages)
                 .DisposeMany()
                 .Subscribe()
                 .DisposeItWith(Disposable);
-            _logService
+            // push new information messages to source cache
+            // they will automatically be deleted after a timeout or if the user closes them
+            logService1
                 .OnMessage
                 .Where(_ => _.Type != LogMessageType.Trace)
                 .Subscribe(_ => _messageCache.Add(_))
                 .DisposeItWith(Disposable);
 
+            #endregion
 
+            #region Build main menu
 
-            menuItems.Select(_ => _.Items)
+            var menuItemsProviders = menuItems as IViewModelProvider<IShellMenuItem>[] ?? menuItems.ToArray();
+            // filter top menu items
+            menuItemsProviders.Select(_ => _.Items)
                 .Merge()
                 .Filter(_ => _.Position == ShellMenuPosition.Top)
                 .ObserveOn(RxApp.MainThreadScheduler)
@@ -103,8 +94,8 @@ namespace Asv.Drones.Gui.Core
                 .SortBy(_ => _.Order)
                 .Subscribe()
                 .DisposeItWith(Disposable);
-
-            menuItems.Select(_ => _.Items)
+            // filter bottom menu items
+            menuItemsProviders.Select(_ => _.Items)
                 .Merge()
                 .Filter(_ => _.Position == ShellMenuPosition.Bottom)
                 .ObserveOn(RxApp.MainThreadScheduler)
@@ -112,13 +103,16 @@ namespace Asv.Drones.Gui.Core
                 .SortBy(_ => _.Order)
                 .Subscribe()
                 .DisposeItWith(Disposable);
+
+            #endregion
+
         }
         
         [Reactive]
-        public string Title { get; set; }
+        public string Title { get; set; } = null!;
 
         [Reactive]
-        public IShellPage CurrentPage { get; set; }
+        public IShellPage CurrentPage { get; set; } = null!;
 
         public IShellMenuItem SelectedMenu
         {

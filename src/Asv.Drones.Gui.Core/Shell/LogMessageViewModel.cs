@@ -19,21 +19,24 @@ namespace Asv.Drones.Gui.Core
             
         }
 
-        public LogMessageViewModel(ISourceList<LogMessage> source, LogMessage message):this(message)
+        public LogMessageViewModel(ISourceList<LogMessage> sourceList, LogMessage message):this(message)
         {
+            // we need to remove 
             Observable
                 .Timer(TimeSpan.FromSeconds(10))
-                .Subscribe(_ => source.Remove(_message))
+                .Subscribe(_ => sourceList.Remove(_message))
                 .DisposeItWith(Disposable);
+
             this.WhenAnyValue(_ => _.IsOpen)
                 .Where(_ => _ == false)
-                .Subscribe(_ => source.Remove(_message))
+                .Subscribe(_ => sourceList.Remove(_message))
                 .DisposeItWith(Disposable);
         }
 
         public string Title => _message.Source;
         [Reactive]
         public bool IsOpen { get; set; }
+
         public InfoBarSeverity Severity
         {
             get
