@@ -46,5 +46,45 @@ namespace Asv.Drones.Gui.Core
             InternalSaveConfig(_ => _.CurrentLanguage = lang.Id);
 
         }
+
+        #region Units
+
+        public const long OneKB = 1024;
+
+        public const long OneMB = OneKB * OneKB;
+
+        public const long OneGB = OneMB * OneKB;
+
+        public const long OneTB = OneGB * OneKB;
+
+        public string BytesToString(long bytes)
+        {
+            //TODO: Localize
+            return bytes switch
+            {
+                (< OneKB) => $"{bytes}B",
+                (>= OneKB) and (< OneMB) => $"{bytes / OneKB}KB",
+                (>= OneMB) and (< OneGB) => $"{bytes / OneMB}MB",
+                (>= OneGB) and (< OneTB) => $"{bytes / OneMB}GB",
+                (>= OneTB) => $"{bytes / OneTB}"
+            };
+        }
+
+        public string RateToString(long bytesPerSec)
+        {
+            //TODO: Localize
+            return bytesPerSec switch
+            {
+                (< OneKB) => $"{bytesPerSec}B/s",
+                (>= OneKB) and (< OneMB) => $"{bytesPerSec / OneKB}KB/s",
+                (>= OneMB) and (< OneGB) => $"{bytesPerSec / OneMB}MB/s",
+                (>= OneGB) and (< OneTB) => $"{bytesPerSec / OneMB}GB/s",
+                (>= OneTB) => $"{bytesPerSec / OneTB}"
+            };
+        }
+
+        #endregion  
+
+
     }
 }

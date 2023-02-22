@@ -29,7 +29,12 @@ namespace Asv.Drones.Gui.Core
     {
         IRxEditableValue<LanguageInfo> CurrentLanguage { get; }
         IEnumerable<LanguageInfo> AvailableLanguages { get; }
+
+        string BytesToString(long bytes);
+        string RateToString(long bytesPerSec);
     }
+
+
 
     
 }

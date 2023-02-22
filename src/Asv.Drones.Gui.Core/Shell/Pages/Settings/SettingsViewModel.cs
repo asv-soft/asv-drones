@@ -15,17 +15,14 @@ namespace Asv.Drones.Gui.Core
 {
 
 
-    [ExportShellPage(BaseUriString)]
+    [ExportShellPage(WellKnownUri.ShellPageSettingsUriString)]
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class SettingsViewModel:ViewModelBase,IShellPage
     {
-        public const string BaseUriString = "asv:shell.settings";
-        public static readonly Uri BaseUri = new(BaseUriString);
-
         private readonly ReadOnlyObservableCollection<ISettingsPart> _items;
 
         // this is for designer
-        public SettingsViewModel():base(BaseUri)
+        public SettingsViewModel():base(WellKnownUri.ShellPageSettingsUri)
         {
             if (Design.IsDesignMode)
             {

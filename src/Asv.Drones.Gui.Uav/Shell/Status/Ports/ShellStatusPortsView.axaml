@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="100" d:DesignHeight="25"
+             DockPanel.Dock="Right"
+             x:CompileBindings="True"
+             x:Class="Asv.Drones.Gui.Uav.ShellStatusPortsView"
+             x:DataType="uav:ShellStatusPortsViewModel">
+	<Design.DataContext>
+        <uav:ShellStatusPortsViewModel/>
+    </Design.DataContext>
+    <StackPanel Orientation="Horizontal">
+        <avalonia:MaterialIcon Margin="3,0" Kind="SwapVertical" Width="15" Height="15"/>
+        <TextBlock Margin="3,0" VerticalAlignment="Center" Theme="{DynamicResource CaptionTextBlockStyle}" Text="{Binding TotalRateString}" />
+    </StackPanel>
+</UserControl>

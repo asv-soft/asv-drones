@@ -35,10 +35,21 @@
 				</StackPanel>
             </Border>
         </Grid>
-		<DockPanel Height="25" DockPanel.Dock="Bottom" Background="{DynamicResource InfoBarErrorSeverityBackgroundBrush}">
-            <avalonia:MaterialIcon Margin="3,0" Kind="Information" Width="15" Height="15" DockPanel.Dock="Left" Foreground="{DynamicResource InfoBarErrorSeverityIconBackground}"/>
-			<TextBlock Margin="3,0" VerticalAlignment="Center" Theme="{StaticResource CaptionTextBlockStyle}" Text="asdasdasd" />
-        </DockPanel>
+        <ItemsControl Items="{Binding StatusItems}" Height="25" DockPanel.Dock="Bottom" Background="{DynamicResource InfoBarErrorSeverityBackgroundBrush}">
+			<ItemsControl.ItemContainerTheme>
+              <ControlTheme TargetType="ContentPresenter">
+                  <ControlTheme.Setters>
+                       <Setter Property="DockPanel.Dock" Value="Right"/>
+                  </ControlTheme.Setters>
+              </ControlTheme>
+            </ItemsControl.ItemContainerTheme>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel LastChildFill="True"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+
         <ui:NavigationView 
                            PaneDisplayMode="Left"
                            IsPaneOpen="False"
