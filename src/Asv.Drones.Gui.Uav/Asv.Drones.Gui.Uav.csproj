@@ -45,4 +45,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\Ports\Dialogs\UdpPortView.axaml" />
+  </ItemGroup>
+
 </Project>

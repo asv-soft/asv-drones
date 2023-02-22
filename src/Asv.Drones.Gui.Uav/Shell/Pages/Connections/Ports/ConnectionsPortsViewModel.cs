@@ -103,7 +103,7 @@ namespace Asv.Drones.Gui.Uav
                 IsSecondaryButtonEnabled = true,
                 CloseButtonText = RS.ConnectionsViewModel_AddDialogPort_Cancel
             };
-            var viewModel = new TcpPortViewModel(_deviceSvc);
+            var viewModel = new UdpPortViewModel(_deviceSvc);
             viewModel.ApplyDialog(dialog);
             dialog.Content = viewModel;
             var result = await dialog.ShowAsync();

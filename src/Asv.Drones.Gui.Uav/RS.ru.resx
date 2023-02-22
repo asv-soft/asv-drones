@@ -130,7 +130,7 @@
     <value>Новый последовательный порт {0}</value>
   </data>
   <data name="SerialPortView_Title" xml:space="preserve">
-    <value>Наввание</value>
+    <value>Название</value>
   </data>
   <data name="SerialPortView_PortName" xml:space="preserve">
     <value>Порт</value>
@@ -224,5 +224,23 @@
   </data>
   <data name="TcpPortView_SerialBaudRate" xml:space="preserve">
     <value>Скорость передачи данных</value>
+  </data>
+  <data name="UdpPortView_LocalIpAddress" xml:space="preserve">
+    <value>IP адрес</value>
+  </data>
+  <data name="UdpPortView_LocalPortName" xml:space="preserve">
+    <value>Порт</value>
+  </data>
+  <data name="UdpPortView_PortTitle" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="UdpPortView_RemoteIpAddress" xml:space="preserve">
+    <value>Удаленный IP адрес</value>
+  </data>
+  <data name="UdpPortView_RemotePortName" xml:space="preserve">
+    <value>Удаленный порт</value>
+  </data>
+  <data name="UdpPortView_ToggleName" xml:space="preserve">
+    <value>Указать удаленный хост</value>
   </data>
 </root>
