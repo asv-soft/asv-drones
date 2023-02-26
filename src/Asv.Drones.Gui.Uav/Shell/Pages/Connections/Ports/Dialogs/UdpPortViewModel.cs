@@ -6,6 +6,7 @@ using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Controls;
+using DynamicData.Binding;
 using FluentAvalonia.UI.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -16,13 +17,38 @@ namespace Asv.Drones.Gui.Uav
     public class UdpPortViewModel:ViewModelBaseWithValidation
     {
         private readonly IMavlinkDevicesService? _device;
-        private bool _isRemote;
+        
 
         public UdpPortViewModel() : base(new Uri(ConnectionsViewModel.BaseUri, "ports.udp"))
         {
             if (Design.IsDesignMode)
             {
-                _isRemote = false;
+        
+            }
+
+            this.WhenValueChanged(_ => IsRemote).Subscribe(_ => UpdateValidationRules()).DisposeItWith(Disposable);
+        }
+
+        private void UpdateValidationRules()
+        {
+            this.ClearValidationRules();
+
+            this.ValidationRule(x => x.Title, _ => !string.IsNullOrWhiteSpace(_), "You must specify a valid name")
+                .DisposeItWith(Disposable);
+
+            this.ValidationRule(x => x.LocalIpAddress, _ => !string.IsNullOrWhiteSpace(_) && IPAddress.TryParse(_, out IPAddress? ip), "You must enter a valid IP address")
+                .DisposeItWith(Disposable);
+
+            this.ValidationRule(x => x.LocalPort, _ => _ is > 1 and < 65535, "Port number must be a value between 1 and 65535")
+                .DisposeItWith(Disposable);
+
+            if (IsRemote)
+            {
+                this.ValidationRule(x => x.RemoteIpAddress, _ => !string.IsNullOrWhiteSpace(_) && IPAddress.TryParse(_, out IPAddress? ip), "You must enter a valid IP address")
+                    .DisposeItWith(Disposable);
+                this.ValidationRule(x => x.RemotePort, _ => _ is > 1 and < 65535, "Port number must be a value between 1 and 65535")
+                    .DisposeItWith(Disposable);
+                
             }
         }
 
@@ -31,8 +57,6 @@ namespace Asv.Drones.Gui.Uav
         {
             _device = device ?? throw new ArgumentNullException(nameof(device));
             Title = "New UDP " + device.Router.GetPorts().Length;
-
-            SetValidationRules();
         }
 
         public void ApplyDialog(ContentDialog dialog)
@@ -60,27 +84,6 @@ namespace Asv.Drones.Gui.Uav
             }
         }
 
-        private void SetValidationRules()
-        {
-            this.ClearValidationRules();
-
-            this.ValidationRule(x => x.Title, _ => !string.IsNullOrWhiteSpace(_), "You must specify a valid name")
-                .DisposeItWith(Disposable);
-
-            this.ValidationRule(x => x.RemotePort, _ => _ is > 1 and < 65535, "Port number must be a value between 1 and 65535")
-                .DisposeItWith(Disposable);
-            this.ValidationRule(x => x.LocalPort, _ => _ is > 1 and < 65535, "Port number must be a value between 1 and 65535")
-                .DisposeItWith(Disposable);
-
-            if (_isRemote)
-            {
-                this.ValidationRule(x => x.RemoteIpAddress, _ => !string.IsNullOrWhiteSpace(_) && IPAddress.TryParse(_, out IPAddress? ip), "You must enter a valid IP address")
-                    .DisposeItWith(Disposable);
-                this.ValidationRule(x => x.LocalIpAddress, _ => !string.IsNullOrWhiteSpace(_) && IPAddress.TryParse(_, out IPAddress? ip), "You must enter a valid IP address")
-                    .DisposeItWith(Disposable);
-            }
-        }
-
         [Reactive]
         public string Title { get; set; }
         [Reactive]
@@ -89,17 +92,7 @@ namespace Asv.Drones.Gui.Uav
         public string LocalIpAddress { get; set; }
 
         [Reactive]
-        public bool IsRemote
-        {
-            get => _isRemote;
-
-            set
-            {
-                _isRemote = value;
-
-                SetValidationRules();
-            }
-        }
+        public bool IsRemote { get; set; }
         [Reactive]
         public string RemoteIpAddress { get; set; }
         [Reactive]
