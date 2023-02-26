@@ -1,9 +1,5 @@
 using System.ComponentModel.Composition;
 using Asv.Common;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Media;
-using Avalonia;
-using FluentAvalonia.Styling;
 using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;

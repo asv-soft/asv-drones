@@ -1,22 +1,16 @@
 using System;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using Asv.Cfg;
-using Asv.Cfg.ImMemory;
-using Asv.Cfg.Json;
 using Asv.Drones.Gui.Core;
 using System.Collections.Generic;
 using System.Reflection;
 using System.ComponentModel.Composition.Primitives;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using Asv.Drones.Gui.Uav;
-using FluentAvalonia.Styling;
 using NLog;
 using Avalonia.Controls.Templates;
 

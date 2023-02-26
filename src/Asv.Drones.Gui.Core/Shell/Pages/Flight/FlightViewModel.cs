@@ -1,5 +1,4 @@
-﻿using ReactiveUI;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 
 namespace Asv.Drones.Gui.Core
 {

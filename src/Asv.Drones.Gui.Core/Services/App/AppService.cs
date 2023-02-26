@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.Composition;
-using Asv.Avalonia.Map;
 using Asv.Cfg;
 
 namespace Asv.Drones.Gui.Core

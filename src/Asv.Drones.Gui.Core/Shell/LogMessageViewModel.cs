@@ -1,6 +1,5 @@
 ﻿using System.Reactive.Linq;
 using Asv.Common;
-using Avalonia.Media;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
 using ReactiveUI;

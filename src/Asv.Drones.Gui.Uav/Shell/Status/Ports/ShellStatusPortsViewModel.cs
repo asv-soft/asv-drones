@@ -2,7 +2,6 @@
 using Avalonia.Controls;
 using ReactiveUI.Fody.Helpers;
 using System.ComponentModel.Composition;
-using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Common;
 

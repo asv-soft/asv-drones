@@ -2,13 +2,8 @@
 using System.ComponentModel.Composition;
 using System.Reactive.Linq;
 using Asv.Common;
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Media;
 using DynamicData;
-using DynamicData.Binding;
-using FluentAvalonia.Styling;
 using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core

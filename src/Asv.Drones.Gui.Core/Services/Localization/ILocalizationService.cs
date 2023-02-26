@@ -1,6 +1,5 @@
 ﻿using Asv.Common;
 using System.Globalization;
-using Asv.Avalonia.Map;
 
 namespace Asv.Drones.Gui.Core
 {
