@@ -110,6 +110,7 @@ namespace Asv.Drones.Gui.Uav
 
         public override string ToString()
         {
+            // TODO: Localize
             return $"{(1.0 / Time.TotalSeconds):F1} Hz";
         }
     }

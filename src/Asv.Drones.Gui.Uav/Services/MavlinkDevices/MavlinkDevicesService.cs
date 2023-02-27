@@ -97,7 +97,7 @@ namespace Asv.Drones.Gui.Uav
                 .Skip(1)
                 .Subscribe(_ =>
                 {
-                    transponder.Start(heartbeatRateMs);
+                    transponder.Start(_);
                     InternalSaveConfig(cfg => cfg.HeartbeatRateMs = (int)_.TotalMilliseconds);
                 })
                 .DisposeItWith(Disposable);
