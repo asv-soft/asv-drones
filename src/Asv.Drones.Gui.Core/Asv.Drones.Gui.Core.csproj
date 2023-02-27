@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Asv.Cfg" Version="1.4.0" />
+    <PackageReference Include="Asv.Cfg" Version="1.4.4" />
     <PackageReference Include="Avalonia" Version="11.0.0-preview4" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview4" />
     <PackageReference Include="FluentAvalonia.UI.Windowing" Version="2.0.0-preview4" />
@@ -37,6 +37,7 @@
   <ItemGroup>
     <Folder Include="Services\Localization\" />
     <Folder Include="Services\Theme\" />
+    <Folder Include="Shell\Pages\Settings\Map\" />
   </ItemGroup>
 
   <ItemGroup>

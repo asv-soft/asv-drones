@@ -8,9 +8,9 @@ namespace Asv.Drones.Gui.Core
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class SettingsShellMenuItem : DisposableViewModelBase, IShellMenuItem
     {
-        public Uri Id { get; } = new("asv:shell.menu.settings");
+        public Uri Id => WellKnownUri.ShellMenuSettingsUri;
         public string Name => RS.SettingsShellMenuProvider_SettingsShellMenuProvider_Settings;
-        public Uri NavigateTo => SettingsViewModel.BaseUri;
+        public Uri NavigateTo => WellKnownUri.ShellPageSettingsUri;
         public string Icon => MaterialIconDataProvider.GetData(MaterialIconKind.Settings);
         public ShellMenuPosition Position => ShellMenuPosition.Bottom;
         public ShellMenuItemType Type => ShellMenuItemType.PageNavigation;

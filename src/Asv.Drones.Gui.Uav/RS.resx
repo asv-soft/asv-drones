@@ -196,7 +196,7 @@
     <value>Heartbeat rate</value>
   </data>
   <data name="ConnectionsIdentificationView_HeartbeatTimeout_Description" xml:space="preserve">
-    <value>After that timeout of Heartbeat packet device will be removed from device list</value>
+    <value>After that timeout of Heartbeat packet deviceService will be removed from deviceService list</value>
   </data>
   <data name="ConnectionsIdentificationView_HeartbeatTimeout_Header" xml:space="preserve">
     <value>Heartbeat timeout</value>
@@ -216,14 +216,14 @@
   <data name="MavlinkDeviceView_Status_Name" xml:space="preserve">
     <value>System status</value>
   </data>
-  <data name="TcpPortView_PortName" xml:space="preserve">
-    <value>Port name</value>
+  <data name="TcpPortView_TcpIpAddress" xml:space="preserve">
+	  <value>IP address</value>
   </data>
   <data name="TcpPortView_PortTitle" xml:space="preserve">
     <value>Port title</value>
   </data>
-  <data name="TcpPortView_SerialBaudRate" xml:space="preserve">
-    <value>Serial baud rate</value>
+  <data name="TcpPortView_TcpIpPort" xml:space="preserve">
+	  <value>Port number</value>
   </data>
   <data name="UdpPortView_LocalIpAddress" xml:space="preserve">
     <value>IP Address</value>

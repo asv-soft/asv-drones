@@ -13,9 +13,9 @@
 
     public interface IAppPathInfo
     {
-        string CurrentDirectory { get; }
         string ApplicationDataFolder { get; }
         string ApplicationConfigFilePath { get; }
+        string MapCacheFolder { get; }
     }
 
 

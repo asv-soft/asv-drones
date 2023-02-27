@@ -3,10 +3,8 @@ using Asv.Cfg;
 using Asv.Common;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 using FluentAvalonia.Styling;
-using Newtonsoft.Json.Linq;
 
 namespace Asv.Drones.Gui.Core
 {

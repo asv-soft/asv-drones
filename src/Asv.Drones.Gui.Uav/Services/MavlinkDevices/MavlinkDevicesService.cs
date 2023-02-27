@@ -1,32 +1,29 @@
 ﻿using System.ComponentModel.Composition;
 using System.Reactive.Linq;
-using System.Security.Principal;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
-using Asv.Mavlink.Client;
 using Asv.Mavlink.V2.Ardupilotmega;
 using Asv.Mavlink.V2.Common;
 using Asv.Mavlink.V2.Icarous;
 using Asv.Mavlink.V2.Uavionix;
 using DynamicData;
 using Material.Icons;
-using ObservableExtensions = System.ObservableExtensions;
 
 namespace Asv.Drones.Gui.Uav
 {
     public class MavlinkDeviceServiceConfig
     {
         public MavlinkPortConfig[] Ports { get; set; } = {
-            new() { ConnectionString = "tcp://127.0.0.1:5762", IsEnabled = true, Name = "" },
-            new() { ConnectionString = "tcp://127.0.0.1:7341?srv=true", IsEnabled = true, Name = "Base station" },
+            new() { ConnectionString = "tcp://127.0.0.1:5762", IsEnabled = true, Name = "SITL connection" },
+            new() { ConnectionString = "tcp://172.16.0.1:7341", IsEnabled = true, Name = "Base station" },
         };
 
         public byte SystemId { get; set; } = 254;
         public byte ComponentId { get; set; } = 254;
         public int HeartbeatRateMs { get; set; } = 1000;
-        public int DeviceHeartbeatTimeoutMs { get; set; } = 30_000;
+        public int DeviceHeartbeatTimeoutMs { get; set; } = 60_000;
     }
 
     [Export(typeof(IMavlinkDevicesService))]
@@ -100,7 +97,7 @@ namespace Asv.Drones.Gui.Uav
                 .Skip(1)
                 .Subscribe(_ =>
                 {
-                    transponder.Start(heartbeatRateMs);
+                    transponder.Start(_);
                     InternalSaveConfig(cfg => cfg.HeartbeatRateMs = (int)_.TotalMilliseconds);
                 })
                 .DisposeItWith(Disposable);

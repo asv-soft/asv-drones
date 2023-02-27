@@ -358,15 +358,6 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Port name.
-        /// </summary>
-        public static string TcpPortView_PortName {
-            get {
-                return ResourceManager.GetString("TcpPortView_PortName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Port title.
         /// </summary>
         public static string TcpPortView_PortTitle {
@@ -376,11 +367,20 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IP address.
+        /// </summary>
+        public static string TcpPortView_TcpIpAddress {
+            get {
+                return ResourceManager.GetString("TcpPortView_TcpIpAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Serial baud rate.
         /// </summary>
-        public static string TcpPortView_SerialBaudRate {
+        public static string TcpPortView_TcpIpPort {
             get {
-                return ResourceManager.GetString("TcpPortView_SerialBaudRate", resourceCulture);
+                return ResourceManager.GetString("TcpPortView_TcpIpPort", resourceCulture);
             }
         }
         
