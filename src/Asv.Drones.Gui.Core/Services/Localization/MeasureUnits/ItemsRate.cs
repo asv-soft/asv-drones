@@ -28,7 +28,7 @@
                 (double.NaN) => $"N/A", //TODO: Localize
                 (< 0) => $"N/A", //TODO: Localize
                 (0) => $"{itemsPerSec,-4:F0}",
-                (< 1) => $"{itemsPerSec,-4:F3}",
+                (< 1) => $"{itemsPerSec,-4:F1}",
                 (< OneKHz) => $"{itemsPerSec,-4:F0}",
                 (>= OneKHz) and (< OneMHz) => $"{itemsPerSec / OneKHz,-4:F0}",
                 (>= OneMHz) and (< OneGHz) => $"{itemsPerSec / OneKHz,-4:F0}",

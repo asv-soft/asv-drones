@@ -18,6 +18,7 @@ namespace Asv.Drones.Gui.Uav
 
         public ConnectionsIdentificationViewModel() : base(new Uri(ConnectionsViewModel.BaseUri,"id"))
         {
+            // TODO: Localize
             this.ValidationRule(_ => _.DeviceTimeout, _ => _ is >= DeviceTimeoutMin and <= DeviceTimeoutMax, _ => $"Timeout must be from {DeviceTimeoutMin} to {DeviceTimeoutMax}")
                 .DisposeItWith(Disposable);
             

@@ -36,17 +36,17 @@ namespace Asv.Drones.Gui.Uav
         {
             Observable.Timer(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)).Subscribe(_ =>
             {
-                var info = deviceSvc.Router.GetPorts().Select(_ => deviceSvc.Router.GetInfo(_)).IgnoreNulls().ToArray();
-                var totalRx = info.Sum(portInfo => portInfo!.RxBytes);
-                var totalTx = info.Sum(portInfo => portInfo!.TxBytes);
-                TotalRateString = $"{localization.ByteRate.GetValueWithUnits(_rxRate.Calculate(totalRx))} | {localization.ByteRate.GetValueWithUnits(_txRate.Calculate(totalTx))}";
+
+                var totalRx = deviceSvc.Router.RxBytes;
+                var totalTx = deviceSvc.Router.TxBytes;
+                TotalRateString = $"{localization.ByteRate.GetValueWithUnits(_txRate.Calculate(totalTx))} | {localization.ByteRate.GetValueWithUnits(_rxRate.Calculate(totalRx))}";
 
             }).DisposeItWith(Disposable);
 
         }
 
 
-        public int Order => 0;
+        public int Order => -2;
 
         [Reactive]
         public string TotalRateString { get; set; }

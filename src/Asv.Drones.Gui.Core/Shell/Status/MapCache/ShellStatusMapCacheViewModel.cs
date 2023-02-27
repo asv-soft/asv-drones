@@ -44,7 +44,7 @@ namespace Asv.Drones.Gui.Core
             return size;
         }
 
-        public int Order => 0;
+        public int Order => -1;
 
         [Reactive]
         public string CacheSizeString { get; set; }

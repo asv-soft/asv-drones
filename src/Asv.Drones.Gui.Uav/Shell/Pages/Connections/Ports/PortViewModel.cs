@@ -29,8 +29,15 @@ namespace Asv.Drones.Gui.Uav
                 Icon = ConvertIcon(PortType.Serial);
                 RxText = "0.456";
                 RxUnitText = "kb/s";
+                RxPktText = "156";
+                RxPktUnitText = "Hz";
+                
+                    
                 TxText = "0.456";
                 TxUnitText = "kb/s";
+                TxPktText = "156";
+                TxPktUnitText = "Hz";
+
                 SkippedText = "153";
                 SkippedUnitText = "pkt";
                 ConnectionString = "tcp://127.0.0.1:7341?srv=true";
@@ -97,22 +104,29 @@ namespace Asv.Drones.Gui.Uav
             Error = info.LastException?.Message;
 
             var rxByteRate = _rxByteRate.Calculate(info.RxBytes);
+            RxText = _localization.ByteRate.GetValue(rxByteRate);
+            RxUnitText = _localization.ByteRate.GetUnit(rxByteRate);
+
             var rxPktRate = _rxPacketRate.Calculate(info.RxPackets);
-            RxText = $"{_localization.ByteRate.GetValue(rxByteRate)} | {_localization.ItemsRate.GetValue(rxPktRate)}";
-            RxUnitText = $"{_localization.ByteRate.GetUnit(rxByteRate)} | {_localization.ItemsRate.GetUnit(rxPktRate)}";
+            RxPktText = _localization.ItemsRate.GetValue(rxPktRate);
+            RxPktUnitText = _localization.ItemsRate.GetUnit(rxPktRate);
 
             var txByteRate = _txByteRate.Calculate(info.TxBytes);
+            TxText = _localization.ByteRate.GetValue(txByteRate);
+            TxUnitText = _localization.ByteRate.GetUnit(txByteRate);
+
             var txPktRate = _txPacketRate.Calculate(info.TxPackets);
-            TxText = $"{_localization.ByteRate.GetValue(txByteRate)} | {_localization.ItemsRate.GetValue(txPktRate)}";
-            TxUnitText = $"{_localization.ByteRate.GetUnit(txByteRate)} | {_localization.ByteRate.GetUnit(txPktRate)}";
+            TxPktText = _localization.ItemsRate.GetValue(txPktRate);
+            TxPktUnitText = _localization.ItemsRate.GetUnit(txPktRate);
 
             IsPortEnabled = info.IsEnabled;
-            SkippedText = $"{info.SkipPackets} | {info.DeserializationErrors}";
-            SkippedUnitText = "skip | err"; // 
+            SkippedText = $"{info.SkipPackets}";
+            SkippedUnitText = "err"; // TODO: Localize
 
         }
 
-        
+       
+
 
         private MaterialIconKind ConvertIcon(PortType infoType)
         {
@@ -136,9 +150,21 @@ namespace Asv.Drones.Gui.Uav
         [Reactive]
         public string RxUnitText { get; set; }
         [Reactive]
+        public string RxPktUnitText { get; set; }
+        [Reactive]
+        public string RxPktText { get; set; }
+
+        
+        
+        [Reactive]
         public string TxText { get; set; }
         [Reactive]
         public string TxUnitText { get; set; }
+        [Reactive]
+        public string TxPktUnitText { get; set; }
+        [Reactive]
+        public string TxPktText { get; set; }
+
 
         [Reactive]
         public string ConnectionString { get; set; }
