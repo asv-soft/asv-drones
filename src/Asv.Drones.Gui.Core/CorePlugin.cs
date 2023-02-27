@@ -59,8 +59,12 @@ namespace Asv.Drones.Gui.Core
             var baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 #endif
             var appData = Path.Combine(baseDirectory, "AsvDronesGui");
-            // this is for store map
+            // this is for store map tiles
             Cache.CacheFolder = Path.Combine(appData, "map");
+            if (Directory.Exists(Cache.CacheFolder) == false)
+            {
+                Directory.CreateDirectory(Cache.CacheFolder);
+            }
             var configPath = Path.Combine(appData, "config.json");
             return new AppPathInfo(appData,configPath, Cache.CacheFolder);
         }

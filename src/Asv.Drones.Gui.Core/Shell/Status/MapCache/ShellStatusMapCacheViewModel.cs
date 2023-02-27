@@ -23,6 +23,7 @@ namespace Asv.Drones.Gui.Core
         {
             
             var mapDir = new DirectoryInfo(app.Paths.MapCacheFolder);
+            
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10)).Subscribe(_ =>
             {
                 CacheSizeString = localization.ByteSize.GetValueWithUnits(DirSize(mapDir));
@@ -32,6 +33,8 @@ namespace Asv.Drones.Gui.Core
 
         private static long DirSize(DirectoryInfo d)
         {
+            // if folder not exist return zero size
+            if (d.Exists == false) return 0;
             // Add file sizes.
             var fis = d.GetFiles();
             var size = fis.Sum(fi => fi.Length);
