@@ -8,13 +8,13 @@ namespace Asv.Drones.Gui.Core
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class FlightShellMenuItem : DisposableViewModelBase, IShellMenuItem
     {
-        public Uri Id { get; } = new("asv:shell.menu.flight");
+        public Uri Id { get; } = new(WellKnownUri.ShellMenuFlight);
         public string Name => RS.FlightShellMenuItem_Name;
-        public Uri NavigateTo => FlightViewModel.BaseUri;
+        public Uri NavigateTo { get; } = new(WellKnownUri.ShellPageFlight);
         public string Icon => MaterialIconDataProvider.GetData(MaterialIconKind.Map);
         public ShellMenuPosition Position => ShellMenuPosition.Top;
         public ShellMenuItemType Type => ShellMenuItemType.PageNavigation;
-        public int Order => 0;
+        public int Order => short.MinValue;
         public ReadOnlyObservableCollection<IShellMenuItem>? Items => null;
     }
 

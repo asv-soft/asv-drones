@@ -10,14 +10,14 @@ namespace Asv.Drones.Gui.Core
 {
 
 
-    [ExportShellPage(WellKnownUri.ShellPageSettingsUriString)]
+    [ExportShellPage(WellKnownUri.ShellPageSettings)]
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class SettingsViewModel:ViewModelBase,IShellPage
     {
         private readonly ReadOnlyObservableCollection<ISettingsPart> _items;
 
         // this is for designer
-        public SettingsViewModel():base(WellKnownUri.ShellPageSettingsUri)
+        public SettingsViewModel():base(new Uri(WellKnownUri.ShellPageSettings))
         {
             if (Design.IsDesignMode)
             {

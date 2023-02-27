@@ -2,15 +2,14 @@
 {
     public class AppPathInfo : IAppPathInfo
     {
-        public AppPathInfo(string applicationDataFolder, string applicationConfigFilePath, string mapCacheFolder)
+        public AppPathInfo(string applicationDataFolder, string applicationConfigFilePath)
         {
             ApplicationDataFolder = applicationDataFolder;
             ApplicationConfigFilePath = applicationConfigFilePath;
-            MapCacheFolder = mapCacheFolder;
         }
 
         public string ApplicationDataFolder { get; }
         public string ApplicationConfigFilePath { get; }
-        public string MapCacheFolder { get; }
+        
     }
 }

@@ -10,7 +10,7 @@ namespace Asv.Drones.Gui.Core
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class ShellStatusMapCacheViewModel:ViewModelBase, IShellStatusItem
     {
-        public ShellStatusMapCacheViewModel() : base(new(WellKnownUri.ShellStatusUri,"mapcahce"))
+        public ShellStatusMapCacheViewModel() : base(new Uri(WellKnownUri.ShellStatusMapCache))
         {
             if (Design.IsDesignMode)
             {
@@ -19,30 +19,19 @@ namespace Asv.Drones.Gui.Core
         }
 
         [ImportingConstructor]
-        public ShellStatusMapCacheViewModel(IAppService app,ILocalizationService localization):this()
+        public ShellStatusMapCacheViewModel(IMapService app,ILocalizationService localization):this()
         {
             
-            var mapDir = new DirectoryInfo(app.Paths.MapCacheFolder);
+           
             
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10)).Subscribe(_ =>
             {
-                CacheSizeString = localization.ByteSize.GetValueWithUnits(DirSize(mapDir));
+                CacheSizeString = localization.ByteSize.GetValueWithUnits(app.CalculateMapCacheSize());
             }).DisposeItWith(Disposable);
             
         }
 
-        private static long DirSize(DirectoryInfo d)
-        {
-            // if folder not exist return zero size
-            if (d.Exists == false) return 0;
-            // Add file sizes.
-            var fis = d.GetFiles();
-            var size = fis.Sum(fi => fi.Length);
-            // Add subdirectory sizes.
-            var dis = d.GetDirectories();
-            size += dis.Sum(DirSize);
-            return size;
-        }
+        
 
         public int Order => -1;
 

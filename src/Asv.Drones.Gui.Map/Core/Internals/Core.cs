@@ -174,12 +174,10 @@ namespace Asv.Avalonia.Map
 
         public GMapProvider Provider
         {
-            get
-            {
-                return _provider;
-            }
+            get => _provider;
             set
             {
+                value ??= EmptyProvider.Instance;
                 if (_provider == null || !_provider.Equals(value))
                 {
                     bool diffProjection = _provider == null || _provider.Projection != value.Projection;
