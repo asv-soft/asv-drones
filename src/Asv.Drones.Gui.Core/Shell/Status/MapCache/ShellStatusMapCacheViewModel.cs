@@ -21,10 +21,11 @@ namespace Asv.Drones.Gui.Core
         [ImportingConstructor]
         public ShellStatusMapCacheViewModel(IAppService app,ILocalizationService localization):this()
         {
+            
             var mapDir = new DirectoryInfo(app.Paths.MapCacheFolder);
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10)).Subscribe(_ =>
             {
-                CacheSizeString = localization.BytesToString(DirSize(mapDir));
+                CacheSizeString = localization.ByteSize.GetValueWithUnits(DirSize(mapDir));
             }).DisposeItWith(Disposable);
             
         }

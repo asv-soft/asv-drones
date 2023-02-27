@@ -35,7 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\Localization\" />
     <Folder Include="Services\Theme\" />
     <Folder Include="Shell\Pages\Settings\Map\" />
   </ItemGroup>

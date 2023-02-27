@@ -34,7 +34,7 @@
         BorderThickness="1"
         CornerRadius="{StaticResource ControlCornerRadius}"
         >
-        <Grid Margin="8" ColumnDefinitions="70,*,Auto,120,120,120,Auto">
+        <Grid Margin="8" ColumnDefinitions="70,*,Auto,90,100,100,Auto">
            
             <avalonia:MaterialIcon 
                 ToolTip.Tip="{Binding Error}"
@@ -58,7 +58,7 @@
                     <TextBlock TextAlignment="Center" FontSize="16" Text="Rx"/>
 				</StackPanel>
                 <TextBlock TextAlignment="Center" FontSize="18" Text="{Binding RxText}"/>
-                <TextBlock TextAlignment="Center" FontSize="12" Text="kb/s"/>
+                <TextBlock TextAlignment="Center" FontSize="12" Text="{Binding RxUnitText}"/>
 			</StackPanel>
             <StackPanel Grid.Column="4" Margin="10,5" >
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -66,7 +66,7 @@
                     <TextBlock TextAlignment="Center" FontSize="16" Text="Err"/>
                 </StackPanel>
                 <TextBlock TextAlignment="Center" FontSize="18" Text="{Binding SkippedText}"/>
-                <TextBlock TextAlignment="Center" FontSize="12" Text="pkt"/>
+                <TextBlock TextAlignment="Center" FontSize="12" Text="{Binding SkippedUnitText}"/>
             </StackPanel>
             <StackPanel Grid.Column="5" Margin="10,5" >
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -74,7 +74,7 @@
                     <TextBlock TextAlignment="Center" FontSize="16" Text="Tx"/>
                 </StackPanel>
                 <TextBlock TextAlignment="Center" FontSize="18" Text="{Binding TxText}"/>
-                <TextBlock TextAlignment="Center" FontSize="12" Text="kb/s"/>
+                <TextBlock TextAlignment="Center" FontSize="12" Text="{Binding TxUnitText}"/>
             </StackPanel>
 
             <Button Grid.Column="6" Command="{Binding DeletePortCommand}">
