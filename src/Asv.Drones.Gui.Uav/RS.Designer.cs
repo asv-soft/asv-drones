@@ -383,5 +383,59 @@ namespace Asv.Drones.Gui.Uav {
                 return ResourceManager.GetString("TcpPortView_TcpIpPort", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IP Address.
+        /// </summary>
+        public static string UdpPortView_LocalIpAddress {
+            get {
+                return ResourceManager.GetString("UdpPortView_LocalIpAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port Number.
+        /// </summary>
+        public static string UdpPortView_LocalPortName {
+            get {
+                return ResourceManager.GetString("UdpPortView_LocalPortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string UdpPortView_PortTitle {
+            get {
+                return ResourceManager.GetString("UdpPortView_PortTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote IP Address.
+        /// </summary>
+        public static string UdpPortView_RemoteIpAddress {
+            get {
+                return ResourceManager.GetString("UdpPortView_RemoteIpAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote port number.
+        /// </summary>
+        public static string UdpPortView_RemotePortName {
+            get {
+                return ResourceManager.GetString("UdpPortView_RemotePortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify remote host.
+        /// </summary>
+        public static string UdpPortView_ToggleName {
+            get {
+                return ResourceManager.GetString("UdpPortView_ToggleName", resourceCulture);
+            }
+        }
     }
 }

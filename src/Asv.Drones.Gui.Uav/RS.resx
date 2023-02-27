@@ -225,4 +225,22 @@
   <data name="TcpPortView_TcpIpPort" xml:space="preserve">
 	  <value>Port number</value>
   </data>
+  <data name="UdpPortView_LocalIpAddress" xml:space="preserve">
+    <value>IP Address</value>
+  </data>
+  <data name="UdpPortView_LocalPortName" xml:space="preserve">
+    <value>Port Number</value>
+  </data>
+  <data name="UdpPortView_PortTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="UdpPortView_RemoteIpAddress" xml:space="preserve">
+    <value>Remote IP Address</value>
+  </data>
+  <data name="UdpPortView_RemotePortName" xml:space="preserve">
+    <value>Remote port number</value>
+  </data>
+  <data name="UdpPortView_ToggleName" xml:space="preserve">
+    <value>Specify remote host</value>
+  </data>
 </root>
