@@ -26,11 +26,33 @@ namespace Asv.Drones.Gui.Core
 
     public interface ILocalizationService
     {
+        /// <summary>
+        /// Allows you to select or get the current application language
+        /// </summary>
         IRxEditableValue<LanguageInfo> CurrentLanguage { get; }
+        /// <summary>
+        /// Returns the list of available languages
+        /// </summary>
         IEnumerable<LanguageInfo> AvailableLanguages { get; }
 
+        #region Units
+
+        /// <summary>
+        /// Convert bytes count to short localized string
+        /// For example: 1024 => 1 KB
+        /// </summary>
+        /// <param name="bytes">Total bytes</param>
+        /// <returns></returns>
         string BytesToString(long bytes);
-        string RateToString(long bytesPerSec);
+        /// <summary>
+        /// Convert bytes rate to short localized string
+        /// For example: 1024 => 1 KB/s
+        /// </summary>
+        /// <param name="bytesPerSec">Total bytes</param>
+        /// <returns></returns>
+        string BytesRateToString(long bytesPerSec);
+
+        #endregion
     }
 
 

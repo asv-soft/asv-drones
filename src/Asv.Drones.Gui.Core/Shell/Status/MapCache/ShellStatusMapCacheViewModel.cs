@@ -14,7 +14,7 @@ namespace Asv.Drones.Gui.Core
         {
             if (Design.IsDesignMode)
             {
-                CacheSizeString = "1 024 kB/s";
+                CacheSizeString = "1 024 KB";
             }
         }
 
@@ -22,7 +22,7 @@ namespace Asv.Drones.Gui.Core
         public ShellStatusMapCacheViewModel(IAppService app,ILocalizationService localization):this()
         {
             var mapDir = new DirectoryInfo(app.Paths.MapCacheFolder);
-            Observable.Timer(TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(5)).Subscribe(_ =>
+            Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10)).Subscribe(_ =>
             {
                 CacheSizeString = localization.BytesToString(DirSize(mapDir));
             }).DisposeItWith(Disposable);

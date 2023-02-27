@@ -30,7 +30,7 @@ namespace Asv.Drones.Gui.Uav
                 var totalRx = info.Sum(_ => _.RxBytes);
                 var totalTx = info.Sum(_ => _.TxBytes);
 
-                TotalRateString = $"{localization.RateToString(totalRx)} | {localization.RateToString(totalTx)}";
+                TotalRateString = $"{localization.BytesRateToString(totalRx)} | {localization.BytesRateToString(totalTx)}";
             }).DisposeItWith(Disposable);
 
         }

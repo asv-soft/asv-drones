@@ -70,7 +70,7 @@ namespace Asv.Drones.Gui.Core
             };
         }
 
-        public string RateToString(long bytesPerSec)
+        public string BytesRateToString(long bytesPerSec)
         {
             //TODO: Localize
             return bytesPerSec switch
