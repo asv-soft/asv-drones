@@ -37,7 +37,7 @@ namespace Asv.Drones.Gui.Uav
         }
 
         [ImportingConstructor]
-        public ConnectionsPortsViewModel(IMavlinkDevicesService deviceSvc, ILogService logService):this()
+        public ConnectionsPortsViewModel(IMavlinkDevicesService deviceSvc, ILogService logService,ILocalizationService localization):this()
         {
             _deviceSvc = deviceSvc ?? throw new ArgumentNullException(nameof(deviceSvc));
             _logService = logService ?? throw new ArgumentNullException(nameof(logService));
@@ -50,9 +50,9 @@ namespace Asv.Drones.Gui.Uav
                 .DisposeItWith(Disposable);
             deviceSvc.Router
                 .GetPorts()
-                .ForEach(_ => cache.AddOrUpdate(new PortViewModel(deviceSvc, _)));
+                .ForEach(_ => cache.AddOrUpdate(new PortViewModel(deviceSvc, localization, _)));
             deviceSvc.Router
-                .OnAddPort.Subscribe(_ => cache.AddOrUpdate(new PortViewModel(deviceSvc, _)))
+                .OnAddPort.Subscribe(_ => cache.AddOrUpdate(new PortViewModel(deviceSvc, localization, _)))
                 .DisposeItWith(Disposable);
             deviceSvc.Router
                 .OnRemovePort.Subscribe(_ => cache.Remove(_)).DisposeItWith(Disposable);

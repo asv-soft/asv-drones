@@ -11,8 +11,6 @@ namespace Asv.Drones.Gui.Core
     [PartCreationPolicy(CreationPolicy.Shared)]
     public partial class ShellView : ReactiveUserControl<ShellViewModel>
     {
-        
-
         public ShellView()
         {
             InitializeComponent();

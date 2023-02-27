@@ -38,19 +38,25 @@ namespace Asv.Drones.Gui.Core
         #region Units
 
         /// <summary>
-        /// Convert bytes count to short localized string
-        /// For example: 1024 => 1 KB
-        /// </summary>
-        /// <param name="bytes">Total bytes</param>
-        /// <returns></returns>
-        string BytesToString(long bytes);
-        /// <summary>
         /// Convert bytes rate to short localized string
         /// For example: 1024 => 1 KB/s
         /// </summary>
-        /// <param name="bytesPerSec">Total bytes</param>
         /// <returns></returns>
-        string BytesRateToString(long bytesPerSec);
+        IMeasureUnit<double> ByteRate { get; }
+
+        /// <summary>
+        /// Convert items rate to short localized string
+        /// For example: 1000 => 1 KHz
+        /// </summary>
+        /// <returns></returns>
+        IMeasureUnit<double> ItemsRate { get; }
+
+        /// <summary>
+        /// Convert bytes count to short localized string
+        /// For example: 1024 => 1 KB
+        /// </summary>
+        /// <returns></returns>
+        IMeasureUnit<long> ByteSize { get; }
 
         #endregion
     }

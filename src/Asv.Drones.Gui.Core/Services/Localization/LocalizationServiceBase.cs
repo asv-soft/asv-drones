@@ -36,6 +36,8 @@ namespace Asv.Drones.Gui.Core
         public IRxEditableValue<LanguageInfo> CurrentLanguage { get; }
         public IEnumerable<LanguageInfo> AvailableLanguages => _languages;
 
+       
+
         private void SetLanguage(LanguageInfo lang)
         {
             if (lang == null) throw new ArgumentNullException(nameof(lang));
@@ -49,41 +51,14 @@ namespace Asv.Drones.Gui.Core
 
         #region Units
 
-        public const long OneKB = 1024;
+        public IMeasureUnit<double> ByteRate { get; } = new BytesRate();
 
-        public const long OneMB = OneKB * OneKB;
+        public IMeasureUnit<double> ItemsRate { get; } = new ItemsRate();
 
-        public const long OneGB = OneMB * OneKB;
+        public IMeasureUnit<long> ByteSize { get; } = new ByteSize();
 
-        public const long OneTB = OneGB * OneKB;
 
-        public string BytesToString(long bytes)
-        {
-            //TODO: Localize
-            return bytes switch
-            {
-                (< OneKB) => $"{bytes}B",
-                (>= OneKB) and (< OneMB) => $"{bytes / OneKB}KB",
-                (>= OneMB) and (< OneGB) => $"{bytes / OneMB}MB",
-                (>= OneGB) and (< OneTB) => $"{bytes / OneMB}GB",
-                (>= OneTB) => $"{bytes / OneTB}"
-            };
-        }
-
-        public string BytesRateToString(long bytesPerSec)
-        {
-            //TODO: Localize
-            return bytesPerSec switch
-            {
-                (< OneKB) => $"{bytesPerSec}B/s",
-                (>= OneKB) and (< OneMB) => $"{bytesPerSec / OneKB}KB/s",
-                (>= OneMB) and (< OneGB) => $"{bytesPerSec / OneMB}MB/s",
-                (>= OneGB) and (< OneTB) => $"{bytesPerSec / OneMB}GB/s",
-                (>= OneTB) => $"{bytesPerSec / OneTB}"
-            };
-        }
-
-        #endregion  
+        #endregion
 
 
     }

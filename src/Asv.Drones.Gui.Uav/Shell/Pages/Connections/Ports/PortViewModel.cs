@@ -13,12 +13,13 @@ namespace Asv.Drones.Gui.Uav
     public class PortViewModel:ViewModelBase
     {
         private readonly IMavlinkDevicesService _svc;
+        private readonly ILocalizationService _localization;
         private readonly Guid _id;
-        private long _lastRx = long.MaxValue;
-        private long _lastTx = long.MaxValue;
-        private DateTime _lastUpdate = DateTime.MaxValue;
-        private long _lastRxPkt = long.MaxValue;
-        private long _lastTxPkt = long.MaxValue;
+        private readonly IncrementalRateCounter _rxByteRate = new(3);
+        private readonly IncrementalRateCounter _rxPacketRate = new(3);
+        private readonly IncrementalRateCounter _txByteRate = new(3);
+        private readonly IncrementalRateCounter _txPacketRate = new(3);
+
 
         public PortViewModel() : base(new Uri(ConnectionsViewModel.BaseUri, $"port.{Guid.NewGuid()}"))
         {
@@ -26,8 +27,19 @@ namespace Asv.Drones.Gui.Uav
             {
                 PortId = Guid.NewGuid();
                 Icon = ConvertIcon(PortType.Serial);
-                RxText = "123.456";
-                TxText = "123.456";
+                RxText = "0.456";
+                RxUnitText = "kb/s";
+                RxPktText = "156";
+                RxPktUnitText = "Hz";
+                
+                    
+                TxText = "0.456";
+                TxUnitText = "kb/s";
+                TxPktText = "156";
+                TxPktUnitText = "Hz";
+
+                SkippedText = "153";
+                SkippedUnitText = "pkt";
                 ConnectionString = "tcp://127.0.0.1:7341?srv=true";
             }
             
@@ -39,17 +51,14 @@ namespace Asv.Drones.Gui.Uav
             
         }
 
-        public PortViewModel(IMavlinkDevicesService svc,Guid id):this(id)
+        public PortViewModel(IMavlinkDevicesService svc, ILocalizationService localization, Guid id):this(id)
         {
-            _svc = svc;
+            _svc = svc ?? throw new ArgumentNullException(nameof(svc));
+            _localization = localization ?? throw new ArgumentNullException(nameof(localization));
             _id = id;
             Observable.Timer(TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(1)).ObserveOn(RxApp.MainThreadScheduler).Subscribe(Update).DisposeItWith(Disposable);
             EnableDisableCommand = ReactiveCommand.Create(() => _svc.Router.SetEnabled(_id, IsPortEnabled)).DisposeItWith(Disposable);
             DeletePortCommand = ReactiveCommand.Create(() => _svc.Router.RemovePort(_id)).DisposeItWith(Disposable);
-            Disposable.AddAction(() =>
-            {
-
-            });
         }
 
         public Guid PortId { get; }
@@ -94,38 +103,30 @@ namespace Asv.Drones.Gui.Uav
 
             Error = info.LastException?.Message;
 
-            var now = DateTime.Now;
+            var rxByteRate = _rxByteRate.Calculate(info.RxBytes);
+            RxText = _localization.ByteRate.GetValue(rxByteRate);
+            RxUnitText = _localization.ByteRate.GetUnit(rxByteRate);
 
-            var deltaSeconds = (now - _lastUpdate).TotalSeconds;
-            if (deltaSeconds <= 0) deltaSeconds = 1;
+            var rxPktRate = _rxPacketRate.Calculate(info.RxPackets);
+            RxPktText = _localization.ItemsRate.GetValue(rxPktRate);
+            RxPktUnitText = _localization.ItemsRate.GetUnit(rxPktRate);
 
-            var deltaRx = info.RxBytes - _lastRx;
-            if (deltaRx <= 0) deltaRx = 0;
+            var txByteRate = _txByteRate.Calculate(info.TxBytes);
+            TxText = _localization.ByteRate.GetValue(txByteRate);
+            TxUnitText = _localization.ByteRate.GetUnit(txByteRate);
 
-            var deltaRxPkt = info.RxPackets - _lastRxPkt;
-            if (deltaRxPkt <= 0) deltaRxPkt = 0;
+            var txPktRate = _txPacketRate.Calculate(info.TxPackets);
+            TxPktText = _localization.ItemsRate.GetValue(txPktRate);
+            TxPktUnitText = _localization.ItemsRate.GetUnit(txPktRate);
 
-            var deltaTx = info.TxBytes - _lastTx;
-            if (deltaTx <= 0) deltaTx = 0;
-
-            var deltaTxPkt = info.TxPackets - _lastTxPkt;
-            if (deltaTxPkt <= 0) deltaTxPkt = 0;
-
-
-            RxText = $"{deltaRx / deltaSeconds / 1024.0:F3} / {deltaRxPkt,-3}";
-            TxText = $"{deltaTx / deltaSeconds / 1024.0:F3} / {deltaTxPkt,-3}";
             IsPortEnabled = info.IsEnabled;
-            SkippedText = $"{info.SkipPackets}/{info.DeserializationErrors}";
+            SkippedText = $"{info.SkipPackets}";
+            SkippedUnitText = "err"; // TODO: Localize
 
-
-            _lastRx = info.RxBytes;
-            _lastTx = info.TxBytes;
-            _lastRxPkt = info.RxPackets;
-            _lastTxPkt = info.TxPackets;
-            _lastUpdate = now;
         }
 
-        
+       
+
 
         private MaterialIconKind ConvertIcon(PortType infoType)
         {
@@ -147,7 +148,23 @@ namespace Asv.Drones.Gui.Uav
         [Reactive]
         public string RxText { get; set; }
         [Reactive]
+        public string RxUnitText { get; set; }
+        [Reactive]
+        public string RxPktUnitText { get; set; }
+        [Reactive]
+        public string RxPktText { get; set; }
+
+        
+        
+        [Reactive]
         public string TxText { get; set; }
+        [Reactive]
+        public string TxUnitText { get; set; }
+        [Reactive]
+        public string TxPktUnitText { get; set; }
+        [Reactive]
+        public string TxPktText { get; set; }
+
 
         [Reactive]
         public string ConnectionString { get; set; }
@@ -170,11 +187,14 @@ namespace Asv.Drones.Gui.Uav
 
         [Reactive]
         public string SkippedText { get; set; }
+        [Reactive]
+        public string SkippedUnitText { get; set; }
 
         [Reactive]
         public string Description { get; set; }
 
         [Reactive]
         public string? Error { get; set; }
+        
     }
 }

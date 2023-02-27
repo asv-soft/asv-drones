@@ -32,7 +32,7 @@ namespace Asv.Drones.Gui.Uav
         private void UpdateValidationRules()
         {
             this.ClearValidationRules();
-
+            // TODO: Localize
             this.ValidationRule(x => x.Title, _ => !string.IsNullOrWhiteSpace(_), "You must specify a valid name")
                 .DisposeItWith(Disposable);
 
@@ -56,6 +56,7 @@ namespace Asv.Drones.Gui.Uav
         public UdpPortViewModel(IMavlinkDevicesService device) : this()
         {
             _device = device ?? throw new ArgumentNullException(nameof(device));
+            // TODO: Localize
             Title = "New UDP " + device.Router.GetPorts().Length;
         }
 
