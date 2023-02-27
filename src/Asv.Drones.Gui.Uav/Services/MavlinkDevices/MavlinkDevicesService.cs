@@ -1,18 +1,15 @@
 ﻿using System.ComponentModel.Composition;
 using System.Reactive.Linq;
-using System.Security.Principal;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
-using Asv.Mavlink.Client;
 using Asv.Mavlink.V2.Ardupilotmega;
 using Asv.Mavlink.V2.Common;
 using Asv.Mavlink.V2.Icarous;
 using Asv.Mavlink.V2.Uavionix;
 using DynamicData;
 using Material.Icons;
-using ObservableExtensions = System.ObservableExtensions;
 
 namespace Asv.Drones.Gui.Uav
 {

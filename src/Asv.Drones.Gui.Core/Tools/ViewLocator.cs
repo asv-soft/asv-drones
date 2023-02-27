@@ -1,7 +1,5 @@
-using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.Linq;
 using Asv.Drones.Gui.Core;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
@@ -11,6 +9,8 @@ namespace Asv.Drones.Gui
 {
     public class ViewLocator : IDataTemplate,IDisposable
     {
+        public static Type BaseViewType = typeof(IControl);
+
         private readonly CompositionContainer _container;
         private bool _isDisposed;
 

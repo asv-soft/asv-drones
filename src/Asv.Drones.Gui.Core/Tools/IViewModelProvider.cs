@@ -1,5 +1,4 @@
 ﻿using DynamicData;
-using Material.Icons;
 using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core

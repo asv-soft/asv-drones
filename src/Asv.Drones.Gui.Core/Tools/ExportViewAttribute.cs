@@ -11,7 +11,7 @@ namespace Asv.Drones.Gui.Core
     public class ExportViewAttribute : ExportAttribute, IViewMetadata
     {
         public ExportViewAttribute(Type viewModelType)
-            : base(null, typeof(IControl))
+            : base(null, ViewLocator.BaseViewType)
         {
             // TODO: need to check if developer made mistake and viewModelType is a View type
             this.ViewModelType = viewModelType;  

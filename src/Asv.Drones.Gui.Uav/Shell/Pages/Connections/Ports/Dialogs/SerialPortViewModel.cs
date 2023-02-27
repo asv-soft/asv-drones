@@ -2,19 +2,14 @@
 using System.ComponentModel.Composition;
 using System.IO.Ports;
 using System.Reactive.Linq;
-using Asv.Avalonia.Map;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
-using Asv.IO;
 using Asv.Mavlink;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using ReactiveUI.Validation.Abstractions;
-using ReactiveUI.Validation.Contexts;
 using ReactiveUI.Validation.Extensions;
-using ReactiveUI.Validation.Helpers;
 
 namespace Asv.Drones.Gui.Uav
 {

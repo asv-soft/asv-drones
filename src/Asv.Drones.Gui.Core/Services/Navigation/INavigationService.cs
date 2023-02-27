@@ -1,9 +1,4 @@
-﻿using FluentAvalonia.UI.Controls;
-using System.Web;
-using System;
-using Asv.Avalonia.Map;
-
-namespace Asv.Drones.Gui.Core
+﻿namespace Asv.Drones.Gui.Core
 {
     public class NavigationServiceHelper
     {

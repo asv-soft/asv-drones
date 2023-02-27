@@ -3,11 +3,11 @@ using Avalonia.ReactiveUI;
 
 namespace Asv.Drones.Gui.Core
 {
-    [ExportView(typeof(SettingsThemeViewModel))]
+    [ExportView(typeof(ShellStatusMapCacheViewModel))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public partial class SettingsThemeView : ReactiveUserControl<SettingsThemeViewModel>
+    public partial class ShellStatusMapCacheView : ReactiveUserControl<ShellStatusMapCacheViewModel>
     {
-        public SettingsThemeView()
+        public ShellStatusMapCacheView()
         {
             InitializeComponent();
         }

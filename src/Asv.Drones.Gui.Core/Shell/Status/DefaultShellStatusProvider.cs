@@ -3,12 +3,12 @@ using DynamicData;
 
 namespace Asv.Drones.Gui.Core
 {
-    [Export(typeof(IViewModelProvider<IShellMenuItem>))]
+    [Export(typeof(IViewModelProvider<IShellStatusItem>))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class DefaultShellMenuProvider : ViewModelProviderBase<IShellMenuItem>
+    public class DefaultShellStatusProvider : ViewModelProviderBase<IShellStatusItem>
     {
         [ImportingConstructor]
-        public DefaultShellMenuProvider([ImportMany]IEnumerable<IShellMenuItem> exportedMenuItems)
+        public DefaultShellStatusProvider([ImportMany] IEnumerable<IShellStatusItem> exportedMenuItems)
         {
             Source.AddOrUpdate(exportedMenuItems);
         }

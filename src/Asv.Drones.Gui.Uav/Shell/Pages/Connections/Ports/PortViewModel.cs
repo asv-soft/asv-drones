@@ -1,10 +1,8 @@
-﻿using System.Drawing;
-using System.Reactive.Linq;
+﻿using System.Reactive.Linq;
 using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.IO;
-using Asv.Mavlink;
 using Avalonia.Controls;
 using Material.Icons;
 using ReactiveUI;
