@@ -18,7 +18,7 @@ namespace Asv.Drones.Gui.Uav
         private readonly IncrementalRateCounter _rxRate = new();
         private readonly IncrementalRateCounter _txRate = new();
 
-        public ShellStatusPortsViewModel() : base(new(WellKnownUri.ShellStatusUri, "ports"))
+        public ShellStatusPortsViewModel() : base(new(new Uri(WellKnownUri.ShellStatus), "ports"))
         {
             
             if (Design.IsDesignMode)

@@ -22,7 +22,7 @@ namespace Asv.Drones.Gui.Core
         private readonly SourceList<LogMessage> _messageSourceList = new();
         
 
-        public ShellViewModel():base(WellKnownUri.ShellBaseUri)
+        public ShellViewModel():base(new(WellKnownUri.Shell))
         {
             if (Design.IsDesignMode)
             {

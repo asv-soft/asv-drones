@@ -15,7 +15,6 @@
     {
         string ApplicationDataFolder { get; }
         string ApplicationConfigFilePath { get; }
-        string MapCacheFolder { get; }
     }
 
 

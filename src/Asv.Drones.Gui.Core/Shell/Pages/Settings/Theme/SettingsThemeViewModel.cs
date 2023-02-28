@@ -16,7 +16,7 @@ namespace Asv.Drones.Gui.Core
         public int Order => 0;
 
 
-        public SettingsThemeViewModel():base(WellKnownUri.ShellPageSettingsThemeUri)
+        public SettingsThemeViewModel():base(new(WellKnownUri.ShellPageSettingsTheme))
         {
             
         }

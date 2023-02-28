@@ -3,7 +3,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:map="clr-namespace:Asv.Avalonia.Map;assembly=Asv.Drones.Gui.Map"
+             xmlns:core="clr-namespace:Asv.Drones.Gui.Core"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Asv.Drones.Gui.Core.FlightView">
-    <map:MapView/>
+             x:CompileBindings="True"
+             x:Class="Asv.Drones.Gui.Core.FlightView"
+             x:DataType="core:FlightViewModel">
+    <Design.DataContext>
+		<core:FlightViewModel/>
+    </Design.DataContext>
+
+    <map:MapView MapProvider="{Binding MapProvider}"/>
 </UserControl>

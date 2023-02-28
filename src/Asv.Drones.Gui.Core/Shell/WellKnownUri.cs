@@ -2,35 +2,35 @@
 {
     public static class WellKnownUri
     {
-        public const string ShellBaseUriString = "asv:shell";
-        public static readonly Uri ShellBaseUri = new(ShellBaseUriString);
+        public const string UriScheme = "asv";
+        public const string Shell = "asv:shell";
 
-        public const string ShellMenuUriString = $"{ShellBaseUriString}.menu";
-        public static readonly Uri ShellMenuUri = new(ShellMenuUriString);
+        #region Shell main menu
 
-        public const string ShellPageUriString = $"{ShellBaseUriString}.page";
-        public static readonly Uri ShellPageUri = new(ShellPageUriString);
+        public const string ShellMenu = "asv:shell.menu";
+        public const string ShellMenuFlight = "asv:shell.menu.flight";
+        public const string ShellMenuPlaning = "asv:shell.menu.planing";
+        public const string ShellMenuSettings = "asv:shell.menu.settings";
 
-        public const string ShellStatusUriString = $"{ShellBaseUriString}.status";
-        public static readonly Uri ShellStatusUri = new(ShellStatusUriString);
+        #endregion
 
-        public const string ShellMenuSettingsUriString = $"{ShellMenuUriString}.settings";
-        public static readonly Uri ShellMenuSettingsUri = new(ShellMenuSettingsUriString);
+        #region Shell pages
 
-        public const string ShellMenuPlaningUriString = $"{ShellMenuUriString}.planing";
-        public static readonly Uri ShellMenuPlaningUri = new(ShellMenuPlaningUriString);
+        public const string ShellPage = "asv:shell.page";
+        public const string ShellPageSettings = "asv:shell.page.settings";
+        public const string ShellPageSettingsTheme = "asv:shell.page.settings.theme";
+        public const string ShellPageFlight = $"asv:shell.page.flight";
+        public const string ShellPagePlaning = "asv:shell.page.planing";
 
-       
+        #endregion
 
-        public const string ShellPageSettingsUriString = $"{ShellPageUriString}.settings";
-        public static readonly Uri ShellPageSettingsUri = new(ShellPageSettingsUriString);
+        #region Status items
 
-        public const string ShellPageSettingsThemeUriString = $"{ShellPageSettingsUriString}.theme";
-        public static readonly Uri ShellPageSettingsThemeUri = new(ShellPageSettingsThemeUriString);
+        public const string ShellStatus = "asv:shell.status";
+        public const string ShellStatusMapCache = "asv:shell.status.mapchache";
 
-        public const string ShellPagePlaningUriString = $"{ShellPageUriString}.planing";
-        public static readonly Uri ShellPagePlaningUri = new(ShellPagePlaningUriString);
+        #endregion
 
-       
+
     }
 }
