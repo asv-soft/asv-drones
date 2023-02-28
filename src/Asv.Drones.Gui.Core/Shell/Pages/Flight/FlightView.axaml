@@ -4,13 +4,80 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:map="clr-namespace:Asv.Avalonia.Map;assembly=Asv.Drones.Gui.Map"
              xmlns:core="clr-namespace:Asv.Drones.Gui.Core"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:CompileBindings="True"
              x:Class="Asv.Drones.Gui.Core.FlightView"
              x:DataType="core:FlightViewModel">
-    <Design.DataContext>
+	<Design.DataContext>
 		<core:FlightViewModel/>
-    </Design.DataContext>
+	</Design.DataContext>
+	<Grid ShowGridLines="True" ColumnDefinitions="*,5,3*,5,*" RowDefinitions="Auto,3*,5,*">
+        <map:MapView
+			MapProvider="{CompiledBinding MapProvider}"
+			SelectedItem="{Binding SelectedItem}"
+			Position="{CompiledBinding Center, Mode=TwoWay}"
+			DialogText="{CompiledBinding DialogText}"
+			DialogTarget="{CompiledBinding DialogTarget, Mode=TwoWay}"
+			IsInDialogMode="{CompiledBinding IsInDialogMode, Mode=TwoWay}"
+			Zoom="{CompiledBinding Zoom, Mode=TwoWay}"
+			Grid.ColumnSpan="5"
+			Grid.Row="0"
+			Grid.RowSpan="4"
+			Items="{Binding Markers}"
+        >
+			<map:MapView.ItemTemplate>
+				<DataTemplate x:DataType="map:MapAnchorViewModel">
+					<map:MapAnchorView
+						Name="AnchorView"
+						map:MapView.Location="{CompiledBinding Location, Mode=TwoWay}"
+						map:MapView.Path="{CompiledBinding Path,Mode=TwoWay}"
+						map:MapView.Stroke="{CompiledBinding Stroke,Mode=TwoWay}"
+						map:MapView.Fill="{CompiledBinding Fill,Mode=TwoWay}"
+						map:MapView.StrokeThickness="{CompiledBinding StrokeThickness,Mode=TwoWay}"
+						map:MapView.StrokeDashArray="{CompiledBinding StrokeDashArray,Mode=TwoWay}"
+						map:MapView.PathOpacity="{CompiledBinding PathOpacity,Mode=TwoWay}"
+						map:MapView.ZOrder="{CompiledBinding ZOrder}"
+						map:MapView.IsEditable ="{CompiledBinding IsEditable,Mode=OneWay}"
+						map:MapView.OffsetX="{Binding OffsetX,ElementName=AnchorView}"
+						map:MapView.OffsetY="{Binding OffsetY,ElementName=AnchorView}"
+						OffsetXType="{CompiledBinding OffsetX}"
+						OffsetYType="{CompiledBinding OffsetY}"
+						IsVisible="{CompiledBinding IsVisible,Mode=TwoWay}"
+						IsSelected="{CompiledBinding IsSelected,Mode=TwoWay}"
+						Icon="{CompiledBinding Icon}"
+						IconBrush="{CompiledBinding IconBrush}"
+						Title="{CompiledBinding Title}"
+						RotateCenterX="{CompiledBinding RotateCenterX}"
+						RotateCenterY="{CompiledBinding RotateCenterY}"
+						RotateAngle="{CompiledBinding RotateAngle}"
+						Size="{CompiledBinding Size}"
+						Actions="{CompiledBinding Actions} "
+						Description="{CompiledBinding Description}"/>
+				</DataTemplate>
+			</map:MapView.ItemTemplate>
+		</map:MapView>
+        <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" >
 
-    <map:MapView MapProvider="{Binding MapProvider}"/>
+        </ScrollViewer>
+        <ScrollViewer Grid.Row="0" Grid.Column="4" Grid.RowSpan="4" >
+
+        </ScrollViewer>
+
+        <!-- <Grid Grid.Row="3" Grid.Column="2" Margin="5"> -->
+        <!--     <Border Opacity="0.5" Background="Black" CornerRadius="10"/> -->
+        <!--     <TabControl AutoScrollToSelectedItem="True" Items="{Binding Tabs}" TabStripPlacement="Bottom" Classes="Scrollable"> -->
+        <!--         <TabControl.ItemTemplate> -->
+        <!--             <DataTemplate x:DataType="core:IMainShellMapTab"> -->
+        <!--                 <StackPanel Orientation="Horizontal"> -->
+        <!--                     <avalonia:MaterialIcon Kind="{CompiledBinding Icon}" Width="24" Height="24"/> -->
+        <!--                     <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="{CompiledBinding Title}"/> -->
+        <!--                 </StackPanel> -->
+        <!--             </DataTemplate> -->
+        <!--         </TabControl.ItemTemplate> -->
+        <!--     </TabControl> -->
+        <!-- </Grid> -->
+        <GridSplitter Width="5" Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" Background="Black" Opacity="0" ResizeBehavior="PreviousAndNext"/>
+        <GridSplitter Width="5" Grid.Row="0" Grid.RowSpan="4" Grid.Column="3" Background="Black" Opacity="0" ResizeBehavior="PreviousAndNext"/>
+        <GridSplitter HorizontalAlignment="Stretch" Height="5" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="1" Background="Black" Opacity="0" ResizeBehavior="PreviousAndNext"/>
+	</Grid>
 </UserControl>

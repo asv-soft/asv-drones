@@ -11,6 +11,7 @@
     <PackageReference Include="Asv.Common" Version="1.4.6" />
     <PackageReference Include="Asv.IO" Version="1.4.6" />
     <PackageReference Include="Asv.Mavlink" Version="1.1.10" />
+    <PackageReference Include="Asv.Mavlink.Vehicle" Version="1.1.10" />
     <PackageReference Include="Avalonia" Version="11.0.0-preview4" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview4" />
     <PackageReference Include="DynamicData" Version="7.12.11" />
