@@ -9,6 +9,9 @@ using Avalonia.Media.Immutable;
 using FluentAvalonia.Styling;
 using FluentAvalonia.UI.Media;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using Asv.Drones.Gui.Core;
+using Avalonia.Platform.Storage;
 
 namespace Asv.Drones.Gui
 {
@@ -48,6 +51,7 @@ namespace Asv.Drones.Gui
             MinHeight = 400;
             TitleBar.ExtendsContentIntoTitleBar = true;
         }
+
         protected override void OnOpened(EventArgs e)
         {
             base.OnOpened(e);
@@ -163,5 +167,6 @@ namespace Asv.Drones.Gui
                 Background = new ImmutableSolidColorBrush(color, 0.9);
             }
         }
+
     }
 }

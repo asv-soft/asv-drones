@@ -20,6 +20,7 @@
         public const string ShellPageSettings = "asv:shell.page.settings";
         public const string ShellPageSettingsTheme = "asv:shell.page.settings.theme";
         public const string ShellPageFlight = $"asv:shell.page.flight";
+        public const string ShellPageFlightLayer = $"asv:shell.page.flight.layer";
         public const string ShellPagePlaning = "asv:shell.page.planing";
 
         #endregion

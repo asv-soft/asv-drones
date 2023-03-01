@@ -14,7 +14,7 @@ namespace Asv.Drones.Gui.Uav
         IRxEditableValue<byte> ComponentId { get; }
         IRxEditableValue<byte> SystemId { get; }
         IRxEditableValue<TimeSpan> HeartbeatRate { get; }
-        
+        IObservable<IChangeSet<IVehicle, ushort>> Vehicles { get; } 
     }
 
     

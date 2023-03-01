@@ -21,9 +21,6 @@ namespace Asv.Drones.Gui.Core
         [ImportingConstructor]
         public ShellStatusMapCacheViewModel(IMapService app,ILocalizationService localization):this()
         {
-            
-           
-            
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10)).Subscribe(_ =>
             {
                 CacheSizeString = localization.ByteSize.GetValueWithUnits(app.CalculateMapCacheSize());

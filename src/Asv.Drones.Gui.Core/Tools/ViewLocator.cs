@@ -9,7 +9,7 @@ namespace Asv.Drones.Gui
 {
     public class ViewLocator : IDataTemplate,IDisposable
     {
-        public static Type BaseViewType = typeof(IControl);
+        public static readonly Type BaseViewType = typeof(IControl);
 
         private readonly CompositionContainer _container;
         private bool _isDisposed;
