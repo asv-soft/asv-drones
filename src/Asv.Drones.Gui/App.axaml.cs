@@ -112,10 +112,6 @@ namespace Asv.Drones.Gui
             
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindow()
-                {
-                    DataContext = _container.GetExportedValue<ShellViewModel>()
-                };
                 desktop.ShutdownRequested += (_, _) =>
                 {
                     foreach (var plugin in _plugins)
@@ -134,9 +130,13 @@ namespace Asv.Drones.Gui
                             }
                         }
                     }
-                    
                     _container.Dispose();
                 };
+                var window = new MainWindow();
+                var navigation = _container.GetExportedValue<INavigationService>();
+                navigation?.InitStorageProvider(window.StorageProvider);
+                window.DataContext = _container.GetExportedValue<ShellViewModel>();
+                desktop.MainWindow = window;
             }
 
             base.OnFrameworkInitializationCompleted();
