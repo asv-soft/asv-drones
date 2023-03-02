@@ -60,8 +60,8 @@ namespace Asv.Avalonia.Map
                 Actions = new ReadOnlyObservableCollection<MapAnchorActionViewModel>(
                     new ObservableCollection<MapAnchorActionViewModel>
                     {
-                        new() {Title = "Action1", Icon = "MaterialIconKind.Run"},
-                        new() {Title = "Action2", Icon = "MaterialIconKind.Run"}
+                        new() {Title = "Action1", Icon = MaterialIconKind.Run},
+                        new() {Title = "Action2", Icon = MaterialIconKind.Run}
                     });
             }
         }

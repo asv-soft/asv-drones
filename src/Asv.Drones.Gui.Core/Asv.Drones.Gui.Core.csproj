@@ -35,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controls\MapWidget\" />
+    <Folder Include="Controls\Map\" />
     <Folder Include="Services\MapService\" />
     <Folder Include="Services\Theme\" />
     <Folder Include="Shell\Pages\Flight\Layers\" />
