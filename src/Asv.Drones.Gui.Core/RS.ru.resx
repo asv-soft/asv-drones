@@ -140,4 +140,43 @@
 	<data name="PlaningShellMenuItem_Name" xml:space="preserve">
 		<value>Планирование полета</value>
 	</data>
+	<data name="ByteSize_BytesUnit" xml:space="preserve">
+		<value>Б</value>
+	</data>
+	<data name="ByteSize_KilobytesUnit" xml:space="preserve">
+		<value>КБ</value>
+	</data>
+	<data name="ByteSize_MegabytesUnit" xml:space="preserve">
+		<value>МБ</value>
+	</data>
+	<data name="ByteSize_GigabytesUnit" xml:space="preserve">
+		<value>ГБ</value>
+	</data>
+	<data name="Common_NotAvailable" xml:space="preserve">
+		<value>Н/Д</value>
+	</data>
+	<data name="BytesRate_BytesPerSecondUnit" xml:space="preserve">
+		<value>Б/с</value>
+	</data>
+	<data name="BytesRate_GigaBytesPerSecondUnit" xml:space="preserve">
+		<value>ГБ/с</value>
+	</data>
+	<data name="BytesRate_KiloBytesPerSecondUnit" xml:space="preserve">
+		<value>КБ/с</value>
+	</data>
+	<data name="BytesRate_MegaBytesPerSecondUnit" xml:space="preserve">
+		<value>МБ/с</value>
+	</data>
+	<data name="ItemsRate_GigaHerzUnit" xml:space="preserve">
+		<value>ГГц</value>
+	</data>
+	<data name="ItemsRate_HerzUnit" xml:space="preserve">
+		<value>Гц</value>
+	</data>
+	<data name="ItemsRate_KiloHerzUnit" xml:space="preserve">
+		<value>КГц</value>
+	</data>
+	<data name="ItemsRate_MegaHerzUnit" xml:space="preserve">
+		<value>МГц</value>
+	</data>
 </root>
