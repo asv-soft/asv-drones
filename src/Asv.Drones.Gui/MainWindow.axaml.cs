@@ -4,17 +4,26 @@ using Avalonia.Media;
 using Avalonia.Platform;
 using FluentAvalonia.UI.Windowing;
 using System;
+using System.ComponentModel;
 using Avalonia.Media.Imaging;
 using Avalonia.Media.Immutable;
 using FluentAvalonia.Styling;
 using FluentAvalonia.UI.Media;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Asv.Cfg;
 using Asv.Drones.Gui.Core;
 using Avalonia.Platform.Storage;
 
 namespace Asv.Drones.Gui
 {
+    public class ShellViewConfig
+    {
+        public double Width { get; set; }
+        public double Height { get; set; }
+        public int PositionX { get; set; }
+        public int PositionY { get; set; }
+    }
     public class SampleAppSplashScreen : IApplicationSplashScreen
     {
         public SampleAppSplashScreen()
@@ -40,6 +49,7 @@ namespace Asv.Drones.Gui
 
     public partial class MainWindow : AppWindow
     {
+        private readonly IConfiguration _configuration;
         public MainWindow()
         {
             InitializeComponent();
@@ -50,6 +60,27 @@ namespace Asv.Drones.Gui
             MinWidth = 450;
             MinHeight = 400;
             TitleBar.ExtendsContentIntoTitleBar = true;
+        }
+
+        
+        public MainWindow(IConfiguration configuration) : this()
+        {
+            _configuration = configuration;
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+
+            var shellViewConfig = new ShellViewConfig
+            {
+                Height = Height,
+                Width = Width,
+                PositionX = Position.X,
+                PositionY = Position.Y
+            };
+
+            _configuration.Set(nameof(ShellViewConfig), shellViewConfig);
         }
 
         protected override void OnOpened(EventArgs e)
@@ -117,6 +148,15 @@ namespace Asv.Drones.Gui
                 {
                     width = 400;
                 }
+            }
+
+            if (_configuration.Exist<ShellViewConfig>(nameof(ShellViewConfig)))
+            {
+                var shellViewConfig = _configuration.Get<ShellViewConfig>(nameof(ShellViewConfig));
+
+                Height = shellViewConfig.Height;
+                Width = shellViewConfig.Width;
+                Position = new PixelPoint(shellViewConfig.PositionX, shellViewConfig.PositionY);
             }
         }
 
