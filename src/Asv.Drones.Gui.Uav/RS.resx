@@ -217,13 +217,13 @@
     <value>System status</value>
   </data>
   <data name="TcpPortView_TcpIpAddress" xml:space="preserve">
-	  <value>IP address</value>
+    <value>IP address</value>
   </data>
   <data name="TcpPortView_PortTitle" xml:space="preserve">
     <value>Port title</value>
   </data>
   <data name="TcpPortView_TcpIpPort" xml:space="preserve">
-	  <value>Port number</value>
+    <value>Port number</value>
   </data>
   <data name="UdpPortView_LocalIpAddress" xml:space="preserve">
     <value>IP Address</value>
@@ -242,5 +242,14 @@
   </data>
   <data name="UdpPortView_ToggleName" xml:space="preserve">
     <value>Specify remote host</value>
+  </data>
+  <data name="ConnectionsIdentificationViewModel_DeviceTimeout" xml:space="preserve">
+    <value>Timeout must be from {0} to {1}</value>
+  </data>
+  <data name="ConnectionsIdentificationViewModel_ToString" xml:space="preserve">
+    <value>Hz</value>
+  </data>
+  <data name="PortViewModel_SkippedUnitTest" xml:space="preserve">
+    <value>error</value>
   </data>
 </root>

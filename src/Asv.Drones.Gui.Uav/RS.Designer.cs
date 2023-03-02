@@ -79,7 +79,7 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to After that timeout of Heartbeat packet device will be removed from device list.
+        ///   Looks up a localized string similar to After that timeout of Heartbeat packet deviceService will be removed from deviceService list.
         /// </summary>
         public static string ConnectionsIdentificationView_HeartbeatTimeout_Description {
             get {
@@ -111,6 +111,24 @@ namespace Asv.Drones.Gui.Uav {
         public static string ConnectionsIdentificationView_SystemComponentId_Header {
             get {
                 return ResourceManager.GetString("ConnectionsIdentificationView_SystemComponentId_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timeout must be from {0} to {1}.
+        /// </summary>
+        public static string ConnectionsIdentificationViewModel_DeviceTimeout {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationViewModel_DeviceTimeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hz.
+        /// </summary>
+        public static string ConnectionsIdentificationViewModel_ToString {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationViewModel_ToString", resourceCulture);
             }
         }
         
@@ -295,6 +313,15 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to error.
+        /// </summary>
+        public static string PortViewModel_SkippedUnitTest {
+            get {
+                return ResourceManager.GetString("PortViewModel_SkippedUnitTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Baud rate.
         /// </summary>
         public static string SerialPortView_BaudRate {
@@ -376,7 +403,7 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Serial baud rate.
+        ///   Looks up a localized string similar to Port number.
         /// </summary>
         public static string TcpPortView_TcpIpPort {
             get {
