@@ -6,6 +6,9 @@ using System.Reactive.Disposables;
 
 namespace Asv.Drones.Gui.Core
 {
+    /// <summary>
+    /// Map interface
+    /// </summary>
     public interface IMap
     {
         int MaxZoom { get; set; }
@@ -18,12 +21,16 @@ namespace Asv.Drones.Gui.Core
     }
 
     
-
+    /// <summary>
+    /// Anchor on map
+    /// </summary>
     public interface IMapAnchor : IMapAnchorViewModel,IViewModel
     {
         IMapAnchor Init(IMap map);
     }
-
+    /// <summary>
+    /// Base implementation of <see cref="IMapAnchor"/>
+    /// </summary>
     public class MapAnchorBase : MapAnchorViewModel, IMapAnchor
     {
         protected readonly CompositeDisposable Disposable = new();
