@@ -116,6 +116,8 @@ namespace Asv.Drones.Gui.Uav
         public ICommand AddTcpPortCommand { get; }
         public ICommand AddUdpPortCommand { get; }
 
+        public bool IsRebootRequired { get; private set; }
+        
         public int Order => 0;
     }
 }
