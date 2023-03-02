@@ -70,6 +70,51 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change current map provider for application.
+        /// </summary>
+        public static string MapSettingsView_MapProvider_Description {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapProvider_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map Provider.
+        /// </summary>
+        public static string MapSettingsView_MapProvider_Header {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapProvider_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string MapSettingsView_MapsInfo_ButtonName {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapsInfo_ButtonName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maps location and size.
+        /// </summary>
+        public static string MapSettingsView_MapsInfo_Description {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapsInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maps Info.
+        /// </summary>
+        public static string MapSettingsView_MapsInfo_Header {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapsInfo_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mission planing.
         /// </summary>
         public static string PlaningShellMenuItem_Name {

@@ -19,6 +19,7 @@
         public const string ShellPage = "asv:shell.page";
         public const string ShellPageSettings = "asv:shell.page.settings";
         public const string ShellPageSettingsTheme = "asv:shell.page.settings.theme";
+        public const string ShellPageMapSettings = "asv:shell.page.settings.map";
         public const string ShellPageFlight = $"asv:shell.page.flight";
         public const string ShellPagePlaning = "asv:shell.page.planing";
 
