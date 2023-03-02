@@ -35,6 +35,8 @@ namespace Asv.Drones.Gui.Uav
         [ImportingConstructor]
         public ConnectionsIdentificationViewModel(IMavlinkDevicesService svc):this()
         {
+            svc.NeedReloadToApplyConfig.Subscribe(_ => IsRebootRequired = _).DisposeItWith(Disposable);
+            
             svc.SystemId
                 .Subscribe(_ => SystemId = _)
                 .DisposeItWith(Disposable);
@@ -43,7 +45,6 @@ namespace Asv.Drones.Gui.Uav
                 .DistinctUntilChanged()
                 .Subscribe(svc.SystemId)
                 .DisposeItWith(Disposable);
-
 
             svc.ComponentId
                 .Subscribe(_ => ComponentId = _)
@@ -71,7 +72,8 @@ namespace Asv.Drones.Gui.Uav
                 .DisposeItWith(Disposable);
         }
 
-        
+        [Reactive]
+        public bool IsRebootRequired { get; private set; }
 
         public int Order => -1;
 
