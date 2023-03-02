@@ -32,21 +32,21 @@ namespace Asv.Drones.Gui.Uav
         private void UpdateValidationRules()
         {
             this.ClearValidationRules();
-            // TODO: Localize
-            this.ValidationRule(x => x.Title, _ => !string.IsNullOrWhiteSpace(_), "You must specify a valid name")
+            
+            this.ValidationRule(x => x.Title, _ => !string.IsNullOrWhiteSpace(_), RS.UdpPortViewModel_ValidTitle)
                 .DisposeItWith(Disposable);
 
-            this.ValidationRule(x => x.LocalIpAddress, _ => !string.IsNullOrWhiteSpace(_) && IPAddress.TryParse(_, out IPAddress? ip), "You must enter a valid IP address")
+            this.ValidationRule(x => x.LocalIpAddress, _ => !string.IsNullOrWhiteSpace(_) && IPAddress.TryParse(_, out IPAddress? ip), RS.UdpPortViewModel_ValidLocalIpAddress)
                 .DisposeItWith(Disposable);
 
-            this.ValidationRule(x => x.LocalPort, _ => _ is > 1 and < 65535, "Port number must be a value between 1 and 65535")
+            this.ValidationRule(x => x.LocalPort, _ => _ is > 1 and < 65535, RS.UdpPortViewModel_ValidLocalPort)
                 .DisposeItWith(Disposable);
 
             if (IsRemote)
             {
-                this.ValidationRule(x => x.RemoteIpAddress, _ => !string.IsNullOrWhiteSpace(_) && IPAddress.TryParse(_, out IPAddress? ip), "You must enter a valid IP address")
+                this.ValidationRule(x => x.RemoteIpAddress, _ => !string.IsNullOrWhiteSpace(_) && IPAddress.TryParse(_, out IPAddress? ip), RS.UdpPortViewModel_ValidRemoteIpAddress)
                     .DisposeItWith(Disposable);
-                this.ValidationRule(x => x.RemotePort, _ => _ is > 1 and < 65535, "Port number must be a value between 1 and 65535")
+                this.ValidationRule(x => x.RemotePort, _ => _ is > 1 and < 65535, RS.UdpPortViewModel_ValidRemotePort)
                     .DisposeItWith(Disposable);
                 
             }
@@ -56,8 +56,7 @@ namespace Asv.Drones.Gui.Uav
         public UdpPortViewModel(IMavlinkDevicesService device) : this()
         {
             _device = device ?? throw new ArgumentNullException(nameof(device));
-            // TODO: Localize
-            Title = "New UDP " + device.Router.GetPorts().Length;
+            Title = $"{RS.UdpPortViewModel_Title} {device.Router.GetPorts().Length}";
         }
 
         public void ApplyDialog(ContentDialog dialog)

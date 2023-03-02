@@ -252,4 +252,46 @@
   <data name="PortViewModel_SkippedUnitTest" xml:space="preserve">
     <value>error</value>
   </data>
+  <data name="RoiAnchor_Vehicle_Yaw_Sample_Description" xml:space="preserve">
+    <value>Yaw angle</value>
+  </data>
+  <data name="RoiAnchor_Vehicle_Yaw_Sample_Unit" xml:space="preserve">
+    <value>deg</value>
+  </data>
+  <data name="TcpPortViewModel_Title" xml:space="preserve">
+    <value>New TCP</value>
+  </data>
+  <data name="TcpPortViewModel_ValidTitle" xml:space="preserve">
+    <value>You must specify a valid name</value>
+  </data>
+  <data name="TcpPortViewModel_ValidPort" xml:space="preserve">
+    <value>Port number must be value from 1 to 65535</value>
+  </data>
+  <data name="TcpPortViewModel_ValidIpAddress" xml:space="preserve">
+    <value>You must insert a valid ip address</value>
+  </data>
+  <data name="TcpPortViewModel_LogService_Error" xml:space="preserve">
+    <value>Error to create port</value>
+  </data>
+  <data name="UdpPortViewModel_ValidTitle" xml:space="preserve">
+    <value>You must specify a valid name</value>
+  </data>
+  <data name="UdpPortViewModel_ValidLocalIpAddress" xml:space="preserve">
+    <value>You must enter a valid IP address</value>
+  </data>
+  <data name="UdpPortViewModel_ValidLocalPort" xml:space="preserve">
+    <value>Port number must be a value between 1 and 65535</value>
+  </data>
+  <data name="UdpPortViewModel_ValidRemotePort" xml:space="preserve">
+    <value>Port number must be a value between 1 and 65535</value>
+  </data>
+  <data name="UdpPortViewModel_ValidRemoteIpAddress" xml:space="preserve">
+    <value>You must enter a valid IP address</value>
+  </data>
+  <data name="UdpPortViewModel_Title" xml:space="preserve">
+    <value>New UDP</value>
+  </data>
+  <data name="RoiAnchor_Vehicle_Name" xml:space="preserve">
+    <value>ROI of</value>
+  </data>
 </root>
