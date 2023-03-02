@@ -1,33 +1,24 @@
-﻿using Asv.Avalonia.Map;
-using Asv.Common;
-using DynamicData;
-using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
+using Asv.Avalonia.Map;
 
 namespace Asv.Drones.Gui.Core
 {
-    public interface IMap
-    {
-        int MaxZoom { get; set; }
-        int MinZoom { get; set; }
-        double Zoom { get; set; }
-        GeoPoint Center { get; set; }
-        ReadOnlyObservableCollection<IMapAnchor> Markers { get; }
-        IMapAnchor SelectedItem { get; set; }
-        Task<GeoPoint> ShowTargetDialog(string text, CancellationToken cancel);
-    }
-
-    
-
+    /// <summary>
+    /// Anchor on map
+    /// </summary>
     public interface IMapAnchor : IMapAnchorViewModel,IViewModel
     {
         IMapAnchor Init(IMap map);
     }
-
+    
+    /// <summary>
+    /// Base implementation of <see cref="IMapAnchor"/>
+    /// </summary>
     public class MapAnchorBase : MapAnchorViewModel, IMapAnchor
     {
         protected readonly CompositeDisposable Disposable = new();
         private readonly Uri _id;
+        private double _disposeFlag;
 
         public MapAnchorBase(Uri id)
         {
@@ -41,16 +32,23 @@ namespace Asv.Drones.Gui.Core
             return this;
         }
 
-        protected IMap Map { get; private set; }
-
         protected virtual void InternalWhenMapLoaded(IMap map)
         {
-            Map = map ?? throw new ArgumentNullException(nameof(map));
+            // do nothing            
         }
 
-        public void Dispose()
+        protected IMap Map { get; private set; }
+       
+        protected virtual void InternalDisposeOnce()
         {
             Disposable.Dispose();
+        }
+        
+        public void Dispose()
+        {
+            if (Interlocked.CompareExchange(ref _disposeFlag, 1, 0) != 0) return;
+            InternalDisposeOnce();
+            GC.SuppressFinalize(this);
         }
 
         public Uri Id => _id;

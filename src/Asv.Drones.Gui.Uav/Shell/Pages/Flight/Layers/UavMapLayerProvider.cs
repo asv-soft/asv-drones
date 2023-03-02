@@ -2,7 +2,6 @@
 using System.ComponentModel.Composition;
 using System.Reactive.Linq;
 using Asv.Drones.Gui.Core;
-using System.Security.Cryptography;
 
 namespace Asv.Drones.Gui.Uav
 {
@@ -12,9 +11,9 @@ namespace Asv.Drones.Gui.Uav
     public class UavMapLayerProvider : IViewModelProvider<IMapAnchor>
     {
         [ImportingConstructor]
-        public UavMapLayerProvider(IMavlinkDevicesService svc)
+        public UavMapLayerProvider(IMavlinkDevicesService svc,[ImportMany]IEnumerable<IUavActionProvider> actions)
         {
-            var uav = svc.Vehicles.Transform(_=>new UavAnchor(_)).ChangeKey((k, _) => _.Id).Transform(_=>(IMapAnchor)_);
+            var uav = svc.Vehicles.Transform(_=>new UavAnchor(_,actions)).ChangeKey((k, _) => _.Id).Transform(_=>(IMapAnchor)_);
             var roi = svc.Vehicles.Transform(_ => new RoiAnchor(_)).ChangeKey((k, _) => _.Id).Transform(_ => (IMapAnchor)_);
             var home = svc.Vehicles.Transform(_ => new HomeAnchor(_)).ChangeKey((k, _) => _.Id).Transform(_ => (IMapAnchor)_);
             var goTo = svc.Vehicles.Transform(_ => new GoToAnchor(_)).ChangeKey((k, _) => _.Id).Transform(_ => (IMapAnchor)_);

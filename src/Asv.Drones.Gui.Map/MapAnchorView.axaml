@@ -79,23 +79,25 @@
                         IsOpen="{TemplateBinding IsSelected}"
                         PlacementTarget="PART_ContentPresenter"
                     >
-           <!--              <controls1:Card IsVisible="{TemplateBinding IsPopupNotEmpty}"> -->
-           <!--                  <StackPanel> -->
-           <!--                      <TextBlock Text="{TemplateBinding Description}"/> -->
-           <!--                      <ItemsControl Items="{TemplateBinding Actions}"> -->
-           <!--                          <ItemsControl.ItemTemplate> -->
-           <!--                              <DataTemplate DataType="controls:MapAnchorActionViewModel"> -->
-           <!--                                  <Button HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" Margin="3" Command="{CompiledBinding Command}" CommandParameter="{CompiledBinding CommandParameter}" Classes="Outline Light" > -->
-           <!--                                      <StackPanel Orientation="Horizontal"> -->
-           <!--                                          <avalonia:MaterialIcon Margin="0,0,10,0"  Kind="{CompiledBinding Icon}" Width="24" Height="24"/> -->
-           <!--                                          <TextBlock VerticalAlignment="Center" Text="{CompiledBinding Title}"/> -->
-											<!-- 	</StackPanel> -->
-											<!-- </Button> -->
-           <!--                              </DataTemplate> -->
-           <!--                          </ItemsControl.ItemTemplate> -->
-           <!--                      </ItemsControl> -->
-           <!--                  </StackPanel> -->
-           <!--              </controls1:Card> -->
+                        <Border Background="{DynamicResource SolidBackgroundFillColorBase}" Padding="10" CornerRadius="{DynamicResource ControlCornerRadius}" >
+                            <StackPanel>
+                                <TextBlock Text="{TemplateBinding Description}"/>
+                                <ItemsControl Items="{TemplateBinding Actions}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="controls:MapAnchorActionViewModel">
+                                            <Button HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" Margin="3" Command="{CompiledBinding Command}" CommandParameter="{CompiledBinding CommandParameter}" Classes="Outline Light" >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <avalonia:MaterialIcon Margin="0,0,10,0"  Kind="{CompiledBinding Icon}" Width="24" Height="24"/>
+                                                    <TextBlock VerticalAlignment="Center" Text="{CompiledBinding Title}"/>
+                                                </StackPanel>
+                                            </Button>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>    
+                        </Border>
+                        
+                        
                     </Popup>
                 </Grid>
                 
