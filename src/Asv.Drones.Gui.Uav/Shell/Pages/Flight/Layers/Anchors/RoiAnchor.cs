@@ -23,9 +23,9 @@ namespace Asv.Drones.Gui.Uav
             vehicle.Roi.Select(_ => _.HasValue).DistinctUntilChanged().Subscribe(_ => IsVisible = _).DisposeWith(Disposable);
             vehicle.Roi.Where(_ => _.HasValue).Subscribe(_ => Location = _.Value).DisposeWith(Disposable);
 
-            vehicle.Name.Subscribe(_ => Title = $"ROI of {_}").DisposeWith(Disposable); // TODO: Localize
+            vehicle.Name.Subscribe(_ => Title = $"{RS.RoiAnchor_Vehicle_Name} {_}").DisposeWith(Disposable);
 
-            vehicle.Yaw.Sample(TimeSpan.FromSeconds(1), RxApp.MainThreadScheduler).Subscribe(_ => Description = $"Yaw angle {_:F0} deg"); // TODO: Localize
+            vehicle.Yaw.Sample(TimeSpan.FromSeconds(1), RxApp.MainThreadScheduler).Subscribe(_ => Description = $"{RS.RoiAnchor_Vehicle_Yaw_Sample_Description}: {_:F0} {RS.RoiAnchor_Vehicle_Yaw_Sample_Unit}");
         }
 
     }

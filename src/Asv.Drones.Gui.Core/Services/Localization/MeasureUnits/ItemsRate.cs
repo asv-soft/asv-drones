@@ -8,15 +8,14 @@
 
         public string GetUnit(double itemsPerSec)
         {
-            //TODO: Localize
             return itemsPerSec switch
             {
                 (double.NaN) => string.Empty,
                 (< 0) => string.Empty,
-                (<= OneKHz) => "Hz",
-                (>= OneKHz) and (< OneMHz) => "KHz",
-                (>= OneMHz) and (< OneGHz) => "MHz",
-                (>= OneGHz) => "GHz",
+                (<= OneKHz) => RS.ItemsRate_HerzUnit,
+                (>= OneKHz) and (< OneMHz) => RS.ItemsRate_KiloHerzUnit,
+                (>= OneMHz) and (< OneGHz) => RS.ItemsRate_MegaHerzUnit,
+                (>= OneGHz) => RS.ItemsRate_GigaHerzUnit,
             };
         }
 
@@ -24,9 +23,8 @@
         {
             return itemsPerSec switch
             {
-
-                (double.NaN) => $"N/A", //TODO: Localize
-                (< 0) => $"N/A", //TODO: Localize
+                (double.NaN) => RS.Common_NotAvailable,
+                (< 0) => RS.Common_NotAvailable,
                 (0) => $"{itemsPerSec,-4:F0}",
                 (< 1) => $"{itemsPerSec,-4:F1}",
                 (< OneKHz) => $"{itemsPerSec,-4:F0}",

@@ -18,8 +18,7 @@ namespace Asv.Drones.Gui.Uav
 
         public ConnectionsIdentificationViewModel() : base(new Uri(ConnectionsViewModel.BaseUri,"id"))
         {
-            // TODO: Localize
-            this.ValidationRule(_ => _.DeviceTimeout, _ => _ is >= DeviceTimeoutMin and <= DeviceTimeoutMax, _ => $"Timeout must be from {DeviceTimeoutMin} to {DeviceTimeoutMax}")
+            this.ValidationRule(_ => _.DeviceTimeout, _ => _ is >= DeviceTimeoutMin and <= DeviceTimeoutMax, _ => string.Format(RS.ConnectionsIdentificationViewModel_DeviceTimeout, DeviceTimeoutMin, DeviceTimeoutMax))
                 .DisposeItWith(Disposable);
             
 
@@ -113,8 +112,7 @@ namespace Asv.Drones.Gui.Uav
 
         public override string ToString()
         {
-            // TODO: Localize
-            return $"{(1.0 / Time.TotalSeconds):F1} Hz";
+            return string.Format($"{(1.0 / Time.TotalSeconds):F1}", RS.ConnectionsIdentificationViewModel_ToString);
         }
     }
 

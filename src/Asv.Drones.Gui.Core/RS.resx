@@ -159,4 +159,43 @@
   <data name="PlaningShellMenuItem_Name" xml:space="preserve">
     <value>Mission planing</value>
   </data>
+  <data name="ByteSize_BytesUnit" xml:space="preserve">
+    <value>B</value>
+  </data>
+  <data name="ByteSize_KilobytesUnit" xml:space="preserve">
+    <value>KB</value>
+  </data>
+  <data name="ByteSize_MegabytesUnit" xml:space="preserve">
+    <value>MB</value>
+  </data>
+  <data name="ByteSize_GigabytesUnit" xml:space="preserve">
+    <value>GB</value>
+  </data>
+  <data name="Common_NotAvailable" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="BytesRate_BytesPerSecondUnit" xml:space="preserve">
+    <value>B/s</value>
+  </data>
+  <data name="BytesRate_KiloBytesPerSecondUnit" xml:space="preserve">
+    <value>KB/s</value>
+  </data>
+  <data name="BytesRate_MegaBytesPerSecondUnit" xml:space="preserve">
+    <value>MB/s</value>
+  </data>
+  <data name="BytesRate_GigaBytesPerSecondUnit" xml:space="preserve">
+    <value>GB/s</value>
+  </data>
+  <data name="ItemsRate_HerzUnit" xml:space="preserve">
+    <value>Hz</value>
+  </data>
+  <data name="ItemsRate_KiloHerzUnit" xml:space="preserve">
+    <value>KHz</value>
+  </data>
+  <data name="ItemsRate_MegaHerzUnit" xml:space="preserve">
+    <value>MHz</value>
+  </data>
+  <data name="ItemsRate_GigaHerzUnit" xml:space="preserve">
+    <value>GHz</value>
+  </data>
 </root>

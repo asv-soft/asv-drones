@@ -8,14 +8,13 @@
 
         public string GetUnit(long bytes)
         {
-            //TODO: Localize
             return bytes switch
             {
                 (< 0) => string.Empty,
-                (< OneKb) => "B",
-                (>= OneKb) and (< OneMb) => "KB", 
-                (>= OneMb) and (< OneGb) => "MB",
-                (>= OneGb)  => "GB",
+                (< OneKb) => RS.ByteSize_BytesUnit,
+                (>= OneKb) and (< OneMb) => RS.ByteSize_KilobytesUnit, 
+                (>= OneMb) and (< OneGb) => RS.ByteSize_MegabytesUnit,
+                (>= OneGb)  => RS.ByteSize_GigabytesUnit,
             };
         }
 
@@ -23,7 +22,7 @@
         {
             return bytes switch
             {
-                (< 0) => $"N/A", //TODO: Localize
+                (< 0) => RS.Common_NotAvailable,
                 (< OneKb) => $"{bytes}",
                 (>= OneKb) and (< OneMb) => $"{bytes / OneKb}",
                 (>= OneMb) and (< OneGb) => $"{bytes / OneMb}",
