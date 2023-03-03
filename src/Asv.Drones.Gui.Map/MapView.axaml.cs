@@ -360,7 +360,7 @@ namespace Asv.Avalonia.Map
             get => _zoom;
             set
             {
-                if (SetAndRaise(ZoomProperty, ref _zoom, value))
+                if (Enumerable.Range(1, 20).Contains((int)value) && SetAndRaise(ZoomProperty, ref _zoom, value))
                 {
                     UpdateZoom();
                 }
