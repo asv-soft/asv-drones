@@ -11,6 +11,7 @@ using System.ComponentModel.Composition.Primitives;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using Asv.Cfg;
 using Asv.Drones.Gui.Uav;
 using NLog;
 using Avalonia.Controls.Templates;
@@ -133,7 +134,8 @@ namespace Asv.Drones.Gui
                     }
                     _container.Dispose();
                 };
-                var window = new MainWindow();
+                var configuration = _container.GetExportedValue<IConfiguration>();
+                var window = new MainWindow(configuration);
                 var navigation = _container.GetExportedValue<INavigationService>();
                 navigation?.InitStorageProvider(window.StorageProvider);
                 window.DataContext = _container.GetExportedValue<ShellViewModel>();
