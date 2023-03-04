@@ -198,4 +198,52 @@
   <data name="ItemsRate_GigaHerzUnit" xml:space="preserve">
     <value>GHz</value>
   </data>
+  <data name="SettingsThemeViewModel_Distance" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="SettingsThemeViewModel_DistanceDescription" xml:space="preserve">
+    <value>Change the current measure units of distance.</value>
+  </data>
+  <data name="SettingsThemeViewModel_Altitude" xml:space="preserve">
+    <value>Altitude</value>
+  </data>
+  <data name="SettingsThemeViewModel_AltitudeDescription" xml:space="preserve">
+    <value>Change the current measure units of altitude.</value>
+  </data>
+  <data name="SettingsThemeViewModel_LatitudeLongitude" xml:space="preserve">
+    <value>Latitude &amp; Longitude</value>
+  </data>
+  <data name="SettingsThemeViewModel_LatitudeLongitudeDescription" xml:space="preserve">
+    <value>Change the current measure units of latitude &amp; longitude.</value>
+  </data>
+  <data name="SettingsThemeViewModel_DistanceMeters" xml:space="preserve">
+    <value>Meters</value>
+  </data>
+  <data name="SettingsThemeViewModel_DistanceInternationalNauticalMiles" xml:space="preserve">
+    <value>Nautical miles</value>
+  </data>
+  <data name="SettingsThemeViewModel_AltitudeMeters" xml:space="preserve">
+    <value>Meters</value>
+  </data>
+  <data name="SettingsThemeViewModel_AltitudeFeets" xml:space="preserve">
+    <value>Feets</value>
+  </data>
+  <data name="SettingsThemeViewModel_LatitudeLongtitudeDegrees" xml:space="preserve">
+    <value>Degrees</value>
+  </data>
+  <data name="SettingsThemeViewModel_LatitudeLongtitudeDegreesMinutesSeconds" xml:space="preserve">
+    <value>Degrees, minutes, seconds</value>
+  </data>
+  <data name="SettingsThemeViewModel_AltitudeFeetUnit" xml:space="preserve">
+    <value>ft</value>
+  </data>
+  <data name="SettingsThemeViewModel_AltitudeMeterUnit" xml:space="preserve">
+    <value>m</value>
+  </data>
+  <data name="SettingsThemeViewModel_DistanceMeterUnit" xml:space="preserve">
+    <value>m</value>
+  </data>
+  <data name="SettingsThemeViewModel_DistanceInternationalNauticalMileUnit" xml:space="preserve">
+    <value>nmi</value>
+  </data>
 </root>
