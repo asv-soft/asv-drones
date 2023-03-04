@@ -9,20 +9,19 @@ namespace Asv.Drones.Gui.Core
 
     [Export(typeof(ISettingsPart))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class SettingsThemeViewModel : ViewModelBase,ISettingsPart
+    public class SettingsThemeViewModel : ViewModelBase, ISettingsPart
     {
         private readonly IThemeService _themeService;
         private readonly ILocalizationService _localization;
         public int Order => 0;
 
-
-        public SettingsThemeViewModel():base(new(WellKnownUri.ShellPageSettingsTheme))
+        public SettingsThemeViewModel() : base(new(WellKnownUri.ShellPageSettingsTheme))
         {
             
         }
 
         [ImportingConstructor]
-        public SettingsThemeViewModel(IThemeService themeService,ILocalizationService localization):this()
+        public SettingsThemeViewModel(IThemeService themeService, ILocalizationService localization) : this()
         {
             _themeService = themeService;
             _localization = localization;
@@ -33,6 +32,9 @@ namespace Asv.Drones.Gui.Core
             _themeService.FlowDirection.Subscribe(_ => FlowDirection = _).DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.FlowDirection).Subscribe(_themeService.FlowDirection).DisposeItWith(Disposable);
 
+            this.WhenAnyValue(_ => _.SelectedLanguage)
+                .Subscribe(_ => IsRebootRequired = _ != _localization.CurrentLanguage.Value).DisposeItWith(Disposable);
+            
             _localization.CurrentLanguage.Subscribe(_ => SelectedLanguage = _).DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.SelectedLanguage).Subscribe(_localization.CurrentLanguage).DisposeItWith(Disposable);
         }
@@ -53,5 +55,9 @@ namespace Asv.Drones.Gui.Core
         public LanguageInfo SelectedLanguage { get; set; }
 
         public IEnumerable<LanguageInfo> AppLanguages => _localization.AvailableLanguages;
+        
+        
+        [Reactive]
+        public bool IsRebootRequired { get; private set; }
     }
 }

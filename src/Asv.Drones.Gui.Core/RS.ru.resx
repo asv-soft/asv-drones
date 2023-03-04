@@ -179,4 +179,10 @@
 	<data name="ItemsRate_MegaHerzUnit" xml:space="preserve">
 		<value>МГц</value>
 	</data>
+	<data name="SettingsView_RebootRequiredTitle" xml:space="preserve">
+		<value>Требуется перезагрузка</value>
+	</data>
+	<data name="SettingsView_RebootRequiredDescription" xml:space="preserve">
+		<value>Вы должны перезагрузить программу, чтобы применить изменения.</value>
+	</data>
 </root>

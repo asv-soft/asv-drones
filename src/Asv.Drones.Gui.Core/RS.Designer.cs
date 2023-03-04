@@ -258,6 +258,24 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must reload the program to apply the changes..
+        /// </summary>
+        public static string SettingsView_RebootRequiredDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_RebootRequiredDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reboot required.
+        /// </summary>
+        public static string SettingsView_RebootRequiredTitle {
+            get {
+                return ResourceManager.GetString("SettingsView_RebootRequiredTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LeftToRight.
         /// </summary>
         public static string ThemeService_FlowDirections_LeftToRight {
