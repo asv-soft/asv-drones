@@ -98,7 +98,7 @@ namespace Asv.Avalonia.Map
             }
             set
             {
-                if (_zoom != value && !IsDragging && value >= 1)
+                if (_zoom != value && !IsDragging)
                 {
                     _zoom = value;
 
