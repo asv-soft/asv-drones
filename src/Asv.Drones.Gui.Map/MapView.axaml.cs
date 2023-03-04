@@ -31,8 +31,6 @@ namespace Asv.Avalonia.Map
         private readonly ScaleTransform _lastScaleTransform = new();
         private readonly MouseDevice _mouse = new();
 
-        private static readonly HashSet<int> _zoomRange = Enumerable.Range(1, 20).ToHashSet();
-        
         static MapView()
         {
             MapImageProxy.Enable();
@@ -362,7 +360,7 @@ namespace Asv.Avalonia.Map
             get => _zoom;
             set
             {
-                if (_zoomRange.Contains((int)value) && SetAndRaise(ZoomProperty, ref _zoom, value))
+                if (value >= 1 & value <= 20 && SetAndRaise(ZoomProperty, ref _zoom, value))
                 {
                     UpdateZoom();
                 }
