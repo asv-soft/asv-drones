@@ -9,9 +9,7 @@
              x:CompileBindings="True"
              x:Class="Asv.Drones.Gui.Core.ShellView"
              x:DataType="core:ShellViewModel">
-    <UserControl.Resources>
-		<ui:FAPathIcon x:Key="MapIcon" Data="M15,19L9,16.89V5L15,7.11M20.5,3C20.44,3 20.39,3 20.34,3L15,5.1L9,3L3.36,4.9C3.15,4.97 3,5.15 3,5.38V20.5A0.5,0.5 0 0,0 3.5,21C3.55,21 3.61,21 3.66,20.97L9,18.9L15,21L20.64,19.1C20.85,19 21,18.85 21,18.62V3.5A0.5,0.5 0 0,0 20.5,3Z"/>
-    </UserControl.Resources>
+    
     <Design.DataContext>
 		<core:ShellViewModel/>
 	</Design.DataContext>
@@ -21,18 +19,40 @@
         </Style>
     </UserControl.Styles>
 	<DockPanel>
-        <Grid DockPanel.Dock="Top" Name="TitleBarHost" ColumnDefinitions="Auto,Auto,*" Background="Transparent">
+        <Grid DockPanel.Dock="Top" Name="TitleBarHost" ColumnDefinitions="Auto,Auto,*,Auto" >
             <Image Margin="13 10"
                    IsHitTestVisible="False"
                    Source="/Assets/icon.ico"
                    Width="25" Height="25"
                    DockPanel.Dock="Left"
                    Name="WindowIcon"/>
-            <Border Grid.Column="2">
-				<StackPanel Orientation="Horizontal">
-                    
-				</StackPanel>
-            </Border>
+            <Menu Grid.Column="1" Items="{Binding HeaderMenuItems}" >
+                <Menu.ItemTemplate>
+                    <DataTemplate>
+                                
+                    </DataTemplate>
+                </Menu.ItemTemplate>
+                <Menu.Styles>
+                    <Style Selector="MenuItem" x:DataType="core:IHeaderMenuItem">
+                        <Setter Property="Header" Value="{Binding Header}"/>
+                        <Setter Property="Icon" Value="{Binding Icon, Converter={x:Static core:MaterialIconConverter.Instance}}"/>
+                        <Setter Property="Command" Value="{Binding Command}"/>
+                        <Setter Property="CommandParameter" Value="{Binding CommandParameter}"/>
+                        <Setter Property="IsEnabled" Value="{Binding IsEnabled}"/>
+                        <Setter Property="IsVisible" Value="{Binding IsVisible}"/>
+                        <Setter Property="StaysOpenOnClick" Value="{Binding StaysOpenOnClick}"/>
+                        <Setter Property="Items" Value="{Binding Items}"/>
+                        <Setter Property="HotKey" Value="{Binding HotKey}"/>
+                        <Setter Property="InputGesture" Value="{Binding HotKey}"/>
+                    </Style>
+                </Menu.Styles>
+            </Menu>
+            <!-- <Border MinWidth="150" Margin="5" CornerRadius="{DynamicResource ControlCornerRadius}" Grid.Column="2" HorizontalAlignment="Center" Background="#366ace"> -->
+            <!--     <ComboBox HorizontalAlignment="Stretch" Foreground="White" Background="#366ace" BorderThickness="0" > -->
+            <!--         <ComboBoxItem>IDLE MODE</ComboBoxItem> -->
+            <!--         <ComboBoxItem>ILS MODE</ComboBoxItem> -->
+            <!--     </ComboBox> -->
+            <!-- </Border> -->
         </Grid>
         <ItemsControl Items="{Binding StatusItems}" Height="25" DockPanel.Dock="Bottom" Background="{DynamicResource InfoBarErrorSeverityBackgroundBrush}">
 			<ItemsControl.ItemContainerTheme>
@@ -60,15 +80,15 @@
                            MenuItemTemplateSelector="{x:Static core:MenuItemTemplateSelector.Instance}">
             <Panel>
                 <ContentControl Content="{CompiledBinding CurrentPage}"/>
-                <ItemsControl Items="{Binding Messages}" Margin="10">
+                <ItemsControl Items="{Binding Messages}" Margin="8">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Spacing="8"></StackPanel>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <ui:InfoBar Title="{Binding Title}" IsOpen="{Binding IsOpen}" Severity="{Binding Severity}" Message="{Binding Message}" />
+                        <DataTemplate x:DataType="core:LogMessageViewModel">
+                            <ui:InfoBar Tapped="InputElement_OnTapped" Title="{Binding Title}" IsOpen="{Binding IsOpen}" Severity="{Binding Severity}" Message="{Binding Message}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -79,3 +99,4 @@
 	
     
 </UserControl>
+
