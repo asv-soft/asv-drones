@@ -4,14 +4,6 @@ using Asv.Avalonia.Map;
 namespace Asv.Drones.Gui.Core
 {
     /// <summary>
-    /// Anchor on map
-    /// </summary>
-    public interface IMapAnchor : IMapAnchorViewModel,IViewModel
-    {
-        IMapAnchor Init(IMap map);
-    }
-    
-    /// <summary>
     /// Base implementation of <see cref="IMapAnchor"/>
     /// </summary>
     public class MapAnchorBase : MapAnchorViewModel, IMapAnchor

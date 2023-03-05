@@ -10,11 +10,11 @@ using DynamicData;
 
 namespace Asv.Drones.Gui.Uav
 {
-    public class UavGoToLinePolygon : MapAnchorBase
+    public class UavGoToPolygon : FlightAnchorBase
     {
         private readonly ReadOnlyObservableCollection<GeoPoint> _path;
 
-        public UavGoToLinePolygon(IVehicle vehicle) : base(new(UavWellKnownUri.UavAnchorsBaseUri + $"/{vehicle.FullId}/goto-line"))
+        public UavGoToPolygon(IVehicle vehicle) : base(vehicle, "goto-polygon")
         {
             ZOrder = -1000;
             OffsetX = 0;

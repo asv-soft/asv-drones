@@ -8,9 +8,11 @@ namespace Asv.Drones.Gui.Core
 {
     [Export(typeof(IShellStatusItem))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class ShellStatusMapCacheViewModel:ViewModelBase, IShellStatusItem
+    public class ShellStatusMapCacheViewModel:ShellStatusItem
     {
-        public ShellStatusMapCacheViewModel() : base(new Uri(WellKnownUri.ShellStatusMapCache))
+        public static readonly Uri Uri = new(ShellStatusItem.Uri,"map-cache");
+        
+        public ShellStatusMapCacheViewModel() : base(Uri)
         {
             if (Design.IsDesignMode)
             {
@@ -30,7 +32,7 @@ namespace Asv.Drones.Gui.Core
 
         
 
-        public int Order => -1;
+        public override int Order => -1;
 
         [Reactive]
         public string CacheSizeString { get; set; }

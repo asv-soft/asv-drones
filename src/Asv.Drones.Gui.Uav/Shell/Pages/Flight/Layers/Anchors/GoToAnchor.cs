@@ -1,6 +1,7 @@
 ﻿using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Avalonia.Map;
+using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.Vehicle;
@@ -10,9 +11,10 @@ using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav
 {
-    public class GoToAnchor : MapAnchorBase
+    public class GoToAnchor : FlightAnchorBase
     {
-        public GoToAnchor(IVehicle vehicle) : base(new(UavWellKnownUri.UavAnchorsBaseUri + $"/{vehicle.FullId}/goto"))
+        public GoToAnchor(IVehicle vehicle) 
+            : base(vehicle,"goto")
         {
             Size = 32;
             OffsetX = OffsetXEnum.Center;
@@ -37,9 +39,11 @@ namespace Asv.Drones.Gui.Uav
             {
                 distance = vehicle.GlobalPosition.Value.DistanceTo(vehicle.GoToTarget.Value.Value);
             }
-
+            
             if (vehicle.GpsGroundVelocity.Value != 0)
             {
+                // TODO: User Localize
+                // TODO: User IlocalizationService for speed, time and distance units 
                 var leftTime = TimeSpan.FromSeconds(distance / vehicle.GpsGroundVelocity.Value);
                 return $"Next target of     {vehicle.Name.Value}\n" +
                        $"Distance to target {distance:F0} m\n" +

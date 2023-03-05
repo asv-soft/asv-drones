@@ -15,6 +15,7 @@ namespace Asv.Drones.Gui.Uav
         public StartAutoAnchorActionViewModel(IVehicle vehicle, IMap map, ILogService log) : base(vehicle, map, log)
         {
             _log = log;
+            // TODO: Localize
             Title = "Start mission";
             Icon = MaterialIconKind.RayStartArrow;
             Vehicle.IsArmed.ObserveOn(RxApp.MainThreadScheduler).Select(_ => _).Subscribe(CanExecute).DisposeWith(Disposable);
@@ -22,6 +23,7 @@ namespace Asv.Drones.Gui.Uav
 
         protected override async Task ExecuteImpl(CancellationToken cancel)
         {
+            // TODO: Localize
             _log.Info(LogName, $"User send Start mission for {Vehicle.Name.Value}");
             await Vehicle.SetCurrentMissionItem(0, cancel);
         }

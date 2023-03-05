@@ -16,6 +16,7 @@ namespace Asv.Drones.Gui.Uav
         public RoiAnchorActionViewModel(IVehicle vehicle, IMap map,ILogService log) : base(vehicle, map,log)
         {
             _log = log;
+            // TODO: Localize
             Title = "Set ROI";
             Icon = MaterialIconKind.ImageFilterCenterFocus;
             Vehicle.IsArmed.ObserveOn(RxApp.MainThreadScheduler).Select(_ => _).Subscribe(CanExecute).DisposeWith(Disposable);
@@ -23,6 +24,7 @@ namespace Asv.Drones.Gui.Uav
 
         protected override async Task ExecuteImpl(CancellationToken cancel)
         {
+            // TODO: Localize
             var target = await Map.ShowTargetDialog("Select target for region of interests (ROI)", CancellationToken.None);
             var point = new GeoPoint(target.Latitude, target.Longitude, (double)Vehicle.GlobalPosition.Value.Altitude);
             _log.Info(LogName, $"User set ROI '{point}' for {Vehicle.Name.Value}");

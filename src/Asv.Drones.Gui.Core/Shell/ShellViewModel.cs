@@ -13,6 +13,9 @@ namespace Asv.Drones.Gui.Core
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class ShellViewModel : ViewModelBase, IShell
     {
+        public const string UriString = $"{WellKnownUri.UriScheme}:shell";
+        public static readonly Uri Uri = new(UriString);
+        
         private readonly INavigationService _navigation;
         private IShellMenuItem _selectedMenu = null!;
         private readonly ReadOnlyObservableCollection<IShellMenuItem> _menuItems = null!;
@@ -21,8 +24,8 @@ namespace Asv.Drones.Gui.Core
         private readonly ReadOnlyObservableCollection<IShellStatusItem> _statusItems = null!;
         private readonly SourceList<LogMessage> _messageSourceList = new();
         
-
-        public ShellViewModel():base(new(WellKnownUri.Shell))
+    
+        public ShellViewModel():base(Uri)
         {
             if (Design.IsDesignMode)
             {

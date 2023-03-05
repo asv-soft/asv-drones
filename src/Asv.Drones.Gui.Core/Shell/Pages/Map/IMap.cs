@@ -3,6 +3,7 @@ using Asv.Common;
 using DynamicData;
 using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
+using Material.Icons;
 
 namespace Asv.Drones.Gui.Core
 {
@@ -20,4 +21,25 @@ namespace Asv.Drones.Gui.Core
         Task<GeoPoint> ShowTargetDialog(string text, CancellationToken cancel);
     }
     
+    /// <summary>
+    /// Anchor on map
+    /// </summary>
+    public interface IMapAnchor : IMapAnchorViewModel,IViewModel
+    {
+        IMapAnchor Init(IMap map);
+    }
+    
+    public enum WidgetLocation
+    {
+        Left,   
+        Right,
+        Bottom
+    }
+    public interface IMapWidget:IViewModel
+    {
+        WidgetLocation Location { get; }
+        public string Title { get; }
+        public MaterialIconKind Icon { get; }
+        IMapWidget Init(IMap map);
+    }
 }

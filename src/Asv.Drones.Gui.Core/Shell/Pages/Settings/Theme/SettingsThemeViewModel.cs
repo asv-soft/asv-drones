@@ -9,14 +9,18 @@ namespace Asv.Drones.Gui.Core
 
     [Export(typeof(ISettingsPart))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class SettingsThemeViewModel : ViewModelBase,ISettingsPart
+    public class SettingsThemeViewModel : SettingsPartBase
     {
+        
+        private static readonly Uri Uri = new(SettingsPartBase.Uri, "theme");
+        
         private readonly IThemeService _themeService;
         private readonly ILocalizationService _localization;
-        public int Order => 0;
+        
+        public override int Order => 0;
 
 
-        public SettingsThemeViewModel() : base(new(WellKnownUri.ShellPageSettingsTheme))
+        public SettingsThemeViewModel() : base(Uri)
         {
             
         }

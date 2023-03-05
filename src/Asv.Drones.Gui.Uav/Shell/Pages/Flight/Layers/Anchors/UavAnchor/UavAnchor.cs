@@ -2,6 +2,7 @@
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Avalonia.Map;
+using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Media;
@@ -10,22 +11,23 @@ using Material.Icons;
 
 namespace Asv.Drones.Gui.Uav
 {
-    public class UavAnchor: MapAnchorBase
+    public class UavAnchor: FlightAnchorBase
     {
-        private readonly IVehicle _vehicle;
         private ReadOnlyObservableCollection<MapAnchorActionViewModel> _actions;
-        private readonly IEnumerable<IUavActionProvider> _actionsProviders;
+        private readonly IEnumerable<IFlightUavActionProvider> _actionsProviders;
+        private readonly ILocalizationService _localizationService;
 
-        public UavAnchor(IVehicle vehicle,IEnumerable<IUavActionProvider> actionsProviders):base(new(UavWellKnownUri.UavAnchorsBaseUri+ $"/{vehicle.FullId}/uav"))
+        public UavAnchor(IVehicle vehicle,ILocalizationService localizationService,IEnumerable<IFlightUavActionProvider> actionsProviders)
+            :base(vehicle,"uav")
         {
-            _vehicle = vehicle;
             _actionsProviders = actionsProviders;
+            _localizationService = localizationService;
             Size = 48;
             OffsetX = OffsetXEnum.Center;
             OffsetY = OffsetYEnum.Center;
             IconBrush = Brushes.Red;
             IsVisible = true;
-            UpdateIcon(vehicle.Class.Value);
+            vehicle.Class.Subscribe(_ => Icon = MavlinkHelper.GetIcon(_)).DisposeItWith(Disposable);
             vehicle.GlobalPosition.Subscribe(_ => Location = _).DisposeWith(Disposable);
             vehicle.Yaw.Select(_ => Math.Round(_, 0)).DistinctUntilChanged().Subscribe(_ => RotateAngle = _).DisposeWith(Disposable);
             Title = vehicle.Name.Value;
@@ -36,16 +38,16 @@ namespace Asv.Drones.Gui.Uav
         
         private void UpdateDescription()
         {
-            // TODO: add measure item to ILocalization service to print coordinates
-            Description = $"Lat:{_vehicle.GlobalPosition.Value.Latitude:F5}\n" +
-                          $"Lon:{_vehicle.GlobalPosition.Value.Longitude:F5}\n" +
-                          $"Alt:{_vehicle.GlobalPosition.Value.Altitude:F2}\n";
+            // TODO: Localize
+            Description = $"Lat:{_localizationService.LatitudeAndLongitude.GetValueWithUnits(Vehicle.GlobalPosition.Value.Latitude)}\n" +
+                          $"Lon:{_localizationService.LatitudeAndLongitude.GetValueWithUnits(Vehicle.GlobalPosition.Value.Longitude)}\n" +
+                          $"Alt:{_localizationService.Altitude.GetValueWithUnits(Vehicle.GlobalPosition.Value.Altitude)}\n";
         }
 
         protected override void InternalWhenMapLoaded(IMap map)
         {
             _actionsProviders
-                .SelectMany(_ => _.CreateActions(_vehicle, map))
+                .SelectMany(_ => _.CreateActions(Vehicle, map))
                 .Cast<MapAnchorActionViewModel>()
                 .OrderBy(_=>_.Order)
                 .AsObservableChangeSet()
@@ -57,21 +59,6 @@ namespace Asv.Drones.Gui.Uav
         
         public override ReadOnlyObservableCollection<MapAnchorActionViewModel> Actions => _actions;
         
-        private void UpdateIcon(VehicleClass type)
-        {
-            switch (type)
-            {
-                case VehicleClass.Plane:
-                    Icon = MaterialIconKind.Plane;
-                    break;
-                case VehicleClass.Copter:
-                case VehicleClass.Unknown:
-                    Icon = MaterialIconKind.Navigation;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
-
-        }
+        
     }
 }

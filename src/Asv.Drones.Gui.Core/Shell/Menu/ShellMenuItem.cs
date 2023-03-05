@@ -3,11 +3,14 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Core
 {
-    public class ShellMenuItemViewModel : ViewModelBase, IShellMenuItem
+    public class ShellMenuItem : ViewModelBase, IShellMenuItem
     {
-        public ShellMenuItemViewModel(Uri id) : base(id)
-        {
+        public const string UriString = ShellViewModel.UriString + ".menu";
+        public static readonly Uri Uri = new(UriString);
 
+        protected ShellMenuItem(Uri id) : base(id)
+        {
+            
         }
         [Reactive]
         public string Name { get; set; }

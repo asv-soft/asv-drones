@@ -13,22 +13,22 @@ namespace Asv.Drones.Gui.Uav
 
     [Export(typeof(IShellStatusItem))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class ShellStatusPortsViewModel : ViewModelBase, IShellStatusItem
+    public class ShellStatusPortsViewModel : ShellStatusItem
     {
+        public static readonly Uri Uri = new(ShellStatusItem.Uri,"ports");
+        
         private readonly IncrementalRateCounter _rxRate = new();
         private readonly IncrementalRateCounter _txRate = new();
-
-        public ShellStatusPortsViewModel() : base(new(new Uri(WellKnownUri.ShellStatus), "ports"))
+        
+        /// <summary>
+        /// This constructor is used by design time tools
+        /// </summary>
+        public ShellStatusPortsViewModel() : base(Uri)
         {
-            
             if (Design.IsDesignMode)
             {
                 TotalRateString = "1 024 kB";
             }
-
-            
-            
-
         }
 
         [ImportingConstructor]
@@ -46,7 +46,7 @@ namespace Asv.Drones.Gui.Uav
         }
 
 
-        public int Order => -2;
+        public override int Order => -2;
 
         [Reactive]
         public string TotalRateString { get; set; }
