@@ -1,6 +1,7 @@
 ﻿using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Avalonia.Map;
+using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Media;
@@ -9,9 +10,9 @@ using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav
 {
-    public class RoiAnchor : MapAnchorBase
+    public class RoiAnchor : FlightAnchorBase
     {
-        public RoiAnchor(IVehicle vehicle) : base(new(UavWellKnownUri.UavAnchorsBaseUri + $"/{vehicle.FullId}/roi"))
+        public RoiAnchor(IVehicle vehicle) : base(vehicle, "roi")
         {
             Size = 32;
             OffsetX = OffsetXEnum.Center;

@@ -204,7 +204,7 @@
   </data>
   <data name="SettingsView_RebootRequiredDescription" xml:space="preserve">
     <value>You must reload the program to apply the changes.</value>
-
+  </data>
   <data name="SettingsThemeViewModel_Distance" xml:space="preserve">
     <value>Distance</value>
   </data>

@@ -10,11 +10,11 @@ using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav
 {
-    public class UavTrackPolygon : MapAnchorBase
+    public class UavTrackPolygon : FlightAnchorBase
     {
         private readonly ReadOnlyObservableCollection<GeoPoint> _path;
 
-        public UavTrackPolygon(IVehicle vehicle) : base(new(UavWellKnownUri.UavAnchorsBaseUri + $"/{vehicle.FullId}/track"))
+        public UavTrackPolygon(IVehicle vehicle) : base(vehicle, "track-polygon")
         {
             ZOrder = -1000;
             OffsetX = 0;
@@ -26,7 +26,7 @@ namespace Asv.Drones.Gui.Uav
                 .Where(_ => _.Latitude != 0 && _.Longitude != 0)
                 .Sample(TimeSpan.FromSeconds(1), RxApp.MainThreadScheduler)
                 .Select(_ => _)
-                .ToObservableChangeSet(limitSizeTo:100) // TODO: move history size to config
+                .ToObservableChangeSet(limitSizeTo:100) // TODO: move history size to settings
                 .Bind(out _path)
                 .Subscribe()
                 .DisposeWith(Disposable);

@@ -15,6 +15,7 @@ namespace Asv.Drones.Gui.Uav
         public LandAnchorActionViewModel(IVehicle vehicle, IMap map,ILogService log) : base(vehicle, map,log)
         {
             _log = log;
+            // TODO: Localize
             Title = "Immediately land";
             Icon = MaterialIconKind.ArrowDownBoldHexagonOutline;
             Vehicle.IsArmed.ObserveOn(RxApp.MainThreadScheduler).Select(_ => _).Subscribe(CanExecute).DisposeWith(Disposable);
@@ -22,6 +23,7 @@ namespace Asv.Drones.Gui.Uav
 
         protected override async Task ExecuteImpl(CancellationToken cancel)
         {
+            // TODO: Localize
             _log.Info(LogName, $"User send DoLand for {Vehicle.Name.Value}");
             await Vehicle.DoLand(cancel);
         }

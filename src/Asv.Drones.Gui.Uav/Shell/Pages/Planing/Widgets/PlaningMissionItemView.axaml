@@ -1,0 +1,21 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:CompileBindings="True"
+             x:Class="Asv.Drones.Gui.Uav.PlaningMissionItemView"
+             x:DataType="uav:PlaningMissionItemViewModel">
+    <Design.DataContext>
+        <uav:PlaningMissionItemViewModel/>
+    </Design.DataContext>
+    <Grid IsSharedSizeScope="True" DoubleTapped="InputElement_OnDoubleTapped">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Index"/>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="Command"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0" Text="{Binding Index}"/>
+        <TextBlock Grid.Column="1" Text="{Binding Title}"/>
+    </Grid>
+</UserControl>

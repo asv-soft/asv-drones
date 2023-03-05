@@ -35,10 +35,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controls\Map\" />
     <Folder Include="Services\MapService\" />
     <Folder Include="Services\Theme\" />
-    <Folder Include="Shell\Pages\Flight\Layers\" />
     <Folder Include="Shell\Pages\Settings\Map\" />
   </ItemGroup>
 
@@ -47,9 +45,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>RS.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Shell\Pages\Flight\FlightView.axaml.cs">
-      <DependentUpon>FlightView.axaml</DependentUpon>
     </Compile>
     <Compile Update="Shell\Pages\Planing\PlaningView.axaml.cs">
       <DependentUpon>PlaningView.axaml</DependentUpon>

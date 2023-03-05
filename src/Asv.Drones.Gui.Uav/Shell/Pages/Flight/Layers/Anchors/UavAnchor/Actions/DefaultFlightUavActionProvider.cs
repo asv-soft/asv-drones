@@ -5,14 +5,14 @@ using Asv.Mavlink;
 
 namespace Asv.Drones.Gui.Uav
 {
-    [Export(typeof(IUavActionProvider))]
+    [Export(typeof(IFlightUavActionProvider))]
     [PartCreationPolicy(CreationPolicy.Shared)]
-    public class DefaultUavActionProvider:IUavActionProvider
+    public class DefaultFlightUavActionProvider:IFlightUavActionProvider
     {
         private readonly ILogService _log;
 
         [ImportingConstructor]
-        public DefaultUavActionProvider(ILogService log)
+        public DefaultFlightUavActionProvider(ILogService log)
         {
             _log = log;
         }

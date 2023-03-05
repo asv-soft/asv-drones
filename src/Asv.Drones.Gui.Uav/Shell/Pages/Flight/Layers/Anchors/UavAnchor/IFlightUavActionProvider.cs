@@ -4,7 +4,7 @@ using Asv.Mavlink;
 
 namespace Asv.Drones.Gui.Uav
 {
-    public interface IUavActionProvider
+    public interface IFlightUavActionProvider
     {
         public IEnumerable<UavActionActionBase> CreateActions(IVehicle vehicle, IMap map);
     }

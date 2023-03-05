@@ -79,7 +79,7 @@
                         IsOpen="{TemplateBinding IsSelected}"
                         PlacementTarget="PART_ContentPresenter"
                     >
-                        <Border Background="{DynamicResource SolidBackgroundFillColorBase}" Padding="10" CornerRadius="{DynamicResource ControlCornerRadius}" >
+                        <Border IsVisible="{TemplateBinding IsPopupNotEmpty}" Background="{DynamicResource SolidBackgroundFillColorBase}" Padding="10" CornerRadius="{DynamicResource ControlCornerRadius}" >
                             <StackPanel>
                                 <TextBlock Text="{TemplateBinding Description}"/>
                                 <ItemsControl Items="{TemplateBinding Actions}">

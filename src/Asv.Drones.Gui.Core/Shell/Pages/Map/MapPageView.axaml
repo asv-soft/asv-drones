@@ -2,16 +2,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:map="clr-namespace:Asv.Avalonia.Map;assembly=Asv.Drones.Gui.Map"
              xmlns:core="clr-namespace:Asv.Drones.Gui.Core"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:map="clr-namespace:Asv.Avalonia.Map;assembly=Asv.Drones.Gui.Map"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Asv.Drones.Gui.Core.FlightView"
-             x:DataType="core:FlightViewModel">
-	<Design.DataContext>
-		<core:FlightViewModel/>
-	</Design.DataContext>
-	<Grid ShowGridLines="True" ColumnDefinitions="*,5,3*,5,*" RowDefinitions="Auto,3*,5,*">
+             x:DataType="core:MapPageViewModel"
+             x:Class="Asv.Drones.Gui.Core.MapPageView">
+    <Design.DataContext>
+        <core:MapPageViewModel/>
+    </Design.DataContext>
+    <Grid d:ShowGridLines="True" ColumnDefinitions="*,5,3*,5,*" RowDefinitions="Auto,3*,5,*">
         <map:MapView
 			MapProvider="{CompiledBinding MapProvider}"
 			SelectedItem="{Binding SelectedItem}"
@@ -56,28 +56,39 @@
 				</DataTemplate>
 			</map:MapView.ItemTemplate>
 		</map:MapView>
-        <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" >
-
+        <ScrollViewer Margin="8,8,0,8" Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Background="{x:Null}">
+	        <ItemsControl Items="{Binding LeftWidgets}" Background="{x:Null}">
+		        <ItemsControl.ItemsPanel>
+			        <ItemsPanelTemplate>
+				        <StackPanel Spacing="8"/>
+			        </ItemsPanelTemplate>
+		        </ItemsControl.ItemsPanel>
+	        </ItemsControl>
         </ScrollViewer>
-        <ScrollViewer Grid.Row="0" Grid.Column="4" Grid.RowSpan="4" >
-
+        <ScrollViewer Margin="0,8,8,8" Grid.Row="0" Grid.Column="4" Grid.RowSpan="4" Background="{x:Null}" >
+	        <ItemsControl Items="{Binding RightWidgets}" Background="{x:Null}">
+		        <ItemsControl.ItemsPanel>
+			        <ItemsPanelTemplate>
+				        <StackPanel Spacing="8" />
+			        </ItemsPanelTemplate>
+		        </ItemsControl.ItemsPanel>
+	        </ItemsControl>
         </ScrollViewer>
 
-        <!-- <Grid Grid.Row="3" Grid.Column="2" Margin="5"> -->
-        <!--     <Border Opacity="0.5" Background="Black" CornerRadius="10"/> -->
-        <!--     <TabControl AutoScrollToSelectedItem="True" Items="{Binding Tabs}" TabStripPlacement="Bottom" Classes="Scrollable"> -->
-        <!--         <TabControl.ItemTemplate> -->
-        <!--             <DataTemplate x:DataType="core:IMainShellMapTab"> -->
-        <!--                 <StackPanel Orientation="Horizontal"> -->
-        <!--                     <avalonia:MaterialIcon Kind="{CompiledBinding Icon}" Width="24" Height="24"/> -->
-        <!--                     <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="{CompiledBinding Title}"/> -->
-        <!--                 </StackPanel> -->
-        <!--             </DataTemplate> -->
-        <!--         </TabControl.ItemTemplate> -->
-        <!--     </TabControl> -->
-        <!-- </Grid> -->
-        <GridSplitter Width="5" Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" Background="Black" Opacity="0" ResizeBehavior="PreviousAndNext"/>
-        <GridSplitter Width="5" Grid.Row="0" Grid.RowSpan="4" Grid.Column="3" Background="Black" Opacity="0" ResizeBehavior="PreviousAndNext"/>
-        <GridSplitter HorizontalAlignment="Stretch" Height="5" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="1" Background="Black" Opacity="0" ResizeBehavior="PreviousAndNext"/>
+        <Grid Grid.Row="3" Grid.Column="2" Margin="5" Background="Transparent"> 
+	        <TabControl AutoScrollToSelectedItem="True" Items="{Binding BottomWidgets}" TabStripPlacement="Bottom" Background="Transparent">
+		        <TabControl.ItemTemplate>
+			        <DataTemplate x:DataType="core:IMapWidget">
+				        <StackPanel Orientation="Horizontal" Spacing="8">
+					        <avalonia:MaterialIcon Kind="{CompiledBinding Icon}" Width="24" Height="24"/> 
+					        <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="{CompiledBinding Title}"/>
+				        </StackPanel>
+			        </DataTemplate>
+		        </TabControl.ItemTemplate>
+	        </TabControl>
+        </Grid>
+        <GridSplitter Width="5" Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" Background="Transparent" IsHitTestVisible="True" ResizeBehavior="PreviousAndNext"/>
+        <GridSplitter Width="5" Grid.Row="0" Grid.RowSpan="4" Grid.Column="3" Background="Transparent" IsHitTestVisible="True" Opacity="1" ResizeBehavior="PreviousAndNext"/>
+        <GridSplitter HorizontalAlignment="Stretch" Height="5" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="1" Background="Transparent" IsHitTestVisible="True" ResizeBehavior="PreviousAndNext"/>
 	</Grid>
 </UserControl>

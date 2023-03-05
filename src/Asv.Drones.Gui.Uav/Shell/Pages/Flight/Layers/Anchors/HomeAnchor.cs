@@ -1,6 +1,7 @@
 ﻿using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Avalonia.Map;
+using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Media;
@@ -9,9 +10,9 @@ using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav
 {
-    public class HomeAnchor : MapAnchorBase
+    public class HomeAnchor : FlightAnchorBase
     {
-        public HomeAnchor(IVehicle vehicle): base(new(UavWellKnownUri.UavAnchorsBaseUri + $"/{vehicle.FullId}/home"))
+        public HomeAnchor(IVehicle vehicle): base(vehicle, "home")
         {
             Size = 32;
             OffsetX = OffsetXEnum.Center;
@@ -29,6 +30,8 @@ namespace Asv.Drones.Gui.Uav
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(_ =>
                 {
+                    // TODO: User Localize
+                    // TODO: User IlocalizationService for speed, time and distance units 
                     Description = $"Launch of       {vehicle.Name.Value}\n" +
                                   $"Distance to UAV {vehicle.HomeDistance.Value:F0} m";
                 })
