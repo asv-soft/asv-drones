@@ -366,15 +366,30 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+
+        ///   Looks up a localized string similar to You must reload the program to apply the changes..
+        /// </summary>
+        public static string SettingsView_RebootRequiredDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_RebootRequiredDescription", resourceCulture);
+
         ///   Looks up a localized string similar to Latitude &amp; Longitude.
         /// </summary>
         public static string SettingsThemeViewModel_LatitudeLongitude {
             get {
                 return ResourceManager.GetString("SettingsThemeViewModel_LatitudeLongitude", resourceCulture);
+
             }
         }
         
         /// <summary>
+
+        ///   Looks up a localized string similar to Reboot required.
+        /// </summary>
+        public static string SettingsView_RebootRequiredTitle {
+            get {
+                return ResourceManager.GetString("SettingsView_RebootRequiredTitle", resourceCulture);
+
         ///   Looks up a localized string similar to Change the current measure units of latitude &amp; longitude..
         /// </summary>
         public static string SettingsThemeViewModel_LatitudeLongitudeDescription {
@@ -398,6 +413,7 @@ namespace Asv.Drones.Gui.Core {
         public static string SettingsThemeViewModel_LatitudeLongtitudeDegreesMinutesSeconds {
             get {
                 return ResourceManager.GetString("SettingsThemeViewModel_LatitudeLongtitudeDegreesMinutesSeconds", resourceCulture);
+
             }
         }
         
