@@ -23,6 +23,13 @@ namespace Asv.Drones.Gui.Core
         public string DisplayName { get; }
         public CultureInfo Culture => _culture ??= _getCulture();
     }
+    
+    public enum VelocityUnits
+    {
+        MetersPerSecond,
+        KilometersPerHour,
+        MilesPerHour
+    }
 
     public enum AltitudeUnits
     {
@@ -42,6 +49,19 @@ namespace Asv.Drones.Gui.Core
         DegreesMinutesSeconds
     }
 
+    public class VelocityUnitItem
+    {
+        public VelocityUnitItem(VelocityUnits id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+        
+        public VelocityUnits Id { get; }
+        
+        public string Name { get; }
+    }
+    
     public class AltitudeUnitItem
     {
         public AltitudeUnitItem(AltitudeUnits id, string name)
@@ -98,6 +118,10 @@ namespace Asv.Drones.Gui.Core
         IRxEditableValue<LatitudeLongitudeUnitItem> CurrentLatitudeLongitudeUnit { get; }
         IEnumerable<LatitudeLongitudeUnitItem> LatitudeLongitudeUnits { get; }
         
+        IRxEditableValue<VelocityUnitItem> CurrentVelocityUnit { get; }
+        IEnumerable<VelocityUnitItem> VelocityUnits { get; }
+
+        
         #region Units
 
         /// <summary>
@@ -126,6 +150,9 @@ namespace Asv.Drones.Gui.Core
         IMeasureUnit<double> Distance { get; }
 
         IMeasureUnit<double> LatitudeAndLongitude { get; }
+        
+        IMeasureUnit<double> Velocity { get; }
+
         #endregion
     }
 

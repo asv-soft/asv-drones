@@ -67,6 +67,12 @@ namespace Asv.Drones.Gui.Core
             this.WhenAnyValue(_ => _.SelectedLatitudeLongitudeAltitudeUnit)
                 .Subscribe(_localization.CurrentLatitudeLongitudeUnit)
                 .DisposeItWith(Disposable);
+            
+            _localization.CurrentVelocityUnit.Subscribe(_ => SelectedVelocityUnit = _)
+                .DisposeItWith(Disposable);
+            this.WhenAnyValue(_ => _.SelectedVelocityUnit)
+                .Subscribe(_localization.CurrentVelocityUnit)
+                .DisposeItWith(Disposable);
         }
 
         public IEnumerable<ThemeItem> AppThemes => _themeService.Themes;
@@ -103,5 +109,11 @@ namespace Asv.Drones.Gui.Core
         public LatitudeLongitudeUnitItem SelectedLatitudeLongitudeAltitudeUnit { get; set; }
 
         public IEnumerable<LatitudeLongitudeUnitItem> LatitudeLongitudeUnits => _localization.LatitudeLongitudeUnits;
+        
+        
+        [Reactive]
+        public VelocityUnitItem SelectedVelocityUnit { get; set; }
+
+        public IEnumerable<VelocityUnitItem> VelocityUnits => _localization.VelocityUnits;
     }
 }

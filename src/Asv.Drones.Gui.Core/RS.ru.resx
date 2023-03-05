@@ -235,4 +235,31 @@
 		<value>nmi</value>
 
 	</data>
+	<data name="SettingsThemeViewModel_VelocityMetersPerSecondUnit" xml:space="preserve">
+		<value>м/с</value>
+	</data>
+	<data name="SettingsThemeViewModel_VelocityKilometersPerHourUnit" xml:space="preserve">
+		<value>км/ч</value>
+	</data>
+	<data name="SettingsThemeViewModel_VelocityMilesPerHourUnit" xml:space="preserve">
+		<value>миль/ч</value>
+	</data>
+	<data name="SettingsThemeViewModel_RelativeTimeMillisecondsUnit" xml:space="preserve">
+		<value>мс</value>
+	</data>
+	<data name="SettingsThemeViewModel_RelativeTimeSecondsUnit" xml:space="preserve">
+		<value>с</value>
+	</data>
+	<data name="SettingsThemeView_MeasurementUnits_Header_Title" xml:space="preserve">
+		<value>Единицы измерения</value>
+	</data>
+	<data name="SettingsThemeView_MeasurementUnits_Header_Description" xml:space="preserve">
+		<value>В этом разделе можно настроить единицы измерения для различных параметров.</value>
+	</data>
+	<data name="SettingsThemeViewModel_Velocity" xml:space="preserve">
+		<value>Скорость</value>
+	</data>
+	<data name="SettingsThemeViewModel_VelocityDescription" xml:space="preserve">
+		<value>Измените текущие единицы измерения скорости.</value>
+	</data>
 </root>

@@ -204,6 +204,24 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to In this section you can specialize measurement units for various parameters..
+        /// </summary>
+        public static string SettingsThemeView_MeasurementUnits_Header_Description {
+            get {
+                return ResourceManager.GetString("SettingsThemeView_MeasurementUnits_Header_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Measurement units.
+        /// </summary>
+        public static string SettingsThemeView_MeasurementUnits_Header_Title {
+            get {
+                return ResourceManager.GetString("SettingsThemeView_MeasurementUnits_Header_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Altitude.
         /// </summary>
         public static string SettingsThemeViewModel_Altitude {
@@ -398,6 +416,69 @@ namespace Asv.Drones.Gui.Core {
         public static string SettingsThemeViewModel_LatitudeLongtitudeDegreesMinutesSeconds {
             get {
                 return ResourceManager.GetString("SettingsThemeViewModel_LatitudeLongtitudeDegreesMinutesSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ms.
+        /// </summary>
+        public static string SettingsThemeViewModel_RelativeTimeMillisecondsUnit {
+            get {
+                return ResourceManager.GetString("SettingsThemeViewModel_RelativeTimeMillisecondsUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to s.
+        /// </summary>
+        public static string SettingsThemeViewModel_RelativeTimeSecondsUnit {
+            get {
+                return ResourceManager.GetString("SettingsThemeViewModel_RelativeTimeSecondsUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velocity.
+        /// </summary>
+        public static string SettingsThemeViewModel_Velocity {
+            get {
+                return ResourceManager.GetString("SettingsThemeViewModel_Velocity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of velocity..
+        /// </summary>
+        public static string SettingsThemeViewModel_VelocityDescription {
+            get {
+                return ResourceManager.GetString("SettingsThemeViewModel_VelocityDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to km/h.
+        /// </summary>
+        public static string SettingsThemeViewModel_VelocityKilometersPerHourUnit {
+            get {
+                return ResourceManager.GetString("SettingsThemeViewModel_VelocityKilometersPerHourUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SettingsThemeViewModel_VelocityMetersPerSecondUnit {
+            get {
+                return ResourceManager.GetString("SettingsThemeViewModel_VelocityMetersPerSecondUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mi/h.
+        /// </summary>
+        public static string SettingsThemeViewModel_VelocityMilesPerHourUnit {
+            get {
+                return ResourceManager.GetString("SettingsThemeViewModel_VelocityMilesPerHourUnit", resourceCulture);
             }
         }
         
