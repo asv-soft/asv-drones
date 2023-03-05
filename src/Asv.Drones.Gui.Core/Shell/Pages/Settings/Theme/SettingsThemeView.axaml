@@ -45,7 +45,7 @@
             </core:OptionsDisplayItem.ActionButton>
 
         </core:OptionsDisplayItem >
-        <core:OptionsDisplayItem Header="Flow direction"
+        <core:OptionsDisplayItem Margin="0,0,0,8" Header="{x:Static core:RS.SettingsThemeViewModel_FlowDirection}"
                                  Icon="AlignRight"
                                  Description="{x:Static core:RS.SettingsThemeViewModel_FlowDirectionDescription}">
 
@@ -59,6 +59,55 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
 				</ComboBox>
+            </core:OptionsDisplayItem.ActionButton>
+
+        </core:OptionsDisplayItem>
+        <core:OptionsDisplayItem Margin="0,0,0,8" Header="{x:Static core:RS.SettingsThemeViewModel_Distance}"
+                                 Icon="Ruler"
+                                 Description="{x:Static core:RS.SettingsThemeViewModel_DistanceDescription}">
+
+           
+            <core:OptionsDisplayItem.ActionButton>
+                <ComboBox MinWidth="150" SelectedItem="{Binding SelectedDistanceAltitudeUnit}" 
+                          Items="{Binding DistanceUnits}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </core:OptionsDisplayItem.ActionButton>
+
+        </core:OptionsDisplayItem>
+        <core:OptionsDisplayItem Margin="0,0,0,8" Header="{x:Static core:RS.SettingsThemeViewModel_Altitude}"
+                                 Icon="Ruler"
+                                 Description="{x:Static core:RS.SettingsThemeViewModel_AltitudeDescription}">
+
+            <core:OptionsDisplayItem.ActionButton>
+                <ComboBox MinWidth="150" SelectedItem="{Binding SelectedAltitudeAltitudeUnit}" 
+                          Items="{Binding AltitudeUnits}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </core:OptionsDisplayItem.ActionButton>
+
+        </core:OptionsDisplayItem>
+        <core:OptionsDisplayItem Margin="0,0,0,8" Header="{x:Static core:RS.SettingsThemeViewModel_LatitudeLongitude}"
+                                 Icon="Ruler"
+                                 Description="{x:Static core:RS.SettingsThemeViewModel_LatitudeLongitudeDescription}">
+
+            <core:OptionsDisplayItem.ActionButton>
+                <ComboBox MinWidth="150" SelectedItem="{Binding SelectedLatitudeLongitudeAltitudeUnit}" 
+                          Items="{Binding LatitudeLongitudeUnits}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </core:OptionsDisplayItem.ActionButton>
 
         </core:OptionsDisplayItem>

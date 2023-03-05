@@ -14,8 +14,6 @@ namespace Asv.Drones.Gui.Core
         public FlowDirection? FlowDirection { get; set; }
     }
 
-    
-
     [Export(typeof(IThemeService))]
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class ThemeService : ServiceWithConfigBase<ThemeServiceConfig>, IThemeService
@@ -62,7 +60,6 @@ namespace Asv.Drones.Gui.Core
             flowDirection ??= _flowDirections.First();
             FlowDirection = new RxValue<FlowDirectionItem>(flowDirection).DisposeItWith(Disposable);
             FlowDirection.Subscribe(SetFlowDirection).DisposeItWith(Disposable);
-
         }
 
         public IEnumerable<ThemeItem> Themes =>_themes;

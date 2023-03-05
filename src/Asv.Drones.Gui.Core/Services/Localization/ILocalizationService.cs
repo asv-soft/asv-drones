@@ -24,6 +24,60 @@ namespace Asv.Drones.Gui.Core
         public CultureInfo Culture => _culture ??= _getCulture();
     }
 
+    public enum AltitudeUnits
+    {
+        Meters,
+        Feets
+    }
+
+    public enum DistanceUnits
+    {
+        Meters,
+        NauticalMiles
+    }
+
+    public enum LatitudeLongitudeUnits
+    {
+        Degrees,
+        DegreesMinutesSeconds
+    }
+
+    public class AltitudeUnitItem
+    {
+        public AltitudeUnitItem(AltitudeUnits id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+
+        public AltitudeUnits Id { get; }
+        public string Name { get; }
+    }
+
+    public class DistanceUnitItem
+    {
+        public DistanceUnitItem(DistanceUnits id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+
+        public DistanceUnits Id { get; }
+        public string Name { get; }
+    }
+
+    public class LatitudeLongitudeUnitItem
+    {
+        public LatitudeLongitudeUnitItem(LatitudeLongitudeUnits id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+
+        public LatitudeLongitudeUnits Id { get; }
+        public string Name { get; }
+    }
+
     public interface ILocalizationService
     {
         /// <summary>
@@ -34,7 +88,16 @@ namespace Asv.Drones.Gui.Core
         /// Returns the list of available languages
         /// </summary>
         IEnumerable<LanguageInfo> AvailableLanguages { get; }
+        
+        IRxEditableValue<AltitudeUnitItem> CurrentAltitudeUnit { get; }
+        IEnumerable<AltitudeUnitItem> AltitudeUnits { get; }
 
+        IRxEditableValue<DistanceUnitItem> CurrentDistanceUnit { get; }
+        IEnumerable<DistanceUnitItem> DistanceUnits { get; }
+        
+        IRxEditableValue<LatitudeLongitudeUnitItem> CurrentLatitudeLongitudeUnit { get; }
+        IEnumerable<LatitudeLongitudeUnitItem> LatitudeLongitudeUnits { get; }
+        
         #region Units
 
         /// <summary>
@@ -58,6 +121,11 @@ namespace Asv.Drones.Gui.Core
         /// <returns></returns>
         IMeasureUnit<long> ByteSize { get; }
 
+        IMeasureUnit<double> Altitude { get; }
+
+        IMeasureUnit<double> Distance { get; }
+
+        IMeasureUnit<double> LatitudeAndLongitude { get; }
         #endregion
     }
 

@@ -15,6 +15,7 @@ namespace Asv.Drones.Gui.Core
         private readonly ILocalizationService _localization;
         public int Order => 0;
 
+
         public SettingsThemeViewModel() : base(new(WellKnownUri.ShellPageSettingsTheme))
         {
             
@@ -27,16 +28,41 @@ namespace Asv.Drones.Gui.Core
             _localization = localization;
 
             _themeService.CurrentTheme.Subscribe(_ => SelectedTheme = _).DisposeItWith(Disposable);
-            this.WhenAnyValue(_ => _.SelectedTheme).Subscribe(_themeService.CurrentTheme).DisposeItWith(Disposable);
+            this.WhenAnyValue(_ => _.SelectedTheme)
+                .Subscribe(_themeService.CurrentTheme)
+                .DisposeItWith(Disposable);
 
-            _themeService.FlowDirection.Subscribe(_ => FlowDirection = _).DisposeItWith(Disposable);
-            this.WhenAnyValue(_ => _.FlowDirection).Subscribe(_themeService.FlowDirection).DisposeItWith(Disposable);
+            _themeService.FlowDirection.Subscribe(_ => FlowDirection = _)
+                .DisposeItWith(Disposable);
+            this.WhenAnyValue(_ => _.FlowDirection)
+                .Subscribe(_themeService.FlowDirection)
+                .DisposeItWith(Disposable);
 
             this.WhenAnyValue(_ => _.SelectedLanguage)
                 .Subscribe(_ => IsRebootRequired = _ != _localization.CurrentLanguage.Value).DisposeItWith(Disposable);
             
             _localization.CurrentLanguage.Subscribe(_ => SelectedLanguage = _).DisposeItWith(Disposable);
-            this.WhenAnyValue(_ => _.SelectedLanguage).Subscribe(_localization.CurrentLanguage).DisposeItWith(Disposable);
+            this.WhenAnyValue(_ => _.SelectedLanguage)
+                .Subscribe(_localization.CurrentLanguage)
+                .DisposeItWith(Disposable);
+
+            _localization.CurrentAltitudeUnit.Subscribe(_ => SelectedAltitudeAltitudeUnit = _)
+                .DisposeItWith(Disposable);
+            this.WhenAnyValue(_ => _.SelectedAltitudeAltitudeUnit)
+                .Subscribe(_localization.CurrentAltitudeUnit)
+                .DisposeItWith(Disposable);
+            
+            _localization.CurrentDistanceUnit.Subscribe(_ => SelectedDistanceAltitudeUnit = _)
+                .DisposeItWith(Disposable);
+            this.WhenAnyValue(_ => _.SelectedDistanceAltitudeUnit)
+                .Subscribe(_localization.CurrentDistanceUnit)
+                .DisposeItWith(Disposable);
+
+            _localization.CurrentLatitudeLongitudeUnit.Subscribe(_ => SelectedLatitudeLongitudeAltitudeUnit = _)
+                .DisposeItWith(Disposable);
+            this.WhenAnyValue(_ => _.SelectedLatitudeLongitudeAltitudeUnit)
+                .Subscribe(_localization.CurrentLatitudeLongitudeUnit)
+                .DisposeItWith(Disposable);
         }
 
         public IEnumerable<ThemeItem> AppThemes => _themeService.Themes;
@@ -55,9 +81,26 @@ namespace Asv.Drones.Gui.Core
         public LanguageInfo SelectedLanguage { get; set; }
 
         public IEnumerable<LanguageInfo> AppLanguages => _localization.AvailableLanguages;
-        
+       
+
         
         [Reactive]
         public bool IsRebootRequired { get; private set; }
+
+        [Reactive]
+        public AltitudeUnitItem SelectedAltitudeAltitudeUnit { get; set; }
+
+        public IEnumerable<AltitudeUnitItem> AltitudeUnits => _localization.AltitudeUnits;
+
+        [Reactive]
+        public DistanceUnitItem SelectedDistanceAltitudeUnit { get; set; }
+
+        public IEnumerable<DistanceUnitItem> DistanceUnits => _localization.DistanceUnits;
+
+        [Reactive]
+        public LatitudeLongitudeUnitItem SelectedLatitudeLongitudeAltitudeUnit { get; set; }
+
+        public IEnumerable<LatitudeLongitudeUnitItem> LatitudeLongitudeUnits => _localization.LatitudeLongitudeUnits;
+
     }
 }
