@@ -41,7 +41,8 @@ namespace Asv.Drones.Gui.Core
         FilePickerFileType StoreFileFilter { get; }
         string GetSuggestedFileNameForStore();
         string DefaultStoreFileExtension { get; }
-
+        
+       
         /// <summary>
         /// Create new store
         /// </summary>

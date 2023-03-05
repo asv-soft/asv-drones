@@ -19,7 +19,7 @@
         </Style>
     </UserControl.Styles>
 	<DockPanel>
-        <Grid DockPanel.Dock="Top" Name="TitleBarHost" ColumnDefinitions="Auto,Auto,*,Auto" >
+        <Grid DockPanel.Dock="Top" Name="TitleBarHost" ColumnDefinitions="Auto,Auto,*,Auto" HorizontalAlignment="Stretch">
             <Image Margin="13 10"
                    IsHitTestVisible="False"
                    Source="/Assets/icon.ico"
@@ -47,12 +47,13 @@
                     </Style>
                 </Menu.Styles>
             </Menu>
-            <!-- <Border MinWidth="150" Margin="5" CornerRadius="{DynamicResource ControlCornerRadius}" Grid.Column="2" HorizontalAlignment="Center" Background="#366ace"> -->
-            <!--     <ComboBox HorizontalAlignment="Stretch" Foreground="White" Background="#366ace" BorderThickness="0" > -->
-            <!--         <ComboBoxItem>IDLE MODE</ComboBoxItem> -->
-            <!--         <ComboBoxItem>ILS MODE</ComboBoxItem> -->
-            <!--     </ComboBox> -->
-            <!-- </Border> -->
+            <Border Padding="10,5" Margin="5" CornerRadius="{DynamicResource ControlCornerRadius}" VerticalAlignment="Center"  Grid.Column="2" HorizontalAlignment="Center" Background="#366ace">
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <avalonia:MaterialIcon Width="20" Height="20" Kind="DatabaseOutline" Foreground="#40b5e0"/>
+                    <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>    
+                </StackPanel>
+            </Border>
+            
         </Grid>
         <ItemsControl Items="{Binding StatusItems}" Height="25" DockPanel.Dock="Bottom" Background="{DynamicResource InfoBarErrorSeverityBackgroundBrush}">
 			<ItemsControl.ItemContainerTheme>

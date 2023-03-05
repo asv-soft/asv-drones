@@ -7,6 +7,7 @@ using System.ComponentModel.Composition;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Common;
+using Asv.Drones.Core;
 using DynamicData.Binding;
 using Material.Icons;
 
@@ -64,6 +65,7 @@ namespace Asv.Drones.Gui.Core
 
         [ImportingConstructor]
         public ShellViewModel(
+            IAppService app,
             INavigationService navigation, 
             ILogService logService, 
             [ImportMany(HeaderMenuItem.UriString)] IEnumerable<IViewModelProvider<IHeaderMenuItem>> headerMenuProviders,
@@ -77,6 +79,12 @@ namespace Asv.Drones.Gui.Core
 
             _navigation.Init(this);
 
+            
+            app.Store.Where(_=>_!=null)
+                .Select(_=>Path.GetFileNameWithoutExtension(Path.GetFileName(_.SourceName)))
+                .Subscribe(_=>Title = _)
+                .DisposeItWith(Disposable);
+            
             #region Header menu
 
             headerMenuProviders.Select(_ => _.Items)
@@ -145,7 +153,9 @@ namespace Asv.Drones.Gui.Core
 
             #endregion
         }
+
         
+
         [Reactive]
         public string Title { get; set; } = null!;
 

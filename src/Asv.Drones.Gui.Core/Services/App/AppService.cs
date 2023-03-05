@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Composition;
+using System.Reactive.Linq;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Core;
@@ -20,6 +21,7 @@ namespace Asv.Drones.Gui.Core
         private readonly IEnumerable<Lazy<IAppStoreCopyProvider>> _storeCopyProviders;
         private readonly RxValue<IAppStore> _store;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly RxValue<string> _storeName;
         private const string _defaultStoreFileExtension = "asv";
 
         [ImportingConstructor]
@@ -48,16 +50,19 @@ namespace Asv.Drones.Gui.Core
             {
                 CreateStoreDefault();
             }
-            #endregion
             
+            
+            
+            #endregion
+
+            
+
         }
 
-        
+
 
         public IAppInfo Info { get; }
         public IAppPathInfo Paths { get; }
-
-
         public IRxValue<IAppStore> Store => _store;
 
         public FilePickerFileType StoreFileFilter { get; } = new("Asv.Drones files")
@@ -87,6 +92,7 @@ namespace Asv.Drones.Gui.Core
         }
 
         public string DefaultStoreFileExtension => _defaultStoreFileExtension;
+        
 
         public void CreateStore(string filePath, bool copyFromCurrent)
         {
