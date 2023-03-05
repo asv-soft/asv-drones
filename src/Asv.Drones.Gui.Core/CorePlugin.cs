@@ -60,7 +60,8 @@ namespace Asv.Drones.Gui.Core
 #endif
             var appData = Path.Combine(baseDirectory, "AsvDronesGui");
             var configPath = Path.Combine(appData, "config.json");
-            return new AppPathInfo(appData,configPath);
+            var appStoreFolder = Path.Combine(appData, "store");
+            return new AppPathInfo(appData,configPath,appStoreFolder);
         }
 
  
