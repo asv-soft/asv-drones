@@ -198,6 +198,13 @@
   <data name="ItemsRate_GigaHerzUnit" xml:space="preserve">
     <value>GHz</value>
   </data>
+
+  <data name="SettingsView_RebootRequiredTitle" xml:space="preserve">
+    <value>Reboot required</value>
+  </data>
+  <data name="SettingsView_RebootRequiredDescription" xml:space="preserve">
+    <value>You must reload the program to apply the changes.</value>
+
   <data name="SettingsThemeViewModel_Distance" xml:space="preserve">
     <value>Distance</value>
   </data>
@@ -245,5 +252,6 @@
   </data>
   <data name="SettingsThemeViewModel_DistanceInternationalNauticalMileUnit" xml:space="preserve">
     <value>nmi</value>
+
   </data>
 </root>

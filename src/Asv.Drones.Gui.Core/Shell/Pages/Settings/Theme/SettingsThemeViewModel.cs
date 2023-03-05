@@ -9,7 +9,7 @@ namespace Asv.Drones.Gui.Core
 
     [Export(typeof(ISettingsPart))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class SettingsThemeViewModel : ViewModelBase,ISettingsPart
+    public class SettingsThemeViewModel : ViewModelBase, ISettingsPart
     {
         private readonly IThemeService _themeService;
         private readonly ILocalizationService _localization;
@@ -22,7 +22,7 @@ namespace Asv.Drones.Gui.Core
         }
 
         [ImportingConstructor]
-        public SettingsThemeViewModel(IThemeService themeService,ILocalizationService localization):this()
+        public SettingsThemeViewModel(IThemeService themeService, ILocalizationService localization) : this()
         {
             _themeService = themeService;
             _localization = localization;
@@ -38,6 +38,9 @@ namespace Asv.Drones.Gui.Core
                 .Subscribe(_themeService.FlowDirection)
                 .DisposeItWith(Disposable);
 
+            this.WhenAnyValue(_ => _.SelectedLanguage)
+                .Subscribe(_ => IsRebootRequired = _ != _localization.CurrentLanguage.Value).DisposeItWith(Disposable);
+            
             _localization.CurrentLanguage.Subscribe(_ => SelectedLanguage = _).DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.SelectedLanguage)
                 .Subscribe(_localization.CurrentLanguage)
@@ -78,7 +81,12 @@ namespace Asv.Drones.Gui.Core
         public LanguageInfo SelectedLanguage { get; set; }
 
         public IEnumerable<LanguageInfo> AppLanguages => _localization.AvailableLanguages;
+       
+
         
+        [Reactive]
+        public bool IsRebootRequired { get; private set; }
+
         [Reactive]
         public AltitudeUnitItem SelectedAltitudeAltitudeUnit { get; set; }
 
@@ -93,5 +101,6 @@ namespace Asv.Drones.Gui.Core
         public LatitudeLongitudeUnitItem SelectedLatitudeLongitudeAltitudeUnit { get; set; }
 
         public IEnumerable<LatitudeLongitudeUnitItem> LatitudeLongitudeUnits => _localization.LatitudeLongitudeUnits;
+
     }
 }
