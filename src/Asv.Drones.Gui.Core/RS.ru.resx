@@ -185,7 +185,7 @@
 	</data>
 	<data name="SettingsView_RebootRequiredDescription" xml:space="preserve">
 		<value>Вы должны перезагрузить программу, чтобы применить изменения.</value>
-
+	</data>
 	<data name="SettingsThemeViewModel_Distance" xml:space="preserve">
 		<value>Расстояние</value>
 	</data>

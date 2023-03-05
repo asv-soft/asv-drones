@@ -1,3 +1,5 @@
+using ReactiveUI.Fody.Helpers;
+
 namespace Asv.Drones.Gui.Core
 {
     public abstract class SettingsPartBase : ViewModelBase, ISettingsPart
@@ -9,5 +11,7 @@ namespace Asv.Drones.Gui.Core
             
         }
         public abstract int Order { get; }
+        [Reactive]
+        public bool IsRebootRequired { get; set; }
     }
 }

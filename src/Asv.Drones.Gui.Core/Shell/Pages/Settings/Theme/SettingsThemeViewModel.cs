@@ -88,9 +88,7 @@ namespace Asv.Drones.Gui.Core
        
 
         
-        [Reactive]
-        public bool IsRebootRequired { get; private set; }
-
+        
         [Reactive]
         public AltitudeUnitItem SelectedAltitudeAltitudeUnit { get; set; }
 
