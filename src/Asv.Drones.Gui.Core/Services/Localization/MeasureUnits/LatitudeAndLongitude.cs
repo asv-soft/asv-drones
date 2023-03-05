@@ -25,7 +25,7 @@ public class LatitudeAndLongitude : IMeasureUnit<double>
         return _units switch
         {
             LatitudeLongitudeUnits.Degrees => $"{value:F5}",
-            LatitudeLongitudeUnits.DegreesMinutesSeconds => $"{value:F0}°{_minutes = (value - (int)value) * 60:F0}'{_minutes * 60:F2}''"
+            LatitudeLongitudeUnits.DegreesMinutesSeconds => $"{value:F0}°{_minutes = (value - (int)value) * 60:F0}'{(_minutes - (int)_minutes) * 60:F2}''"
         };
     }
 }
