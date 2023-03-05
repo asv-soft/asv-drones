@@ -199,6 +199,8 @@ namespace Asv.Drones.Gui.Core
         
         public IMeasureUnit<double> Velocity { get; private set; }
 
+        public IMeasureUnit<TimeSpan> RelativeTime { get; } = new RelativeTime();
+
         #endregion
 
     }
