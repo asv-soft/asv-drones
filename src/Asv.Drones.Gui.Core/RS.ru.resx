@@ -262,4 +262,10 @@
 	<data name="SettingsThemeViewModel_VelocityDescription" xml:space="preserve">
 		<value>Измените текущие единицы измерения скорости.</value>
 	</data>
+	<data name="HeaderFileMenu_Header" xml:space="preserve">
+		<value>Файл</value>
+	</data>
+	<data name="HeaderOpenMenu_Header" xml:space="preserve">
+		<value>Открыть</value>
+	</data>
 </root>

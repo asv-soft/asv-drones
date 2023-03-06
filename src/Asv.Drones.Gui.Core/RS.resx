@@ -281,4 +281,13 @@
   <data name="SettingsThemeViewModel_VelocityDescription" xml:space="preserve">
     <value>Change the current measure units of velocity.</value>
   </data>
+  <data name="HeaderFileMenu_Header" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="HeaderOpenMenu_Header" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="GlobalCommands_OpenStoreDialogTitle" xml:space="preserve">
+    <value>Open store file</value>
+  </data>
 </root>

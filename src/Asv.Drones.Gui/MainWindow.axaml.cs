@@ -60,6 +60,7 @@ namespace Asv.Drones.Gui
             MinWidth = 450;
             MinHeight = 400;
             TitleBar.ExtendsContentIntoTitleBar = true;
+            TitleBar.TitleBarHitTestType = TitleBarHitTestType.Complex;
         }
 
         

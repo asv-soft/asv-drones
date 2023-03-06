@@ -4,8 +4,12 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Common;
+using Asv.Drones.Core;
+using DynamicData.Binding;
+using Material.Icons;
 
 namespace Asv.Drones.Gui.Core
 {
@@ -23,20 +27,23 @@ namespace Asv.Drones.Gui.Core
         private readonly ReadOnlyObservableCollection<LogMessageViewModel> _messages = null!;
         private readonly ReadOnlyObservableCollection<IShellStatusItem> _statusItems = null!;
         private readonly SourceList<LogMessage> _messageSourceList = new();
-        
-    
+        private readonly ReadOnlyObservableCollection<IHeaderMenuItem> _headerMenu = null!;
+
+
         public ShellViewModel():base(Uri)
         {
             if (Design.IsDesignMode)
             {
                 Title = "MissionFile.asv";
-                _menuItems =
-                    new ReadOnlyObservableCollection<IShellMenuItem>(new ObservableCollection<IShellMenuItem>(new IShellMenuItem[] 
+                _headerMenu = new(new(new IHeaderMenuItem[]
+                {
+                    new HeaderMenuItem(new($"asv://{Guid.NewGuid()}")){Header = "File", Icon = MaterialIconKind.File},
+                }));
+                _menuItems = new (new (new IShellMenuItem[] 
                     {
 
                     }));
-                _footerMenuItems = new ReadOnlyObservableCollection<IShellMenuItem>(
-                    new ObservableCollection<IShellMenuItem>(new IShellMenuItem[]
+                _footerMenuItems = new (new(new IShellMenuItem[]
                     {
 
                     }));
@@ -58,8 +65,10 @@ namespace Asv.Drones.Gui.Core
 
         [ImportingConstructor]
         public ShellViewModel(
+            IAppService app,
             INavigationService navigation, 
             ILogService logService, 
+            [ImportMany(HeaderMenuItem.UriString)] IEnumerable<IViewModelProvider<IHeaderMenuItem>> headerMenuProviders,
             [ImportMany] IEnumerable<IViewModelProvider<IShellMenuItem>> menuProviders,
             [ImportMany] IEnumerable<IViewModelProvider<IShellStatusItem>> statusProviders) : this()    
         {
@@ -70,6 +79,24 @@ namespace Asv.Drones.Gui.Core
 
             _navigation.Init(this);
 
+            
+            app.Store.Where(_=>_!=null)
+                .Select(_=>Path.GetFileNameWithoutExtension(Path.GetFileName(_.SourceName)))
+                .Subscribe(_=>Title = _)
+                .DisposeItWith(Disposable);
+            
+            #region Header menu
+
+            headerMenuProviders.Select(_ => _.Items)
+                .Merge()
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .SortBy(_ => _.Order)
+                .Bind(out _headerMenu)
+                .Subscribe()
+                .DisposeItWith(Disposable);
+
+            #endregion
+            
             #region Subscribe to notifications
 
             _messageSourceList
@@ -126,7 +153,9 @@ namespace Asv.Drones.Gui.Core
 
             #endregion
         }
+
         
+
         [Reactive]
         public string Title { get; set; } = null!;
 
@@ -145,11 +174,13 @@ namespace Asv.Drones.Gui.Core
                 }
             }
         }
-
+        public ReadOnlyObservableCollection<IHeaderMenuItem> HeaderMenuItems => _headerMenu;
         public ReadOnlyObservableCollection<IShellMenuItem> MenuItems => _menuItems;
         public ReadOnlyObservableCollection<IShellMenuItem> FooterMenuItems => _footerMenuItems;
         public ReadOnlyObservableCollection<LogMessageViewModel> Messages => _messages;
         public ReadOnlyObservableCollection<IShellStatusItem> StatusItems => _statusItems;
+        
+        
 
     }
 }

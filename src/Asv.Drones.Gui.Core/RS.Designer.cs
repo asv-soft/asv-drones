@@ -150,6 +150,33 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open store file.
+        /// </summary>
+        public static string GlobalCommands_OpenStoreDialogTitle {
+            get {
+                return ResourceManager.GetString("GlobalCommands_OpenStoreDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        public static string HeaderFileMenu_Header {
+            get {
+                return ResourceManager.GetString("HeaderFileMenu_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string HeaderOpenMenu_Header {
+            get {
+                return ResourceManager.GetString("HeaderOpenMenu_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GHz.
         /// </summary>
         public static string ItemsRate_GigaHerzUnit {
