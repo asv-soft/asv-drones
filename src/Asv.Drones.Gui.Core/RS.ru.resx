@@ -166,12 +166,15 @@
     <value>Провайдер карт</value>
   </data>
   <data name="MapSettingsView_MapsInfo_ButtonName" xml:space="preserve">
-    <value>Открыть</value>
+    <value>Изменить</value>
   </data>
   <data name="MapSettingsView_MapsInfo_Description" xml:space="preserve">
-    <value>Расположение карт и размер</value>
+    <value>Текущее хранилище карт находится {0} и занимает {1}</value>
   </data>
   <data name="MapSettingsView_MapsInfo_Header" xml:space="preserve">
+    <value>Хранилище карт</value>
+  </data>
+  <data name="MapSettingsViewModel_MapDialogTitle" xml:space="preserve">
     <value>Карты</value>
   </data>
 </root>

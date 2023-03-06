@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using Asv.Avalonia.Map;
 using Asv.Common;
-using Avalonia.Controls;
+using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -14,6 +14,7 @@ namespace Asv.Drones.Gui.Core
     {
         private readonly IMapService _mapService;
         private readonly INavigationService _navigationService;
+        private readonly ILocalizationService _localizationService;
 
         public MapSettingsViewModel() : base(new (WellKnownUri.ShellPageMapSettings))
         {
@@ -24,22 +25,29 @@ namespace Asv.Drones.Gui.Core
         {
             _mapService = mapService;
             _navigationService = navigationService;
+            _localizationService = localization;
 
             _mapService.CurrentMapProvider.Subscribe(_ => CurrentMapProvider = _).DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.CurrentMapProvider).Subscribe(_mapService.CurrentMapProvider).DisposeItWith(Disposable);
 
             OpenFolderCommand = ReactiveCommand.CreateFromTask(OpenFolder).DisposeItWith(Disposable);
-            MapSize = localization.ByteSize.GetValueWithUnits(_mapService.CalculateMapCacheSize());
+            UpdateDescription();
         }
 
-        public async Task OpenFolder()
+        private async Task OpenFolder()
         {
-            var path = await _navigationService.ShowOpenFolderDialogAsync("Maps", null);
+            var path = await _navigationService.ShowOpenFolderDialogAsync(RS.MapSettingsViewModel_MapDialogTitle, _mapService.MapCacheDirectory);
 
             if (!string.IsNullOrEmpty(path))
             {
                 _mapService.SetMapCacheDirectory(path);
+                UpdateDescription();
             }
+        }
+
+        private void UpdateDescription()
+        {
+            MapStorageDescription = string.Format(RS.MapSettingsView_MapsInfo_Description, _mapService.MapCacheDirectory, _localizationService.ByteSize.GetValueWithUnits(_mapService.CalculateMapCacheSize()));
         }
 
         public int Order => 1;
@@ -48,10 +56,12 @@ namespace Asv.Drones.Gui.Core
         public GMapProvider CurrentMapProvider { get; set; }
         public IEnumerable<GMapProvider> AvailableProviders => _mapService.AvailableProviders;
 
-        public string MapDirectory => _mapService.MapCacheDirectory;
-
-        public string MapSize { get; set; }
+        [Reactive]
+        public string MapStorageDescription { get; set; }
 
         public ICommand OpenFolderCommand { get; }
+
+        public string MapIcon => MaterialIconDataProvider.GetData(MaterialIconKind.Map);
+        public string FolderIcon => MaterialIconDataProvider.GetData(MaterialIconKind.FolderOpen);
     }
 }

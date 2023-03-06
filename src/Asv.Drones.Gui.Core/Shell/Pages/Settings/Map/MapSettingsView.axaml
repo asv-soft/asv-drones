@@ -12,7 +12,7 @@
   </Design.DataContext>
     <StackPanel>
 		<core:OptionsDisplayItem Header="{x:Static core:RS.MapSettingsView_MapProvider_Header}"
-                                 Icon="Map"
+                                 Icon="{Binding MapIcon}"
                                  Description="{x:Static core:RS.MapSettingsView_MapProvider_Description}"
                                  Margin="0,0,0,8">
 
@@ -30,17 +30,13 @@
 
         </core:OptionsDisplayItem>
         <core:OptionsDisplayItem Header="{x:Static core:RS.MapSettingsView_MapsInfo_Header}"
-                                 Icon="Map"
-                                 Description="{x:Static core:RS.MapSettingsView_MapsInfo_Description}">
+                                 Icon="{Binding FolderIcon}"
+                                 Description="{Binding MapStorageDescription}">
 
             <core:OptionsDisplayItem.ActionButton>
-                <StackPanel>
-                    <Button Content="{x:Static core:RS.MapSettingsView_MapsInfo_ButtonName}" 
-                            MinWidth="150"
-                            Command="{Binding OpenFolderCommand}" />
-                    <TextBlock Text="{Binding MapSize}"
-                               HorizontalAlignment="Center" />
-                </StackPanel>
+                <Button Content="{x:Static core:RS.MapSettingsView_MapsInfo_ButtonName}" 
+                        MinWidth="150"
+                        Command="{Binding OpenFolderCommand}" />
             </core:OptionsDisplayItem.ActionButton>
         </core:OptionsDisplayItem>
     </StackPanel>

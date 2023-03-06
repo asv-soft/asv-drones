@@ -166,12 +166,15 @@
     <value>Map Provider</value>
   </data>
   <data name="MapSettingsView_MapsInfo_ButtonName" xml:space="preserve">
-    <value>Open</value>
+    <value>Change</value>
   </data>
   <data name="MapSettingsView_MapsInfo_Description" xml:space="preserve">
-    <value>Maps location and size</value>
+    <value>Current map storage is located at {0} and has a size of {1}</value>
   </data>
   <data name="MapSettingsView_MapsInfo_Header" xml:space="preserve">
-    <value>Maps Info</value>
+    <value>Map storage</value>
+  </data>
+  <data name="MapSettingsViewModel_MapDialogTitle" xml:space="preserve">
+    <value>Maps</value>
   </data>
 </root>
