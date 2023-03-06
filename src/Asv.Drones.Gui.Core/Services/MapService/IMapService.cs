@@ -11,6 +11,7 @@ namespace Asv.Drones.Gui.Core
     public interface IMapService
     {
         long CalculateMapCacheSize();
+        void SetMapCacheDirectory(string path);
         string MapCacheDirectory { get; }
         IRxEditableValue<GMapProvider> CurrentMapProvider { get; }
         IEnumerable<GMapProvider> AvailableProviders { get; }

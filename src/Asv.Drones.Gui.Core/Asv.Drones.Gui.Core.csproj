@@ -39,7 +39,6 @@
   <ItemGroup>
     <Folder Include="Services\MapService\" />
     <Folder Include="Services\Theme\" />
-    <Folder Include="Shell\Pages\Settings\Map\" />
   </ItemGroup>
 
   <ItemGroup>

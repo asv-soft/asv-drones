@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:core="clr-namespace:Asv.Drones.Gui.Core"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="800"
+             x:CompileBindings="True"
+             x:Class="Asv.Drones.Gui.Core.MapSettingsView"
+             x:DataType="core:MapSettingsViewModel">
+  <Design.DataContext>
+      <core:MapSettingsViewModel />
+  </Design.DataContext>
+    <StackPanel>
+		<core:OptionsDisplayItem Header="{x:Static core:RS.MapSettingsView_MapProvider_Header}"
+                                 Icon="{Binding MapIcon}"
+                                 Description="{x:Static core:RS.MapSettingsView_MapProvider_Description}"
+                                 Margin="0,0,0,8">
+
+            <core:OptionsDisplayItem.ActionButton>
+                <ComboBox SelectedItem="{Binding CurrentMapProvider}"
+                          Items="{Binding AvailableProviders}"
+                          MinWidth="150">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </core:OptionsDisplayItem.ActionButton>
+
+        </core:OptionsDisplayItem>
+        <core:OptionsDisplayItem Header="{x:Static core:RS.MapSettingsView_MapsInfo_Header}"
+                                 Icon="{Binding FolderIcon}"
+                                 Description="{Binding MapStorageDescription}">
+
+            <core:OptionsDisplayItem.ActionButton>
+                <Button Content="{x:Static core:RS.MapSettingsView_MapsInfo_ButtonName}" 
+                        MinWidth="150"
+                        Command="{Binding OpenFolderCommand}" />
+            </core:OptionsDisplayItem.ActionButton>
+        </core:OptionsDisplayItem>
+    </StackPanel>
+</UserControl>

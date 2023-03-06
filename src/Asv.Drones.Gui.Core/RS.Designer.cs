@@ -213,6 +213,60 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change current map provider for application.
+        /// </summary>
+        public static string MapSettingsView_MapProvider_Description {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapProvider_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map Provider.
+        /// </summary>
+        public static string MapSettingsView_MapProvider_Header {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapProvider_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string MapSettingsView_MapsInfo_ButtonName {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapsInfo_ButtonName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current map storage is located at {0} and has a size of {1}.
+        /// </summary>
+        public static string MapSettingsView_MapsInfo_Description {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapsInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map storage.
+        /// </summary>
+        public static string MapSettingsView_MapsInfo_Header {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapsInfo_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maps.
+        /// </summary>
+        public static string MapSettingsViewModel_MapDialogTitle {
+            get {
+                return ResourceManager.GetString("MapSettingsViewModel_MapDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mission planing.
         /// </summary>
         public static string PlaningShellMenuItem_Name {
