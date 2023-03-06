@@ -8,9 +8,11 @@ namespace Asv.Drones.Gui.Core
 {
     [Export(typeof(IShellStatusItem))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class ShellStatusMapCacheViewModel:ViewModelBase, IShellStatusItem
+    public class ShellStatusMapCacheViewModel:ShellStatusItem
     {
-        public ShellStatusMapCacheViewModel() : base(new Uri(WellKnownUri.ShellStatusMapCache))
+        public static readonly Uri Uri = new(ShellStatusItem.Uri,"map-cache");
+        
+        public ShellStatusMapCacheViewModel() : base(Uri)
         {
             if (Design.IsDesignMode)
             {
@@ -21,9 +23,6 @@ namespace Asv.Drones.Gui.Core
         [ImportingConstructor]
         public ShellStatusMapCacheViewModel(IMapService app,ILocalizationService localization):this()
         {
-            
-           
-            
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10)).Subscribe(_ =>
             {
                 CacheSizeString = localization.ByteSize.GetValueWithUnits(app.CalculateMapCacheSize());
@@ -33,7 +32,7 @@ namespace Asv.Drones.Gui.Core
 
         
 
-        public int Order => -1;
+        public override int Order => -1;
 
         [Reactive]
         public string CacheSizeString { get; set; }

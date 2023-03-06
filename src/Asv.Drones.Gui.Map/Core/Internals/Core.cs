@@ -111,7 +111,7 @@ namespace Asv.Avalonia.Map
                     {
                         CancelAsyncTasks();
 
-                        Matrix.ClearLevelsBelove(_zoom - LevelsKeepInMemory);
+                        Matrix.ClearLevelsBelow(_zoom - LevelsKeepInMemory);
                         Matrix.ClearLevelsAbove(_zoom + LevelsKeepInMemory);
 
                         lock (FailedLoads)
@@ -1089,6 +1089,7 @@ namespace Asv.Avalonia.Map
                 TileDrawingListLock.AcquireReaderLock();
                 try
                 {
+
                     Matrix.ClearLevelAndPointsNotIn(Zoom, TileDrawingList);
                 }
                 finally

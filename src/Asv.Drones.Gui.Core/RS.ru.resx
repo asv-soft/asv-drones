@@ -54,6 +54,194 @@
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+	
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>1.3</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="SettingsShellMenuProvider_SettingsShellMenuProvider_Settings" xml:space="preserve">
+		<value>Настройки</value>
+	</data>
+	<data name="FlightShellMenuItem_Name" xml:space="preserve">
+		<value>Режим полета</value>
+	</data>
+	<data name="ThemeService_Themes_Contrast" xml:space="preserve">
+		<value>Контрастная</value>
+	</data>
+	<data name="ThemeService_Themes_Dark" xml:space="preserve">
+		<value>Темная</value>
+	</data>
+	<data name="ThemeService_Themes_Light" xml:space="preserve">
+		<value>Светлая</value>
+	</data>
+	<data name="ThemeService_FlowDirections_LeftToRight" xml:space="preserve">
+		<value>СлеваНаПраво</value>
+	</data>
+	<data name="ThemeService_FlowDirections_RightToLeft" xml:space="preserve">
+		<value>СправаНаЛево</value>
+	</data>
+	<data name="SettingsThemeViewModel_CurrentTheme" xml:space="preserve">
+		<value>Тема</value>
+	</data>
+	<data name="SettingsThemeViewModel_ChangeThemeDescription" xml:space="preserve">
+		<value>Измените текущую тему приложения.</value>
+	</data>
+	<data name="SettingsThemeViewModel_CurrentLanguage" xml:space="preserve">
+		<value>Язык приложения</value>
+	</data>
+	<data name="SettingsThemeViewModel_CurrentLanguageDescription" xml:space="preserve">
+		<value>Измените текущий язык приложения. Изменения будут применены после перезапуска приложения.</value>
+	</data>
+	<data name="SettingsThemeViewModel_FlowDirection" xml:space="preserve">
+		<value>Направление чтения</value>
+	</data>
+	<data name="SettingsThemeViewModel_FlowDirectionDescription" xml:space="preserve">
+		<value>Измените направление чтения.</value>
+	</data>
+	<data name="PlaningShellMenuItem_Name" xml:space="preserve">
+		<value>Планирование полета</value>
+	</data>
+	<data name="ByteSize_BytesUnit" xml:space="preserve">
+		<value>Б</value>
+	</data>
+	<data name="ByteSize_KilobytesUnit" xml:space="preserve">
+		<value>КБ</value>
+	</data>
+	<data name="ByteSize_MegabytesUnit" xml:space="preserve">
+		<value>МБ</value>
+	</data>
+	<data name="ByteSize_GigabytesUnit" xml:space="preserve">
+		<value>ГБ</value>
+	</data>
+	<data name="Common_NotAvailable" xml:space="preserve">
+		<value>Н/Д</value>
+	</data>
+	<data name="BytesRate_BytesPerSecondUnit" xml:space="preserve">
+		<value>Б/с</value>
+	</data>
+	<data name="BytesRate_GigaBytesPerSecondUnit" xml:space="preserve">
+		<value>ГБ/с</value>
+	</data>
+	<data name="BytesRate_KiloBytesPerSecondUnit" xml:space="preserve">
+		<value>КБ/с</value>
+	</data>
+	<data name="BytesRate_MegaBytesPerSecondUnit" xml:space="preserve">
+		<value>МБ/с</value>
+	</data>
+	<data name="ItemsRate_GigaHerzUnit" xml:space="preserve">
+		<value>ГГц</value>
+	</data>
+	<data name="ItemsRate_HerzUnit" xml:space="preserve">
+		<value>Гц</value>
+	</data>
+	<data name="ItemsRate_KiloHerzUnit" xml:space="preserve">
+		<value>КГц</value>
+	</data>
+	<data name="ItemsRate_MegaHerzUnit" xml:space="preserve">
+		<value>МГц</value>
+	</data>
+
+	<data name="SettingsView_RebootRequiredTitle" xml:space="preserve">
+		<value>Требуется перезагрузка</value>
+	</data>
+	<data name="SettingsView_RebootRequiredDescription" xml:space="preserve">
+		<value>Вы должны перезагрузить программу, чтобы применить изменения.</value>
+	</data>
+	<data name="SettingsThemeViewModel_Distance" xml:space="preserve">
+		<value>Расстояние</value>
+	</data>
+	<data name="SettingsThemeViewModel_DistanceDescription" xml:space="preserve">
+		<value>Измените текущие единицы измерения расстояния.</value>
+	</data>
+	<data name="SettingsThemeViewModel_Altitude" xml:space="preserve">
+		<value>Высота</value>
+	</data>
+	<data name="SettingsThemeViewModel_AltitudeDescription" xml:space="preserve">
+		<value>Измените текущие единицы измерения высоты.</value>
+	</data>
+	<data name="SettingsThemeViewModel_LatitudeLongitude" xml:space="preserve">
+		<value>Широта и долгота</value>
+	</data>
+	<data name="SettingsThemeViewModel_LatitudeLongitudeDescription" xml:space="preserve">
+		<value>Измените текущие единицы измерения широты и долготы.</value>
+	</data>
+	<data name="SettingsThemeViewModel_DistanceMeters" xml:space="preserve">
+		<value>Метры</value>
+	</data>
+	<data name="SettingsThemeViewModel_DistanceInternationalNauticalMiles" xml:space="preserve">
+		<value>Морские мили</value>
+	</data>
+	<data name="SettingsThemeViewModel_AltitudeMeters" xml:space="preserve">
+		<value>Метры</value>
+	</data>
+	<data name="SettingsThemeViewModel_AltitudeFeets" xml:space="preserve">
+		<value>Футы</value>
+	</data>
+	<data name="SettingsThemeViewModel_LatitudeLongtitudeDegrees" xml:space="preserve">
+		<value>Градусы</value>
+	</data>
+	<data name="SettingsThemeViewModel_LatitudeLongtitudeDegreesMinutesSeconds" xml:space="preserve">
+		<value>Градусы, минуты, секунды</value>
+	</data>
+	<data name="SettingsThemeViewModel_AltitudeFeetUnit" xml:space="preserve">
+		<value>фут</value>
+	</data>
+	<data name="SettingsThemeViewModel_AltitudeMeterUnit" xml:space="preserve">
+		<value>м</value>
+	</data>
+	<data name="SettingsThemeViewModel_DistanceMeterUnit" xml:space="preserve">
+		<value>м</value>
+	</data>
+	<data name="SettingsThemeViewModel_DistanceInternationalNauticalMileUnit" xml:space="preserve">
+		<value>nmi</value>
+
+	</data>
+	<data name="HeaderFileMenu_Header" xml:space="preserve">
+		<value>Файл</value>
+	</data>
+	<data name="HeaderOpenMenu_Header" xml:space="preserve">
+		<value>Открыть</value>
+	</data>
     mimetype: application/x-microsoft.net.object.bytearray.base64
     value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter

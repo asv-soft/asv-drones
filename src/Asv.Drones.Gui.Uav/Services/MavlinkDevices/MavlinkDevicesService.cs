@@ -4,12 +4,14 @@ using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
+using Asv.Mavlink.Client;
 using Asv.Mavlink.V2.Ardupilotmega;
 using Asv.Mavlink.V2.Common;
 using Asv.Mavlink.V2.Icarous;
 using Asv.Mavlink.V2.Uavionix;
+using Avalonia.Controls.Shapes;
 using DynamicData;
-using Material.Icons;
+using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav
 {
@@ -30,6 +32,7 @@ namespace Asv.Drones.Gui.Uav
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class MavlinkDevicesService : ServiceWithConfigBase<MavlinkDeviceServiceConfig>, IMavlinkDevicesService
     {
+        private readonly IPacketSequenceCalculator _sequenceCalculator;
         private readonly SourceCache<IMavlinkDevice, ushort> _devices = new(_ => _.FullId);
         private readonly MavlinkRouter _mavlinkRouter;
         private readonly RxValue<byte> _systemId;
@@ -41,7 +44,9 @@ namespace Asv.Drones.Gui.Uav
         [ImportingConstructor]
         public MavlinkDevicesService(IConfiguration config,IPacketSequenceCalculator sequenceCalculator):base(config)
         {
-            #region Init mavlink router
+            _sequenceCalculator = sequenceCalculator ?? throw new ArgumentNullException(nameof(sequenceCalculator));
+
+            #region InitUriHost mavlink router
 
             _mavlinkRouter = new MavlinkRouter(_ =>
             {
@@ -59,7 +64,7 @@ namespace Asv.Drones.Gui.Uav
 
             #endregion
 
-            #region Init mavlink heartbeat
+            #region InitUriHost mavlink heartbeat
 
             var serverIdentity = InternalGetConfig(_ => new MavlinkServerIdentity { SystemId = _.SystemId, ComponentId = _.ComponentId });
             var transponder = new MavlinkPacketTransponder<HeartbeatPacket, HeartbeatPayload>(_mavlinkRouter, serverIdentity, sequenceCalculator)
@@ -105,7 +110,6 @@ namespace Asv.Drones.Gui.Uav
 
             #endregion
 
-
             #region Mavlink devices
 
             var deviceTimeout = InternalGetConfig(_ => TimeSpan.FromMilliseconds(_.DeviceHeartbeatTimeoutMs));
@@ -122,6 +126,15 @@ namespace Asv.Drones.Gui.Uav
                 .DisposeItWith(Disposable);
 
             #endregion
+
+            #region Mavlink vehicles
+
+            Vehicles = _devices
+            .Connect()
+                .Filter(_=> _.Autopilot is MavAutopilot.MavAutopilotArdupilotmega)
+                .Transform(CreateVehicle).Where(_ => _ != null).DisposeMany().RefCount();
+
+            #endregion
         }
 
         public IObservable<IChangeSet<IMavlinkDevice, ushort>> Devices => _devices.Connect().RefCount();
@@ -130,56 +143,47 @@ namespace Asv.Drones.Gui.Uav
         public IRxEditableValue<byte> SystemId => _systemId;
         public IRxEditableValue<byte> ComponentId => _componentId;
         public IRxEditableValue<TimeSpan> HeartbeatRate => _heartBeatRate;
+        public IObservable<IChangeSet<IVehicle, ushort>> Vehicles { get; }
         public IRxEditableValue<TimeSpan> DeviceTimeout => _deviceBrowser.DeviceTimeout;
 
-
-    }
-
-    public static class MavlinkIconHelper
-    {
-        public static MaterialIconKind GetIcon(MavType type)
+        private IVehicle? CreateVehicle(IMavlinkDevice device)
         {
-            switch (type)
+            var proto = new MavlinkClient(Router, new MavlinkClientIdentity
             {
-                case MavType.MavTypeFixedWing:
-                    return MaterialIconKind.Airplane;
-                case MavType.MavTypeGeneric:
-                case MavType.MavTypeQuadrotor:
-                case MavType.MavTypeHexarotor:
-                case MavType.MavTypeOctorotor:
-                case MavType.MavTypeTricopter:
-                    return MaterialIconKind.Quadcopter;
-                case MavType.MavTypeHelicopter:
-                    return MaterialIconKind.Helicopter;
-                case MavType.MavTypeAntennaTracker:
-                    return MaterialIconKind.Antenna;
-                case MavType.MavTypeGcs:
-                    return MaterialIconKind.Computer;
-                default:
-                    return MaterialIconKind.HelpNetworkOutline;
+                TargetSystemId = device.SystemId,
+                TargetComponentId = device.ComponentId,
+                SystemId = _systemId.Value,
+                ComponentId = _componentId.Value,
+            }, new MavlinkClientConfig(), _sequenceCalculator, false, RxApp.MainThreadScheduler); // TODO: MavlinkClientConfig - add to settings 
+
+            IVehicle dev = default;
+
+            if (device.Autopilot == MavAutopilot.MavAutopilotArdupilotmega)
+            {
+                switch (device.Type)
+                {
+                    case MavType.MavTypeQuadrotor:
+                    case MavType.MavTypeTricopter:
+                    case MavType.MavTypeHexarotor:
+                        dev = new VehicleArdupilotCopter(proto, new VehicleBaseConfig(),true);// TODO: VehicleBaseConfig - add to settings 
+                        break;
+                    case MavType.MavTypeFixedWing:
+                        dev = new VehicleArdupilotPlane(proto, new VehicleBaseConfig(),true); // TODO: VehicleBaseConfig - add to settings 
+                        break;
+                }
             }
+
+            if (dev == null)
+            {
+                proto.Dispose();
+            }
+            else
+            {
+                dev.StartListen();    
+            }
+
+            return dev;
         }
 
-        public static string GetTypeName(MavType type)
-        {
-            switch (type)
-            {
-                case MavType.MavTypeFixedWing:
-                    return "Fixed wing";
-                case MavType.MavTypeGeneric:
-                case MavType.MavTypeQuadrotor:
-                    return "Quadrotor";
-                case MavType.MavTypeHexarotor:
-                    return "Hexarotor";
-                case MavType.MavTypeOctorotor:
-                    return "Octorotor";
-                case MavType.MavTypeTricopter:
-                    return "Tricopter";
-                case MavType.MavTypeHelicopter:
-                    return "Helicopter";
-                default:
-                    return "Unknown type";
-            }
-        }
     }
 }

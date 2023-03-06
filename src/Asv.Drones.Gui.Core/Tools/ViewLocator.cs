@@ -9,7 +9,7 @@ namespace Asv.Drones.Gui
 {
     public class ViewLocator : IDataTemplate,IDisposable
     {
-        public static Type BaseViewType = typeof(IControl);
+        public static readonly Type BaseViewType = typeof(IControl);
 
         private readonly CompositionContainer _container;
         private bool _isDisposed;
@@ -32,7 +32,15 @@ namespace Asv.Drones.Gui
             var type = Type.GetType(name);
             if (type == null) return new TextBlock { Text = "Not Found: " + name };
             var contract = AttributedModelServices.GetContractName(type);
-            return (IControl)_container.GetExportedValue<object>(contract)!;
+            try
+            {
+                return (IControl)_container.GetExportedValue<object>(contract)!;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            
         }
 
         public bool Match(object? data)

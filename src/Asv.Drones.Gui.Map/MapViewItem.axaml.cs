@@ -188,7 +188,7 @@ namespace Asv.Avalonia.Map
                     }
                     if (itemPoint.Y < minY)
                     {
-                        minY = itemPoint.X;
+                        minY = itemPoint.Y;
                     }
                     localPath.Add(itemPoint);
                 }

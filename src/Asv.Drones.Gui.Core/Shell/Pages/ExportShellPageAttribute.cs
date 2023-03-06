@@ -2,6 +2,9 @@
 
 namespace Asv.Drones.Gui.Core
 {
+    /// <summary>
+    /// Define this attribute to export shell page
+    /// </summary>
     [MetadataAttribute]
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class ExportShellPageAttribute : ExportAttribute

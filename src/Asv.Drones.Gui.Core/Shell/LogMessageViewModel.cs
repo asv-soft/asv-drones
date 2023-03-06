@@ -9,6 +9,7 @@ namespace Asv.Drones.Gui.Core
 {
     public class LogMessageViewModel:DisposableViewModelBase
     {
+        private readonly ISourceList<LogMessage> _sourceList;
         private readonly LogMessage _message;
 
         public LogMessageViewModel(LogMessage message)
@@ -20,16 +21,22 @@ namespace Asv.Drones.Gui.Core
 
         public LogMessageViewModel(ISourceList<LogMessage> sourceList, LogMessage message):this(message)
         {
+            _sourceList = sourceList;
             // we need to remove 
             Observable
                 .Timer(TimeSpan.FromSeconds(10))
-                .Subscribe(_ => sourceList.Remove(_message))
+                .Subscribe(_ => Close())
                 .DisposeItWith(Disposable);
 
             this.WhenAnyValue(_ => _.IsOpen)
                 .Where(_ => _ == false)
                 .Subscribe(_ => sourceList.Remove(_message))
                 .DisposeItWith(Disposable);
+        }
+
+        public void Close()
+        {
+            _sourceList?.Remove(_message);
         }
 
         public string Title => _message.Source;

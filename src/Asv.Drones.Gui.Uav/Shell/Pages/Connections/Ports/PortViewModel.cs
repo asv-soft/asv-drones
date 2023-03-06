@@ -121,7 +121,7 @@ namespace Asv.Drones.Gui.Uav
 
             IsPortEnabled = info.IsEnabled;
             SkippedText = $"{info.SkipPackets}";
-            SkippedUnitText = "err"; // TODO: Localize
+            SkippedUnitText = RS.PortViewModel_SkippedUnitTest;
 
         }
 

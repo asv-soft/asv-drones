@@ -48,7 +48,9 @@ namespace Asv.Drones.Gui.Uav
                 .DisposeItWith(Disposable);
             Disposable.AddAction(() => { });
         }
-
+        
+        public bool IsRebootRequired { get; private set; }
+        
         public int Order => 255;
 
         public ReadOnlyObservableCollection<MavlinkDeviceViewModel> Items => _items;
