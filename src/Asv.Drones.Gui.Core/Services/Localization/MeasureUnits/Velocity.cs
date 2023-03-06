@@ -17,9 +17,9 @@ public class Velocity : IMeasureUnit<double>
     {
         return _units switch
         {
-            VelocityUnits.MetersPerSecond => RS.SettingsThemeViewModel_VelocityMetersPerSecondUnit,
-            VelocityUnits.KilometersPerHour => RS.SettingsThemeViewModel_VelocityKilometersPerHourUnit,
-            VelocityUnits.MilesPerHour => RS.SettingsThemeViewModel_VelocityMilesPerHourUnit
+            VelocityUnits.MetersPerSecond => RS.Velocity_MetersPerSecondUnit,
+            VelocityUnits.KilometersPerHour => RS.Velocity_KilometersPerHourUnit,
+            VelocityUnits.MilesPerHour => RS.Velocity_MilesPerHourUnit
         };
     }
 

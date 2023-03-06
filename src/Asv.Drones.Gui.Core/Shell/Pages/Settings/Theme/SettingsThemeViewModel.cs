@@ -18,8 +18,7 @@ namespace Asv.Drones.Gui.Core
         private readonly ILocalizationService _localization;
         
         public override int Order => 0;
-
-
+        
         public SettingsThemeViewModel() : base(Uri)
         {
             
@@ -49,30 +48,6 @@ namespace Asv.Drones.Gui.Core
             this.WhenAnyValue(_ => _.SelectedLanguage)
                 .Subscribe(_localization.CurrentLanguage)
                 .DisposeItWith(Disposable);
-
-            _localization.CurrentAltitudeUnit.Subscribe(_ => SelectedAltitudeAltitudeUnit = _)
-                .DisposeItWith(Disposable);
-            this.WhenAnyValue(_ => _.SelectedAltitudeAltitudeUnit)
-                .Subscribe(_localization.CurrentAltitudeUnit)
-                .DisposeItWith(Disposable);
-            
-            _localization.CurrentDistanceUnit.Subscribe(_ => SelectedDistanceAltitudeUnit = _)
-                .DisposeItWith(Disposable);
-            this.WhenAnyValue(_ => _.SelectedDistanceAltitudeUnit)
-                .Subscribe(_localization.CurrentDistanceUnit)
-                .DisposeItWith(Disposable);
-
-            _localization.CurrentLatitudeLongitudeUnit.Subscribe(_ => SelectedLatitudeLongitudeAltitudeUnit = _)
-                .DisposeItWith(Disposable);
-            this.WhenAnyValue(_ => _.SelectedLatitudeLongitudeAltitudeUnit)
-                .Subscribe(_localization.CurrentLatitudeLongitudeUnit)
-                .DisposeItWith(Disposable);
-            
-            _localization.CurrentVelocityUnit.Subscribe(_ => SelectedVelocityUnit = _)
-                .DisposeItWith(Disposable);
-            this.WhenAnyValue(_ => _.SelectedVelocityUnit)
-                .Subscribe(_localization.CurrentVelocityUnit)
-                .DisposeItWith(Disposable);
         }
 
         public IEnumerable<ThemeItem> AppThemes => _themeService.Themes;
@@ -91,29 +66,5 @@ namespace Asv.Drones.Gui.Core
         public LanguageInfo SelectedLanguage { get; set; }
 
         public IEnumerable<LanguageInfo> AppLanguages => _localization.AvailableLanguages;
-       
-
-        
-        
-        [Reactive]
-        public AltitudeUnitItem SelectedAltitudeAltitudeUnit { get; set; }
-
-        public IEnumerable<AltitudeUnitItem> AltitudeUnits => _localization.AltitudeUnits;
-
-        [Reactive]
-        public DistanceUnitItem SelectedDistanceAltitudeUnit { get; set; }
-
-        public IEnumerable<DistanceUnitItem> DistanceUnits => _localization.DistanceUnits;
-
-        [Reactive]
-        public LatitudeLongitudeUnitItem SelectedLatitudeLongitudeAltitudeUnit { get; set; }
-
-        public IEnumerable<LatitudeLongitudeUnitItem> LatitudeLongitudeUnits => _localization.LatitudeLongitudeUnits;
-        
-        
-        [Reactive]
-        public VelocityUnitItem SelectedVelocityUnit { get; set; }
-
-        public IEnumerable<VelocityUnitItem> VelocityUnits => _localization.VelocityUnits;
     }
 }

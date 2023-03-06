@@ -54,8 +54,8 @@ namespace Asv.Drones.Gui.Core
             #region CurrentAltitudeUnitInit
             _altitudes = new()
             {
-                new(Core.AltitudeUnits.Meters, RS.SettingsThemeViewModel_AltitudeMeters),
-                new(Core.AltitudeUnits.Feets, RS.SettingsThemeViewModel_AltitudeFeets)
+                new(Core.AltitudeUnits.Meters, RS.MeasureUnitsSettingsViewModel_AltitudeMeters),
+                new(Core.AltitudeUnits.Feets, RS.MeasureUnitsSettingsViewModel_AltitudeFeets)
             };
 
             var selectedAltitude = _altitudes.First();
@@ -73,8 +73,8 @@ namespace Asv.Drones.Gui.Core
             #region CurrentDistanceUnitInit
             _distances = new()
             {
-                new (Core.DistanceUnits.Meters, RS.SettingsThemeViewModel_DistanceMeters),
-                new (Core.DistanceUnits.NauticalMiles, RS.SettingsThemeViewModel_DistanceInternationalNauticalMiles)
+                new (Core.DistanceUnits.Meters, RS.MeasureUnitsSettingsViewModel_DistanceMeters),
+                new (Core.DistanceUnits.NauticalMiles, RS.MeasureUnitsSettingsViewModel_DistanceInternationalNauticalMiles)
             };
 
             var selectedDistance = _distances.First();
@@ -92,8 +92,8 @@ namespace Asv.Drones.Gui.Core
             #region CurrentLatitudeLongitudeUnitInit
             _latitudesAndLongitudes = new()
             {
-                new ( Core.LatitudeLongitudeUnits.Degrees, RS.SettingsThemeViewModel_LatitudeLongtitudeDegrees),
-                new (Core.LatitudeLongitudeUnits.DegreesMinutesSeconds, RS.SettingsThemeViewModel_LatitudeLongtitudeDegreesMinutesSeconds)
+                new ( Core.LatitudeLongitudeUnits.Degrees, RS.MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegrees),
+                new (Core.LatitudeLongitudeUnits.DegreesMinutesSeconds, RS.MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds)
             };
 
             var selectedLatitudeLongitude = _latitudesAndLongitudes.First();
@@ -111,9 +111,9 @@ namespace Asv.Drones.Gui.Core
             #region CurrentVelocityUnitInit
             _velocities = new()
             {
-                new ( Core.VelocityUnits.MetersPerSecond, RS.SettingsThemeViewModel_VelocityMetersPerSecondUnit),
-                new (Core.VelocityUnits.KilometersPerHour, RS.SettingsThemeViewModel_VelocityKilometersPerHourUnit),
-                new (Core.VelocityUnits.MilesPerHour, RS.SettingsThemeViewModel_VelocityMilesPerHourUnit)
+                new ( Core.VelocityUnits.MetersPerSecond, RS.Velocity_MetersPerSecondUnit),
+                new (Core.VelocityUnits.KilometersPerHour, RS.Velocity_KilometersPerHourUnit),
+                new (Core.VelocityUnits.MilesPerHour, RS.Velocity_MilesPerHourUnit)
             };
 
             var selectedVelocity = _velocities.First();

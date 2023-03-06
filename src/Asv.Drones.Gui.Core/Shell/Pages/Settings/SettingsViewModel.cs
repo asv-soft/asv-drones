@@ -36,7 +36,8 @@ namespace Asv.Drones.Gui.Core
                 _items = new ReadOnlyObservableCollection<ISettingsPart>(new ObservableCollection<ISettingsPart>(
                     new ISettingsPart[]
                     {
-                        new SettingsThemeViewModel()
+                        new SettingsThemeViewModel(),
+                        new MeasureUnitsSettingsViewModel(),
                     }));
             }
         }
@@ -55,8 +56,8 @@ namespace Asv.Drones.Gui.Core
             settings.Select(_ => _.Items)
                 .Merge()
                 .ObserveOn(RxApp.MainThreadScheduler)
-                .Bind(out _items)
                 .SortBy(_ => _.Order)
+                .Bind(out _items)
                 .DisposeMany()
                 .Subscribe()
                 .DisposeItWith(Disposable);

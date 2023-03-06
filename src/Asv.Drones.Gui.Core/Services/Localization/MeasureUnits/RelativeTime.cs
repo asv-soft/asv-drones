@@ -6,8 +6,8 @@ public class RelativeTime : IMeasureUnit<TimeSpan>
     {
         return value.Ticks switch
         {
-            (< TimeSpan.TicksPerSecond) => RS.SettingsThemeViewModel_RelativeTimeMillisecondsUnit,
-            (>= TimeSpan.TicksPerSecond) and (<= TimeSpan.TicksPerMinute) => RS.SettingsThemeViewModel_RelativeTimeSecondsUnit,
+            (< TimeSpan.TicksPerSecond) => RS.RelativeTime_MillisecondsUnit,
+            (>= TimeSpan.TicksPerSecond) and (<= TimeSpan.TicksPerMinute) => RS.RelativeTime_SecondsUnit,
             (>= TimeSpan.TicksPerMinute) => "",
         };
     }

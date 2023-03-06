@@ -205,80 +205,80 @@
   <data name="SettingsView_RebootRequiredDescription" xml:space="preserve">
     <value>You must reload the program to apply the changes.</value>
   </data>
-  <data name="SettingsThemeViewModel_Distance" xml:space="preserve">
+  <data name="MeasureUnitsSettingsViewModel_Distance" xml:space="preserve">
     <value>Distance</value>
   </data>
-  <data name="SettingsThemeViewModel_DistanceDescription" xml:space="preserve">
+  <data name="MeasureUnitsSettingsViewModel_DistanceDescription" xml:space="preserve">
     <value>Change the current measure units of distance.</value>
   </data>
-  <data name="SettingsThemeViewModel_Altitude" xml:space="preserve">
+  <data name="MeasureUnitsSettingsViewModel_Altitude" xml:space="preserve">
     <value>Altitude</value>
   </data>
-  <data name="SettingsThemeViewModel_AltitudeDescription" xml:space="preserve">
+  <data name="MeasureUnitsSettingsViewModel_AltitudeDescription" xml:space="preserve">
     <value>Change the current measure units of altitude.</value>
   </data>
-  <data name="SettingsThemeViewModel_LatitudeLongitude" xml:space="preserve">
+  <data name="MeasureUnitsSettingsViewModel_LatitudeLongitude" xml:space="preserve">
     <value>Latitude &amp; Longitude</value>
   </data>
-  <data name="SettingsThemeViewModel_LatitudeLongitudeDescription" xml:space="preserve">
+  <data name="MeasureUnitsSettingsViewModel_LatitudeLongitudeDescription" xml:space="preserve">
     <value>Change the current measure units of latitude &amp; longitude.</value>
   </data>
-  <data name="SettingsThemeViewModel_DistanceMeters" xml:space="preserve">
+  <data name="MeasureUnitsSettingsViewModel_DistanceMeters" xml:space="preserve">
     <value>Meters</value>
   </data>
-  <data name="SettingsThemeViewModel_DistanceInternationalNauticalMiles" xml:space="preserve">
+  <data name="MeasureUnitsSettingsViewModel_DistanceInternationalNauticalMiles" xml:space="preserve">
     <value>Nautical miles</value>
   </data>
-  <data name="SettingsThemeViewModel_AltitudeMeters" xml:space="preserve">
+  <data name="MeasureUnitsSettingsViewModel_AltitudeMeters" xml:space="preserve">
     <value>Meters</value>
   </data>
-  <data name="SettingsThemeViewModel_AltitudeFeets" xml:space="preserve">
+  <data name="MeasureUnitsSettingsViewModel_AltitudeFeets" xml:space="preserve">
     <value>Feets</value>
   </data>
-  <data name="SettingsThemeViewModel_LatitudeLongtitudeDegrees" xml:space="preserve">
+  <data name="MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegrees" xml:space="preserve">
     <value>Degrees</value>
   </data>
-  <data name="SettingsThemeViewModel_LatitudeLongtitudeDegreesMinutesSeconds" xml:space="preserve">
+  <data name="MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds" xml:space="preserve">
     <value>Degrees, minutes, seconds</value>
   </data>
-  <data name="SettingsThemeViewModel_AltitudeFeetUnit" xml:space="preserve">
+  <data name="Altitude_FeetUnit" xml:space="preserve">
     <value>ft</value>
   </data>
-  <data name="SettingsThemeViewModel_AltitudeMeterUnit" xml:space="preserve">
+  <data name="Altitude_MeterUnit" xml:space="preserve">
     <value>m</value>
   </data>
-  <data name="SettingsThemeViewModel_DistanceMeterUnit" xml:space="preserve">
+  <data name="Distance_MeterUnit" xml:space="preserve">
     <value>m</value>
   </data>
-  <data name="SettingsThemeViewModel_DistanceInternationalNauticalMileUnit" xml:space="preserve">
+  <data name="Distance_InternationalNauticalMileUnit" xml:space="preserve">
     <value>nmi</value>
 
   </data>
-  <data name="SettingsThemeViewModel_VelocityMetersPerSecondUnit" xml:space="preserve">
+  <data name="Velocity_MetersPerSecondUnit" xml:space="preserve">
     <value>m/s</value>
   </data>
-  <data name="SettingsThemeViewModel_VelocityKilometersPerHourUnit" xml:space="preserve">
+  <data name="Velocity_KilometersPerHourUnit" xml:space="preserve">
     <value>km/h</value>
   </data>
-  <data name="SettingsThemeViewModel_VelocityMilesPerHourUnit" xml:space="preserve">
+  <data name="Velocity_MilesPerHourUnit" xml:space="preserve">
     <value>mi/h</value>
   </data>
-  <data name="SettingsThemeViewModel_RelativeTimeMillisecondsUnit" xml:space="preserve">
+  <data name="RelativeTime_MillisecondsUnit" xml:space="preserve">
     <value>ms</value>
   </data>
-  <data name="SettingsThemeViewModel_RelativeTimeSecondsUnit" xml:space="preserve">
+  <data name="RelativeTime_SecondsUnit" xml:space="preserve">
     <value>s</value>
   </data>
-  <data name="SettingsThemeView_MeasurementUnits_Header_Title" xml:space="preserve">
+  <data name="MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Title" xml:space="preserve">
     <value>Measurement units</value>
   </data>
-  <data name="SettingsThemeView_MeasurementUnits_Header_Description" xml:space="preserve">
+  <data name="MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Description" xml:space="preserve">
     <value>In this section you can specialize measurement units for various parameters.</value>
   </data>
-  <data name="SettingsThemeViewModel_Velocity" xml:space="preserve">
+  <data name="MeasureUnitsSettingsViewModel_Velocity" xml:space="preserve">
     <value>Velocity</value>
   </data>
-  <data name="SettingsThemeViewModel_VelocityDescription" xml:space="preserve">
+  <data name="MeasureUnitsSettingsViewModel_VelocityDescription" xml:space="preserve">
     <value>Change the current measure units of velocity.</value>
   </data>
   <data name="HeaderFileMenu_Header" xml:space="preserve">
