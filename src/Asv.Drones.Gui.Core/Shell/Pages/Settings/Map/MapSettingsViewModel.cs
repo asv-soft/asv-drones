@@ -10,13 +10,15 @@ namespace Asv.Drones.Gui.Core
 {
     [Export(typeof(ISettingsPart))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class MapSettingsViewModel : ViewModelBase, ISettingsPart
+    public class MapSettingsViewModel : SettingsPartBase
     {
+        private static readonly Uri Uri = new(SettingsPartBase.Uri, "map");
+
         private readonly IMapService _mapService;
         private readonly INavigationService _navigationService;
         private readonly ILocalizationService _localizationService;
 
-        public MapSettingsViewModel() : base(new (WellKnownUri.ShellPageMapSettings))
+        public MapSettingsViewModel() : base(Uri)
         {
         }
 
@@ -50,7 +52,7 @@ namespace Asv.Drones.Gui.Core
             MapStorageDescription = string.Format(RS.MapSettingsView_MapsInfo_Description, _mapService.MapCacheDirectory, _localizationService.ByteSize.GetValueWithUnits(_mapService.CalculateMapCacheSize()));
         }
 
-        public int Order => 1;
+        public override int Order => 1;
 
         [Reactive]
         public GMapProvider CurrentMapProvider { get; set; }

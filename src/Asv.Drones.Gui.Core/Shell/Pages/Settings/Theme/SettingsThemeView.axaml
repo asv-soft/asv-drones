@@ -95,7 +95,7 @@
             </core:OptionsDisplayItem.ActionButton>
 
         </core:OptionsDisplayItem>
-        <core:OptionsDisplayItem Margin="0,0,0,8" Header="{x:Static core:RS.SettingsThemeViewModel_LatitudeLongitude}"
+        <core:OptionsDisplayItem Header="{x:Static core:RS.SettingsThemeViewModel_LatitudeLongitude}"
                                  Icon="Ruler"
                                  Description="{x:Static core:RS.SettingsThemeViewModel_LatitudeLongitudeDescription}">
 
