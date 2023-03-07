@@ -12,7 +12,7 @@
     </Design.DataContext>
     <Panel>
         <StackPanel Spacing="10" Margin="10">
-            <TextBlock Text="Set altitude for takeoff command."/>
+            <TextBlock Text="{x:Static uav:RS.TakeOffAnchorActionViewModel_DialogDescription}"/>
             <TextBox Focusable="True" Name="AltitudeTextBox" Margin="0,0" Text="{Binding Altitude}" KeyDown="Altitude_OnKeyDown"/>
         </StackPanel>
     </Panel>

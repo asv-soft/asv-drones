@@ -1,11 +1,8 @@
 ﻿
 using System.ComponentModel.Composition;
 using System.Reactive.Linq;
-using Asv.Cfg;
-using Asv.Cfg.Json;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
-using Asv.Mavlink;
 using FluentAvalonia.UI.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -14,31 +11,28 @@ using ReactiveUI.Validation.Extensions;
 namespace Asv.Drones.Gui.Uav;
 
 
-[Export]
-[PartCreationPolicy(CreationPolicy.NonShared)]
+[ExportShellPage(UriString)]
+[PartCreationPolicy(CreationPolicy.Shared)]
 public class TakeOffViewModel : ViewModelBaseWithValidation
 {
-    private ITakeOffService _service;
-    [ImportingConstructor]
-    public TakeOffViewModel(ITakeOffService service) : this() 
-    {
-        _service = service;
+    
+    public const string UriString = UavAnchor.BaseUriString + ".actions.takeoff";
+    public static readonly Uri Uri = new(UriString);
 
-        _service?.CurrentAltitude.Subscribe(_ => Altitude = _).DisposeItWith(Disposable);
+
+    [ImportingConstructor]
+    public TakeOffViewModel(ITakeOffService service) : this()
+    {
+        service?.CurrentAltitude.Subscribe(_ => Altitude = _).DisposeItWith(Disposable);
         this.WhenAnyValue(_ => _.Altitude)
-            .Subscribe(_service.CurrentAltitude)
+            .Subscribe(service.CurrentAltitude)
             .DisposeItWith(Disposable);
 
-        if (Altitude == null)
-        {
-            Altitude = 30;
-        }
-        
-        this.ValidationRule(x => x.Altitude, _ => _ >= 1, RS.SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name)
+        this.ValidationRule(x => x.Altitude, _ => _ >= 1, RS.TakeOffAnchorActionViewModel_ValidValue)
             .DisposeItWith(Disposable);
     }
 
-    public TakeOffViewModel() : base(new Uri(UavAnchor.BaseUri, "actions.takeoff"))
+    public TakeOffViewModel() : base(Uri)
     {
         
     }

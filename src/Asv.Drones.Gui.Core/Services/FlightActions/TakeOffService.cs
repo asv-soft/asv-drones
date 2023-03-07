@@ -11,7 +11,9 @@ namespace Asv.Drones.Gui.Core
         public double? CurrentAltitude { get; set; }
 
     }
-
+    
+    [Export(typeof(ITakeOffService))]
+    [PartCreationPolicy(CreationPolicy.Shared)]
     public class TakeOffService : ServiceWithConfigBase<TakeOffServiceConfig>, ITakeOffService
     {
         private readonly double _currentAltitude;
@@ -35,7 +37,7 @@ namespace Asv.Drones.Gui.Core
         
         private void SetAltitude(double? altitude)
         {
-            if (altitude == null) throw new ArgumentNullException(nameof(altitude));
+            if (altitude == null) return;
             InternalSaveConfig(_ => _.CurrentAltitude = altitude);
         }
 

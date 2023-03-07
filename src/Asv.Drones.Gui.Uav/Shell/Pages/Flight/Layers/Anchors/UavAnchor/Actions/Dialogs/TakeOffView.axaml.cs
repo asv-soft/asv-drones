@@ -35,7 +35,7 @@ public partial class TakeOffView : ReactiveUserControl<TakeOffViewModel>
                 if (current != null)
                 {
                     var next = KeyboardNavigationHandler.GetNext(current, NavigationDirection.Next);
-                    if (next != null && next.Focusable)
+                    if (next != null && next.Focusable && next.IsEnabled)
                     {
                         FocusManager.Instance?.Focus(next, NavigationMethod.Directional);
                     }

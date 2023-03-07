@@ -14,12 +14,14 @@ namespace Asv.Drones.Gui.Uav
     public class TakeOffAnchorActionViewModel : UavActionActionBase
     {
         private readonly ILogService _log;
-        
-        public TakeOffAnchorActionViewModel(IVehicle vehicle, IMap map, ILogService log) : base(vehicle, map, log)
+        private readonly ITakeOffService _takeOffService;
+
+        public TakeOffAnchorActionViewModel(IVehicle vehicle, IMap map, ILogService log, ITakeOffService takeOffService) : base(vehicle, map, log)
         {
             _log = log;
-            // TODO: Localize
-            Title = "Take off";
+            _takeOffService = takeOffService;
+            
+            Title = "TakeOff";
             Icon = MaterialIconKind.ArrowUpBoldHexagonOutline;
             
             Command = ReactiveCommand.CreateFromTask(ExecuteImpl, CanExecute);
@@ -32,23 +34,21 @@ namespace Asv.Drones.Gui.Uav
 
             var dialog = new ContentDialog()
             {
-                Title = Title,
-                PrimaryButtonText = "Set",
+                Title = RS.TakeOffAnchorActionViewModel_Title,
+                PrimaryButtonText = RS.TakeOffAnchorActionViewModel_DialogPrimaryButton,
                 IsSecondaryButtonEnabled = true,
-                SecondaryButtonText = "Cancel"
+                SecondaryButtonText = RS.TakeOffAnchorActionViewModel_DialogSecondaryButton
             };
             
-            var viewModel = new TakeOffViewModel();
+            var viewModel = new TakeOffViewModel(_takeOffService);
             viewModel.ApplyDialog(dialog);
             dialog.Content = viewModel;
             
-
-
             var result = await dialog.ShowAsync();
 
             if (result == ContentDialogResult.Primary)
             {
-                _log.Info(LogName, $"User send TakeOff for {Vehicle.Name.Value}");
+                _log.Info(LogName, string.Format(RS.TakeOffAnchorActionViewModel_LogMessage, Vehicle.Name.Value));
                 await Vehicle.TakeOff(viewModel.Altitude.Value, cancel);
             }
 

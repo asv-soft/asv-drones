@@ -29,6 +29,7 @@ namespace Asv.Drones.Gui.Core
             var svc4 = _container.GetExport<INavigationService>();
             var svc5 = _container.GetExport<ILocalizationService>();
             var svc6 = _container.GetExports<IMapService>();
+            var svc7 = _container.GetExport<ITakeOffService>();
         }
 
         public void OnFrameworkInitializationCompleted()
