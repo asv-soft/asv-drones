@@ -63,6 +63,11 @@ namespace Asv.Drones.Gui.Core
             return size;
         }
 
+        public void SetMapCacheDirectory(string directory)
+        {
+            _mapCacheDirectory = directory;
+        }
+
         public string MapCacheDirectory => _mapCacheDirectory;
 
         public IRxEditableValue<GMapProvider> CurrentMapProvider => _currentMapProvider;
