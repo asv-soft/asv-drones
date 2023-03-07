@@ -17,8 +17,8 @@ public class Distance : IMeasureUnit<double>
     {
         return _units switch
         {
-            DistanceUnits.Meters => RS.SettingsThemeViewModel_DistanceMeterUnit,
-            DistanceUnits.NauticalMiles => RS.SettingsThemeViewModel_DistanceInternationalNauticalMileUnit
+            DistanceUnits.Meters => RS.Distance_MeterUnit,
+            DistanceUnits.NauticalMiles => RS.Distance_InternationalNauticalMileUnit
         };
     }
 

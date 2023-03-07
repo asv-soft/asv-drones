@@ -15,8 +15,8 @@ public class Altitude : IMeasureUnit<double>
     {
         return _units switch
         {
-            AltitudeUnits.Meters => RS.SettingsThemeViewModel_AltitudeMeterUnit,
-            AltitudeUnits.Feets => RS.SettingsThemeViewModel_AltitudeFeetUnit
+            AltitudeUnits.Meters => RS.Altitude_MeterUnit,
+            AltitudeUnits.Feets => RS.Altitude_FeetUnit
         };
     }
 
