@@ -60,6 +60,24 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ft.
+        /// </summary>
+        public static string Altitude_FeetUnit {
+            get {
+                return ResourceManager.GetString("Altitude_FeetUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m.
+        /// </summary>
+        public static string Altitude_MeterUnit {
+            get {
+                return ResourceManager.GetString("Altitude_MeterUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to B.
         /// </summary>
         public static string ByteSize_BytesUnit {
@@ -137,6 +155,24 @@ namespace Asv.Drones.Gui.Core {
         public static string Common_NotAvailable {
             get {
                 return ResourceManager.GetString("Common_NotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to nmi.
+        /// </summary>
+        public static string Distance_InternationalNauticalMileUnit {
+            get {
+                return ResourceManager.GetString("Distance_InternationalNauticalMileUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m.
+        /// </summary>
+        public static string Distance_MeterUnit {
+            get {
+                return ResourceManager.GetString("Distance_MeterUnit", resourceCulture);
             }
         }
         
@@ -267,6 +303,150 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Altitude.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_Altitude {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_Altitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of altitude..
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_AltitudeDescription {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_AltitudeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feets.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_AltitudeFeets {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_AltitudeFeets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meters.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_AltitudeMeters {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_AltitudeMeters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distance.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_Distance {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_Distance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of distance..
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_DistanceDescription {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_DistanceDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nautical miles.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_DistanceInternationalNauticalMiles {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_DistanceInternationalNauticalMiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meters.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_DistanceMeters {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_DistanceMeters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude &amp; Longitude.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_LatitudeLongitude {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_LatitudeLongitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of latitude &amp; longitude..
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_LatitudeLongitudeDescription {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_LatitudeLongitudeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Degrees.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegrees {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegrees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Degrees, minutes, seconds.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In this section you can specialize measurement units for various parameters..
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Description {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Measurement units.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Title {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velocity.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_Velocity {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_Velocity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of velocity..
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_VelocityDescription {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_VelocityDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mission planing.
         /// </summary>
         public static string PlaningShellMenuItem_Name {
@@ -276,65 +456,29 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ms.
+        /// </summary>
+        public static string RelativeTime_MillisecondsUnit {
+            get {
+                return ResourceManager.GetString("RelativeTime_MillisecondsUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to s.
+        /// </summary>
+        public static string RelativeTime_SecondsUnit {
+            get {
+                return ResourceManager.GetString("RelativeTime_SecondsUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string SettingsShellMenuProvider_SettingsShellMenuProvider_Settings {
             get {
                 return ResourceManager.GetString("SettingsShellMenuProvider_SettingsShellMenuProvider_Settings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Altitude.
-        /// </summary>
-        public static string SettingsThemeViewModel_Altitude {
-            get {
-                return ResourceManager.GetString("SettingsThemeViewModel_Altitude", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change the current measure units of altitude..
-        /// </summary>
-        public static string SettingsThemeViewModel_AltitudeDescription {
-            get {
-                return ResourceManager.GetString("SettingsThemeViewModel_AltitudeDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Feets.
-        /// </summary>
-        public static string SettingsThemeViewModel_AltitudeFeets {
-            get {
-                return ResourceManager.GetString("SettingsThemeViewModel_AltitudeFeets", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ft.
-        /// </summary>
-        public static string SettingsThemeViewModel_AltitudeFeetUnit {
-            get {
-                return ResourceManager.GetString("SettingsThemeViewModel_AltitudeFeetUnit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Meters.
-        /// </summary>
-        public static string SettingsThemeViewModel_AltitudeMeters {
-            get {
-                return ResourceManager.GetString("SettingsThemeViewModel_AltitudeMeters", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to m.
-        /// </summary>
-        public static string SettingsThemeViewModel_AltitudeMeterUnit {
-            get {
-                return ResourceManager.GetString("SettingsThemeViewModel_AltitudeMeterUnit", resourceCulture);
             }
         }
         
@@ -375,60 +519,6 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Distance.
-        /// </summary>
-        public static string SettingsThemeViewModel_Distance {
-            get {
-                return ResourceManager.GetString("SettingsThemeViewModel_Distance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change the current measure units of distance..
-        /// </summary>
-        public static string SettingsThemeViewModel_DistanceDescription {
-            get {
-                return ResourceManager.GetString("SettingsThemeViewModel_DistanceDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Nautical miles.
-        /// </summary>
-        public static string SettingsThemeViewModel_DistanceInternationalNauticalMiles {
-            get {
-                return ResourceManager.GetString("SettingsThemeViewModel_DistanceInternationalNauticalMiles", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to nmi.
-        /// </summary>
-        public static string SettingsThemeViewModel_DistanceInternationalNauticalMileUnit {
-            get {
-                return ResourceManager.GetString("SettingsThemeViewModel_DistanceInternationalNauticalMileUnit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Meters.
-        /// </summary>
-        public static string SettingsThemeViewModel_DistanceMeters {
-            get {
-                return ResourceManager.GetString("SettingsThemeViewModel_DistanceMeters", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to m.
-        /// </summary>
-        public static string SettingsThemeViewModel_DistanceMeterUnit {
-            get {
-                return ResourceManager.GetString("SettingsThemeViewModel_DistanceMeterUnit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Flow direction.
         /// </summary>
         public static string SettingsThemeViewModel_FlowDirection {
@@ -443,42 +533,6 @@ namespace Asv.Drones.Gui.Core {
         public static string SettingsThemeViewModel_FlowDirectionDescription {
             get {
                 return ResourceManager.GetString("SettingsThemeViewModel_FlowDirectionDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Latitude &amp; Longitude.
-        /// </summary>
-        public static string SettingsThemeViewModel_LatitudeLongitude {
-            get {
-                return ResourceManager.GetString("SettingsThemeViewModel_LatitudeLongitude", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change the current measure units of latitude &amp; longitude..
-        /// </summary>
-        public static string SettingsThemeViewModel_LatitudeLongitudeDescription {
-            get {
-                return ResourceManager.GetString("SettingsThemeViewModel_LatitudeLongitudeDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Degrees.
-        /// </summary>
-        public static string SettingsThemeViewModel_LatitudeLongtitudeDegrees {
-            get {
-                return ResourceManager.GetString("SettingsThemeViewModel_LatitudeLongtitudeDegrees", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Degrees, minutes, seconds.
-        /// </summary>
-        public static string SettingsThemeViewModel_LatitudeLongtitudeDegreesMinutesSeconds {
-            get {
-                return ResourceManager.GetString("SettingsThemeViewModel_LatitudeLongtitudeDegreesMinutesSeconds", resourceCulture);
             }
         }
         
@@ -542,6 +596,33 @@ namespace Asv.Drones.Gui.Core {
         public static string ThemeService_Themes_Light {
             get {
                 return ResourceManager.GetString("ThemeService_Themes_Light", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to km/h.
+        /// </summary>
+        public static string Velocity_KilometersPerHourUnit {
+            get {
+                return ResourceManager.GetString("Velocity_KilometersPerHourUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string Velocity_MetersPerSecondUnit {
+            get {
+                return ResourceManager.GetString("Velocity_MetersPerSecondUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mi/h.
+        /// </summary>
+        public static string Velocity_MilesPerHourUnit {
+            get {
+                return ResourceManager.GetString("Velocity_MilesPerHourUnit", resourceCulture);
             }
         }
     }
