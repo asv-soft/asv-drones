@@ -81,7 +81,7 @@
                            MenuItemTemplateSelector="{x:Static core:MenuItemTemplateSelector.Instance}">
             <Panel>
                 <ContentControl Content="{CompiledBinding CurrentPage}"/>
-                <ItemsControl Items="{Binding Messages}" Margin="8">
+                <ItemsControl HorizontalAlignment="Center" MinWidth="600" Items="{Binding Messages}" Margin="8">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Spacing="8"></StackPanel>

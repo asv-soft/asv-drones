@@ -34,6 +34,18 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>RS.resx</DependentUpon>
     </Compile>
+    <Compile Update="Shell\Pages\Planing\Widgets\Mission\PlaningMissionItemView.axaml.cs">
+      <DependentUpon>PlaningMissionItemView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Shell\Pages\Planing\Widgets\Mission\PlaningMissionView.axaml.cs">
+      <DependentUpon>PlaningMissionView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Shell\Pages\Flight\Widgets\Telemetry\FlightUavView.axaml.cs">
+      <DependentUpon>UavWidgetView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
