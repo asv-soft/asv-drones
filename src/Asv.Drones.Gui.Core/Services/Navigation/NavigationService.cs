@@ -6,6 +6,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using Avalonia.Platform.Storage.FileIO;
+using FluentAvalonia.UI.Controls;
 
 namespace Asv.Drones.Gui.Core
 {
@@ -25,7 +26,7 @@ namespace Asv.Drones.Gui.Core
         private IStorageProvider? _windowStorageProvider;
 
         [ImportingConstructor]
-        public NavigationService(CompositionContainer container,IConfiguration cfgSvc):base(cfgSvc)
+        public NavigationService(CompositionContainer container, IConfiguration cfgSvc):base(cfgSvc)
         {
             _container = container;
         }
@@ -82,9 +83,7 @@ namespace Asv.Drones.Gui.Core
             if (selectedItem == null) return null;
             return selectedItem.TryGetUri(out var uri) == false ? null : uri.AbsolutePath;
         }
-
-
-
+        
         public async Task<string?> ShowOpenFolderDialogAsync(string title, string? suggestedStartLocation)
         {
             if (_windowStorageProvider == null)

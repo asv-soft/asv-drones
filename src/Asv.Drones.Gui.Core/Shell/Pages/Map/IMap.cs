@@ -12,6 +12,7 @@ namespace Asv.Drones.Gui.Core
     /// </summary>
     public interface IMap
     {
+        bool IsInDialogMode { get; set; }
         int MaxZoom { get; set; }
         int MinZoom { get; set; }
         double Zoom { get; set; }
