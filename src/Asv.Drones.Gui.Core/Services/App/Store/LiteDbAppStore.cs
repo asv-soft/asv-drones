@@ -14,7 +14,15 @@ namespace Asv.Drones.Core
             _db = db;
             
         }
-
         
+        public int GetFileSizeInBytes()
+        {
+            var result = _db.GetCollection("$dump")
+                .Query()
+                .Select("{used: SUM(*.usedBytes)}")
+                .ToList();
+
+            return result[0]["used"].AsInt32;
+        }
     }
 }
