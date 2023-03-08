@@ -51,7 +51,8 @@ namespace Asv.Drones.Gui.Core
                 _statusItems =
                     new ReadOnlyObservableCollection<IShellStatusItem>(new ObservableCollection<IShellStatusItem>(new IShellStatusItem[]
                     {
-                        new ShellStatusMapCacheViewModel()
+                        new ShellStatusMapCacheViewModel(),
+                        new ShellStatusFileStorageViewModel()
                     }));
                 _messages = new ReadOnlyObservableCollection<LogMessageViewModel>(
                     new ObservableCollection<LogMessageViewModel>(new LogMessageViewModel[]

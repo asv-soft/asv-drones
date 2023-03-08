@@ -13,7 +13,7 @@ namespace Asv.Drones.Core
     
     public interface IAppStore:IStore
     {
-        
+        int GetFileSizeInBytes();
     }
 
     
