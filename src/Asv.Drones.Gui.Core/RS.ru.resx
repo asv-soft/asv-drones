@@ -1,57 +1,58 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
-		Microsoft ResX Schema
-
-		Version 1.3
-
-		The primary goals of this format is to allow a simple XML format 
-		that is mostly human readable. The generation and parsing of the 
-		various data types are done through the TypeConverter classes 
-		associated with the data types.
-
-		Example:
-
-		... ado.net/XML headers & schema ...
-		<resheader name="resmimetype">text/microsoft-resx</resheader>
-		<resheader name="version">1.3</resheader>
-		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-		<data name="Name1">this is my long string</data>
-		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-			[base64 mime encoded serialized .NET Framework object]
-		</data>
-		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-			[base64 mime encoded string representing a byte array form of the .NET Framework object]
-		</data>
-
-		There are any number of "resheader" rows that contain simple 
-		name/value pairs.
-
-		Each data row contains a name, and value. The row also contains a 
-		type or mimetype. Type corresponds to a .NET class that support 
-		text/value conversion through the TypeConverter architecture. 
-		Classes that don't support this are serialized and stored with the 
-		mimetype set.
-
-		The mimetype is used for serialized objects, and tells the 
-		ResXResourceReader how to depersist the object. This is currently not 
-		extensible. For a given mimetype the value must be set accordingly:
-
-		Note - application/x-microsoft.net.object.binary.base64 is the format 
-		that the ResXResourceWriter will generate, however the reader can 
-		read any of the formats listed below.
-
-		mimetype: application/x-microsoft.net.object.binary.base64
-		value   : The object must be serialized with 
-			: System.Serialization.Formatters.Binary.BinaryFormatter
-			: and then encoded with base64 encoding.
-
-		mimetype: application/x-microsoft.net.object.soap.base64
-		value   : The object must be serialized with 
-			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-			: and then encoded with base64 encoding.
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
 
 		mimetype: application/x-microsoft.net.object.bytearray.base64
 		value   : The object must be serialized into a byte array 
@@ -186,54 +187,81 @@
 	<data name="SettingsView_RebootRequiredDescription" xml:space="preserve">
 		<value>Вы должны перезагрузить программу, чтобы применить изменения.</value>
 	</data>
-	<data name="SettingsThemeViewModel_Distance" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_Distance" xml:space="preserve">
 		<value>Расстояние</value>
 	</data>
-	<data name="SettingsThemeViewModel_DistanceDescription" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_DistanceDescription" xml:space="preserve">
 		<value>Измените текущие единицы измерения расстояния.</value>
 	</data>
-	<data name="SettingsThemeViewModel_Altitude" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_Altitude" xml:space="preserve">
 		<value>Высота</value>
 	</data>
-	<data name="SettingsThemeViewModel_AltitudeDescription" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_AltitudeDescription" xml:space="preserve">
 		<value>Измените текущие единицы измерения высоты.</value>
 	</data>
-	<data name="SettingsThemeViewModel_LatitudeLongitude" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_LatitudeLongitude" xml:space="preserve">
 		<value>Широта и долгота</value>
 	</data>
-	<data name="SettingsThemeViewModel_LatitudeLongitudeDescription" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_LatitudeLongitudeDescription" xml:space="preserve">
 		<value>Измените текущие единицы измерения широты и долготы.</value>
 	</data>
-	<data name="SettingsThemeViewModel_DistanceMeters" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_DistanceMeters" xml:space="preserve">
 		<value>Метры</value>
 	</data>
-	<data name="SettingsThemeViewModel_DistanceInternationalNauticalMiles" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_DistanceInternationalNauticalMiles" xml:space="preserve">
 		<value>Морские мили</value>
 	</data>
-	<data name="SettingsThemeViewModel_AltitudeMeters" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_AltitudeMeters" xml:space="preserve">
 		<value>Метры</value>
 	</data>
-	<data name="SettingsThemeViewModel_AltitudeFeets" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_AltitudeFeets" xml:space="preserve">
 		<value>Футы</value>
 	</data>
-	<data name="SettingsThemeViewModel_LatitudeLongtitudeDegrees" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegrees" xml:space="preserve">
 		<value>Градусы</value>
 	</data>
-	<data name="SettingsThemeViewModel_LatitudeLongtitudeDegreesMinutesSeconds" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds" xml:space="preserve">
 		<value>Градусы, минуты, секунды</value>
 	</data>
-	<data name="SettingsThemeViewModel_AltitudeFeetUnit" xml:space="preserve">
+	<data name="Altitude_FeetUnit" xml:space="preserve">
 		<value>фут</value>
 	</data>
-	<data name="SettingsThemeViewModel_AltitudeMeterUnit" xml:space="preserve">
+	<data name="Altitude_MeterUnit" xml:space="preserve">
 		<value>м</value>
 	</data>
-	<data name="SettingsThemeViewModel_DistanceMeterUnit" xml:space="preserve">
+	<data name="Distance_MeterUnit" xml:space="preserve">
 		<value>м</value>
 	</data>
-	<data name="SettingsThemeViewModel_DistanceInternationalNauticalMileUnit" xml:space="preserve">
+	<data name="Distance_InternationalNauticalMileUnit" xml:space="preserve">
 		<value>nmi</value>
 
+	</data>
+	<data name="Velocity_MetersPerSecondUnit" xml:space="preserve">
+		<value>м/с</value>
+	</data>
+	<data name="Velocity_KilometersPerHourUnit" xml:space="preserve">
+		<value>км/ч</value>
+	</data>
+	<data name="Velocity_MilesPerHourUnit" xml:space="preserve">
+		<value>миль/ч</value>
+	</data>
+	<data name="RelativeTime_MillisecondsUnit" xml:space="preserve">
+		<value>мс</value>
+	</data>
+	<data name="RelativeTime_SecondsUnit" xml:space="preserve">
+		<value>с</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Title" xml:space="preserve">
+		<value>Единицы измерения</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Description" xml:space="preserve">
+		<value>В этом разделе можно настроить единицы измерения для различных параметров.</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_Velocity" xml:space="preserve">
+		<value>Скорость</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_VelocityDescription" xml:space="preserve">
+		<value>Измените текущие единицы измерения скорости.</value>
 	</data>
 	<data name="HeaderFileMenu_Header" xml:space="preserve">
 		<value>Файл</value>
@@ -241,4 +269,127 @@
 	<data name="HeaderOpenMenu_Header" xml:space="preserve">
 		<value>Открыть</value>
 	</data>
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="SettingsShellMenuProvider_SettingsShellMenuProvider_Settings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="FlightShellMenuItem_Name" xml:space="preserve">
+    <value>Режим полета</value>
+  </data>
+  <data name="ThemeService_Themes_Contrast" xml:space="preserve">
+    <value>Контрастная</value>
+  </data>
+  <data name="ThemeService_Themes_Dark" xml:space="preserve">
+    <value>Темная</value>
+  </data>
+  <data name="ThemeService_Themes_Light" xml:space="preserve">
+    <value>Светлая</value>
+  </data>
+  <data name="ThemeService_FlowDirections_LeftToRight" xml:space="preserve">
+    <value>СлеваНаПраво</value>
+  </data>
+  <data name="ThemeService_FlowDirections_RightToLeft" xml:space="preserve">
+    <value>СправаНаЛево</value>
+  </data>
+  <data name="SettingsThemeViewModel_CurrentTheme" xml:space="preserve">
+    <value>Тема</value>
+  </data>
+  <data name="SettingsThemeViewModel_ChangeThemeDescription" xml:space="preserve">
+    <value>Измените текущую тему приложения.</value>
+  </data>
+  <data name="SettingsThemeViewModel_CurrentLanguage" xml:space="preserve">
+    <value>Язык приложения</value>
+  </data>
+  <data name="SettingsThemeViewModel_CurrentLanguageDescription" xml:space="preserve">
+    <value>Измените текущий язык приложения. Изменения будут применены после перезапуска приложения.</value>
+  </data>
+  <data name="SettingsThemeViewModel_FlowDirection" xml:space="preserve">
+    <value>Направление чтения</value>
+  </data>
+  <data name="SettingsThemeViewModel_FlowDirectionDescription" xml:space="preserve">
+    <value>Измените направление чтения.</value>
+  </data>
+  <data name="PlaningShellMenuItem_Name" xml:space="preserve">
+    <value>Планирование полета</value>
+  </data>
+  <data name="MapSettingsView_MapProvider_Description" xml:space="preserve">
+    <value>Выбрать провайдер карт</value>
+  </data>
+  <data name="MapSettingsView_MapProvider_Header" xml:space="preserve">
+    <value>Провайдер карт</value>
+  </data>
+  <data name="MapSettingsView_MapsInfo_ButtonName" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="MapSettingsView_MapsInfo_Description" xml:space="preserve">
+    <value>Текущее хранилище карт находится {0} и занимает {1}</value>
+  </data>
+  <data name="MapSettingsView_MapsInfo_Header" xml:space="preserve">
+    <value>Хранилище карт</value>
+  </data>
+  <data name="MapSettingsViewModel_MapDialogTitle" xml:space="preserve">
+    <value>Карты</value>
+  </data>
 </root>

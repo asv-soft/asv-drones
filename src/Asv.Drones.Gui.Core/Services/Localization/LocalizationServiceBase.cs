@@ -15,6 +15,8 @@ namespace Asv.Drones.Gui.Core
         public DistanceUnitItem? CurrentDistanceUnit { get; set; }
 
         public LatitudeLongitudeUnitItem? CurrentLatitudeLongitudeUnit { get; set; }
+        
+        public VelocityUnitItem? CurrentVelocityUnit { get; set; }
     }
 
     public class LocalizationServiceBase : ServiceWithConfigBase<LocalizationServiceConfig>, ILocalizationService
@@ -30,7 +32,9 @@ namespace Asv.Drones.Gui.Core
         private readonly List<DistanceUnitItem> _distances;
 
         private readonly List<LatitudeLongitudeUnitItem> _latitudesAndLongitudes;
-        
+
+        private readonly List<VelocityUnitItem> _velocities;
+
         [ImportingConstructor]
         public LocalizationServiceBase(IConfiguration cfgSvc):base(cfgSvc)
         {
@@ -50,8 +54,8 @@ namespace Asv.Drones.Gui.Core
             #region CurrentAltitudeUnitInit
             _altitudes = new()
             {
-                new(Core.AltitudeUnits.Meters, RS.SettingsThemeViewModel_AltitudeMeters),
-                new(Core.AltitudeUnits.Feets, RS.SettingsThemeViewModel_AltitudeFeets)
+                new(Core.AltitudeUnits.Meters, RS.MeasureUnitsSettingsViewModel_AltitudeMeters),
+                new(Core.AltitudeUnits.Feets, RS.MeasureUnitsSettingsViewModel_AltitudeFeets)
             };
 
             var selectedAltitude = _altitudes.First();
@@ -69,8 +73,8 @@ namespace Asv.Drones.Gui.Core
             #region CurrentDistanceUnitInit
             _distances = new()
             {
-                new (Core.DistanceUnits.Meters, RS.SettingsThemeViewModel_DistanceMeters),
-                new (Core.DistanceUnits.NauticalMiles, RS.SettingsThemeViewModel_DistanceInternationalNauticalMiles)
+                new (Core.DistanceUnits.Meters, RS.MeasureUnitsSettingsViewModel_DistanceMeters),
+                new (Core.DistanceUnits.NauticalMiles, RS.MeasureUnitsSettingsViewModel_DistanceInternationalNauticalMiles)
             };
 
             var selectedDistance = _distances.First();
@@ -88,8 +92,8 @@ namespace Asv.Drones.Gui.Core
             #region CurrentLatitudeLongitudeUnitInit
             _latitudesAndLongitudes = new()
             {
-                new ( Core.LatitudeLongitudeUnits.Degrees, RS.SettingsThemeViewModel_LatitudeLongtitudeDegrees),
-                new (Core.LatitudeLongitudeUnits.DegreesMinutesSeconds, RS.SettingsThemeViewModel_LatitudeLongtitudeDegreesMinutesSeconds)
+                new ( Core.LatitudeLongitudeUnits.Degrees, RS.MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegrees),
+                new (Core.LatitudeLongitudeUnits.DegreesMinutesSeconds, RS.MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds)
             };
 
             var selectedLatitudeLongitude = _latitudesAndLongitudes.First();
@@ -102,6 +106,26 @@ namespace Asv.Drones.Gui.Core
 
             CurrentLatitudeLongitudeUnit = new RxValue<LatitudeLongitudeUnitItem>(selectedLatitudeLongitude).DisposeItWith(Disposable);
             CurrentLatitudeLongitudeUnit.Subscribe(SetLatitudeLongitudeUnit).DisposeWith(Disposable);
+            #endregion
+
+            #region CurrentVelocityUnitInit
+            _velocities = new()
+            {
+                new ( Core.VelocityUnits.MetersPerSecond, RS.Velocity_MetersPerSecondUnit),
+                new (Core.VelocityUnits.KilometersPerHour, RS.Velocity_KilometersPerHourUnit),
+                new (Core.VelocityUnits.MilesPerHour, RS.Velocity_MilesPerHourUnit)
+            };
+
+            var selectedVelocity = _velocities.First();
+            var velocityFromConfig = InternalGetConfig(_ => _.CurrentVelocityUnit);
+
+            if (string.IsNullOrWhiteSpace(velocityFromConfig?.Name) == false)
+            {
+                selectedVelocity = _velocities.FirstOrDefault(_ => _.Id.Equals(velocityFromConfig.Id));
+            }
+
+            CurrentVelocityUnit = new RxValue<VelocityUnitItem>(selectedVelocity).DisposeItWith(Disposable);
+            CurrentVelocityUnit.Subscribe(SetVelocityUnit).DisposeWith(Disposable);
             #endregion
         }
 
@@ -117,6 +141,10 @@ namespace Asv.Drones.Gui.Core
         public IRxEditableValue<LatitudeLongitudeUnitItem> CurrentLatitudeLongitudeUnit { get; }
         public IEnumerable<LatitudeLongitudeUnitItem> LatitudeLongitudeUnits => _latitudesAndLongitudes;
 
+        public IRxEditableValue<VelocityUnitItem> CurrentVelocityUnit { get; }
+        public IEnumerable<VelocityUnitItem> VelocityUnits => _velocities;
+
+        
         private void SetLanguage(LanguageInfo lang)
         {
             if (lang == null) throw new ArgumentNullException(nameof(lang));
@@ -148,6 +176,13 @@ namespace Asv.Drones.Gui.Core
             InternalSaveConfig(_ => _.CurrentLatitudeLongitudeUnit = latitudeLongitude);
         }
 
+        private void SetVelocityUnit(VelocityUnitItem velocity)
+        {
+            if (velocity == null) throw new ArgumentNullException(nameof(velocity));
+            Velocity = new Velocity(velocity.Id);
+            InternalSaveConfig(_ => _.CurrentVelocityUnit = velocity);
+        }
+        
         #region Units
 
         public IMeasureUnit<double> ByteRate { get; } = new BytesRate();
@@ -161,6 +196,10 @@ namespace Asv.Drones.Gui.Core
         public IMeasureUnit<double> Distance { get; private set; }
 
         public IMeasureUnit<double> LatitudeAndLongitude { get; private set; }
+        
+        public IMeasureUnit<double> Velocity { get; private set; }
+
+        public IMeasureUnit<TimeSpan> RelativeTime { get; } = new RelativeTime();
 
         #endregion
 
