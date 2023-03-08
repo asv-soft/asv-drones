@@ -3,7 +3,7 @@
         xmlns:controls="using:Asv.Drones.Gui.Core"
         xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia">
     <Design.PreviewWith>
-        <controls:BatteryIndicator Value="100"/>
+        <controls:BatteryIndicator Value="50" CriticalValue="20" WarningValue="45" MaxValue="100"/>
     </Design.PreviewWith>
 
     <Style Selector="controls|BatteryIndicator">

@@ -15,28 +15,28 @@ public class BatteryIndicator : TemplatedControl
     #endregion
     
     #region Styled Props
-    public static readonly StyledProperty<double> CriticalValueProperty = AvaloniaProperty.Register<BatteryIndicator, double>(
-        nameof(CriticalValue), 20);
+    public static readonly StyledProperty<double?> CriticalValueProperty = AvaloniaProperty.Register<BatteryIndicator, double?>(
+        nameof(CriticalValue), 20, notifying: UpdateColor);
 
-    public double CriticalValue
+    public double? CriticalValue
     {
         get => GetValue(CriticalValueProperty);
         set => SetValue(CriticalValueProperty, value);
     }
 
-    public static readonly StyledProperty<double> WarningValueProperty = AvaloniaProperty.Register<BatteryIndicator, double>(
-        nameof(WarningValue),50);
+    public static readonly StyledProperty<double?> WarningValueProperty = AvaloniaProperty.Register<BatteryIndicator, double?>(
+        nameof(WarningValue),50, notifying: UpdateColor);
 
-    public double WarningValue
+    public double? WarningValue
     {
         get => GetValue(WarningValueProperty);
         set => SetValue(WarningValueProperty, value);
     }
 
-    public static readonly StyledProperty<double> MaxValueProperty = AvaloniaProperty.Register<BatteryIndicator, double>(
-        nameof(MaxValue), 100);
+    public static readonly StyledProperty<double?> MaxValueProperty = AvaloniaProperty.Register<BatteryIndicator, double?>(
+        nameof(MaxValue), 100, notifying: UpdateColor);
 
-    public double MaxValue
+    public double? MaxValue
     {
         get => GetValue(MaxValueProperty);
         set => SetValue(MaxValueProperty, value);
@@ -75,11 +75,9 @@ public class BatteryIndicator : TemplatedControl
         
     }
 
-    private static void UpdateValue(IAvaloniaObject source, bool beforeChanged)
+    private static void UpdateColor(IAvaloniaObject source, bool beforeChanged)
     {
         if (source is not BatteryIndicator indicator) return;
-
-        indicator.IconKind = GetIcon(indicator.Value);
         
         if (indicator.Value > indicator.WarningValue & indicator.Value <= indicator.MaxValue)
         {
@@ -93,6 +91,15 @@ public class BatteryIndicator : TemplatedControl
         {
             indicator.IconColor = indicator._criticalValueColor;
         }
+    }
+    
+    private static void UpdateValue(IAvaloniaObject source, bool beforeChanged)
+    {
+        if (source is not BatteryIndicator indicator) return;
+
+        indicator.IconKind = GetIcon(indicator.Value);
+
+        UpdateColor(source, beforeChanged);
     }
 
     private static MaterialIconKind GetIcon(double? value)
