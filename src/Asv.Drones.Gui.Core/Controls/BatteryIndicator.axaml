@@ -1,0 +1,16 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Asv.Drones.Gui.Core"
+        xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia">
+    <Design.PreviewWith>
+        <controls:BatteryIndicator Value="100"/>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|BatteryIndicator">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <avalonia:MaterialIcon Background="Transparent" Foreground="{TemplateBinding IconColor}" Width="20" Height="20" Kind="{TemplateBinding IconKind}"/>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>
