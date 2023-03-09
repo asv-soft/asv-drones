@@ -15,16 +15,16 @@ namespace Asv.Drones.Gui.Uav
     {
         private ReadOnlyObservableCollection<MapAnchorActionViewModel> _actions;
         private readonly IEnumerable<IFlightUavActionProvider> _actionsProviders;
-        private readonly ILocalizationService _localizationService;
+        private readonly ILocalizationService _loc;
 
         public const string BaseUriString = "asv:shell.pages.layers.anchors.uavanchor";
         public static readonly Uri BaseUri = new(BaseUriString);
 
-        public UavAnchor(IVehicle vehicle,ILocalizationService localizationService,IEnumerable<IFlightUavActionProvider> actionsProviders)
+        public UavAnchor(IVehicle vehicle,ILocalizationService loc,IEnumerable<IFlightUavActionProvider> actionsProviders)
             :base(vehicle,"uav")
         {
             _actionsProviders = actionsProviders;
-            _localizationService = localizationService;
+            _loc = loc;
             Size = 48;
             OffsetX = OffsetXEnum.Center;
             OffsetY = OffsetYEnum.Center;
@@ -42,9 +42,9 @@ namespace Asv.Drones.Gui.Uav
         private void UpdateDescription()
         {
             // TODO: Localize
-            Description = $"Lat:{_localizationService.LatitudeAndLongitude.GetValueWithUnits(Vehicle.GlobalPosition.Value.Latitude)}\n" +
-                          $"Lon:{_localizationService.LatitudeAndLongitude.GetValueWithUnits(Vehicle.GlobalPosition.Value.Longitude)}\n" +
-                          $"Alt:{_localizationService.Altitude.GetValueWithUnits(Vehicle.GlobalPosition.Value.Altitude)}\n";
+            Description = $"Lat: {_loc.LatitudeAndLongitude.FromSIToStringWithUnits(Vehicle.GlobalPosition.Value.Latitude)}\n" +
+                          $"Lon: {_loc.LatitudeAndLongitude.FromSIToStringWithUnits(Vehicle.GlobalPosition.Value.Longitude)}\n" +
+                          $"Alt: {_loc.Altitude.FromSIToStringWithUnits(Vehicle.GlobalPosition.Value.Altitude)}\n";
         }
 
         protected override void InternalWhenMapLoaded(IMap map)

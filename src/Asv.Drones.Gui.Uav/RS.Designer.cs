@@ -438,7 +438,7 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User send TakeOff for {0}.
+        ///   Looks up a localized string similar to User send TakeOff at {0} altitude for {1}.
         /// </summary>
         public static string TakeOffAnchorActionViewModel_LogMessage {
             get {

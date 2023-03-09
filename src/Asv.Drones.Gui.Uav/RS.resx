@@ -310,6 +310,6 @@
     <value>Altitude must be greater or equal {0}.</value>
   </data>
   <data name="TakeOffAnchorActionViewModel_LogMessage" xml:space="preserve">
-    <value>User send TakeOff for {0}</value>
+    <value>User send TakeOff at {0} altitude for {1}</value>
   </data>
 </root>

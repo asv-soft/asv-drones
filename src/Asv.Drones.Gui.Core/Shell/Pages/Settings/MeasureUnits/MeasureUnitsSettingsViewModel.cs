@@ -25,49 +25,49 @@ namespace Asv.Drones.Gui.Core
         {
             _localization = localization;
             
-            _localization.CurrentAltitudeUnit.Subscribe(_ => SelectedAltitudeUnit = _)
+            _localization.Altitude.CurrentUnit.Subscribe(_ => SelectedAltitudeUnit = _)
                 .DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.SelectedAltitudeUnit)
-                .Subscribe(_localization.CurrentAltitudeUnit)
+                .Subscribe(_localization.Altitude.CurrentUnit)
                 .DisposeItWith(Disposable);
             
-            _localization.CurrentDistanceUnit.Subscribe(_ => SelectedDistanceUnit = _)
+            _localization.Distance.CurrentUnit.Subscribe(_ => SelectedDistanceUnit = _)
                 .DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.SelectedDistanceUnit)
-                .Subscribe(_localization.CurrentDistanceUnit)
+                .Subscribe(_localization.Distance.CurrentUnit)
                 .DisposeItWith(Disposable);
 
-            _localization.CurrentLatitudeLongitudeUnit.Subscribe(_ => SelectedLatitudeLongitudeUnit = _)
+            _localization.LatitudeAndLongitude.CurrentUnit.Subscribe(_ => SelectedLatitudeLongitudeUnit = _)
                 .DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.SelectedLatitudeLongitudeUnit)
-                .Subscribe(_localization.CurrentLatitudeLongitudeUnit)
+                .Subscribe( _localization.LatitudeAndLongitude.CurrentUnit)
                 .DisposeItWith(Disposable);
             
-            _localization.CurrentVelocityUnit.Subscribe(_ => SelectedVelocityUnit = _)
+            _localization.Velocity.CurrentUnit.Subscribe(_ => SelectedVelocityUnit = _)
                 .DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.SelectedVelocityUnit)
-                .Subscribe(_localization.CurrentVelocityUnit)
+                .Subscribe(_localization.Velocity.CurrentUnit)
                 .DisposeItWith(Disposable);
         }
         
         [Reactive]
-        public AltitudeUnitItem SelectedAltitudeUnit { get; set; }
+        public IMeasureUnitItem<double,AltitudeUnits> SelectedAltitudeUnit { get; set; }
 
-        public IEnumerable<AltitudeUnitItem> AltitudeUnits => _localization.AltitudeUnits;
-
-        [Reactive]
-        public DistanceUnitItem SelectedDistanceUnit { get; set; }
-
-        public IEnumerable<DistanceUnitItem> DistanceUnits => _localization.DistanceUnits;
+        public IEnumerable<IMeasureUnitItem<double,AltitudeUnits>> AltitudeUnits => _localization.Altitude.AvailableUnits;
 
         [Reactive]
-        public LatitudeLongitudeUnitItem SelectedLatitudeLongitudeUnit { get; set; }
+        public IMeasureUnitItem<double,DistanceUnits> SelectedDistanceUnit { get; set; }
 
-        public IEnumerable<LatitudeLongitudeUnitItem> LatitudeLongitudeUnits => _localization.LatitudeLongitudeUnits;
+        public IEnumerable<IMeasureUnitItem<double,DistanceUnits>> DistanceUnits => _localization.Distance.AvailableUnits;
+
+        [Reactive]
+        public IMeasureUnitItem<double,LatitudeLongitudeUnits> SelectedLatitudeLongitudeUnit { get; set; }
+
+        public IEnumerable<IMeasureUnitItem<double,LatitudeLongitudeUnits>> LatitudeLongitudeUnits => _localization.LatitudeAndLongitude.AvailableUnits;
         
         [Reactive]
-        public VelocityUnitItem SelectedVelocityUnit { get; set; }
+        public IMeasureUnitItem<double,VelocityUnits> SelectedVelocityUnit { get; set; }
 
-        public IEnumerable<VelocityUnitItem> VelocityUnits => _localization.VelocityUnits;
+        public IEnumerable<IMeasureUnitItem<double,VelocityUnits>> VelocityUnits => _localization.Velocity.AvailableUnits;
     }
 }

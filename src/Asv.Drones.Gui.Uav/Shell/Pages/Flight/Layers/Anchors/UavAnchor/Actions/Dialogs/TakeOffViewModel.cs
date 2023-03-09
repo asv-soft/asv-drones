@@ -12,6 +12,11 @@ using ReactiveUI.Validation.Extensions;
 namespace Asv.Drones.Gui.Uav;
 
 
+public class TakeOffViewModelConfig
+{
+    public double TakeOffAltitudeMeter { get; set; } = 30;
+}
+
 [ExportShellPage(UriString)]
 [PartCreationPolicy(CreationPolicy.Shared)]
 public class TakeOffViewModel : ViewModelBaseWithValidation
@@ -21,19 +26,24 @@ public class TakeOffViewModel : ViewModelBaseWithValidation
     
     public const string UriString = UavAnchor.BaseUriString + ".actions.takeoff";
     public static readonly Uri Uri = new(UriString);
+    private readonly TakeOffViewModelConfig _config;
 
+    public const double MinimumAltitudeMeter = 1;
 
     [ImportingConstructor]
     public TakeOffViewModel(IConfiguration cfg, ILocalizationService loc) : this()
     {
         _cfg = cfg;
         _loc = loc;
-        
-        Altitude = _loc.Altitude.GetDoubleValue(_cfg.Get<double?>("TakeOffAltitude") ?? 30, false);
+        _config = cfg.Get<TakeOffViewModelConfig>();
+        Altitude = _loc.Altitude.FromSIToString(_config.TakeOffAltitudeMeter);
 
+        this.ValidationRule(x => x.Altitude, _=>  _loc.Altitude.IsValid(_), _=>  _loc.Altitude.GetErrorMessage(_) )
+            .DisposeItWith(Disposable);
+        
         this.ValidationRule(x => x.Altitude, 
-                _ => _ >= _loc.Altitude.GetDoubleValue(1, false), 
-                string.Format(RS.TakeOffAnchorActionViewModel_ValidValue, _loc.Altitude.GetValue(1)))
+                _ => _loc.Altitude.IsValid(_) && _loc.Altitude.ConvertToSI(_) >= MinimumAltitudeMeter, 
+                string.Format(RS.TakeOffAnchorActionViewModel_ValidValue, _loc.Altitude.FromSIToString(MinimumAltitudeMeter)))
             .DisposeItWith(Disposable);
     }
 
@@ -47,15 +57,16 @@ public class TakeOffViewModel : ViewModelBaseWithValidation
         if (dialog == null) throw new ArgumentNullException(nameof(dialog));
         
         dialog.PrimaryButtonCommand =
-            ReactiveCommand.Create(() => { _cfg.Set("TakeOffAltitude", _loc.Altitude.GetDoubleValue(Altitude.Value, true)); },
+            ReactiveCommand.Create(() =>
+                {
+                    _config.TakeOffAltitudeMeter = _loc.Altitude.ConvertToSI(Altitude);
+                    _cfg.Set(_config);
+                },
                 this.IsValid().Do(_ =>dialog.IsPrimaryButtonEnabled = _)).DisposeItWith(Disposable);
     }
 
     [Reactive]
-    public double? Altitude { get; set; }
-    
-    public string Units
-    {
-        get => _loc.Altitude.GetUnit(0);
-    }
+    public string Altitude { get; set; }
+
+    public string Units => _loc.Altitude.CurrentUnit.Value.Unit;
 }

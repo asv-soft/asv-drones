@@ -60,20 +60,38 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Feets.
+        /// </summary>
+        public static string Altitude_Feet_Title {
+            get {
+                return ResourceManager.GetString("Altitude_Feet_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ft.
         /// </summary>
-        public static string Altitude_FeetUnit {
+        public static string Altitude_Feet_Unit {
             get {
-                return ResourceManager.GetString("Altitude_FeetUnit", resourceCulture);
+                return ResourceManager.GetString("Altitude_Feet_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meters.
+        /// </summary>
+        public static string Altitude_Meter_Title {
+            get {
+                return ResourceManager.GetString("Altitude_Meter_Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to m.
         /// </summary>
-        public static string Altitude_MeterUnit {
+        public static string Altitude_Meter_Unit {
             get {
-                return ResourceManager.GetString("Altitude_MeterUnit", resourceCulture);
+                return ResourceManager.GetString("Altitude_Meter_Unit", resourceCulture);
             }
         }
         
@@ -159,20 +177,38 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to nmi.
+        ///   Looks up a localized string similar to Meters.
         /// </summary>
-        public static string Distance_InternationalNauticalMileUnit {
+        public static string Distance_Meters_Title {
             get {
-                return ResourceManager.GetString("Distance_InternationalNauticalMileUnit", resourceCulture);
+                return ResourceManager.GetString("Distance_Meters_Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to m.
         /// </summary>
-        public static string Distance_MeterUnit {
+        public static string Distance_Meters_Unit {
             get {
-                return ResourceManager.GetString("Distance_MeterUnit", resourceCulture);
+                return ResourceManager.GetString("Distance_Meters_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nautical miles.
+        /// </summary>
+        public static string Distance_NauticalMiles_Title {
+            get {
+                return ResourceManager.GetString("Distance_NauticalMiles_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NM.
+        /// </summary>
+        public static string Distance_NauticalMiles_Unit {
+            get {
+                return ResourceManager.GetString("Distance_NauticalMiles_Unit", resourceCulture);
             }
         }
         
@@ -317,24 +353,6 @@ namespace Asv.Drones.Gui.Core {
         public static string MeasureUnitsSettingsViewModel_AltitudeDescription {
             get {
                 return ResourceManager.GetString("MeasureUnitsSettingsViewModel_AltitudeDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Feets.
-        /// </summary>
-        public static string MeasureUnitsSettingsViewModel_AltitudeFeets {
-            get {
-                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_AltitudeFeets", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Meters.
-        /// </summary>
-        public static string MeasureUnitsSettingsViewModel_AltitudeMeters {
-            get {
-                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_AltitudeMeters", resourceCulture);
             }
         }
         

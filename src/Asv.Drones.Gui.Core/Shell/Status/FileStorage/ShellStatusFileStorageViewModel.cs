@@ -32,7 +32,7 @@ public class ShellStatusFileStorageViewModel : ShellStatusItem
 
         var storageSize = app.Store.Value.GetFileSizeInBytes();
 
-        StorageSize = localizationService.ByteSize.GetValueWithUnits(storageSize);
+        StorageSize = localizationService.ByteSize.ConvertToStringWithUnits(storageSize);
     }
 
     public override int Order => -3;

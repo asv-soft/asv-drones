@@ -40,12 +40,14 @@ namespace Asv.Drones.Gui.Uav
                 Heading = heading;
             }).DisposeWith(Disposable);
             _vehicle.AltitudeAboveHome
+                .Select(_localization.Altitude.ConvertFromSi)
                 .Select(_=>Math.Round(_))
                 .DistinctUntilChanged()
-                .Subscribe(_ => Altitude = _localization.Altitude.GetDoubleValue(_, false))
+                .Subscribe(_ => Altitude = _)
                 .DisposeWith(Disposable);
             _vehicle
                 .GpsGroundVelocity
+                .Select(_localization.Velocity.ConvertFromSi)
                 .Select(_ => Math.Round(_))
                 .DistinctUntilChanged()
                 .Subscribe(_ => Velocity = _)
@@ -60,7 +62,7 @@ namespace Asv.Drones.Gui.Uav
                 .Subscribe(_ =>
             {
                 IsArmed = _;
-                UpdateStatusText(_ ? "Armed" : "Disarmed");
+                UpdateStatusText(_ ? "Armed" : "Disarmed"); // TODO: Localize
             }).DisposeWith(Disposable);
             _vehicle.ArmedTime
                 .DistinctUntilChanged()

@@ -1,6 +1,6 @@
 ﻿namespace Asv.Drones.Gui.Core;
 
-public class RelativeTime : IMeasureUnit<TimeSpan>
+public class RelativeTime : IReadOnlyMeasureUnit<TimeSpan>
 {
     public string GetUnit(TimeSpan value)
     {
@@ -12,7 +12,7 @@ public class RelativeTime : IMeasureUnit<TimeSpan>
         };
     }
 
-    public string GetValue(TimeSpan value)
+    public string ConvertToString(TimeSpan value)
     {
         return value.Ticks switch
         {
@@ -21,7 +21,4 @@ public class RelativeTime : IMeasureUnit<TimeSpan>
             (>= TimeSpan.TicksPerMinute) => $"{value.TotalHours}:{value.Minutes}:{value.Seconds}",
         };
     }
-    
-    public string GetValueSI(TimeSpan value) => $"{value}";
-
 }
