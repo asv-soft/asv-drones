@@ -38,7 +38,6 @@
 
   <ItemGroup>
     <Folder Include="Services\MapService\" />
-    <Folder Include="Services\FlightActions\" />
     <Folder Include="Services\Theme\" />
   </ItemGroup>
 

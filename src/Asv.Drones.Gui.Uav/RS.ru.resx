@@ -307,7 +307,7 @@
     <value>Отмена</value>
   </data>
   <data name="TakeOffAnchorActionViewModel_ValidValue" xml:space="preserve">
-    <value>Высота должна быть больше или равна 1.</value>
+    <value>Высота должна быть больше или равна {0}.</value>
   </data>
   <data name="TakeOffAnchorActionViewModel_LogMessage" xml:space="preserve">
     <value>Пользователь отправил TakeOff для {0}</value>

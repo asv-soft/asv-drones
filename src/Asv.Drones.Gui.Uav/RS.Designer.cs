@@ -456,7 +456,7 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Altitude must be greater or equal 1..
+        ///   Looks up a localized string similar to Altitude must be greater or equal {0}..
         /// </summary>
         public static string TakeOffAnchorActionViewModel_ValidValue {
             get {

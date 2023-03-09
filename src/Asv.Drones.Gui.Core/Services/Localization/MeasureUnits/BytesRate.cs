@@ -34,6 +34,6 @@
             };
         }
 
-        
+        public string GetValueSI(double bytesPerSec) => GetValue(bytesPerSec);
     }
 }

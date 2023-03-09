@@ -21,4 +21,7 @@ public class RelativeTime : IMeasureUnit<TimeSpan>
             (>= TimeSpan.TicksPerMinute) => $"{value.TotalHours}:{value.Minutes}:{value.Seconds}",
         };
     }
+    
+    public string GetValueSI(TimeSpan value) => $"{value}";
+
 }

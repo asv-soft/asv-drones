@@ -13,7 +13,10 @@
     <Panel>
         <StackPanel Spacing="10" Margin="10">
             <TextBlock Text="{x:Static uav:RS.TakeOffAnchorActionViewModel_DialogDescription}"/>
-            <TextBox Focusable="True" Name="AltitudeTextBox" Margin="0,0" Text="{Binding Altitude}" KeyDown="Altitude_OnKeyDown"/>
+            <Grid ColumnDefinitions="*, Auto">
+                <TextBox Grid.Column="0" Focusable="True" Name="AltitudeTextBox" Text="{Binding Altitude}" KeyDown="Altitude_OnKeyDown"/>
+                <TextBlock VerticalAlignment="Center" Margin="8 0" Grid.Column="1" Text="{Binding Units}"/>                
+            </Grid>
         </StackPanel>
     </Panel>
 </UserControl>

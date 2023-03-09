@@ -307,7 +307,7 @@
     <value>Cancel</value>
   </data>
   <data name="TakeOffAnchorActionViewModel_ValidValue" xml:space="preserve">
-    <value>Altitude must be greater or equal 1.</value>
+    <value>Altitude must be greater or equal {0}.</value>
   </data>
   <data name="TakeOffAnchorActionViewModel_LogMessage" xml:space="preserve">
     <value>User send TakeOff for {0}</value>

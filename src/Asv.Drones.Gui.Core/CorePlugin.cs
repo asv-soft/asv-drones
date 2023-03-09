@@ -29,7 +29,6 @@ namespace Asv.Drones.Gui.Core
             batch.AddExportedValue(_defaultViewLocator = new ViewLocator(container));
             batch.AddExportedValue(GetAppInfo());
             batch.AddExportedValue<ILocalizationService>(new LocalizationServiceBase(config));
-            batch.AddExportedValue<ITakeOffService>(new TakeOffService(config));
             container.Compose(batch);
         }
 

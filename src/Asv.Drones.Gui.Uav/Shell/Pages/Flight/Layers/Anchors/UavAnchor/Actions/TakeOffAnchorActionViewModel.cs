@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.Composition;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using Asv.Cfg;
 using Asv.Drones.Gui.Core;
 using Asv.Drones.Uav;
 using Asv.Mavlink;
@@ -14,12 +15,14 @@ namespace Asv.Drones.Gui.Uav
     public class TakeOffAnchorActionViewModel : UavActionActionBase
     {
         private readonly ILogService _log;
-        private readonly ITakeOffService _takeOffService;
-
-        public TakeOffAnchorActionViewModel(IVehicle vehicle, IMap map, ILogService log, ITakeOffService takeOffService) : base(vehicle, map, log)
+        private readonly IConfiguration _cfg;
+        private readonly ILocalizationService _loc;
+        
+        public TakeOffAnchorActionViewModel(IVehicle vehicle, IMap map, ILogService log, IConfiguration cfg, ILocalizationService loc) : base(vehicle, map, log)
         {
             _log = log;
-            _takeOffService = takeOffService;
+            _cfg = cfg;
+            _loc = loc;
             
             Title = "TakeOff";
             Icon = MaterialIconKind.ArrowUpBoldHexagonOutline;
@@ -40,7 +43,7 @@ namespace Asv.Drones.Gui.Uav
                 SecondaryButtonText = RS.TakeOffAnchorActionViewModel_DialogSecondaryButton
             };
             
-            var viewModel = new TakeOffViewModel(_takeOffService);
+            var viewModel = new TakeOffViewModel(_cfg, _loc);
             viewModel.ApplyDialog(dialog);
             dialog.Content = viewModel;
             
@@ -49,7 +52,7 @@ namespace Asv.Drones.Gui.Uav
             if (result == ContentDialogResult.Primary)
             {
                 _log.Info(LogName, string.Format(RS.TakeOffAnchorActionViewModel_LogMessage, Vehicle.Name.Value));
-                await Vehicle.TakeOff(viewModel.Altitude.Value, cancel);
+                await Vehicle.TakeOff(_loc.Altitude.GetDoubleValue(viewModel.Altitude.Value, true), cancel);
             }
 
             Map.IsInDialogMode = false;

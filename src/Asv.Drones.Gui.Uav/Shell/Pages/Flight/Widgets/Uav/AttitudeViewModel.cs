@@ -12,14 +12,17 @@ namespace Asv.Drones.Gui.Uav
     public class AttitudeViewModel:ViewModelBase
     {
         private readonly IVehicle _vehicle;
-
+        private readonly ILocalizationService _localization;
+        
         public AttitudeViewModel():base(new Uri("designTime://attitude"))
         {
             
         }
 
-        public AttitudeViewModel(IVehicle vehicle, Uri id):base(id)
+        public AttitudeViewModel(IVehicle vehicle, Uri id, ILocalizationService localization) : base(id)
         {
+            _localization = localization;
+            
             _vehicle = vehicle ?? throw new ArgumentNullException(nameof(vehicle));
             _vehicle.Roll
                 .DistinctUntilChanged()
@@ -39,7 +42,7 @@ namespace Asv.Drones.Gui.Uav
             _vehicle.AltitudeAboveHome
                 .Select(_=>Math.Round(_))
                 .DistinctUntilChanged()
-                .Subscribe(_ => Altitude = _)
+                .Subscribe(_ => Altitude = _localization.Altitude.GetDoubleValue(_, false))
                 .DisposeWith(Disposable);
             _vehicle
                 .GpsGroundVelocity

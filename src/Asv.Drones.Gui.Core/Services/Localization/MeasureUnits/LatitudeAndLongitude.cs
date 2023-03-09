@@ -28,4 +28,6 @@ public class LatitudeAndLongitude : IMeasureUnit<double>
             LatitudeLongitudeUnits.DegreesMinutesSeconds => $"{value:F0}°{_minutes = (value - (int)value) * 60:F0}'{(_minutes - (int)_minutes) * 60:F2}''"
         };
     }
+
+    public string GetValueSI(double value) => $"{value}";
 }
