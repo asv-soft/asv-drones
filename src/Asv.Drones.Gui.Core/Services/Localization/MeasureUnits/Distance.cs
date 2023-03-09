@@ -30,4 +30,14 @@ public class Distance : IMeasureUnit<double>
             DistanceUnits.NauticalMiles => $"{distance/MetersInInternationalNauticalMile:F0}"
         };
     }
+
+    public string GetValueSI(double distance)
+    {
+        return _units switch
+        {
+            DistanceUnits.Meters => $"{distance}",
+            DistanceUnits.NauticalMiles => $"{distance * MetersInInternationalNauticalMile}"
+        };
+    }
+
 }

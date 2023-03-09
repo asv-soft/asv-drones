@@ -32,4 +32,14 @@ public class Velocity : IMeasureUnit<double>
             VelocityUnits.MilesPerHour => $"{value * MetersPerSecondInMilesPerHour:F1}"
         };
     }
+    
+    public string GetValueSI(double value)
+    {
+        return _units switch
+        {
+            VelocityUnits.MetersPerSecond => $"{value}",
+            VelocityUnits.KilometersPerHour => $"{value / MetersPerSecondInKilometersPerHour}",
+            VelocityUnits.MilesPerHour => $"{value / MetersPerSecondInMilesPerHour}"
+        };
+    }
 }

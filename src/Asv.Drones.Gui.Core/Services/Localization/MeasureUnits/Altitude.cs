@@ -28,4 +28,13 @@ public class Altitude : IMeasureUnit<double>
             AltitudeUnits.Feets => $"{altitude * MetersInFeet:F2}"
         };
     }
+
+    public string GetValueSI(double altitude)
+    {
+        return _units switch
+        {
+            AltitudeUnits.Meters => $"{altitude}",
+            AltitudeUnits.Feets => $"{altitude / MetersInFeet}"
+        };
+    }
 }

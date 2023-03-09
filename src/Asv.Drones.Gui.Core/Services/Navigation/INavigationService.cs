@@ -45,6 +45,5 @@ namespace Asv.Drones.Gui.Core
         /// <param name="fileTypes"></param>
         /// <returns>The path of the file that was saved. Null if no file was saved</returns>
         Task<string?> ShowSaveFileDialogAsync(string title, string? suggestedStartLocation, string? suggestedFileName, string? defaultExtension, params FilePickerFileType[] fileTypes);
-
     }
 }

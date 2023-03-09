@@ -294,4 +294,22 @@
   <data name="RoiAnchor_Vehicle_Name" xml:space="preserve">
     <value>ROI от</value>
   </data>
+  <data name="TakeOffAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Взлёт</value>
+  </data>
+  <data name="TakeOffAnchorActionViewModel_DialogDescription" xml:space="preserve">
+    <value>Задайте высоту для взлёта относительно земли (AGL).</value>
+  </data>
+  <data name="TakeOffAnchorActionViewModel_DialogPrimaryButton" xml:space="preserve">
+    <value>Взлёт</value>
+  </data>
+  <data name="TakeOffAnchorActionViewModel_DialogSecondaryButton" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="TakeOffAnchorActionViewModel_ValidValue" xml:space="preserve">
+    <value>Высота должна быть больше или равна {0}.</value>
+  </data>
+  <data name="TakeOffAnchorActionViewModel_LogMessage" xml:space="preserve">
+    <value>Пользователь отправил TakeOff для {0}</value>
+  </data>
 </root>

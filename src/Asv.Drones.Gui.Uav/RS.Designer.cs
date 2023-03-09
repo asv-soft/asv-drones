@@ -411,6 +411,60 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set altitude above ground level (AGL) for takeoff command..
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_DialogDescription {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_DialogDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take off.
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_DialogPrimaryButton {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_DialogPrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_DialogSecondaryButton {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_DialogSecondaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User send TakeOff for {0}.
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_LogMessage {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_LogMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take off.
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_Title {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude must be greater or equal {0}..
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_ValidValue {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_ValidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Port title.
         /// </summary>
         public static string TcpPortView_PortTitle {

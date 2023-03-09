@@ -33,5 +33,8 @@
                 (>= OneGHz) => $"{itemsPerSec / OneMHz,-4:F0}",
             };
         }
+        
+        public string GetValueSI(double itemsPerSec) => GetValue(itemsPerSec);
+
     }
 }

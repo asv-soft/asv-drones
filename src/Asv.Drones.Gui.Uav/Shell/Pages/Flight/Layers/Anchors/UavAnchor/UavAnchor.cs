@@ -11,11 +11,14 @@ using Material.Icons;
 
 namespace Asv.Drones.Gui.Uav
 {
-    public class UavAnchor: FlightAnchorBase
+    public class UavAnchor : FlightAnchorBase
     {
         private ReadOnlyObservableCollection<MapAnchorActionViewModel> _actions;
         private readonly IEnumerable<IFlightUavActionProvider> _actionsProviders;
         private readonly ILocalizationService _localizationService;
+
+        public const string BaseUriString = "asv:shell.pages.layers.anchors.uavanchor";
+        public static readonly Uri BaseUri = new(BaseUriString);
 
         public UavAnchor(IVehicle vehicle,ILocalizationService localizationService,IEnumerable<IFlightUavActionProvider> actionsProviders)
             :base(vehicle,"uav")

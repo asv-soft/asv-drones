@@ -29,5 +29,7 @@
                 (>= OneGb)  => $"{bytes / OneMb}",
             };
         }
+
+        public string GetValueSI(long bytes) => GetValue(bytes);
     }
 }
