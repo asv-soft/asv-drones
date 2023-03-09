@@ -20,12 +20,12 @@ namespace Asv.Drones.Gui.Uav
                 Attitude = new AttitudeViewModel();
             }
         }
-        
-        public FlightUavViewModel(IVehicle vehicle, ILogService log, ILocalizationService localization):base(vehicle,"uav")
+        public FlightUavViewModel(IVehicle vehicle, ILogService log):base(vehicle,"uav")
         {
             Vehicle.Name.Subscribe(_ => Title = _).DisposeItWith(Disposable);
             Vehicle.Class.Select(MavlinkHelper.GetIcon).Subscribe(_ => Icon = _).DisposeItWith(Disposable);
-            Attitude = new AttitudeViewModel(vehicle, new Uri(Id, "/id"), localization);
+            Attitude = new AttitudeViewModel(vehicle, new Uri(Id, "/id"));
+            Vehicle.BatteryCharge.Subscribe(_ => BatteryLevel = _.Value).DisposeItWith(Disposable);
         }
 
         protected override void InternalAfterMapInit(IMap map)
@@ -39,5 +39,7 @@ namespace Asv.Drones.Gui.Uav
 
         public AttitudeViewModel Attitude { get; }
         public ICommand LocateVehicleCommand { get; set; }
+        [Reactive] 
+        public double BatteryLevel { get; set; }
     }
 }
