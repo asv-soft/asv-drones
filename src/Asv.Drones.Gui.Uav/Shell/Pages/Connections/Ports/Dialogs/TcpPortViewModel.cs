@@ -13,7 +13,8 @@ namespace Asv.Drones.Gui.Uav
 {
     public class TcpPortViewModel:ViewModelBaseWithValidation
     {
-        private readonly IMavlinkDevicesService? _device;
+        private readonly IMavlinkDevicesService? _deviceService;
+        private readonly ILogService _logService;
 
         public TcpPortViewModel() : base(new Uri(ConnectionsViewModel.BaseUri, "ports.tcp"))
         {
@@ -21,22 +22,25 @@ namespace Asv.Drones.Gui.Uav
         }
 
         [ImportingConstructor]
-        public TcpPortViewModel(IMavlinkDevicesService device) : this()
+        public TcpPortViewModel(IMavlinkDevicesService deviceService,ILogService logService) : this()
         {
-            _device = device ?? throw new ArgumentNullException(nameof(device));
-            Title = "New TCP " + device.Router.GetPorts().Length;
+            _deviceService = deviceService ?? throw new ArgumentNullException(nameof(deviceService));
+            _logService = logService ?? throw new ArgumentNullException(nameof(logService));
+            Title = $"{RS.TcpPortViewModel_Title}: {deviceService.Router.GetPorts().Length}";
+            Port = 7341;
+            IpAddress = "172.16.0.1";
+            IsTcpIpServer = true;
 
-            this.ValidationRule(x => x.Title, _ => !string.IsNullOrWhiteSpace(_), "You must specify a valid name")
+            this.ValidationRule(x => x.Title, _ => !string.IsNullOrWhiteSpace(_), RS.TcpPortViewModel_ValidTitle)
                 .DisposeItWith(Disposable);
 
-            this.ValidationRule(x => x.Port, _ => _ is > 1 and < 65535, "Port number must be value from 1 to 65535")
+            this.ValidationRule(x => x.Port, _ => _ is > 1 and < 65535, RS.TcpPortViewModel_ValidPort)
                 .DisposeItWith(Disposable);
-            this.ValidationRule(x => x.ServerIp, _ => !string.IsNullOrWhiteSpace(_) && IPAddress.TryParse(_, out IPAddress? ip), "You must insert a valid ip address")
+
+            this.ValidationRule(x => x.IpAddress, _ => !string.IsNullOrWhiteSpace(_) && IPAddress.TryParse(_, out IPAddress? ip), RS.TcpPortViewModel_ValidIpAddress)
                 .DisposeItWith(Disposable);
             
         }
-
-        
 
 
         public void ApplyDialog(ContentDialog dialog)
@@ -48,33 +52,35 @@ namespace Asv.Drones.Gui.Uav
 
         private void AddTcpPort()
         {
-            if (_device == null) return;
+            // this is for design mode
+            if (_deviceService == null) return;
+
             try
             {
-                _device.Router.AddPort(new MavlinkPortConfig
+                _deviceService.Router.AddPort(new MavlinkPortConfig
                 {
                     Name = Title,
-                    ConnectionString = $"tcp://{ServerIp}:{Port}" + (IsServer ? "?srv=true":string.Empty),
+                    ConnectionString = $"tcp://{IpAddress}:{Port}" + (IsTcpIpServer ? "?srv=true":string.Empty),
                     IsEnabled = true,
                 });
                 
             }
             catch (Exception e)
             {
-
+                _logService.Error("", $"{RS.TcpPortViewModel_LogService_Error}:{e.Message}", e);
             }
         }
 
         [Reactive]
         public string Title { get; set; }
 
-        [Reactive]
+        [Reactive] 
         public int Port { get; set; }
 
         [Reactive]
-        public bool IsServer { get; set; }
+        public bool IsTcpIpServer { get; set; }
 
         [Reactive]
-        public string ServerIp { get; set; }
+        public string IpAddress { get; set; }
     }
 }

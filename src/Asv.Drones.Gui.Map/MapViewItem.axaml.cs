@@ -1,7 +1,4 @@
-
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Common;
@@ -10,9 +7,7 @@ using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Mixins;
-using Avalonia.Controls.Shapes;
 using Avalonia.Input;
-using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
 using Avalonia.Media;
 using ReactiveUI;
@@ -193,7 +188,7 @@ namespace Asv.Avalonia.Map
                     }
                     if (itemPoint.Y < minY)
                     {
-                        minY = itemPoint.X;
+                        minY = itemPoint.Y;
                     }
                     localPath.Add(itemPoint);
                 }

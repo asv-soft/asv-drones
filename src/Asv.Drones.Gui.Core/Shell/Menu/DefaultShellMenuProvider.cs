@@ -1,9 +1,5 @@
 ﻿using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using System.Reactive.Linq;
 using DynamicData;
-using Material.Icons;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core
 {

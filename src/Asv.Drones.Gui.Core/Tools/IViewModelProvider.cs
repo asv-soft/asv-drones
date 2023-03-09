@@ -1,5 +1,4 @@
 ﻿using DynamicData;
-using Material.Icons;
 using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core
@@ -10,11 +9,12 @@ namespace Asv.Drones.Gui.Core
         IObservable<IChangeSet<TView, Uri>> Items { get; }
     }
 
-    public class ViewModelProviderBase<TView> : IViewModelProvider<TView>
+    public abstract class ViewModelProviderBase<TView> : IViewModelProvider<TView>
         where TView : IViewModel
     {
+       
         private readonly SourceCache<TView, Uri> _sourceCache = new(_ => _.Id);
-
+        
         protected ISourceCache<TView, Uri> Source => _sourceCache;
 
         public IObservable<IChangeSet<TView, Uri>> Items => _sourceCache.Connect();
@@ -28,7 +28,7 @@ namespace Asv.Drones.Gui.Core
 
     public class ViewModelBase : DisposableViewModelBase, IViewModel
     {
-        public ViewModelBase(Uri id)
+        protected ViewModelBase(Uri id)
         {
             Id = id;
         }
@@ -38,7 +38,7 @@ namespace Asv.Drones.Gui.Core
 
     public class ViewModelBaseWithValidation : DisposableViewModelWithValidation, IViewModel
     {
-        public ViewModelBaseWithValidation(Uri id)
+        protected ViewModelBaseWithValidation(Uri id)
         {
             Id = id;
         }

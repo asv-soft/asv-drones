@@ -1,0 +1,11 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <uav:AttitudeIndicator Width="500" Height="500" RollAngle="0" PitchAngle="0" Velocity="0" Altitude="150" Heading="57" HomeAzimuth="37" />
+        </Border>
+    </Design.PreviewWith>
+    <StyleInclude Source="/Controls/AttitudeIndicator.axaml"/>
+    
+</Styles>

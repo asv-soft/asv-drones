@@ -6,15 +6,18 @@ namespace Asv.Drones.Gui.Core
 {
     [Export(typeof(IShellMenuItem))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class SettingsShellMenuItem : DisposableViewModelBase, IShellMenuItem
+    public class SettingsShellMenuItem : ShellMenuItem
     {
-        public Uri Id { get; } = new("asv:shell.menu.settings");
-        public string Name => RS.SettingsShellMenuProvider_SettingsShellMenuProvider_Settings;
-        public Uri NavigateTo => SettingsViewModel.BaseUri;
-        public string Icon => MaterialIconDataProvider.GetData(MaterialIconKind.Settings);
-        public ShellMenuPosition Position => ShellMenuPosition.Bottom;
-        public ShellMenuItemType Type => ShellMenuItemType.PageNavigation;
-        public int Order => 0;
-        public ReadOnlyObservableCollection<IShellMenuItem>? Items => null;
+        public const string UriString = ShellMenuItem.UriString + ".settings";
+        public static readonly Uri Uri = new(UriString);
+        public SettingsShellMenuItem() : base(Uri)
+        {
+            Name = RS.SettingsShellMenuProvider_SettingsShellMenuProvider_Settings;
+            NavigateTo = SettingsViewModel.Uri;
+            Icon = MaterialIconDataProvider.GetData(MaterialIconKind.Settings);
+            Position = ShellMenuPosition.Bottom;
+            Type = ShellMenuItemType.PageNavigation;
+            Order = 0;
+        }
     }
 }

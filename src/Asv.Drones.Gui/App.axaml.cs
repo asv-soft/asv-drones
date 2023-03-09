@@ -1,13 +1,9 @@
 using System;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using Asv.Cfg;
-using Asv.Cfg.ImMemory;
-using Asv.Cfg.Json;
 using Asv.Drones.Gui.Core;
 using System.Collections.Generic;
 using System.Reflection;
@@ -15,148 +11,156 @@ using System.ComponentModel.Composition.Primitives;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using Asv.Cfg;
 using Asv.Drones.Gui.Uav;
-using FluentAvalonia.Styling;
+using NLog;
+using Avalonia.Controls.Templates;
 
 namespace Asv.Drones.Gui
 {
     public partial class App : Application
     {
         private readonly CompositionContainer _container;
-
+        private readonly Stack<KeyValuePair<IPluginMetadata, IPluginEntryPoint>> _plugins = new();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public App()
         {
             _container = new CompositionContainer(new AggregateCatalog(Catalogs().ToArray()), CompositionOptions.IsThreadSafe);
+            // we need to export the container itself 
             var batch = new CompositionBatch();
-            RegisterDefaultServices(batch);
-            _container.Compose(batch);
-        }
-
-        private void RegisterDefaultServices(CompositionBatch batch)
-        {
-            batch.AddExportedValue(new ViewLocator(_container));
             batch.AddExportedValue(_container);
-            batch.AddExportedValue(GetAppInfo());
-            var path = GetAppPathInfo();
-            batch.AddExportedValue(GetAppPathInfo());
-            var config = new JsonOneFileConfiguration(path.ApplicationConfigFilePath, true, null);
-            batch.AddExportedValue<IConfiguration>(config);
-            batch.AddExportedValue<ILocalizationService>(new LocalizationServiceBase(config));
-        }
+            batch.AddExportedValue<IDataTemplateHost>(this);
+            _container.Compose(batch);
 
-        
 
-        #region AppInfo
+            #region loading plugins entry points
 
-        private class AppInfo : IAppInfo
-        {
-            public AppInfo(string name, string version, string author, string appUrl, string appLicense)
+            foreach (var plugin in _container.GetExports<IPluginEntryPoint, IPluginMetadata>().OrderBy(_ => _.Metadata.LoadingOrder))
             {
-                Name = name;
-                Version = version;
-                Author = author;
-                AppUrl = appUrl;
-                AppLicense = appLicense;
-
-            }
-
-            public string Name { get; }
-            public string Version { get; }
-            public string Author { get; }
-            public string AppUrl { get; }
-            public string AppLicense { get; }
-            public string CurrentAvaloniaVersion
-            {
-                get
+                try
                 {
-                    return typeof(AppBuilder).Assembly.GetName().Version?.ToString();
+                    var item = new KeyValuePair<IPluginMetadata, IPluginEntryPoint>(plugin.Metadata, plugin.Value);
+                    _plugins.Push(item);
+                    Logger.Debug($"Load plugin entry point '{plugin.Metadata.Name}' with order={plugin.Metadata.LoadingOrder}");
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e,$"Error to load plugin entry point: {plugin.Metadata.Name}:{e.Message}");
+                    if (Debugger.IsAttached)
+                    {
+                        Debugger.Break();
+                    }
                 }
             }
-        }
 
-        private IAppInfo GetAppInfo()
-        {
-            var assm = GetType().Assembly.GetName();
-            return new AppInfo(assm.Name ?? "Asv.Drones", assm.Version?.ToString() ?? "0.0.0",
-                "https://github.com/asvol", "https://github.com/asvol/asv-drones", "MIT License");
-        }
-
-
-        #endregion
-
-        #region AppPathInfo
-
-        private class AppPathInfo:IAppPathInfo
-        {
-            public AppPathInfo()
-            {
-                CurrentDirectory = Environment.CurrentDirectory;
-#if DEBUG
-                ApplicationDataFolder = Path.Combine(CurrentDirectory, "AsvDrones");
-                ApplicationConfigFilePath = Path.Combine(ApplicationDataFolder, "config.json");
-#else
-                ApplicationDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AsvDrones") ?? Path.Combine(CurrentDirectory,"Data");
-                ApplicationConfigFilePath = Path.Combine(ApplicationDataFolder, "config.json");
-#endif
-                
-            }
-
-            public string CurrentDirectory { get; }
-            public string ApplicationDataFolder { get; }
-            public string ApplicationConfigFilePath { get; }
+            #endregion
 
         }
-
-        private IAppPathInfo GetAppPathInfo()
-        {
-            return new AppPathInfo();
-        }
-
-        #endregion
 
         private IEnumerable<Assembly> Assemblies()
         {
-            yield return typeof(ExportViewAttribute).Assembly;
-            yield return typeof(IMavlinkDevicesService).Assembly;
+            //yield return GetType().Assembly;                   // Asv.Drones.Gui
+            yield return typeof(CorePlugin).Assembly;               // Asv.Drones.Gui.Core
+            yield return typeof(IMavlinkDevicesService).Assembly;   // Asv.Drones.Gui.Uav
 
         }
 
         private IEnumerable<ComposablePartCatalog> Catalogs()
         {
-            return Assemblies().Distinct().Select(assembly => new AssemblyCatalog(assembly));
+            foreach (var asm in Assemblies().Distinct().Select(assembly => new AssemblyCatalog(assembly)))
+            {
+                yield return asm;
+            }
 
-            // Enable this feature to load plugins at runtime
 
-            // var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            // if (dir != null)
-            // {
-            //     var cat = new DirectoryCatalog(dir, "Asv.Drones.Gui.Plugins.*.dll");
-            //     cat.Refresh();
-            //     yield return cat;
-            // }
+#if DEBUG
+
+#else
+            // Enable this feature to load plugins from folder
+            var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            if (dir != null)
+            {
+                var cat = new DirectoryCatalog(dir, "Asv.Drones.Gui.Plugins.*.dll");
+                cat.Refresh();
+                yield return cat;
+            }
+#endif
         }
 
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
-            DataTemplates.Add(_container.GetExportedValue<ViewLocator>() ?? throw new InvalidOperationException());
+            foreach (var plugin in _plugins)
+            {
+                try
+                {
+                    plugin.Value.Initialize();
+                    Logger.Trace($"Initialize plugin entry point '{plugin.Key.Name}' with order={plugin.Key.LoadingOrder}");
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e, $"Error to initialize plugin entry point: {plugin.Key.Name}:{e.Message}");
+                    if (Debugger.IsAttached)
+                    {
+                        Debugger.Break();
+                    }
+                }
+            }
+            
         }
 
         public override void OnFrameworkInitializationCompleted()
         {
+            
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindow()
-                {
-                    DataContext = _container.GetExportedValue<ShellViewModel>()
-                };
                 desktop.ShutdownRequested += (_, _) =>
                 {
-                    _container.GetExportedValue<ViewLocator>()?.Dispose();
+                    foreach (var plugin in _plugins)
+                    {
+                        try
+                        {
+                            plugin.Value.OnShutdownRequested();
+                            Logger.Trace($"Call plugin {plugin.Key.Name}.{nameof(plugin.Value.OnShutdownRequested)}() with order={plugin.Key.LoadingOrder}");
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.Error(e, $"Error to call {plugin.Key.Name}.{nameof(plugin.Value.OnShutdownRequested)}() at plugin entry point:{e.Message}");
+                            if (Debugger.IsAttached)
+                            {
+                                Debugger.Break();
+                            }
+                        }
+                    }
                     _container.Dispose();
                 };
+                var configuration = _container.GetExportedValue<IConfiguration>();
+                var window = new MainWindow(configuration);
+                var navigation = _container.GetExportedValue<INavigationService>();
+                navigation?.InitStorageProvider(window.StorageProvider);
+                window.DataContext = _container.GetExportedValue<ShellViewModel>();
+                desktop.MainWindow = window;
             }
+
             base.OnFrameworkInitializationCompleted();
+
+            foreach (var plugin in _plugins)
+            {
+                try
+                {
+                    plugin.Value.OnFrameworkInitializationCompleted();
+                    Logger.Trace($"Call plugin {plugin.Key.Name}.{nameof(plugin.Value.OnFrameworkInitializationCompleted)}() with order={plugin.Key.LoadingOrder}");
+                }
+                catch (Exception e)
+                {
+                    Logger.Error($"Error to call {plugin.Key.Name}.{nameof(plugin.Value.OnFrameworkInitializationCompleted)}() at plugin entry point:{e.Message}");
+                    if (Debugger.IsAttached)
+                    {
+                        Debugger.Break();
+                    }
+                }
+            }
         }
+
     }
 }

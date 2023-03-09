@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:core="clr-namespace:Asv.Drones.Gui.Core"
+             mc:Ignorable="d" d:DesignWidth="100" d:DesignHeight="25"
+             DockPanel.Dock="Right"
+             x:CompileBindings="True"
+             x:Class="Asv.Drones.Gui.Core.ShellStatusFileStorageView"
+             x:DataType="core:ShellStatusFileStorageViewModel">
+    <Design.DataContext>
+        <core:ShellStatusFileStorageViewModel />
+    </Design.DataContext>
+    <StackPanel Orientation="Horizontal">
+        <avalonia:MaterialIcon Width="20" Height="20" Kind="DatabaseOutline" Foreground="White" />
+        <TextBlock Text="{Binding Title}" VerticalAlignment="Center" Foreground="White" />
+        <TextBlock Margin="5 0 0 0" Text="{Binding StorageSize}" VerticalAlignment="Center" Foreground="White" />
+	</StackPanel>
+</UserControl>

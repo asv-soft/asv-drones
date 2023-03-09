@@ -2,7 +2,6 @@
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
-using Asv.Mavlink.V2.Common;
 using Avalonia.Controls;
 using Material.Icons;
 using ReactiveUI;
@@ -34,8 +33,8 @@ namespace Asv.Drones.Gui.Uav
         public MavlinkDeviceViewModel(IMavlinkDevice info) : base(new Uri(DeviceBrowserViewModel.BaseUri, $"{info.FullId}"))
         {
             DeviceFullId = info.FullId;
-            Icon = MavlinkIconHelper.GetIcon(info.Type);
-            Name = $"{MavlinkIconHelper.GetTypeName(info.Type):G} [{info.SystemId}:{info.ComponentId}]";
+            Icon = MavlinkHelper.GetIcon(info.Type);
+            Name = $"{MavlinkHelper.GetTypeName(info.Type):G} [{info.SystemId}:{info.ComponentId}]";
             Description = $"Type: {info.Type.ToString("G").Replace("MavType","")}, System ID: {info.SystemId}, Component ID: {info.ComponentId}, Mavlink Version: {info.MavlinkVersion}";
 
             Observable.Timer(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3)).Subscribe(_ =>

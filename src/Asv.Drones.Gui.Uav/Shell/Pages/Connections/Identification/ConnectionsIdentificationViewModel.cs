@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.Composition;
 using System.Reactive.Linq;
 using Asv.Common;
@@ -19,7 +18,7 @@ namespace Asv.Drones.Gui.Uav
 
         public ConnectionsIdentificationViewModel() : base(new Uri(ConnectionsViewModel.BaseUri,"id"))
         {
-            this.ValidationRule(_ => _.DeviceTimeout, _ => _ is >= DeviceTimeoutMin and <= DeviceTimeoutMax, _ => $"Timeout must be from {DeviceTimeoutMin} to {DeviceTimeoutMax}")
+            this.ValidationRule(_ => _.DeviceTimeout, _ => _ is >= DeviceTimeoutMin and <= DeviceTimeoutMax, _ => string.Format(RS.ConnectionsIdentificationViewModel_DeviceTimeout, DeviceTimeoutMin, DeviceTimeoutMax))
                 .DisposeItWith(Disposable);
             
 
@@ -35,6 +34,8 @@ namespace Asv.Drones.Gui.Uav
         [ImportingConstructor]
         public ConnectionsIdentificationViewModel(IMavlinkDevicesService svc):this()
         {
+            svc.NeedReloadToApplyConfig.Subscribe(_ => IsRebootRequired = _).DisposeItWith(Disposable);
+            
             svc.SystemId
                 .Subscribe(_ => SystemId = _)
                 .DisposeItWith(Disposable);
@@ -43,7 +44,6 @@ namespace Asv.Drones.Gui.Uav
                 .DistinctUntilChanged()
                 .Subscribe(svc.SystemId)
                 .DisposeItWith(Disposable);
-
 
             svc.ComponentId
                 .Subscribe(_ => ComponentId = _)
@@ -71,7 +71,8 @@ namespace Asv.Drones.Gui.Uav
                 .DisposeItWith(Disposable);
         }
 
-        
+        [Reactive]
+        public bool IsRebootRequired { get; private set; }
 
         public int Order => -1;
 
@@ -111,7 +112,7 @@ namespace Asv.Drones.Gui.Uav
 
         public override string ToString()
         {
-            return $"{(1.0 / Time.TotalSeconds):F1} Hz";
+            return string.Format($"{(1.0 / Time.TotalSeconds):F1}", RS.ConnectionsIdentificationViewModel_ToString);
         }
     }
 

@@ -2,30 +2,28 @@
 using System.ComponentModel.Composition;
 using System.Reactive.Linq;
 using Asv.Common;
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Media;
 using DynamicData;
 using DynamicData.Binding;
-using FluentAvalonia.Styling;
 using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core
 {
 
 
-    [ExportShellPage(BaseUriString)]
+    [ExportShellPage(UriString)]
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class SettingsViewModel:ViewModelBase,IShellPage
     {
-        public const string BaseUriString = "asv:shell.settings";
-        public static readonly Uri BaseUri = new(BaseUriString);
-
+        public const string UriString = ShellPage.UriString + ".settings";
+        public static readonly Uri Uri = new Uri(UriString);
+        
         private readonly ReadOnlyObservableCollection<ISettingsPart> _items;
-
-        // this is for designer
-        public SettingsViewModel():base(BaseUri)
+        private readonly ObservableAsPropertyHelper<bool> _isRebootRequired;
+        /// <summary>
+        /// This is a design time constructor
+        /// </summary>
+        public SettingsViewModel():base(Uri)
         {
             if (Design.IsDesignMode)
             {
@@ -34,6 +32,7 @@ namespace Asv.Drones.Gui.Core
                 AppLicense = "MIT License";
                 AppUrl = "https://github.com/asvol/asv-drones";
                 CurrentAvaloniaVersion = "0.0.0";
+                _isRebootRequired = Observable.Return(true).ToProperty(this, _ => _.IsRebootRequired);
                 _items = new ReadOnlyObservableCollection<ISettingsPart>(new ObservableCollection<ISettingsPart>(
                     new ISettingsPart[]
                     {
@@ -56,10 +55,17 @@ namespace Asv.Drones.Gui.Core
             settings.Select(_ => _.Items)
                 .Merge()
                 .ObserveOn(RxApp.MainThreadScheduler)
-                .Bind(out _items)
                 .SortBy(_ => _.Order)
+                .Bind(out _items)
                 .DisposeMany()
                 .Subscribe()
+                .DisposeItWith(Disposable);
+            
+            _items.ToObservableChangeSet()
+                .AutoRefresh(_ => _.IsRebootRequired) // update collection when any part require reboot
+                .ToCollection()
+                .Select(parts => parts.Any(part => part.IsRebootRequired)) // check if any part require reboot
+                .ToProperty(this, _ => _.IsRebootRequired, out _isRebootRequired)
                 .DisposeItWith(Disposable);
         }
 
@@ -72,6 +78,8 @@ namespace Asv.Drones.Gui.Core
 
         public ReadOnlyObservableCollection<ISettingsPart> Items => _items;
 
+        public bool IsRebootRequired => _isRebootRequired.Value;
+        
         public void SetArgs(Uri link)
         {
             

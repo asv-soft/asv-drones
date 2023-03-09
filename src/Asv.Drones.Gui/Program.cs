@@ -1,6 +1,4 @@
 using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.ReactiveUI;
 using NLog;
 using ReactiveUI;
@@ -45,17 +43,17 @@ namespace Asv.Drones.Gui
                 .UsePlatformDetect()
                 .With(new X11PlatformOptions
                 {
-                    // EnableMultiTouch = true,
-                    // UseDBusMenu = true,
-                    // EnableIme = true
+                    EnableMultiTouch = true,
+                    UseDBusMenu = true,
+                    EnableIme = true
                 })
                 .With(new Win32PlatformOptions
                 {
                     // Avalonia 11.0.0-preview1 issue: CornerRadius not clipping,
                     // Avalonia 11.0.0-preview1 issue: sometimes might crash by collection enumerate fail
-                    // UseCompositor = false,
-                    // AllowEglInitialization = false,
-                    // UseDeferredRendering = false
+                    UseCompositor = false,
+                    AllowEglInitialization = false,
+                    UseDeferredRendering = true
                 })
                 .With(new X11PlatformOptions
                 {

@@ -1,13 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Reactive.Linq;
-using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Avalonia.Controls;
 using DynamicData;
 using DynamicData.Binding;
-using FluentAvalonia.UI.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -20,13 +18,14 @@ namespace Asv.Drones.Gui.Uav
         public const string BaseUriString = "asv:shell.connections";
         public static readonly Uri BaseUri = new(BaseUriString);
         private readonly ReadOnlyObservableCollection<IConnectionPart> _items;
+        private readonly ObservableAsPropertyHelper<bool> _isReloadRequired;
 
 
         public ConnectionsViewModel() : base(BaseUri)
         {
             if (Design.IsDesignMode)
             {
-                IsReloadRequired = true;
+                _isReloadRequired = Observable.Return(true).ToProperty(this, _ => _.IsReloadRequired);
                 _items = new ReadOnlyObservableCollection<IConnectionPart>(new ObservableCollection<IConnectionPart>(
                     new IConnectionPart[]
                     {
@@ -37,11 +36,9 @@ namespace Asv.Drones.Gui.Uav
         }
 
         [ImportingConstructor]
-        public ConnectionsViewModel([ImportMany]IEnumerable<IViewModelProvider<IConnectionPart>> parts, IMavlinkDevicesService svc) : this()
+        public ConnectionsViewModel([ImportMany]IEnumerable<IViewModelProvider<IConnectionPart>> partProviders, IMavlinkDevicesService svc) : this()
         {
-            svc.NeedReloadToApplyConfig.Subscribe(_ => IsReloadRequired = _).DisposeItWith(Disposable);
-
-            parts.Select(_ => _.Items)
+            partProviders.Select(_ => _.Items)
                 .Merge()
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .SortBy(_ => _.Order)
@@ -49,12 +46,19 @@ namespace Asv.Drones.Gui.Uav
                 .DisposeMany()
                 .Subscribe()
                 .DisposeItWith(Disposable);
+            
+            // this is for ReloadRequired showing
+            _items.ToObservableChangeSet()
+                .AutoRefresh(_ => _.IsRebootRequired) // update collection when any part require reboot
+                .ToCollection()
+                .Select(parts => parts.Any(part => part.IsRebootRequired)) // check if any part require reboot
+                .ToProperty(this, _ => _.IsReloadRequired, out _isReloadRequired)
+                .DisposeItWith(Disposable);
         }
 
         public ReadOnlyObservableCollection<IConnectionPart> Items => _items;
 
-        [Reactive]
-        public bool IsReloadRequired { get; set; }
+        public bool IsReloadRequired => _isReloadRequired.Value;
 
         public void SetArgs(Uri link)
         {

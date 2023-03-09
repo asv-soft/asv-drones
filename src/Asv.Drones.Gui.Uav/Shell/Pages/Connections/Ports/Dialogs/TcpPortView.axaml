@@ -12,12 +12,14 @@
     </Design.DataContext>
     <Panel>
         <StackPanel Spacing="10" Margin="10">
-            <TextBlock Text="Port title"/>
+            <TextBlock Text="{x:Static uav:RS.TcpPortView_PortTitle}"/>
             <TextBox Text="{Binding Title}"/>
-            <TextBlock Text="Port name"/>
-			<TextBox Text="{Binding ServerIp}"/>
-            <TextBlock Text="Serial baud rate"/>
+            <TextBlock Text="{x:Static uav:RS.TcpPortView_TcpIpAddress}"/>
+			<TextBox Text="{Binding IpAddress}"/>
+            <TextBlock Text="{x:Static uav:RS.TcpPortView_TcpIpPort}"/>
 			<TextBox Text="{Binding Port}"/>
+            <RadioButton IsChecked="{Binding IsTcpIpServer}" Content="TCP\IP server"/>
+            <RadioButton IsChecked="{Binding !IsTcpIpServer}" Content="TCP\IP client"/>
         </StackPanel>
     </Panel>
 </UserControl>

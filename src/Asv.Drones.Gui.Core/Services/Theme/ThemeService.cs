@@ -3,10 +3,8 @@ using Asv.Cfg;
 using Asv.Common;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 using FluentAvalonia.Styling;
-using Newtonsoft.Json.Linq;
 
 namespace Asv.Drones.Gui.Core
 {
@@ -15,8 +13,6 @@ namespace Asv.Drones.Gui.Core
         public string? Theme { get; set; }
         public FlowDirection? FlowDirection { get; set; }
     }
-
-    
 
     [Export(typeof(IThemeService))]
     [PartCreationPolicy(CreationPolicy.Shared)]
@@ -64,7 +60,6 @@ namespace Asv.Drones.Gui.Core
             flowDirection ??= _flowDirections.First();
             FlowDirection = new RxValue<FlowDirectionItem>(flowDirection).DisposeItWith(Disposable);
             FlowDirection.Subscribe(SetFlowDirection).DisposeItWith(Disposable);
-
         }
 
         public IEnumerable<ThemeItem> Themes =>_themes;

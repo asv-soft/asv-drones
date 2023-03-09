@@ -37,7 +37,7 @@ namespace Asv.Drones.Gui.Uav
         }
 
         [ImportingConstructor]
-        public ConnectionsPortsViewModel(IMavlinkDevicesService deviceSvc, ILogService logService):this()
+        public ConnectionsPortsViewModel(IMavlinkDevicesService deviceSvc, ILogService logService,ILocalizationService localization):this()
         {
             _deviceSvc = deviceSvc ?? throw new ArgumentNullException(nameof(deviceSvc));
             _logService = logService ?? throw new ArgumentNullException(nameof(logService));
@@ -50,9 +50,9 @@ namespace Asv.Drones.Gui.Uav
                 .DisposeItWith(Disposable);
             deviceSvc.Router
                 .GetPorts()
-                .ForEach(_ => cache.AddOrUpdate(new PortViewModel(deviceSvc, _)));
+                .ForEach(_ => cache.AddOrUpdate(new PortViewModel(deviceSvc, localization, _)));
             deviceSvc.Router
-                .OnAddPort.Subscribe(_ => cache.AddOrUpdate(new PortViewModel(deviceSvc, _)))
+                .OnAddPort.Subscribe(_ => cache.AddOrUpdate(new PortViewModel(deviceSvc, localization, _)))
                 .DisposeItWith(Disposable);
             deviceSvc.Router
                 .OnRemovePort.Subscribe(_ => cache.Remove(_)).DisposeItWith(Disposable);
@@ -87,7 +87,7 @@ namespace Asv.Drones.Gui.Uav
                 IsSecondaryButtonEnabled = true,
                 CloseButtonText = RS.ConnectionsViewModel_AddDialogPort_Cancel
             };
-            var viewModel = new TcpPortViewModel(_deviceSvc);
+            var viewModel = new TcpPortViewModel(_deviceSvc,_logService);
             viewModel.ApplyDialog(dialog);
             dialog.Content = viewModel;
             var result = await dialog.ShowAsync();
@@ -103,7 +103,7 @@ namespace Asv.Drones.Gui.Uav
                 IsSecondaryButtonEnabled = true,
                 CloseButtonText = RS.ConnectionsViewModel_AddDialogPort_Cancel
             };
-            var viewModel = new TcpPortViewModel(_deviceSvc);
+            var viewModel = new UdpPortViewModel(_deviceSvc);
             viewModel.ApplyDialog(dialog);
             dialog.Content = viewModel;
             var result = await dialog.ShowAsync();
@@ -116,6 +116,8 @@ namespace Asv.Drones.Gui.Uav
         public ICommand AddTcpPortCommand { get; }
         public ICommand AddUdpPortCommand { get; }
 
+        public bool IsRebootRequired { get; private set; }
+        
         public int Order => 0;
     }
 }

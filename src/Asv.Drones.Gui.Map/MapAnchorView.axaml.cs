@@ -1,5 +1,6 @@
-using System;
 using System.Collections;
+using System.Reactive.Linq;
+using Asv.Common;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
@@ -19,8 +20,8 @@ namespace Asv.Avalonia.Map
             SelectableMixin.Attach<MapAnchorView>(IsSelectedProperty);
             // PressedMixin.Attach<MapAnchorView>();
             this.WhenAnyValue(_ => _.Description).Subscribe(_ => IsPopupNotEmpty = !string.IsNullOrWhiteSpace(Description) );
-            this.WhenAnyValue(_ => _.CanvasBounds).Subscribe(_ => UpdateOffset(_));
-
+            this.WhenAnyValue(_ => _.CanvasBounds).Subscribe(UpdateOffset);
+            
         }
 
         private void UpdateOffset(Rect rect)
@@ -94,7 +95,8 @@ namespace Asv.Avalonia.Map
             get => GetValue(IsSelectedProperty);
             set => SetValue(IsSelectedProperty, value);
         }
-
+        
+  
         public static readonly StyledProperty<double> RotateCenterXProperty = AvaloniaProperty.Register<MapAnchorView, double>(nameof(RotateCenterX));
         public double RotateCenterX
         {

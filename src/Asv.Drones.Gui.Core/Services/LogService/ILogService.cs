@@ -8,7 +8,8 @@
 
     public static class LogServiceHelper
     {
-        public static void Error(this ILogService src, string sender, string message, Exception ex = null)
+        public static void Error(this ILogService src, string sender, string message,
+            Exception ex = null)
         {
             src.SendMessage(new LogMessage(DateTime.Now, LogMessageType.Error, sender, message, ex?.Message));
         }

@@ -111,7 +111,7 @@ namespace Asv.Avalonia.Map
                     {
                         CancelAsyncTasks();
 
-                        Matrix.ClearLevelsBelove(_zoom - LevelsKeepInMemory);
+                        Matrix.ClearLevelsBelow(_zoom - LevelsKeepInMemory);
                         Matrix.ClearLevelsAbove(_zoom + LevelsKeepInMemory);
 
                         lock (FailedLoads)
@@ -174,12 +174,10 @@ namespace Asv.Avalonia.Map
 
         public GMapProvider Provider
         {
-            get
-            {
-                return _provider;
-            }
+            get => _provider;
             set
             {
+                value ??= EmptyProvider.Instance;
                 if (_provider == null || !_provider.Equals(value))
                 {
                     bool diffProjection = _provider == null || _provider.Projection != value.Projection;
@@ -1091,6 +1089,7 @@ namespace Asv.Avalonia.Map
                 TileDrawingListLock.AcquireReaderLock();
                 try
                 {
+
                     Matrix.ClearLevelAndPointsNotIn(Zoom, TileDrawingList);
                 }
                 finally
