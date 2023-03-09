@@ -39,7 +39,7 @@ namespace Asv.Drones.Gui.Uav
 
                 var totalRx = deviceSvc.Router.RxBytes;
                 var totalTx = deviceSvc.Router.TxBytes;
-                TotalRateString = $"{localization.ByteRate.GetValueWithUnits(_txRate.Calculate(totalTx))} | {localization.ByteRate.GetValueWithUnits(_rxRate.Calculate(totalRx))}";
+                TotalRateString = $"{localization.ByteRate.ConvertToStringWithUnits(_txRate.Calculate(totalTx))} | {localization.ByteRate.ConvertToStringWithUnits(_rxRate.Calculate(totalRx))}";
 
             }).DisposeItWith(Disposable);
 

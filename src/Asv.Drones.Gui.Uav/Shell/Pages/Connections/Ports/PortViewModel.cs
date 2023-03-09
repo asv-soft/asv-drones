@@ -104,19 +104,19 @@ namespace Asv.Drones.Gui.Uav
             Error = info.LastException?.Message;
 
             var rxByteRate = _rxByteRate.Calculate(info.RxBytes);
-            RxText = _localization.ByteRate.GetValue(rxByteRate);
+            RxText = _localization.ByteRate.ConvertToString(rxByteRate);
             RxUnitText = _localization.ByteRate.GetUnit(rxByteRate);
 
             var rxPktRate = _rxPacketRate.Calculate(info.RxPackets);
-            RxPktText = _localization.ItemsRate.GetValue(rxPktRate);
+            RxPktText = _localization.ItemsRate.ConvertToString(rxPktRate);
             RxPktUnitText = _localization.ItemsRate.GetUnit(rxPktRate);
 
             var txByteRate = _txByteRate.Calculate(info.TxBytes);
-            TxText = _localization.ByteRate.GetValue(txByteRate);
+            TxText = _localization.ByteRate.ConvertToString(txByteRate);
             TxUnitText = _localization.ByteRate.GetUnit(txByteRate);
 
             var txPktRate = _txPacketRate.Calculate(info.TxPackets);
-            TxPktText = _localization.ItemsRate.GetValue(txPktRate);
+            TxPktText = _localization.ItemsRate.ConvertToString(txPktRate);
             TxPktUnitText = _localization.ItemsRate.GetUnit(txPktRate);
 
             IsPortEnabled = info.IsEnabled;

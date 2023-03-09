@@ -310,6 +310,6 @@
     <value>Высота должна быть больше или равна {0}.</value>
   </data>
   <data name="TakeOffAnchorActionViewModel_LogMessage" xml:space="preserve">
-    <value>Пользователь отправил TakeOff для {0}</value>
+    <value>Пользователь отправил команду Взлёт на высоту {0} для {1}</value>
   </data>
 </root>

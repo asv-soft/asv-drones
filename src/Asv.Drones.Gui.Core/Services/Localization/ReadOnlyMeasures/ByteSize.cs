@@ -1,6 +1,6 @@
 ﻿namespace Asv.Drones.Gui.Core
 {
-    public class ByteSize : IMeasureUnit<long>
+    public class ByteSize : IReadOnlyMeasureUnit<long>
     {
         private const long OneKb = 1024;
         private const long OneMb = OneKb * OneKb;
@@ -18,7 +18,7 @@
             };
         }
 
-        public string GetValue(long bytes)
+        public string ConvertToString(long bytes)
         {
             return bytes switch
             {
@@ -29,7 +29,5 @@
                 (>= OneGb)  => $"{bytes / OneMb}",
             };
         }
-
-        public string GetValueSI(long bytes) => GetValue(bytes);
     }
 }

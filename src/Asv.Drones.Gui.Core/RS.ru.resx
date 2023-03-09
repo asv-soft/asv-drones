@@ -211,10 +211,10 @@
 	<data name="MeasureUnitsSettingsViewModel_DistanceInternationalNauticalMiles" xml:space="preserve">
 		<value>Морские мили</value>
 	</data>
-	<data name="MeasureUnitsSettingsViewModel_AltitudeMeters" xml:space="preserve">
+	<data name="Altitude_Meter_Title" xml:space="preserve">
 		<value>Метры</value>
 	</data>
-	<data name="MeasureUnitsSettingsViewModel_AltitudeFeets" xml:space="preserve">
+	<data name="Altitude_Feet_Title" xml:space="preserve">
 		<value>Футы</value>
 	</data>
 	<data name="MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegrees" xml:space="preserve">
@@ -223,19 +223,19 @@
 	<data name="MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds" xml:space="preserve">
 		<value>Градусы, минуты, секунды</value>
 	</data>
-	<data name="Altitude_FeetUnit" xml:space="preserve">
+	<data name="Altitude_Feet_Unit" xml:space="preserve">
 		<value>фут</value>
 	</data>
-	<data name="Altitude_MeterUnit" xml:space="preserve">
+	<data name="Altitude_Meter_Unit" xml:space="preserve">
 		<value>м</value>
 	</data>
-	<data name="Distance_MeterUnit" xml:space="preserve">
+	<data name="Distance_Meters_Unit" xml:space="preserve">
 		<value>м</value>
 	</data>
-	<data name="Distance_InternationalNauticalMileUnit" xml:space="preserve">
-		<value>nmi</value>
+  <data name="Distance_NauticalMiles_Unit" xml:space="preserve">
+	  <value>NM</value>
 
-	</data>
+  </data>
 	<data name="Velocity_MetersPerSecondUnit" xml:space="preserve">
 		<value>м/с</value>
 	</data>
@@ -391,5 +391,14 @@
   </data>
   <data name="MapSettingsViewModel_MapDialogTitle" xml:space="preserve">
     <value>Карты</value>
+  </data>
+  <data name="Distance_Meters_Title" xml:space="preserve">
+	  <value>Метры</value>
+  </data>
+  <data name="GlobalCommands_OpenStoreDialogTitle" xml:space="preserve">
+	  <value>Открыть файл</value>
+  </data>
+  <data name="Distance_NauticalMiles_Title" xml:space="preserve">
+	  <value>Морские мили</value>
   </data>
 </root>
