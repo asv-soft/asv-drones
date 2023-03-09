@@ -1,0 +1,33 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:core="clr-namespace:Asv.Drones.Gui.Core">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <Border Padding="20" MinHeight="300">
+                <StackPanel>
+                    <core:OptionsDisplayItem Header="Header"
+                                             Description="This is a description of whatver this does"
+                                             Icon="Save" 
+                                             Navigates="True"/>
+
+                    <core:OptionsDisplayItem Header="Header"
+                                             Description="This is a description of whatver this does"
+                                             Icon="Save"
+                                             Expands="True"
+                                             Content="Hello World"/>
+
+                    <core:OptionsDisplayItem Header="Header" Classes="Vertical"
+                                             Description="This is a description of whatver this does"
+                                             Icon="Save"
+                                             Expands="True"
+                                             Content="Hello World" />
+                    <core:BatteryIndicator Width="50" Height="50" Value="0" CriticalValue="0.2" WarningValue="0.45" MaxValue="1.1"/>
+                </StackPanel>
+                
+            </Border>
+        </Border>
+    </Design.PreviewWith>
+    <StyleInclude Source="/Controls/OptionsDisplayItem/OptionsDisplayItemStyles.axaml"/>
+    <StyleInclude Source="/Controls/BatteryIndicator.axaml"/>
+   
+</Styles>
