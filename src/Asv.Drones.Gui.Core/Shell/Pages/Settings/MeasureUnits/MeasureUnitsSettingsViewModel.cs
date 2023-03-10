@@ -13,7 +13,7 @@ namespace Asv.Drones.Gui.Core
         
         private readonly ILocalizationService _localization;
         
-        public override int Order => 1;
+        public override int Order => 2;
         
         public MeasureUnitsSettingsViewModel() : base(Uri)
         {
