@@ -314,4 +314,25 @@
   <data name="Distance_NauticalMiles_Title" xml:space="preserve">
     <value>Nautical miles</value>
   </data>
+  <data name="LogsShellMenuItem_Name" xml:space="preserve">
+    <value>Log messages</value>
+  </data>
+  <data name="LogsPageView_By" xml:space="preserve">
+    <value>by </value>
+  </data>
+  <data name="LogsPageView_SearchWatermark" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="LogsPageView_From" xml:space="preserve">
+    <value>From {0}</value>
+  </data>
+  <data name="LogsPageView_To" xml:space="preserve">
+    <value>to {0}</value>
+  </data>
+  <data name="LogsPageView_Filtered" xml:space="preserve">
+    <value>Filtered: {0}</value>
+  </data>
+  <data name="LogsPageView_Total" xml:space="preserve">
+    <value>Total: {0}</value>
+  </data>
 </root>

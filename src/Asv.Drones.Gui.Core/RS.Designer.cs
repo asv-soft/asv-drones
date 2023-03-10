@@ -285,6 +285,69 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to by .
+        /// </summary>
+        public static string LogsPageView_By {
+            get {
+                return ResourceManager.GetString("LogsPageView_By", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filtered: {0}.
+        /// </summary>
+        public static string LogsPageView_Filtered {
+            get {
+                return ResourceManager.GetString("LogsPageView_Filtered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From {0}.
+        /// </summary>
+        public static string LogsPageView_From {
+            get {
+                return ResourceManager.GetString("LogsPageView_From", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string LogsPageView_SearchWatermark {
+            get {
+                return ResourceManager.GetString("LogsPageView_SearchWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to to {0}.
+        /// </summary>
+        public static string LogsPageView_To {
+            get {
+                return ResourceManager.GetString("LogsPageView_To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total: {0}.
+        /// </summary>
+        public static string LogsPageView_Total {
+            get {
+                return ResourceManager.GetString("LogsPageView_Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log messages.
+        /// </summary>
+        public static string LogsShellMenuItem_Name {
+            get {
+                return ResourceManager.GetString("LogsShellMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change current map provider for application.
         /// </summary>
         public static string MapSettingsView_MapProvider_Description {
