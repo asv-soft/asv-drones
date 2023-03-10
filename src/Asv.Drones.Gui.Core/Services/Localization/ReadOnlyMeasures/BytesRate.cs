@@ -1,6 +1,6 @@
 ﻿namespace Asv.Drones.Gui.Core
 {
-    public class BytesRate : IMeasureUnit<double>
+    public class BytesRate : IReadOnlyMeasureUnit<double>
     {
         private const double OneKb = 1024.0;
         private const double OneMb = OneKb * OneKb;
@@ -19,7 +19,7 @@
             };
         }
 
-        public string GetValue(double bytesPerSec)
+        public string ConvertToString(double bytesPerSec)
         {
             return bytesPerSec switch
             {
@@ -34,6 +34,6 @@
             };
         }
 
-        
+        public string GetValueSI(double bytesPerSec) => ConvertToString(bytesPerSec);
     }
 }

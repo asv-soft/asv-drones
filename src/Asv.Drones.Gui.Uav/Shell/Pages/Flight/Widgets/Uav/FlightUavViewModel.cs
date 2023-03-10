@@ -6,6 +6,7 @@ using Asv.Mavlink;
 using Avalonia.Controls;
 using Material.Icons;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Uav
 {
@@ -20,11 +21,12 @@ namespace Asv.Drones.Gui.Uav
                 Attitude = new AttitudeViewModel();
             }
         }
-        public FlightUavViewModel(IVehicle vehicle, ILogService log):base(vehicle,"uav")
+        public FlightUavViewModel(IVehicle vehicle, ILogService log,ILocalizationService loc):base(vehicle,"uav")
         {
             Vehicle.Name.Subscribe(_ => Title = _).DisposeItWith(Disposable);
             Vehicle.Class.Select(MavlinkHelper.GetIcon).Subscribe(_ => Icon = _).DisposeItWith(Disposable);
-            Attitude = new AttitudeViewModel(vehicle, new Uri(Id, "/id"));
+            Attitude = new AttitudeViewModel(vehicle, new Uri(Id, "/id"),loc);
+            Vehicle.BatteryCharge.Subscribe(_ => BatteryLevel = _.Value).DisposeItWith(Disposable);
         }
 
         protected override void InternalAfterMapInit(IMap map)
@@ -38,5 +40,7 @@ namespace Asv.Drones.Gui.Uav
 
         public AttitudeViewModel Attitude { get; }
         public ICommand LocateVehicleCommand { get; set; }
+        [Reactive] 
+        public double BatteryLevel { get; set; }
     }
 }

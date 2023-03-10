@@ -5,6 +5,7 @@
              xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:uav1="clr-namespace:Asv.Drones.Gui.Uav.Uav"
+             xmlns:core="clr-namespace:Asv.Drones.Gui.Core;assembly=Asv.Drones.Gui.Core"
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
              x:CompileBindings="True"
              x:DataType="uav:FlightUavViewModel"
@@ -28,8 +29,8 @@
             <uav1:AttitudeView DataContext="{Binding Attitude}"/>
             <WrapPanel ItemHeight="30" ItemWidth="60">
                 <StackPanel Orientation="Horizontal" Spacing="5">
-                    <avalonia:MaterialIcon Kind="Battery40" Foreground="Green" Width="20" Height="20" />
-                    <TextBlock VerticalAlignment="Center" Text="76%"/>
+                    <core:BatteryIndicator Width="20" Height="20" MaxValue="1" WarningValue="0.5" CriticalValue="0.2" Value="{Binding BatteryLevel}"/>   
+                    <TextBlock VerticalAlignment="Center" Text="{Binding BatteryLevel}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Spacing="5">
                     <avalonia:MaterialIcon Kind="Clock" Foreground="Green" Width="20" Height="20" />

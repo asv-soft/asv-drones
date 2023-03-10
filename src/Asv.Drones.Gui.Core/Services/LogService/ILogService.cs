@@ -1,9 +1,12 @@
-﻿namespace Asv.Drones.Gui.Core
+﻿using Asv.Store;
+
+namespace Asv.Drones.Gui.Core
 {
     public interface ILogService
     {
         void SendMessage(LogMessage message);
         IObservable<LogMessage> OnMessage { get; }
+        ITextStore LogStore { get; }
     }
 
     public static class LogServiceHelper

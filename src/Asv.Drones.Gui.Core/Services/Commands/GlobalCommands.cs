@@ -10,12 +10,12 @@ namespace Asv.Drones.Gui.Core
     public interface IGlobalCommandsService
     {
         ReactiveCommand<Unit,Unit> OpenStore { get; }
-        ReactiveCommand<Unit,Unit> CreateStore { get;  }
+        ReactiveCommand<Unit,Unit> CreateStore { get; }
     }
     
     [Export(typeof(IGlobalCommandsService))]
     [PartCreationPolicy(CreationPolicy.Shared)]
-    public class GlobalCommandsService:IGlobalCommandsService
+    public class GlobalCommandsService : IGlobalCommandsService
     {
         private readonly IAppService _app;
         private readonly ILogService _log;
@@ -70,7 +70,7 @@ namespace Asv.Drones.Gui.Core
                 _log.Error("Open file", e.Message, e);
             }
         }
-        
+
         private string? TryGetCurrentFolder()
         {
             string? currentFolder = null;

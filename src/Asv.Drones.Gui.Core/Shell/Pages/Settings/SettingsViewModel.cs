@@ -36,8 +36,7 @@ namespace Asv.Drones.Gui.Core
                 _items = new ReadOnlyObservableCollection<ISettingsPart>(new ObservableCollection<ISettingsPart>(
                     new ISettingsPart[]
                     {
-                        new SettingsThemeViewModel(),
-                        new MapSettingsViewModel()
+                        new SettingsThemeViewModel()
                     }));
             }
         }

@@ -7,8 +7,8 @@
         <styling:FluentAvaloniaTheme />
         <StyleInclude Source="avares://FluentAvalonia.UI.Windowing/Styles/FAWindowingStyles.axaml" />
         <StyleInclude Source="avares://Asv.Drones.Gui.Map/ToolKit.axaml"/>
-        <StyleInclude Source="avares://Asv.Drones.Gui.Core/Styles/OptionsDisplayItemStyles.axaml"/>
-        <StyleInclude Source="avares://Asv.Drones.Gui.Uav/Controls/AttitudeIndicator.axaml"/>
+        <StyleInclude Source="avares://Asv.Drones.Gui.Core/App.axaml"/>
+        <StyleInclude Source="avares://Asv.Drones.Gui.Uav/App.axaml"/>
         <StyleInclude Source="avares://Material.Icons.Avalonia/App.xaml"></StyleInclude>
     </Application.Styles>
 </Application>

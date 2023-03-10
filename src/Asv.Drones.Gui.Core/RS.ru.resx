@@ -187,54 +187,81 @@
 	<data name="SettingsView_RebootRequiredDescription" xml:space="preserve">
 		<value>Вы должны перезагрузить программу, чтобы применить изменения.</value>
 	</data>
-	<data name="SettingsThemeViewModel_Distance" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_Distance" xml:space="preserve">
 		<value>Расстояние</value>
 	</data>
-	<data name="SettingsThemeViewModel_DistanceDescription" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_DistanceDescription" xml:space="preserve">
 		<value>Измените текущие единицы измерения расстояния.</value>
 	</data>
-	<data name="SettingsThemeViewModel_Altitude" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_Altitude" xml:space="preserve">
 		<value>Высота</value>
 	</data>
-	<data name="SettingsThemeViewModel_AltitudeDescription" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_AltitudeDescription" xml:space="preserve">
 		<value>Измените текущие единицы измерения высоты.</value>
 	</data>
-	<data name="SettingsThemeViewModel_LatitudeLongitude" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_LatitudeLongitude" xml:space="preserve">
 		<value>Широта и долгота</value>
 	</data>
-	<data name="SettingsThemeViewModel_LatitudeLongitudeDescription" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_LatitudeLongitudeDescription" xml:space="preserve">
 		<value>Измените текущие единицы измерения широты и долготы.</value>
 	</data>
-	<data name="SettingsThemeViewModel_DistanceMeters" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_DistanceMeters" xml:space="preserve">
 		<value>Метры</value>
 	</data>
-	<data name="SettingsThemeViewModel_DistanceInternationalNauticalMiles" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_DistanceInternationalNauticalMiles" xml:space="preserve">
 		<value>Морские мили</value>
 	</data>
-	<data name="SettingsThemeViewModel_AltitudeMeters" xml:space="preserve">
+	<data name="Altitude_Meter_Title" xml:space="preserve">
 		<value>Метры</value>
 	</data>
-	<data name="SettingsThemeViewModel_AltitudeFeets" xml:space="preserve">
+	<data name="Altitude_Feet_Title" xml:space="preserve">
 		<value>Футы</value>
 	</data>
-	<data name="SettingsThemeViewModel_LatitudeLongtitudeDegrees" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegrees" xml:space="preserve">
 		<value>Градусы</value>
 	</data>
-	<data name="SettingsThemeViewModel_LatitudeLongtitudeDegreesMinutesSeconds" xml:space="preserve">
+	<data name="MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds" xml:space="preserve">
 		<value>Градусы, минуты, секунды</value>
 	</data>
-	<data name="SettingsThemeViewModel_AltitudeFeetUnit" xml:space="preserve">
+	<data name="Altitude_Feet_Unit" xml:space="preserve">
 		<value>фут</value>
 	</data>
-	<data name="SettingsThemeViewModel_AltitudeMeterUnit" xml:space="preserve">
+	<data name="Altitude_Meter_Unit" xml:space="preserve">
 		<value>м</value>
 	</data>
-	<data name="SettingsThemeViewModel_DistanceMeterUnit" xml:space="preserve">
+	<data name="Distance_Meters_Unit" xml:space="preserve">
 		<value>м</value>
 	</data>
-	<data name="SettingsThemeViewModel_DistanceInternationalNauticalMileUnit" xml:space="preserve">
-		<value>nmi</value>
+  <data name="Distance_NauticalMiles_Unit" xml:space="preserve">
+	  <value>NM</value>
 
+  </data>
+	<data name="Velocity_MetersPerSecondUnit" xml:space="preserve">
+		<value>м/с</value>
+	</data>
+	<data name="Velocity_KilometersPerHourUnit" xml:space="preserve">
+		<value>км/ч</value>
+	</data>
+	<data name="Velocity_MilesPerHourUnit" xml:space="preserve">
+		<value>миль/ч</value>
+	</data>
+	<data name="RelativeTime_MillisecondsUnit" xml:space="preserve">
+		<value>мс</value>
+	</data>
+	<data name="RelativeTime_SecondsUnit" xml:space="preserve">
+		<value>с</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Title" xml:space="preserve">
+		<value>Единицы измерения</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Description" xml:space="preserve">
+		<value>В этом разделе можно настроить единицы измерения для различных параметров.</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_Velocity" xml:space="preserve">
+		<value>Скорость</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_VelocityDescription" xml:space="preserve">
+		<value>Измените текущие единицы измерения скорости.</value>
 	</data>
 	<data name="HeaderFileMenu_Header" xml:space="preserve">
 		<value>Файл</value>
@@ -364,5 +391,14 @@
   </data>
   <data name="MapSettingsViewModel_MapDialogTitle" xml:space="preserve">
     <value>Карты</value>
+  </data>
+  <data name="Distance_Meters_Title" xml:space="preserve">
+	  <value>Метры</value>
+  </data>
+  <data name="GlobalCommands_OpenStoreDialogTitle" xml:space="preserve">
+	  <value>Открыть файл</value>
+  </data>
+  <data name="Distance_NauticalMiles_Title" xml:space="preserve">
+	  <value>Морские мили</value>
   </data>
 </root>

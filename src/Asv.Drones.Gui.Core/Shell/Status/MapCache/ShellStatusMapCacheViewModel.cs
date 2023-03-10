@@ -25,7 +25,7 @@ namespace Asv.Drones.Gui.Core
         {
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10)).Subscribe(_ =>
             {
-                CacheSizeString = localization.ByteSize.GetValueWithUnits(app.CalculateMapCacheSize());
+                CacheSizeString = localization.ByteSize.ConvertToStringWithUnits(app.CalculateMapCacheSize());
             }).DisposeItWith(Disposable);
             
         }

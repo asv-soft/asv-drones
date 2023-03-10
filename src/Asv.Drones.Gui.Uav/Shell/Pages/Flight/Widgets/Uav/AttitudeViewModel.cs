@@ -12,14 +12,17 @@ namespace Asv.Drones.Gui.Uav
     public class AttitudeViewModel:ViewModelBase
     {
         private readonly IVehicle _vehicle;
-
+        private readonly ILocalizationService _localization;
+        
         public AttitudeViewModel():base(new Uri("designTime://attitude"))
         {
             
         }
 
-        public AttitudeViewModel(IVehicle vehicle, Uri id):base(id)
+        public AttitudeViewModel(IVehicle vehicle, Uri id, ILocalizationService localization) : base(id)
         {
+            _localization = localization;
+            
             _vehicle = vehicle ?? throw new ArgumentNullException(nameof(vehicle));
             _vehicle.Roll
                 .DistinctUntilChanged()
@@ -37,12 +40,14 @@ namespace Asv.Drones.Gui.Uav
                 Heading = heading;
             }).DisposeWith(Disposable);
             _vehicle.AltitudeAboveHome
+                .Select(_localization.Altitude.ConvertFromSi)
                 .Select(_=>Math.Round(_))
                 .DistinctUntilChanged()
                 .Subscribe(_ => Altitude = _)
                 .DisposeWith(Disposable);
             _vehicle
                 .GpsGroundVelocity
+                .Select(_localization.Velocity.ConvertFromSi)
                 .Select(_ => Math.Round(_))
                 .DistinctUntilChanged()
                 .Subscribe(_ => Velocity = _)
@@ -57,7 +62,7 @@ namespace Asv.Drones.Gui.Uav
                 .Subscribe(_ =>
             {
                 IsArmed = _;
-                UpdateStatusText(_ ? "Armed" : "Disarmed");
+                UpdateStatusText(_ ? "Armed" : "Disarmed"); // TODO: Localize
             }).DisposeWith(Disposable);
             _vehicle.ArmedTime
                 .DistinctUntilChanged()

@@ -1,6 +1,6 @@
 ﻿namespace Asv.Drones.Gui.Core
 {
-    public class ItemsRate : IMeasureUnit<double>
+    public class ItemsRate : IReadOnlyMeasureUnit<double>
     {
         private const double OneKHz = 1000.0;
         private const double OneMHz = OneKHz * OneKHz;
@@ -19,7 +19,7 @@
             };
         }
 
-        public string GetValue(double itemsPerSec)
+        public string ConvertToString(double itemsPerSec)
         {
             return itemsPerSec switch
             {
@@ -33,5 +33,7 @@
                 (>= OneGHz) => $"{itemsPerSec / OneMHz,-4:F0}",
             };
         }
+        
+
     }
 }
