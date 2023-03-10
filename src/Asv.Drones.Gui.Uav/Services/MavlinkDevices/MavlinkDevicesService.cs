@@ -33,6 +33,7 @@ namespace Asv.Drones.Gui.Uav
     public class MavlinkDevicesService : ServiceWithConfigBase<MavlinkDeviceServiceConfig>, IMavlinkDevicesService
     {
         private readonly IPacketSequenceCalculator _sequenceCalculator;
+        private readonly ILogService _log;
         private readonly SourceCache<IMavlinkDevice, ushort> _devices = new(_ => _.FullId);
         private readonly MavlinkRouter _mavlinkRouter;
         private readonly RxValue<byte> _systemId;
@@ -40,11 +41,13 @@ namespace Asv.Drones.Gui.Uav
         private readonly RxValue<TimeSpan> _heartBeatRate;
         private readonly RxValue<bool> _needReloadToApplyConfig = new(false);
         private readonly MavlinkDeviceBrowser _deviceBrowser;
+        private readonly IObservableCache<string, ushort> _logNames;
 
         [ImportingConstructor]
-        public MavlinkDevicesService(IConfiguration config,IPacketSequenceCalculator sequenceCalculator):base(config)
+        public MavlinkDevicesService(IConfiguration config,IPacketSequenceCalculator sequenceCalculator,ILogService log):base(config)
         {
             _sequenceCalculator = sequenceCalculator ?? throw new ArgumentNullException(nameof(sequenceCalculator));
+            _log = log ?? throw new ArgumentNullException(nameof(log));
 
             #region InitUriHost mavlink router
 
@@ -135,7 +138,58 @@ namespace Asv.Drones.Gui.Uav
                 .Transform(CreateVehicle).Where(_ => _ != null).DisposeMany().RefCount();
 
             #endregion
+
+            #region Logs
+
+            _logNames = Vehicles
+                .AutoRefreshOnObservable(_ => _.Name)
+                .Filter(_=>_.Name.Value!=null)
+                .Transform(_ => _.Name.Value,true)
+                .AsObservableCache();
+            _mavlinkRouter.Filter<StatustextPacket>().Subscribe(SaveToLog).DisposeItWith(Disposable);
+
+            #endregion
+           
         }
+
+        #region Logs
+
+        private void SaveToLog(StatustextPacket pkt)
+        {
+            var indexOfNullSymbol = pkt.Payload.Text.IndexOf('\0');
+            var txt = new string(pkt.Payload.Text,0, indexOfNullSymbol < 0 ? pkt.Payload.Text.Length : indexOfNullSymbol);
+            switch (pkt.Payload.Severity)
+            {
+                case MavSeverity.MavSeverityEmergency:
+                case MavSeverity.MavSeverityAlert:
+                case MavSeverity.MavSeverityCritical:
+                case MavSeverity.MavSeverityError:
+                    _log.Error(TryGetName(pkt), txt, null);
+                    break;
+                case MavSeverity.MavSeverityWarning:
+                    _log.Warning(TryGetName(pkt), txt);
+                    break;
+                case MavSeverity.MavSeverityNotice:
+                    _log.Trace(TryGetName(pkt), txt);
+                    break;
+                case MavSeverity.MavSeverityInfo:
+                    _log.Trace(TryGetName(pkt), txt);
+                    break;
+                case MavSeverity.MavSeverityDebug:
+                    _log.Trace(TryGetName(pkt), txt);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
+        }
+        private string TryGetName(StatustextPacket pkt)
+        {
+            var name = _logNames.Lookup(pkt.FullId);
+            return name.HasValue ? name.Value : $"[{pkt.SystemId},{pkt.ComponenId}]";
+        }
+        
+        #endregion
 
         public IObservable<IChangeSet<IMavlinkDevice, ushort>> Devices => _devices.Connect().RefCount();
         public IMavlinkRouter Router => _mavlinkRouter;
