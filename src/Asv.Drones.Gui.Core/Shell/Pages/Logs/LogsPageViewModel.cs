@@ -5,8 +5,7 @@ using System.Reactive.Subjects;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Store;
-using DynamicData;
-using LiteDB;
+using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -48,12 +47,11 @@ namespace Asv.Drones.Gui.Core
             _logService = logService;
             _configuration = configuration;
             
+            PageLengths = new List<int> { 25, 50, 100, 250, 500 };
+            Take = _configuration.Get<int>("TakePageLength");
+            
             this.WhenAnyValue(_ => _.SearchText).Throttle(TimeSpan.FromMilliseconds(200)).Skip(1).Subscribe(_ => Refresh.Execute()).DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.Take, _ => _.Skip).Subscribe(_ => Refresh.Execute()).DisposeItWith(Disposable);
-
-            PageLengths = new List<int> { 25, 50, 100, 250, 500 };
-
-            Take = _configuration.Get<int>("TakePageLength");
         }
         
         private void OnRefreshError(Exception ex)
@@ -65,13 +63,16 @@ namespace Asv.Drones.Gui.Core
         {
             if (Skip < 0) Skip = 0;
             var query = new TextMessageQuery { Take = Take, Skip = Skip, Search = SearchText ?? "" };
-            Messages = _logService.LogStore.Find(query).Distinct().ToList();
+            Messages = _logService.LogStore.Find(query).Select(_ => new RemoteLogMessageProxy(_)).ToList();
+
             Filtered = _logService.LogStore.Count(query);
+            
             if (Messages.Count == 0 & Filtered != 0)
             {
                 Skip = 0;
                 RefreshItemsImpl();
             }
+            
             Total = _logService.LogStore.Count();
             To = Skip + Take;
             CanNext.OnNext(To < Filtered);
@@ -100,18 +101,18 @@ namespace Asv.Drones.Gui.Core
         public Subject<bool> CanNext { get; } = new();
         
         public Subject<bool> CanPrev { get; } = new();
-        
-        [Reactive] 
-        public List<TextMessage> Messages { get; set; }
-        
+
+        [Reactive]
+        public List<RemoteLogMessageProxy> Messages { get; set; }
+
         [Reactive]
         public string SearchText { get; set; }
         
         [Reactive]
-        public int Skip { get; set; } = 0;
+        public int Skip { get; set; }
         
         [Reactive]
-        public int Take { get; set; } = 50;
+        public int Take { get; set; }
         
         [Reactive]
         public int Filtered { get; set; }
@@ -126,6 +127,49 @@ namespace Asv.Drones.Gui.Core
         {
             
         }
-    }    
+    }
+
+    public class RemoteLogMessageProxy
+    {
+        public RemoteLogMessageProxy(TextMessage textMessage)
+        {
+            switch ((LogMessageType)textMessage.IntTag)
+            {
+                case LogMessageType.Info:
+                    IsInfo = true;
+                    Icon = MaterialIconKind.InformationCircle;
+                    break;
+                
+                case LogMessageType.Warning:
+                    IsWarning = true;
+                    Icon = MaterialIconKind.Warning;
+                    break;
+                
+                case LogMessageType.Error:
+                    IsError = true;
+                    Icon = MaterialIconKind.ErrorOutline;
+                    break;
+                
+                case LogMessageType.Trace:
+                    IsDebug = true;
+                    Icon = MaterialIconKind.Exclamation;
+                    break;
+            }
+
+            DateTime = textMessage.Date;
+            Sender = textMessage.StrTag;
+            Message = textMessage.Text;
+        }
+        
+        public bool IsError { get; }
+        public bool IsWarning { get; }
+        public bool IsDebug { get; }
+        public bool IsInfo { get; }
+
+        public DateTime DateTime { get; }
+        public MaterialIconKind Icon { get; }
+        public string Sender { get; }
+        public string Message { get; }
+    }
 }
 
