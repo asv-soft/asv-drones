@@ -13,7 +13,7 @@ namespace Asv.Drones.Gui.Core
 {
     [ExportShellPage(UriString)]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class LogsPageViewModel : ViewModelBase, IShellPage
+    public class LogMessagesPageViewModel : ViewModelBase, IShellPage
     {
         public const string UriString = ShellPage.UriString + ".logs";
         public static readonly Uri Uri = new Uri(UriString);
@@ -24,7 +24,7 @@ namespace Asv.Drones.Gui.Core
         private readonly IConfiguration _configuration;
         private readonly ObservableAsPropertyHelper<bool> _isRefreshing;
         
-        public LogsPageViewModel() : base(Uri)
+        public LogMessagesPageViewModel() : base(Uri)
         {
             Refresh = ReactiveCommand.CreateFromObservable(() => Observable.Start(RefreshItemsImpl).SubscribeOn(RxApp.TaskpoolScheduler).TakeUntil(CancelRefresh));
             Refresh.IsExecuting.ToProperty(this, _ => _.IsRefreshing, out _isRefreshing);
@@ -42,7 +42,7 @@ namespace Asv.Drones.Gui.Core
         }
 
         [ImportingConstructor]
-        public LogsPageViewModel(ILogService logService, IConfiguration configuration) : this()
+        public LogMessagesPageViewModel(ILogService logService, IConfiguration configuration) : this()
         {
             _logService = logService;
             _configuration = configuration;
@@ -147,11 +147,11 @@ namespace Asv.Drones.Gui.Core
                 
                 case LogMessageType.Error:
                     IsError = true;
-                    Icon = MaterialIconKind.ErrorOutline;
+                    Icon = MaterialIconKind.Warning;
                     break;
                 
                 case LogMessageType.Trace:
-                    IsDebug = true;
+                    IsTrace = true;
                     Icon = MaterialIconKind.Exclamation;
                     break;
             }
@@ -163,7 +163,7 @@ namespace Asv.Drones.Gui.Core
         
         public bool IsError { get; }
         public bool IsWarning { get; }
-        public bool IsDebug { get; }
+        public bool IsTrace { get; }
         public bool IsInfo { get; }
 
         public DateTime DateTime { get; }

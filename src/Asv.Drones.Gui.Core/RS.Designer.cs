@@ -287,63 +287,63 @@ namespace Asv.Drones.Gui.Core {
         /// <summary>
         ///   Looks up a localized string similar to by .
         /// </summary>
-        public static string LogsPageView_By {
+        public static string LogMessagesPageView_By {
             get {
-                return ResourceManager.GetString("LogsPageView_By", resourceCulture);
+                return ResourceManager.GetString("LogMessagesPageView_By", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Filtered: {0}.
         /// </summary>
-        public static string LogsPageView_Filtered {
+        public static string LogMessagesPageView_Filtered {
             get {
-                return ResourceManager.GetString("LogsPageView_Filtered", resourceCulture);
+                return ResourceManager.GetString("LogMessagesPageView_Filtered", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to From {0}.
         /// </summary>
-        public static string LogsPageView_From {
+        public static string LogMessagesPageView_From {
             get {
-                return ResourceManager.GetString("LogsPageView_From", resourceCulture);
+                return ResourceManager.GetString("LogMessagesPageView_From", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
-        public static string LogsPageView_SearchWatermark {
+        public static string LogMessagesPageView_SearchWatermark {
             get {
-                return ResourceManager.GetString("LogsPageView_SearchWatermark", resourceCulture);
+                return ResourceManager.GetString("LogMessagesPageView_SearchWatermark", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to to {0}.
         /// </summary>
-        public static string LogsPageView_To {
+        public static string LogMessagesPageView_To {
             get {
-                return ResourceManager.GetString("LogsPageView_To", resourceCulture);
+                return ResourceManager.GetString("LogMessagesPageView_To", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Total: {0}.
         /// </summary>
-        public static string LogsPageView_Total {
+        public static string LogMessagesPageView_Total {
             get {
-                return ResourceManager.GetString("LogsPageView_Total", resourceCulture);
+                return ResourceManager.GetString("LogMessagesPageView_Total", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Log messages.
         /// </summary>
-        public static string LogsShellMenuItem_Name {
+        public static string LogMessagesShellMenuItem_Name {
             get {
-                return ResourceManager.GetString("LogsShellMenuItem_Name", resourceCulture);
+                return ResourceManager.GetString("LogMessagesShellMenuItem_Name", resourceCulture);
             }
         }
         

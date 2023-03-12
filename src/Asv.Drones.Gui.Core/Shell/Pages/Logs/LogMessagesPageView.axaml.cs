@@ -3,11 +3,11 @@ using Avalonia.ReactiveUI;
 
 namespace Asv.Drones.Gui.Core
 {
-    [ExportView(typeof(LogsPageViewModel))]
+    [ExportView(typeof(LogMessagesPageViewModel))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public partial class LogsPageView : ReactiveUserControl<LogsPageViewModel>
+    public partial class LogMessagesPageView : ReactiveUserControl<LogMessagesPageViewModel>
     {
-        public LogsPageView()
+        public LogMessagesPageView()
         {
             InitializeComponent();
         }
