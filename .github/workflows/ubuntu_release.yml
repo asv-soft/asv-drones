@@ -18,7 +18,9 @@ jobs:
             dotnet-version: '6.x.x'
       
       - name: Restore dependencies
-        run: dotnet Restore
+        run: |
+          cd src
+          dotnet restore
 
       - name: Build application
         run: dotnet build -c Release --no-restore
