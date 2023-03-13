@@ -50,8 +50,17 @@ namespace Asv.Drones.Gui.Core
             PageLengths = new List<int> { 25, 50, 100, 250, 500 };
             Take = _configuration.Get<int>("TakePageLength");
             
-            this.WhenAnyValue(_ => _.SearchText).Throttle(TimeSpan.FromMilliseconds(200)).Skip(1).Subscribe(_ => Refresh.Execute()).DisposeItWith(Disposable);
-            this.WhenAnyValue(_ => _.Take, _ => _.Skip).Subscribe(_ => Refresh.Execute()).DisposeItWith(Disposable);
+            this.WhenAnyValue(_ => _.SearchText)
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Throttle(TimeSpan.FromMilliseconds(200))
+                .Skip(1)
+                .Subscribe(_ => Refresh.Execute())
+                .DisposeItWith(Disposable);
+            
+            this.WhenAnyValue(_ => _.Take, _ => _.Skip)
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(_ => Refresh.Execute())
+                .DisposeItWith(Disposable);
         }
         
         private void OnRefreshError(Exception ex)
