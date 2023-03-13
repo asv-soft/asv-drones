@@ -31,7 +31,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: windows-release
-          path: net6.0/
           if-no-files-found: error
 
       - name: Download artifacts
