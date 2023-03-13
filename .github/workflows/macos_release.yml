@@ -1,0 +1,59 @@
+name: Continuous integration for MacOS
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Setup .Net 6
+        uses: actions/setup-dotnet@v3
+        with:
+            dotnet-version: '6.x.x'
+      
+      - name: Restore dependencies
+        run: dotnet Restore
+
+      - name: Build application
+        run: dotnet build -c Release --no-restore
+
+  artifacts:
+    needs: build
+    runs-on: macos-latest
+    steps:
+      - name: Upload artifacts
+        uses: actions/checkout@v3
+        with:
+          name: macos-release
+          path: src/Asv.Drones.Gui/bin/Debug/net6.0/
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: macos-release
+          path: macos
+          
+#  ftps:
+#    needs: artifacts
+#    runs-on: macos-latest
+#    steps:  
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: macos-release
+#          path: macos
+#          
+#      - name: Sync files with server
+#        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+#        with:
+#            server: ftp.samkirkland.com
+#            username: myFtpUserName
+#            password: ${{ secrets.FTP_PASSWORD }}
+#            protocol: ftps
+#            local-dir: ./macos/
+#            server-dir: public_html/macos/
+#            port: 1234 # todo replace with your web hosts ftps port
