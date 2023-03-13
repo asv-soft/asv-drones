@@ -27,21 +27,17 @@ jobs:
           cd src
           dotnet build -c Release --no-restore
 
-  artifacts:
-      needs: build
-      runs-on: ubuntu-latest
-      steps:
-        - name: Upload artifacts
-          uses: actions/upload-artifact@v3
-          with:
-            name: ubuntu-release
-            path: src/Asv.Drones.Gui/bin/Debug/net6.0/
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ubuntu-release
+          path: src/Asv.Drones.Gui/bin/Debug/net6.0/
 
-        - name: Download artifacts
-          uses: actions/download-artifact@v3
-          with:
-            name: ubuntu-release
-            path: ubuntu
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ubuntu-release
+          path: ubuntu
 
 
 #  ftps:
