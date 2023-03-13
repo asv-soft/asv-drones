@@ -32,7 +32,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Upload artifacts
-        uses: actions/checkout@v3
+        uses: actions/upload-artifact@v3
         with:
           name: macos-release
           path: src/Asv.Drones.Gui/bin/Debug/net6.0/
