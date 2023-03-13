@@ -422,4 +422,13 @@
   <data name="LogMessagesPageView_Total" xml:space="preserve">
 	  <value>Всего: {0}</value>
   </data>
+  <data name="LogMessagesPageViewModel_LogName" xml:space="preserve">
+	  <value>СообщенияЛога</value>
+  </data>
+  <data name="LogMessagesPageViewModel_RefreshErrorMessage" xml:space="preserve">
+	  <value>Ошибка при обновлении элементов</value>
+  </data>
+  <data name="LogMessagesPageViewModel_ClearAllMessage" xml:space="preserve">
+	  <value>Очистить все сообщения лога</value>
+  </data>
 </root>

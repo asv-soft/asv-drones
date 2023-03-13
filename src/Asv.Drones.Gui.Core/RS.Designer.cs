@@ -339,6 +339,33 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear all log messages.
+        /// </summary>
+        public static string LogMessagesPageViewModel_ClearAllMessage {
+            get {
+                return ResourceManager.GetString("LogMessagesPageViewModel_ClearAllMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LogMessages.
+        /// </summary>
+        public static string LogMessagesPageViewModel_LogName {
+            get {
+                return ResourceManager.GetString("LogMessagesPageViewModel_LogName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error to refresh items.
+        /// </summary>
+        public static string LogMessagesPageViewModel_RefreshErrorMessage {
+            get {
+                return ResourceManager.GetString("LogMessagesPageViewModel_RefreshErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log messages.
         /// </summary>
         public static string LogMessagesShellMenuItem_Name {

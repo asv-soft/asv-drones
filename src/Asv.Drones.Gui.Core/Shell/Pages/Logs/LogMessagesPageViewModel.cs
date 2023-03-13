@@ -56,7 +56,7 @@ namespace Asv.Drones.Gui.Core
         
         private void OnRefreshError(Exception ex)
         {
-            _logService.Error("LogView", "Error to refresh items", ex);
+            _logService.Error(RS.LogMessagesPageViewModel_LogName, RS.LogMessagesPageViewModel_RefreshErrorMessage, ex);
         }
         
         private void RefreshItemsImpl()
@@ -67,10 +67,9 @@ namespace Asv.Drones.Gui.Core
 
             Filtered = _logService.LogStore.Count(query);
             
-            if (Messages.Count == 0 & Filtered != 0)
+            if (Messages?.Count == 0 && Filtered != 0)
             {
                 Skip = 0;
-                RefreshItemsImpl();
             }
             
             Total = _logService.LogStore.Count();
@@ -82,7 +81,7 @@ namespace Asv.Drones.Gui.Core
         
         private void ClearAllImpl()
         {
-            _logService.Warning("LogMessages","Clear all log messages");
+            _logService.Warning(RS.LogMessagesPageViewModel_LogName,RS.LogMessagesPageViewModel_ClearAllMessage);
             _logService.LogStore.ClearAll();
         }
         

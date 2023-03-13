@@ -335,4 +335,13 @@
   <data name="LogMessagesPageView_Total" xml:space="preserve">
     <value>Total: {0}</value>
   </data>
+  <data name="LogMessagesPageViewModel_LogName" xml:space="preserve">
+    <value>LogMessages</value>
+  </data>
+  <data name="LogMessagesPageViewModel_RefreshErrorMessage" xml:space="preserve">
+    <value>Error to refresh items</value>
+  </data>
+  <data name="LogMessagesPageViewModel_ClearAllMessage" xml:space="preserve">
+    <value>Clear all log messages</value>
+  </data>
 </root>
