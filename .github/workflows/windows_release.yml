@@ -1,0 +1,62 @@
+name: Continuous integration for Windows
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Setup .Net 6
+        uses: actions/setup-dotnet@v3
+        with:
+            dotnet-version: '6.x.x'
+      
+      - name: Restore dependencies
+        run: |
+          cd src
+          dotnet restore
+
+      - name: Build application
+        run: |
+          cd src
+          dotnet build -c Release --no-restore
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-release
+          path: ${{ github.workspace }}/src/Asv.Drones.Gui/bin/Release/net6.0/
+          if-no-files-found: error
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: windows-release
+          path: windows
+
+            
+#  ftps:
+#    needs: artifacts
+#    runs-on: windows-latest
+#    steps:  
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: windows-release
+#          path: windows
+#          
+#      - name: Sync files with server
+#        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+#        with:
+#            server: ftp.samkirkland.com
+#            username: myFtpUserName
+#            password: ${{ secrets.FTP_PASSWORD }}
+#            protocol: ftps
+#            local-dir: ./windows/
+#            server-dir: public_html/windows/
+#            port: 1234 # todo replace with your web hosts ftps port
