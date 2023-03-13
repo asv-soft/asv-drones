@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ubuntu-release
-          path: ${{ github.workspace }}
+          path: ${{ github.workspace }}/src/Asv.Drones.Gui/bin/Release/net6.0/
           if-no-files-found: error
 
       - name: Download artifacts
