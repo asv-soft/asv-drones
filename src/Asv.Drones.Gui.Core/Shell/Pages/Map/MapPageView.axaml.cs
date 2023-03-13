@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
@@ -15,6 +16,29 @@ namespace Asv.Drones.Gui.Core
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
+        }
+
+        protected static void SetColumnDefinitions(ColumnDefinitions columnDefinitions, string values)
+        {
+            var parsedValues = Regex.Split(values, ",");
+
+            columnDefinitions.Clear();
+            
+            foreach (var value in parsedValues)
+            {
+                if (value.Contains('*'))
+                {
+                    int.TryParse(value.AsSpan(0, (value.Length - 1)), out var gridLengthValue);
+                    
+                    columnDefinitions.Add(new ColumnDefinition(new GridLength(gridLengthValue, GridUnitType.Star)));
+                }
+                else
+                {
+                    int.TryParse(value, out var gridLengthValue);
+                    
+                    columnDefinitions.Add(new ColumnDefinition(new GridLength(gridLengthValue)));
+                }
+            }
         }
     }
 }

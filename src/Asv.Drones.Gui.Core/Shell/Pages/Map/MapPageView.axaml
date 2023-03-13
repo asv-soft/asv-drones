@@ -23,8 +23,7 @@
 			Grid.ColumnSpan="5"
 			Grid.Row="0"
 			Grid.RowSpan="4"
-			Items="{Binding Markers}"
-        >
+			Items="{Binding Markers}">
 			<map:MapView.ItemTemplate>
 				<DataTemplate x:DataType="map:MapAnchorViewModel">
 					<map:MapAnchorView
