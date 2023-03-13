@@ -23,7 +23,9 @@ jobs:
           dotnet restore
 
       - name: Build application
-        run: dotnet build -c Release --no-restore
+        run:  |
+          cd src
+          dotnet build -c Release --no-restore
 
   artifacts:
     needs: build
