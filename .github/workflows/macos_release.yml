@@ -31,8 +31,9 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: macos-release
-          path: src/Asv.Drones.Gui/bin/Debug/net6.0/
-          
+          path: src/Asv.Drones.Gui/bin/Debug/net6.0
+          if-no-files-found: error
+
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
