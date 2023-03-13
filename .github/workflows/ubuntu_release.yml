@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ubuntu-release
-          path: src/Asv.Drones.Gui/bin/Debug/net6.0
+          path: net6.0/
           if-no-files-found: error
 
       - name: Download artifacts
