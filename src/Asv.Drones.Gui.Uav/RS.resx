@@ -315,7 +315,7 @@
 
   <data name="BatteryUavRttView_ToolTip" xml:space="preserve">
     <value>Battery level</value>
-
+  </data>
   <data name="UavAnchor_Latitude" xml:space="preserve">
     <value>Latitude: {0}</value>
   </data>

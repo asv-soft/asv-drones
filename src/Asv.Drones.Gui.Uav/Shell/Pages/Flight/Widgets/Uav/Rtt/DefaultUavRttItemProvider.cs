@@ -9,6 +9,7 @@ public class DefaultUavRttItemProvider : IUavRttItemProvider
 {
     public IEnumerable<IUavRttItem> Create(IVehicle vehicle)
     {
+        
         yield return new BatteryUavRttViewModel(vehicle);
     }
 }

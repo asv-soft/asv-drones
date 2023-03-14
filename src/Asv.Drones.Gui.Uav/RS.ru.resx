@@ -315,7 +315,7 @@
 
   <data name="BatteryUavRttView_ToolTip" xml:space="preserve">
     <value>Заряд батареи</value>
-
+  </data>
   <data name="UavAnchor_Latitude" xml:space="preserve">
     <value>Широта: {0}</value>
   </data>
