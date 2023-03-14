@@ -62,4 +62,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <AdditionalFiles Include="Shell\Pages\Map\Flight\Logger\LoggerView.axaml" />
+  </ItemGroup>
+
 </Project>
