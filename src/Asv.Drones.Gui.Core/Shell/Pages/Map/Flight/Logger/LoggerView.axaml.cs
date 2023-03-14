@@ -18,12 +18,4 @@ public partial class LoggerView : ReactiveUserControl<LoggerViewModel>
     {
         AvaloniaXamlLoader.Load(this);
     }
-
-    private void Control_OnSizeChanged(object? sender, SizeChangedEventArgs e)
-    {
-        if (sender is ScrollViewer sv)
-        { 
-            sv.ScrollToEnd();   
-        }
-    }
 }
