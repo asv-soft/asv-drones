@@ -105,18 +105,15 @@ public class BatteryIndicator : TemplatedControl
 
     private static void SetPseudoClass(BatteryIndicator indicator)
     {
-  
         var value = indicator.Value;        
         indicator.PseudoClasses.Set(":unknown", value == null || double.IsFinite(value.Value) == false || value > indicator.MaxValue);
         indicator.PseudoClasses.Set(":critical", value <= indicator.CriticalValue);
         indicator.PseudoClasses.Set(":warning", value > indicator.CriticalValue & value <= indicator.WarningValue);
         indicator.PseudoClasses.Set(":normal", value > indicator.WarningValue & value <= indicator.MaxValue);
-        
     }
     
     private static void UpdateValue(IAvaloniaObject source, bool beforeChanged)
     {
-        
         if (source is not BatteryIndicator indicator) return;
 
         SetPseudoClass(indicator);
