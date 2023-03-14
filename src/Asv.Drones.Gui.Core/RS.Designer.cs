@@ -285,6 +285,96 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to by .
+        /// </summary>
+        public static string LogMessagesPageView_By {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_By", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filtered: {0}.
+        /// </summary>
+        public static string LogMessagesPageView_Filtered {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_Filtered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From {0}.
+        /// </summary>
+        public static string LogMessagesPageView_From {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_From", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string LogMessagesPageView_SearchWatermark {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_SearchWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to to {0}.
+        /// </summary>
+        public static string LogMessagesPageView_To {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total: {0}.
+        /// </summary>
+        public static string LogMessagesPageView_Total {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear all log messages.
+        /// </summary>
+        public static string LogMessagesPageViewModel_ClearAllMessage {
+            get {
+                return ResourceManager.GetString("LogMessagesPageViewModel_ClearAllMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LogMessages.
+        /// </summary>
+        public static string LogMessagesPageViewModel_LogName {
+            get {
+                return ResourceManager.GetString("LogMessagesPageViewModel_LogName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error to refresh items.
+        /// </summary>
+        public static string LogMessagesPageViewModel_RefreshErrorMessage {
+            get {
+                return ResourceManager.GetString("LogMessagesPageViewModel_RefreshErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log messages.
+        /// </summary>
+        public static string LogMessagesShellMenuItem_Name {
+            get {
+                return ResourceManager.GetString("LogMessagesShellMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change current map provider for application.
         /// </summary>
         public static string MapSettingsView_MapProvider_Description {
