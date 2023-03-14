@@ -41,6 +41,7 @@ namespace Asv.Drones.Gui.Uav
         
         private void UpdateDescription()
         {
+            
             // TODO: Localize
             Description = $"Lat: {_loc.LatitudeAndLongitude.FromSIToStringWithUnits(Vehicle.GlobalPosition.Value.Latitude)}\n" +
                           $"Lon: {_loc.LatitudeAndLongitude.FromSIToStringWithUnits(Vehicle.GlobalPosition.Value.Longitude)}\n" +

@@ -312,4 +312,7 @@
   <data name="TakeOffAnchorActionViewModel_LogMessage" xml:space="preserve">
     <value>User send TakeOff at {0} altitude for {1}</value>
   </data>
+  <data name="BatteryUavRttView_ToolTip" xml:space="preserve">
+    <value>Battery level</value>
+  </data>
 </root>

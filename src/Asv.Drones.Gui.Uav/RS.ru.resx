@@ -312,4 +312,7 @@
   <data name="TakeOffAnchorActionViewModel_LogMessage" xml:space="preserve">
     <value>Пользователь отправил команду Взлёт на высоту {0} для {1}</value>
   </data>
+  <data name="BatteryUavRttView_ToolTip" xml:space="preserve">
+    <value>Заряд батареи</value>
+  </data>
 </root>

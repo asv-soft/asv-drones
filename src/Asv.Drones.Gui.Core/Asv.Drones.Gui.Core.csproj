@@ -42,11 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="RS.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>RS.resx</DependentUpon>
-    </Compile>
     <Compile Update="Shell\Pages\Planing\PlaningView.axaml.cs">
       <DependentUpon>PlaningView.axaml</DependentUpon>
     </Compile>

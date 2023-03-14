@@ -60,6 +60,15 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Battery level.
+        /// </summary>
+        public static string BatteryUavRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("BatteryUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The rate at which the HEARTBEAT message must be transmitted to announce the existence of the system on the MAVLink network.
         /// </summary>
         public static string ConnectionsIdentificationView_HeartbeatRate_Description {
