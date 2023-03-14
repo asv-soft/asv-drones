@@ -312,4 +312,16 @@
   <data name="TakeOffAnchorActionViewModel_LogMessage" xml:space="preserve">
     <value>User send TakeOff at {0} altitude for {1}</value>
   </data>
+  <data name="UavAnchor_Latitude" xml:space="preserve">
+    <value>Latitude: {0}</value>
+  </data>
+  <data name="UavAnchor_Longitude" xml:space="preserve">
+    <value>Longitude: {0}</value>
+  </data>
+  <data name="UavAnchor_GNSS_Altitude" xml:space="preserve">
+    <value>GNSS Altitude: {0}</value>
+  </data>
+  <data name="UavAnchor_AGL_Altitude" xml:space="preserve">
+    <value>AGL Altitude: {0}</value>
+  </data>
 </root>

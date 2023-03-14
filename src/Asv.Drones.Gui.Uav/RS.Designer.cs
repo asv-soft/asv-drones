@@ -537,6 +537,42 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AGL Altitude: {0}.
+        /// </summary>
+        public static string UavAnchor_AGL_Altitude {
+            get {
+                return ResourceManager.GetString("UavAnchor_AGL_Altitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GNSS Altitude: {0}.
+        /// </summary>
+        public static string UavAnchor_GNSS_Altitude {
+            get {
+                return ResourceManager.GetString("UavAnchor_GNSS_Altitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude: {0}.
+        /// </summary>
+        public static string UavAnchor_Latitude {
+            get {
+                return ResourceManager.GetString("UavAnchor_Latitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude: {0}.
+        /// </summary>
+        public static string UavAnchor_Longitude {
+            get {
+                return ResourceManager.GetString("UavAnchor_Longitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IP Address.
         /// </summary>
         public static string UdpPortView_LocalIpAddress {
