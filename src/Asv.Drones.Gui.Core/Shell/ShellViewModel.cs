@@ -93,6 +93,7 @@ namespace Asv.Drones.Gui.Core
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .SortBy(_ => _.Order)
                 .Bind(out _headerMenu)
+                .DisposeMany()
                 .Subscribe()
                 .DisposeItWith(Disposable);
 
@@ -128,6 +129,7 @@ namespace Asv.Drones.Gui.Core
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .SortBy(_ => _.Order)
                 .Bind(out _menuItems)
+                .DisposeMany()
                 .Subscribe()
                 .DisposeItWith(Disposable);
             // filter bottom menu items
@@ -137,6 +139,7 @@ namespace Asv.Drones.Gui.Core
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .SortBy(_ => _.Order)
                 .Bind(out _footerMenuItems)
+                .DisposeMany()
                 .Subscribe()
                 .DisposeItWith(Disposable);
 
@@ -149,6 +152,7 @@ namespace Asv.Drones.Gui.Core
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .SortBy(_ => _.Order)
                 .Bind(out _statusItems)
+                .DisposeMany()
                 .Subscribe()
                 .DisposeItWith(Disposable);
 

@@ -41,10 +41,12 @@ namespace Asv.Drones.Gui.Uav
         
         private void UpdateDescription()
         {
+
             Description = string.Format(RS.UavAnchor_Latitude, _loc.LatitudeAndLongitude.FromSIToStringWithUnits(Vehicle.GlobalPosition.Value.Latitude)) + "\n" +
                           string.Format(RS.UavAnchor_Longitude, _loc.LatitudeAndLongitude.FromSIToStringWithUnits(Vehicle.GlobalPosition.Value.Longitude)) + "\n" +
                           string.Format(RS.UavAnchor_GNSS_Altitude, _loc.Altitude.FromSIToStringWithUnits(Vehicle.GlobalPosition.Value.Altitude)) + "\n" +
                           string.Format(RS.UavAnchor_AGL_Altitude, _loc.Altitude.FromSIToStringWithUnits(Vehicle.AltitudeAboveHome.Value));
+
         }
 
         protected override void InternalWhenMapLoaded(IMap map)
