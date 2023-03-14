@@ -33,6 +33,8 @@ namespace Asv.Drones.Gui.Uav
 
         protected override async Task ExecuteImpl(CancellationToken cancel)
         {
+            Map.IsInDialogMode = true;
+            
             var dialog = new ContentDialog()
             {
                 Title = RS.TakeOffAnchorActionViewModel_Title,
@@ -53,6 +55,8 @@ namespace Asv.Drones.Gui.Uav
                 _log.Info(LogName, string.Format(RS.TakeOffAnchorActionViewModel_LogMessage,_loc.Altitude.FromSIToStringWithUnits(altInMeters), Vehicle.Name.Value));
                 await Vehicle.TakeOff(altInMeters, cancel);
             }
+            
+            Map.IsInDialogMode = false;
         }
     }
 }
