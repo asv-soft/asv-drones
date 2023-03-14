@@ -12,7 +12,7 @@
     <Design.DataContext>
         <core:LoggerViewModel />
     </Design.DataContext>
-    <ScrollViewer Margin="10" SizeChanged="Control_OnSizeChanged">
+    <ScrollViewer Margin="10">
             <ItemsControl Items="{Binding Messages}">
                 <ItemsControl.Styles>
                     <Style Selector="Grid#ItemGrid.Info > TextBlock">

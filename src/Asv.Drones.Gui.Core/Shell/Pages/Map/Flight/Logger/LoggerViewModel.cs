@@ -47,20 +47,25 @@ public class LoggerViewModel : FlightWidgetBase
         switch (logMessage.Type)
         {
             case LogMessageType.Info:
-                messages.Add(new FlightLogMessage { IconKind = MaterialIconKind.InfoCircle, Message = logMessage.Message, IsInfo = true });
+                messages.Insert(0, new FlightLogMessage { IconKind = MaterialIconKind.InfoCircle, Message = logMessage.Message, IsInfo = true });
                 break;
             case LogMessageType.Error:
-                messages.Add(new FlightLogMessage { IconKind = MaterialIconKind.Error, Message = logMessage.Message, IsError = true });
+                messages.Insert(0, new FlightLogMessage { IconKind = MaterialIconKind.Error, Message = logMessage.Message, IsError = true });
                 break;
             case LogMessageType.Warning:
-                messages.Add(new FlightLogMessage { IconKind = MaterialIconKind.Warning, Message = logMessage.Message, IsWarning = true });
+                messages.Insert(0, new FlightLogMessage { IconKind = MaterialIconKind.Warning, Message = logMessage.Message, IsWarning = true });
                 break;
             case LogMessageType.Trace:
-                messages.Add(new FlightLogMessage { IconKind = MaterialIconKind.Abacus, Message = logMessage.Message, IsTrace = true });
+                messages.Insert(0, new FlightLogMessage { IconKind = MaterialIconKind.Abacus, Message = logMessage.Message, IsTrace = true });
                 break;
             default:
-                messages.Add(new FlightLogMessage { IconKind = MaterialIconKind.InfoCircle, Message = logMessage.Message, IsInfo = true });
+                messages.Insert(0, new FlightLogMessage { IconKind = MaterialIconKind.InfoCircle, Message = logMessage.Message, IsInfo = true });
                 break;
+        }
+
+        if (messages.Count > 30)
+        {
+            messages.RemoveAt(messages.Count - 1);
         }
     }
 
