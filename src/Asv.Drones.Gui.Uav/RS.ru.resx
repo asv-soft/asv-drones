@@ -312,7 +312,21 @@
   <data name="TakeOffAnchorActionViewModel_LogMessage" xml:space="preserve">
     <value>Пользователь отправил команду Взлёт на высоту {0} для {1}</value>
   </data>
+
   <data name="BatteryUavRttView_ToolTip" xml:space="preserve">
     <value>Заряд батареи</value>
+
+  <data name="UavAnchor_Latitude" xml:space="preserve">
+    <value>Широта: {0}</value>
+  </data>
+  <data name="UavAnchor_Longitude" xml:space="preserve">
+    <value>Долгота: {0}</value>
+  </data>
+  <data name="UavAnchor_GNSS_Altitude" xml:space="preserve">
+    <value>Высота GNSS: {0}</value>
+  </data>
+  <data name="UavAnchor_AGL_Altitude" xml:space="preserve">
+    <value>Высота AGL: {0}</value>
+
   </data>
 </root>
