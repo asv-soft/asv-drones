@@ -29,8 +29,8 @@
             <uav1:AttitudeView DataContext="{Binding Attitude}"/>
             <WrapPanel ItemHeight="30" ItemWidth="60">
                 <StackPanel Orientation="Horizontal" Spacing="5">
-                    <core:BatteryIndicator Width="20" Height="20" MaxValue="1" WarningValue="0.5" CriticalValue="0.2" Value="{Binding BatteryLevel}"/>   
-                    <TextBlock VerticalAlignment="Center" Text="{Binding BatteryLevel}"/>
+                    <core:BatteryIndicator Width="20" Height="20" MaxValue="100" WarningValue="50" CriticalValue="20" Value="{Binding BatteryLevel}"/>   
+                    <TextBlock VerticalAlignment="Center" Text="{Binding BatteryLevel, StringFormat='{}{0}%'}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Spacing="5">
                     <avalonia:MaterialIcon Kind="Clock" Foreground="Green" Width="20" Height="20" />

@@ -26,7 +26,7 @@ namespace Asv.Drones.Gui.Uav
             Vehicle.Name.Subscribe(_ => Title = _).DisposeItWith(Disposable);
             Vehicle.Class.Select(MavlinkHelper.GetIcon).Subscribe(_ => Icon = _).DisposeItWith(Disposable);
             Attitude = new AttitudeViewModel(vehicle, new Uri(Id, "/id"),loc);
-            Vehicle.BatteryCharge.Subscribe(_ => BatteryLevel = _.Value).DisposeItWith(Disposable);
+            Vehicle.BatteryCharge.Subscribe(_ => BatteryLevel = _.Value * 100).DisposeItWith(Disposable);
         }
 
         protected override void InternalAfterMapInit(IMap map)
