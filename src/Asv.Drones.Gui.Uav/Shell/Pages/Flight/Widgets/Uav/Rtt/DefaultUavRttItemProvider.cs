@@ -8,17 +8,18 @@ namespace Asv.Drones.Gui.Uav;
 [PartCreationPolicy(CreationPolicy.NonShared)]
 public class DefaultUavRttItemProvider : IUavRttItemProvider
 {
-    private readonly ILocalizationService _localization;
+    private readonly ILocalizationService _localizationService;
     
     [ImportingConstructor]
-    public DefaultUavRttItemProvider(ILocalizationService localization)
+    public DefaultUavRttItemProvider(ILocalizationService localizationService)
     {
-        _localization = localization;
+        _localizationService = localizationService;
     }
     
     public IEnumerable<IUavRttItem> Create(IVehicle vehicle)
     {
+        yield return new FlightTimeUavRttViewModel(vehicle, _localizationService);
         yield return new BatteryUavRttViewModel(vehicle);
-        yield return new HomeDistanceUavRttViewModel(vehicle, _localization);
+        yield return new HomeDistanceUavRttViewModel(vehicle, _localizationService);
     }
 }

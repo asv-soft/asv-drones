@@ -16,9 +16,10 @@ public class RelativeTime : IReadOnlyMeasureUnit<TimeSpan>
     {
         return value.Ticks switch
         {
-            (< TimeSpan.TicksPerSecond) => $"{value.Milliseconds}",
+            (< TimeSpan.TicksPerSecond) => $"{value.Milliseconds:000}",
             (>= TimeSpan.TicksPerSecond) and (< TimeSpan.TicksPerMinute) => $"{value.Seconds}",
-            (>= TimeSpan.TicksPerMinute) => $"{value.TotalHours}:{value.Minutes}:{value.Seconds}",
+            (>= TimeSpan.TicksPerMinute) and (< TimeSpan.TicksPerHour) => $"{value.Minutes:00}:{value.Seconds:00}",
+            (>= TimeSpan.TicksPerHour) => $"{value.TotalHours:00}:{value.Minutes:00}:{value.Seconds:00}",
         };
     }
 }
