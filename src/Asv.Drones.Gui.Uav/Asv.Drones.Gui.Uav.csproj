@@ -46,6 +46,10 @@
       <DependentUpon>UavWidgetView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Shell\Pages\Flight\Widgets\Uav\Attitude\AttitudeView.axaml.cs">
+      <DependentUpon>AttitudeView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -61,6 +65,7 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Shell\Pages\Connections\Ports\Dialogs\UdpPortView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Flight\Widgets\Logger\LoggerView.axaml" />
   </ItemGroup>
 
 </Project>

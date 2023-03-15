@@ -1,10 +1,12 @@
+using System.Collections.ObjectModel;
+using System.ComponentModel.Composition;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
-using Asv.Mavlink.V2.Common;
 using Avalonia.Controls;
+using DynamicData;
 using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -13,6 +15,13 @@ namespace Asv.Drones.Gui.Uav
 {
     public class FlightUavViewModel:FlightVehicleWidgetBase
     {
+        private ReadOnlyObservableCollection<IUavRttItem> _rttItems;
+        public static Uri GenerateUri(IVehicle vehicle) => FlightVehicleWidgetBase.GenerateUri(vehicle,"uav");
+
+        
+        
+        
+
         public FlightUavViewModel()
         {
             if (Design.IsDesignMode)
@@ -20,16 +29,29 @@ namespace Asv.Drones.Gui.Uav
                 Icon = MaterialIconKind.Navigation;
                 Title = "Hexacopter[45646]";
                 Attitude = new AttitudeViewModel();
+                _rttItems = new ReadOnlyObservableCollection<IUavRttItem>(new ObservableCollection<IUavRttItem>(new[]
+                {
+                    new BatteryUavRttViewModel()
+                }));
             }
         }
-        public FlightUavViewModel(IVehicle vehicle, ILogService log,ILocalizationService loc):base(vehicle,"uav")
+        public FlightUavViewModel(IVehicle vehicle, ILogService log,ILocalizationService loc,
+            IEnumerable<IUavRttItemProvider> rttItems):base(vehicle,GenerateUri(vehicle))
         {
             Vehicle.Name.Subscribe(_ => Title = _).DisposeItWith(Disposable);
             Vehicle.Class.Select(MavlinkHelper.GetIcon).Subscribe(_ => Icon = _).DisposeItWith(Disposable);
             Attitude = new AttitudeViewModel(vehicle, new Uri(Id, "/id"),loc);
-            Vehicle.BatteryCharge.Subscribe(_ => BatteryLevel = _.Value).DisposeItWith(Disposable);
-            Vehicle.GpsInfo.Subscribe(_ => FixType = _.FixType).DisposeItWith(Disposable);
-            Vehicle.GpsInfo.Subscribe(_ => DopStatus = _.PdopStatus).DisposeItWith(Disposable);
+
+            rttItems
+                .SelectMany(_ => _.Create(Vehicle))
+                .OrderBy(_=>_.Order)
+                .AsObservableChangeSet()
+                .AutoRefresh(_=>_.IsVisible)
+                .Filter(_=>_.IsVisible)
+                .Bind(out _rttItems)
+                .DisposeMany()
+                .Subscribe()
+                .DisposeItWith(Disposable);
         }
 
         protected override void InternalAfterMapInit(IMap map)
@@ -41,13 +63,9 @@ namespace Asv.Drones.Gui.Uav
             } ).DisposeItWith(Disposable);
         }
 
-        public AttitudeViewModel Attitude { get; }
+        
         public ICommand LocateVehicleCommand { get; set; }
-        [Reactive] 
-        public double BatteryLevel { get; set; }
-        [Reactive]
-        public GpsFixType FixType { get; set; }
-        [Reactive]
-        public DopStatusEnum DopStatus { get; set; }
+        public AttitudeViewModel Attitude { get; }
+        public ReadOnlyObservableCollection<IUavRttItem> RttItems => _rttItems;
     }
 }

@@ -1,0 +1,18 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:core="clr-namespace:Asv.Drones.Gui.Core;assembly=Asv.Drones.Gui.Core"
+             xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
+             mc:Ignorable="d" d:DesignWidth="100" d:DesignHeight="30"
+             x:CompileBindings="True"
+             x:Class="Asv.Drones.Gui.Uav.BatteryUavRttView"
+             x:DataType="uav:BatteryUavRttViewModel">
+    <Design.DataContext>
+        <uav:BatteryUavRttViewModel/>
+    </Design.DataContext>
+    <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="Battery level">
+        <core:BatteryIndicator Width="20" Height="20" MaxValue="1" WarningValue="0.5" CriticalValue="0.2" Value="{Binding BatteryLevel}"/>   
+        <TextBlock VerticalAlignment="Center" Text="{Binding BatteryLevel,StringFormat={}{0:P0} }"/>
+    </StackPanel>
+</UserControl>

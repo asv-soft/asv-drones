@@ -1,0 +1,65 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:core="clr-namespace:Asv.Drones.Gui.Core;assembly=Asv.Drones.Gui.Core"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
+             x:CompileBindings="True"
+             x:DataType="core:LoggerViewModel"
+             Background="Transparent"
+             x:Class="Asv.Drones.Gui.Core.LoggerView">
+    <Design.DataContext>
+        <core:LoggerViewModel />
+    </Design.DataContext>
+    <ScrollViewer Margin="10">
+            <ItemsControl Items="{Binding Messages}">
+                <ItemsControl.Styles>
+                    <Style Selector="Grid#ItemGrid.Info > TextBlock">
+                        <Setter Property="Foreground" Value="White" />
+                    </Style>
+                    <Style Selector="Grid#ItemGrid.Info > avalonia|MaterialIcon">
+                        <Setter Property="Foreground" Value="White" />
+                    </Style>
+                    
+                    <Style Selector="Grid#ItemGrid.Error > TextBlock">
+                        <Setter Property="Foreground" Value="Red"/>
+                    </Style>
+                    <Style Selector="Grid#ItemGrid.Error > avalonia|MaterialIcon">
+                        <Setter Property="Foreground" Value="Red"/>
+                    </Style>
+                    
+                    <Style Selector="Grid#ItemGrid.Warning > TextBlock">
+                        <Setter Property="Foreground" Value="Orange"/>
+                    </Style>
+                    <Style Selector="Grid#ItemGrid.Warning > avalonia|MaterialIcon">
+                        <Setter Property="Foreground" Value="Orange"/>
+                    </Style>
+                    
+                    <Style Selector="Grid#ItemGrid.Trace > TextBlock">
+                        <Setter Property="Foreground" Value="White" />
+                    </Style>
+                    <Style Selector="Grid#ItemGrid.Trace > avalonia|MaterialIcon">
+                        <Setter Property="Foreground" Value="White" />
+                    </Style>
+                </ItemsControl.Styles>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Name="ItemGrid" 
+                              Classes.Error="{Binding IsError}"
+                              Classes.Info="{Binding IsInfo}"
+                              Classes.Warning="{Binding IsWarning}"
+                              Classes.Trace="{Binding IsTrace}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Icon" />
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Message" />
+                            </Grid.ColumnDefinitions>
+                            
+                            <avalonia:MaterialIcon HorizontalAlignment="Center" Kind="{Binding IconKind}" />
+                            <TextBlock Margin="3 0 0 0" Grid.Column="1" Text="{Binding Message}" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+</UserControl>

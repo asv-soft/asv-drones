@@ -60,6 +60,15 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Battery level.
+        /// </summary>
+        public static string BatteryUavRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("BatteryUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The rate at which the HEARTBEAT message must be transmitted to announce the existence of the system on the MAVLink network.
         /// </summary>
         public static string ConnectionsIdentificationView_HeartbeatRate_Description {
@@ -533,6 +542,42 @@ namespace Asv.Drones.Gui.Uav {
         public static string TcpPortViewModel_ValidTitle {
             get {
                 return ResourceManager.GetString("TcpPortViewModel_ValidTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AGL Altitude: {0}.
+        /// </summary>
+        public static string UavAnchor_AGL_Altitude {
+            get {
+                return ResourceManager.GetString("UavAnchor_AGL_Altitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GNSS Altitude: {0}.
+        /// </summary>
+        public static string UavAnchor_GNSS_Altitude {
+            get {
+                return ResourceManager.GetString("UavAnchor_GNSS_Altitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude: {0}.
+        /// </summary>
+        public static string UavAnchor_Latitude {
+            get {
+                return ResourceManager.GetString("UavAnchor_Latitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude: {0}.
+        /// </summary>
+        public static string UavAnchor_Longitude {
+            get {
+                return ResourceManager.GetString("UavAnchor_Longitude", resourceCulture);
             }
         }
         
