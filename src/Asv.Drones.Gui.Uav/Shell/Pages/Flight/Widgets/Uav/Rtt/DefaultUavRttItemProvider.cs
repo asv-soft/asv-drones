@@ -21,6 +21,7 @@ public class DefaultUavRttItemProvider : IUavRttItemProvider
         yield return new FlightTimeUavRttViewModel(vehicle, _localizationService);
         yield return new BatteryUavRttViewModel(vehicle);
         yield return new HomeDistanceUavRttViewModel(vehicle, _localizationService);
-        yield return new GpsUavRttViewModel(vehicle);
+        yield return new GpsUavRttViewModel(vehicle, GpsInfo.GpsInfo);
+        yield return new GpsUavRttViewModel(vehicle, GpsInfo.Gps2Info);
     }
 }

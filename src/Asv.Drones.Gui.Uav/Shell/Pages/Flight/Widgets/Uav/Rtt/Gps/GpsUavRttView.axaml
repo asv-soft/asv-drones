@@ -11,8 +11,11 @@
     <Design.DataContext>
         <uav:GpsUavRttViewModel />
     </Design.DataContext>
-    <core:GpsStatusIndicator Width="20" 
-                             Height="20"
-                             FixType="{Binding FixType}" 
-                             DopStatus="{Binding DopStatus}" />
+    <StackPanel Spacing="5" Orientation="Horizontal" IsVisible="{Binding IsVisible}">
+        <core:GpsStatusIndicator Width="20"
+                                 Height="20"
+                                 FixType="{Binding FixType}"
+                                 DopStatus="{Binding DopStatus}" />
+        <TextBlock Text="{Binding FixTypeText}" VerticalAlignment="Center" />
+    </StackPanel>
 </UserControl>
