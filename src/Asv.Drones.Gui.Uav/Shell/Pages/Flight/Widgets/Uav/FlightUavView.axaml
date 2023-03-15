@@ -31,10 +31,7 @@
                 <StackPanel Orientation="Horizontal" Spacing="5">
                     <core:BatteryIndicator Width="20" Height="20" MaxValue="1" WarningValue="0.5" CriticalValue="0.2" Value="{Binding BatteryLevel}"/>   
                     <TextBlock VerticalAlignment="Center" Text="{Binding BatteryLevel}"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Spacing="5">
-                    <avalonia:MaterialIcon Kind="Clock" Foreground="Green" Width="20" Height="20" />
-                    <TextBlock VerticalAlignment="Center" Text="76%"/>
+                    <core:GpsStatusIndicator Width="20" Height="20" FixType="{Binding FixType}" DopStatus="{Binding DopStatus}" />
                 </StackPanel>
             </WrapPanel>
         </StackPanel>    
