@@ -6,6 +6,7 @@ using Asv.Drones.Gui.Core;
 using Asv.Drones.Uav;
 using Asv.Mavlink;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using ReactiveUI;
@@ -33,6 +34,10 @@ namespace Asv.Drones.Gui.Uav
 
         protected override async Task ExecuteImpl(CancellationToken cancel)
         {
+            var selectedItem = Map.SelectedItem;
+            
+            Map.SelectedItem = null;
+            
             var dialog = new ContentDialog()
             {
                 Title = RS.TakeOffAnchorActionViewModel_Title,
@@ -53,6 +58,8 @@ namespace Asv.Drones.Gui.Uav
                 _log.Info(LogName, string.Format(RS.TakeOffAnchorActionViewModel_LogMessage,_loc.Altitude.FromSIToStringWithUnits(altInMeters), Vehicle.Name.Value));
                 await Vehicle.TakeOff(altInMeters, cancel);
             }
+
+            Map.SelectedItem = selectedItem;
         }
     }
 }
