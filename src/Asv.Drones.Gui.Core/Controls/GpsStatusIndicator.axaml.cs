@@ -3,53 +3,13 @@ using Asv.Mavlink.V2.Common;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
-using Avalonia.Controls.Primitives;
-using Avalonia.Media;
 using Material.Icons;
 
 namespace Asv.Drones.Gui.Core;
 
 [PseudoClasses(":critical", ":warning", ":normal", ":unknown")]
-public class GpsStatusIndicator : TemplatedControl
+public class GpsStatusIndicator : IndicatorBase
 {
-    #region Brushes
-   
-    public static readonly StyledProperty<Brush> UnknownBrushProperty = AvaloniaProperty.Register<GpsStatusIndicator, Brush>(
-        "UnknownBrush");
-
-    public Brush UnknownBrush
-    {
-        get => GetValue(UnknownBrushProperty);
-        set => SetValue(UnknownBrushProperty, value);
-    }
-    
-    public static readonly StyledProperty<Brush> CriticalBrushProperty = AvaloniaProperty.Register<GpsStatusIndicator, Brush>(
-        "CriticalBrush");
-
-    public Brush CriticalBrush
-    {
-        get => GetValue(CriticalBrushProperty);
-        set => SetValue(CriticalBrushProperty, value);
-    }
-    public static readonly StyledProperty<Brush> WarningBrushProperty = AvaloniaProperty.Register<GpsStatusIndicator, Brush>(
-        "WarningBrush");
-
-    public Brush WarningBrush
-    {
-        get => GetValue(WarningBrushProperty);
-        set => SetValue(WarningBrushProperty, value);
-    }
-    public static readonly StyledProperty<Brush> NormalBrushProperty = AvaloniaProperty.Register<GpsStatusIndicator, Brush>(
-        "NormalBrush");
-
-    public Brush NormalBrush
-    {
-        get => GetValue(NormalBrushProperty);
-        set => SetValue(NormalBrushProperty, value);
-    }
-    
-    #endregion
-    
     #region Styled Props
 
     public static readonly StyledProperty<GpsFixType> FixTypeProperty =
@@ -81,19 +41,10 @@ public class GpsStatusIndicator : TemplatedControl
         get => GetValue(DopStatusProperty);
         set => SetValue(DopStatusProperty, value);
     }
-    
-    public static readonly StyledProperty<MaterialIconKind> IconKindProperty = AvaloniaProperty.Register<GpsStatusIndicator, MaterialIconKind>(
-        nameof(IconKind), MaterialIconKind.CrosshairsQuestion);
-
-    public MaterialIconKind IconKind
-    {
-        get => GetValue(IconKindProperty);
-        set => SetValue(IconKindProperty, value);
-    }
 
     #endregion
 
-    private static void SetPseudoClass(GpsStatusIndicator indicator)
+    public static void SetPseudoClass(GpsStatusIndicator indicator)
     {
         var dopStatus = indicator.DopStatus;
 
@@ -101,6 +52,9 @@ public class GpsStatusIndicator : TemplatedControl
         indicator.PseudoClasses.Set(":critical", dopStatus is DopStatusEnum.Fair or DopStatusEnum.Poor);
         indicator.PseudoClasses.Set(":warning", dopStatus == DopStatusEnum.Moderate);
         indicator.PseudoClasses.Set(":normal", dopStatus is DopStatusEnum.Ideal or DopStatusEnum.Excellent or DopStatusEnum.Good);
+        
+        indicator.IconKind = GetIcon(indicator.FixType);
+        indicator.ToolTipText = indicator.FixType.GetShortDisplayName();
     }
 
     private static void UpdateValue(IAvaloniaObject source, bool beforeChanged)
@@ -108,9 +62,6 @@ public class GpsStatusIndicator : TemplatedControl
         if (source is not GpsStatusIndicator indicator) return;
         
         SetPseudoClass(indicator);
-
-        indicator.IconKind = GetIcon(indicator.FixType);
-        indicator.ToolTipText = indicator.FixType.GetShortDisplayName();
     }
 
     private static MaterialIconKind GetIcon(GpsFixType fixType)
