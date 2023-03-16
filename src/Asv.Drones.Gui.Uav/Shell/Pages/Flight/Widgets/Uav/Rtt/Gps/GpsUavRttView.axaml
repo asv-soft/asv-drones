@@ -11,7 +11,7 @@
     <Design.DataContext>
         <uav:GpsUavRttViewModel />
     </Design.DataContext>
-    <StackPanel Spacing="5" Orientation="Horizontal" IsVisible="{Binding IsVisible}">
+    <StackPanel Spacing="5" Orientation="Horizontal" IsVisible="{Binding IsVisible}" ToolTip.Tip="{Binding ToolTipText}">
         <core:GpsStatusIndicator Width="20"
                                  Height="20"
                                  FixType="{Binding FixType}"
