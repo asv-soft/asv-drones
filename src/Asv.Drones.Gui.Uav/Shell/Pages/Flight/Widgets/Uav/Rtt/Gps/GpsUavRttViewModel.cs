@@ -24,7 +24,7 @@ public class GpsUavRttViewModel : UavRttItem
             gpsInfo.Subscribe(_ => FixType = _.FixType).DisposeItWith(Disposable);
             gpsInfo.Subscribe(_ => DopStatus = _.PdopStatus).DisposeItWith(Disposable);
             gpsInfo.Subscribe(_ => FixTypeText = SetFixTypeText(_.FixType)).DisposeItWith(Disposable);
-            ToolTipText = gpsInfo.Value.FixType.GetShortDisplayName();
+            ToolTipText = GpsInfoHelper.GetDescription(gpsInfo.Value.PdopStatus);
         }
     }
 
