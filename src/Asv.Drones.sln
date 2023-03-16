@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Asv.Drones.Gui.Map", "Asv.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Asv.Drones.Gui.Uav", "Asv.Drones.Gui.Uav\Asv.Drones.Gui.Uav.csproj", "{4522555F-5114-4F75-B5F9-253595518396}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asv.Drones.Gui.Gbs", "Asv.Drones.Gui.Gbs\Asv.Drones.Gui.Gbs.csproj", "{7348E48B-AFF3-44D4-9446-7C774A867C8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{4522555F-5114-4F75-B5F9-253595518396}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4522555F-5114-4F75-B5F9-253595518396}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4522555F-5114-4F75-B5F9-253595518396}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7348E48B-AFF3-44D4-9446-7C774A867C8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7348E48B-AFF3-44D4-9446-7C774A867C8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7348E48B-AFF3-44D4-9446-7C774A867C8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7348E48B-AFF3-44D4-9446-7C774A867C8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
