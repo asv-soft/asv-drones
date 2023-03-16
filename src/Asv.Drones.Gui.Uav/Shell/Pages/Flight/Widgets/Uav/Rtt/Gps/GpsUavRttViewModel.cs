@@ -5,12 +5,6 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Uav;
 
-public enum GpsInfo
-{
-    GpsInfo,
-    Gps2Info
-}
-
 public class GpsUavRttViewModel : UavRttItem
 {
     public GpsUavRttViewModel()
@@ -19,34 +13,18 @@ public class GpsUavRttViewModel : UavRttItem
         DopStatus = DopStatusEnum.Unknown;
     }
 
-    public GpsUavRttViewModel(IVehicle vehicle, GpsInfo gpsInfo) : base(vehicle, GenerateRtt(vehicle, "gps"))
+    public GpsUavRttViewModel(IVehicle vehicle, IRxValue<GpsInfo> gpsInfo) : base(vehicle, GenerateRtt(vehicle, "gps"))
     {
-        switch (gpsInfo)
+        if (gpsInfo.Value == null || gpsInfo.Value.FixType == GpsFixType.GpsFixTypeNoGps)
         {
-            case GpsInfo.GpsInfo:
-                if (Vehicle.GpsInfo.Value == null || Vehicle.GpsInfo.Value.FixType == GpsFixType.GpsFixTypeNoGps)
-                {
-                    IsVisible = false;
-                    break;
-                }
-                
-                Vehicle.GpsInfo.Subscribe(_ => FixType = _.FixType).DisposeItWith(Disposable);
-                Vehicle.GpsInfo.Subscribe(_ => DopStatus = _.PdopStatus).DisposeItWith(Disposable);
-                Vehicle.GpsInfo.Subscribe(_ => FixTypeText = SetFixTypeText(_.FixType)).DisposeItWith(Disposable);
-                break;
-            case GpsInfo.Gps2Info:
-                if (Vehicle.Gps2Info.Value == null || Vehicle.Gps2Info.Value.FixType == GpsFixType.GpsFixTypeNoGps)
-                {
-                    IsVisible = false;
-                    break;
-                }
-
-                Vehicle.Gps2Info.Subscribe(_ => FixType = _.FixType).DisposeItWith(Disposable);
-                Vehicle.Gps2Info.Subscribe(_ => DopStatus = _.PdopStatus).DisposeItWith(Disposable);
-                Vehicle.Gps2Info.Subscribe(_ => FixTypeText = SetFixTypeText(_.FixType)).DisposeItWith(Disposable);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(gpsInfo), gpsInfo, null);
+            IsVisible = false;
+        }
+        else
+        {
+            gpsInfo.Subscribe(_ => FixType = _.FixType).DisposeItWith(Disposable);
+            gpsInfo.Subscribe(_ => DopStatus = _.PdopStatus).DisposeItWith(Disposable);
+            gpsInfo.Subscribe(_ => FixTypeText = SetFixTypeText(_.FixType)).DisposeItWith(Disposable);
+            ToolTipText = GpsInfoHelper.GetDescription(gpsInfo.Value.PdopStatus);
         }
     }
 
@@ -72,4 +50,6 @@ public class GpsUavRttViewModel : UavRttItem
     public DopStatusEnum DopStatus { get; set; }
     [Reactive]
     public string FixTypeText { get; set; }
+    [Reactive]
+    public string ToolTipText { get; set; }
 }

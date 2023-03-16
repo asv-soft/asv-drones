@@ -19,8 +19,7 @@
                                        Foreground="{TemplateBinding Foreground}"
                                        Width="{TemplateBinding Width}"
                                        Height="{TemplateBinding Height}"
-                                       Kind="{TemplateBinding IconKind}"
-                                       ToolTip.Tip="{TemplateBinding ToolTipText}" />
+                                       Kind="{TemplateBinding IconKind}" />
             </ControlTemplate>
         </Setter>
     </Style>
