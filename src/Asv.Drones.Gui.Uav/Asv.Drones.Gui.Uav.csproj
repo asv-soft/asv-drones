@@ -53,6 +53,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Services" />
     <Folder Include="Shell\Menu\" />
   </ItemGroup>
 

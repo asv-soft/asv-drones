@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Asv.Drones.Gui.Core\Asv.Drones.Gui.Core.csproj" />
+    <ProjectReference Include="..\Asv.Drones.Gui.Gbs\Asv.Drones.Gui.Gbs.csproj" />
     <ProjectReference Include="..\Asv.Drones.Gui.Uav\Asv.Drones.Gui.Uav.csproj" />
   </ItemGroup>
   <ItemGroup>
