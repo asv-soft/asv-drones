@@ -9,6 +9,6 @@ public class Voltage : IReadOnlyMeasureUnit<double>
 
     public string ConvertToString(double value)
     {
-        return $"{value:F2}";
+        return $"{value:F1}";
     }
 }
