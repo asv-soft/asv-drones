@@ -49,7 +49,7 @@ public class GpsUavRttViewModel : UavRttItem
     [Reactive]
     public DopStatusEnum DopStatus { get; set; }
     [Reactive]
-    public string FixTypeText { get; set; }
+    public string FixTypeText { get; set; } = RS.UavRttItem_ValueNotAvailable;
     [Reactive]
     public string ToolTipText { get; set; }
 }
