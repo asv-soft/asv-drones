@@ -67,6 +67,15 @@
   <ItemGroup>
     <UpToDateCheckInput Remove="Shell\Pages\Connections\Ports\Dialogs\UdpPortView.axaml" />
     <UpToDateCheckInput Remove="Shell\Pages\Flight\Widgets\Logger\LoggerView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\ConnectionsView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\DeviceBrowser\DeviceBrowserView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\DeviceBrowser\MavlinkDeviceView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\Identification\ConnectionsIdentificationView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\Ports\ConnectionsPortView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\Ports\Dialogs\SerialPortView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\Ports\Dialogs\TcpPortView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\Ports\Dialogs\UdpPortView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\Ports\PortView.axaml" />
   </ItemGroup>
 
 </Project>

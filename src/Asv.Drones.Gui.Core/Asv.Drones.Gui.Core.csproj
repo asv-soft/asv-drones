@@ -60,6 +60,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AdditionalFiles Include="Shell\Pages\Connections\ConnectionsView.axaml" />
+    <AdditionalFiles Include="Shell\Pages\Connections\DeviceBrowser\DeviceBrowserView.axaml" />
+    <AdditionalFiles Include="Shell\Pages\Connections\DeviceBrowser\MavlinkDeviceView.axaml" />
+    <AdditionalFiles Include="Shell\Pages\Connections\Identification\ConnectionsIdentificationView.axaml" />
+    <AdditionalFiles Include="Shell\Pages\Connections\Ports\ConnectionsPortView.axaml" />
+    <AdditionalFiles Include="Shell\Pages\Connections\Ports\Dialogs\SerialPortView.axaml" />
+    <AdditionalFiles Include="Shell\Pages\Connections\Ports\Dialogs\TcpPortView.axaml" />
+    <AdditionalFiles Include="Shell\Pages\Connections\Ports\Dialogs\UdpPortView.axaml" />
+    <AdditionalFiles Include="Shell\Pages\Connections\Ports\PortView.axaml" />
     <AdditionalFiles Include="Shell\Pages\Map\Flight\Logger\LoggerView.axaml" />
   </ItemGroup>
 

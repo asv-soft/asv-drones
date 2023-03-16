@@ -344,4 +344,173 @@
   <data name="LogMessagesPageViewModel_ClearAllMessage" xml:space="preserve">
     <value>Clear all log messages</value>
   </data>
+  <data name="SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name" xml:space="preserve">
+    <value>You must specify a valid name</value>
+  </data>
+  <data name="SerialPortViewModel_SerialPortViewModel_ValidSerialPort" xml:space="preserve">
+    <value>You must specify a valid serial port name</value>
+  </data>
+  <data name="SerialPortViewModel_SerialPortViewModel_BaudRateValid" xml:space="preserve">
+    <value>Baud rate must be value from {0} to {1}</value>
+  </data>
+  <data name="SerialPortViewModel_SerialPortViewModel_NewSerial" xml:space="preserve">
+    <value>New serial {0}</value>
+  </data>
+  <data name="SerialPortView_Title" xml:space="preserve">
+    <value>Port title</value>
+  </data>
+  <data name="SerialPortView_PortName" xml:space="preserve">
+    <value>Port name</value>
+  </data>
+  <data name="SerialPortView_BaudRate" xml:space="preserve">
+    <value>Baud rate</value>
+  </data>
+  <data name="ConnectionsShellMenuItem_Name" xml:space="preserve">
+    <value>Connections</value>
+  </data>
+  <data name="ConnectionsViewModel_AddDialogPort_Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ConnectionsViewModel_AddDialogPort_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ConnectionsViewModel_AddSerialPortDialog_Title" xml:space="preserve">
+    <value>Add new Mavlink serial port</value>
+  </data>
+  <data name="ConnectionsViewModel_AddTcpPortDialog_Title" xml:space="preserve">
+    <value>Add new Mavlink TCP port</value>
+  </data>
+  <data name="ConnectionsViewModel_AddUdpPortDialog_Title" xml:space="preserve">
+    <value>Add new Mavlink UDP port</value>
+  </data>
+  <data name="PortView_ToggleButton_Enabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="PortView_ToggleButton_Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="ConnectionsPortsView_AddSerialCommand_Title" xml:space="preserve">
+    <value>Add Serial</value>
+  </data>
+  <data name="ConnectionsPortsView_AddTcpCommand_Title" xml:space="preserve">
+    <value>Add TCP</value>
+  </data>
+  <data name="ConnectionsPortsView_AddUdpCommand_Title" xml:space="preserve">
+    <value>Add UDP</value>
+  </data>
+  <data name="ConnectionsPortsView_Header_Title" xml:space="preserve">
+    <value>Connections ports</value>
+  </data>
+  <data name="ConnectionsView_Header_Description" xml:space="preserve">
+    <value>This page allows you to configure the basic settings on the Mavlink network</value>
+  </data>
+  <data name="ConnectionsView_Header_Title" xml:space="preserve">
+    <value>Mavlink network</value>
+  </data>
+  <data name="ConnectionsPortsView_Header_Description" xml:space="preserve">
+    <value>Point of entry that allows it to communicate with other devices in Mavlink network.</value>
+  </data>
+  <data name="DeviceBrowserView_Description" xml:space="preserve">
+    <value>In this section you can see all found devices on the network</value>
+  </data>
+  <data name="DeviceBrowserView_Header" xml:space="preserve">
+    <value>Device list</value>
+  </data>
+  <data name="ConnectionsIdentificationView_HeartbeatRate_Description" xml:space="preserve">
+    <value>The rate at which the HEARTBEAT message must be transmitted to announce the existence of the system on the MAVLink network</value>
+  </data>
+  <data name="ConnectionsIdentificationView_HeartbeatRate_Header" xml:space="preserve">
+    <value>Heartbeat rate</value>
+  </data>
+  <data name="ConnectionsIdentificationView_HeartbeatTimeout_Description" xml:space="preserve">
+    <value>After that timeout of Heartbeat packet deviceService will be removed from deviceService list</value>
+  </data>
+  <data name="ConnectionsIdentificationView_HeartbeatTimeout_Header" xml:space="preserve">
+    <value>Heartbeat timeout</value>
+  </data>
+  <data name="ConnectionsIdentificationView_SystemComponentId_Description" xml:space="preserve">
+    <value>Each system has a network-unique system id, and each component has a system-unique component id that can be used for addressing/routing</value>
+  </data>
+  <data name="ConnectionsIdentificationView_SystemComponentId_Header" xml:space="preserve">
+    <value>System \ Component ID</value>
+  </data>
+  <data name="MavlinkDeviceView_Mode_Name" xml:space="preserve">
+    <value>Custom mode</value>
+  </data>
+  <data name="MavlinkDeviceView_Rate_Name" xml:space="preserve">
+    <value>Heartbeat rate</value>
+  </data>
+  <data name="MavlinkDeviceView_Status_Name" xml:space="preserve">
+    <value>System status</value>
+  </data>
+  <data name="TcpPortView_TcpIpAddress" xml:space="preserve">
+    <value>IP address</value>
+  </data>
+  <data name="TcpPortView_PortTitle" xml:space="preserve">
+    <value>Port title</value>
+  </data>
+  <data name="TcpPortView_TcpIpPort" xml:space="preserve">
+    <value>Port number</value>
+  </data>
+  <data name="UdpPortView_LocalIpAddress" xml:space="preserve">
+    <value>IP Address</value>
+  </data>
+  <data name="UdpPortView_LocalPortName" xml:space="preserve">
+    <value>Port Number</value>
+  </data>
+  <data name="UdpPortView_PortTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="UdpPortView_RemoteIpAddress" xml:space="preserve">
+    <value>Remote IP Address</value>
+  </data>
+  <data name="UdpPortView_RemotePortName" xml:space="preserve">
+    <value>Remote port number</value>
+  </data>
+  <data name="UdpPortView_ToggleName" xml:space="preserve">
+    <value>Specify remote host</value>
+  </data>
+  <data name="ConnectionsIdentificationViewModel_DeviceTimeout" xml:space="preserve">
+    <value>Timeout must be from {0} to {1}</value>
+  </data>
+  <data name="ConnectionsIdentificationViewModel_ToString" xml:space="preserve">
+    <value>Hz</value>
+  </data>
+  <data name="PortViewModel_SkippedUnitTest" xml:space="preserve">
+    <value>error</value>
+  </data>
+ 
+  <data name="TcpPortViewModel_Title" xml:space="preserve">
+    <value>New TCP</value>
+  </data>
+  <data name="TcpPortViewModel_ValidTitle" xml:space="preserve">
+    <value>You must specify a valid name</value>
+  </data>
+  <data name="TcpPortViewModel_ValidPort" xml:space="preserve">
+    <value>Port number must be value from 1 to 65535</value>
+  </data>
+  <data name="TcpPortViewModel_ValidIpAddress" xml:space="preserve">
+    <value>You must insert a valid ip address</value>
+  </data>
+  <data name="TcpPortViewModel_LogService_Error" xml:space="preserve">
+    <value>Error to create port</value>
+  </data>
+  <data name="UdpPortViewModel_ValidTitle" xml:space="preserve">
+    <value>You must specify a valid name</value>
+  </data>
+  <data name="UdpPortViewModel_ValidLocalIpAddress" xml:space="preserve">
+    <value>You must enter a valid IP address</value>
+  </data>
+  <data name="UdpPortViewModel_ValidLocalPort" xml:space="preserve">
+    <value>Port number must be a value between 1 and 65535</value>
+  </data>
+  <data name="UdpPortViewModel_ValidRemotePort" xml:space="preserve">
+    <value>Port number must be a value between 1 and 65535</value>
+  </data>
+  <data name="UdpPortViewModel_ValidRemoteIpAddress" xml:space="preserve">
+    <value>You must enter a valid IP address</value>
+  </data>
+  <data name="UdpPortViewModel_Title" xml:space="preserve">
+    <value>New UDP</value>
+  </data>
 </root>

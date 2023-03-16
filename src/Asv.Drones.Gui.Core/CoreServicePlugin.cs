@@ -1,6 +1,7 @@
 ﻿using Asv.Cfg;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using Asv.Drones.Gui.Uav;
 
 namespace Asv.Drones.Gui.Core
 {
@@ -28,7 +29,8 @@ namespace Asv.Drones.Gui.Core
             var svc3 = _container.GetExport<IThemeService>();
             var svc4 = _container.GetExport<INavigationService>();
             var svc5 = _container.GetExport<ILocalizationService>();
-            var svc6 = _container.GetExports<IMapService>();
+            var svc6 = _container.GetExport<IMapService>();
+            var svc7 = _container.GetExport<IMavlinkDevicesService>();
         }
 
         public void OnFrameworkInitializationCompleted()
