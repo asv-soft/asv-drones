@@ -513,4 +513,7 @@
   <data name="UdpPortViewModel_Title" xml:space="preserve">
     <value>New UDP</value>
   </data>
+  <data name="PacketViewerShellMenuItem_Name" xml:space="preserve">
+    <value>Packet Viewer</value>
+  </data>
 </root>

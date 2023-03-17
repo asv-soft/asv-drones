@@ -600,4 +600,7 @@
 	<data name="UdpPortViewModel_Title" xml:space="preserve">
     <value>Новый UDP</value>
   </data>
+  <data name="PacketViewerShellMenuItem_Name" xml:space="preserve">
+	  <value>Просмотр пакетов</value>
+  </data>
 </root>
