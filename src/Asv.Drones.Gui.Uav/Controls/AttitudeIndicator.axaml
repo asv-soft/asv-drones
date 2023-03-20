@@ -10,7 +10,7 @@
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="Template">
             <ControlTemplate>
-                <Viewbox>
+                <Viewbox >
                     <Canvas x:Name="Canvas"
                              
                             Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InternalWidth}"

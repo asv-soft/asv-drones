@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
+             xmlns:core="clr-namespace:Asv.Drones.Gui.Core;assembly=Asv.Drones.Gui.Core"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="100"
+             x:Class="Asv.Drones.Gui.Uav.MissionStatusView">
+    <Border Name="ClipMissionStatus" 
+            CornerRadius="{DynamicResource ControlCornerRadius}" 
+            ClipToBounds="True">
+        <uav:MissionStatusIndicator CurrentDistance="1110"
+                                    MaxDistance="1400"
+                                    Items="{Binding RoundItems}"
+                                    
+                                    />
+    </Border>
+</UserControl>
