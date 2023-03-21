@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:core="clr-namespace:Asv.Drones.Gui.Core"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Asv.Drones.Gui.Core.ParametersEditorPageView"
+             x:CompileBindings ="True"
+             x:DataType="core:ParametersEditorPageViewModel">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="175" Width="*"/>   
+            <ColumnDefinition Width="5"/>   
+            <ColumnDefinition MinWidth="500" Width="2.5*"/>   
+        </Grid.ColumnDefinitions>
+        <DockPanel Margin="5" Grid.Column="0" LastChildFill="True">
+            <DockPanel DockPanel.Dock="Top" LastChildFill="True">
+                <ToggleButton Margin="4 0 0 0" DockPanel.Dock="Right" Width="30" Height="30">
+                    <avalonia:MaterialIcon Kind="Star"/>
+                </ToggleButton>
+                <ToggleButton Margin="4 0 0 0" DockPanel.Dock="Right" Width="30" Height="30">
+                    <avalonia:MaterialIcon Kind="Folder"/>
+                </ToggleButton>
+                <TextBox Text="{Binding Search}" Margin="4 0 0 0" Watermark="Search">
+                    <TextBox.InnerRightContent>
+                        <Button Command="{Binding Clear}" Background="Transparent" BorderThickness="0" Width="30" Height="30">
+                            <avalonia:MaterialIcon Kind="Close"/>
+                        </Button>
+                    </TextBox.InnerRightContent>
+                </TextBox>
+            </DockPanel>
+            <ScrollViewer>
+                <TreeView/>
+            </ScrollViewer>
+        </DockPanel>
+        
+        <GridSplitter Grid.Column="1"/>
+        <ItemsControl Grid.Column="2">
+        </ItemsControl>
+    </Grid>
+</UserControl>
