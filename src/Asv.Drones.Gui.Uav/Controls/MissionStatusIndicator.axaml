@@ -3,18 +3,18 @@
         xmlns:controls="using:Asv.Drones.Gui.Uav"
         xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia">
     <Design.PreviewWith>
-        <controls:MissionStatusIndicator Width="1000" Height="200" CurrentDistance="130" MaxDistance="1420"/>
+        <controls:MissionStatusIndicator Width="500" Height="100" CurrentDistance="2825"/>
     </Design.PreviewWith>
 
     <Style Selector="controls|MissionStatusIndicator">
         <Setter Property="Template">
             <ControlTemplate>
                 <Viewbox Stretch="Fill">
-                    <Canvas Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InternalWidth}" 
-                            Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InternalHeight}">
+                    <Canvas Width="{Binding InternalWidth, RelativeSource={RelativeSource TemplatedParent}}" 
+                            Height="{Binding InternalHeight, RelativeSource={RelativeSource TemplatedParent}}">
 
                         <!-- Arc -->
-                        <Path Margin="0 120" StrokeThickness="5">
+                        <Path Margin="0 120 0 0" StrokeThickness="5">
                             <Path.Stroke>
                                 <LinearGradientBrush EndPoint="500,0" StartPoint="501, 0">
                                     <GradientStop Color="Gray"/>
@@ -33,10 +33,10 @@
                         </Path>
                         
                         <!-- Round Points -->
-                        <ItemsControl Name="RoundPoints" Margin="0 72"
-                                      Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InternalWidth}" 
-                                      Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InternalRoundHeight}"
-                                      Items="{Binding RelativeSource={RelativeSource TemplatedParent}, Path= Items}">
+                        <ItemsControl Name="RoundPoints" Margin="0 72 0 0"
+                                      Width="{Binding InternalWidth, RelativeSource={RelativeSource TemplatedParent}}" 
+                                      Height="{Binding InternalRoundHeight, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Items="{Binding WayPoints, RelativeSource={RelativeSource TemplatedParent}}">
                             <ItemsControl.RenderTransform>
                                 <TransformGroup>
                                     <RotateTransform Angle="{Binding RelativeSource={RelativeSource TemplatedParent}, Path= CurrentAngle}"/>
@@ -55,12 +55,14 @@
                                                 <RotateTransform Angle="{CompiledBinding Angle}"/>
                                             </TransformGroup>
                                         </StackPanel.RenderTransform>
-                                        <TextBlock Margin="0 5" Text="{CompiledBinding Title}" TextAlignment="Center" Foreground="#e0e0e0" FontSize="20"/>
+                                        <TextBlock Margin="0 5" Text="{CompiledBinding Title}" 
+                                                   TextAlignment="Center" Foreground="#e0e0e0" FontSize="20"/>
                                         <Grid>
                                             <Ellipse Fill="Black" Stroke="#e0e0e0" StrokeThickness="2" Width="20" Height="20"/>
                                             <Ellipse IsVisible="{CompiledBinding Passed}" Fill="White" Width="10" Height="10"/>
                                         </Grid>
-                                        <TextBlock Text="{CompiledBinding Altitude, StringFormat='Alt: {0}'}" TextAlignment="Center" Foreground="#e0e0e0" FontSize="20"/>
+                                        <TextBlock Text="{CompiledBinding Altitude, StringFormat='Alt: {0}'}" 
+                                                   TextAlignment="Center" Foreground="#e0e0e0" FontSize="20"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -89,27 +91,25 @@
                                    TextAlignment="End"/>
                         
                         <!-- Current & Next Way Points -->
-                        <Grid Canvas.Top="10"
-                              HorizontalAlignment="Center"
-                              Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InternalWidth}">
-                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Spacing="8">
+                        <Grid Canvas.Top="50" Canvas.Left="20">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
                                 <StackPanel Orientation="Horizontal" 
                                             Spacing="5"
-                                            IsVisible="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CurrentWayPoint, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                            IsVisible="{Binding CurrentWayPointTitle, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
                                     <Grid>
                                         <Ellipse Fill="Black" Stroke="#e0e0e0" StrokeThickness="2" Width="20" Height="20"/>
-                                        <Ellipse Fill="White" Width="12" Height="12"/>
+                                        <Ellipse Fill="White" Width="10" Height="10"/>
                                     </Grid>
-                                    <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CurrentWayPoint}" FontSize="25"/>
-                                    <avalonia:MaterialIcon Margin="5 0 0 0" Kind="ArrowRightThick" Width="20" Height="20"/>    
+                                    <TextBlock Text="{Binding CurrentWayPointTitle, RelativeSource={RelativeSource TemplatedParent}}" FontSize="25"/>
+                                    <avalonia:MaterialIcon Margin="5 0 0 0" Kind="ArrowRightThick"/>    
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal"
                                             Spacing="5"
-                                            IsVisible="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NextWayPoint, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                            IsVisible="{Binding NextWayPointTitle, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
                                     <Grid>
                                         <Ellipse Fill="Black" Stroke="#e0e0e0" StrokeThickness="2" Width="20" Height="20"/>
                                     </Grid>
-                                    <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NextWayPoint}" FontSize="25"/>    
+                                    <TextBlock Text="{Binding NextWayPointTitle, RelativeSource={RelativeSource TemplatedParent}}" FontSize="25"/>    
                                 </StackPanel>
                             </StackPanel>
                         </Grid>

@@ -3,16 +3,31 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
-             xmlns:core="clr-namespace:Asv.Drones.Gui.Core;assembly=Asv.Drones.Gui.Core"
-             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="100"
-             x:Class="Asv.Drones.Gui.Uav.MissionStatusView">
-    <Border Name="ClipMissionStatus" 
-            CornerRadius="{DynamicResource ControlCornerRadius}" 
-            ClipToBounds="True">
-        <uav:MissionStatusIndicator CurrentDistance="1110"
-                                    MaxDistance="1400"
-                                    Items="{Binding RoundItems}"
-                                    
-                                    />
-    </Border>
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="380" d:DesignHeight="60"
+             x:Class="Asv.Drones.Gui.Uav.Uav.MissionStatusView"
+             x:CompileBindings="True"
+             x:DataType="uav:MissionStatusViewModel">
+    <DockPanel LastChildFill="True">
+        <Grid DockPanel.Dock="Right">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <ToggleButton HorizontalAlignment="Stretch" Grid.Row="0" IsChecked="{Binding EnablePolygons}">
+                <avalonia:MaterialIcon Kind="LayersClear"/>
+            </ToggleButton>
+            <ToggleButton HorizontalAlignment="Stretch" Grid.Row="1" IsChecked="{Binding EnablePolygons}">
+                <avalonia:MaterialIcon Kind="VectorPolygon"/>
+            </ToggleButton>
+            <ToggleButton HorizontalAlignment="Stretch" Grid.Row="2" IsChecked="{Binding EnablePolygonsAndAnchors}">
+                <StackPanel Orientation="Horizontal">
+                    <avalonia:MaterialIcon Kind="VectorPolygon"/>
+                    <avalonia:MaterialIcon Kind="Anchor"/>
+                </StackPanel>
+            </ToggleButton>
+        </Grid>
+        <uav:MissionStatusIndicator WayPoints="{Binding WayPoints}" CurrentDistance="1"/>
+    </DockPanel>
 </UserControl>

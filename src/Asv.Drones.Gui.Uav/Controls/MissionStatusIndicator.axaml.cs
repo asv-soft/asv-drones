@@ -1,14 +1,19 @@
+using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Avalonia.Map;
 using Asv.Common;
+using Asv.Mavlink;
 using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Mixins;
 using Avalonia.Controls.Primitives;
+using Avalonia.Data;
 using Avalonia.Input;
+using DynamicData;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Uav;
 
@@ -141,71 +146,76 @@ public class MissionStatusIndicator : TemplatedControl
         private static readonly StyledProperty<double> MaxDistanceProperty = AvaloniaProperty.Register<MissionStatusIndicator, double>(
             nameof(MaxDistance), defaultValue: 0, notifying: UpdateMaxDistance);
 
-        public double MaxDistance
+        private double MaxDistance
         {
             get => GetValue(MaxDistanceProperty);
             set => SetValue(MaxDistanceProperty, value);
         }
         #endregion
+
+        #region Items
+        public static readonly StyledProperty<AvaloniaList<RoundWayPointItem>> WayPointsProperty = AvaloniaProperty.Register<MissionStatusIndicator, AvaloniaList<RoundWayPointItem>>(
+            nameof(WayPoints), notifying: UpdateWayPoints);
+        
+        [Reactive]
+        public AvaloniaList<RoundWayPointItem> WayPoints
+        {
+            get => GetValue(WayPointsProperty);
+            set => SetValue(WayPointsProperty, value);
+        }
+        #endregion
         
     #endregion
 
-    #region Attached props
-    #region Items
-    public static readonly AttachedProperty<IEnumerable<RoundWayPointItem>> ItemsProperty =
-        AvaloniaProperty.RegisterAttached<MissionStatusIndicator, IAvaloniaObject, IEnumerable<RoundWayPointItem>>("Items");
-    
-    public static void SetItems(IAvaloniaObject element, IEnumerable<RoundWayPointItem> value) 
-        => element.SetValue(ItemsProperty, value);
-    
-    public static IEnumerable<RoundWayPointItem> GetItems(IAvaloniaObject element)
-        => (IEnumerable<RoundWayPointItem>)element.GetValue(ItemsProperty);
-    #endregion
-    
-    #endregion
-    
     public MissionStatusIndicator()
     {
-        SetItems(this, new AvaloniaList<RoundWayPointItem>()
+        if (Design.IsDesignMode)
         {
-            new() { Altitude = 50, Distance = 0, Title = "WP 0"},
-            new() { Altitude = 50, Distance = 130, Title = "WP 1"},
-            new() { Altitude = 100, Distance = 185, Title = "WP 2"},
-            new() { Altitude = 100, Distance = 213, Title = "WP 3"},
-            new() { Altitude = 60, Distance = 164, Title = "WP 4"},
-            new() { Altitude = 60, Distance = 108, Title = "WP 5"},
-            new() { Altitude = 70, Distance = 321, Title = "WP 6"},
-            new() { Altitude = 70, Distance = 232, Title = "WP 7"}
-        });
+            WayPoints = new()
+            {
+                new() { Altitude = 50, Distance = 0, Title = "WP 0" },
+                new() { Altitude = 50, Distance = 130, Title = "WP 1" },
+                new() { Altitude = 100, Distance = 185, Title = "WP 2" },
+                new() { Altitude = 100, Distance = 213, Title = "WP 3" },
+                new() { Altitude = 60, Distance = 164, Title = "WP 4" },
+                new() { Altitude = 60, Distance = 108, Title = "WP 5" },
+                new() { Altitude = 70, Distance = 321, Title = "WP 6" },
+                new() { Altitude = 70, Distance = 232, Title = "WP 7" },
+                new() { Altitude = 50, Distance = 120, Title = "WP 8" },
+                new() { Altitude = 50, Distance = 130, Title = "WP 9" },
+                new() { Altitude = 100, Distance = 185, Title = "WP 10" },
+                new() { Altitude = 100, Distance = 213, Title = "WP 11" },
+                new() { Altitude = 60, Distance = 164, Title = "WP 12" },
+                new() { Altitude = 60, Distance = 108, Title = "WP 13" },
+                new() { Altitude = 70, Distance = 321, Title = "WP 14" },
+                new() { Altitude = 70, Distance = 232, Title = "WP 15" }
+            };
+        }
         
-        //WayPoints = new AvaloniaList<RoundWayPointItem>()
-        //{
-        //    new() { Altitude = 50, Distance = 0, Title = "WP 0"},
-        //    new() { Altitude = 50, Distance = 130, Title = "WP 1"},
-        //    new() { Altitude = 100, Distance = 185, Title = "WP 2"},
-        //    new() { Altitude = 100, Distance = 213, Title = "WP 3"},
-        //    new() { Altitude = 60, Distance = 164, Title = "WP 4"},
-        //    new() { Altitude = 60, Distance = 108, Title = "WP 5"},
-        //    new() { Altitude = 70, Distance = 321, Title = "WP 6"},
-        //    new() { Altitude = 70, Distance = 232, Title = "WP 7"}
-        //};
+    }
+
+    private static void UpdateWayPoints(IAvaloniaObject source, bool beforeChanged)
+    {
+        if (source is not MissionStatusIndicator indicator) return;
+        
+        indicator.MaxDistance = indicator.WayPoints.Sum(_ => _.Distance);
     }
     
     private static void UpdateCurrentDistance(IAvaloniaObject source, bool beforeChanged)
     {
         if (source is not MissionStatusIndicator indicator) return;
-
+        
         if (indicator.CurrentDistance == 0 | indicator.CurrentDistance >= indicator.MaxDistance) return;
         
         double aggregatedDistance = 0;
         
         var currentDistance = indicator.CurrentDistance;
 
-        indicator.CurrentAngle = -GetAngle(currentDistance, indicator.MaxDistance);
+        indicator.CurrentAngle = -GetAngle(currentDistance, indicator.MaxDistance + 150);
 
-        indicator.Completed = -indicator.CurrentAngle / RoundDegrees;        
+        indicator.Completed = GetAngle(currentDistance, indicator.MaxDistance) / RoundDegrees;        
         
-        foreach (var item in GetItems(indicator))
+        foreach (var item in indicator.WayPoints)
         {
             aggregatedDistance += item.Distance;
 
@@ -215,31 +225,29 @@ public class MissionStatusIndicator : TemplatedControl
             }
         }
 
-        double nextDistance = GetItems(indicator).Where(_ => !_.Passed)?.FirstOrDefault()?.Distance ?? (indicator.MaxDistance - aggregatedDistance);
+        double nextDistance = indicator.WayPoints.Where(_ => !_.Passed)?.FirstOrDefault()?.Distance ?? (indicator.MaxDistance - aggregatedDistance);
 
-        indicator.Next = GetItems(indicator).Where(_ => _.Passed).Sum(_ => _.Distance) - currentDistance + nextDistance;
+        indicator.Next = indicator.WayPoints.Where(_ => _.Passed).Sum(_ => _.Distance) - currentDistance + nextDistance;
         
-        indicator.CurrentWayPointTitle = GetItems(indicator).LastOrDefault(_ => _.Passed)?.Title ?? "Home";
+        indicator.CurrentWayPointTitle = indicator.WayPoints.LastOrDefault(_ => _.Passed)?.Title ?? "Home";
 
-        indicator.NextWayPointTitle = GetItems(indicator).FirstOrDefault(_ => !_.Passed)?.Title ?? "Home";
+        indicator.NextWayPointTitle = indicator.WayPoints.FirstOrDefault(_ => !_.Passed)?.Title ?? "Home";
     }
 
     private static void UpdateMaxDistance(IAvaloniaObject source, bool beforeChanged)
     {
         if (source is not MissionStatusIndicator indicator) return;
 
-        if (GetItems(indicator) is null) return;
+        if (indicator.WayPoints is null) return;
         
         double aggregatedDistance = 0;
         
-        foreach (var item in GetItems(indicator))
+        foreach (var item in indicator.WayPoints)
         {
             aggregatedDistance += item.Distance;
             
-            item.Angle = GetAngle(aggregatedDistance, indicator.MaxDistance);
+            item.Angle = GetAngle(aggregatedDistance, indicator.MaxDistance + 150);
         }
-        
-        UpdateCurrentDistance(source, beforeChanged);
     }
     
     private static double GetAngle(double value, double max) => value * RoundDegrees / max;
@@ -247,6 +255,26 @@ public class MissionStatusIndicator : TemplatedControl
 
 public class RoundWayPointItem : AvaloniaObject
 {
+    public RoundWayPointItem()
+    {
+        
+    }
+
+    public RoundWayPointItem(MissionItem item)
+    {
+        //const R = 6371e3; // metres
+        //const φ1 = lat1 * Math.PI/180; // φ, λ in radians
+        //const φ2 = lat2 * Math.PI/180;
+        //const Δφ = (lat2-lat1) * Math.PI/180;
+        //const Δλ = (lon2-lon1) * Math.PI/180;
+        //
+        //const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+        //    Math.cos(φ1) * Math.cos(φ2) *
+        //    Math.sin(Δλ/2) * Math.sin(Δλ/2);
+        //const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        //
+        //const d = R * c; // in metres
+    }
     #region Distance
     private double _distance;
 
