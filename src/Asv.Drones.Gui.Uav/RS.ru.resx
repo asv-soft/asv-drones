@@ -162,4 +162,7 @@
   <data name="RoiAnchor_Vehicle_Yaw_Sample_Unit" xml:space="preserve">
     <value>град</value>
   </data>
+  <data name="UavRttItem_ValueNotAvailable" xml:space="preserve">
+    <value>Н\Д</value>
+  </data>
 </root>
