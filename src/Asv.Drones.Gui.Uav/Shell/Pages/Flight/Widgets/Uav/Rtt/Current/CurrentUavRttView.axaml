@@ -5,12 +5,13 @@
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
              mc:Ignorable="d" d:DesignWidth="100" d:DesignHeight="30"
-             x:Class="Asv.Drones.Gui.Uav.CurrentUavRttView">
+             x:Class="Asv.Drones.Gui.Uav.CurrentUavRttView"
+             x:DataType="uav:CurrentUavRttViewModel">
     <Design.DataContext>
         <uav:CurrentUavRttViewModel/>
     </Design.DataContext>
     <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="UAV current">
-        <avalonia:MaterialIcon Foreground="{StaticResource ThemeAccentColor}" Width="20" Height="20" Kind="CurrentDc"/>   
-        <TextBlock VerticalAlignment="Center" Text="{Binding Current}"/>
+        <avalonia:MaterialIcon Foreground="{StaticResource SystemAccentColor}" Width="20" Height="20" Kind="CurrentDc"/>   
+        <TextBlock VerticalAlignment="Center" Text="{CompiledBinding Current}"/>
     </StackPanel>
 </UserControl>
