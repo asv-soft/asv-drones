@@ -13,6 +13,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Input;
 using DynamicData;
+using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -192,12 +193,17 @@ public class MissionStatusIndicator : TemplatedControl
             //    new() { Altitude = 70, Distance = 232, Title = "WP 15" }
             //};
         }
-        
+
+        this
+            .WhenAnyValue(_ => _.WayPoints)
+            .Subscribe(_ => UpdateWayPoints(this, false));
     }
 
     private static void UpdateWayPoints(IAvaloniaObject source, bool beforeChanged)
     {
         if (source is not MissionStatusIndicator indicator) return;
+        
+        if (indicator.WayPoints is null) return;
         
         for (int i = 1; i < indicator.WayPoints.Count; i++)
         {
