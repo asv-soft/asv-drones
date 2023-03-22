@@ -7,5 +7,5 @@
         </Border>
     </Design.PreviewWith>
     <StyleInclude Source="/Controls/AttitudeIndicator.axaml"/>
-    
+    <StyleInclude Source="/Controls/MissionStatusIndicator.axaml"/>
 </Styles>
