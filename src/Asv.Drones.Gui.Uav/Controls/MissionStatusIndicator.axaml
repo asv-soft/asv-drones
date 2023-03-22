@@ -3,13 +3,13 @@
         xmlns:controls="using:Asv.Drones.Gui.Uav"
         xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia">
     <Design.PreviewWith>
-        <controls:MissionStatusIndicator Width="500" Height="100" CurrentDistance="2825"/>
+        <controls:MissionStatusIndicator Width="350" Height="60" CurrentDistance="2825"/>
     </Design.PreviewWith>
 
     <Style Selector="controls|MissionStatusIndicator">
         <Setter Property="Template">
             <ControlTemplate>
-                <Viewbox Stretch="Fill">
+                <Viewbox Stretch="UniformToFill">
                     <Canvas Width="{Binding InternalWidth, RelativeSource={RelativeSource TemplatedParent}}" 
                             Height="{Binding InternalHeight, RelativeSource={RelativeSource TemplatedParent}}">
 
@@ -61,7 +61,7 @@
                                             <Ellipse Fill="Black" Stroke="#e0e0e0" StrokeThickness="2" Width="20" Height="20"/>
                                             <Ellipse IsVisible="{CompiledBinding Passed}" Fill="White" Width="10" Height="10"/>
                                         </Grid>
-                                        <TextBlock Text="{CompiledBinding Altitude, StringFormat='Alt: {0}'}" 
+                                        <TextBlock Text="{CompiledBinding Altitude, StringFormat='Alt: {0:F2}'}" 
                                                    TextAlignment="Center" Foreground="#e0e0e0" FontSize="20"/>
                                     </StackPanel>
                                 </DataTemplate>

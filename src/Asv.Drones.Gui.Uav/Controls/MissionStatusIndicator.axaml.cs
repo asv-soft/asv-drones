@@ -4,6 +4,7 @@ using System.Reactive.Linq;
 using Asv.Avalonia.Map;
 using Asv.Common;
 using Asv.Mavlink;
+using Asv.Mavlink.Vehicle;
 using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Controls;
@@ -132,7 +133,7 @@ public class MissionStatusIndicator : TemplatedControl
 
     #region Styled props
         #region Current distance
-        private static readonly StyledProperty<double> CurrentDistanceProperty = AvaloniaProperty.Register<MissionStatusIndicator, double>(
+        public static readonly StyledProperty<double> CurrentDistanceProperty = AvaloniaProperty.Register<MissionStatusIndicator, double>(
             nameof(CurrentDistance), notifying: UpdateCurrentDistance);
 
         public double CurrentDistance
@@ -153,12 +154,12 @@ public class MissionStatusIndicator : TemplatedControl
         }
         #endregion
 
-        #region Items
-        public static readonly StyledProperty<AvaloniaList<RoundWayPointItem>> WayPointsProperty = AvaloniaProperty.Register<MissionStatusIndicator, AvaloniaList<RoundWayPointItem>>(
+        #region WayPoints
+        public static readonly StyledProperty<ReadOnlyObservableCollection<RoundWayPointItem>> WayPointsProperty = AvaloniaProperty.Register<MissionStatusIndicator, ReadOnlyObservableCollection<RoundWayPointItem>>(
             nameof(WayPoints), notifying: UpdateWayPoints);
         
         [Reactive]
-        public AvaloniaList<RoundWayPointItem> WayPoints
+        public ReadOnlyObservableCollection<RoundWayPointItem> WayPoints
         {
             get => GetValue(WayPointsProperty);
             set => SetValue(WayPointsProperty, value);
@@ -171,25 +172,25 @@ public class MissionStatusIndicator : TemplatedControl
     {
         if (Design.IsDesignMode)
         {
-            WayPoints = new()
-            {
-                new() { Altitude = 50, Distance = 0, Title = "WP 0" },
-                new() { Altitude = 50, Distance = 130, Title = "WP 1" },
-                new() { Altitude = 100, Distance = 185, Title = "WP 2" },
-                new() { Altitude = 100, Distance = 213, Title = "WP 3" },
-                new() { Altitude = 60, Distance = 164, Title = "WP 4" },
-                new() { Altitude = 60, Distance = 108, Title = "WP 5" },
-                new() { Altitude = 70, Distance = 321, Title = "WP 6" },
-                new() { Altitude = 70, Distance = 232, Title = "WP 7" },
-                new() { Altitude = 50, Distance = 120, Title = "WP 8" },
-                new() { Altitude = 50, Distance = 130, Title = "WP 9" },
-                new() { Altitude = 100, Distance = 185, Title = "WP 10" },
-                new() { Altitude = 100, Distance = 213, Title = "WP 11" },
-                new() { Altitude = 60, Distance = 164, Title = "WP 12" },
-                new() { Altitude = 60, Distance = 108, Title = "WP 13" },
-                new() { Altitude = 70, Distance = 321, Title = "WP 14" },
-                new() { Altitude = 70, Distance = 232, Title = "WP 15" }
-            };
+            //WayPoints = new()
+            //{
+            //    new() { Altitude = 50, Distance = 0, Title = "WP 0" },
+            //    new() { Altitude = 50, Distance = 130, Title = "WP 1" },
+            //    new() { Altitude = 100, Distance = 185, Title = "WP 2" },
+            //    new() { Altitude = 100, Distance = 213, Title = "WP 3" },
+            //    new() { Altitude = 60, Distance = 164, Title = "WP 4" },
+            //    new() { Altitude = 60, Distance = 108, Title = "WP 5" },
+            //    new() { Altitude = 70, Distance = 321, Title = "WP 6" },
+            //    new() { Altitude = 70, Distance = 232, Title = "WP 7" },
+            //    new() { Altitude = 50, Distance = 120, Title = "WP 8" },
+            //    new() { Altitude = 50, Distance = 130, Title = "WP 9" },
+            //    new() { Altitude = 100, Distance = 185, Title = "WP 10" },
+            //    new() { Altitude = 100, Distance = 213, Title = "WP 11" },
+            //    new() { Altitude = 60, Distance = 164, Title = "WP 12" },
+            //    new() { Altitude = 60, Distance = 108, Title = "WP 13" },
+            //    new() { Altitude = 70, Distance = 321, Title = "WP 14" },
+            //    new() { Altitude = 70, Distance = 232, Title = "WP 15" }
+            //};
         }
         
     }
@@ -197,6 +198,17 @@ public class MissionStatusIndicator : TemplatedControl
     private static void UpdateWayPoints(IAvaloniaObject source, bool beforeChanged)
     {
         if (source is not MissionStatusIndicator indicator) return;
+        
+        for (int i = 1; i < indicator.WayPoints.Count; i++)
+        {
+            indicator.WayPoints[i].Distance = GeoMath.Distance(
+                indicator.WayPoints[i - 1].Latitude,
+                indicator.WayPoints[i - 1].Longitude,
+                indicator.WayPoints[i - 1].Altitude,
+                indicator.WayPoints[i].Latitude,
+                indicator.WayPoints[i].Longitude,
+                indicator.WayPoints[i].Altitude);
+        }
         
         indicator.MaxDistance = indicator.WayPoints.Sum(_ => _.Distance);
     }
@@ -211,7 +223,7 @@ public class MissionStatusIndicator : TemplatedControl
         
         var currentDistance = indicator.CurrentDistance;
 
-        indicator.CurrentAngle = -GetAngle(currentDistance, indicator.MaxDistance + 150);
+        indicator.CurrentAngle = -GetAngle(currentDistance, indicator.MaxDistance + (indicator.MaxDistance * 0.1));
 
         indicator.Completed = GetAngle(currentDistance, indicator.MaxDistance) / RoundDegrees;        
         
@@ -239,14 +251,14 @@ public class MissionStatusIndicator : TemplatedControl
         if (source is not MissionStatusIndicator indicator) return;
 
         if (indicator.WayPoints is null) return;
-        
+
         double aggregatedDistance = 0;
         
-        foreach (var item in indicator.WayPoints)
+        for (int i = 1; i < indicator.WayPoints.Count; i++)
         {
-            aggregatedDistance += item.Distance;
+            aggregatedDistance += indicator.WayPoints[i].Distance;
             
-            item.Angle = GetAngle(aggregatedDistance, indicator.MaxDistance + 150);
+            indicator.WayPoints[i].Angle = GetAngle(aggregatedDistance, indicator.MaxDistance + (indicator.MaxDistance * 0.1));
         }
     }
     
@@ -262,19 +274,12 @@ public class RoundWayPointItem : AvaloniaObject
 
     public RoundWayPointItem(MissionItem item)
     {
-        //const R = 6371e3; // metres
-        //const φ1 = lat1 * Math.PI/180; // φ, λ in radians
-        //const φ2 = lat2 * Math.PI/180;
-        //const Δφ = (lat2-lat1) * Math.PI/180;
-        //const Δλ = (lon2-lon1) * Math.PI/180;
-        //
-        //const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-        //    Math.cos(φ1) * Math.cos(φ2) *
-        //    Math.sin(Δλ/2) * Math.sin(Δλ/2);
-        //const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        //
-        //const d = R * c; // in metres
+        Altitude = item.Location.Value.Altitude;
+        Latitude = item.Location.Value.Latitude;
+        Longitude = item.Location.Value.Longitude;
+        Title = $"WP {item.Index}";
     }
+    
     #region Distance
     private double _distance;
 
@@ -307,6 +312,32 @@ public class RoundWayPointItem : AvaloniaObject
     }
     #endregion
 
+    #region Latitude
+    private double _latitude;
+
+    public static readonly DirectProperty<RoundWayPointItem, double> LatitudeProperty = AvaloniaProperty.RegisterDirect<RoundWayPointItem, double>(
+        nameof(Latitude), o => o.Latitude, (o, v) => o.Latitude = v);
+
+    public double Latitude
+    {
+        get => _latitude;
+        set => SetAndRaise(LatitudeProperty, ref _latitude, value);
+    }
+    #endregion
+
+    #region Longitude
+    private double _longitude;
+
+    public static readonly DirectProperty<RoundWayPointItem, double> LongitudeProperty = AvaloniaProperty.RegisterDirect<RoundWayPointItem, double>(
+        nameof(Longitude), o => o.Longitude, (o, v) => o.Longitude = v);
+
+    public double Longitude
+    {
+        get => _longitude;
+        set => SetAndRaise(LongitudeProperty, ref _longitude, value);
+    }
+    #endregion
+    
     #region Angle
     private double _angle;
 

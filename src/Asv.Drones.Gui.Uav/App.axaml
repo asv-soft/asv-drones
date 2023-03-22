@@ -3,7 +3,11 @@
         xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav">
     <Design.PreviewWith>
         <Border Padding="20">
-            <uav:AttitudeIndicator Width="500" Height="500" RollAngle="0" PitchAngle="0" Velocity="0" Altitude="150" Heading="57" HomeAzimuth="37" />
+            <StackPanel>
+                <uav:AttitudeIndicator Width="500" Height="500" RollAngle="0" PitchAngle="0" Velocity="0" Altitude="150" Heading="57" HomeAzimuth="37" />
+                <uav:MissionStatusIndicator Width="500"/>    
+            </StackPanel>
+            
         </Border>
     </Design.PreviewWith>
     <StyleInclude Source="/Controls/AttitudeIndicator.axaml"/>
