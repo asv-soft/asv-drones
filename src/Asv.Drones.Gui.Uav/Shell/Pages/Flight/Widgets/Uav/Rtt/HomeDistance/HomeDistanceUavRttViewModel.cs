@@ -27,6 +27,6 @@ public class HomeDistanceUavRttViewModel : UavRttItem
             .DisposeWith(Disposable);
         
     }
-    [Reactive]
-    public string HomeDistance { get; set; }
+
+    [Reactive] public string HomeDistance { get; set; } = RS.UavRttItem_ValueNotAvailable;
 }

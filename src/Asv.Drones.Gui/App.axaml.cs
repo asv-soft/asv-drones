@@ -60,8 +60,8 @@ namespace Asv.Drones.Gui
         private IEnumerable<Assembly> Assemblies()
         {
             //yield return GetType().Assembly;                   // Asv.Drones.Gui
-            yield return typeof(CorePlugin).Assembly;               // Asv.Drones.Gui.Core
-            yield return typeof(IMavlinkDevicesService).Assembly;   // Asv.Drones.Gui.Uav
+            yield return typeof(CorePlugin).Assembly;            // Asv.Drones.Gui.Core
+            yield return typeof(UavPlugin).Assembly;             // Asv.Drones.Gui.Uav
 
         }
 
