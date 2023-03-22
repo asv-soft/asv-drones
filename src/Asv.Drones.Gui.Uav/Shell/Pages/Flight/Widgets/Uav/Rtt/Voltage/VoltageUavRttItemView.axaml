@@ -5,12 +5,13 @@
              xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              mc:Ignorable="d" d:DesignWidth="100" d:DesignHeight="30"
-             x:Class="Asv.Drones.Gui.Uav.VoltageUavRttItemView">
+             x:Class="Asv.Drones.Gui.Uav.VoltageUavRttItemView"
+             x:DataType="uav:VoltageUavRttItemViewModel">
     <Design.DataContext>
         <uav:VoltageUavRttItemViewModel/>
     </Design.DataContext>
     <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="UAV voltage">
         <avalonia:MaterialIcon Foreground="{StaticResource SystemAccentColor}" Width="20" Height="20" Kind="HighVoltage"/>   
-        <TextBlock VerticalAlignment="Center" Text="{Binding Voltage}"/>
+        <TextBlock VerticalAlignment="Center" Text="{CompiledBinding Voltage}"/>
     </StackPanel>
 </UserControl>
