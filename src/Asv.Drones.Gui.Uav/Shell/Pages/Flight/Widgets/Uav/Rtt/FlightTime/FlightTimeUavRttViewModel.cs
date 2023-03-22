@@ -24,7 +24,6 @@ public class FlightTimeUavRttViewModel : UavRttItem
             .Subscribe(_ => FlightTime = $"{localization.RelativeTime.ConvertToString(_)} {localization.RelativeTime.GetUnit(_)}")
             .DisposeWith(Disposable);
     }
-    
-    [Reactive]
-    public string FlightTime { get; set; }
+
+    [Reactive] public string FlightTime { get; set; } = RS.UavRttItem_ValueNotAvailable;
 }
