@@ -184,5 +184,14 @@ namespace Asv.Drones.Gui.Uav {
                 return ResourceManager.GetString("UavAnchor_Longitude", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to N\A.
+        /// </summary>
+        public static string UavRttItem_ValueNotAvailable {
+            get {
+                return ResourceManager.GetString("UavRttItem_ValueNotAvailable", resourceCulture);
+            }
+        }
     }
 }
