@@ -21,9 +21,7 @@ namespace Asv.Drones.Gui.Uav
             var goTo = svc.Vehicles.Transform(_ => new GoToAnchor(_)).ChangeKey((k, _) => _.Id).Transform(_ => (IMapAnchor)_);
             var goToLine = svc.Vehicles.Transform(_ => new UavGoToPolygon(_)).ChangeKey((k, _) => _.Id).Transform(_ => (IMapAnchor)_);
             var track = svc.Vehicles.Transform(_ => new UavTrackPolygon(_)).ChangeKey((k, _) => _.Id).Transform(_ => (IMapAnchor)_);
-
-
-
+            
             Items = uav.Merge(roi).Merge(home).Merge(goTo).Merge(goToLine).Merge(track);
         }
 

@@ -1,10 +1,8 @@
 using System.ComponentModel.Composition;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
+using Asv.Drones.Gui.Core;
 using Avalonia.ReactiveUI;
 
-namespace Asv.Drones.Gui.Core;
+namespace Asv.Drones.Gui.Uav;
 
 [ExportView(typeof(ParametersEditorPageViewModel))]
 [PartCreationPolicy(CreationPolicy.NonShared)]
