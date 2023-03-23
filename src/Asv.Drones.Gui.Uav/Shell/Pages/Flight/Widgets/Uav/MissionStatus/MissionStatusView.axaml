@@ -13,24 +13,27 @@
         <uav1:MissionStatusViewModel/>
     </Design.DataContext>
     <DockPanel LastChildFill="True">
-        <WrapPanel DockPanel.Dock="Top">
-            <Button Command="{Binding Download}">
+        <Grid DockPanel.Dock="Top">
+            <Button HorizontalAlignment="Left" Command="{Binding Download}">
                 <avalonia:MaterialIcon Kind="Sync"/>
             </Button>
-            <ToggleButton IsChecked="{CompiledBinding DisableAll}">
-                <avalonia:MaterialIcon Kind="LayersClear"/>
-            </ToggleButton>
-            <ToggleButton IsChecked="{CompiledBinding EnablePolygons}">
-                <avalonia:MaterialIcon Kind="VectorPolygon"/>
-            </ToggleButton>
-            <ToggleButton IsChecked="{CompiledBinding EnablePolygonsAndAnchors}">
-                <StackPanel Orientation="Horizontal">
+            <WrapPanel HorizontalAlignment="Right">
+                <ToggleButton IsChecked="{CompiledBinding DisableAll}">
+                    <avalonia:MaterialIcon Kind="LayersClear"/>
+                </ToggleButton>
+                <ToggleButton IsChecked="{CompiledBinding EnablePolygons}">
                     <avalonia:MaterialIcon Kind="VectorPolygon"/>
-                    <TextBlock Text="+"/>
-                    <avalonia:MaterialIcon Kind="Anchor"/>
-                </StackPanel>
-            </ToggleButton>
-        </WrapPanel>
+                </ToggleButton>
+                <ToggleButton IsChecked="{CompiledBinding EnablePolygonsAndAnchors}">
+                    <StackPanel Orientation="Horizontal">
+                        <avalonia:MaterialIcon Kind="VectorPolygon"/>
+                        <TextBlock Text="+"/>
+                        <avalonia:MaterialIcon Kind="Anchor"/>
+                    </StackPanel>
+                </ToggleButton>
+            </WrapPanel>
+        </Grid>
+        <ProgressBar DockPanel.Dock="Bottom" Value="{Binding Progress}"/>
         <uav:MissionStatusIndicator WayPoints="{CompiledBinding WayPoints}" CurrentDistance="{CompiledBinding Distance}"/>
     </DockPanel>
 </UserControl>

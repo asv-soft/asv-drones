@@ -43,7 +43,7 @@ namespace Asv.Drones.Gui.Uav
             Vehicle.Name.Subscribe(_ => Title = _).DisposeItWith(Disposable);
             Vehicle.Class.Select(MavlinkHelper.GetIcon).Subscribe(_ => Icon = _).DisposeItWith(Disposable);
             Attitude = new AttitudeViewModel(vehicle, new Uri(Id, "/id"),loc);
-            MissionStatus = new MissionStatusViewModel(vehicle, log, new Uri(Id, "/id"),loc);
+            MissionStatus = new MissionStatusViewModel(Vehicle, log, new Uri(Id, "/id"),loc);
             
             rttItems
                 .SelectMany(_ => _.Create(Vehicle))

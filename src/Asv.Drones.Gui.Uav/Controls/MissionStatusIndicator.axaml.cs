@@ -1,8 +1,5 @@
 using System.Collections.ObjectModel;
-using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using Asv.Avalonia.Map;
-using Asv.Common;
 using Asv.Mavlink;
 using Asv.Mavlink.Vehicle;
 using Avalonia;
@@ -11,11 +8,11 @@ using Avalonia.Controls;
 using Avalonia.Controls.Mixins;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
-using Avalonia.Input;
-using DynamicData;
 using DynamicData.Binding;
+using FluentAvalonia.Core;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Disposable = System.Reactive.Disposables.Disposable;
 
 namespace Asv.Drones.Gui.Uav;
 
@@ -136,7 +133,7 @@ public class MissionStatusIndicator : TemplatedControl
         #region Current distance
         public static readonly StyledProperty<double> CurrentDistanceProperty = AvaloniaProperty.Register<MissionStatusIndicator, double>(
             nameof(CurrentDistance), notifying: UpdateCurrentDistance);
-
+        
         public double CurrentDistance
         {
             get => GetValue(CurrentDistanceProperty);
@@ -147,7 +144,7 @@ public class MissionStatusIndicator : TemplatedControl
         #region Max distance
         private static readonly StyledProperty<double> MaxDistanceProperty = AvaloniaProperty.Register<MissionStatusIndicator, double>(
             nameof(MaxDistance), defaultValue: 0, notifying: UpdateMaxDistance);
-
+        
         private double MaxDistance
         {
             get => GetValue(MaxDistanceProperty);
@@ -159,7 +156,6 @@ public class MissionStatusIndicator : TemplatedControl
         public static readonly StyledProperty<ReadOnlyObservableCollection<RoundWayPointItem>> WayPointsProperty = AvaloniaProperty.Register<MissionStatusIndicator, ReadOnlyObservableCollection<RoundWayPointItem>>(
             nameof(WayPoints), notifying: UpdateWayPoints);
         
-        [Reactive]
         public ReadOnlyObservableCollection<RoundWayPointItem> WayPoints
         {
             get => GetValue(WayPointsProperty);
@@ -194,8 +190,8 @@ public class MissionStatusIndicator : TemplatedControl
             //};
         }
 
-        this
-            .WhenAnyValue(_ => _.WayPoints)
+        this.WhenAnyValue(_ => _.WayPoints.Count)
+            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => UpdateWayPoints(this, false));
     }
 
@@ -203,7 +199,7 @@ public class MissionStatusIndicator : TemplatedControl
     {
         if (source is not MissionStatusIndicator indicator) return;
         
-        if (indicator.WayPoints is null) return;
+        if (indicator.WayPoints is null | indicator.WayPoints.Count == 0) return;
         
         for (int i = 1; i < indicator.WayPoints.Count; i++)
         {
@@ -215,8 +211,8 @@ public class MissionStatusIndicator : TemplatedControl
                 indicator.WayPoints[i].Longitude,
                 indicator.WayPoints[i].Altitude);
         }
-        
-        indicator.MaxDistance = indicator.WayPoints.Sum(_ => _.Distance);
+
+        UpdateMaxDistance(source, beforeChanged);
     }
     
     private static void UpdateCurrentDistance(IAvaloniaObject source, bool beforeChanged)
@@ -258,6 +254,8 @@ public class MissionStatusIndicator : TemplatedControl
 
         if (indicator.WayPoints is null) return;
 
+        indicator.MaxDistance = indicator.WayPoints.Sum(_ => _.Distance);
+        
         double aggregatedDistance = 0;
         
         for (int i = 1; i < indicator.WayPoints.Count; i++)
@@ -266,6 +264,8 @@ public class MissionStatusIndicator : TemplatedControl
             
             indicator.WayPoints[i].Angle = GetAngle(aggregatedDistance, indicator.MaxDistance + (indicator.MaxDistance * 0.1));
         }
+        
+        UpdateCurrentDistance(source, beforeChanged);
     }
     
     private static double GetAngle(double value, double max) => value * RoundDegrees / max;

@@ -55,15 +55,16 @@ public class MissionStatusViewModel : ViewModelBase
 
         _log = log;
         
-        _vehicle.MissionItems.ObserveOn(RxApp.MainThreadScheduler)
+        _vehicle.MissionItems
+            .ObserveOn(RxApp.MainThreadScheduler)
             .Filter(_ => _.Command.Value != MavCmd.MavCmdNavReturnToLaunch)
             .Transform(_ => new RoundWayPointItem(_))
             .Bind(out _wayPoints)
+            .DisposeMany()
             .Subscribe()
             .DisposeItWith(Disposable);
 
-        _download = ReactiveCommand
-            .CreateFromObservable(
+        _download = ReactiveCommand.CreateFromObservable(
                 () => Observable.FromAsync(DownloadImpl).SubscribeOn(RxApp.TaskpoolScheduler).TakeUntil(_cancelDownload), 
                 this.WhenAnyValue(_ => _.IsInProgress).Select(_ => !_))
             .DisposeItWith(Disposable);
@@ -99,7 +100,7 @@ public class MissionStatusViewModel : ViewModelBase
 
     private async Task DownloadImpl(CancellationToken cancel)
     {
-       await _vehicle.DownloadMission(3, cancel,_ => Progress = _);
+        await _vehicle.DownloadMission(3, cancel,_ => Progress = _ * 100);
     }
 
     #endregion
@@ -116,6 +117,6 @@ public class MissionStatusViewModel : ViewModelBase
     public bool EnablePolygonsAndAnchors { get; set; }
     [Reactive]
     public double Distance { get; set; }
-
+    
     public ReadOnlyObservableCollection<RoundWayPointItem> WayPoints => _wayPoints;
 }
