@@ -21,32 +21,7 @@ public class MissionStatusViewModel : ViewModelBase
 
     public MissionStatusViewModel() : base(new Uri("designTime://missionstatus"))
     {
-        if (Design.IsDesignMode)
-        {
-            _wayPoints = new ReadOnlyObservableCollection<RoundWayPointItem>(
-                new ObservableCollection<RoundWayPointItem>
-                {
-                    new() { Altitude = 50, Distance = 0, Title = "WP 0" },
-                    new() { Altitude = 50, Distance = 130, Title = "WP 1" },
-                    new() { Altitude = 100, Distance = 185, Title = "WP 2" },
-                    new() { Altitude = 100, Distance = 213, Title = "WP 3" },
-                    new() { Altitude = 60, Distance = 164, Title = "WP 4" },
-                    new() { Altitude = 60, Distance = 108, Title = "WP 5" },
-                    new() { Altitude = 70, Distance = 321, Title = "WP 6" },
-                    new() { Altitude = 70, Distance = 232, Title = "WP 7" },
-                    new() { Altitude = 50, Distance = 120, Title = "WP 8" },
-                    new() { Altitude = 50, Distance = 130, Title = "WP 9" },
-                    new() { Altitude = 100, Distance = 185, Title = "WP 10" },
-                    new() { Altitude = 100, Distance = 213, Title = "WP 11" },
-                    new() { Altitude = 60, Distance = 164, Title = "WP 12" },
-                    new() { Altitude = 60, Distance = 108, Title = "WP 13" },
-                    new() { Altitude = 70, Distance = 321, Title = "WP 14" },
-                    new() { Altitude = 70, Distance = 232, Title = "WP 15" }
-                });
-            
-            
-            Distance = 125;    
-        }
+        
     }
 
     public MissionStatusViewModel(IVehicle vehicle, ILogService log, Uri id, ILocalizationService localization) : base(id)
