@@ -11,6 +11,7 @@ using Asv.Mavlink.V2.Icarous;
 using Asv.Mavlink.V2.Uavionix;
 using Avalonia.Controls.Shapes;
 using DynamicData;
+using DynamicData.Binding;
 using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav
@@ -132,6 +133,8 @@ namespace Asv.Drones.Gui.Uav
 
             #region Mavlink vehicles
 
+            
+            
             Vehicles = _devices
             .Connect()
                 .Filter(_=> _.Autopilot is MavAutopilot.MavAutopilotArdupilotmega)
@@ -200,6 +203,13 @@ namespace Asv.Drones.Gui.Uav
         public IObservable<IChangeSet<IVehicle, ushort>> Vehicles { get; }
         public IRxEditableValue<TimeSpan> DeviceTimeout => _deviceBrowser.DeviceTimeout;
 
+        public IVehicle? GetVehicleByFullId(ushort id)
+        {
+            using var a = Vehicles.BindToObservableList(out var list).Subscribe();
+            return list.Items.FirstOrDefault(_=>_.FullId == id);
+        }
+        
+        
         private IVehicle? CreateVehicle(IMavlinkDevice device)
         {
             var proto = new MavlinkClient(Router, new MavlinkClientIdentity

@@ -4,15 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:client="clr-namespace:Asv.Mavlink.Client;assembly=Asv.Mavlink"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Asv.Drones.Gui.Uav.ParametersEditorPageView"
              x:CompileBindings ="True"
              x:DataType="uav:ParametersEditorPageViewModel">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="175" Width="*"/>   
+            <ColumnDefinition MinWidth="220" Width="*"/>   
             <ColumnDefinition Width="5"/>   
-            <ColumnDefinition MinWidth="500" Width="2.5*"/>   
+            <ColumnDefinition MinWidth="500" Width="2*"/>   
         </Grid.ColumnDefinitions>
         <DockPanel Margin="5" Grid.Column="0" LastChildFill="True">
             <DockPanel DockPanel.Dock="Top" LastChildFill="True">
@@ -22,6 +23,9 @@
                 <ToggleButton Margin="4 0 0 0" DockPanel.Dock="Right" Width="30" Height="30">
                     <avalonia:MaterialIcon Kind="Folder"/>
                 </ToggleButton>
+                <Button Command="{Binding UpdateParams}" Margin="4 0 0 0" DockPanel.Dock="Right" Width="30" Height="30">
+                    <avalonia:MaterialIcon Kind="Sync"/>
+                </Button>
                 <TextBox Text="{Binding Search}" Margin="4 0 0 0" Watermark="Search">
                     <TextBox.InnerRightContent>
                         <Button Command="{Binding Clear}" Background="Transparent" BorderThickness="0" Width="30" Height="30">
@@ -30,11 +34,21 @@
                     </TextBox.InnerRightContent>
                 </TextBox>
             </DockPanel>
-            <ScrollViewer>
-                <TreeView/>
-            </ScrollViewer>
+            <ProgressBar DockPanel.Dock="Top" Value="{Binding Progress}"/>
+            <ListBox Items="{Binding Params}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="client:MavParam">
+                        <DockPanel LastChildFill="True">
+                            <ToggleButton Margin="10 0 0 0" Background="Transparent" BorderThickness="0" DockPanel.Dock="Right">
+                                <avalonia:MaterialIcon Width="20" Height="20" Kind="Star"/>
+                            </ToggleButton>
+                            <avalonia:MaterialIcon Width="20" Margin="10 0 0 0" DockPanel.Dock="Right" Kind="Pin"/>
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Name}"/>
+                        </DockPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </DockPanel>
-        
         <GridSplitter Grid.Column="1"/>
         <ItemsControl Grid.Column="2">
         </ItemsControl>
