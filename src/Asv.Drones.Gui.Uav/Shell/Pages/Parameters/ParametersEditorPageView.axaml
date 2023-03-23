@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             xmlns:client="clr-namespace:Asv.Mavlink.Client;assembly=Asv.Mavlink"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Asv.Drones.Gui.Uav.ParametersEditorPageView"
              x:CompileBindings ="True"
@@ -35,22 +34,27 @@
                 </TextBox>
             </DockPanel>
             <ProgressBar DockPanel.Dock="Top" Value="{Binding Progress}"/>
-            <ListBox Items="{Binding Params}">
+            <ListBox SelectedItem="{Binding SelectedItem}" Items="{Binding Parameters}">
                 <ListBox.ItemTemplate>
-                    <DataTemplate DataType="client:MavParam">
+                    <DataTemplate DataType="uav:ParameterItem">
                         <DockPanel LastChildFill="True">
-                            <ToggleButton Margin="10 0 0 0" Background="Transparent" BorderThickness="0" DockPanel.Dock="Right">
+                            <ToggleButton IsChecked="{Binding Stared}" Margin="10 0 0 0" Background="Transparent" BorderThickness="0" DockPanel.Dock="Right">
                                 <avalonia:MaterialIcon Width="20" Height="20" Kind="Star"/>
                             </ToggleButton>
-                            <avalonia:MaterialIcon Width="20" Margin="10 0 0 0" DockPanel.Dock="Right" Kind="Pin"/>
-                            <TextBlock VerticalAlignment="Center" Text="{Binding Name}"/>
+                            <avalonia:MaterialIcon IsVisible="{Binding Pinned}" Width="20" Margin="10 0 0 0" DockPanel.Dock="Right" Kind="Pin"/>
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Parameter.Name}"/>
                         </DockPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
         </DockPanel>
         <GridSplitter Grid.Column="1"/>
-        <ItemsControl Grid.Column="2">
+        <ItemsControl Items="{Binding PinnedParameters}" Grid.Column="2">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
         </ItemsControl>
     </Grid>
 </UserControl>

@@ -24,7 +24,8 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
     private readonly ILogService _log;
     private IVehicle _vehicle;
 
-    private ReadOnlyObservableCollection<MavParam> _params;
+    private ReadOnlyObservableCollection<ParameterItem> _parameters;
+    private ObservableCollection<VehicleParamDescription> _descriptions;
 
     public const string UriString = ShellMenuItem.UriString + ".parameters";
     public static readonly Uri Uri = new Uri(UriString);
@@ -39,21 +40,42 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
     {
         _svc = svc;
         _log = log;
+
+        PinnedParameters = new ObservableCollection<ParametersEditorParameterViewModel>();
+        
+        this.WhenValueChanged(_ => _.SelectedItem)
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(AddSelectedItem)
+            .DisposeItWith(Disposable);
+        
+        this.WhenAnyValue(_ => _.Search)
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Throttle(TimeSpan.FromMilliseconds(500))
+            .Skip(1)
+            .Subscribe(_ => UpdateParams.Execute(null))
+            .DisposeItWith(Disposable);
         
         _updateParams = ReactiveCommand.CreateFromObservable(
                 () => Observable.FromAsync(UpdateParamsImpl).SubscribeOn(RxApp.TaskpoolScheduler).TakeUntil(_cancelUpdateParams), 
                 this.WhenAnyValue(_ => _.IsInProgress).Select(_ => !_))
             .DisposeItWith(Disposable);
+        
         _updateParams.IsExecuting.ToProperty(this, _ => _.IsUpdatingParams, out _isUpdatingParams)
             .DisposeItWith(Disposable);
+        
         _updateParams.ThrownExceptions.Subscribe(OnUpdateParamsError)
             .DisposeItWith(Disposable);
+        
         _cancelUpdateParams = ReactiveCommand.Create(() => { }, _updateParams.IsExecuting)
             .DisposeItWith(Disposable);
     }
 
     [Reactive]
+    public ParameterItem SelectedItem { get; set; }
+    
+    [Reactive]
     public bool IsInProgress { get; set; }
+    
     [Reactive]
     public IProgress<double> Progress { get; set; }
     
@@ -68,8 +90,6 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
     private async Task UpdateParamsImpl(CancellationToken cancel)
     {
         await _vehicle.Params.ReadAllParams(cancel, Progress);
-        
-        UpdateVehicle();
     }
     
     private void OnUpdateParamsError(Exception exception)
@@ -79,34 +99,57 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
     }
     #endregion
     
+    [Reactive]
     public ReactiveCommand<Unit,Unit> Clear { get; set; }
 
     [Reactive]
     public string Search { get; set; }
 
-    public ReadOnlyObservableCollection<MavParam> Params => _params;
+    public ReadOnlyObservableCollection<ParameterItem> Parameters => _parameters;
+    
+    [Reactive]
+    public ObservableCollection<ParametersEditorParameterViewModel> PinnedParameters { get; set; }
+
+    private void AddSelectedItem(ParameterItem item)
+    {
+        if (item == null) return;
+        
+        if(PinnedParameters.Count > 0)
+            PinnedParameters = new ObservableCollection<ParametersEditorParameterViewModel>(PinnedParameters.Where(_ => _.Parameter.Pinned));
+        
+        if(item.Parameter != null && item.Description != null)
+            PinnedParameters.Add(new ParametersEditorParameterViewModel(item));
+    }
     
     private void ClearImpl() => Search = "";
 
+    private bool FilterParams(MavParam param)
+    {
+        if (Search.IsNullOrWhiteSpace()) return true;
+        
+        return param.Name.ToLower().Contains(Search.ToLower());
+    }
+    
     private void UpdateVehicle()
     {
-        SourceCache<MavParam,string> _list = new (_=>_.Name);
+        SourceCache<MavParam, string> _list = new (_=>_.Name);
+        
         _list.Connect()
-            .Filter(_ => true)
-            .SortBy(_ => _.Name)
-            .Bind(out _params)
+            .Filter(FilterParams)
+            .Transform(_ => new ParameterItem(_, _descriptions.FirstOrDefault(__ => __.Name == _.Name)))
+            .SortBy(_ => _.Parameter.Name)
+            .Bind(out _parameters)
             .Subscribe();
 
         _vehicle.Params.OnParamUpdated
-            .Subscribe(_ => _list.AddOrUpdate(_));
-
+            .Subscribe(_ => _list.AddOrUpdate(_)).DisposeItWith(Disposable);
+        
         foreach (var paramItem in _vehicle.Params.Params.Values)
         {
             _list.AddOrUpdate(paramItem);
         }
     }
 
-    
     public void SetArgs(Uri link)
     {
         var fullIdString = link.GetComponents(UriComponents.Query, UriFormat.UriEscaped).Replace("Id=","");
@@ -114,7 +157,32 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
         if(ushort.TryParse(fullIdString, out var fullId))
         {
             _vehicle = _svc.GetVehicleByFullId(fullId);
-            UpdateVehicle();
+            
+            _descriptions = new ObservableCollection<VehicleParamDescription>(_vehicle.GetParamDescription());
+            
+            this.WhenValueChanged(_ => _.Parameters).Subscribe(_ => UpdateVehicle());
         }
     }
+}
+
+public class ParameterItem
+{
+    private readonly MavParam _parameter;
+    private readonly VehicleParamDescription _description; 
+    
+    public ParameterItem(MavParam parameter, VehicleParamDescription description)
+    {
+        _parameter = parameter;
+        _description = description;
+    }
+
+    public MavParam Parameter => _parameter;
+
+    public VehicleParamDescription Description => _description;
+    
+    [Reactive]
+    public bool Pinned { get; set; }
+    
+    [Reactive]
+    public bool Stared { get; set; }
 }

@@ -4,30 +4,32 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
-             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
+             mc:Ignorable="d"
              x:Class="Asv.Drones.Gui.Uav.ParametersEditorParameterView"
              x:CompileBindings ="True"
+             Width="400"
+             Height="400"
              x:DataType="uav:ParametersEditorParameterViewModel">
     <StackPanel>
         <DockPanel>
-            <Button Command="{CompiledBinding Pin}" Background="Transparent" BorderThickness="0" DockPanel.Dock="Right">
+            <ToggleButton IsChecked="{Binding Parameter.Pinned}" Background="Transparent" BorderThickness="0" DockPanel.Dock="Right">
                 <avalonia:MaterialIcon Width="25" Height="25" Kind="Pin"/>
-            </Button>
-            <TextBlock Text="{CompiledBinding RawName}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </ToggleButton>
+            <TextBlock Text="{CompiledBinding Parameter.Parameter.Name}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </DockPanel>
-        <TextBlock Text="{CompiledBinding Name}" TextWrapping="Wrap" Margin="10 5"/>
-        <TextBox Text="{CompiledBinding Value}" Margin="10 5">
+        <TextBlock Text="{CompiledBinding Parameter.Description.Name}" TextWrapping="Wrap" Margin="10 5"/>
+        <TextBox Text="" Margin="10 5">
             <TextBox.InnerRightContent>
-                <TextBlock Text="{CompiledBinding Units}" Margin="10 0" VerticalAlignment="Center"/>
+                <TextBlock Text="{CompiledBinding Parameter.Description.Units}" Margin="10 0" VerticalAlignment="Center"/>
             </TextBox.InnerRightContent>
         </TextBox>
         <Grid Margin="10 5" ColumnDefinitions="*, 5, *">
             <Button Command="{CompiledBinding Update}" HorizontalAlignment="Stretch" Grid.Column="0" Content="Update"/>
             <Button Command="{CompiledBinding Write}" HorizontalAlignment="Stretch" Grid.Column="2" Content="Write"/>
         </Grid>
-        <TextBlock Text="{CompiledBinding RangeDescription}" TextWrapping="Wrap" Margin="10 5"/>
-        <TextBlock Text="{CompiledBinding Description}" TextWrapping="Wrap" Margin="10 5"/>
-        <Border IsVisible="{CompiledBinding IsRebootRequired}" Margin="10 5" HorizontalAlignment="Left" Padding="5" Background="Red" CornerRadius="{StaticResource ControlCornerRadius}">
+        <TextBlock Text="{CompiledBinding Parameter.Description.Values}" TextWrapping="Wrap" Margin="10 5"/>
+        <TextBlock Text="{CompiledBinding Parameter.Description.Description}" TextWrapping="Wrap" Margin="10 5"/>
+        <Border IsVisible="{CompiledBinding Parameter.Description.IsRebootRequired}" Margin="10 5" HorizontalAlignment="Left" Padding="5" Background="Red" CornerRadius="{StaticResource ControlCornerRadius}">
             <TextBlock FontWeight="Bold" Text="Reboot required"/>
         </Border>
     </StackPanel>

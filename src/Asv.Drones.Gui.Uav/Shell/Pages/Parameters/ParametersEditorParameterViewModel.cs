@@ -3,6 +3,7 @@ using System.Reactive.Linq;
 using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
+using Asv.Mavlink.Client;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -10,36 +11,20 @@ namespace Asv.Drones.Gui.Uav;
 
 public class ParametersEditorParameterViewModel : ViewModelBase
 {
-    public const string UriString = ShellMenuItem.UriString + ".somebody";
+    public const string UriString = ShellMenuItem.UriString + ".parameter";
     public static readonly Uri Uri = new Uri(UriString);
     
     public ParametersEditorParameterViewModel() : base(Uri)
     {
-        IsRebootRequired = false;    
+        
     }
 
-    [Reactive]
-    public string RawName { get; set; }
+    public ParametersEditorParameterViewModel(ParameterItem parameterItem) : this()
+    {
+        Parameter = parameterItem;
+    }
     
-    [Reactive]
-    public string Name { get; set; }
-
-    [Reactive]
-    public string Value { get; set; }
-
-    [Reactive]
-    public string Units { get; set; }
-
-    [Reactive]
-    public string RangeDescription { get; set; }
-
-    [Reactive]
-    public string Description { get; set; }
-
-    [Reactive] 
-    public bool IsRebootRequired { get; set; }
-    
-    public ICommand Pin { get; set; }
+    public ParameterItem Parameter { get; }
     
     public ICommand Write { get; set; }
 
