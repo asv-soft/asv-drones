@@ -10,4 +10,8 @@
       <ProjectReference Include="..\Asv.Drones.Gui.Core\Asv.Drones.Gui.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="DynamicData" Version="7.12.11" />
+    </ItemGroup>
+
 </Project>

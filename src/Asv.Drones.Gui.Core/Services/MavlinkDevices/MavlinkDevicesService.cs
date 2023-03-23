@@ -11,6 +11,7 @@ using Asv.Mavlink.V2.Icarous;
 using Asv.Mavlink.V2.Uavionix;
 using Avalonia.Controls.Shapes;
 using DynamicData;
+using DynamicData.Binding;
 using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav
@@ -48,7 +49,7 @@ namespace Asv.Drones.Gui.Uav
         {
             _sequenceCalculator = sequenceCalculator ?? throw new ArgumentNullException(nameof(sequenceCalculator));
             _log = log ?? throw new ArgumentNullException(nameof(log));
-
+            
             #region InitUriHost mavlink router
 
             _mavlinkRouter = new MavlinkRouter(_ =>
@@ -237,6 +238,8 @@ namespace Asv.Drones.Gui.Uav
             }
 
             return dev;
+            
+            
         }
 
     }
