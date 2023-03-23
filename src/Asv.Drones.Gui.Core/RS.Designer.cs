@@ -582,6 +582,33 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string LogMessageTypeHelper_GetDisplayName_Error {
+            get {
+                return ResourceManager.GetString("LogMessageTypeHelper_GetDisplayName_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string LogMessageTypeHelper_GetDisplayName_Info {
+            get {
+                return ResourceManager.GetString("LogMessageTypeHelper_GetDisplayName_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string LogMessageTypeHelper_GetDisplayName_Warning {
+            get {
+                return ResourceManager.GetString("LogMessageTypeHelper_GetDisplayName_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change current map provider for application.
         /// </summary>
         public static string MapSettingsView_MapProvider_Description {

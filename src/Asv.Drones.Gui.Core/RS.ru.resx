@@ -603,4 +603,13 @@
   <data name="PacketViewerShellMenuItem_Name" xml:space="preserve">
 	  <value>Просмотр пакетов</value>
   </data>
+  <data name="LogMessageTypeHelper_GetDisplayName_Info" xml:space="preserve">
+	  <value>Информация</value>
+  </data>
+  <data name="LogMessageTypeHelper_GetDisplayName_Warning" xml:space="preserve">
+	  <value>Предупреждение</value>
+  </data>
+  <data name="LogMessageTypeHelper_GetDisplayName_Error" xml:space="preserve">
+	  <value>Ошибка</value>
+  </data>
 </root>
