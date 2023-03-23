@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Reactive.Linq;
 using Asv.Mavlink;
 using Asv.Mavlink.Vehicle;
@@ -190,16 +191,25 @@ public class MissionStatusIndicator : TemplatedControl
             //};
         }
 
-        this.WhenAnyValue(_ => _.WayPoints.Count)
-            .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(_ => UpdateWayPoints(this, false));
+        
+        //this.WhenAnyValue(_ => _.WayPoints.Count)
+        //    .ObserveOn(RxApp.MainThreadScheduler)
+        //    .Subscribe(_ => UpdateWayPoints(this, false));
     }
 
     private static void UpdateWayPoints(IAvaloniaObject source, bool beforeChanged)
     {
         if (source is not MissionStatusIndicator indicator) return;
         
-        if (indicator.WayPoints is null | indicator.WayPoints.Count == 0) return;
+        if (indicator.WayPoints is null | beforeChanged) return;
+        
+        indicator.WayPoints.ObserveCollectionChanges().Subscribe(
+            _ => UpdateEverything(source, beforeChanged));
+    }
+
+    private static void UpdateEverything(IAvaloniaObject source, bool beforeChanged)
+    {
+        if (source is not MissionStatusIndicator indicator) return;
         
         for (int i = 1; i < indicator.WayPoints.Count; i++)
         {
@@ -214,7 +224,7 @@ public class MissionStatusIndicator : TemplatedControl
 
         UpdateMaxDistance(source, beforeChanged);
     }
-    
+
     private static void UpdateCurrentDistance(IAvaloniaObject source, bool beforeChanged)
     {
         if (source is not MissionStatusIndicator indicator) return;
