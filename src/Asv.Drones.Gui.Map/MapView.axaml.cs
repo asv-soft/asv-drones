@@ -29,7 +29,6 @@ namespace Asv.Avalonia.Map
         internal readonly TranslateTransform MapOverlayTranslateTransform = new();
         internal ScaleTransform MapScaleTransform = new();
         private readonly ScaleTransform _lastScaleTransform = new();
-        private readonly MouseDevice _mouse = new();
 
         static MapView()
         {
@@ -46,7 +45,7 @@ namespace Asv.Avalonia.Map
 
         private static void UpdateIsEditable(IAvaloniaObject obj, BindingValue<bool> objNewValue)
         {
-            var find = (obj as ILogical).GetLogicalParent<MapViewItem>();
+            var find = (obj as ILogical)?.GetLogicalParent<MapViewItem>();
             if (find != null)
             {
                 find.IsEditable = objNewValue.Value;
@@ -55,7 +54,7 @@ namespace Asv.Avalonia.Map
 
         private static void UpdateZOrder(IAvaloniaObject obj, BindingValue<int> objNewValue)
         {
-            var find = (obj as ILogical).GetLogicalParent<MapViewItem>();
+            var find = (obj as ILogical)?.GetLogicalParent<MapViewItem>();
             if (find != null)
             {
                 find.ZIndex = objNewValue.Value;
@@ -64,13 +63,13 @@ namespace Asv.Avalonia.Map
 
         private static void UpdatePath(IAvaloniaObject obj)
         {
-            var find = (obj as ILogical).GetLogicalParent<MapViewItem>();
+            var find = (obj as ILogical)?.GetLogicalParent<MapViewItem>();
             find?.UpdatePathCollection();
         }
 
         private static void UpdateLocalPosition(IAvaloniaObject obj)
         {
-            var find = (obj as ILogical).GetLogicalParent<MapViewItem>();
+            var find = (obj as ILogical)?.GetLogicalParent<MapViewItem>();
             find?.UpdateLocalPosition();
         }
 
@@ -119,48 +118,48 @@ namespace Asv.Avalonia.Map
         public static readonly AttachedProperty<double> StrokeThicknessProperty =
             AvaloniaProperty.RegisterAttached<MapView, AvaloniaObject, double>("StrokeThickness",3);
         public static void SetStrokeThickness(IAvaloniaObject element, double value) => element.SetValue(StrokeThicknessProperty, value);
-        public static double GetStrokeThickness(IAvaloniaObject element) => (double)element.GetValue(StrokeThicknessProperty);
+        public static double GetStrokeThickness(IAvaloniaObject element) => (double)element.GetValue(StrokeThicknessProperty)!;
 
         public static readonly AttachedProperty<AvaloniaList<double>> StrokeDashArrayProperty =
             AvaloniaProperty.RegisterAttached<MapView, AvaloniaObject, AvaloniaList<double>>("StrokeDashArray");
         public static void SetStrokeDashArray(IAvaloniaObject element, AvaloniaList<double> value) => element.SetValue(StrokeDashArrayProperty, value);
-        public static AvaloniaList<double> GetStrokeDashArray(IAvaloniaObject element) => (AvaloniaList<double>)element.GetValue(StrokeDashArrayProperty);
+        public static AvaloniaList<double> GetStrokeDashArray(IAvaloniaObject element) => (AvaloniaList<double>)element.GetValue(StrokeDashArrayProperty)!;
 
         public static readonly AttachedProperty<double> PathOpacityProperty =
             AvaloniaProperty.RegisterAttached<MapView, AvaloniaObject, double>("PathOpacity");
         public static void SetPathOpacity(IAvaloniaObject element, double value) => element.SetValue(PathOpacityProperty, value);
-        public static double GetPathOpacity(IAvaloniaObject element) => (double)element.GetValue(PathOpacityProperty);
+        public static double GetPathOpacity(IAvaloniaObject element) => (double)element.GetValue(PathOpacityProperty)!;
 
 
         public static readonly AttachedProperty<IList<GeoPoint>> PathProperty =
             AvaloniaProperty.RegisterAttached<MapView, AvaloniaObject, IList<GeoPoint>>("Path");
         public static void SetPath(IAvaloniaObject element, IList<GeoPoint> value) => element.SetValue(PathProperty, value);
-        public static IList<GeoPoint> GetPath(IAvaloniaObject element) => (IList<GeoPoint>)element.GetValue(PathProperty);
+        public static IList<GeoPoint> GetPath(IAvaloniaObject element) => (IList<GeoPoint>)element.GetValue(PathProperty)!;
 
         public static readonly AttachedProperty<GeoPoint> LocationProperty =
             AvaloniaProperty.RegisterAttached<MapView, AvaloniaObject, GeoPoint>("Location", GeoPoint.ZeroWithAlt);
         public static void SetLocation(IAvaloniaObject element, GeoPoint value) => element.SetValue(LocationProperty, value);
-        public static GeoPoint GetLocation(IAvaloniaObject element) => (GeoPoint)element.GetValue(LocationProperty);
+        public static GeoPoint GetLocation(IAvaloniaObject element) => (GeoPoint)element.GetValue(LocationProperty)!;
 
         public static readonly AttachedProperty<double> OffsetXProperty =
             AvaloniaProperty.RegisterAttached<MapView, AvaloniaObject, double>("OffsetX", 0);
         public static void SetOffsetX(IAvaloniaObject element, double value) => element.SetValue(OffsetXProperty, value);
-        public static double GetOffsetX(IAvaloniaObject element) => (double)element.GetValue(OffsetXProperty);
+        public static double GetOffsetX(IAvaloniaObject element) => (double)element.GetValue(OffsetXProperty)!;
 
         public static readonly AttachedProperty<double> OffsetYProperty =
             AvaloniaProperty.RegisterAttached<MapView, AvaloniaObject, double>("OffsetY", 0);
         public static void SetOffsetY(IAvaloniaObject element, double value) => element.SetValue(OffsetYProperty, value);
-        public static double GetOffsetY(IAvaloniaObject element) => (double)element.GetValue(OffsetYProperty);
+        public static double GetOffsetY(IAvaloniaObject element) => (double)element.GetValue(OffsetYProperty)!;
 
         public static readonly AttachedProperty<int> ZOrderProperty =
             AvaloniaProperty.RegisterAttached<MapView, AvaloniaObject, int>("ZOrder", defaultBindingMode: BindingMode.OneWay);
         public static void SetZOrder(IAvaloniaObject element, int value) => element.SetValue(ZOrderProperty, value);
-        public static int GetZOrder(IAvaloniaObject element) => (int)element.GetValue(ZOrderProperty);
+        public static int GetZOrder(IAvaloniaObject element) => (int)element.GetValue(ZOrderProperty)!;
 
         public static readonly AttachedProperty<bool> IsEditableProperty =
             AvaloniaProperty.RegisterAttached<MapView, AvaloniaObject, bool>("IsEditable", defaultBindingMode: BindingMode.TwoWay);
         public static void SetIsEditable(IAvaloniaObject element, bool value) => element.SetValue(IsEditableProperty, value);
-        public static bool GetIsEditable(IAvaloniaObject element) => (bool)element.GetValue(IsEditableProperty);
+        public static bool GetIsEditable(IAvaloniaObject element) => (bool)element.GetValue(IsEditableProperty)!;
 
 
         #endregion
@@ -277,8 +276,8 @@ namespace Asv.Avalonia.Map
             
         }
 
-        private Canvas _mapCanvas;
-        internal Canvas MapCanvas
+        private Canvas? _mapCanvas;
+        internal Canvas? MapCanvas
         {
             get
             {
@@ -574,11 +573,11 @@ namespace Asv.Avalonia.Map
 
         #region MapProvider
 
-        public static readonly DirectProperty<MapView, GMapProvider> MapProviderProperty =
-            AvaloniaProperty.RegisterDirect<MapView, GMapProvider>(nameof(MapProvider), o => o.MapProvider, (o, v) => o.MapProvider = v);
+        public static readonly DirectProperty<MapView, GMapProvider?> MapProviderProperty =
+            AvaloniaProperty.RegisterDirect<MapView, GMapProvider?>(nameof(MapProvider), o => o.MapProvider, (o, v) => o.MapProvider = v);
 
-        private GMapProvider _mapProvider;
-        public GMapProvider MapProvider
+        private GMapProvider? _mapProvider;
+        public GMapProvider? MapProvider
         {
             get => _mapProvider;
             set
@@ -833,7 +832,7 @@ namespace Asv.Avalonia.Map
                 {
                     IsDragging = true;
                     Debug.WriteLine("IsDragging = " + IsDragging);
-                    _cursorBefore = Cursor;
+                    _cursorBefore = Cursor ?? Cursor.Default;
                     Cursor = new Cursor(StandardCursorType.SizeAll);
                     
                     //_mouse.Capture(this);
@@ -964,10 +963,10 @@ namespace Asv.Avalonia.Map
 
         #region DialogMode
 
-        public static readonly DirectProperty<MapView, string> DialogTextProperty =
-            AvaloniaProperty.RegisterDirect<MapView, string>(nameof(DialogText), o => o.DialogText, (o, v) => o.DialogText = v);
-        private string _dialogText;
-        public string DialogText
+        public static readonly DirectProperty<MapView, string?> DialogTextProperty =
+            AvaloniaProperty.RegisterDirect<MapView, string?>(nameof(DialogText), o => o.DialogText, (o, v) => o.DialogText = v);
+        private string? _dialogText;
+        public string? DialogText
         {
             get => _dialogText;
             set => SetAndRaise(DialogTextProperty, ref _dialogText, value);
@@ -1010,7 +1009,7 @@ namespace Asv.Avalonia.Map
             }
         }
 
-        private Cursor _oldCursor;
+        private Cursor? _oldCursor;
         private bool _disablePointerActions = false;
         private double _positionUpdateCiclicUpdateFlag;
 
@@ -1028,7 +1027,7 @@ namespace Asv.Avalonia.Map
         }
         private void EnableDialogMode()
         {
-            _oldCursor = Cursor;
+            _oldCursor = Cursor ?? Cursor.Default;
             _disablePointerActions = true;
             Cursor = new Cursor(StandardCursorType.Hand);
             foreach (var item in LogicalChildren.Cast<MapViewItem>())
