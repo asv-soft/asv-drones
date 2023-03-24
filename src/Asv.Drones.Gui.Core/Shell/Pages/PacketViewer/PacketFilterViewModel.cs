@@ -9,9 +9,8 @@ public class PacketFilterViewModel : ViewModelBase
     
     private readonly IncrementalRateCounter _packetRate = new(3);
     private readonly ILocalizationService _localization;
-    
-    public const string UriString = ShellPage.UriString + ".packetFilter";
-    public static readonly Uri Uri = new Uri(UriString);
+    public static Uri GenerateUri(string filterId) => new($"{PacketViewerViewModel.UriString}.filter.{filterId}");
+   
     
     [Reactive]
     public string Type { get; set; }
@@ -24,18 +23,23 @@ public class PacketFilterViewModel : ViewModelBase
     [Reactive]
     public bool IsChecked { get; set; }
 
-    public PacketFilterViewModel() : base(Uri)
+    public PacketFilterViewModel() : base(GenerateUri(Guid.NewGuid().ToString()))
     {
+        UpdateRates();
     }
 
-    public PacketFilterViewModel(string type, string source, ILocalizationService localizationService) : this()
+    public PacketFilterViewModel(PacketMessageViewModel pkt,ILocalizationService localizationService) 
+        : base(GenerateUri(pkt.FilterId))
     {
         _localization = localizationService;
-        
-        Type = type;
-        Source = source;
+        Id = pkt.FilterId;
+        Type = pkt.Type;
+        Source = pkt.Source;
         IsChecked = true;
     }
+
+
+    public string Id { get; set; }
 
     public void UpdateRates()
     {
@@ -44,7 +48,5 @@ public class PacketFilterViewModel : ViewModelBase
         var packetRate = _packetRate.Calculate(_cnt);
         MessageRateText = _localization.ItemsRate.ConvertToString(packetRate);
         MessageRateUnitText = _localization.ItemsRate.GetUnit(packetRate);
-        
-        Interlocked.Exchange(ref _cnt, _cnt);
     }
 }

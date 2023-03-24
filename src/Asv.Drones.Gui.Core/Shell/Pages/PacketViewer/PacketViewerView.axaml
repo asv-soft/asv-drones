@@ -15,24 +15,42 @@
     <StackPanel Orientation="Horizontal">
         <Grid RowDefinitions="20 20 Auto">
             <Button Command="{CompiledBinding PlayPause}" Content="PLAY/PAUSE" />
-            <TextBlock Grid.Row="1" Text="{Binding FilteredPackets.Count}" />
-            <DataGrid MaxHeight="800" Grid.Row="2" Items="{Binding FilteredPackets}" IsReadOnly="True">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Date" Binding="{Binding Path=DateTime}"
-                                        x:DataType="core:PacketMessageViewModel" />
-                    <DataGridTextColumn Header="Source" Binding="{Binding Path=Source}"
-                                        x:DataType="core:PacketMessageViewModel" />
-                    <DataGridTextColumn Header="Type" Binding="{Binding Path=Type}"
-                                        x:DataType="core:PacketMessageViewModel" />
-                    <DataGridTextColumn Width="500" Header="Message" Binding="{Binding Path=Message}"
-                                        x:DataType="core:PacketMessageViewModel" />
-                </DataGrid.Columns>
-            </DataGrid>
+            <TextBlock Grid.Row="1" Text="{Binding Packets.Count}" />
+            <ListBox Grid.Row="2" Items="{Binding Packets}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid IsSharedSizeScope="True">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition SharedSizeGroup="Date"/>
+                                <ColumnDefinition SharedSizeGroup="Source"/>
+                                <ColumnDefinition SharedSizeGroup="Type"/>
+                                <ColumnDefinition MaxWidth="500" SharedSizeGroup="Message"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding DateTime}"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Source}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Type}"/>
+                            <TextBlock Grid.Column="3" Text="{Binding Message}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListBox>
+            <!-- <DataGrid MaxHeight="800" Grid.Row="2" Items="{Binding Packets}" IsReadOnly="True"> -->
+            <!--     <DataGrid.Columns> -->
+            <!--         <DataGridTextColumn Header="Date" Binding="{Binding Path=DateTime}" -->
+            <!--                             x:DataType="core:PacketMessageViewModel" /> -->
+            <!--         <DataGridTextColumn Header="Source" Binding="{Binding Path=Source}" -->
+            <!--                             x:DataType="core:PacketMessageViewModel" /> -->
+            <!--         <DataGridTextColumn Header="Type" Binding="{Binding Path=Type}" -->
+            <!--                             x:DataType="core:PacketMessageViewModel" /> -->
+            <!--         <DataGridTextColumn Width="500" Header="Message" Binding="{Binding Path=Message}" -->
+            <!--                             x:DataType="core:PacketMessageViewModel" /> -->
+            <!--     </DataGrid.Columns> -->
+            <!-- </DataGrid> -->
         </Grid>
 
         <StackPanel>
             <CheckBox HorizontalAlignment="Left" IsChecked="True" Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked" />
-            <ItemsControl x:Name="Filters" Margin="10 0 0 0" Items="{Binding Sources}">
+            <ItemsControl x:Name="Filters" Margin="10 0 0 0" Items="{Binding Filters}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel />

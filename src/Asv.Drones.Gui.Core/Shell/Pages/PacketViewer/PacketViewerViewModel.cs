@@ -3,6 +3,7 @@ using System.ComponentModel.Composition;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Uav;
 using Asv.Mavlink;
@@ -19,98 +20,99 @@ namespace Asv.Drones.Gui.Core;
 public class PacketViewerViewModel : ViewModelBase, IShellPage
 {
     private readonly ILocalizationService _localization;
-    
-    private ReadOnlyObservableCollection<PacketMessageViewModel> _filteredPackets;
-    private DateTime _lastTime;
-    
     public const string UriString = ShellPage.UriString + ".packetViewer";
     public static readonly Uri Uri = new Uri(UriString);
-
-    public ReadOnlyObservableCollection<PacketMessageViewModel> FilteredPackets => _filteredPackets;
-    [Reactive] public SourceList<PacketMessageViewModel> Packets { get; set; } = new();
-    [Reactive] public ObservableCollection<PacketFilterViewModel> Sources { get; set; } = new();
-    [Reactive] public bool IsPause { get; set; }
-
-    public Subject<Unit> OnFilterChanged { get; } = new();
     
-    public ReactiveCommand<Unit, Unit> PlayPause { get; set; }
+
+    private readonly Subject<Func<PacketMessageViewModel, bool>> _filterUpdate = new ();
+
+    private readonly SourceCache<PacketFilterViewModel,string> _filtersSource;
+    private readonly ReadOnlyObservableCollection<PacketFilterViewModel> _filters;
+    
+    private readonly SourceCache<PacketMessageViewModel,Guid> _packetsSource;
+    private readonly ReadOnlyObservableCollection<PacketMessageViewModel> _packets;
 
     public PacketViewerViewModel() : base(Uri)
     {
-        PlayPause = ReactiveCommand.CreateFromTask(SwitchIsPause);
+        PlayPause = ReactiveCommand.Create(() => IsPause = !IsPause);
     }
     
     [ImportingConstructor]
     public PacketViewerViewModel(IMavlinkDevicesService mavlinkDevicesService, ILocalizationService localizationService) : this()
     {
         _localization = localizationService;
+
+        _packetsSource = new SourceCache<PacketMessageViewModel, Guid>(_ => _.Id);
+        _filtersSource = new SourceCache<PacketFilterViewModel, string>(_ => _.Id);
         
         mavlinkDevicesService.Router
+            .Where(_=>IsPause == false)
             .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(AddMessage)
+            .Select(_=>new PacketMessageViewModel(_))
+            .Do(UpdateFilterSource)
+            .Subscribe(_=>_packetsSource.AddOrUpdate(_))
             .DisposeItWith(Disposable);
-
-        Packets.LimitSizeTo(1000);
         
-        Packets
+        _filterUpdate.OnNext(FilterPredicate);
+        _packetsSource
             .Connect()
-            .AutoRefreshOnObservable(_ => OnFilterChanged)
-            .Filter(Filter)
-            .Bind(out _filteredPackets)
+            .Filter(_filterUpdate)
+            .SortBy(_=>_.DateTime)
+            .Bind(out _packets)
             .Subscribe()
             .DisposeItWith(Disposable);
 
-        Sources
-            .ToObservableChangeSet()
-            .AutoRefresh(vm => vm.IsChecked)
-            .Subscribe(_ => OnFilterChanged.Next())
+        _filtersSource
+            .Connect()
+            .Bind(out _filters)
+            .Subscribe()
             .DisposeItWith(Disposable);
+
+        _filtersSource
+            .Connect()
+            .WhenValueChanged(_ => _.IsChecked)
+            .Subscribe(_ => _filterUpdate.OnNext(FilterPredicate))
+            .DisposeItWith(Disposable);
+
     }
 
-    private bool Filter(PacketMessageViewModel vm)
+    private void UpdateFilterSource(PacketMessageViewModel obj)
     {
-        return Sources.Any(o => o.IsChecked && o.Type == vm.Type);
-    }
-
-    private void AddMessage(IPacketV2<IPayload> packetV2)
-    {
-        if (IsPause) return;
-        
-        var message = new PacketMessageViewModel(DateTime.Now, $"{packetV2.SystemId},{packetV2.ComponenId}",
-            JsonConvert.SerializeObject(packetV2?.Payload), packetV2.Name);
-        
-        AddOrUpdateFilters(message);
-
-        Packets.Insert(0, message);
-    }
-
-    private void AddOrUpdateFilters(PacketMessageViewModel vm)
-    {
-        var source = Sources.Where(_ => _.Type == vm.Type && _.Source == vm.Source);
-        
-        if (!source.Any())
+        var exist = _filtersSource.Lookup(obj.FilterId);
+        if (exist.HasValue)
         {
-            Sources.Add(new PacketFilterViewModel(vm.Type, vm.Source, _localization));
+            exist.Value.UpdateRates();
         }
         else
         {
-            source.FirstOrDefault().UpdateRates();
+            _filtersSource.AddOrUpdate(new PacketFilterViewModel(obj,_localization));
         }
     }
+
+    public ICommand PlayPause { get; }
+
+    public ReadOnlyObservableCollection<PacketMessageViewModel> Packets => _packets;
+    public ReadOnlyObservableCollection<PacketFilterViewModel> Filters => _filters;
+    
+    
+    
+    [Reactive] public bool IsPause { get; set; }
+
+    private bool FilterPredicate(PacketMessageViewModel vm)
+    {
+        return _filters.Where(_=>_.IsChecked).Any(_=>_.Id == vm.FilterId);
+    }
+  
 
     public void SetArgs(Uri link)
     {
     }
 
-    private Task SwitchIsPause()
-    {
-        IsPause = !IsPause;
-        return Task.CompletedTask;
-    }
+  
 
     private Task UncheckFilters()
     {
-        foreach (var source in Sources)
+        foreach (var source in Filters)
         {
             source.IsChecked = false;
         }
@@ -120,7 +122,7 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
     
     private Task CheckFilters()
     {
-        foreach (var source in Sources)
+        foreach (var source in Filters)
         {
             source.IsChecked = true;
         }
