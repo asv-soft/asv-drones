@@ -24,5 +24,7 @@ public class DefaultUavRttItemProvider : IUavRttItemProvider
         yield return new GpsUavRttViewModel(vehicle, vehicle.GpsInfo);
         yield return new GpsUavRttViewModel(vehicle, vehicle.Gps2Info);
         yield return new VoltageUavRttItemViewModel(vehicle, _localizationService);
+        yield return new CurrentUavRttViewModel(vehicle, _localizationService);
+
     }
 }

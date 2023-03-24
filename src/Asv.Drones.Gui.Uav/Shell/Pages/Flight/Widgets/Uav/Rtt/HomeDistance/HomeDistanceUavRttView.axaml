@@ -5,7 +5,8 @@
              xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              d:DesignWidth="100" d:DesignHeight="30"
-             x:Class="Asv.Drones.Gui.Uav.HomeDistanceUavRttView">
+             x:Class="Asv.Drones.Gui.Uav.HomeDistanceUavRttView"
+             x:DataType="uav:HomeDistanceUavRttViewModel">
     <Design.DataContext>
         <uav:HomeDistanceUavRttViewModel/>
     </Design.DataContext>
