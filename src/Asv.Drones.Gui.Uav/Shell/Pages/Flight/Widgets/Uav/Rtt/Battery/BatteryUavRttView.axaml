@@ -12,7 +12,7 @@
         <uav:BatteryUavRttViewModel/>
     </Design.DataContext>
     <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="Battery level">
-        <core:BatteryIndicator Width="20" Height="20" MaxValue="1" WarningValue="0.5" CriticalValue="0.2" Value="{CompiledBinding BatteryLevel}"/>   
-        <TextBlock VerticalAlignment="Center" Text="{CompiledBinding BatteryLevel,StringFormat={}{0:P0} }"/>
+        <core:BatteryIndicator Width="20" Height="20" MaxValue="1" WarningValue="0.5" CriticalValue="0.2" Value="{Binding BatteryLevel}"/>   
+        <TextBlock VerticalAlignment="Center" Text="{Binding BatteryLevelString}"/>
     </StackPanel>
 </UserControl>
