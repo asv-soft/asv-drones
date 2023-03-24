@@ -1237,5 +1237,14 @@ namespace Asv.Drones.Gui.Core {
                 return ResourceManager.GetString("Velocity_MilesPerHourUnit", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to V.
+        /// </summary>
+        public static string Voltage_Unit {
+            get {
+                return ResourceManager.GetString("Voltage_Unit", resourceCulture);
+            }
+        }
     }
 }

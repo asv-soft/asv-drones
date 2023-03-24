@@ -11,7 +11,7 @@
         <uav:HomeDistanceUavRttViewModel/>
     </Design.DataContext>
     <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="Distance from UAV to home">
-        <avalonia:MaterialIcon Width="20" Height="20" Kind="LocationDistance"/>   
-        <TextBlock VerticalAlignment="Center" Text="{CompiledBinding HomeDistance}"/>
+        <avalonia:MaterialIcon  Width="20" Height="20" Kind="LocationDistance"/>   
+        <TextBlock VerticalAlignment="Center" Text="{Binding HomeDistance}"/>
     </StackPanel>
 </UserControl>
