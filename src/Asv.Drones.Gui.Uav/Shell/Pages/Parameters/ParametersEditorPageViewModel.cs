@@ -10,7 +10,9 @@ using Asv.Mavlink.Client;
 using DynamicData;
 using DynamicData.Alias;
 using DynamicData.Binding;
+using DynamicData.Kernel;
 using DynamicData.PLinq;
+using FluentAvalonia.Core;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -47,7 +49,7 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(AddSelectedItem)
             .DisposeItWith(Disposable);
-        
+
         this.WhenAnyValue(_ => _.Search)
             .ObserveOn(RxApp.MainThreadScheduler)
             .Throttle(TimeSpan.FromMilliseconds(500))
@@ -117,7 +119,9 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
         if(PinnedParameters.Count > 0)
             PinnedParameters = new ObservableCollection<ParametersEditorParameterViewModel>(PinnedParameters.Where(_ => _.Parameter.Pinned));
         
-        if(item.Parameter != null && item.Description != null)
+        if(item.Parameter != null && 
+           item.Description != null && 
+           PinnedParameters.FirstOrDefault(_ => _.Parameter.Parameter.Name == item.Parameter.Name) == null)
             PinnedParameters.Add(new ParametersEditorParameterViewModel(item));
     }
     

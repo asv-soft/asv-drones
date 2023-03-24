@@ -49,12 +49,14 @@
             </ListBox>
         </DockPanel>
         <GridSplitter Grid.Column="1"/>
-        <ItemsControl Items="{Binding PinnedParameters}" Grid.Column="2">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
+        <ScrollViewer Grid.Column="2">
+            <ItemsControl HorizontalAlignment="Stretch" Items="{Binding PinnedParameters}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>    
+        </ScrollViewer>
     </Grid>
 </UserControl>

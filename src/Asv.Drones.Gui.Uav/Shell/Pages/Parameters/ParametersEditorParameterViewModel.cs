@@ -22,9 +22,13 @@ public class ParametersEditorParameterViewModel : ViewModelBase
     public ParametersEditorParameterViewModel(ParameterItem parameterItem) : this()
     {
         Parameter = parameterItem;
+        
+        Value = (object)(parameterItem.Parameter.IntegerValue ?? (parameterItem.Parameter.RealValue ?? 0));
     }
     
-    public ParameterItem Parameter { get; }
+    public object Value { get; set; }
+    
+    public ParameterItem Parameter { get; set; }
     
     public ICommand Write { get; set; }
 
