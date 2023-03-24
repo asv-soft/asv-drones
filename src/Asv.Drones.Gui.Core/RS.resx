@@ -513,4 +513,7 @@
   <data name="UdpPortViewModel_Title" xml:space="preserve">
     <value>New UDP</value>
   </data>
+  <data name="Voltage_Unit" xml:space="preserve">
+    <value>V</value>
+  </data>
 </root>
