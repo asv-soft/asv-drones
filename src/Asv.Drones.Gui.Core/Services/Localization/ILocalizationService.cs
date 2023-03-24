@@ -67,6 +67,8 @@ namespace Asv.Drones.Gui.Core
 
         IReadOnlyMeasureUnit<TimeSpan> RelativeTime { get; }
         
+        IReadOnlyMeasureUnit<double> Current { get; }
+
         IMeasureUnit<double,AltitudeUnits> Altitude { get; }
 
         IMeasureUnit<double,DistanceUnits> Distance { get; }
