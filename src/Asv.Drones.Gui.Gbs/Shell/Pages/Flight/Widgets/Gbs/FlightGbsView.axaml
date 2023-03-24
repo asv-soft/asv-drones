@@ -2,7 +2,39 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:gbs="clr-namespace:Asv.Drones.Gui.Gbs"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Asv.Drones.Gui.Gbs.FlightGbsView">
-    Welcome to Avalonia!
+             x:CompileBindings="True"
+             x:Class="Asv.Drones.Gui.Gbs.FlightGbsView"
+             x:DataType="gbs:FlightGbsViewModel">
+    <Design.DataContext>
+        <gbs:FlightGbsViewModel/>
+    </Design.DataContext>
+    <Border Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8" CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True">
+        <StackPanel Margin="10" Spacing="8">
+            <DockPanel DockPanel.Dock="Top">
+                <Button DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Command="{Binding LocateVehicleCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="{Binding Icon}" Foreground="Red"  Width="25" Height="25" Margin="0,0,5,0"/>
+                        <TextBlock VerticalAlignment="Center" DockPanel.Dock="Top" Text="{Binding Title}" />      
+                    </StackPanel>
+                </Button>
+                
+                <!--<StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Spacing="5">
+                    <Button Padding="3" BorderBrush="Transparent" Background="Transparent" Command="{Binding LocateVehicleCommand}">
+                        <avalonia:MaterialIcon Kind="Target" Width="20" Height="20" />    
+                    </Button>
+                </StackPanel>-->
+                  
+            </DockPanel>    
+            <ItemsControl Items="{Binding RttItems}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel ItemHeight="30" ItemWidth="85" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </StackPanel>    
+    </Border>
 </UserControl>

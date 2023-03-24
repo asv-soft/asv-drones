@@ -5,9 +5,9 @@ using Asv.Mavlink;
 
 namespace Asv.Drones.Gui.Gbs;
 
-[Export(typeof(IUavRttItemProvider))]
+[Export(typeof(IGbsRttItemProvider))]
 [PartCreationPolicy(CreationPolicy.NonShared)]
-public class DefaultGbsRttItemProvider : IUavRttItemProvider
+public class DefaultGbsRttItemProvider : IGbsRttItemProvider
 {
     private readonly ILocalizationService _localizationService;
     
@@ -17,8 +17,8 @@ public class DefaultGbsRttItemProvider : IUavRttItemProvider
         _localizationService = localizationService;
     }
     
-    public IEnumerable<IUavRttItem> Create(IVehicle vehicle)
+    public IEnumerable<IGbsRttItem> Create(IGbsDevice device)
     {
-        
+        yield break;
     }
 }

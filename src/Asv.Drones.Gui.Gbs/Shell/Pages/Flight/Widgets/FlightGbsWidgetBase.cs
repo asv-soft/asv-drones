@@ -12,12 +12,12 @@ namespace Asv.Drones.Gui.Gbs
             
         }
 
-        protected FlightGbsWidgetBase(IVehicle vehicle,Uri uri) : base(uri)
+        protected FlightGbsWidgetBase(IGbsDevice gbs,Uri uri) : base(uri)
         {
-            Vehicle = vehicle;
+            Gbs = gbs;
         }
         
-        protected IVehicle Vehicle { get; }
+        protected IGbsDevice Gbs { get; }
         
         protected override void InternalAfterMapInit(IMap map)
         {

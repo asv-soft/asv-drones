@@ -6,20 +6,20 @@ namespace Asv.Drones.Gui.Gbs;
 
 public abstract class GbsRttItem : ViewModelBase, IGbsRttItem
 {
-    protected IVehicle Vehicle { get; }
+    protected IGbsDevice Gbs { get; }
 
-    public static Uri GenerateRtt(IVehicle vehicle, string name) =>
-        new(FlightGbsViewModel.GenerateUri(vehicle), $"rtt/{name}");
+    public static Uri GenerateUri(IGbsDevice gbs, string name) =>
+        new(FlightGbsViewModel.GenerateUri(gbs), $"rtt/{name}");
 
     public GbsRttItem():base(new Uri($"fordesigntime:{Guid.NewGuid()}"))
     {
         
     }
     
-    protected GbsRttItem(IVehicle vehicle,Uri id) : base(id)
+    protected GbsRttItem(IGbsDevice gbs,Uri id) : base(id)
     {
         IsVisible = true;
-        Vehicle = vehicle;
+        Gbs = gbs;
     }
     
     [Reactive]

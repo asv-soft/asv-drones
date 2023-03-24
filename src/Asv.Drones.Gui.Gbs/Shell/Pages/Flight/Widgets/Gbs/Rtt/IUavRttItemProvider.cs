@@ -2,5 +2,5 @@
 
 public interface IGbsRttItemProvider
 {
-    public IEnumerable<IGbsRttItem> Create(IGbsDevice vehicle);
+    public IEnumerable<IGbsRttItem> Create(IGbsDevice device);
 }
