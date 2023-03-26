@@ -23,6 +23,7 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
 
     private readonly Subject<Func<PacketMessageViewModel, bool>> _sourceFilterUpdate = new ();
     private readonly Subject<Func<PacketMessageViewModel, bool>> _typeFilterUpdate = new ();
+    private readonly Subject<Func<PacketMessageViewModel, bool>> _searchUpdate = new ();
 
     private readonly SourceCache<PacketFilterViewModel,string> _filtersSource;
     private readonly SourceCache<PacketFilterViewModel,string> _filtersSourceType;
@@ -58,15 +59,21 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
         
         _sourceFilterUpdate.OnNext(FilterBySourcePredicate);
         _typeFilterUpdate.OnNext(FilterBySourcePredicate);
+        _searchUpdate.OnNext(SearchPredicate);
         
         _packetsSource
             .Connect()
             .Filter(_sourceFilterUpdate)
             .Filter(_typeFilterUpdate)
+            .Filter(_searchUpdate)
             .LimitSizeTo(1000)
             .Sort(SortExpressionComparer<PacketMessageViewModel>.Descending(_=>_.DateTime), SortOptimisations.ComparesImmutableValuesOnly)
             .Bind(out _packets)
             .Subscribe()
+            .DisposeItWith(Disposable);
+
+        this.WhenAnyValue(_ => _.SearchText)
+            .Subscribe(_ => _searchUpdate.OnNext(SearchPredicate))
             .DisposeItWith(Disposable);
 
         #region Filters
@@ -129,6 +136,7 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
     public ReadOnlyObservableCollection<PacketFilterViewModel> FiltersByType => _filtersByType;
     
     [Reactive] public bool IsPause { get; set; }
+    [Reactive] public string SearchText { get; set; }
 
     private bool FilterBySourcePredicate(PacketMessageViewModel vm)
     {
@@ -139,7 +147,16 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
     {
         return _filtersByType.Where(_=>_.IsChecked).Any(_=>_.Type == vm.Type);
     }
-  
+
+    private bool SearchPredicate(PacketMessageViewModel vm)
+    {
+        if (string.IsNullOrEmpty(SearchText))
+        {
+            return true;
+        }
+
+        return vm.Message.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
+    }
 
     public void SetArgs(Uri link)
     {

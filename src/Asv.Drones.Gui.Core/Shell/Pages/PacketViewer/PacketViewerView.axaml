@@ -13,27 +13,25 @@
         <core:PacketViewerViewModel />
     </Design.DataContext>
     <Grid ColumnDefinitions="* Auto" RowDefinitions="Auto *">
-        <Grid RowDefinitions="Auto 20 Auto">
-            <Grid ColumnDefinitions="* Auto Auto Auto">
-                <TextBox >
-                    <TextBox.Styles>
-                        <Style Selector="TextBox">
-                            <Setter Property="InnerRightContent">
-                                <Template>
-                                    <Button Content="X" Background="Transparent" BorderBrush="{x:Null}" Command="{Binding $parent[TextBox].Clear}" />
-                                </Template>
-                            </Setter>
-                        </Style>
-                    </TextBox.Styles>
-                </TextBox>
-                <Button Margin="5 0 5 0" Grid.Column="1" Content="{avalonia:MaterialIconExt File}" />
-                <Button Margin="5 0 5 0" Grid.Column="2" Command="{CompiledBinding ClearAll}" Content="{avalonia:MaterialIconExt Bin}" />
-                <Button Margin="5 0 5 0" Grid.Column="3" Command="{CompiledBinding PlayPause}" Content="{avalonia:MaterialIconExt PlayPause}" />
-            </Grid>
-            <TextBlock Grid.Row="1" Text="{Binding Packets.Count}" />
+        <Grid Grid.ColumnSpan="2" RowDefinitions="Auto 20 Auto" ColumnDefinitions="* Auto Auto Auto">
+            <TextBox Text="{Binding SearchText, Mode=TwoWay}">
+                <TextBox.Styles>
+                    <Style Selector="TextBox">
+                        <Setter Property="InnerRightContent">
+                            <Template>
+                                <Button Content="X" Background="Transparent" BorderBrush="{x:Null}" Command="{Binding $parent[TextBox].Clear}" />
+                            </Template>
+                        </Setter>
+                    </Style>
+                </TextBox.Styles>
+            </TextBox>
+            <Button Grid.Row="0" Margin="5 0 5 0" Grid.Column="1" Content="{avalonia:MaterialIconExt File}" />
+            <Button Grid.Row="0" Margin="5 0 5 0" Grid.Column="2" Command="{CompiledBinding ClearAll}" Content="{avalonia:MaterialIconExt Bin}" />
+            <Button Grid.Row="0" Margin="5 0 5 0" Grid.Column="3" Command="{CompiledBinding PlayPause}" Content="{avalonia:MaterialIconExt PlayPause}" />
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Packets.Count}" />
         </Grid>
         
-        <ListBox Grid.Column="0" Grid.Row="1" Items="{Binding Packets}">
+        <ListBox Grid.Column="0" Grid.Row="1" Items="{Binding Packets}" Margin="0 0 5 0">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid IsSharedSizeScope="True">
@@ -41,7 +39,7 @@
                             <ColumnDefinition SharedSizeGroup="Date"/>
                             <ColumnDefinition SharedSizeGroup="Source"/>
                             <ColumnDefinition SharedSizeGroup="Type"/>
-                            <ColumnDefinition MaxWidth="500" SharedSizeGroup="Message"/>
+                            <ColumnDefinition SharedSizeGroup="Message" MaxWidth="500"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="{Binding DateTime}"/>
                         <TextBlock Grid.Column="1" Text="{Binding Source}"/>
@@ -68,7 +66,7 @@
                 </ListBox>
             </Grid>
             <Grid RowDefinitions="Auto *">
-                <CheckBox HorizontalAlignment="Left" IsChecked="True" Checked="TypesChecked" Unchecked="TypesUncheced" />
+                <CheckBox HorizontalAlignment="Left" IsChecked="True" Checked="TypesChecked" Unchecked="TypesUnchecked" />
                 <ListBox Grid.Row="1" x:Name="TypeFilters" Margin="10 0 0 0" Items="{Binding FiltersByType}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>

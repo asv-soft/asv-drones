@@ -1,5 +1,4 @@
 using System.ComponentModel.Composition;
-using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
 
@@ -50,7 +49,7 @@ public partial class PacketViewerView : ReactiveUserControl<PacketViewerViewMode
         }
     }
 
-    private void TypesUncheced(object? sender, RoutedEventArgs e)
+    private void TypesUnchecked(object? sender, RoutedEventArgs e)
     {
         var filters = TypeFilters.Items.OfType<PacketFilterViewModel>();
         
