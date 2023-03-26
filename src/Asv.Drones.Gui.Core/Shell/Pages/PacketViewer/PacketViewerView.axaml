@@ -12,69 +12,81 @@
     <Design.DataContext>
         <core:PacketViewerViewModel />
     </Design.DataContext>
-    <StackPanel Orientation="Horizontal">
-        <Grid RowDefinitions="20 20 Auto">
-            <Button Command="{CompiledBinding PlayPause}" Content="PLAY/PAUSE" />
+    <Grid ColumnDefinitions="* Auto" RowDefinitions="Auto *">
+        <Grid RowDefinitions="Auto 20 Auto">
+            <Grid ColumnDefinitions="* Auto Auto Auto">
+                <TextBox >
+                    <TextBox.Styles>
+                        <Style Selector="TextBox">
+                            <Setter Property="InnerRightContent">
+                                <Template>
+                                    <Button Content="X" Background="Transparent" BorderBrush="{x:Null}" Command="{Binding $parent[TextBox].Clear}" />
+                                </Template>
+                            </Setter>
+                        </Style>
+                    </TextBox.Styles>
+                </TextBox>
+                <Button Margin="5 0 5 0" Grid.Column="1" Content="{avalonia:MaterialIconExt File}" />
+                <Button Margin="5 0 5 0" Grid.Column="2" Command="{CompiledBinding ClearAll}" Content="{avalonia:MaterialIconExt Bin}" />
+                <Button Margin="5 0 5 0" Grid.Column="3" Command="{CompiledBinding PlayPause}" Content="{avalonia:MaterialIconExt PlayPause}" />
+            </Grid>
             <TextBlock Grid.Row="1" Text="{Binding Packets.Count}" />
-            <ListBox Grid.Row="2" Items="{Binding Packets}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid IsSharedSizeScope="True">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition SharedSizeGroup="Date"/>
-                                <ColumnDefinition SharedSizeGroup="Source"/>
-                                <ColumnDefinition SharedSizeGroup="Type"/>
-                                <ColumnDefinition MaxWidth="500" SharedSizeGroup="Message"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{Binding DateTime}"/>
-                            <TextBlock Grid.Column="1" Text="{Binding Source}"/>
-                            <TextBlock Grid.Column="2" Text="{Binding Type}"/>
-                            <TextBlock Grid.Column="3" Text="{Binding Message}"/>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ListBox>
-            <!-- <DataGrid MaxHeight="800" Grid.Row="2" Items="{Binding Packets}" IsReadOnly="True"> -->
-            <!--     <DataGrid.Columns> -->
-            <!--         <DataGridTextColumn Header="Date" Binding="{Binding Path=DateTime}" -->
-            <!--                             x:DataType="core:PacketMessageViewModel" /> -->
-            <!--         <DataGridTextColumn Header="Source" Binding="{Binding Path=Source}" -->
-            <!--                             x:DataType="core:PacketMessageViewModel" /> -->
-            <!--         <DataGridTextColumn Header="Type" Binding="{Binding Path=Type}" -->
-            <!--                             x:DataType="core:PacketMessageViewModel" /> -->
-            <!--         <DataGridTextColumn Width="500" Header="Message" Binding="{Binding Path=Message}" -->
-            <!--                             x:DataType="core:PacketMessageViewModel" /> -->
-            <!--     </DataGrid.Columns> -->
-            <!-- </DataGrid> -->
         </Grid>
+        
+        <ListBox Grid.Column="0" Grid.Row="1" Items="{Binding Packets}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid IsSharedSizeScope="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="Date"/>
+                            <ColumnDefinition SharedSizeGroup="Source"/>
+                            <ColumnDefinition SharedSizeGroup="Type"/>
+                            <ColumnDefinition MaxWidth="500" SharedSizeGroup="Message"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding DateTime}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Source}"/>
+                        <TextBlock Grid.Column="2" Text="{Binding Type}"/>
+                        <TextBlock Grid.Column="3" Text="{Binding Message}"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ListBox>
 
-        <StackPanel>
-            <CheckBox HorizontalAlignment="Left" IsChecked="True" Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked" />
-            <ItemsControl x:Name="Filters" Margin="10 0 0 0" Items="{Binding Filters}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid ColumnDefinitions="*,Auto">
-                            <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked}">
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+            <Grid RowDefinitions="Auto *">
+                <CheckBox HorizontalAlignment="Left" IsChecked="True" Checked="SourcesChecked" Unchecked="SourcesUnchecked" />
+                <ListBox Grid.Row="1" x:Name="SourceFilters" Margin="10 0 0 0" Items="{Binding FiltersBySource}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding IsChecked}">
                                 <CheckBox.Content>
-                                    <StackPanel Orientation="Horizontal" Spacing="3">
-                                        <TextBlock Text="{Binding Source}" />
-                                        <TextBlock Text="{Binding Type}" />
-                                    </StackPanel>
+                                    <TextBlock Text="{Binding Source}" />
                                 </CheckBox.Content>
                             </CheckBox>
-                            <StackPanel Margin="3 0 0 0" Grid.Column="1" Orientation="Horizontal" Spacing="3">
-                                <TextBlock VerticalAlignment="Center" Text="{Binding MessageRateText}" />
-                                <TextBlock VerticalAlignment="Center" Text="{Binding MessageRateUnitText}" />
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ListBox>
+            </Grid>
+            <Grid RowDefinitions="Auto *">
+                <CheckBox HorizontalAlignment="Left" IsChecked="True" Checked="TypesChecked" Unchecked="TypesUncheced" />
+                <ListBox Grid.Row="1" x:Name="TypeFilters" Margin="10 0 0 0" Items="{Binding FiltersByType}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked}">
+                                    <CheckBox.Content>
+                                        <TextBlock Text="{Binding Type}" />
+                                    </CheckBox.Content>
+                                </CheckBox>
+                                <StackPanel Margin="3 0 0 0" Grid.Column="1" Orientation="Horizontal" Spacing="3">
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding MessageRateText}" />
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding MessageRateUnitText}" />
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ListBox>
+            </Grid>
         </StackPanel>
-    </StackPanel>
+    </Grid>
 </UserControl>

@@ -14,9 +14,11 @@ public partial class PacketViewerView : ReactiveUserControl<PacketViewerViewMode
         InitializeComponent();
     }
 
-    private void ToggleButton_OnChecked(object? sender, RoutedEventArgs e)
+    private void SourcesChecked(object? sender, RoutedEventArgs e)
     {
-        var filters = Filters.Items.OfType<PacketFilterViewModel>();
+        var filters = SourceFilters.Items.OfType<PacketFilterViewModel>();
+        
+        if (!filters.Any()) return;
 
         foreach (var filter in filters)
         {
@@ -24,9 +26,35 @@ public partial class PacketViewerView : ReactiveUserControl<PacketViewerViewMode
         }
     }
 
-    private void ToggleButton_OnUnchecked(object? sender, RoutedEventArgs e)
+    private void SourcesUnchecked(object? sender, RoutedEventArgs e)
     {
-        var filters = Filters.Items.OfType<PacketFilterViewModel>();
+        var filters = SourceFilters.Items.OfType<PacketFilterViewModel>();
+        
+        if (!filters.Any()) return;
+
+        foreach (var filter in filters)
+        {
+            filter.IsChecked = false;
+        }
+    }
+
+    private void TypesChecked(object? sender, RoutedEventArgs e)
+    {
+        var filters = TypeFilters.Items.OfType<PacketFilterViewModel>();
+
+        if (!filters.Any()) return;
+
+        foreach (var filter in filters)
+        {
+            filter.IsChecked = true;
+        }
+    }
+
+    private void TypesUncheced(object? sender, RoutedEventArgs e)
+    {
+        var filters = TypeFilters.Items.OfType<PacketFilterViewModel>();
+        
+        if (!filters.Any()) return;
 
         foreach (var filter in filters)
         {

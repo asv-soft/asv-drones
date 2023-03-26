@@ -28,7 +28,7 @@ public class PacketFilterViewModel : ViewModelBase
         UpdateRates();
     }
 
-    public PacketFilterViewModel(PacketMessageViewModel pkt,ILocalizationService localizationService) 
+    public PacketFilterViewModel(PacketMessageViewModel pkt, ILocalizationService localizationService) 
         : base(GenerateUri(pkt.FilterId))
     {
         _localization = localizationService;
