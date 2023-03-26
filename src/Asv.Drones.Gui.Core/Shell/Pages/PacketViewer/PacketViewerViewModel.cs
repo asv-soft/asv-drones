@@ -64,8 +64,8 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
             .Filter(_sourceFilterUpdate)
             .Filter(_typeFilterUpdate)
             .LimitSizeTo(1000)
+            .Sort(SortExpressionComparer<PacketMessageViewModel>.Descending(_=>_.DateTime), SortOptimisations.ComparesImmutableValuesOnly)
             .Bind(out _packets)
-            .SortBy(_=>_.DateTime, SortDirection.Descending)
             .Subscribe()
             .DisposeItWith(Disposable);
 
