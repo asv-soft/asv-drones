@@ -15,12 +15,8 @@ namespace Asv.Drones.Gui.Uav
 {
     public class FlightUavViewModel:FlightVehicleWidgetBase
     {
-        private ReadOnlyObservableCollection<IUavRttItem> _rttItems;
+        private readonly ReadOnlyObservableCollection<IUavRttItem> _rttItems;
         public static Uri GenerateUri(IVehicle vehicle) => FlightVehicleWidgetBase.GenerateUri(vehicle,"uav");
-
-        
-        
-        
 
         public FlightUavViewModel()
         {
@@ -42,6 +38,9 @@ namespace Asv.Drones.Gui.Uav
             Vehicle.Class.Select(MavlinkHelper.GetIcon).Subscribe(_ => Icon = _).DisposeItWith(Disposable);
             Attitude = new AttitudeViewModel(vehicle, new Uri(Id, "/id"),loc);
 
+            
+                
+            
             rttItems
                 .SelectMany(_ => _.Create(Vehicle))
                 .OrderBy(_=>_.Order)

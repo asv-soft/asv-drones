@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
-using System.ComponentModel.Composition;
 using System.Reactive.Linq;
+using System.Windows.Input;
 using Asv.Avalonia.Map;
 using Asv.Common;
 using DynamicData;
@@ -10,6 +10,12 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Core
 {
+    public enum MapZoomValue
+    {
+        Increase,
+        Decrease
+    }
+    
     public class MapPageViewModel:ViewModelBase,IShellPage,IMap
     {
         private readonly ReadOnlyObservableCollection<IMapAnchor> _markers;
@@ -87,6 +93,26 @@ namespace Asv.Drones.Gui.Core
                 .DisposeItWith(Disposable);
             
             #endregion
+
+            #region Commands
+
+            ZoomIn = ReactiveCommand.Create(() => ChangeZoomValue(MapZoomValue.Increase)).DisposeItWith(Disposable);
+            ZoomOut = ReactiveCommand.Create(() => ChangeZoomValue(MapZoomValue.Decrease)).DisposeItWith(Disposable);
+
+            #endregion
+        }
+
+        private void ChangeZoomValue(MapZoomValue value)
+        {
+            if (value == MapZoomValue.Increase & Zoom < MaxZoom)
+            {
+                Zoom++;
+            }
+
+            if (value == MapZoomValue.Decrease & Zoom > MinZoom)
+            {
+                Zoom--;
+            }
         }
 
         public ReadOnlyObservableCollection<IMapAnchor> Markers => _markers;
@@ -101,11 +127,13 @@ namespace Asv.Drones.Gui.Core
 
         [Reactive] public int MaxZoom { get; set; } = 20;
         [Reactive] public int MinZoom { get; set; } = 1;
-        [Reactive] public double Zoom { get; set; } = 7;
+        [Reactive] public double Zoom { get; set; } = 10;
         [Reactive]
         public GeoPoint Center { get; set; }
         [Reactive]
         public IMapAnchor SelectedItem { get; set; }
+        public ICommand ZoomIn { get; }
+        public ICommand ZoomOut { get; }
 
         #endregion
 

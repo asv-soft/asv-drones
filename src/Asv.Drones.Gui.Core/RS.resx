@@ -537,4 +537,7 @@
   <data name="PacketViewerView_Save" xml:space="preserve">
     <value>Save as CSV</value>
   </data>
+  <data name="Voltage_Unit" xml:space="preserve">
+    <value>V</value>
+  </data>
 </root>
