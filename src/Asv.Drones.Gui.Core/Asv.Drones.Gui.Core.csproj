@@ -18,8 +18,8 @@
 
   <ItemGroup>
     <PackageReference Include="Asv.Cfg" Version="1.4.6" />
-    <PackageReference Include="Asv.Mavlink" Version="1.1.10" />
-    <PackageReference Include="Asv.Mavlink.Vehicle" Version="1.1.10" />
+    <PackageReference Include="Asv.Mavlink" Version="2.0.0" />
+    <PackageReference Include="Asv.Mavlink.Vehicle" Version="2.0.0" />
     <PackageReference Include="Asv.Store" Version="1.4.6" />
     <PackageReference Include="Avalonia" Version="11.0.0-preview4" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview4" />

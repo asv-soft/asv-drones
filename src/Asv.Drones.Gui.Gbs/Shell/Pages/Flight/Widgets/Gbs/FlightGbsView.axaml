@@ -1,18 +1,15 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             xmlns:uav1="clr-namespace:Asv.Drones.Gui.Uav.Uav"
-             xmlns:core="clr-namespace:Asv.Drones.Gui.Core;assembly=Asv.Drones.Gui.Core"
-             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
+             xmlns:gbs="clr-namespace:Asv.Drones.Gui.Gbs"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:CompileBindings="True"
-             x:DataType="uav:FlightUavViewModel"
-             Background="Transparent"
-             x:Class="Asv.Drones.Gui.Uav.FlightUavView">
+             x:Class="Asv.Drones.Gui.Gbs.FlightGbsView"
+             x:DataType="gbs:FlightGbsViewModel">
     <Design.DataContext>
-        <uav:FlightUavViewModel/>
+        <gbs:FlightGbsViewModel/>
     </Design.DataContext>
     <Border Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8" CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True">
         <StackPanel Margin="10" Spacing="8">
@@ -31,11 +28,10 @@
                 </StackPanel>-->
                   
             </DockPanel>    
-            <uav1:AttitudeView DataContext="{Binding Attitude}"/>
             <ItemsControl Items="{Binding RttItems}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel ItemHeight="30" ItemWidth="100" />
+                        <WrapPanel ItemHeight="30" ItemWidth="85" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
