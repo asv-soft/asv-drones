@@ -79,7 +79,7 @@ namespace Asv.Avalonia.Map
             _core.SystemType = "WindowsPresentation";
             _core.RenderMode = RenderMode.WPF;
             
-            Zoom = _core.MaxZoom;
+            Zoom = _core.MaxZoom / 2;
             MinZoom = _core.MinZoom;
             MaxZoom = _core.MaxZoom;
             MapProvider = GMapProviders.BingHybridMap;
@@ -359,7 +359,7 @@ namespace Asv.Avalonia.Map
             get => _zoom;
             set
             {
-                if (value >= 1 & value <= 20 && SetAndRaise(ZoomProperty, ref _zoom, value))
+                if (value >= MinZoom & value <= MaxZoom && SetAndRaise(ZoomProperty, ref _zoom, value))
                 {
                     UpdateZoom();
                 }
