@@ -20,8 +20,11 @@ namespace Asv.Drones.Gui.Core
 
         private void InputElement_OnTapped(object? sender, TappedEventArgs e)
         {
-            if (sender is not InfoBadge { DataContext: LogMessageViewModel vm }) return;
-            vm.Close();
+            if (sender is InfoBar { DataContext: LogMessageViewModel vm })
+            {
+                vm.Close();
+            }
+            
         }
     }
 }
