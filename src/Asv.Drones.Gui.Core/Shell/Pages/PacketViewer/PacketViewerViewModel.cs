@@ -38,10 +38,9 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
 
     public PacketViewerViewModel() : base(Uri)
     {
-        PlayPause = ReactiveCommand.Create(() => IsPause = !IsPause);
-        ExportToCsv = ReactiveCommand.Create(Export);
-        //TODO: Implement delete all items from collection. Currently impossible due to collection being read-only
-        //ClearAll = ReactiveCommand.Create(() => Packets.RemoveMany(Packets));
+        //TODO: Implement export to CSV
+        //ExportToCsv = ReactiveCommand.Create(Export);
+        ClearAll = ReactiveCommand.Create(() => _packetsSource.Clear());
     }
     
     [ImportingConstructor]
@@ -133,7 +132,6 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
         }
     }
 
-    public ICommand PlayPause { get; }
     public ICommand ClearAll { get; }
     public ICommand ExportToCsv { get; }
 
