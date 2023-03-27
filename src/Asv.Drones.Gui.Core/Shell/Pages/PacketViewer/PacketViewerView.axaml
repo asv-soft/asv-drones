@@ -25,7 +25,7 @@
                     </Style>
                 </TextBox.Styles>
             </TextBox>
-            <Button Grid.Row="0" Margin="5 0 5 0" Grid.Column="1" Content="{avalonia:MaterialIconExt File}" />
+            <Button Grid.Row="0" Margin="5 0 5 0" Grid.Column="1" Command="{Binding ExportToCsv}" Content="{avalonia:MaterialIconExt File}" />
             <Button Grid.Row="0" Margin="5 0 5 0" Grid.Column="2" Command="{CompiledBinding ClearAll}" Content="{avalonia:MaterialIconExt Bin}" />
             <Button Grid.Row="0" Margin="5 0 5 0" Grid.Column="3" Command="{CompiledBinding PlayPause}" Content="{avalonia:MaterialIconExt PlayPause}" />
             <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Packets.Count}" />

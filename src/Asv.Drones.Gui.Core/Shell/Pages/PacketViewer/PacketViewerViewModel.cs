@@ -5,6 +5,8 @@ using System.Reactive.Subjects;
 using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Uav;
+using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using DynamicData;
@@ -17,6 +19,7 @@ namespace Asv.Drones.Gui.Core;
 public class PacketViewerViewModel : ViewModelBase, IShellPage
 {
     private readonly ILocalizationService _localization;
+    private readonly IGlobalCommandsService _cmd;
     public const string UriString = ShellPage.UriString + ".packetViewer";
     public static readonly Uri Uri = new Uri(UriString);
     
@@ -36,14 +39,16 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
     public PacketViewerViewModel() : base(Uri)
     {
         PlayPause = ReactiveCommand.Create(() => IsPause = !IsPause);
+        ExportToCsv = ReactiveCommand.Create(Export);
         //TODO: Implement delete all items from collection. Currently impossible due to collection being read-only
         //ClearAll = ReactiveCommand.Create(() => Packets.RemoveMany(Packets));
     }
     
     [ImportingConstructor]
-    public PacketViewerViewModel(IMavlinkDevicesService mavlinkDevicesService, ILocalizationService localizationService) : this()
+    public PacketViewerViewModel(IMavlinkDevicesService mavlinkDevicesService, ILocalizationService localizationService, IGlobalCommandsService cmd) : this()
     {
         _localization = localizationService;
+        _cmd = cmd;
 
         _packetsSource = new SourceCache<PacketMessageViewModel, Guid>(_ => _.Id);
         _filtersSource = new SourceCache<PacketFilterViewModel, string>(_ => _.Source);
@@ -130,6 +135,7 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
 
     public ICommand PlayPause { get; }
     public ICommand ClearAll { get; }
+    public ICommand ExportToCsv { get; }
 
     public ReadOnlyObservableCollection<PacketMessageViewModel> Packets => _packets;
     public ReadOnlyObservableCollection<PacketFilterViewModel> FiltersBySource => _filtersBySource;
@@ -156,6 +162,24 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
         }
 
         return vm.Message.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
+    }
+
+    public async void Export()
+    {
+        var file = await new Window().StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions(){Title = "Save to CSV..."});
+        
+        try
+        {
+            CsvHelper.SaveToCsv(_packets, "", ";", ",",
+                new CsvColumn<PacketMessageViewModel>("Date", _ => _.DateTime.ToString("G")),
+                new CsvColumn<PacketMessageViewModel>("Type", _ => _.Type),
+                new CsvColumn<PacketMessageViewModel>("Source", _ => _.Source),
+                new CsvColumn<PacketMessageViewModel>("Message", _ => _.Message));
+        }
+        catch(Exception ex)
+        {
+            throw;
+        }
     }
 
     public void SetArgs(Uri link)
