@@ -582,6 +582,33 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string LogMessageTypeHelper_GetDisplayName_Error {
+            get {
+                return ResourceManager.GetString("LogMessageTypeHelper_GetDisplayName_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string LogMessageTypeHelper_GetDisplayName_Info {
+            get {
+                return ResourceManager.GetString("LogMessageTypeHelper_GetDisplayName_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string LogMessageTypeHelper_GetDisplayName_Warning {
+            get {
+                return ResourceManager.GetString("LogMessageTypeHelper_GetDisplayName_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change current map provider for application.
         /// </summary>
         public static string MapSettingsView_MapProvider_Description {
@@ -785,6 +812,51 @@ namespace Asv.Drones.Gui.Core {
         public static string MeasureUnitsSettingsViewModel_VelocityDescription {
             get {
                 return ResourceManager.GetString("MeasureUnitsSettingsViewModel_VelocityDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packet Viewer.
+        /// </summary>
+        public static string PacketViewerShellMenuItem_Name {
+            get {
+                return ResourceManager.GetString("PacketViewerShellMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check/Uncheck All.
+        /// </summary>
+        public static string PacketViewerView_CheckAll {
+            get {
+                return ResourceManager.GetString("PacketViewerView_CheckAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear all packets.
+        /// </summary>
+        public static string PacketViewerView_ClearAll {
+            get {
+                return ResourceManager.GetString("PacketViewerView_ClearAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play/Pause.
+        /// </summary>
+        public static string PacketViewerView_PlayPause {
+            get {
+                return ResourceManager.GetString("PacketViewerView_PlayPause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save as CSV.
+        /// </summary>
+        public static string PacketViewerView_Save {
+            get {
+                return ResourceManager.GetString("PacketViewerView_Save", resourceCulture);
             }
         }
         
@@ -1235,6 +1307,15 @@ namespace Asv.Drones.Gui.Core {
         public static string Velocity_MilesPerHourUnit {
             get {
                 return ResourceManager.GetString("Velocity_MilesPerHourUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to V.
+        /// </summary>
+        public static string Voltage_Unit {
+            get {
+                return ResourceManager.GetString("Voltage_Unit", resourceCulture);
             }
         }
     }

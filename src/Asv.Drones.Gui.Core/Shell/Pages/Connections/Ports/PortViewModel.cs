@@ -119,7 +119,7 @@ namespace Asv.Drones.Gui.Core
             TxPktText = _localization.ItemsRate.ConvertToString(txPktRate);
             TxPktUnitText = _localization.ItemsRate.GetUnit(txPktRate);
 
-            IsPortEnabled = info.IsEnabled;
+            IsPortEnabled = info.IsEnabled ?? false;
             SkippedText = $"{info.SkipPackets}";
             SkippedUnitText = RS.PortViewModel_SkippedUnitTest;
 

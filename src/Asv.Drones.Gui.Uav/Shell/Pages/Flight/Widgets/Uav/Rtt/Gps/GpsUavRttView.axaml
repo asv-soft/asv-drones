@@ -16,6 +16,11 @@
                                  Height="20"
                                  FixType="{Binding FixType}"
                                  DopStatus="{Binding DopStatus}" />
+        <Grid RowDefinitions="*,*">
+            <TextBlock Grid.Row="0" FontSize="10" Text="{Binding TopStatusText}" Width="15"/>
+            <TextBlock Grid.Row="1" FontSize="10" Text="{Binding BottomStatusText}" Width="15"/>
+        </Grid>
+        
         <TextBlock Text="{Binding FixTypeText}" VerticalAlignment="Center" />
     </StackPanel>
 </UserControl>

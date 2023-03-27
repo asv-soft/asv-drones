@@ -62,8 +62,8 @@ namespace Asv.Avalonia.Map
             set => SetAndRaise(IsPopupNotEmptyProperty, ref _isPopupNotEmpty, value);
         }
 
-        public static readonly StyledProperty<IBrush?> IconBrushProperty = AvaloniaProperty.Register<MapAnchorView, IBrush?>(nameof(IconBrush));
-        public IBrush? IconBrush
+        public static readonly StyledProperty<IBrush> IconBrushProperty = AvaloniaProperty.Register<MapAnchorView, IBrush>(nameof(IconBrush));
+        public IBrush IconBrush
         {
             get => GetValue(IconBrushProperty);
             set => SetValue(IconBrushProperty, value);

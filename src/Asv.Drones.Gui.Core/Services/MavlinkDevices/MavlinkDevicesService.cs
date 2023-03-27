@@ -9,9 +9,12 @@ using Asv.Mavlink.V2.Ardupilotmega;
 using Asv.Mavlink.V2.Common;
 using Asv.Mavlink.V2.Icarous;
 using Asv.Mavlink.V2.Uavionix;
+using Asv.Mavlink.V2.AsvGbs;
 using Avalonia.Controls.Shapes;
 using DynamicData;
+using DynamicData.Binding;
 using ReactiveUI;
+using MavType = Asv.Mavlink.V2.Common.MavType;
 
 namespace Asv.Drones.Gui.Uav
 {
@@ -48,7 +51,7 @@ namespace Asv.Drones.Gui.Uav
         {
             _sequenceCalculator = sequenceCalculator ?? throw new ArgumentNullException(nameof(sequenceCalculator));
             _log = log ?? throw new ArgumentNullException(nameof(log));
-
+            
             #region InitUriHost mavlink router
 
             _mavlinkRouter = new MavlinkRouter(_ =>
@@ -57,6 +60,7 @@ namespace Asv.Drones.Gui.Uav
                 _.RegisterArdupilotmegaDialect();
                 _.RegisterIcarousDialect();
                 _.RegisterUavionixDialect();
+                _.RegisterAsvGbsDialect();
 
             }).DisposeItWith(Disposable);
             foreach (var port in InternalGetConfig(_ => _.Ports))
@@ -237,6 +241,8 @@ namespace Asv.Drones.Gui.Uav
             }
 
             return dev;
+            
+            
         }
 
     }

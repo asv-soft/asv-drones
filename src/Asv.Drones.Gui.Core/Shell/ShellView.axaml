@@ -68,6 +68,11 @@
                     <DockPanel LastChildFill="True"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ContentPresenter Content="{Binding}" Margin="0,5,0,0" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
         </ItemsControl>
 
         <ui:NavigationView 

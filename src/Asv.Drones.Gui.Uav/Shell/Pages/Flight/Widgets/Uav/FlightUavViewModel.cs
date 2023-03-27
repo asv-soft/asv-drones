@@ -16,7 +16,7 @@ namespace Asv.Drones.Gui.Uav
 {
     public class FlightUavViewModel:FlightVehicleWidgetBase
     {
-        private ReadOnlyObservableCollection<IUavRttItem> _rttItems;
+        private readonly ReadOnlyObservableCollection<IUavRttItem> _rttItems;
         public static Uri GenerateUri(IVehicle vehicle) => FlightVehicleWidgetBase.GenerateUri(vehicle,"uav");
 
         
