@@ -28,6 +28,7 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
             .DisposeMany()
             .Subscribe()
             .DisposeItWith(Disposable);
+        
     }
     
     public ICommand LocateVehicleCommand { get; set; }
