@@ -22,7 +22,7 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
     private readonly IGlobalCommandsService _cmd;
     public const string UriString = ShellPage.UriString + ".packetViewer";
     public static readonly Uri Uri = new Uri(UriString);
-    
+    public const int MaxPacketSize = 1000; 
 
     private readonly Subject<Func<PacketMessageViewModel, bool>> _sourceFilterUpdate = new ();
     private readonly Subject<Func<PacketMessageViewModel, bool>> _typeFilterUpdate = new ();
@@ -33,7 +33,7 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
     private readonly ReadOnlyObservableCollection<PacketFilterViewModel> _filtersBySource;
     private readonly ReadOnlyObservableCollection<PacketFilterViewModel> _filtersByType;
     
-    private readonly SourceCache<PacketMessageViewModel,Guid> _packetsSource;
+    private readonly SourceList<PacketMessageViewModel> _packetsSource;
     private readonly ReadOnlyObservableCollection<PacketMessageViewModel> _packets;
 
     public PacketViewerViewModel() : base(Uri)
@@ -41,6 +41,16 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
         //TODO: Implement export to CSV
         //ExportToCsv = ReactiveCommand.Create(Export);
         ClearAll = ReactiveCommand.Create(() => _packetsSource.Clear());
+        if (Design.IsDesignMode)
+        {
+            _packets = new ReadOnlyObservableCollection<PacketMessageViewModel>(
+                new ObservableCollection<PacketMessageViewModel>(new[]
+                {
+                    new PacketMessageViewModel{ DateTime = DateTime.Now, Source = "[1,1]", Type = "HEARTBEAT", Message = "asdasdasdasdas"},
+                    new PacketMessageViewModel{ DateTime = DateTime.Now, Source = "[1,1]", Type = "HEARTBEAT", Message = "asdasdasdasdas"},
+                    new PacketMessageViewModel{ DateTime = DateTime.Now, Source = "[1,1]", Type = "HEARTBEAT", Message = "asdasdasdasdas"},
+                }));
+        }
     }
     
     [ImportingConstructor]
@@ -49,16 +59,23 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
         _localization = localizationService;
         _cmd = cmd;
 
-        _packetsSource = new SourceCache<PacketMessageViewModel, Guid>(_ => _.Id);
+        _packetsSource = new SourceList<PacketMessageViewModel>();
         _filtersSource = new SourceCache<PacketFilterViewModel, string>(_ => _.Source);
-        _filtersSourceType = new SourceCache<PacketFilterViewModel, string>(_ => _.Id);
+        _filtersSourceType = new SourceCache<PacketFilterViewModel, string>(_ => _.Type);
         
         mavlinkDevicesService.Router
             .Where(_=>IsPause == false)
             .ObserveOn(RxApp.MainThreadScheduler)
             .Select(_=>new PacketMessageViewModel(_))
             .Do(UpdateFilterSource)
-            .Subscribe(_=>_packetsSource.AddOrUpdate(_))
+            .Subscribe(_=>
+            {
+                while (_packets.Count > MaxPacketSize)
+                {
+                    _packetsSource.RemoveAt(0);
+                }
+                _packetsSource.Add(_);
+            })
             .DisposeItWith(Disposable);
         
         _sourceFilterUpdate.OnNext(FilterBySourcePredicate);
@@ -70,8 +87,6 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
             .Filter(_sourceFilterUpdate)
             .Filter(_typeFilterUpdate)
             .Filter(_searchUpdate)
-            .LimitSizeTo(1000)
-            .Sort(SortExpressionComparer<PacketMessageViewModel>.Descending(_=>_.DateTime), SortOptimisations.ComparesImmutableValuesOnly)
             .Bind(out _packets)
             .Subscribe()
             .DisposeItWith(Disposable);
@@ -84,7 +99,8 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
 
         _filtersSource
             .Connect()
-            .Bind(out _filtersBySource)
+            //.Sort(SortExpressionComparer<PacketFilterViewModel>.Descending(_=>_.Source), SortOptimisations.ComparesImmutableValuesOnly)
+            .Bind(out _filtersBySource, useReplaceForUpdates:true )
             .Subscribe()
             .DisposeItWith(Disposable);
 
@@ -96,7 +112,7 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
 
         _filtersSourceType
             .Connect()
-            .Bind(out _filtersByType)
+            .Bind(out _filtersByType, useReplaceForUpdates:true)
             .Subscribe()
             .DisposeItWith(Disposable);
 
@@ -107,7 +123,15 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
             .DisposeItWith(Disposable);
 
         #endregion
+
+        Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).Subscribe(_ =>
+        {
+            _filtersSource.Items.ForEach(_=>_.UpdateRateText());
+            _filtersSourceType.Items.ForEach(_=>_.UpdateRateText());
+        }).DisposeItWith(Disposable);
     }
+
+    
 
     private void UpdateFilterSource(PacketMessageViewModel obj)
     {
@@ -121,7 +145,7 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
             _filtersSource.AddOrUpdate(new PacketFilterViewModel(obj,_localization));
         }
         
-        var typeExists = _filtersSourceType.Lookup(obj.FilterId);
+        var typeExists = _filtersSourceType.Lookup(obj.Type);
         if (typeExists.HasValue)
         {
             typeExists.Value.UpdateRates();

@@ -26,9 +26,17 @@
     <Design.DataContext>
         <core:PacketViewerViewModel />
     </Design.DataContext>
-    <Grid ColumnDefinitions="* Auto" RowDefinitions="Auto *">
-        <Grid Grid.ColumnSpan="2" RowDefinitions="Auto 20 Auto" ColumnDefinitions="* Auto Auto Auto">
-            <TextBox Text="{Binding SearchText, Mode=TwoWay}">
+    <Grid ColumnDefinitions="* Auto" RowDefinitions="Auto *" Margin="8">
+        <DockPanel Grid.Row="0" Grid.ColumnSpan="2" >
+            <Button DockPanel.Dock="Right" Grid.Row="0" Margin="5 0 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{Binding ExportToCsv}" Content="{avalonia:MaterialIconExt File}" ToolTip.Tip="{x:Static core:RS.PacketViewerView_Save}" />
+            <Button DockPanel.Dock="Right" Margin="5 0 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{CompiledBinding ClearAll}" Content="{avalonia:MaterialIconExt Bin}" ToolTip.Tip="{x:Static core:RS.PacketViewerView_ClearAll}" />
+            <ToggleButton DockPanel.Dock="Right" Margin="5 0 5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsChecked="{Binding IsPause, Mode=TwoWay}" ToolTip.Tip="{x:Static core:RS.PacketViewerView_PlayPause}">
+                <Panel>
+                    <ContentPresenter Content="{avalonia:MaterialIconExt Play}" Classes="tbchecked" />
+                    <ContentPresenter Content="{avalonia:MaterialIconExt Pause}" Classes="tbunchecked" />
+                </Panel>
+            </ToggleButton>
+            <TextBox DockPanel.Dock="Right"  MinWidth="200" Text="{Binding SearchText, Mode=TwoWay}">
                 <TextBox.Styles>
                     <Style Selector="TextBox">
                         <Setter Property="InnerRightContent">
@@ -39,73 +47,82 @@
                     </Style>
                 </TextBox.Styles>
             </TextBox>
-            <Button Grid.Row="0" Margin="5 0 5 0" Grid.Column="1" Command="{Binding ExportToCsv}" Content="{avalonia:MaterialIconExt File}" ToolTip.Tip="{x:Static core:RS.PacketViewerView_Save}" />
-            <Button Grid.Row="0" Margin="5 0 5 0" Grid.Column="2" Command="{CompiledBinding ClearAll}" Content="{avalonia:MaterialIconExt Bin}" ToolTip.Tip="{x:Static core:RS.PacketViewerView_ClearAll}" />
-            <ToggleButton Grid.Row="0" Margin="5 0 5 0" Grid.Column="3" IsChecked="{Binding IsPause, Mode=TwoWay}" ToolTip.Tip="{x:Static core:RS.PacketViewerView_PlayPause}">
-                <Panel>
-                    <ContentPresenter Content="{avalonia:MaterialIconExt Play}" Classes="tbchecked" />
-                    <ContentPresenter Content="{avalonia:MaterialIconExt Pause}" Classes="tbunchecked" />
-                </Panel>
-            </ToggleButton>
-            
-            <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Packets.Count}" />
-        </Grid>
-        
-        <ListBox Grid.Column="0" Grid.Row="1" Items="{Binding Packets}" Margin="0 0 20 0">
+            <avalonia:MaterialIcon DockPanel.Dock="Left" Height="30" Width="30" Kind="Package"/>
+            <TextBlock DockPanel.Dock="Left" Margin="8 0" FontSize="30" Text="Packet viewer"/>
+        </DockPanel>
+       
+        <ListBox Grid.Column="0" Grid.Row="1" Margin="0,0,8,0" Items="{Binding Packets}" Grid.IsSharedSizeScope="True">
+            <ListBox.Styles>
+                <Style Selector="ListBoxItem">
+                    <Setter Property="MinHeight" Value="25"></Setter>
+                </Style>
+            </ListBox.Styles>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid IsSharedSizeScope="True">
+                    <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition SharedSizeGroup="Date"/>
-                            <ColumnDefinition SharedSizeGroup="Source"/>
-                            <ColumnDefinition SharedSizeGroup="Type"/>
-                            <ColumnDefinition SharedSizeGroup="Message"/>
+                            <ColumnDefinition SharedSizeGroup="Date" Width="Auto"/>
+                            <ColumnDefinition SharedSizeGroup="Source" Width="Auto"/>
+                            <ColumnDefinition SharedSizeGroup="Type" Width="Auto"/>
+                            <ColumnDefinition SharedSizeGroup="Message" Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding DateTime}"/>
-                        <TextBlock Grid.Column="1" Text="{Binding Source}"/>
-                        <TextBlock Grid.Column="2" Text="{Binding Type}"/>
-                        <TextBlock Grid.Column="3" Text="{Binding Message}"/>
+                        <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="0" Text="{Binding DateTime, StringFormat={}{0:hh:mm:ss.fff}}"/>
+                        <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="1" Text="{Binding Source}"/>
+                        <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="2" Text="{Binding Type}"/>
+                        <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="3" Text="{Binding Message}"/>
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListBox>
 
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" Spacing="5">
-            <Grid RowDefinitions="Auto *">
-                <CheckBox HorizontalAlignment="Left" Margin="16 0 0 0" IsChecked="True" Checked="SourcesChecked" Unchecked="SourcesUnchecked" Content="{x:Static core:RS.PacketViewerView_CheckAll}" />
-                <ListBox Grid.Row="1" HorizontalAlignment="Left" x:Name="SourceFilters" Items="{Binding FiltersBySource}">
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" Margin="0,8,0,0" Spacing="5" MinWidth="340">
+            <Expander Header="Message sourses">
+                <DockPanel>
+                    <CheckBox DockPanel.Dock="Top" HorizontalAlignment="Left"  IsChecked="True" Checked="SourcesChecked" Unchecked="SourcesUnchecked" Content="{x:Static core:RS.PacketViewerView_CheckAll}" />
+                    <ListBox HorizontalAlignment="Stretch" x:Name="SourceFilters" Items="{Binding FiltersBySource}" Grid.IsSharedSizeScope="True">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" SharedSizeGroup="Rate" />
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsChecked}" Padding="8 6 0 0">
+                                        <CheckBox.Content>
+                                            <TextBlock VerticalAlignment="Center" Text="{Binding Source}" />
+                                        </CheckBox.Content>
+                                    </CheckBox>
+                                    <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding MessageRateText}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </Expander>
+            <Expander Header="Message types">
+                <DockPanel>
+                <CheckBox DockPanel.Dock="Top" HorizontalAlignment="Left"  IsChecked="True" Checked="TypesChecked" Unchecked="TypesUnchecked" Content="{x:Static core:RS.PacketViewerView_CheckAll}" />
+                <ListBox HorizontalAlignment="Stretch" x:Name="TypeFilters" Items="{Binding FiltersByType}" Grid.IsSharedSizeScope="True">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsChecked}" Padding="8 6 0 0">
-                                <CheckBox.Content>
-                                    <TextBlock VerticalAlignment="Center" Text="{Binding Source}" />
-                                </CheckBox.Content>
-                            </CheckBox>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ListBox>
-            </Grid>
-            
-            <Grid RowDefinitions="Auto *">
-                <CheckBox HorizontalAlignment="Left" Margin="16 0 0 0" IsChecked="True" Checked="TypesChecked" Unchecked="TypesUnchecked" Content="{x:Static core:RS.PacketViewerView_CheckAll}" />
-                <ListBox Grid.Row="1" HorizontalAlignment="Left" x:Name="TypeFilters" Items="{Binding FiltersByType}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid ColumnDefinitions="*,Auto">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Rate" />
+                                </Grid.ColumnDefinitions>
                                 <CheckBox Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding IsChecked}" Padding="8 6 0 0">
                                     <CheckBox.Content>
                                         <TextBlock Text="{Binding Type}" />
                                     </CheckBox.Content>
                                 </CheckBox>
-                                <StackPanel Margin="5 0 0 0" Grid.Column="1" Orientation="Horizontal" Spacing="3">
-                                    <TextBlock VerticalAlignment="Center" Text="{Binding MessageRateText}" />
-                                    <TextBlock VerticalAlignment="Center" Text="{Binding MessageRateUnitText}" />
-                                </StackPanel>
+                                <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding MessageRateText}" />
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ListBox>
-            </Grid>
+                </DockPanel>
+            </Expander>
+            
         </StackPanel>
     </Grid>
 </UserControl>

@@ -18,8 +18,7 @@ public class PacketFilterViewModel : ViewModelBase
     public string Source { get; set; }
     [Reactive]
     public string MessageRateText { get; set; }
-    [Reactive]
-    public string MessageRateUnitText { get; set; }
+   
     [Reactive]
     public bool IsChecked { get; set; }
 
@@ -29,24 +28,22 @@ public class PacketFilterViewModel : ViewModelBase
     }
 
     public PacketFilterViewModel(PacketMessageViewModel pkt, ILocalizationService localizationService) 
-        : base(GenerateUri(pkt.FilterId))
+        : base(GenerateUri(Guid.NewGuid().ToString()))
     {
         _localization = localizationService;
-        Id = pkt.FilterId;
         Type = pkt.Type;
         Source = pkt.Source;
         IsChecked = true;
     }
-
-
-    public string Id { get; set; }
-
     public void UpdateRates()
     {
         Interlocked.Increment(ref _cnt);
+        
+    }
 
-        var packetRate = _packetRate.Calculate(_cnt);
-        MessageRateText = _localization.ItemsRate.ConvertToString(packetRate);
-        MessageRateUnitText = _localization.ItemsRate.GetUnit(packetRate);
+    public void UpdateRateText()
+    {
+        var packetRate = Math.Round(_packetRate.Calculate(_cnt),1);
+        MessageRateText = _localization.ItemsRate.ConvertToStringWithUnits(packetRate);
     }
 }

@@ -25,7 +25,7 @@
             {
                 (double.NaN) => RS.Common_NotAvailable,
                 (< 0) => RS.Common_NotAvailable,
-                (0) => $"{itemsPerSec,-4:F0}",
+                (0) => $"{itemsPerSec,-4:F1}",
                 (< 1) => $"{itemsPerSec,-4:F1}",
                 (< OneKHz) => $"{itemsPerSec,-4:F0}",
                 (>= OneKHz) and (< OneMHz) => $"{itemsPerSec / OneKHz,-4:F0}",
