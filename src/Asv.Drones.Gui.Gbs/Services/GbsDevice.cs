@@ -34,6 +34,8 @@ public class GbsDevice:DisposableOnceWithCancel,IGbsDevice
             TargetComponentId = info.ComponentId,
         }, config.Mavlink, pkt, false, RxApp.MainThreadScheduler)
             .DisposeItWith(Disposable);
+        
+        
     }
 
     public IMavlinkClient Client => _client;

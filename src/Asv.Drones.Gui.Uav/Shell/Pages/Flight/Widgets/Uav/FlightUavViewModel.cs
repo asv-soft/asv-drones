@@ -38,6 +38,9 @@ namespace Asv.Drones.Gui.Uav
             Vehicle.Class.Select(MavlinkHelper.GetIcon).Subscribe(_ => Icon = _).DisposeItWith(Disposable);
             Attitude = new AttitudeViewModel(vehicle, new Uri(Id, "/id"),loc);
 
+            
+                
+            
             rttItems
                 .SelectMany(_ => _.Create(Vehicle))
                 .OrderBy(_=>_.Order)
