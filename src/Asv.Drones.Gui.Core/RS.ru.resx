@@ -612,4 +612,16 @@
   <data name="LogMessageTypeHelper_GetDisplayName_Error" xml:space="preserve">
 	  <value>Ошибка</value>
   </data>
+  <data name="PacketViewerView_CheckAll" xml:space="preserve">
+	  <value>Показать/Скрыть все</value>
+  </data>
+  <data name="PacketViewerView_PlayPause" xml:space="preserve">
+	  <value>Возобновить/Остановить</value>
+  </data>
+  <data name="PacketViewerView_ClearAll" xml:space="preserve">
+	  <value>Очистить список пакетов</value>
+  </data>
+  <data name="PacketViewerView_Save" xml:space="preserve">
+	  <value>Сохранить как CSV</value>
+  </data>
 </root>

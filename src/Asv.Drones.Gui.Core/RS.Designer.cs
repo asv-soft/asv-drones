@@ -825,6 +825,42 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check/Uncheck All.
+        /// </summary>
+        public static string PacketViewerView_CheckAll {
+            get {
+                return ResourceManager.GetString("PacketViewerView_CheckAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear all packets.
+        /// </summary>
+        public static string PacketViewerView_ClearAll {
+            get {
+                return ResourceManager.GetString("PacketViewerView_ClearAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play/Pause.
+        /// </summary>
+        public static string PacketViewerView_PlayPause {
+            get {
+                return ResourceManager.GetString("PacketViewerView_PlayPause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save as CSV.
+        /// </summary>
+        public static string PacketViewerView_Save {
+            get {
+                return ResourceManager.GetString("PacketViewerView_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mission planing.
         /// </summary>
         public static string PlaningShellMenuItem_Name {

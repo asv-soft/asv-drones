@@ -9,6 +9,20 @@
              x:Class="Asv.Drones.Gui.Core.PacketViewerView"
              x:CompileBindings ="True"
              x:DataType="core:PacketViewerViewModel">
+    <UserControl.Styles>
+        <Style Selector="ToggleButton ContentPresenter.tbchecked">
+            <Setter Property="IsVisible" Value="False"/>
+        </Style>
+        <Style Selector="ToggleButton:checked ContentPresenter.tbchecked">
+            <Setter Property="IsVisible" Value="True"/>
+        </Style>
+        <Style Selector="ToggleButton ContentPresenter.tbunchecked">
+            <Setter Property="IsVisible" Value="True"/>
+        </Style>
+        <Style Selector="ToggleButton:checked ContentPresenter.tbunchecked">
+            <Setter Property="IsVisible" Value="False"/>
+        </Style>
+    </UserControl.Styles>
     <Design.DataContext>
         <core:PacketViewerViewModel />
     </Design.DataContext>
@@ -25,13 +39,19 @@
                     </Style>
                 </TextBox.Styles>
             </TextBox>
-            <Button Grid.Row="0" Margin="5 0 5 0" Grid.Column="1" Command="{Binding ExportToCsv}" Content="{avalonia:MaterialIconExt File}" />
-            <Button Grid.Row="0" Margin="5 0 5 0" Grid.Column="2" Command="{CompiledBinding ClearAll}" Content="{avalonia:MaterialIconExt Bin}" />
-            <Button Grid.Row="0" Margin="5 0 5 0" Grid.Column="3" Command="{CompiledBinding PlayPause}" Content="{avalonia:MaterialIconExt PlayPause}" />
+            <Button Grid.Row="0" Margin="5 0 5 0" Grid.Column="1" Command="{Binding ExportToCsv}" Content="{avalonia:MaterialIconExt File}" ToolTip.Tip="{x:Static core:RS.PacketViewerView_Save}" />
+            <Button Grid.Row="0" Margin="5 0 5 0" Grid.Column="2" Command="{CompiledBinding ClearAll}" Content="{avalonia:MaterialIconExt Bin}" ToolTip.Tip="{x:Static core:RS.PacketViewerView_ClearAll}" />
+            <ToggleButton Grid.Row="0" Margin="5 0 5 0" Grid.Column="3" IsChecked="{Binding IsPause, Mode=TwoWay}" ToolTip.Tip="{x:Static core:RS.PacketViewerView_PlayPause}">
+                <Panel>
+                    <ContentPresenter Content="{avalonia:MaterialIconExt Play}" Classes="tbchecked" />
+                    <ContentPresenter Content="{avalonia:MaterialIconExt Pause}" Classes="tbunchecked" />
+                </Panel>
+            </ToggleButton>
+            
             <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Packets.Count}" />
         </Grid>
         
-        <ListBox Grid.Column="0" Grid.Row="1" Items="{Binding Packets}" Margin="0 0 5 0">
+        <ListBox Grid.Column="0" Grid.Row="1" Items="{Binding Packets}" Margin="0 0 20 0">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid IsSharedSizeScope="True">
@@ -39,7 +59,7 @@
                             <ColumnDefinition SharedSizeGroup="Date"/>
                             <ColumnDefinition SharedSizeGroup="Source"/>
                             <ColumnDefinition SharedSizeGroup="Type"/>
-                            <ColumnDefinition SharedSizeGroup="Message" MaxWidth="500"/>
+                            <ColumnDefinition SharedSizeGroup="Message"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="{Binding DateTime}"/>
                         <TextBlock Grid.Column="1" Text="{Binding Source}"/>
@@ -50,33 +70,34 @@
             </ItemsControl.ItemTemplate>
         </ListBox>
 
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" Spacing="5">
             <Grid RowDefinitions="Auto *">
-                <CheckBox HorizontalAlignment="Left" IsChecked="True" Checked="SourcesChecked" Unchecked="SourcesUnchecked" />
-                <ListBox Grid.Row="1" x:Name="SourceFilters" Margin="10 0 0 0" Items="{Binding FiltersBySource}">
+                <CheckBox HorizontalAlignment="Left" Margin="16 0 0 0" IsChecked="True" Checked="SourcesChecked" Unchecked="SourcesUnchecked" Content="{x:Static core:RS.PacketViewerView_CheckAll}" />
+                <ListBox Grid.Row="1" HorizontalAlignment="Left" x:Name="SourceFilters" Items="{Binding FiltersBySource}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <CheckBox IsChecked="{Binding IsChecked}">
+                            <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsChecked}" Padding="8 6 0 0">
                                 <CheckBox.Content>
-                                    <TextBlock Text="{Binding Source}" />
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding Source}" />
                                 </CheckBox.Content>
                             </CheckBox>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ListBox>
             </Grid>
+            
             <Grid RowDefinitions="Auto *">
-                <CheckBox HorizontalAlignment="Left" IsChecked="True" Checked="TypesChecked" Unchecked="TypesUnchecked" />
-                <ListBox Grid.Row="1" x:Name="TypeFilters" Margin="10 0 0 0" Items="{Binding FiltersByType}">
+                <CheckBox HorizontalAlignment="Left" Margin="16 0 0 0" IsChecked="True" Checked="TypesChecked" Unchecked="TypesUnchecked" Content="{x:Static core:RS.PacketViewerView_CheckAll}" />
+                <ListBox Grid.Row="1" HorizontalAlignment="Left" x:Name="TypeFilters" Items="{Binding FiltersByType}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid ColumnDefinitions="*,Auto">
-                                <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked}">
+                                <CheckBox Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding IsChecked}" Padding="8 6 0 0">
                                     <CheckBox.Content>
                                         <TextBlock Text="{Binding Type}" />
                                     </CheckBox.Content>
                                 </CheckBox>
-                                <StackPanel Margin="3 0 0 0" Grid.Column="1" Orientation="Horizontal" Spacing="3">
+                                <StackPanel Margin="5 0 0 0" Grid.Column="1" Orientation="Horizontal" Spacing="3">
                                     <TextBlock VerticalAlignment="Center" Text="{Binding MessageRateText}" />
                                     <TextBlock VerticalAlignment="Center" Text="{Binding MessageRateUnitText}" />
                                 </StackPanel>
