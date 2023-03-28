@@ -11,7 +11,7 @@
         <uav:VoltageUavRttItemViewModel/>
     </Design.DataContext>
     <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="UAV voltage">
-        <avalonia:MaterialIcon Foreground="{StaticResource SystemAccentColor}" Width="20" Height="20" Kind="HighVoltage"/>   
+        <avalonia:MaterialIcon Width="20" Height="20" Kind="HighVoltage"/>   
         <TextBlock VerticalAlignment="Center" Text="{CompiledBinding Voltage}"/>
     </StackPanel>
 </UserControl>
