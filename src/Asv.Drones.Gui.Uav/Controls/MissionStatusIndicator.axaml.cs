@@ -10,6 +10,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Mixins;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
+using Avalonia.Media;
 using DynamicData;
 using DynamicData.Binding;
 using FluentAvalonia.Core;
@@ -147,8 +148,9 @@ public class MissionStatusIndicator : TemplatedControl
 
         #region Max distance
         private static readonly StyledProperty<double> MaxDistanceProperty = AvaloniaProperty.Register<MissionStatusIndicator, double>(
-            nameof(MaxDistance), defaultValue: 0);
-        
+            nameof(MaxDistance), defaultValue: 0, notifying: UpdateAngles);
+
+
         private double MaxDistance
         {
             get => GetValue(MaxDistanceProperty);
@@ -181,10 +183,12 @@ public class MissionStatusIndicator : TemplatedControl
         if(collection is null) return;
 
         _changeSet = collection.ToObservableChangeSet();
-        _changeSet.WhenPropertyChanged(_ => _.Location, false)
-            .Throttle(TimeSpan.FromMilliseconds(200))
-            .Subscribe(_ => UpdateEverything());
+
+        _changeSet.Subscribe(_ => UpdateEverything());
         
+        //_changeSet.WhenPropertyChanged(_ => _.Location, false)
+        //    .Subscribe(_ => UpdateEverything());
+
         UpdateEverything();
     }
 
@@ -198,19 +202,22 @@ public class MissionStatusIndicator : TemplatedControl
         }
 
         MaxDistance = WayPoints.Sum(_ => _.Distance);
-
-        UpdateAngles();
     }
 
-    private void UpdateAngles()
+    
+    private static void UpdateAngles(IAvaloniaObject source, bool beforeChanged)
     {
+        if (source is not MissionStatusIndicator indicator) return;
+        
+        if(beforeChanged) return;
+        
         double aggregatedDistance = 0;
         
-        for (int i = 1; i < WayPoints.Count; i++)
+        for (int i = 1; i < indicator.WayPoints.Count; i++)
         {
-            aggregatedDistance += WayPoints[i].Distance;
+            aggregatedDistance += indicator.WayPoints[i].Distance;
             
-            WayPoints[i].Angle = GetAngle(aggregatedDistance, MaxDistance + (MaxDistance * 0.1));
+            indicator.WayPoints[i].Angle = GetAngle(aggregatedDistance, indicator.MaxDistance + (indicator.MaxDistance * 0.1));
         }
     }
     

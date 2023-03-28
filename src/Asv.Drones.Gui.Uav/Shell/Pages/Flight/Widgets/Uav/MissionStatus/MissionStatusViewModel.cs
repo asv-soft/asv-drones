@@ -8,6 +8,9 @@ using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
 using Avalonia.Controls;
 using DynamicData;
+using DynamicData.Aggregation;
+using DynamicData.Binding;
+using FluentAvalonia.Core;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -28,7 +31,20 @@ public class MissionStatusViewModel : ViewModelBase
     {
         _vehicle = vehicle;
 
+        _vehicle.AllMissionsDistance.Subscribe(_ => Total = _ * 1000)
+            .DisposeItWith(Disposable);
+        
         _log = log;
+
+        _vehicle.MissionCurrent.Subscribe(_ => CurrentIndex = _)
+            .DisposeItWith(Disposable);
+
+        _vehicle.MissionReached.Subscribe(_ => ReachedIndex = _)
+            .DisposeItWith(Disposable);
+
+        this.WhenValueChanged(_ => _.ReachedIndex, false)
+            .Subscribe(_ => PathProgress = (double)ReachedIndex / _wayPoints.Count)
+            .DisposeItWith(Disposable);
         
         _vehicle.MissionItems
             .ObserveOn(RxApp.MainThreadScheduler)
@@ -41,7 +57,7 @@ public class MissionStatusViewModel : ViewModelBase
 
         _download = ReactiveCommand.CreateFromObservable(
                 () => Observable.FromAsync(DownloadImpl).SubscribeOn(RxApp.TaskpoolScheduler).TakeUntil(_cancelDownload), 
-                this.WhenAnyValue(_ => _.IsInProgress).Select(_ => !_))
+                this.WhenAnyValue(_ => _.IsInDownloadProgress).Select(_ => !_))
             .DisposeItWith(Disposable);
         
         _download.IsExecuting.ToProperty(this, _ => _.IsDownloading, out _isDownloading)
@@ -54,17 +70,21 @@ public class MissionStatusViewModel : ViewModelBase
             .DisposeItWith(Disposable);
         
         this.WhenAnyValue(_=>_.IsDownloading)
-            .Subscribe(_=> IsInProgress = _)
+            .Subscribe(_=> IsInDownloadProgress = _)
             .DisposeItWith(Disposable);
     }
     
     #region Download
-            
     private readonly ObservableAsPropertyHelper<bool> _isDownloading;
+    
     public bool IsDownloading => _isDownloading.Value;
+    
     public readonly ReactiveCommand<Unit,Unit> _download;
+    
     public ICommand Download => _download;
+    
     private readonly ReactiveCommand<Unit,Unit> _cancelDownload;
+    
     public ICommand CancelDownload => _cancelDownload;
 
     private void OnDownloadError(Exception exception)
@@ -75,23 +95,39 @@ public class MissionStatusViewModel : ViewModelBase
 
     private async Task DownloadImpl(CancellationToken cancel)
     {
-        await _vehicle.DownloadMission(3, cancel,_ => Progress = _ * 100);
+        await _vehicle.DownloadMission(3, cancel,_ => DownloadProgress = _ * 100);
     }
-
     #endregion
+
+    [Reactive]
+    public bool IsInDownloadProgress { get; set; }
     
     [Reactive]
-    public bool IsInProgress { get; set; }
-    [Reactive]
-    public double Progress { get; set; }
+    public double DownloadProgress { get; set; }
+    
     [Reactive]
     public bool DisableAll { get; set; }
+    
     [Reactive]
     public bool EnablePolygons { get; set; }
+    
     [Reactive]
     public bool EnablePolygonsAndAnchors { get; set; }
+    
     [Reactive]
-    public double Distance { get; set; }
+    public double Current { get; set; }
+    
+    [Reactive]
+    public double Total { get; set; }
+
+    [Reactive] 
+    public double PathProgress { get; set; }
+    
+    [Reactive]
+    public ushort CurrentIndex { get; set; }
+
+    [Reactive]
+    public ushort ReachedIndex { get; set; }
     
     public ReadOnlyObservableCollection<RoundWayPointItem> WayPoints => _wayPoints;
 }
