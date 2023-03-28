@@ -19,6 +19,6 @@ public class DefaultGbsRttItemProvider : IGbsRttItemProvider
     
     public IEnumerable<IGbsRttItem> Create(IGbsDevice device)
     {
-        yield break;
+        yield return new LinkQualityGbsRttViewModel(device);
     }
 }
