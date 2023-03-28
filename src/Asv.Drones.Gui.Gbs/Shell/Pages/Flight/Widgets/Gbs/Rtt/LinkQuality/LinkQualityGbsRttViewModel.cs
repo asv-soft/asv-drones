@@ -1,4 +1,6 @@
+using System.Diagnostics;
 using System.Reactive.Linq;
+using Asv.Common;
 using Avalonia.Controls.Mixins;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -18,15 +20,16 @@ public class LinkQualityGbsRttViewModel : GbsRttItem
         Order = 1;
 
         Gbs.Client.Heartbeat.LinkQuality
-            .DistinctUntilChanged()
-            .Sample(TimeSpan.FromMilliseconds(500))
-            .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(_ => LinkQuality = _)
-            .DisposeWith(Disposable);
+            .Subscribe(_ =>
+            {
+                Debug.WriteLine(_);
+                LinkQuality = _;
+            })
+            .DisposeItWith(Disposable);
 
         Gbs.Client.Heartbeat.LinkQuality
             .Subscribe(_ => LinkQualityString = _.ToString("P0"))
-            .DisposeWith(Disposable);
+            .DisposeItWith(Disposable);
     }
     
     [Reactive]
