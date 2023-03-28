@@ -32,6 +32,7 @@
                   
             </DockPanel>    
             <uav1:AttitudeView DataContext="{Binding Attitude}"/>
+            <uav1:MissionStatusView DataContext="{Binding MissionStatus}"/>
             <ItemsControl Items="{Binding RttItems}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

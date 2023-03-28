@@ -7,6 +7,8 @@ using Avalonia.ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav.Uav;
 
+[ExportView(typeof(MissionStatusViewModel))]
+[PartCreationPolicy(CreationPolicy.NonShared)]
 public partial class MissionStatusView : UserControl
 {
     public MissionStatusView()
