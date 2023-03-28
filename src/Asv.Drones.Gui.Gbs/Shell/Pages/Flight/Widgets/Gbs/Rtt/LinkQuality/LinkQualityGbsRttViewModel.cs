@@ -19,7 +19,7 @@ public class LinkQualityGbsRttViewModel : GbsRttItem
     {
         Order = 1;
 
-        Gbs.Client.Heartbeat.LinkQuality
+        Gbs.MavlinkClient.Heartbeat.LinkQuality
             .Subscribe(_ =>
             {
                 Debug.WriteLine(_);
@@ -27,7 +27,7 @@ public class LinkQualityGbsRttViewModel : GbsRttItem
             })
             .DisposeItWith(Disposable);
 
-        Gbs.Client.Heartbeat.LinkQuality
+        Gbs.MavlinkClient.Heartbeat.LinkQuality
             .Subscribe(_ => LinkQualityString = _.ToString("P0"))
             .DisposeItWith(Disposable);
     }

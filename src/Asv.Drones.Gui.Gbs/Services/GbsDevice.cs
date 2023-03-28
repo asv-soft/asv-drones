@@ -9,7 +9,8 @@ namespace Asv.Drones.Gui.Gbs;
 
 public interface IGbsDevice
 {
-    IMavlinkClient Client { get; }
+    IGbsClientDevice DeviceClient { get; }
+    IMavlinkClient MavlinkClient { get; }
     ushort FullId { get; }
 }
 
@@ -20,13 +21,14 @@ public class GbsDeviceConfig
 
 public class GbsDevice:DisposableOnceWithCancel,IGbsDevice
 {
-    private readonly MavlinkClient _client;
+    private readonly MavlinkClient _mavlinkClient;
+    private readonly GbsClientDevice _deviceClient;
 
     public GbsDevice(IMavlinkDevicesService mavlink, IConfiguration cfg, IPacketSequenceCalculator pkt, IMavlinkDevice info)
     {
         var config = cfg.Get<GbsDeviceConfig>();
         FullId = (ushort) (info.ComponentId | (uint) info.SystemId << 8);
-        _client = new MavlinkClient(mavlink.Router, new MavlinkClientIdentity
+        _mavlinkClient = new MavlinkClient(mavlink.Router, new MavlinkClientIdentity
         {
             SystemId = mavlink.SystemId.Value,
             ComponentId = mavlink.ComponentId.Value,
@@ -34,10 +36,12 @@ public class GbsDevice:DisposableOnceWithCancel,IGbsDevice
             TargetComponentId = info.ComponentId,
         }, config.Mavlink, pkt, false, RxApp.MainThreadScheduler)
             .DisposeItWith(Disposable);
-        
-        
+        _deviceClient = new GbsClientDevice(_mavlinkClient)
+            .DisposeItWith(Disposable);
+
     }
 
-    public IMavlinkClient Client => _client;
+    public IGbsClientDevice DeviceClient => _deviceClient;
+    public IMavlinkClient MavlinkClient => _mavlinkClient;
     public ushort FullId { get; }
 }

@@ -13,7 +13,7 @@
     <ItemGroup>
         <PackageReference Include="Asv.Cfg" Version="1.5.0" />
         <PackageReference Include="Asv.Common" Version="1.5.0" />
-        <PackageReference Include="Asv.Mavlink" Version="2.0.2" />
+        <PackageReference Include="Asv.Mavlink" Version="2.0.4" />
       <PackageReference Include="DynamicData" Version="7.12.11" />
       <PackageReference Include="ReactiveUI.Fody" Version="18.4.20" />
     </ItemGroup>
