@@ -22,13 +22,13 @@
                                              Expands="True"
                                              Content="Hello World" />
                     <core:BatteryIndicator Width="50" Height="50" Value="0" CriticalValue="0.2" WarningValue="0.45" MaxValue="1.1"/>
+                    <core:ConnectionQuality Width="50" Height="50" Value="0" CriticalValue="0.2" WarningValue="0.45" MaxValue="1.1"/>
                 </StackPanel>
-                
             </Border>
         </Border>
     </Design.PreviewWith>
     <StyleInclude Source="/Controls/OptionsDisplayItem/OptionsDisplayItemStyles.axaml"/>
     <StyleInclude Source="/Controls/BatteryIndicator.axaml"/>
     <StyleInclude Source="/Controls/GpsStatusIndicator.axaml"/>
-   
+    <StyleInclude Source="/Controls/ConnectionQuality.axaml"/>
 </Styles>
