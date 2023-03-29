@@ -42,11 +42,19 @@ public class ParametersEditorParameterViewModel : ViewModelBase
         if (Parameter.Parameter.IntegerValue != null)
         {
             Value = (object)parameterItem.Parameter.IntegerValue;
+            
+            this.WhenValueChanged(_ => _.Value)
+                .Subscribe(_ => Parameter.Parameter.IntegerValue = Convert.ToInt64(_))
+                .DisposeItWith(Disposable);
         }
         
         if (Parameter.Parameter.RealValue != null)
         {
             Value = (object)parameterItem.Parameter.RealValue;
+            
+            this.WhenValueChanged(_ => _.Value)
+                .Subscribe(_ => Parameter.Parameter.RealValue = Convert.ToSingle(_))
+                .DisposeItWith(Disposable);
         }
 
         StringBuilder builder = new StringBuilder();
@@ -71,23 +79,22 @@ public class ParametersEditorParameterViewModel : ViewModelBase
 
     private async Task WriteImpl(CancellationToken cancel)
     {
-        if (Parameter.Parameter.IntegerValue != null)
-        {
-            Parameter.Parameter.IntegerValue = Convert.ToInt64(Value);
-        }
-        
-        if (Parameter.Parameter.RealValue != null)
-        {
-            Parameter.Parameter.RealValue = Convert.ToSingle(Value);
-        }
-        
-        var param = await _vehicle.Params.WriteParam(Parameter.Parameter, 5, cancel);
-
+        await _vehicle.Params.WriteParam(Parameter.Parameter, 3, cancel);
     }
 
     private async Task UpdateImpl(CancellationToken cancel)
     {
-       Parameter.Parameter = await _vehicle.Params.ReadParam((short)Parameter.Parameter.Index, 5, cancel);
+       Parameter.Parameter = await _vehicle.Params.ReadParam((short)Parameter.Parameter.Index, 3, cancel);
+       
+       if (Parameter.Parameter.IntegerValue != null)
+       {
+           Value = Parameter.Parameter.IntegerValue.Value;
+       }
+        
+       if (Parameter.Parameter.RealValue != null)
+       {
+           Value = Parameter.Parameter.RealValue.Value;
+       }
     }
 
     [Reactive]
