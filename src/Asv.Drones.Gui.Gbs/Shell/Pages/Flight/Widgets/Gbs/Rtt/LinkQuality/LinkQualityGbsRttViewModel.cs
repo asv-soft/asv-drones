@@ -1,8 +1,4 @@
-using System.Diagnostics;
-using System.Reactive.Linq;
 using Asv.Common;
-using Avalonia.Controls.Mixins;
-using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Gbs;
@@ -20,11 +16,7 @@ public class LinkQualityGbsRttViewModel : GbsRttItem
         Order = 1;
 
         Gbs.MavlinkClient.Heartbeat.LinkQuality
-            .Subscribe(_ =>
-            {
-                Debug.WriteLine(_);
-                LinkQuality = _;
-            })
+            .Subscribe(_ => LinkQuality = _)
             .DisposeItWith(Disposable);
 
         Gbs.MavlinkClient.Heartbeat.LinkQuality

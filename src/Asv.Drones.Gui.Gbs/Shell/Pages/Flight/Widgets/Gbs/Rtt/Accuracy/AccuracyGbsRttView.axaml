@@ -1,0 +1,17 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:gbs="clr-namespace:Asv.Drones.Gui.Gbs"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="70" d:DesignHeight="30"
+             x:Class="Asv.Drones.Gui.Gbs.AccuracyGbsRttView"
+             x:DataType="gbs:AccuracyGbsRttViewModel">
+    <Design.DataContext>
+        <gbs:AccuracyGbsRttViewModel/>
+    </Design.DataContext>
+    <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="GBS accuracy">
+        <avalonia:MaterialIcon Kind="TargetVariant"/>
+        <TextBlock VerticalAlignment="Center" Text="{Binding Accuracy}"/>
+    </StackPanel>
+</UserControl>
