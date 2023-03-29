@@ -1,12 +1,14 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.Client;
+using Avalonia;
 using DynamicData;
 using DynamicData.Alias;
 using DynamicData.Binding;
@@ -44,7 +46,7 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
         _log = log;
 
         PinnedParameters = new ObservableCollection<ParametersEditorParameterViewModel>();
-        
+
         this.WhenValueChanged(_ => _.SelectedItem)
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(AddSelectedItem)
@@ -56,7 +58,7 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
             .Skip(1)
             .Subscribe(_ => UpdateParams.Execute(null))
             .DisposeItWith(Disposable);
-        
+
         _updateParams = ReactiveCommand.CreateFromObservable(
                 () => Observable.FromAsync(UpdateParamsImpl).SubscribeOn(RxApp.TaskpoolScheduler).TakeUntil(_cancelUpdateParams), 
                 this.WhenAnyValue(_ => _.IsInProgress).Select(_ => !_))
@@ -122,7 +124,7 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
         if(item.Parameter != null && 
            item.Description != null && 
            PinnedParameters.FirstOrDefault(_ => _.Parameter.Parameter.Name == item.Parameter.Name) == null)
-            PinnedParameters.Add(new ParametersEditorParameterViewModel(item));
+            PinnedParameters.Add(new ParametersEditorParameterViewModel(item, _vehicle));
     }
     
     private void ClearImpl() => Search = "";
@@ -169,24 +171,63 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
     }
 }
 
-public class ParameterItem
+public class ParameterItem : AvaloniaObject
 {
-    private readonly MavParam _parameter;
-    private readonly VehicleParamDescription _description; 
-    
     public ParameterItem(MavParam parameter, VehicleParamDescription description)
     {
-        _parameter = parameter;
-        _description = description;
+        Parameter = parameter;
+        Description = description;
     }
 
-    public MavParam Parameter => _parameter;
+    #region Parameter
+    private MavParam _parameter;
 
-    public VehicleParamDescription Description => _description;
+    public static readonly DirectProperty<ParameterItem, MavParam> ParameterProperty = AvaloniaProperty.RegisterDirect<ParameterItem, MavParam>(
+        nameof(Parameter), o => o.Parameter, (o, v) => o.Parameter = v);
+
+    public MavParam Parameter
+    {
+        get => _parameter;
+        set => SetAndRaise(ParameterProperty, ref _parameter, value);
+    }
+    #endregion
     
-    [Reactive]
-    public bool Pinned { get; set; }
+    #region Description
+    private VehicleParamDescription _description;
+
+    public static readonly DirectProperty<ParameterItem, VehicleParamDescription> DescriptionProperty = AvaloniaProperty.RegisterDirect<ParameterItem, VehicleParamDescription>(
+        nameof(Description), o => o.Description, (o, v) => o.Description = v);
+
+    public VehicleParamDescription Description
+    {
+        get => _description;
+        set => SetAndRaise(DescriptionProperty, ref _description, value);
+    }
+    #endregion
     
-    [Reactive]
-    public bool Stared { get; set; }
+    #region Pinned
+    private bool _pinned;
+
+    public static readonly DirectProperty<ParameterItem, bool> PinnedProperty = AvaloniaProperty.RegisterDirect<ParameterItem, bool>(
+        nameof(Pinned), o => o.Pinned, (o, v) => o.Pinned = v);
+
+    public bool Pinned
+    {
+        get => _pinned;
+        set => SetAndRaise(PinnedProperty, ref _pinned, value);
+    }
+    #endregion
+
+    #region Starred
+    private bool _starred;
+
+    public static readonly DirectProperty<ParameterItem, bool> StaredProperty = AvaloniaProperty.RegisterDirect<ParameterItem, bool>(
+        nameof(Starred), o => o.Starred, (o, v) => o.Starred = v);
+
+    public bool Starred
+    {
+        get => _starred;
+        set => SetAndRaise(StaredProperty, ref _starred, value);
+    }
+    #endregion
 }

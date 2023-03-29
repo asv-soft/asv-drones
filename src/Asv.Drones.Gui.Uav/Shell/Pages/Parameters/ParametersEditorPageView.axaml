@@ -38,7 +38,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="uav:ParameterItem">
                         <DockPanel LastChildFill="True">
-                            <ToggleButton IsChecked="{Binding Stared}" Margin="10 0 0 0" Background="Transparent" BorderThickness="0" DockPanel.Dock="Right">
+                            <ToggleButton IsChecked="{Binding Starred}" Margin="10 0 0 0" Background="Transparent" BorderThickness="0" DockPanel.Dock="Right">
                                 <avalonia:MaterialIcon Width="20" Height="20" Kind="Star"/>
                             </ToggleButton>
                             <avalonia:MaterialIcon IsVisible="{Binding Pinned}" Width="20" Margin="10 0 0 0" DockPanel.Dock="Right" Kind="Pin"/>
@@ -56,7 +56,7 @@
                         <WrapPanel/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-            </ItemsControl>    
+            </ItemsControl>
         </ScrollViewer>
     </Grid>
 </UserControl>
