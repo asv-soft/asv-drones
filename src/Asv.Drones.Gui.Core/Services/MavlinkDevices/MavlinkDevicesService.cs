@@ -208,8 +208,7 @@ namespace Asv.Drones.Gui.Uav
             using var a = Vehicles.BindToObservableList(out var list).Subscribe();
             return list.Items.FirstOrDefault(_=>_.FullId == id);
         }
-        
-        
+
         private IVehicle? CreateVehicle(IMavlinkDevice device)
         {
             var proto = new MavlinkClient(Router, new MavlinkClientIdentity

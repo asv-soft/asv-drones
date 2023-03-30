@@ -1,7 +1,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Reactive;
-using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using Asv.Common;
@@ -10,11 +9,7 @@ using Asv.Mavlink;
 using Asv.Mavlink.Client;
 using Avalonia;
 using DynamicData;
-using DynamicData.Alias;
 using DynamicData.Binding;
-using DynamicData.Kernel;
-using DynamicData.PLinq;
-using FluentAvalonia.Core;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -36,7 +31,7 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
 
     public ParametersEditorPageViewModel() : base(Uri)
     {
-        Clear = ReactiveCommand.Create(ClearImpl).DisposeItWith(Disposable);
+        
     }
 
     [ImportingConstructor]
@@ -44,6 +39,8 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
     {
         _svc = svc;
         _log = log;
+
+        Clear = ReactiveCommand.Create(ClearImpl).DisposeItWith(Disposable);
 
         PinnedParameters = new ObservableCollection<ParametersEditorParameterViewModel>();
 
@@ -108,6 +105,9 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
 
     [Reactive]
     public string Search { get; set; }
+    
+    [Reactive]
+    public ushort FullId { get; set; }
 
     public ReadOnlyObservableCollection<ParameterItem> Parameters => _parameters;
     
@@ -162,6 +162,8 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
         
         if(ushort.TryParse(fullIdString, out var fullId))
         {
+            FullId = fullId;
+            
             _vehicle = _svc.GetVehicleByFullId(fullId);
             
             _descriptions = new ObservableCollection<VehicleParamDescription>(_vehicle.GetParamDescription());

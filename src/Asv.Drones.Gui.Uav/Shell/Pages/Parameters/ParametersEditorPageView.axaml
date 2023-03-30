@@ -8,7 +8,12 @@
              x:Class="Asv.Drones.Gui.Uav.ParametersEditorPageView"
              x:CompileBindings ="True"
              x:DataType="uav:ParametersEditorPageViewModel">
-    <Grid>
+    <DockPanel LastChildFill="True">
+        <StackPanel Margin="8" Orientation="Horizontal" DockPanel.Dock="Top">
+            <avalonia:MaterialIcon Kind="ViewList" Width="30" Height="30"/>
+            <TextBlock Margin="8 0" VerticalAlignment="Center" Text="{Binding  FullId, StringFormat='Parameters editor [{0}]'}" FontSize="30"/>
+        </StackPanel>
+        <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="220" Width="*"/>   
             <ColumnDefinition Width="5"/>   
@@ -33,7 +38,9 @@
                     </TextBox.InnerRightContent>
                 </TextBox>
             </DockPanel>
-            <ProgressBar DockPanel.Dock="Top" Value="{Binding Progress}"/>
+            
+            <!-- <ProgressBar DockPanel.Dock="Top" Value="{Binding Progress}"/> -->
+            
             <ListBox SelectedItem="{Binding SelectedItem}" Items="{Binding Parameters}">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="uav:ParameterItem">
@@ -48,7 +55,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </DockPanel>
-        <GridSplitter Grid.Column="1"/>
+        <GridSplitter Background="Transparent" Grid.Column="1"/>
         <ScrollViewer Grid.Column="2">
             <ItemsControl HorizontalAlignment="Stretch" Items="{Binding PinnedParameters}">
                 <ItemsControl.ItemsPanel>
@@ -59,4 +66,6 @@
             </ItemsControl>
         </ScrollViewer>
     </Grid>
+    </DockPanel>
+    
 </UserControl>

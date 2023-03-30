@@ -10,10 +10,11 @@ using Asv.Mavlink.Client;
 using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ReactiveUI.Validation.Extensions;
 
 namespace Asv.Drones.Gui.Uav;
 
-public class ParametersEditorParameterViewModel : ViewModelBase
+public class ParametersEditorParameterViewModel : ViewModelBaseWithValidation
 {
 
     private readonly IVehicle _vehicle;
@@ -29,31 +30,50 @@ public class ParametersEditorParameterViewModel : ViewModelBase
     {
         _vehicle = vehicle;
         
-        Write = ReactiveCommand.CreateFromTask(WriteImpl);
+        Write = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(WriteImpl).SubscribeOn(RxApp.MainThreadScheduler));
         
-        Update = ReactiveCommand.CreateFromTask(UpdateImpl);
-        
-        Parameter = parameterItem;
+        Update = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(UpdateImpl).SubscribeOn(RxApp.MainThreadScheduler));
 
+        Parameter = parameterItem;
+        
         this.WhenValueChanged(_ => _.Parameter)
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => parameterItem = _);
         
+        
         if (Parameter.Parameter.IntegerValue != null)
         {
-            Value = (object)parameterItem.Parameter.IntegerValue;
+            Value = parameterItem.Parameter.IntegerValue;
             
+            //this.ValidationRule(x => x.Value, 
+            //        _ => long.TryParse(Value.ToString(), out var result), 
+            //        _ =>  $"Value must be in range [{Parameter.Description.Min} - {Parameter.Description.Max}]" )
+            //    .DisposeItWith(Disposable);
+
             this.WhenValueChanged(_ => _.Value)
-                .Subscribe(_ => Parameter.Parameter.IntegerValue = Convert.ToInt64(_))
+                .Subscribe(_ =>
+                {
+                    if(long.TryParse(Value.ToString(), out var result))
+                        Parameter.Parameter.IntegerValue = result;
+                })
                 .DisposeItWith(Disposable);
         }
         
         if (Parameter.Parameter.RealValue != null)
         {
-            Value = (object)parameterItem.Parameter.RealValue;
+            Value = parameterItem.Parameter.RealValue;
             
+            //this.ValidationRule(x => x.Value, 
+            //        _ => float.TryParse(Value.ToString(), out var result), 
+            //        _ =>  $"Value must be in range [{Parameter.Description.Min} - {Parameter.Description.Max}]" )
+            //    .DisposeItWith(Disposable);
+
             this.WhenValueChanged(_ => _.Value)
-                .Subscribe(_ => Parameter.Parameter.RealValue = Convert.ToSingle(_))
+                .Subscribe(_ =>
+                {
+                    if(float.TryParse(Value.ToString(), out var result))
+                        Parameter.Parameter.RealValue = result;
+                })
                 .DisposeItWith(Disposable);
         }
 
@@ -79,7 +99,8 @@ public class ParametersEditorParameterViewModel : ViewModelBase
 
     private async Task WriteImpl(CancellationToken cancel)
     {
-        await _vehicle.Params.WriteParam(Parameter.Parameter, 3, cancel);
+        if(float.TryParse(Value.ToString(), out var resultFloat) || long.TryParse(Value.ToString(), out var resultLong))
+            await _vehicle.Params.WriteParam(Parameter.Parameter, 3, cancel);
     }
 
     private async Task UpdateImpl(CancellationToken cancel)
