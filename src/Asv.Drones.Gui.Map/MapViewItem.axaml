@@ -23,7 +23,6 @@
                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" />
 			  </Grid>
-              
           </ControlTemplate>
       </Setter>
   </Style>

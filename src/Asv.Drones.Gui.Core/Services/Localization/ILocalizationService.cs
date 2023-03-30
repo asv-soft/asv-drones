@@ -66,7 +66,11 @@ namespace Asv.Drones.Gui.Core
         IReadOnlyMeasureUnit<long> ByteSize { get; }
 
         IReadOnlyMeasureUnit<TimeSpan> RelativeTime { get; }
-        
+
+        IReadOnlyMeasureUnit<double> Voltage { get; }
+
+        IReadOnlyMeasureUnit<double> Current { get; }
+
         IMeasureUnit<double,AltitudeUnits> Altitude { get; }
 
         IMeasureUnit<double,DistanceUnits> Distance { get; }

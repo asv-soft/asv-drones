@@ -1,0 +1,66 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
+             xmlns:uav1="clr-namespace:Asv.Drones.Gui.Uav.Uav"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="380" d:DesignHeight="105"
+             x:Class="Asv.Drones.Gui.Uav.Uav.MissionStatusView"
+             x:CompileBindings="True"
+             x:DataType="uav1:MissionStatusViewModel">
+    <Design.DataContext>
+        <uav1:MissionStatusViewModel/>
+    </Design.DataContext>
+    <DockPanel LastChildFill="True">
+        <Grid DockPanel.Dock="Top">
+            <Button HorizontalAlignment="Left" Command="{Binding Download}">
+                <avalonia:MaterialIcon Kind="Sync"/>
+            </Button>
+            <StackPanel Margin="5 0" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+                <Grid VerticalAlignment="Center" Margin="5 0">
+                    <Ellipse Fill="Black" Width="15" Height="15" Stroke="White" StrokeThickness="2"/>
+                    <Ellipse Fill="White" Width="7" Height="7"/>
+                </Grid>
+                <TextBlock Text="{Binding ReachedIndex, StringFormat='WP {0}'}"/>
+                <avalonia:MaterialIcon Margin="5 0 0 0" Kind="ArrowRight"/>
+                <Grid VerticalAlignment="Center" Margin="5 0">
+                    <Ellipse Fill="Black" Width="15" Height="15" Stroke="White" StrokeThickness="2"/>
+                </Grid>
+                <TextBlock Text="{Binding CurrentIndex, StringFormat='WP {0}'}"/>
+                <!-- <TextBlock Margin="5 0" Text="{Binding Current, StringFormat='Current: {0:F1}'}"/> -->
+                <TextBlock Margin="5 0" Text="{Binding Total, StringFormat='Total: {0:F1}'}"/>
+            </StackPanel>
+            
+            <!-- <WrapPanel HorizontalAlignment="Right"> -->
+            <!--     <ToggleButton IsChecked="{CompiledBinding DisableAll}"> -->
+            <!--         <avalonia:MaterialIcon Kind="LayersClear"/> -->
+            <!--     </ToggleButton> -->
+            <!--     <ToggleButton IsChecked="{CompiledBinding EnablePolygons}"> -->
+            <!--         <avalonia:MaterialIcon Kind="VectorPolygon"/> -->
+            <!--     </ToggleButton> -->
+            <!--     <ToggleButton IsChecked="{CompiledBinding EnablePolygonsAndAnchors}"> -->
+            <!--         <StackPanel Orientation="Horizontal"> -->
+            <!--             <avalonia:MaterialIcon Kind="VectorPolygon"/> -->
+            <!--             <TextBlock Text="+"/> -->
+            <!--             <avalonia:MaterialIcon Kind="Anchor"/> -->
+            <!--         </StackPanel> -->
+            <!--     </ToggleButton> -->
+            <!-- </WrapPanel> -->
+        </Grid>
+        <Grid Height="20" Margin="10">
+            <Rectangle>
+                <Rectangle.Fill>
+                    <LinearGradientBrush>
+                        <GradientStop Color="Green" Offset="{CompiledBinding PathProgress}"/>
+                        <GradientStop Color="White" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock HorizontalAlignment="Center" Foreground="Black" Text="{CompiledBinding PathProgress, StringFormat='{}{0:P1}'}"/>
+        </Grid>
+        <!-- <ProgressBar Value="{CompiledBinding Progress}" ShowProgressText="True"/> -->
+        <!-- <uav:MissionStatusIndicator WayPoints="{CompiledBinding WayPoints, Mode=TwoWay}" CurrentDistance="{CompiledBinding Distance}"/> -->
+    </DockPanel>
+</UserControl>

@@ -65,8 +65,8 @@ namespace Asv.Avalonia.Map
         internal double ScaleX = 1;
         internal double ScaleY = 1;
 
-        internal int MaxZoom = 2;
-        internal int MinZoom = 2;
+        internal int MaxZoom = 20;
+        internal int MinZoom = 1;
         internal int Width;
         internal int Height;
 

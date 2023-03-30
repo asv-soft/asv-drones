@@ -13,6 +13,6 @@
     </Design.DataContext>
     <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="UAV time in flight">
         <avalonia:MaterialIcon Width="20" Height="20" Kind="Clock"/>   
-        <TextBlock VerticalAlignment="Center" Text="{Binding FlightTime}"/>
+        <TextBlock VerticalAlignment="Center" Text="{CompiledBinding FlightTime}"/>
     </StackPanel>
 </UserControl>

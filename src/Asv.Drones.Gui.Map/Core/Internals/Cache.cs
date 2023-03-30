@@ -11,7 +11,7 @@ namespace Asv.Avalonia.Map
     /// </summary>
     public class Cache
     {
-        private static Cache? _cacheInstance;
+        private static Cache _cacheInstance;
 
         /// <summary>
         ///     abstract image cache
@@ -22,8 +22,6 @@ namespace Asv.Avalonia.Map
         ///     second level abstract image cache
         /// </summary>
         public PureImageCache ImageCacheSecond;
-
-        string _cache;
 
         public static string CacheFolder { get; set; } = "map";
 
@@ -50,7 +48,7 @@ namespace Asv.Avalonia.Map
             {
                 ConvertToHash(ref url);
 
-                string dir = Path.Combine(_cache, type.ToString()) + Path.DirectorySeparatorChar;
+                string dir = Path.Combine(CacheFolder, type.ToString()) + Path.DirectorySeparatorChar;
 
                 // precrete dir
                 if (!Directory.Exists(dir))
@@ -79,7 +77,7 @@ namespace Asv.Avalonia.Map
             {
                 ConvertToHash(ref url);
 
-                string dir = Path.Combine(_cache, type.ToString()) + Path.DirectorySeparatorChar;
+                string dir = Path.Combine(CacheFolder, type.ToString()) + Path.DirectorySeparatorChar;
                 string file = dir + url + ".txt";
 
                 if (File.Exists(file))

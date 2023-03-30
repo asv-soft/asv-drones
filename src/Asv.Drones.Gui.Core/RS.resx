@@ -513,4 +513,31 @@
   <data name="UdpPortViewModel_Title" xml:space="preserve">
     <value>New UDP</value>
   </data>
+  <data name="PacketViewerShellMenuItem_Name" xml:space="preserve">
+    <value>Packet Viewer</value>
+  </data>
+  <data name="LogMessageTypeHelper_GetDisplayName_Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="LogMessageTypeHelper_GetDisplayName_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="LogMessageTypeHelper_GetDisplayName_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="PacketViewerView_CheckAll" xml:space="preserve">
+    <value>Check/Uncheck All</value>
+  </data>
+  <data name="PacketViewerView_PlayPause" xml:space="preserve">
+    <value>Play/Pause</value>
+  </data>
+  <data name="PacketViewerView_ClearAll" xml:space="preserve">
+    <value>Clear all packets</value>
+  </data>
+  <data name="PacketViewerView_Save" xml:space="preserve">
+    <value>Save as CSV</value>
+  </data>
+  <data name="Voltage_Unit" xml:space="preserve">
+    <value>V</value>
+  </data>
 </root>
