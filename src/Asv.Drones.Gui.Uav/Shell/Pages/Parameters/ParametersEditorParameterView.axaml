@@ -8,9 +8,8 @@
              x:Class="Asv.Drones.Gui.Uav.ParametersEditorParameterView"
              x:CompileBindings ="True"
              Width="400"
-             Height="400"
              x:DataType="uav:ParametersEditorParameterViewModel">
-    <StackPanel>
+    <StackPanel Margin="8">
         <DockPanel>
             <ToggleButton IsChecked="{Binding Parameter.Pinned}" Background="Transparent" BorderThickness="0" DockPanel.Dock="Right">
                 <avalonia:MaterialIcon Width="25" Height="25" Kind="Pin"/>

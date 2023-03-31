@@ -8,6 +8,7 @@ using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.Client;
 using Avalonia;
+using Avalonia.Controls;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
@@ -44,30 +45,29 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
 
         PinnedParameters = new ObservableCollection<ParametersEditorParameterViewModel>();
 
-        this.WhenValueChanged(_ => _.SelectedItem)
+        this.WhenValueChanged(_ => _.SelectedItem, false)
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(AddSelectedItem)
             .DisposeItWith(Disposable);
 
-        this.WhenAnyValue(_ => _.Search)
+        this.WhenValueChanged(_ => _.Search, false)
             .ObserveOn(RxApp.MainThreadScheduler)
-            .Throttle(TimeSpan.FromMilliseconds(500))
+            .Throttle(TimeSpan.FromMilliseconds(150))
             .Skip(1)
             .Subscribe(_ => UpdateParams.Execute(null))
             .DisposeItWith(Disposable);
-
+        
+        this.WhenValueChanged(_ => _.GroupsOnly, false)
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(_ => UpdateParams.Execute(null))
+            .DisposeItWith(Disposable);
+        
         _updateParams = ReactiveCommand.CreateFromObservable(
-                () => Observable.FromAsync(UpdateParamsImpl).SubscribeOn(RxApp.TaskpoolScheduler).TakeUntil(_cancelUpdateParams), 
+                () => Observable.FromAsync(UpdateParamsImpl).SubscribeOn(RxApp.TaskpoolScheduler), 
                 this.WhenAnyValue(_ => _.IsInProgress).Select(_ => !_))
             .DisposeItWith(Disposable);
         
-        _updateParams.IsExecuting.ToProperty(this, _ => _.IsUpdatingParams, out _isUpdatingParams)
-            .DisposeItWith(Disposable);
-        
         _updateParams.ThrownExceptions.Subscribe(OnUpdateParamsError)
-            .DisposeItWith(Disposable);
-        
-        _cancelUpdateParams = ReactiveCommand.Create(() => { }, _updateParams.IsExecuting)
             .DisposeItWith(Disposable);
     }
 
@@ -77,20 +77,15 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
     [Reactive]
     public bool IsInProgress { get; set; }
     
-    [Reactive]
-    public IProgress<double> Progress { get; set; }
-    
     #region Update Params
     private readonly ObservableAsPropertyHelper<bool> _isUpdatingParams;
-    public bool IsUpdatingParams => _isUpdatingParams.Value;
-    public readonly ReactiveCommand<Unit,Unit> _updateParams;
-    public ICommand UpdateParams => _updateParams;
-    private readonly ReactiveCommand<Unit,Unit> _cancelUpdateParams;
-    public ICommand CancelUpdateParams => _cancelUpdateParams;
+    private readonly ReactiveCommand<Unit,Unit> _updateParams;
 
+    public ICommand UpdateParams => _updateParams;
+    
     private async Task UpdateParamsImpl(CancellationToken cancel)
     {
-        await _vehicle.Params.ReadAllParams(cancel, Progress);
+        await _vehicle.Params.RequestAllParams(cancel);
     }
     
     private void OnUpdateParamsError(Exception exception)
@@ -108,7 +103,13 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
     
     [Reactive]
     public ushort FullId { get; set; }
-
+    
+    [Reactive]
+    public bool StarsOnly { get; set; }
+    
+    [Reactive]
+    public bool GroupsOnly { get; set; }
+    
     public ReadOnlyObservableCollection<ParameterItem> Parameters => _parameters;
     
     [Reactive]
@@ -135,26 +136,6 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
         
         return param.Name.ToLower().Contains(Search.ToLower());
     }
-    
-    private void UpdateVehicle()
-    {
-        SourceCache<MavParam, string> _list = new (_=>_.Name);
-        
-        _list.Connect()
-            .Filter(FilterParams)
-            .Transform(_ => new ParameterItem(_, _descriptions.FirstOrDefault(__ => __.Name == _.Name)))
-            .SortBy(_ => _.Parameter.Name)
-            .Bind(out _parameters)
-            .Subscribe();
-
-        _vehicle.Params.OnParamUpdated
-            .Subscribe(_ => _list.AddOrUpdate(_)).DisposeItWith(Disposable);
-        
-        foreach (var paramItem in _vehicle.Params.Params.Values)
-        {
-            _list.AddOrUpdate(paramItem);
-        }
-    }
 
     public void SetArgs(Uri link)
     {
@@ -168,9 +149,61 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
             
             _descriptions = new ObservableCollection<VehicleParamDescription>(_vehicle.GetParamDescription());
             
-            this.WhenValueChanged(_ => _.Parameters).Subscribe(_ => UpdateVehicle());
+            SourceCache<MavParam, string> _list = new (_=>_.Name);
+            
+            _list.Connect()
+                .Filter(FilterParams)
+                .Transform(_ => new ParameterItem(_, _descriptions.FirstOrDefault(__ => __.Name == _.Name)))
+                .SortBy(_ => _.Parameter.Name)
+                .Bind(out _parameters)
+                .Subscribe().DisposeItWith(Disposable);
+            
+            //this.WhenValueChanged(_ => _._parameters, false)
+            //    .ObserveOn(RxApp.MainThreadScheduler)
+            //    .Subscribe(_ => Parameters = GroupsOnly ? _.GroupBy(__ => __.Parameter.Name) : _)
+            //    .DisposeItWith(Disposable);
+            
+            _vehicle.Params.OnParamUpdated
+                .Subscribe(_ => _list.AddOrUpdate(_)).DisposeItWith(Disposable);
+            
+            _vehicle.Params.RequestAllParams(new CancellationToken());
         }
     }
+}
+
+public class HierarchicalParameterItem : AvaloniaObject
+{
+    public HierarchicalParameterItem(string groupName, ReadOnlyObservableCollection<ParameterItem> parameterItems)
+    {
+        GroupName = groupName;
+        Childs = parameterItems;
+    }
+
+    #region Childs
+    private ReadOnlyObservableCollection<ParameterItem> _childs;
+
+    public static readonly DirectProperty<HierarchicalParameterItem, ReadOnlyObservableCollection<ParameterItem>> ChildsProperty = AvaloniaProperty.RegisterDirect<HierarchicalParameterItem, ReadOnlyObservableCollection<ParameterItem>>(
+        nameof(Childs), o => o.Childs, (o, v) => o.Childs = v);
+
+    public ReadOnlyObservableCollection<ParameterItem> Childs
+    {
+        get => _childs;
+        set => SetAndRaise(ChildsProperty, ref _childs, value);
+    }
+    #endregion
+
+    #region Group name
+    private string _groupName;
+
+    public static readonly DirectProperty<HierarchicalParameterItem, string> GroupNameProperty = AvaloniaProperty.RegisterDirect<HierarchicalParameterItem, string>(
+        nameof(GroupName), o => o.GroupName, (o, v) => o.GroupName = v);
+
+    public string GroupName
+    {
+        get => _groupName;
+        set => SetAndRaise(GroupNameProperty, ref _groupName, value);
+    }
+    #endregion
 }
 
 public class ParameterItem : AvaloniaObject

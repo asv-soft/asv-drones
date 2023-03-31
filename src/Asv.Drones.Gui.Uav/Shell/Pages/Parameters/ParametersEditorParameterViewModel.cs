@@ -14,7 +14,7 @@ using ReactiveUI.Validation.Extensions;
 
 namespace Asv.Drones.Gui.Uav;
 
-public class ParametersEditorParameterViewModel : ViewModelBaseWithValidation
+public class ParametersEditorParameterViewModel : ViewModelBase
 {
 
     private readonly IVehicle _vehicle;
@@ -30,9 +30,12 @@ public class ParametersEditorParameterViewModel : ViewModelBaseWithValidation
     {
         _vehicle = vehicle;
         
-        Write = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(WriteImpl).SubscribeOn(RxApp.MainThreadScheduler));
+        if(!parameterItem.Description.IsReadOnly)
+            Write = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(WriteImpl)
+                .SubscribeOn(RxApp.MainThreadScheduler));
         
-        Update = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(UpdateImpl).SubscribeOn(RxApp.MainThreadScheduler));
+        Update = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(UpdateImpl)
+            .SubscribeOn(RxApp.MainThreadScheduler));
 
         Parameter = parameterItem;
         
@@ -45,11 +48,6 @@ public class ParametersEditorParameterViewModel : ViewModelBaseWithValidation
         {
             Value = parameterItem.Parameter.IntegerValue;
             
-            //this.ValidationRule(x => x.Value, 
-            //        _ => long.TryParse(Value.ToString(), out var result), 
-            //        _ =>  $"Value must be in range [{Parameter.Description.Min} - {Parameter.Description.Max}]" )
-            //    .DisposeItWith(Disposable);
-
             this.WhenValueChanged(_ => _.Value)
                 .Subscribe(_ =>
                 {
@@ -62,11 +60,6 @@ public class ParametersEditorParameterViewModel : ViewModelBaseWithValidation
         if (Parameter.Parameter.RealValue != null)
         {
             Value = parameterItem.Parameter.RealValue;
-            
-            //this.ValidationRule(x => x.Value, 
-            //        _ => float.TryParse(Value.ToString(), out var result), 
-            //        _ =>  $"Value must be in range [{Parameter.Description.Min} - {Parameter.Description.Max}]" )
-            //    .DisposeItWith(Disposable);
 
             this.WhenValueChanged(_ => _.Value)
                 .Subscribe(_ =>
