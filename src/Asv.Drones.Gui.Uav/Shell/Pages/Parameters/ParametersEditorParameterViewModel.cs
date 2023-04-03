@@ -1,16 +1,12 @@
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Reflection.Metadata;
 using System.Text;
-using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
-using Asv.Mavlink.Client;
 using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using ReactiveUI.Validation.Extensions;
 
 namespace Asv.Drones.Gui.Uav;
 
@@ -121,9 +117,9 @@ public class ParametersEditorParameterViewModel : ViewModelBase
     public ParameterItem Parameter { get; set; }
     
     [Reactive]
-    public ICommand Write { get; set; }
+    public ReactiveCommand<Unit, Unit> Write { get; set; }
     
     [Reactive]
-    public ICommand Update { get; set; }
+    public ReactiveCommand<Unit, Unit> Update { get; set; }
 
 }

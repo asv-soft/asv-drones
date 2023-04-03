@@ -165,4 +165,13 @@
   <data name="UavRttItem_ValueNotAvailable" xml:space="preserve">
     <value>N\A</value>
   </data>
+  <data name="ParametersEditorPageViewModel_Title" xml:space="preserve">
+    <value>Parameters editor [{0}]</value>
+  </data>
+  <data name="ParametersEditorPageViewModel_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="ParametersEditorPageViewModel_Total" xml:space="preserve">
+    <value>Total: {0}</value>
+  </data>
 </root>

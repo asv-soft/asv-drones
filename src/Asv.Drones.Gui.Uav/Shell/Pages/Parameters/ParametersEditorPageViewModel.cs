@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Windows.Input;
+using System.Reactive.Subjects;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
@@ -40,16 +40,24 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
         _svc = svc;
         _log = log;
         
+        Clear = ReactiveCommand.Create(ClearImpl).DisposeItWith(Disposable);
+        
+        UpdateParams = ReactiveCommand.CreateFromTask(UpdateParamsImpl)
+            .DisposeItWith(Disposable);
+        
+        UpdateParams.ThrownExceptions.Subscribe(OnUpdateParamsError)
+            .DisposeItWith(Disposable);
+
         this.WhenValueChanged(_ => _.SelectedItem, false)
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(AddSelectedItem)
             .DisposeItWith(Disposable);
 
-        this.WhenValueChanged(_ => _.Search, false)
+        this.WhenAnyValue(_ => _.Search)
             .ObserveOn(RxApp.MainThreadScheduler)
             .Throttle(TimeSpan.FromMilliseconds(150))
             .Skip(1)
-            .Subscribe(_ => UpdateParams.Execute())
+            .Subscribe(_ => UpdateParams.Execute().Subscribe().DisposeItWith(Disposable))
             .DisposeItWith(Disposable);
 
         this.WhenAnyValue(_ => _.Parameters.Count)
@@ -59,23 +67,15 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
         this.WhenValueChanged(_ => _.StarsOnly, false)
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => Parameters = _ ? 
-                new ReadOnlyObservableCollection<ParameterItem>(
-                    new ObservableCollection<ParameterItem>(_parameters.Where(_ => _.Starred))) 
+                new (
+                    new (_parameters.Where(_ => _.Starred))) 
                 : _parameters)
-            .DisposeItWith(Disposable);
-        
-        Clear = ReactiveCommand.Create(ClearImpl).DisposeItWith(Disposable);
-        
-        UpdateParams = ReactiveCommand.CreateFromTask(UpdateParamsImpl)
-            .DisposeItWith(Disposable);
-        
-        UpdateParams.ThrownExceptions.Subscribe(OnUpdateParamsError)
             .DisposeItWith(Disposable);
     }
 
     #region Commands
     [Reactive]
-    public ReactiveCommand<Unit,Unit> Clear { get; set; }
+    public ReactiveCommand<Unit, Unit> Clear { get; set; }
 
     [Reactive]
     public ReactiveCommand<Unit, Unit> UpdateParams { get; set; }
@@ -151,7 +151,7 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
             
             _vehicle = _svc.GetVehicleByFullId(fullId);
             
-            _descriptions = new ObservableCollection<VehicleParamDescription>(_vehicle.GetParamDescription());
+            _descriptions = new (_vehicle.GetParamDescription());
             
             SourceCache<MavParam, string> _list = new (_=>_.Name);
             
@@ -164,8 +164,11 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
             
             _vehicle.Params.OnParamUpdated
                 .Subscribe(_ => _list.AddOrUpdate(_)).DisposeItWith(Disposable);
-            
-            _vehicle.Params.RequestAllParams(new CancellationToken());
+
+            foreach (var param in _vehicle.Params.Params)
+            {
+                _list.AddOrUpdate(param.Value);
+            }
             
             this.WhenAnyValue(_ => _._parameters)
                 .ObserveOn(RxApp.MainThreadScheduler)

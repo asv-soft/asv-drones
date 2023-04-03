@@ -11,7 +11,7 @@
     <DockPanel LastChildFill="True">
         <StackPanel Margin="8" Orientation="Horizontal" DockPanel.Dock="Top">
             <avalonia:MaterialIcon Kind="ViewList" Width="30" Height="30"/>
-            <TextBlock Margin="8 0" VerticalAlignment="Center" Text="{Binding  FullId, StringFormat='Parameters editor [{0}]'}" FontSize="30"/>
+            <TextBlock Margin="8 0" VerticalAlignment="Center" Text="{Binding  FullId, StringFormat={x:Static uav:RS.ParametersEditorPageViewModel_Title}}" FontSize="30"/>
         </StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -27,7 +27,7 @@
                     <Button Command="{Binding UpdateParams}" Margin="4 0 0 0" DockPanel.Dock="Right" Width="30" Height="30">
                         <avalonia:MaterialIcon Kind="Sync"/>
                     </Button>
-                    <TextBox Text="{Binding Search}" Margin="4 0 0 0" Watermark="Search">
+                    <TextBox x:Name="SearchBox" Text="{Binding Search}" Margin="4 0 0 0" Watermark="{x:Static uav:RS.ParametersEditorPageViewModel_Search}">
                         <TextBox.InnerRightContent>
                             <Button Command="{Binding Clear}" Background="Transparent" BorderThickness="0" Width="30" Height="30">
                                 <avalonia:MaterialIcon Kind="Close"/>
@@ -35,7 +35,7 @@
                         </TextBox.InnerRightContent>
                     </TextBox>
                 </DockPanel>
-                <TextBlock DockPanel.Dock="Bottom" Text="{Binding Total, StringFormat='Total: {0}'}"/>
+                <TextBlock DockPanel.Dock="Bottom" Text="{Binding Total, StringFormat={x:Static uav:RS.ParametersEditorPageViewModel_Total}}"/>
                 <ListBox SelectedItem="{Binding SelectedItem}" 
                          Items="{Binding Parameters}">
                      <ListBox.DataTemplates>
@@ -46,6 +46,7 @@
                                                Background="Transparent"
                                                BorderThickness="0"
                                                DockPanel.Dock="Right">
+                                     
                                      <avalonia:MaterialIcon Width="20" 
                                                             Height="20" 
                                                             Kind="Star"/>
@@ -55,8 +56,8 @@
                                                         Margin="10 0 0 0"
                                                         DockPanel.Dock="Right"
                                                         Kind="Pin"/>
-                                 <TextBlock VerticalAlignment="Center"
-                                            Text="{Binding Parameter.Name}"/>
+                                 
+                                 <SelectableTextBlock VerticalAlignment="Center" Text="{Binding Parameter.Name}"/>
                              </DockPanel>
                          </DataTemplate>
                      </ListBox.DataTemplates>
