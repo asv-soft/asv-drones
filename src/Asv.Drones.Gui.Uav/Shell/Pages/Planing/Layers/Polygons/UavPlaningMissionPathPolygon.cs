@@ -11,11 +11,11 @@ using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav
 {
-    public class UavMissionPathPolygon: PlaningAnchorBase
+    public class UavPlaningMissionPathPolygon: PlaningAnchorBase
     {
         private readonly ReadOnlyObservableCollection<GeoPoint> _items;
 
-        public UavMissionPathPolygon(IVehicle vehicle):base(vehicle,"mission-polygon")
+        public UavPlaningMissionPathPolygon(IVehicle vehicle):base(vehicle,"planing-mission-polygon")
         {
             vehicle.MissionItems
                 .AutoRefreshOnObservable(_=> _.Location)
