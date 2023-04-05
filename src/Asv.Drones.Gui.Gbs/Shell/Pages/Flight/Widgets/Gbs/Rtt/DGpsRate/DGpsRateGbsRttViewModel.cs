@@ -15,8 +15,8 @@ public class DGpsRateGbsRttViewModel : GbsRttItem
     {
         Order = 2;
 
-        Gbs.MavlinkClient.Gbs.Status
-            .Subscribe(_ => DGpsRate = localizationService.ByteRate.ConvertToStringWithUnits(_.DgpsRate))
+        Gbs.DeviceClient.DgpsRate
+            .Subscribe(_ => DGpsRate = localizationService.ByteRate.ConvertToStringWithUnits(_))
             .DisposeItWith(Disposable);
     }
     

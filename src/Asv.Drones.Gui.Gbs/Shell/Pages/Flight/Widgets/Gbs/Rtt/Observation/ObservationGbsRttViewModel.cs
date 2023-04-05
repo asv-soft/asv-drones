@@ -11,12 +11,12 @@ public class ObservationGbsRttViewModel : GbsRttItem
         Observation = "30%";
     }
 
-    public ObservationGbsRttViewModel(IGbsDevice gbs) : base(gbs, GenerateUri(gbs,"observation"))
+    public ObservationGbsRttViewModel(IGbsDevice gbs,ILocalizationService loc) : base(gbs, GenerateUri(gbs,"observation"))
     {
         Order = 1;
         
-        Gbs.MavlinkClient.Gbs.Status
-            .Subscribe(_ => Observation = _.Observation.ToString())
+        Gbs.DeviceClient.ObservationSec
+            .Subscribe(_ => Observation = loc.RelativeTime.ConvertToString(TimeSpan.FromSeconds(_)))
             .DisposeItWith(Disposable);
     }
     

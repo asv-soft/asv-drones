@@ -84,7 +84,7 @@ namespace Asv.Drones.Gui.Uav
                 _.MavlinkVersion = 3;
                 _.SystemStatus = MavState.MavStateActive;
                 _.Type = MavType.MavTypeGcs;
-            }).Wait();
+            });
             _systemId = new RxValue<byte>(serverIdentity.SystemId).DisposeItWith(Disposable);
             _systemId
                 .Throttle(TimeSpan.FromSeconds(1))

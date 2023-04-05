@@ -15,8 +15,8 @@ public class AccuracyGbsRttViewModel: GbsRttItem
     {
         Order = 1;
         
-        Gbs.MavlinkClient.Gbs.Status
-            .Subscribe(_ => Accuracy = localizationService.Distance.FromSIToStringWithUnits(_.Accuracy))
+        Gbs.DeviceClient.AccuracyMeter
+            .Subscribe(_ => Accuracy = localizationService.Distance.FromSIToStringWithUnits(_))
             .DisposeItWith(Disposable);
     }
     
