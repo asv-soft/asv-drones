@@ -8,11 +8,11 @@ using Material.Icons;
 namespace Asv.Drones.Gui.Core;
 
 [PseudoClasses(":critical", ":warning", ":normal", ":unknown")]
-public class ConnectionQuality : TemplatedControl
+public class ConnectionQuality : IndicatorBase
 {
     #region Brushes
    
-    public static readonly StyledProperty<Brush> UnknownBrushProperty = AvaloniaProperty.Register<BatteryIndicator, Brush>(
+    public static readonly StyledProperty<Brush> UnknownBrushProperty = AvaloniaProperty.Register<ConnectionQuality, Brush>(
         "UnknownBrush");
 
     public Brush UnknownBrush
@@ -21,7 +21,7 @@ public class ConnectionQuality : TemplatedControl
         set => SetValue(UnknownBrushProperty, value);
     }
     
-    public static readonly StyledProperty<Brush> CriticalBrushProperty = AvaloniaProperty.Register<BatteryIndicator, Brush>(
+    public static readonly StyledProperty<Brush> CriticalBrushProperty = AvaloniaProperty.Register<ConnectionQuality, Brush>(
         "CriticalBrush");
 
     public Brush CriticalBrush
@@ -29,7 +29,7 @@ public class ConnectionQuality : TemplatedControl
         get => GetValue(CriticalBrushProperty);
         set => SetValue(CriticalBrushProperty, value);
     }
-    public static readonly StyledProperty<Brush> WarningBrushProperty = AvaloniaProperty.Register<BatteryIndicator, Brush>(
+    public static readonly StyledProperty<Brush> WarningBrushProperty = AvaloniaProperty.Register<ConnectionQuality, Brush>(
         "WarningBrush");
 
     public Brush WarningBrush
@@ -37,7 +37,7 @@ public class ConnectionQuality : TemplatedControl
         get => GetValue(WarningBrushProperty);
         set => SetValue(WarningBrushProperty, value);
     }
-    public static readonly StyledProperty<Brush> NormalBrushProperty = AvaloniaProperty.Register<BatteryIndicator, Brush>(
+    public static readonly StyledProperty<Brush> NormalBrushProperty = AvaloniaProperty.Register<ConnectionQuality, Brush>(
         "NormalBrush");
 
     public Brush NormalBrush
@@ -50,7 +50,7 @@ public class ConnectionQuality : TemplatedControl
     
     #region Styled Props
     
-    public static readonly StyledProperty<double> CriticalValueProperty = AvaloniaProperty.Register<BatteryIndicator, double>(
+    public static readonly StyledProperty<double> CriticalValueProperty = AvaloniaProperty.Register<ConnectionQuality, double>(
         nameof(CriticalValue), 0.2, notifying: UpdateValue);
 
     public double CriticalValue
@@ -59,7 +59,7 @@ public class ConnectionQuality : TemplatedControl
         set => SetValue(CriticalValueProperty, value);
     }
     
-    public static readonly StyledProperty<double> WarningValueProperty = AvaloniaProperty.Register<BatteryIndicator, double>(
+    public static readonly StyledProperty<double> WarningValueProperty = AvaloniaProperty.Register<ConnectionQuality, double>(
         nameof(WarningValue),0.5, notifying: UpdateValue);
 
     public double WarningValue
@@ -68,7 +68,7 @@ public class ConnectionQuality : TemplatedControl
         set => SetValue(WarningValueProperty, value);
     }
     
-    public static readonly StyledProperty<double> MaxValueProperty = AvaloniaProperty.Register<BatteryIndicator, double>(
+    public static readonly StyledProperty<double> MaxValueProperty = AvaloniaProperty.Register<ConnectionQuality, double>(
         nameof(MaxValue), 1, notifying: UpdateValue);
     
     public double MaxValue
@@ -77,7 +77,7 @@ public class ConnectionQuality : TemplatedControl
         set => SetValue(MaxValueProperty, value);
     }
 
-    public static readonly StyledProperty<double?> ValueProperty = AvaloniaProperty.Register<BatteryIndicator, double?>(
+    public static readonly StyledProperty<double?> ValueProperty = AvaloniaProperty.Register<ConnectionQuality, double?>(
         nameof(Value), default(double?), notifying: UpdateValue);
 
     public double? Value
@@ -86,8 +86,8 @@ public class ConnectionQuality : TemplatedControl
         set => SetValue(ValueProperty, value);
     }
 
-    public static readonly StyledProperty<MaterialIconKind> IconKindProperty = AvaloniaProperty.Register<BatteryIndicator, MaterialIconKind>(
-        nameof(IconKind), MaterialIconKind.BatteryUnknown);
+    public static readonly StyledProperty<MaterialIconKind> IconKindProperty = AvaloniaProperty.Register<ConnectionQuality, MaterialIconKind>(
+        nameof(IconKind), MaterialIconKind.WifiStrengthAlertOutline);
 
     public MaterialIconKind IconKind
     {
