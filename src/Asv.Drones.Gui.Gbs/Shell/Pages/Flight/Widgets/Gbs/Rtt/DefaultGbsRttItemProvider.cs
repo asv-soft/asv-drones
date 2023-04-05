@@ -21,5 +21,7 @@ public class DefaultGbsRttItemProvider : IGbsRttItemProvider
     {
         yield return new LinkQualityGbsRttViewModel(device);
         yield return new AccuracyGbsRttViewModel(device, _localizationService);
+        yield return new ObservationGbsRttViewModel(device);
+        yield return new DGpsRateGbsRttViewModel(device, _localizationService);
     }
 }

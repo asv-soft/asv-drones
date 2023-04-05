@@ -14,7 +14,7 @@ public class LinkQualityGbsRttViewModel : GbsRttItem
     public LinkQualityGbsRttViewModel(IGbsDevice gbs) : base(gbs, GenerateUri(gbs,"linkquality"))
     {
         Order = 1;
-
+        
         Gbs.MavlinkClient.Heartbeat.LinkQuality
             .Subscribe(_ => LinkQuality = _)
             .DisposeItWith(Disposable);
