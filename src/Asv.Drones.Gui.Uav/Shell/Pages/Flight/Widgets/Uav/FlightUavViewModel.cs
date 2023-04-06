@@ -17,7 +17,7 @@ namespace Asv.Drones.Gui.Uav
     public class FlightUavViewModel:FlightVehicleWidgetBase
     {
         private readonly ReadOnlyObservableCollection<IUavRttItem> _rttItems;
-
+        
         public static Uri GenerateUri(IVehicle vehicle) => FlightVehicleWidgetBase.GenerateUri(vehicle,"uav");
         
         public FlightUavViewModel()
@@ -35,7 +35,7 @@ namespace Asv.Drones.Gui.Uav
             }
         }
         
-        public FlightUavViewModel(IVehicle vehicle, ILogService log,ILocalizationService loc,
+        public FlightUavViewModel(IVehicle vehicle, ILogService log, ILocalizationService loc,
             IEnumerable<IUavRttItemProvider> rttItems):base(vehicle,GenerateUri(vehicle))
         {
             Vehicle.Name.Subscribe(_ => Title = _).DisposeItWith(Disposable);
@@ -53,6 +53,7 @@ namespace Asv.Drones.Gui.Uav
                 .DisposeMany()
                 .Subscribe()
                 .DisposeItWith(Disposable);
+            
         }
 
         protected override void InternalAfterMapInit(IMap map)
@@ -71,6 +72,14 @@ namespace Asv.Drones.Gui.Uav
             this.WhenValueChanged(_ => _.MissionStatus.EnablePolygon, false)
                 .Subscribe(ChangePolygonVisibility)
                 .DisposeItWith(Disposable);
+
+            Map.Markers.WhenValueChanged(_ => _.Count)
+                .Subscribe(_ =>
+                {
+                    ChangeAnchorsVisibility(MissionStatus.EnableAnchors);
+                    ChangePolygonVisibility(MissionStatus.EnablePolygon);
+                }).DisposeItWith(Disposable);
+            
         }
         
         private void ChangePolygonVisibility(bool needTo)

@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.RegularExpressions;
 using Avalonia;
 using Avalonia.Controls;
@@ -28,7 +29,7 @@ namespace Asv.Drones.Gui.Core
             {
                 if (value.Contains('*'))
                 {
-                    int.TryParse(value.AsSpan(0, (value.Length - 1)), out var gridLengthValue);
+                    int.TryParse(value.AsSpan(0, value.Length - 1), out var gridLengthValue);
                     
                     columnDefinitions.Add(new ColumnDefinition(new GridLength(gridLengthValue, GridUnitType.Star)));
                 }
