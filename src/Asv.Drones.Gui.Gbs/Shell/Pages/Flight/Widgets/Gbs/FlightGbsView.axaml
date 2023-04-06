@@ -14,20 +14,20 @@
     <Border Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8" CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True">
         <StackPanel Margin="10" Spacing="8">
             <DockPanel DockPanel.Dock="Top">
-                <Button DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Command="{Binding LocateVehicleCommand}">
+                <Button DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Command="{Binding LocateBaseStationCommand}">
                     <StackPanel Orientation="Horizontal">
                         <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="{Binding Icon}" Foreground="Red"  Width="25" Height="25" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center" DockPanel.Dock="Top" Text="{Binding Title}" />      
                     </StackPanel>
                 </Button>
-                
-                <!--<StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Spacing="5">
-                    <Button Padding="3" BorderBrush="Transparent" Background="Transparent" Command="{Binding LocateVehicleCommand}">
-                        <avalonia:MaterialIcon Kind="Target" Width="20" Height="20" />    
-                    </Button>
-                </StackPanel>-->
-                  
-            </DockPanel>    
+            </DockPanel>
+            <Grid ColumnDefinitions="* * *" IsVisible="{Binding !IsDisableShown}">
+                <Button Command="{Binding EnableAutoCommand}" Content="Enable Auto" HorizontalAlignment="Stretch" />
+                <Button Margin="5 0 0 0" Grid.Column="1" Command="{Binding EnableFixedCommand}" Content="Enable Fixed" HorizontalAlignment="Stretch" />
+                <Button Margin="5 0 0 0" Grid.Column="2" Command="{Binding CancelCommand}" Content="Cancel" HorizontalAlignment="Stretch" />
+            </Grid>
+            <Button Command="{Binding EnableIdleCommand}" Content="Disable RTK" HorizontalAlignment="Stretch" IsVisible="{Binding IsDisableShown}" />
+            <ProgressBar Height="5" CornerRadius="3" IsIndeterminate="True" IsVisible="{Binding IsProgressShown}" />
             <ItemsControl Items="{Binding RttItems}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
