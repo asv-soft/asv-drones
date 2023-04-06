@@ -4,11 +4,6 @@ using Avalonia.Controls;
 
 namespace Asv.Drones.Gui.Core
 {
-    public class PlaningPageViewConfig
-    {
-        public string Columns { get; set; }
-    }
-    
     [ExportView(typeof(PlaningPageViewModel))]
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class PlaningPageView:MapPageView
@@ -28,11 +23,11 @@ namespace Asv.Drones.Gui.Core
         {
             base.OnLoaded();
 
-            if (_configuration.Exist<PlaningPageViewConfig>(nameof(PlaningPageViewConfig)))
+            if (_configuration.Exist<MapPageViewConfig>(nameof(PlaningPageView)))
             {
-                var columns = _configuration.Get<PlaningPageViewConfig>(nameof(PlaningPageViewConfig));
+                var mapPageViewConfig = _configuration.Get<MapPageViewConfig>(nameof(PlaningPageView));
                 
-                SetColumnDefinitions(((Grid)this.Content).ColumnDefinitions, columns.Columns);
+                SetColumnAndRowDefinitions((Grid)Content, mapPageViewConfig);
             }
         }
 
@@ -40,12 +35,13 @@ namespace Asv.Drones.Gui.Core
         {
             base.OnUnloaded();
 
-            var flightPageViewConfig = new PlaningPageViewConfig
+            var mapPageViewConfig = new MapPageViewConfig
             {
-                Columns = ((Grid)this.Content).ColumnDefinitions.ToString()
+                Columns = ((Grid)this.Content).ColumnDefinitions.ToString(),
+                Rows = ((Grid)this.Content).RowDefinitions.ToString()
             };
 
-            _configuration.Set(nameof(PlaningPageViewConfig), flightPageViewConfig);
+            _configuration.Set(nameof(PlaningPageView), mapPageViewConfig);
         }
     }
 }
