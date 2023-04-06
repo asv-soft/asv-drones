@@ -13,13 +13,14 @@ namespace Asv.Drones.Gui.Uav
         public PlaningMapLayerProvider(IMavlinkDevicesService svc)
         {
             var anchors = svc.Vehicles
-                .Transform(_ => new UavMissionMapLayer(_))
+                .Transform(_ => new UavPlaningMissionMapLayer(_))
                 .DisposeMany()
                 .TransformMany(_ => _.Items, _ => _.Id)
                 .Transform(_=>(IMapAnchor)_);
+            
             var polygon = svc
                 .Vehicles
-                .Transform(_ => (IMapAnchor)new UavMissionPathPolygon(_))
+                .Transform(_ => (IMapAnchor)new UavPlaningMissionPathPolygon(_))
                 .ChangeKey((k, v) => v.Id)
                 .DisposeMany();
             Items = anchors.Merge(polygon);

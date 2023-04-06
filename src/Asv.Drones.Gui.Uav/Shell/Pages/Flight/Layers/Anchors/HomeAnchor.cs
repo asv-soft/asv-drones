@@ -20,6 +20,7 @@ namespace Asv.Drones.Gui.Uav
             Icon = MaterialIconKind.HomeMapMarker;
             IconBrush = Brushes.LightSeaGreen;
             IsVisible = false;
+            IsEditable = false;
 
             vehicle.Home.Select(_ => _.HasValue).DistinctUntilChanged().ObserveOn(RxApp.MainThreadScheduler).Subscribe(_ => IsVisible = _).DisposeWith(Disposable);
             vehicle.Home.Where(_ => _.HasValue).ObserveOn(RxApp.MainThreadScheduler).Subscribe(_ => Location = _.Value).DisposeWith(Disposable);

@@ -20,7 +20,7 @@ public class MissionStatusViewModel : ViewModelBase
 {
     private readonly IVehicle _vehicle;
     private readonly ILogService _log; 
-    private ReadOnlyObservableCollection<RoundWayPointItem> _wayPoints;
+    //private ReadOnlyObservableCollection<RoundWayPointItem> _wayPoints;
 
     public MissionStatusViewModel() : base(new Uri("designTime://missionstatus"))
     {
@@ -31,10 +31,19 @@ public class MissionStatusViewModel : ViewModelBase
     {
         _vehicle = vehicle;
 
+        _log = log;
+
+        Download = ReactiveCommand.CreateFromTask(DownloadImpl)
+            .DisposeItWith(Disposable);
+
+        DisableAll = ReactiveCommand.Create(() =>
+        {
+            EnablePolygon = false;
+            EnableAnchors = false;
+        }).DisposeItWith(Disposable);
+        
         _vehicle.AllMissionsDistance.Subscribe(_ => Total = _ * 1000)
             .DisposeItWith(Disposable);
-        
-        _log = log;
 
         _vehicle.MissionCurrent.Subscribe(_ => CurrentIndex = _)
             .DisposeItWith(Disposable);
@@ -42,56 +51,28 @@ public class MissionStatusViewModel : ViewModelBase
         _vehicle.MissionReached.Subscribe(_ => ReachedIndex = _)
             .DisposeItWith(Disposable);
 
+        _vehicle.MissionItems.Filter(_ => _.Command.Value != MavCmd.MavCmdNavReturnToLaunch)
+            .Count()
+            .Subscribe(_ => WayPointsCount = _)
+            .DisposeItWith(Disposable);
+        
+        //_vehicle.MissionItems
+        //    .Filter(_ => _.Command.Value != MavCmd.MavCmdNavReturnToLaunch)
+        //    .Transform(_ => new RoundWayPointItem(_))
+        //    .Bind(out _wayPoints)
+        //    .DisposeMany()
+        //    .Subscribe()
+        //    .DisposeItWith(Disposable);
+        
         this.WhenValueChanged(_ => _.ReachedIndex, false)
-            .Subscribe(_ => PathProgress = (double)ReachedIndex / _wayPoints.Count)
-            .DisposeItWith(Disposable);
-        
-        _vehicle.MissionItems
-            .ObserveOn(RxApp.MainThreadScheduler)
-            .Filter(_ => _.Command.Value != MavCmd.MavCmdNavReturnToLaunch)
-            .Transform(_ => new RoundWayPointItem(_))
-            .Bind(out _wayPoints)
-            .DisposeMany()
-            .Subscribe()
-            .DisposeItWith(Disposable);
-
-        _download = ReactiveCommand.CreateFromObservable(
-                () => Observable.FromAsync(DownloadImpl).SubscribeOn(RxApp.TaskpoolScheduler).TakeUntil(_cancelDownload), 
-                this.WhenAnyValue(_ => _.IsInDownloadProgress).Select(_ => !_))
-            .DisposeItWith(Disposable);
-        
-        _download.IsExecuting.ToProperty(this, _ => _.IsDownloading, out _isDownloading)
-            .DisposeItWith(Disposable);
-        
-        _download.ThrownExceptions.Subscribe(OnDownloadError)
-            .DisposeItWith(Disposable);
-        
-        _cancelDownload = ReactiveCommand.Create(() => { }, _download.IsExecuting)
-            .DisposeItWith(Disposable);
-        
-        this.WhenAnyValue(_=>_.IsDownloading)
-            .Subscribe(_=> IsInDownloadProgress = _)
+            .Subscribe(_ => PathProgress = (double)ReachedIndex / WayPointsCount)
             .DisposeItWith(Disposable);
     }
+    
+    public ReactiveCommand<Unit, Unit> DisableAll { get; set; }
     
     #region Download
-    private readonly ObservableAsPropertyHelper<bool> _isDownloading;
-    
-    public bool IsDownloading => _isDownloading.Value;
-    
-    public readonly ReactiveCommand<Unit,Unit> _download;
-    
-    public ICommand Download => _download;
-    
-    private readonly ReactiveCommand<Unit,Unit> _cancelDownload;
-    
-    public ICommand CancelDownload => _cancelDownload;
-
-    private void OnDownloadError(Exception exception)
-    {   
-        //TODO: Localize
-        _log.Error("MissionStatus", $"Download mission error {_vehicle.Name.Value}", exception);
-    }
+    public ReactiveCommand<Unit, Unit> Download { get; set; }
 
     private async Task DownloadImpl(CancellationToken cancel)
     {
@@ -100,19 +81,12 @@ public class MissionStatusViewModel : ViewModelBase
     #endregion
 
     [Reactive]
-    public bool IsInDownloadProgress { get; set; }
-    
-    [Reactive]
     public double DownloadProgress { get; set; }
     
-    [Reactive]
-    public bool DisableAll { get; set; }
+    [Reactive] public bool EnablePolygon { get; set; } = true;
     
     [Reactive]
-    public bool EnablePolygons { get; set; }
-    
-    [Reactive]
-    public bool EnablePolygonsAndAnchors { get; set; }
+    public bool EnableAnchors { get; set; } = true;
     
     [Reactive]
     public double Current { get; set; }
@@ -129,5 +103,8 @@ public class MissionStatusViewModel : ViewModelBase
     [Reactive]
     public ushort ReachedIndex { get; set; }
     
-    public ReadOnlyObservableCollection<RoundWayPointItem> WayPoints => _wayPoints;
+    [Reactive]
+    public int WayPointsCount { get; set; }
+    
+    //public ReadOnlyObservableCollection<RoundWayPointItem> WayPoints => _wayPoints;
 }

@@ -13,7 +13,7 @@
     <Design.DataContext>
         <uav:PlaningMissionViewModel/>
     </Design.DataContext>
-    <Panel Background="Transparent" >
+    <Panel Background="Transparent">
         <Border Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8" CornerRadius="{DynamicResource ControlCornerRadius}" />    
         <DockPanel Margin="10">
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
