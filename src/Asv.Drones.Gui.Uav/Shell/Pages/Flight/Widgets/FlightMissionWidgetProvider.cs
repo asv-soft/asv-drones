@@ -15,7 +15,7 @@ namespace Asv.Drones.Gui.Uav
             [ImportMany]IEnumerable<IUavRttItemProvider> rttItems)
         {
             devices.Vehicles
-                .Transform(_ => (IMapWidget)new FlightUavViewModel(_,log, localization,rttItems))
+                .Transform(_ => (IMapWidget)new FlightUavViewModel(_, log, localization, rttItems))
                 .ChangeKey( ((_, v) => v.Id) )
                 .PopulateInto(Source);
         }
