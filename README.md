@@ -6,5 +6,6 @@ Open source user-friendly software solution designed to provide remote control a
 
 ![img/screenshot-flight](img/screenshot-flight.png)
 ![img/screenshot-planing](img/screenshot-planing.png)
+![img/screenshot-packet-viewer](img/screenshot-packet-viewer.png)
 ![img/screenshot-connections](img/screenshot-connections.png)
 ![img/screenshot-settings](img/screenshot-settings.png)
