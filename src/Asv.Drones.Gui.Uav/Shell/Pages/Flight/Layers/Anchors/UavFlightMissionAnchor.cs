@@ -20,7 +20,7 @@ public class UavFlightMissionAnchor : FlightAnchorBase
         Icon = ConvertIcon(missionItem.Command.Value);
         IconBrush = Brushes.OrangeRed;
         IsVisible = true;
-        IsEditable = true;
+        IsEditable = false;
 
         _missionItem = missionItem;
         missionItem.Location.Subscribe(_=>Location = _).DisposeItWith(Disposable);
