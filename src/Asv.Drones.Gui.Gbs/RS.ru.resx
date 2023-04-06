@@ -21,4 +21,70 @@
     <data name="GbsRttItem_ValueNotAvailable" xml:space="preserve">
         <value>Н\Д</value>
     </data>
+    <data name="AutoModeViewModel_Accuracy_ValidValue" xml:space="preserve">
+        <value>Точность должна быть больше или равна {0}.</value>
+    </data>
+    <data name="AutoModeViewModel_Observation_ValidValue" xml:space="preserve">
+        <value>Длительность наблюдения должна быть больше или равна {0}.</value>
+    </data>
+    <data name="AutoModeViewModel_StartFailed" xml:space="preserve">
+        <value>Ошибка старта режима Авто: {0}</value>
+    </data>
+    <data name="AutoModeViewModel_ObservationUnit_Name" xml:space="preserve">
+        <value>сек</value>
+    </data>
+    <data name="AutoModeView_Accuracy_Name" xml:space="preserve">
+        <value>Точность</value>
+    </data>
+    <data name="AutoModeView_Observation_Name" xml:space="preserve">
+        <value>Наблюдение</value>
+    </data>
+    <data name="FixedModeViewModel_Latitude_ValidValue" xml:space="preserve">
+        <value>Широта должна быть больше или равна {0}.</value>
+    </data>
+    <data name="FixedModeViewModel_Longitude_ValidValue" xml:space="preserve">
+        <value>Долгота должна быть больше или равна {0}.</value>
+    </data>
+    <data name="FixedModeViewModel_Altitude_ValidValue" xml:space="preserve">
+        <value>Высота должна быть больше или равна {0}.</value>
+    </data>
+    <data name="FixedModeViewModel_StartFailed" xml:space="preserve">
+        <value>Ошибка старта Фиксированного режима: {0}</value>
+    </data>
+    <data name="FixedModeViewModel_Accuracy_ValidValue" xml:space="preserve">
+        <value>Точность должна быть больше или равна {0}.</value>
+    </data>
+    <data name="FlightGbsViewModel_AutoMode_Title" xml:space="preserve">
+        <value>Режим Авто</value>
+    </data>
+    <data name="FlightGbsViewModel_AutoMode_PrimaryButtonText" xml:space="preserve">
+        <value>Ок</value>
+    </data>
+    <data name="FlightGbsViewModel_AutoMode_CloseButtonText" xml:space="preserve">
+        <value>Отмена</value>
+    </data>
+    <data name="FlightGbsViewModel_FixedMode_Title" xml:space="preserve">
+        <value>Фиксированный режим</value>
+    </data>
+    <data name="FlightGbsViewModel_FixedMode_PrimaryButtonText" xml:space="preserve">
+        <value>Ок</value>
+    </data>
+    <data name="FlightGbsViewModel_FixedMode_CloseButtonText" xml:space="preserve">
+        <value>Отмена</value>
+    </data>
+    <data name="FlightGbsViewModel_Title" xml:space="preserve">
+        <value>Наземная базовая станция</value>
+    </data>
+    <data name="FixedModeView_Accuracy_Name" xml:space="preserve">
+        <value>Точность</value>
+    </data>
+    <data name="FixedModeView_Altitude_Name" xml:space="preserve">
+        <value>Высота</value>
+    </data>
+    <data name="FixedModeView_Latitude_Name" xml:space="preserve">
+        <value>Широта</value>
+    </data>
+    <data name="FixedModeView_Longitude_Name" xml:space="preserve">
+        <value>Долгота</value>
+    </data>
 </root>

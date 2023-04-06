@@ -21,7 +21,7 @@ namespace Asv.Drones.Gui.Gbs {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class RS {
+    public class RS {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -35,7 +35,7 @@ namespace Asv.Drones.Gui.Gbs {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Asv.Drones.Gui.Gbs.RS", typeof(RS).Assembly);
@@ -50,7 +50,7 @@ namespace Asv.Drones.Gui.Gbs {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -60,9 +60,207 @@ namespace Asv.Drones.Gui.Gbs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accuracy.
+        /// </summary>
+        public static string AutoModeView_Accuracy_Name {
+            get {
+                return ResourceManager.GetString("AutoModeView_Accuracy_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Observation.
+        /// </summary>
+        public static string AutoModeView_Observation_Name {
+            get {
+                return ResourceManager.GetString("AutoModeView_Observation_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accuracy must be greater or equal {0}..
+        /// </summary>
+        public static string AutoModeViewModel_Accuracy_ValidValue {
+            get {
+                return ResourceManager.GetString("AutoModeViewModel_Accuracy_ValidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Observation time must be greater or equal {0}..
+        /// </summary>
+        public static string AutoModeViewModel_Observation_ValidValue {
+            get {
+                return ResourceManager.GetString("AutoModeViewModel_Observation_ValidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sec.
+        /// </summary>
+        public static string AutoModeViewModel_ObservationUnit_Name {
+            get {
+                return ResourceManager.GetString("AutoModeViewModel_ObservationUnit_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto mode start failed: {0}.
+        /// </summary>
+        public static string AutoModeViewModel_StartFailed {
+            get {
+                return ResourceManager.GetString("AutoModeViewModel_StartFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accuracy.
+        /// </summary>
+        public static string FixedModeView_Accuracy_Name {
+            get {
+                return ResourceManager.GetString("FixedModeView_Accuracy_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude.
+        /// </summary>
+        public static string FixedModeView_Altitude_Name {
+            get {
+                return ResourceManager.GetString("FixedModeView_Altitude_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude.
+        /// </summary>
+        public static string FixedModeView_Latitude_Name {
+            get {
+                return ResourceManager.GetString("FixedModeView_Latitude_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude.
+        /// </summary>
+        public static string FixedModeView_Longitude_Name {
+            get {
+                return ResourceManager.GetString("FixedModeView_Longitude_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accuracy must be greater or equal {0}..
+        /// </summary>
+        public static string FixedModeViewModel_Accuracy_ValidValue {
+            get {
+                return ResourceManager.GetString("FixedModeViewModel_Accuracy_ValidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude must be greater or equal {0}..
+        /// </summary>
+        public static string FixedModeViewModel_Altitude_ValidValue {
+            get {
+                return ResourceManager.GetString("FixedModeViewModel_Altitude_ValidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude must be greater or equal {0}..
+        /// </summary>
+        public static string FixedModeViewModel_Latitude_ValidValue {
+            get {
+                return ResourceManager.GetString("FixedModeViewModel_Latitude_ValidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude must be greater or equal {0}..
+        /// </summary>
+        public static string FixedModeViewModel_Longitude_ValidValue {
+            get {
+                return ResourceManager.GetString("FixedModeViewModel_Longitude_ValidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fixed mode start failed: {0}.
+        /// </summary>
+        public static string FixedModeViewModel_StartFailed {
+            get {
+                return ResourceManager.GetString("FixedModeViewModel_StartFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string FlightGbsViewModel_AutoMode_CloseButtonText {
+            get {
+                return ResourceManager.GetString("FlightGbsViewModel_AutoMode_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string FlightGbsViewModel_AutoMode_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("FlightGbsViewModel_AutoMode_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Mode.
+        /// </summary>
+        public static string FlightGbsViewModel_AutoMode_Title {
+            get {
+                return ResourceManager.GetString("FlightGbsViewModel_AutoMode_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string FlightGbsViewModel_FixedMode_CloseButtonText {
+            get {
+                return ResourceManager.GetString("FlightGbsViewModel_FixedMode_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string FlightGbsViewModel_FixedMode_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("FlightGbsViewModel_FixedMode_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fixed Mode.
+        /// </summary>
+        public static string FlightGbsViewModel_FixedMode_Title {
+            get {
+                return ResourceManager.GetString("FlightGbsViewModel_FixedMode_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ground base station.
+        /// </summary>
+        public static string FlightGbsViewModel_Title {
+            get {
+                return ResourceManager.GetString("FlightGbsViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to N\A.
         /// </summary>
-        internal static string GbsRttItem_ValueNotAvailable {
+        public static string GbsRttItem_ValueNotAvailable {
             get {
                 return ResourceManager.GetString("GbsRttItem_ValueNotAvailable", resourceCulture);
             }
