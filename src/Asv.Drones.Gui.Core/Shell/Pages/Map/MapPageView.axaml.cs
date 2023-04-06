@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Text.RegularExpressions;
 using Avalonia;
 using Avalonia.Controls;
@@ -7,6 +6,12 @@ using Avalonia.ReactiveUI;
 
 namespace Asv.Drones.Gui.Core
 {
+    public class MapPageViewConfig
+    {
+        public string Columns { get; set; }
+        public string Rows { get; set; }
+    }
+    
     public partial class MapPageView : ReactiveUserControl<MapPageViewModel>
     {
         public MapPageView()
@@ -19,25 +24,43 @@ namespace Asv.Drones.Gui.Core
             AvaloniaXamlLoader.Load(this);
         }
 
-        protected static void SetColumnDefinitions(ColumnDefinitions columnDefinitions, string values)
+        protected static void SetColumnAndRowDefinitions(Grid grid, MapPageViewConfig cfg)
         {
-            var parsedValues = Regex.Split(values, ",");
+            var parsedColumnValues = Regex.Split(cfg.Columns, ",");
+            var parsedRowValues = Regex.Split(cfg.Rows, ",");
 
-            columnDefinitions.Clear();
+            grid.ColumnDefinitions.Clear();
+            grid.RowDefinitions.Clear();
             
-            foreach (var value in parsedValues)
+            foreach (var value in parsedColumnValues)
             {
                 if (value.Contains('*'))
                 {
-                    int.TryParse(value.AsSpan(0, value.Length - 1), out var gridLengthValue);
+                    int.TryParse(value.Substring(0, value.Length - 1).Split('.').FirstOrDefault(), out var gridLengthValue);
                     
-                    columnDefinitions.Add(new ColumnDefinition(new GridLength(gridLengthValue, GridUnitType.Star)));
+                    grid.ColumnDefinitions.Add(new ColumnDefinition(new GridLength(gridLengthValue, GridUnitType.Star)));
                 }
                 else
                 {
-                    int.TryParse(value, out var gridLengthValue);
+                    int.TryParse(value.Split('.').FirstOrDefault(), out var gridLengthValue);
                     
-                    columnDefinitions.Add(new ColumnDefinition(new GridLength(gridLengthValue)));
+                    grid.ColumnDefinitions.Add(new ColumnDefinition(new GridLength(gridLengthValue)));
+                }
+            }
+            
+            foreach (var value in parsedRowValues)
+            {
+                if (value.Contains('*'))
+                {
+                    int.TryParse(value.Substring(0, value.Length - 1).Split('.').FirstOrDefault(), out var gridLengthValue);
+                    
+                    grid.RowDefinitions.Add(new RowDefinition(new GridLength(gridLengthValue, GridUnitType.Star)));
+                }
+                else
+                {
+                    int.TryParse(value.Split('.').FirstOrDefault(), out var gridLengthValue);
+                    
+                    grid.RowDefinitions.Add(new RowDefinition(new GridLength(gridLengthValue)));
                 }
             }
         }
