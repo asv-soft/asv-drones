@@ -57,7 +57,7 @@
                                                         DockPanel.Dock="Right"
                                                         Kind="Pin"/>
                                  
-                                 <SelectableTextBlock VerticalAlignment="Center" Text="{Binding Parameter.Name}"/>
+                                 <TextBlock VerticalAlignment="Center" Text="{Binding Parameter.Name}"/>
                              </DockPanel>
                          </DataTemplate>
                      </ListBox.DataTemplates>
@@ -72,6 +72,7 @@
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
+                
             </ScrollViewer>
         </Grid>
     </DockPanel>

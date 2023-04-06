@@ -10,8 +10,6 @@ namespace Asv.Drones.Gui.Uav
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class FlightsMapLayerProvider : IViewModelProvider<IMapAnchor>
     {
-        
-        
         [ImportingConstructor]
         public FlightsMapLayerProvider(IMavlinkDevicesService svc,
             ILocalizationService loc,

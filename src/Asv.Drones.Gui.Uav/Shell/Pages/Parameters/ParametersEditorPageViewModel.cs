@@ -26,7 +26,7 @@ public class ParametersEditorPageViewModel : ViewModelBase, IShellPage
     private ReadOnlyObservableCollection<ParameterItem> _parameters;
     private ObservableCollection<VehicleParamDescription> _descriptions;
 
-    private const string UriString = ShellMenuItem.UriString + ".parameters";
+    private const string UriString = ShellPage.UriString + ".parameters";
     private static readonly Uri Uri = new Uri(UriString);
 
     public ParametersEditorPageViewModel() : base(Uri)

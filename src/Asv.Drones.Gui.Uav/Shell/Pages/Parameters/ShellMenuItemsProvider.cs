@@ -16,14 +16,17 @@ public class ParametersShellPageProvider : ViewModelProviderBase<IShellMenuItem>
     [ImportingConstructor]
     public ParametersShellPageProvider(IMavlinkDevicesService svc)
     {
-        svc.Vehicles.Transform(_ => (IShellMenuItem)new ShellMenuItem(new(ShellMenuItem.UriString + ".parameters"))
+        svc.Vehicles.Transform(_ => (IShellMenuItem)new ShellMenuItem(new($"{ShellMenuItem.UriString}.parameters.{_.FullId}"))
         {
             Name = $"Parameters editor [{_.FullId}]",
-            NavigateTo = new(ShellMenuItem.UriString + ".parameters" + $"?Id={_.FullId}"),
+            NavigateTo = new($"{ShellPage.UriString}.parameters?Id={_.FullId}"),
             Icon = MaterialIconDataProvider.GetData(MaterialIconKind.ViewList),
             Position = ShellMenuPosition.Top,
             Type = ShellMenuItemType.PageNavigation,
             Order = _.FullId
-        }).ChangeKey((_, v) => v.Id).PopulateInto(Source);
+        }).ChangeKey((_, v) => v.Id)
+            .DisposeMany()
+            .PopulateInto(Source)
+            .DisposeItWith(Disposable);
     }
 }
