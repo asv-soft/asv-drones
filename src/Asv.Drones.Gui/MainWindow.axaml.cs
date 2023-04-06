@@ -155,9 +155,38 @@ namespace Asv.Drones.Gui
             {
                 var shellViewConfig = _configuration.Get<ShellViewConfig>(nameof(ShellViewConfig));
 
-                Height = shellViewConfig.Height;
-                Width = shellViewConfig.Width;
-                Position = new PixelPoint(shellViewConfig.PositionX, shellViewConfig.PositionY);
+                var totalWidth = 0;
+                var totalHeight = 0;
+
+                foreach (var scr in Screens.All)
+                {
+                    totalWidth += scr.Bounds.Width;
+                    totalHeight += scr.Bounds.Height;
+                }
+
+                if (shellViewConfig.PositionX > totalWidth || shellViewConfig.PositionY > totalHeight)
+                {
+                    Position = new PixelPoint(0, 0);
+                }
+                else
+                {
+                    Position = new PixelPoint(shellViewConfig.PositionX, shellViewConfig.PositionY);
+                }
+
+                if (shellViewConfig.Height > totalHeight || shellViewConfig.Width > totalWidth)
+                {
+                    var scrBounds = Screens.Primary.Bounds;
+                    
+                    Height = scrBounds.Height * 0.9;
+                    Width = scrBounds.Width * 0.9;
+                    
+                    Position = new PixelPoint(0, 0);
+                }
+                else
+                {
+                    Height = shellViewConfig.Height;
+                    Width = shellViewConfig.Width;
+                }
             }
         }
 
