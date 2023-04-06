@@ -69,6 +69,33 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string ParametersEditorPageViewModel_Search {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageViewModel_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameters editor [{0}].
+        /// </summary>
+        public static string ParametersEditorPageViewModel_Title {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total: {0}.
+        /// </summary>
+        public static string ParametersEditorPageViewModel_Total {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageViewModel_Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ROI of.
         /// </summary>
         public static string RoiAnchor_Vehicle_Name {

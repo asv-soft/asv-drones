@@ -165,4 +165,13 @@
   <data name="UavRttItem_ValueNotAvailable" xml:space="preserve">
     <value>Н\Д</value>
   </data>
+  <data name="ParametersEditorPageViewModel_Title" xml:space="preserve">
+    <value>Редактор параметров [{0}]</value>
+  </data>
+  <data name="ParametersEditorPageViewModel_Search" xml:space="preserve">
+    <value>Найти</value>
+  </data>
+  <data name="ParametersEditorPageViewModel_Total" xml:space="preserve">
+    <value>Всего: {0}</value>
+  </data>
 </root>

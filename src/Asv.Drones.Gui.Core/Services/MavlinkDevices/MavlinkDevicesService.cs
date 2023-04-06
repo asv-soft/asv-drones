@@ -136,6 +136,8 @@ namespace Asv.Drones.Gui.Uav
 
             #region Mavlink vehicles
 
+            
+            
             Vehicles = _devices
             .Connect()
                 .Filter(_=> _.Autopilot is MavAutopilot.MavAutopilotArdupilotmega)
@@ -203,6 +205,12 @@ namespace Asv.Drones.Gui.Uav
         public IRxEditableValue<TimeSpan> HeartbeatRate => _heartBeatRate;
         public IObservable<IChangeSet<IVehicle, ushort>> Vehicles { get; }
         public IRxEditableValue<TimeSpan> DeviceTimeout => _deviceBrowser.DeviceTimeout;
+
+        public IVehicle? GetVehicleByFullId(ushort id)
+        {
+            using var a = Vehicles.BindToObservableList(out var list).Subscribe();
+            return list.Items.FirstOrDefault(_=>_.FullId == id);
+        }
 
         private IVehicle? CreateVehicle(IMavlinkDevice device)
         {

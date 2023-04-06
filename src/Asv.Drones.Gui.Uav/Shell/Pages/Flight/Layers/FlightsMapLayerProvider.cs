@@ -2,7 +2,6 @@
 using System.ComponentModel.Composition;
 using System.Reactive.Linq;
 using Asv.Drones.Gui.Core;
-using Asv.Drones.Gui.Uav.Uav;
 
 namespace Asv.Drones.Gui.Uav
 {
@@ -11,8 +10,6 @@ namespace Asv.Drones.Gui.Uav
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class FlightsMapLayerProvider : IViewModelProvider<IMapAnchor>
     {
-        
-        
         [ImportingConstructor]
         public FlightsMapLayerProvider(IMavlinkDevicesService svc,
             ILocalizationService loc,
