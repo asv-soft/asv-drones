@@ -20,6 +20,8 @@ public class DefaultGbsRttItemProvider : IGbsRttItemProvider
     public IEnumerable<IGbsRttItem> Create(IGbsDevice device)
     {
         yield return new LinkQualityGbsRttViewModel(device);
+        yield return new VisibleSatellitesGbsRttViewModel(device);
+        yield return new BaseStationModeGbsRttViewModel(device);
         yield return new AccuracyGbsRttViewModel(device, _localizationService);
         yield return new ObservationGbsRttViewModel(device,_localizationService);
         yield return new DGpsRateGbsRttViewModel(device, _localizationService);
