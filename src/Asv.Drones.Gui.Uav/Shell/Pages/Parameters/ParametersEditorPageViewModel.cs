@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Asv.Common;
@@ -184,8 +185,16 @@ public class ParameterItem : AvaloniaObject
     {
         Parameter = parameter;
         Description = description;
+        
+        PinItem = ReactiveCommand.Create(() =>
+        {
+            Pinned = !Pinned;
+        });
     }
 
+    [Reactive]
+    public ReactiveCommand<Unit, Unit> PinItem { get; set; }
+    
     #region Parameter
     private MavParam _parameter;
 

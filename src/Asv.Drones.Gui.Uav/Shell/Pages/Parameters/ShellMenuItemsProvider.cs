@@ -18,12 +18,12 @@ public class ParametersShellPageProvider : ViewModelProviderBase<IShellMenuItem>
     {
         svc.Vehicles.Transform(_ => (IShellMenuItem)new ShellMenuItem(new(ShellMenuItem.UriString + ".parameters"))
         {
-            Name = $"Parameters editor [{_.FullId}]",
+            Name = string.Format(RS.ParametersEditorPageViewModel_Title, _.FullId),
             NavigateTo = new(ShellMenuItem.UriString + ".parameters" + $"?Id={_.FullId}"),
             Icon = MaterialIconDataProvider.GetData(MaterialIconKind.ViewList),
             Position = ShellMenuPosition.Top,
             Type = ShellMenuItemType.PageNavigation,
             Order = _.FullId
-        }).ChangeKey((_, v) => v.Id).PopulateInto(Source);
+        }).ChangeKey((_, v) => v.Id).DisposeMany().PopulateInto(Source);
     }
 }

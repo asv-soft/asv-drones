@@ -38,29 +38,25 @@
                 <TextBlock DockPanel.Dock="Bottom" Text="{Binding Total, StringFormat={x:Static uav:RS.ParametersEditorPageViewModel_Total}}"/>
                 <ListBox SelectedItem="{Binding SelectedItem}" 
                          Items="{Binding Parameters}">
-                     <ListBox.DataTemplates>
-                         <DataTemplate DataType="uav:ParameterItem">
-                             <DockPanel LastChildFill="True">
-                                 <ToggleButton IsChecked="{Binding Starred}"
-                                               Margin="10 0 0 0"
-                                               Background="Transparent"
-                                               BorderThickness="0"
-                                               DockPanel.Dock="Right">
-                                     
-                                     <avalonia:MaterialIcon Width="20" 
-                                                            Height="20" 
-                                                            Kind="Star"/>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="uav:ParameterItem">
+                            <DockPanel Background="Transparent" Name="ItemDockPanel" LastChildFill="True">
+                                <Interaction.Behaviors>
+                                    <EventTriggerBehavior SourceObject="ItemDockPanel" EventName="DoubleTapped">
+                                        <InvokeCommandAction
+                                            Command="{Binding PinItem}" />
+                                    </EventTriggerBehavior>
+                                </Interaction.Behaviors>
+                                <ToggleButton IsChecked="{Binding Starred}" Margin="10 0 0 0"
+                                              Background="Transparent" BorderThickness="0" DockPanel.Dock="Right">
+                                     <avalonia:MaterialIcon Width="20" Height="20" Kind="Star"/>
                                  </ToggleButton>
-                                 <avalonia:MaterialIcon IsVisible="{Binding Pinned}"
-                                                        Width="20"
-                                                        Margin="10 0 0 0"
-                                                        DockPanel.Dock="Right"
-                                                        Kind="Pin"/>
-                                 
-                                 <SelectableTextBlock VerticalAlignment="Center" Text="{Binding Parameter.Name}"/>
-                             </DockPanel>
-                         </DataTemplate>
-                     </ListBox.DataTemplates>
+                                 <avalonia:MaterialIcon IsVisible="{Binding Pinned}" Width="20"
+                                                        Margin="10 0 0 0" DockPanel.Dock="Right" Kind="Pin"/>
+                                 <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding Parameter.Name}"/>
+                             </DockPanel>    
+                        </DataTemplate>
+                     </ListBox.ItemTemplate>
                  </ListBox>
             </DockPanel>
             <GridSplitter Background="Transparent" Grid.Column="1"/>
