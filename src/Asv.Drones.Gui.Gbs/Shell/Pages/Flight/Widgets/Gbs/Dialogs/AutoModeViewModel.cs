@@ -1,5 +1,6 @@
 using System.ComponentModel.Composition;
 using System.Reactive.Linq;
+using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using FluentAvalonia.UI.Controls;
@@ -9,6 +10,12 @@ using ReactiveUI.Validation.Extensions;
 
 namespace Asv.Drones.Gui.Gbs;
 
+public class AutoModeConfig
+{
+    public ushort Observation { get; set; }
+    public string Accuracy { get; set; }
+}
+
 [Export]
 [PartCreationPolicy(CreationPolicy.NonShared)]
 public class AutoModeViewModel : ViewModelBaseWithValidation
@@ -16,6 +23,7 @@ public class AutoModeViewModel : ViewModelBaseWithValidation
     private readonly IGbsDevice _gbsDevice;
     private readonly ILogService _logService;
     private readonly ILocalizationService _loc;
+    private readonly IConfiguration _configuration;
     private readonly CancellationToken _ctx;
 
     private const double MinimumAccuracyDistance = 1;
@@ -26,12 +34,21 @@ public class AutoModeViewModel : ViewModelBaseWithValidation
     }
     
     [ImportingConstructor]
-    public AutoModeViewModel(IGbsDevice gbsDevice, ILogService logService, ILocalizationService loc, CancellationToken ctx) : this()
+    public AutoModeViewModel(IGbsDevice gbsDevice, ILogService logService, ILocalizationService loc, IConfiguration configuration, CancellationToken ctx) : this()
     {
         _gbsDevice = gbsDevice;
         _logService = logService;
+        _configuration = configuration;
         _loc = loc;
         _ctx = ctx;
+        
+        if (_configuration.Exist<AutoModeConfig>(nameof(AutoModeViewModel)))
+        {
+            var autoModeConfig = _configuration.Get<AutoModeConfig>(nameof(AutoModeViewModel));
+
+            Accuracy = autoModeConfig.Accuracy;
+            Observation = autoModeConfig.Observation;
+        }
         
 #region Validation Rules
 
@@ -48,14 +65,6 @@ public class AutoModeViewModel : ViewModelBaseWithValidation
             .DisposeItWith(Disposable);
 
 #endregion
-
-        this.WhenAnyValue(_ => _._gbsDevice.MavlinkClient.Gbs.Status.Value.Observation)
-            .Subscribe(_ => Observation = _)
-            .DisposeItWith(Disposable);
-
-        this.WhenAnyValue(_ => _._gbsDevice.MavlinkClient.Gbs.Status.Value.Accuracy)
-            .Subscribe(_ => Accuracy = _loc.Distance.FromSIToString(_))
-            .DisposeItWith(Disposable);
     }
 
     public void ApplyDialog(ContentDialog dialog)
@@ -79,6 +88,14 @@ public class AutoModeViewModel : ViewModelBaseWithValidation
         {
             _logService.Error("", string.Format(RS.AutoModeViewModel_StartFailed, e.Message), e);
         }
+        
+        var autoModeConfig = new AutoModeConfig()
+        {
+            Accuracy = Accuracy,
+            Observation = Observation
+        };
+        
+        _configuration.Set(nameof(AutoModeViewModel), autoModeConfig);
     }
 
     [Reactive] public ushort Observation { get; set; }

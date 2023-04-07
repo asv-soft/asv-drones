@@ -2,6 +2,7 @@
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Windows.Input;
+using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink.V2.AsvGbs;
@@ -18,6 +19,7 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
     private readonly ReadOnlyObservableCollection<IGbsRttItem> _rttItems;
     private readonly ILogService _logService;
     private readonly ILocalizationService _loc;
+    private readonly IConfiguration _configuration;
     public static Uri GenerateUri(IGbsDevice gbs) => FlightGbsWidgetBase.GenerateUri(gbs,"gbs");
     
     private Subject<bool> _canExecuteAutoCommand = new();
@@ -25,11 +27,12 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
     private Subject<bool> _canExecuteIdleCommand = new();
     private Subject<bool> _canExecuteCancelCommand = new();
     
-    public FlightGbsViewModel(IGbsDevice gbsDevice, ILogService log, ILocalizationService loc, IEnumerable<IGbsRttItemProvider> rttItems)
+    public FlightGbsViewModel(IGbsDevice gbsDevice, ILogService log, ILocalizationService loc, IConfiguration configuration, IEnumerable<IGbsRttItemProvider> rttItems)
         :base(gbsDevice, GenerateUri(gbsDevice))
     {
         _logService = log;
         _loc = loc;
+        _configuration = configuration;
         
         Icon = MaterialIconKind.RouterWireless;
         Title = RS.FlightGbsViewModel_Title;
@@ -122,7 +125,7 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
             CloseButtonText = RS.FlightGbsViewModel_AutoMode_CloseButtonText
         };
 
-        var viewModel = new AutoModeViewModel(Gbs, _logService, _loc, ctx);
+        var viewModel = new AutoModeViewModel(Gbs, _logService, _loc, _configuration, ctx);
         viewModel.ApplyDialog(dialog);
         dialog.Content = viewModel;
         var result = await dialog.ShowAsync();
