@@ -18,7 +18,7 @@
         </StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="220" Width="1*"/>
+                <ColumnDefinition MinWidth="220" Width="*"/>
                 <ColumnDefinition Width="5"/>
                 <ColumnDefinition MinWidth="500" Width="2*"/>
             </Grid.ColumnDefinitions>

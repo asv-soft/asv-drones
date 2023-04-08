@@ -9,11 +9,11 @@ using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav
 {
-    public class UavMissionAnchor : PlaningAnchorBase
+    public class UavPlaningMissionAnchor : PlaningAnchorBase
     {
         private readonly MissionItem _missionItem;
 
-        public UavMissionAnchor(MissionItem missionItem, IVehicle vehicle):base(vehicle,$"mission/{missionItem.Index}")
+        public UavPlaningMissionAnchor(MissionItem missionItem, IVehicle vehicle):base(vehicle,$"planing-mission/{missionItem.Index}")
         {
             Size = 16;
             OffsetX = OffsetXEnum.Center;

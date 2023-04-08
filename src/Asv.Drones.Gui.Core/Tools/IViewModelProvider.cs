@@ -1,4 +1,5 @@
-﻿using DynamicData;
+﻿using Asv.Common;
+using DynamicData;
 using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core
@@ -9,7 +10,7 @@ namespace Asv.Drones.Gui.Core
         IObservable<IChangeSet<TView, Uri>> Items { get; }
     }
 
-    public abstract class ViewModelProviderBase<TView> : IViewModelProvider<TView>
+    public abstract class ViewModelProviderBase<TView> : DisposableOnceWithCancel, IViewModelProvider<TView>
         where TView : IViewModel
     {
        

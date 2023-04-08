@@ -9,7 +9,13 @@
              x:CompileBindings ="True"
              Width="400"
              x:DataType="uav:ParametersEditorParameterViewModel">
-    <StackPanel Margin="8">
+    <Border Padding="{DynamicResource ButtonPadding}"
+            Background="{DynamicResource ControlFillColorDefaultBrush}"
+            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+            BorderThickness = "1"
+            CornerRadius="{StaticResource ControlCornerRadius}"
+            Margin="8">
+        <StackPanel>
         <DockPanel>
             <ToggleButton IsChecked="{Binding Parameter.Pinned}" Background="Transparent" BorderThickness="0" DockPanel.Dock="Right">
                 <avalonia:MaterialIcon Width="25" Height="25" Kind="Pin"/>
@@ -32,4 +38,5 @@
             <TextBlock FontWeight="Bold" Text="Reboot required"/>
         </Border>
     </StackPanel>
+    </Border>
 </UserControl>
