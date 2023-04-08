@@ -8,6 +8,9 @@
              x:Class="Asv.Drones.Gui.Uav.ParametersEditorPageView"
              x:CompileBindings ="True"
              x:DataType="uav:ParametersEditorPageViewModel">
+    <Design.DataContext>
+        <uav:ParametersEditorPageViewModel/>
+    </Design.DataContext>
     <DockPanel LastChildFill="True">
         <StackPanel Margin="8" Orientation="Horizontal" DockPanel.Dock="Top">
             <avalonia:MaterialIcon Kind="ViewList" Width="30" Height="30"/>
@@ -15,7 +18,7 @@
         </StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="220" Width="*"/>
+                <ColumnDefinition MinWidth="220" Width="1*"/>
                 <ColumnDefinition Width="5"/>
                 <ColumnDefinition MinWidth="500" Width="2*"/>
             </Grid.ColumnDefinitions>
@@ -26,6 +29,9 @@
                     </ToggleButton>
                     <Button Command="{Binding UpdateParams}" Margin="4 0 0 0" DockPanel.Dock="Right" Width="30" Height="30">
                         <avalonia:MaterialIcon Kind="Sync"/>
+                    </Button>
+                    <Button Command="{Binding RemoveAllPins}" Margin="4 0 0 0" DockPanel.Dock="Right" Width="30" Height="30">
+                        <avalonia:MaterialIcon Kind="PinOff"/>
                     </Button>
                     <TextBox x:Name="SearchBox" Text="{Binding Search}" Margin="4 0 0 0" Watermark="{x:Static uav:RS.ParametersEditorPageViewModel_Search}">
                         <TextBox.InnerRightContent>
@@ -48,12 +54,12 @@
                                     </EventTriggerBehavior>
                                 </Interaction.Behaviors>
                                 <ToggleButton IsChecked="{Binding Starred}" Margin="10 0 0 0"
-                                              Background="Transparent" BorderThickness="0" DockPanel.Dock="Right">
-                                     <avalonia:MaterialIcon Width="20" Height="20" Kind="Star"/>
-                                 </ToggleButton>
-                                 <avalonia:MaterialIcon IsVisible="{Binding Pinned}" Width="20"
-                                                        Margin="10 0 0 0" DockPanel.Dock="Right" Kind="Pin"/>
-                                 <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding Parameter.Name}"/>
+                                              BorderThickness="0" DockPanel.Dock="Right" Theme="{StaticResource TransparentToggleButton}">
+                                    <avalonia:MaterialIcon Width="20" Height="20" Kind="{Binding StarKind}"/>
+                                </ToggleButton>
+                                <avalonia:MaterialIcon IsVisible="{Binding Pinned}" Width="20"
+                                                       Margin="10 0 0 0" DockPanel.Dock="Right" Kind="Pin"/>
+                                <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding Parameter.Name}"/>
                              </DockPanel>    
                         </DataTemplate>
                      </ListBox.ItemTemplate>
