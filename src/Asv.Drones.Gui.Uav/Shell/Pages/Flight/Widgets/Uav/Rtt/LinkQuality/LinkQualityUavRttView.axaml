@@ -11,7 +11,7 @@
     <Design.DataContext>
         <uav:LinkQualityUavRttViewModel/>
     </Design.DataContext>
-    <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="UAV link quality">
+    <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="{x:Static uav:RS.LinkQualityUavRttView_ToolTip}">
         <core:ConnectionQuality Width="20" Height="20" MaxValue="1" WarningValue="0.5" CriticalValue="0.2" Value="{CompiledBinding LinkQuality}"/>
         <TextBlock VerticalAlignment="Center" Text="{CompiledBinding LinkQualityString}"/>
     </StackPanel>

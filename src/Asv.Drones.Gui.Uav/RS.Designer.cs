@@ -69,6 +69,51 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CPU load of UAV.
+        /// </summary>
+        public static string CpuLoadUavRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("CpuLoadUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UAV current.
+        /// </summary>
+        public static string CurrentUavRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("CurrentUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UAV time in flight.
+        /// </summary>
+        public static string FlightTimeUavRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("FlightTimeUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distance from UAV to home.
+        /// </summary>
+        public static string HomeDistanceUavRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("HomeDistanceUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UAV link quality.
+        /// </summary>
+        public static string LinkQualityUavRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("LinkQualityUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string ParametersEditorPageViewModel_Search {
@@ -218,6 +263,15 @@ namespace Asv.Drones.Gui.Uav {
         public static string UavRttItem_ValueNotAvailable {
             get {
                 return ResourceManager.GetString("UavRttItem_ValueNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UAV voltage.
+        /// </summary>
+        public static string VoltageUavRttItemView_ToolTip {
+            get {
+                return ResourceManager.GetString("VoltageUavRttItemView_ToolTip", resourceCulture);
             }
         }
     }

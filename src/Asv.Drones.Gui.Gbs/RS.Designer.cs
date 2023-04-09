@@ -60,6 +60,15 @@ namespace Asv.Drones.Gui.Gbs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GBS accuracy.
+        /// </summary>
+        public static string AccuracyGbsRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("AccuracyGbsRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accuracy.
         /// </summary>
         public static string AutoModeView_Accuracy_Name {
@@ -110,6 +119,24 @@ namespace Asv.Drones.Gui.Gbs {
         public static string AutoModeViewModel_StartFailed {
             get {
                 return ResourceManager.GetString("AutoModeViewModel_StartFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GBS mode.
+        /// </summary>
+        public static string BaseStationModeGbsRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("BaseStationModeGbsRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GBS DGps bytes rate.
+        /// </summary>
+        public static string DGpsRateGbsRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("DGpsRateGbsRttView_ToolTip", resourceCulture);
             }
         }
         
@@ -263,6 +290,33 @@ namespace Asv.Drones.Gui.Gbs {
         public static string GbsRttItem_ValueNotAvailable {
             get {
                 return ResourceManager.GetString("GbsRttItem_ValueNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GBS link quality.
+        /// </summary>
+        public static string LinkQualityGbsRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("LinkQualityGbsRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GBS observe time.
+        /// </summary>
+        public static string ObservationGbsRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("ObservationGbsRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GBS observe this amount of satellites.
+        /// </summary>
+        public static string VisibleSatellitesGbsRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("VisibleSatellitesGbsRttView_ToolTip", resourceCulture);
             }
         }
     }
