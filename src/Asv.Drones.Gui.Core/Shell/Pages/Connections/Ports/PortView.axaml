@@ -35,8 +35,12 @@
         BorderThickness="1"
         CornerRadius="{StaticResource ControlCornerRadius}"
         >
-        <Grid Margin="8" ColumnDefinitions="70,*,Auto,90,90,120,90,90,Auto,Auto">
-           
+        <Grid x:Name="PortGrid" Background="Transparent" Margin="8" ColumnDefinitions="70,*,Auto,90,90,120,90,90,Auto,Auto">
+            <Interaction.Behaviors>
+                <EventTriggerBehavior SourceObject="PortGrid" EventName="DoubleTapped">
+                    <InvokeCommandAction Command="{Binding ChangeSelectionCommand}" />
+                </EventTriggerBehavior>
+            </Interaction.Behaviors>  
             <avalonia:MaterialIcon 
                 ToolTip.Tip="{Binding Error}"
                 Classes.Connected="{Binding IsConnected}" 

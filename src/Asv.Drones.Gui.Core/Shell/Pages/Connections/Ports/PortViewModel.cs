@@ -64,6 +64,11 @@ namespace Asv.Drones.Gui.Core
             EnableDisableCommand = ReactiveCommand.Create(() => _svc.Router.SetEnabled(_id, IsPortEnabled)).DisposeItWith(Disposable);
             DeletePortCommand = ReactiveCommand.Create(() => _svc.Router.RemovePort(_id)).DisposeItWith(Disposable);
             EditPortCommand = ReactiveCommand.CreateFromTask(EditPortImpl).DisposeItWith(Disposable);
+            ChangeSelectionCommand = ReactiveCommand.Create(() =>
+            {
+                IsPortEnabled = !IsPortEnabled;
+                _svc.Router.SetEnabled(_id, IsPortEnabled);
+            }).DisposeItWith(Disposable);
         }
 
         public Guid PortId { get; }
@@ -178,6 +183,8 @@ namespace Asv.Drones.Gui.Core
         
         public ICommand EditPortCommand { get; }
 
+        public ICommand ChangeSelectionCommand { get; }
+        
         private async Task EditPortImpl(CancellationToken cancel)
         {
             var info = _svc.Router.GetInfo(_id);
