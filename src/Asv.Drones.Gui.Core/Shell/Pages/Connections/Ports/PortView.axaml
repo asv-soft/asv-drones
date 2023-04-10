@@ -5,7 +5,7 @@
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
              xmlns:core="clr-namespace:Asv.Drones.Gui.Core"
-             mc:Ignorable="d" d:DesignWidth="800"
+             mc:Ignorable="d" d:DesignWidth="860"
              Height="90"
              MinWidth="600"
              x:Class="Asv.Drones.Gui.Core.PortView"
@@ -35,7 +35,7 @@
         BorderThickness="1"
         CornerRadius="{StaticResource ControlCornerRadius}"
         >
-        <Grid Margin="8" ColumnDefinitions="70,*,Auto,90,90,120,90,90,Auto">
+        <Grid Margin="8" ColumnDefinitions="70,*,Auto,90,90,120,90,90,Auto,Auto">
            
             <avalonia:MaterialIcon 
                 ToolTip.Tip="{Binding Error}"
@@ -94,7 +94,11 @@
                 <TextBlock TextAlignment="Center" FontSize="12" Text="{Binding TxPktUnitText}"/>
             </StackPanel>
 
-            <Button Grid.Column="8" Command="{Binding DeletePortCommand}">
+            <Button Margin="5 0" Grid.Column="8" Command="{Binding EditPortCommand}">
+                <avalonia:MaterialIcon Width="30" Height="30" Kind="Edit"/>
+            </Button>
+            
+            <Button Grid.Column="9" Command="{Binding DeletePortCommand}">
                 <avalonia:MaterialIcon  Foreground="{DynamicResource SystemFillColorCriticalBrush}" Width="30" Height="30" Kind="Trash"/>
             </Button>
         </Grid>

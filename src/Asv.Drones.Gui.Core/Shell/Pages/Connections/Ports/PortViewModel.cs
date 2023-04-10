@@ -1,9 +1,12 @@
-﻿using System.Reactive.Linq;
+﻿using System.Reactive;
+using System.Reactive.Linq;
 using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Uav;
 using Asv.IO;
+using Asv.Mavlink;
 using Avalonia.Controls;
+using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -19,6 +22,7 @@ namespace Asv.Drones.Gui.Core
         private readonly IncrementalRateCounter _rxPacketRate = new(3);
         private readonly IncrementalRateCounter _txByteRate = new(3);
         private readonly IncrementalRateCounter _txPacketRate = new(3);
+        private readonly ILogService _logService;
 
 
         public PortViewModel() : base(new Uri(ConnectionsViewModel.BaseUri, $"port.{Guid.NewGuid()}"))
@@ -48,17 +52,18 @@ namespace Asv.Drones.Gui.Core
         public PortViewModel(Guid id):base(new Uri(ConnectionsViewModel.BaseUri, $"port.{id}"))
         {
             PortId = id;
-            
         }
 
-        public PortViewModel(IMavlinkDevicesService svc, ILocalizationService localization, Guid id):this(id)
+        public PortViewModel(IMavlinkDevicesService svc, ILocalizationService localization, ILogService logService, Guid id):this(id)
         {
             _svc = svc ?? throw new ArgumentNullException(nameof(svc));
             _localization = localization ?? throw new ArgumentNullException(nameof(localization));
             _id = id;
+            _logService = logService;
             Observable.Timer(TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(1)).ObserveOn(RxApp.MainThreadScheduler).Subscribe(Update).DisposeItWith(Disposable);
             EnableDisableCommand = ReactiveCommand.Create(() => _svc.Router.SetEnabled(_id, IsPortEnabled)).DisposeItWith(Disposable);
             DeletePortCommand = ReactiveCommand.Create(() => _svc.Router.RemovePort(_id)).DisposeItWith(Disposable);
+            EditPortCommand = ReactiveCommand.CreateFromTask(EditPortImpl).DisposeItWith(Disposable);
         }
 
         public Guid PortId { get; }
@@ -124,10 +129,7 @@ namespace Asv.Drones.Gui.Core
             SkippedUnitText = RS.PortViewModel_SkippedUnitTest;
 
         }
-
-       
-
-
+        
         private MaterialIconKind ConvertIcon(PortType infoType)
         {
             return infoType switch
@@ -173,7 +175,100 @@ namespace Asv.Drones.Gui.Core
         public bool IsPortEnabled { get; set; }
 
         public ICommand EnableDisableCommand { get; }
+        
+        public ICommand EditPortCommand { get; }
 
+        private async Task EditPortImpl(CancellationToken cancel)
+        {
+            var info = _svc.Router.GetInfo(_id);
+                
+            var uri = new Uri(info.ConnectionString);
+                    
+            var dialog = new ContentDialog()
+            {
+                Title = RS.ConnectionsViewModel_EditUdpPortDialog_Title,
+                PrimaryButtonText = RS.ConnectionsViewModel_EditDialogPort_Accept,
+                IsSecondaryButtonEnabled = true,
+                CloseButtonText = RS.ConnectionsViewModel_EditDialogPort_Cancel
+            };
+            
+            switch (info.Type)
+            {
+                case PortType.Serial:
+                {
+                    var viewModel = new SerialPortViewModel(_svc, _logService);
+                    
+                    viewModel.Title = info.Name;
+
+                    viewModel.SelectedPort = uri.AbsolutePath; 
+                    
+                    var query = uri.Query.Split(new char[] {'?'});
+
+                    int.TryParse(query[1].Replace("br=", ""), out var baudRate);
+
+                    viewModel.SelectedBaudRate = baudRate;
+
+                    viewModel.ApplyDialog(dialog);
+                    
+                    dialog.Content = viewModel;
+                }
+                break;
+                case PortType.Tcp:
+                {
+                    var viewModel = new TcpPortViewModel(_svc, _logService);
+                    
+                    viewModel.Title = info.Name;
+                    
+                    viewModel.IpAddress = uri.Host;
+                    
+                    viewModel.Port = uri.Port;
+
+                    viewModel.IsTcpIpServer = false;
+                    
+                    if (!uri.Query.IsNullOrWhiteSpace())
+                    {
+                        var query = uri.Query.Split(new char[] {'?'});
+                        bool.TryParse(query[1].Replace("srv=", ""), out var isTcpIpServer);
+                        viewModel.IsTcpIpServer = isTcpIpServer;
+                    }
+
+                    viewModel.ApplyDialog(dialog);
+                    
+                    dialog.Content = viewModel;
+                }
+                break;
+                case PortType.Udp:
+                {
+                    var viewModel = new UdpPortViewModel(_svc);
+                    
+                    viewModel.Title = info.Name;
+                    
+                    viewModel.LocalIpAddress = uri.Host;
+                    
+                    viewModel.LocalPort = uri.Port;
+                    
+                    if (!uri.Query.IsNullOrWhiteSpace())
+                    {
+                        var query = uri.Query.Split(new char[] {'?','&'});
+                        viewModel.IsRemote = true;
+                        viewModel.RemoteIpAddress = query[1].Replace("rhost=", "");
+                        int.TryParse(query[2].Replace("rport=", ""), out var remotePort);
+                        viewModel.RemotePort = remotePort;
+                    }
+                    
+                    viewModel.ApplyDialog(dialog);
+                    
+                    dialog.Content = viewModel;
+                }
+                break;
+            }
+            
+            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+            {
+                _svc.Router.RemovePort(_id);
+            }
+        }
+        
         [Reactive]
         public bool IsConnected { get; set; }
         [Reactive]
