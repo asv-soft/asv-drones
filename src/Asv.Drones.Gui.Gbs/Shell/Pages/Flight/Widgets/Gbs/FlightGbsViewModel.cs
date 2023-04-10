@@ -1,10 +1,13 @@
 ﻿using System.Collections.ObjectModel;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink.V2.AsvGbs;
+using Avalonia.Controls;
+using Avalonia.Styling;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
@@ -51,6 +54,14 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
         EnableFixedCommand = ReactiveCommand.CreateFromTask(EnableFixedMode, _canExecuteFixedCommand).DisposeItWith(Disposable);
         EnableIdleCommand = ReactiveCommand.CreateFromTask(EnableIdleMode, _canExecuteIdleCommand).DisposeItWith(Disposable);
         CancelCommand = ReactiveCommand.CreateFromTask(EnableIdleMode, _canExecuteCancelCommand).DisposeItWith(Disposable);
+
+        Gbs.DeviceClient.BeidouSatellites.Subscribe(_ => BeidouSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
+        Gbs.DeviceClient.GalSatellites.Subscribe(_ => GalSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
+        Gbs.DeviceClient.GlonassSatellites.Subscribe(_ => GlonassSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
+        Gbs.DeviceClient.GpsSatellites.Subscribe(_ => GpsSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
+        Gbs.DeviceClient.ImesSatellites.Subscribe(_ => ImesSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
+        Gbs.DeviceClient.QzssSatellites.Subscribe(_ => QzssSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
+        Gbs.DeviceClient.SbasSatellites.Subscribe(_ => SbasSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
     }
 
     private void SwitchMode(AsvGbsCustomMode mode)
@@ -170,4 +181,20 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
     public bool IsProgressShown { get; set; }
     [Reactive]
     public bool IsDisableShown { get; set; }
+    
+    [Reactive]
+    public GridLength BeidouSats { get; set; }
+    [Reactive]
+    public GridLength GalSats { get; set; }
+    [Reactive]
+    public GridLength GlonassSats { get; set; }
+    [Reactive]
+    public GridLength GpsSats { get; set; }
+    [Reactive]
+    public GridLength ImesSats { get; set; }
+    [Reactive]
+    public GridLength QzssSats { get; set; }
+    [Reactive]
+    public GridLength SbasSats { get; set; }
+   
 }

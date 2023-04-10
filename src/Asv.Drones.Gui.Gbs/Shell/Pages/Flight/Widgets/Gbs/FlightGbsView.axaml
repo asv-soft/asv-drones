@@ -28,6 +28,47 @@
             </Grid>
             <Button Command="{Binding EnableIdleCommand}" Content="Disable RTK" HorizontalAlignment="Stretch" IsVisible="{Binding IsDisableShown}" />
             <ProgressBar Height="5" CornerRadius="3" IsIndeterminate="True" IsVisible="{Binding IsProgressShown}" />
+            <Border Background="Transparent" CornerRadius="{StaticResource ControlCornerRadius}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition MinWidth="50" Width="{Binding BeidouSats}"/>
+                        <ColumnDefinition MinWidth="50" Width="{Binding GalSats}"/>
+                        <ColumnDefinition MinWidth="50" Width="{Binding GlonassSats}"/>
+                        <ColumnDefinition MinWidth="50" Width="{Binding GpsSats}"/>
+                        <ColumnDefinition MinWidth="50" Width="{Binding ImesSats}"/>
+                        <ColumnDefinition MinWidth="50" Width="{Binding QzssSats}"/>
+                        <ColumnDefinition MinWidth="50" Width="{Binding SbasSats}"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Background="#E93F29" Grid.Column="0">
+                        <TextBlock HorizontalAlignment="Center" Text="Beidou"/>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding BeidouSats.Value}"/>
+                    </StackPanel>
+                    <StackPanel Background="#F6BF72" Grid.Column="1">
+                        <TextBlock HorizontalAlignment="Center" Text="Gal"/>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding GalSats.Value}"/>
+                    </StackPanel>
+                    <StackPanel Background="#ACC865" Grid.Column="2">
+                        <TextBlock HorizontalAlignment="Center" Text="Glonass"/>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding GlonassSats.Value}"/>
+                    </StackPanel>
+                    <StackPanel Background="#8ED2D3" Grid.Column="3">
+                        <TextBlock HorizontalAlignment="Center" Text="Gps"/>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding GpsSats.Value}"/>
+                    </StackPanel>
+                    <StackPanel Background="#FE8256" Grid.Column="4">
+                        <TextBlock HorizontalAlignment="Center" Text="Imes"/>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding ImesSats.Value}"/>
+                    </StackPanel>
+                    <StackPanel Background="#CD91B6" Grid.Column="5">
+                        <TextBlock HorizontalAlignment="Center" Text="Qzss"/>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding QzssSats.Value}"/>
+                    </StackPanel>
+                    <StackPanel Background="#47938D" Grid.Column="6">
+                        <TextBlock HorizontalAlignment="Center" Text="Sbas"/>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding SbasSats.Value}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
             <ItemsControl Items="{Binding RttItems}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
