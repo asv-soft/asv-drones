@@ -141,7 +141,7 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
             CloseButtonText = RS.FlightGbsViewModel_FixedMode_CloseButtonText
         };
 
-        var viewModel = new FixedModeViewModel(Gbs, _logService, _loc, ctx);
+        var viewModel = new FixedModeViewModel(Gbs, _logService, _loc, _configuration, ctx);
         viewModel.ApplyDialog(dialog);
         dialog.Content = viewModel;
         var result = await dialog.ShowAsync();
