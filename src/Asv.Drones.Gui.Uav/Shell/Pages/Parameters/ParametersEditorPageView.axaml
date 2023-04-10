@@ -16,7 +16,7 @@
             <avalonia:MaterialIcon Kind="ViewList" Width="30" Height="30"/>
             <TextBlock Margin="8 0" VerticalAlignment="Center" Text="{Binding  FullId, StringFormat={x:Static uav:RS.ParametersEditorPageViewModel_Title}}" FontSize="30"/>
         </StackPanel>
-        <Grid>
+        <Grid x:Name="MainGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="220" Width="*"/>
                 <ColumnDefinition Width="5"/>
