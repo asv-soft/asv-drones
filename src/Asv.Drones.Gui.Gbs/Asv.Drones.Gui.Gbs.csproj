@@ -26,6 +26,7 @@
       </EmbeddedResource>
       <EmbeddedResource Update="RS.ru.resx">
         <LastGenOutput>RS.ru.Designer.cs</LastGenOutput>
+        <DependentUpon>RS.resx</DependentUpon>
       </EmbeddedResource>
     </ItemGroup>
 

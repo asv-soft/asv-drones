@@ -63,6 +63,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RS.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="RS.ru.resx">
+      <DependentUpon>RS.resx</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
