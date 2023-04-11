@@ -1,4 +1,5 @@
 using System.ComponentModel.Composition;
+using System.Globalization;
 using System.Reactive.Linq;
 using Asv.Cfg;
 using Asv.Common;
@@ -12,7 +13,7 @@ namespace Asv.Drones.Gui.Gbs;
 
 public class AutoModeConfig
 {
-    public ushort Observation { get; set; }
+    public double Observation { get; set; }
     public double Accuracy { get; set; }
 }
 
@@ -42,11 +43,11 @@ public class AutoModeViewModel : ViewModelBaseWithValidation
         
         var autoModeConfig = _configuration.Get<AutoModeConfig>();
         Accuracy = _loc.Distance.FromSiToString(autoModeConfig.Accuracy);
-        Observation = autoModeConfig.Observation;
+        Observation = autoModeConfig.Observation.ToString();
         
 #region Validation Rules
 
-        this.ValidationRule(x => x.Observation, _ => _ > 0,
+        this.ValidationRule(x => x.Observation, _ => Convert.ToDouble(_) > 0,
                 string.Format(RS.AutoModeViewModel_Observation_ValidValue, MinimumObservationTime))
             .DisposeItWith(Disposable);
 
@@ -73,15 +74,16 @@ public class AutoModeViewModel : ViewModelBaseWithValidation
     private async Task SetUpAutoMode(CancellationToken cancel)
     {
         if (_gbsDevice == null) return;
-        var acc = _loc.Distance.ConvertToSi(Accuracy); 
+        var acc = _loc.Distance.ConvertToSi(Accuracy);
+        var obs = Convert.ToDouble(Observation);
         _configuration.Set(new AutoModeConfig
         {
             Accuracy = acc,
-            Observation = Observation,
+            Observation = obs
         });
         try
         {
-            await _gbsDevice.DeviceClient.StartAutoMode(Observation, (float)acc, cancel);
+            await _gbsDevice.DeviceClient.StartAutoMode((float)obs, (float)acc, cancel);
         }
         catch (Exception e)
         {
@@ -91,7 +93,7 @@ public class AutoModeViewModel : ViewModelBaseWithValidation
         
     }
 
-    [Reactive] public ushort Observation { get; set; }
+    [Reactive] public string Observation { get; set; } = "0";
     [Reactive] public string Accuracy { get; set; } = "0";
 
     public string AccuracyUnits => _loc.Distance.CurrentUnit.Value.Unit;
