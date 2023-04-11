@@ -26,7 +26,7 @@ public class AutoModeViewModel : ViewModelBaseWithValidation
     private readonly ILocalizationService _loc;
     private readonly IConfiguration _configuration;
 
-    private const double MinimumAccuracyDistance = 1;
+    private const double MinimumAccuracyDistance = 0.01;
     private const double MinimumObservationTime = 1;
     
     public AutoModeViewModel() : base(new Uri(FlightGbsViewModel.Uri, "auto"))
@@ -51,10 +51,8 @@ public class AutoModeViewModel : ViewModelBaseWithValidation
                 string.Format(RS.AutoModeViewModel_Observation_ValidValue, MinimumObservationTime))
             .DisposeItWith(Disposable);
 
-        this.ValidationRule(x => x.Accuracy, _ => _loc.Distance.IsValid(_), _ => _loc.Distance.GetErrorMessage(_))
-            .DisposeItWith(Disposable);
         this.ValidationRule(x => x.Accuracy,
-                _ => _loc.Distance.IsValid(_) && _loc.Distance.ConvertToSi(_) >= MinimumAccuracyDistance,
+                _ => _loc.Distance.IsValid(MinimumAccuracyDistance, double.MaxValue, _) && _loc.Distance.ConvertToSi(_) >= MinimumAccuracyDistance,
                 string.Format(RS.AutoModeViewModel_Accuracy_ValidValue,
                     _loc.Distance.FromSiToString(MinimumAccuracyDistance)))
             .DisposeItWith(Disposable);
