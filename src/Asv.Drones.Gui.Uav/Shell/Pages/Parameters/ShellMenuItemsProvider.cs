@@ -18,7 +18,7 @@ public class ParametersShellPageProvider : ViewModelProviderBase<IShellMenuItem>
     {
         svc.Vehicles.Transform(_ => (IShellMenuItem)new ShellMenuItem(new($"{ShellMenuItem.UriString}.parameters.{_.FullId}"))
         {
-            Name = $"Parameters editor [{_.FullId}]",
+            Name = string.Format(RS.ParametersEditorPageViewModel_Title, _.FullId),
             NavigateTo = new($"{ShellPage.UriString}.parameters?Id={_.FullId}"),
             Icon = MaterialIconDataProvider.GetData(MaterialIconKind.ViewList),
             Position = ShellMenuPosition.Top,

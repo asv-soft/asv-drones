@@ -49,7 +49,8 @@ namespace Asv.Drones.Gui.Core
             
             PageLengths = new List<int> { 25, 50, 100, 250, 500 };
             Take = _configuration.Get<int>("TakePageLength");
-            
+            if (Take == 0) Take = 25; 
+                
             this.WhenAnyValue(_ => _.SearchText)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Throttle(TimeSpan.FromMilliseconds(200))
