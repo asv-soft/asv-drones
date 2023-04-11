@@ -6,7 +6,7 @@
         private const long OneMb = OneKb * OneKb;
         private const long OneGb = OneMb * OneKb;
 
-        public string GetUnit(long bytes)
+        public string? GetUnit(long bytes)
         {
             return bytes switch
             {

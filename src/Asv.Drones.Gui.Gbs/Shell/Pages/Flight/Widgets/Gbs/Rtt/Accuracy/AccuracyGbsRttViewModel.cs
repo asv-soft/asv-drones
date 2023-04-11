@@ -15,7 +15,7 @@ public class AccuracyGbsRttViewModel: GbsRttItem
     {
         Order = 1;
         Gbs.DeviceClient.AccuracyMeter
-            .Subscribe(_ => Accuracy = localizationService.Distance.FromSIToStringWithUnits(_))
+            .Subscribe(_ => Accuracy = localizationService.Distance.FromSiToStringWithUnits(_))
             .DisposeItWith(Disposable);
     }
     

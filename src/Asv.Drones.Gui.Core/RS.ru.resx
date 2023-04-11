@@ -199,9 +199,9 @@
 	<data name="MeasureUnitsSettingsViewModel_AltitudeDescription" xml:space="preserve">
 		<value>Измените текущие единицы измерения высоты.</value>
 	</data>
-	<data name="MeasureUnitsSettingsViewModel_LatitudeLongitude" xml:space="preserve">
-		<value>Широта и долгота</value>
-	</data>
+  <data name="MeasureUnitsSettingsViewModel_Latitude" xml:space="preserve">
+	  <value>Широта</value>
+  </data>
 	<data name="MeasureUnitsSettingsViewModel_LatitudeLongitudeDescription" xml:space="preserve">
 		<value>Измените текущие единицы измерения широты и долготы.</value>
 	</data>
@@ -626,5 +626,8 @@
   </data>
   <data name="Voltage_Unit" xml:space="preserve">
 	  <value>В</value>
+  </data>
+  <data name="MeasureUnitsSettingsViewModel_Longitude" xml:space="preserve">
+	  <value>Долгота</value>
   </data>
 </root>

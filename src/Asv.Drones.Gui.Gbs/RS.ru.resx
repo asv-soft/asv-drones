@@ -39,15 +39,6 @@
     <data name="AutoModeView_Observation_Name" xml:space="preserve">
         <value>Наблюдение</value>
     </data>
-    <data name="FixedModeViewModel_Latitude_ValidValue" xml:space="preserve">
-        <value>Широта должна быть больше или равна {0}.</value>
-    </data>
-    <data name="FixedModeViewModel_Longitude_ValidValue" xml:space="preserve">
-        <value>Долгота должна быть больше или равна {0}.</value>
-    </data>
-    <data name="FixedModeViewModel_Altitude_ValidValue" xml:space="preserve">
-        <value>Высота должна быть больше или равна {0}.</value>
-    </data>
     <data name="FixedModeViewModel_StartFailed" xml:space="preserve">
         <value>Ошибка старта Фиксированного режима: {0}</value>
     </data>

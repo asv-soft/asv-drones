@@ -37,10 +37,16 @@ namespace Asv.Drones.Gui.Core
                 .Subscribe(_localization.Distance.CurrentUnit)
                 .DisposeItWith(Disposable);
 
-            _localization.LatitudeAndLongitude.CurrentUnit.Subscribe(_ => SelectedLatitudeLongitudeUnit = _)
+            _localization.Latitude.CurrentUnit.Subscribe(_ => SelectedLatitudeUnit = _)
                 .DisposeItWith(Disposable);
-            this.WhenAnyValue(_ => _.SelectedLatitudeLongitudeUnit)
-                .Subscribe( _localization.LatitudeAndLongitude.CurrentUnit)
+            this.WhenAnyValue(_ => _.SelectedLatitudeUnit)
+                .Subscribe( _localization.Latitude.CurrentUnit)
+                .DisposeItWith(Disposable);
+            
+            _localization.Longitude.CurrentUnit.Subscribe(_ => SelectedLongitudeUnit = _)
+                .DisposeItWith(Disposable);
+            this.WhenAnyValue(_ => _.SelectedLongitudeUnit)
+                .Subscribe( _localization.Longitude.CurrentUnit)
                 .DisposeItWith(Disposable);
             
             _localization.Velocity.CurrentUnit.Subscribe(_ => SelectedVelocityUnit = _)
@@ -61,9 +67,11 @@ namespace Asv.Drones.Gui.Core
         public IEnumerable<IMeasureUnitItem<double,DistanceUnits>> DistanceUnits => _localization.Distance.AvailableUnits;
 
         [Reactive]
-        public IMeasureUnitItem<double,LatitudeLongitudeUnits> SelectedLatitudeLongitudeUnit { get; set; }
-
-        public IEnumerable<IMeasureUnitItem<double,LatitudeLongitudeUnits>> LatitudeLongitudeUnits => _localization.LatitudeAndLongitude.AvailableUnits;
+        public IMeasureUnitItem<double,LatitudeUnits> SelectedLatitudeUnit { get; set; }
+        public IEnumerable<IMeasureUnitItem<double,LatitudeUnits>> LatitudeUnits => _localization.Latitude.AvailableUnits;
+        
+        public IMeasureUnitItem<double,LongitudeUnits> SelectedLongitudeUnit { get; set; }
+        public IEnumerable<IMeasureUnitItem<double,LongitudeUnits>> LongitudeUnits => _localization.Longitude.AvailableUnits;
         
         [Reactive]
         public IMeasureUnitItem<double,VelocityUnits> SelectedVelocityUnit { get; set; }

@@ -6,7 +6,7 @@
         private const double OneMHz = OneKHz * OneKHz;
         private const double OneGHz = OneMHz * OneKHz;
 
-        public string GetUnit(double itemsPerSec)
+        public string? GetUnit(double itemsPerSec)
         {
             return itemsPerSec switch
             {

@@ -2,7 +2,7 @@ namespace Asv.Drones.Gui.Core;
 
 public interface IReadOnlyMeasureUnit<in TValue>
 {
-    string GetUnit(TValue value);
+    string? GetUnit(TValue value);
     string ConvertToString(TValue value);
 
 }
