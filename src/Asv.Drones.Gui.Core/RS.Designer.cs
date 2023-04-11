@@ -366,6 +366,51 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accept.
+        /// </summary>
+        public static string ConnectionsViewModel_EditDialogPort_Accept {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditDialogPort_Accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string ConnectionsViewModel_EditDialogPort_Cancel {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditDialogPort_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit selected Mavlink serial port.
+        /// </summary>
+        public static string ConnectionsViewModel_EditSerialPortDialog_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditSerialPortDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit selected Mavlink TCP port.
+        /// </summary>
+        public static string ConnectionsViewModel_EditTcpPortDialog_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditTcpPortDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit selected Mavlink UDP port.
+        /// </summary>
+        public static string ConnectionsViewModel_EditUdpPortDialog_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditUdpPortDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In this section you can see all found devices on the network.
         /// </summary>
         public static string DeviceBrowserView_Description {

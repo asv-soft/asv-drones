@@ -630,4 +630,19 @@
   <data name="MeasureUnitsSettingsViewModel_Longitude" xml:space="preserve">
 	  <value>Долгота</value>
   </data>
+  <data name="ConnectionsViewModel_EditDialogPort_Accept" xml:space="preserve">
+	  <value>Принять</value>
+  </data>
+  <data name="ConnectionsViewModel_EditSerialPortDialog_Title" xml:space="preserve">
+	  <value>Редактировать выбранный последовательный порт</value>
+  </data>
+  <data name="ConnectionsViewModel_EditTcpPortDialog_Title" xml:space="preserve">
+	  <value>Редактировать выбранный TCP порт</value>
+  </data>
+  <data name="ConnectionsViewModel_EditUdpPortDialog_Title" xml:space="preserve">
+	  <value>Редактировать выбранный порт UDP</value>
+  </data>
+  <data name="ConnectionsViewModel_EditDialogPort_Cancel" xml:space="preserve">
+	  <value>Отмена</value>
+  </data>
 </root>

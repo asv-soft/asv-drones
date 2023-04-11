@@ -75,7 +75,7 @@ namespace Asv.Drones.Gui.Core
                 {
                     Name = Title,
                     ConnectionString = $"serial:{SelectedPort}?br={SelectedBaudRate}",
-                    IsEnabled = true,
+                    IsEnabled = false,
                 });
             }
             catch (Exception e)
