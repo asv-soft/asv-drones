@@ -105,4 +105,16 @@
     <data name="FlightGbsView_Cancel_Content" xml:space="preserve">
         <value>Cancel</value>
     </data>
+    <data name="GbsAnchor_Latitude" xml:space="preserve">
+        <value>Latitude: {0}</value>
+    </data>
+    <data name="GbsAnchor_Longitude" xml:space="preserve">
+        <value>Longitude: {0}</value>
+    </data>
+    <data name="GbsAnchor_GNSS_Altitude" xml:space="preserve">
+        <value>GNSS Altitude: {0}</value>
+    </data>
+    <data name="GbsAnchor_Title" xml:space="preserve">
+        <value>Ground Base Station</value>
+    </data>
 </root>

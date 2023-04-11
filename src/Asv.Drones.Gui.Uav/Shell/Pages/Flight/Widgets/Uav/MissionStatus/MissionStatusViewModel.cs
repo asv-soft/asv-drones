@@ -1,20 +1,15 @@
-using System.Collections.ObjectModel;
 using System.Reactive;
-using System.Reactive.Linq;
-using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
-using Avalonia.Controls;
 using DynamicData;
 using DynamicData.Aggregation;
 using DynamicData.Binding;
-using FluentAvalonia.Core;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
-namespace Asv.Drones.Gui.Uav.Uav;
+namespace Asv.Drones.Gui.Uav.MissionStatus;
 
 public class MissionStatusViewModel : ViewModelBase
 {
