@@ -1,5 +1,6 @@
 using System.ComponentModel.Composition;
 using Asv.Drones.Gui.Core;
+using Asv.Drones.Gui.Uav.MissionStatus;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;

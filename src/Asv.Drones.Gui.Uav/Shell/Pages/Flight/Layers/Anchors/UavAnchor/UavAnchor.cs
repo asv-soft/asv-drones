@@ -28,6 +28,8 @@ namespace Asv.Drones.Gui.Uav
             Size = 48;
             OffsetX = OffsetXEnum.Center;
             OffsetY = OffsetYEnum.Center;
+            StrokeThickness = 1;
+            Stroke = Brushes.Honeydew;
             IconBrush = Brushes.Red;
             IsVisible = true;
             vehicle.Class.Subscribe(_ => Icon = MavlinkHelper.GetIcon(_)).DisposeItWith(Disposable);

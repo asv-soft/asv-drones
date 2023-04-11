@@ -17,7 +17,9 @@ public class GbsAnchor : GbsAnchorBase
         Size = 48;
         OffsetX = OffsetXEnum.Center;
         OffsetY = OffsetYEnum.Center;
-        IconBrush = Brushes.WhiteSmoke;
+        StrokeThickness = 1;
+        Stroke = Brushes.Indigo;
+        IconBrush = Brushes.Teal;
         IsVisible = true;
         Title = RS.GbsAnchor_Title;
         
