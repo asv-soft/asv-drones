@@ -55,8 +55,8 @@
                                              Description="{x:Static core:RS.MeasureUnitsSettingsViewModel_LatitudeLongitudeDescription}">
 
                         <core:OptionsDisplayItem.ActionButton>
-                            <ComboBox MinWidth="150" SelectedItem="{Binding SelectedLongitudeUnit}" 
-                                      Items="{Binding LongitudeUnits}">
+                            <ComboBox MinWidth="150" SelectedItem="{Binding SelectedLatitudeUnit}" 
+                                      Items="{Binding LatitudeUnits}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Title}"/>
@@ -71,8 +71,8 @@
                                              Description="{x:Static core:RS.MeasureUnitsSettingsViewModel_LatitudeLongitudeDescription}">
 
                         <core:OptionsDisplayItem.ActionButton>
-                            <ComboBox MinWidth="150" SelectedItem="{Binding SelectedLatitudeUnit}" 
-                                      Items="{Binding LatitudeUnits}">
+                            <ComboBox MinWidth="150" SelectedItem="{Binding SelectedLongitudeUnit}" 
+                                      Items="{Binding LongitudeUnits}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Title}"/>

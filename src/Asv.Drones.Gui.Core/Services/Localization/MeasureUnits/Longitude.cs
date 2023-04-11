@@ -1,17 +1,19 @@
+using System.Text.RegularExpressions;
 using Asv.Cfg;
+using Asv.Common;
 
 namespace Asv.Drones.Gui.Core;
 
 public enum LongitudeUnits
 {
-    Degrees,
-    DegreesMinutesSeconds
+    Deg,
+    Dms
 }
 public class Longitude : MeasureUnitBase<double,LongitudeUnits>
 {
     private static readonly IMeasureUnitItem<double, LongitudeUnits>[] Units = {
-        new LongitudeUnitDegrees(),
-        new LongitudeUnitDegreesMinutesSeconds()
+        new LongitudeUnitDeg(),
+        new LongitudeUnitDms()
     };
     public Longitude(IConfiguration cfgSvc,string cfgKey):base(cfgSvc,cfgKey,Units)
     {
@@ -22,67 +24,85 @@ public class Longitude : MeasureUnitBase<double,LongitudeUnits>
     public override string Description => "Units of longitude";
 }
 
-public class LongitudeUnitDegrees : DoubleMeasureUnitItem<LongitudeUnits>
+public class LongitudeUnitDeg :  IMeasureUnitItem<double, LongitudeUnits>
 {
-    public LongitudeUnitDegrees() : base(LongitudeUnits.Degrees, "[Deg]°", "°", true, "F7", 1)
+    public LongitudeUnits Id => LongitudeUnits.Deg;
+    public string Title => "[Deg]°";
+    public string Unit => "°";
+    public bool IsSiUnit => true;
+    public double ConvertFromSi(double siValue)
     {
-
+        return siValue;
     }
 
-    public override bool IsValid(string value)
+    public double ConvertToSi(double value)
     {
-        if (base.IsValid(value) == false) return false;
-        var val = ConvertToSi(value);
-        return val is >= -180 and <= 180;
+        return value;
     }
 
-    public override string? GetErrorMessage(string value)
+    public bool IsValid(string value)
     {
-        var msg = base.GetErrorMessage(value);
-        if (msg != null) return msg;
-        var val = ConvertToSi(value);
-        if (val < -180) return "Longitude must be greater than -180°"; // TODO: Localize
-        if (val > 180) return "Longitude must be less than 180°"; // TODO: Localize
-        return null;
+        return GeoPointLongitude.IsValid(value);
+    }
 
+    public string? GetErrorMessage(string value)
+    {
+        return GeoPointLongitude.GetErrorMessage(value);
+    }
+
+    public double ConvertToSi(string value)
+    {
+        return GeoPointLongitude.TryParse(value, out var result) ? result : double.NaN;
+    }
+
+    public string FromSiToString(double value)
+    {
+        return value.ToString("F7");
+    }
+
+    public string FromSiToStringWithUnits(double value)
+    {
+        return $"{value:F7}°";
     }
 }
 
-public class LongitudeUnitDegreesMinutesSeconds : DoubleMeasureUnitItem<LongitudeUnits>
+public class LongitudeUnitDms : IMeasureUnitItem<double, LongitudeUnits>
 {
-    public LongitudeUnitDegreesMinutesSeconds() : base(LongitudeUnits.DegreesMinutesSeconds,
-        "[Deg]°[Min]′[Sec]′′", "°", true, "F7", 1)
+    public LongitudeUnits Id => LongitudeUnits.Dms; 
+    public string Title => "[Deg]°[Min]′[Sec]′′";
+    public string Unit => "°";
+    public bool IsSiUnit => false;
+    public double ConvertFromSi(double siValue)
     {
-
+        return siValue;
     }
 
-    public override bool IsValid(string value)
+    public double ConvertToSi(double value)
     {
-        //TODO: Parse strings like "N 40° 26.771′"
-        if (base.IsValid(value) == false) return false;
-        var val = ConvertToSi(value);
-        return val is >= -90 and <= 90;
+        return value;
     }
 
-    public override string? GetErrorMessage(string value)
+    public bool IsValid(string value)
     {
-        //TODO: Parse strings like "N 40° 26.771′"
-        var msg = base.GetErrorMessage(value);
-        if (msg != null) return msg;
-        var val = ConvertToSi(value);
-        if (val < -180) return "Longitude must be greater than -180°"; // TODO: Localize
-        if (val > 180) return "Longitude must be less than 180°"; // TODO: Localize
-        return null;
-
+        return GeoPointLongitude.IsValid(value);
     }
 
-    public override string FromSiToString(double value)
+    public string? GetErrorMessage(string value)
     {
-        var minutes = (value - (int)value) * 60;
-        return $"{value:F0}°{minutes:F0}′{(minutes - (int)minutes) * 60:F2}′′";
+        return GeoPointLongitude.GetErrorMessage(value);
     }
 
-    public override string FromSiToStringWithUnits(double value)
+    public double ConvertToSi(string value)
+    {
+        return GeoPointLongitude.TryParse(value, out var result) ? result : double.NaN;
+    }
+
+    public string FromSiToString(double value)
+    {
+        return GeoPointLongitude.PrintDms(value);
+    }
+
+    public string FromSiToStringWithUnits(double value)
     {
         return FromSiToString(value);
     }

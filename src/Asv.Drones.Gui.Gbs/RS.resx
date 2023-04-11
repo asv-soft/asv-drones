@@ -96,6 +96,15 @@
     <data name="VisibleSatellitesGbsRttView_ToolTip" xml:space="preserve">
         <value>GBS observe this amount of satellites</value>
     </data>
+    <data name="FlightGbsView_EnableAuto_Content" xml:space="preserve">
+        <value>Enable Auto</value>
+    </data>
+    <data name="FlightGbsView_EnableFixed_Content" xml:space="preserve">
+        <value>Enable Fixed</value>
+    </data>
+    <data name="FlightGbsView_Cancel_Content" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
     <data name="GbsAnchor_Latitude" xml:space="preserve">
         <value>Latitude: {0}</value>
     </data>
