@@ -10,7 +10,7 @@
     <Design.DataContext>
         <gbs:AccuracyGbsRttViewModel/>
     </Design.DataContext>
-    <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="GBS accuracy">
+    <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="{x:Static gbs:RS.AccuracyGbsRttView_ToolTip}">
         <avalonia:MaterialIcon Kind="TargetVariant"/>
         <TextBlock VerticalAlignment="Center" Text="{Binding Accuracy}"/>
     </StackPanel>
