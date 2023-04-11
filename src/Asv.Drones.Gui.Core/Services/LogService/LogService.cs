@@ -30,7 +30,7 @@ namespace Asv.Drones.Gui.Core
             _hostName = $"{Environment.MachineName}.{Environment.UserName}";
             
             app.Store.Subscribe(_ => _store = _.GetText(StoreTextCollectionName)).DisposeItWith(Disposable);
-            _onMessage.ObserveOn(RxApp.MainThreadScheduler).Subscribe(SaveToStore,DisposeCancel);
+            _onMessage.Subscribe(SaveToStore,DisposeCancel);
         }
         
         private void SaveToStore(LogMessage logMessage)

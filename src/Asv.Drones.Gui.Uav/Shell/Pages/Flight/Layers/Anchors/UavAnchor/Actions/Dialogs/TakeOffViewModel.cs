@@ -36,14 +36,14 @@ public class TakeOffViewModel : ViewModelBaseWithValidation
         _cfg = cfg;
         _loc = loc;
         _config = cfg.Get<TakeOffViewModelConfig>();
-        Altitude = _loc.Altitude.FromSIToString(_config.TakeOffAltitudeMeter);
+        Altitude = _loc.Altitude.FromSiToString(_config.TakeOffAltitudeMeter);
 
         this.ValidationRule(x => x.Altitude, _=>  _loc.Altitude.IsValid(_), _=>  _loc.Altitude.GetErrorMessage(_) )
             .DisposeItWith(Disposable);
         
         this.ValidationRule(x => x.Altitude, 
-                _ => _loc.Altitude.IsValid(_) && _loc.Altitude.ConvertToSI(_) >= MinimumAltitudeMeter, 
-                string.Format(RS.TakeOffAnchorActionViewModel_ValidValue, _loc.Altitude.FromSIToString(MinimumAltitudeMeter)))
+                _ => _loc.Altitude.IsValid(_) && _loc.Altitude.ConvertToSi(_) >= MinimumAltitudeMeter, 
+                string.Format(RS.TakeOffAnchorActionViewModel_ValidValue, _loc.Altitude.FromSiToString(MinimumAltitudeMeter)))
             .DisposeItWith(Disposable);
     }
 
@@ -59,7 +59,7 @@ public class TakeOffViewModel : ViewModelBaseWithValidation
         dialog.PrimaryButtonCommand =
             ReactiveCommand.Create(() =>
                 {
-                    _config.TakeOffAltitudeMeter = _loc.Altitude.ConvertToSI(Altitude);
+                    _config.TakeOffAltitudeMeter = _loc.Altitude.ConvertToSi(Altitude);
                     _cfg.Set(_config);
                 },
                 this.IsValid().Do(_ =>dialog.IsPrimaryButtonEnabled = _)).DisposeItWith(Disposable);

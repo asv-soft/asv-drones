@@ -37,7 +37,7 @@ namespace Asv.Drones.Gui.Uav
             }
         }
         
-        public PlaningMissionViewModel(IVehicle vehicle,ILogService log) : base(vehicle, "mission")
+        public PlaningMissionViewModel(IVehicle vehicle,ILogService log) : base(vehicle, "planing-mission")
         {
             _log = log;
             
@@ -100,16 +100,16 @@ namespace Asv.Drones.Gui.Uav
                 .DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.SelectedItem)
                 .Where(_=>_!=null)
-                .Select(_ => Map.Markers.Where(_ => _ is UavMissionAnchor)
-                    .Cast<UavMissionAnchor>()
+                .Select(_ => Map.Markers.Where(_ => _ is UavPlaningMissionAnchor)
+                    .Cast<UavPlaningMissionAnchor>()
                     .FirstOrDefault(__ => __.MissionItem == _.Item))
                 .Where(_=>_!=null)
                 .Subscribe(_ => Map.SelectedItem = _)
                 .DisposeItWith(Disposable);
             
             Map.WhenAnyValue(_ => _.SelectedItem)
-                .Where(_=>_ is UavMissionAnchor)
-                .Cast<UavMissionAnchor>()
+                .Where(_=>_ is UavPlaningMissionAnchor)
+                .Cast<UavPlaningMissionAnchor>()
                 .Subscribe(_=>SelectedItem = _items.FirstOrDefault(__=>__.Item == _.MissionItem))
                 .DisposeItWith(Disposable);
         }

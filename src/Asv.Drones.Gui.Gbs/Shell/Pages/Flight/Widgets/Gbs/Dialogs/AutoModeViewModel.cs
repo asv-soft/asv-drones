@@ -1,5 +1,6 @@
 using System.ComponentModel.Composition;
 using System.Reactive.Linq;
+using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using FluentAvalonia.UI.Controls;
@@ -9,6 +10,12 @@ using ReactiveUI.Validation.Extensions;
 
 namespace Asv.Drones.Gui.Gbs;
 
+public class AutoModeConfig
+{
+    public ushort Observation { get; set; }
+    public double Accuracy { get; set; }
+}
+
 [Export]
 [PartCreationPolicy(CreationPolicy.NonShared)]
 public class AutoModeViewModel : ViewModelBaseWithValidation
@@ -16,7 +23,7 @@ public class AutoModeViewModel : ViewModelBaseWithValidation
     private readonly IGbsDevice _gbsDevice;
     private readonly ILogService _logService;
     private readonly ILocalizationService _loc;
-    private readonly CancellationToken _ctx;
+    private readonly IConfiguration _configuration;
 
     private const double MinimumAccuracyDistance = 1;
     private const double MinimumObservationTime = 1;
@@ -26,12 +33,16 @@ public class AutoModeViewModel : ViewModelBaseWithValidation
     }
     
     [ImportingConstructor]
-    public AutoModeViewModel(IGbsDevice gbsDevice, ILogService logService, ILocalizationService loc, CancellationToken ctx) : this()
+    public AutoModeViewModel(IGbsDevice gbsDevice, ILogService logService, ILocalizationService loc, IConfiguration configuration, CancellationToken ctx) : this()
     {
         _gbsDevice = gbsDevice;
         _logService = logService;
+        _configuration = configuration;
         _loc = loc;
-        _ctx = ctx;
+        
+        var autoModeConfig = _configuration.Get<AutoModeConfig>();
+        Accuracy = _loc.Distance.FromSiToString(autoModeConfig.Accuracy);
+        Observation = autoModeConfig.Observation;
         
 #region Validation Rules
 
@@ -42,20 +53,12 @@ public class AutoModeViewModel : ViewModelBaseWithValidation
         this.ValidationRule(x => x.Accuracy, _ => _loc.Distance.IsValid(_), _ => _loc.Distance.GetErrorMessage(_))
             .DisposeItWith(Disposable);
         this.ValidationRule(x => x.Accuracy,
-                _ => _loc.Distance.IsValid(_) && _loc.Distance.ConvertToSI(_) >= MinimumAccuracyDistance,
+                _ => _loc.Distance.IsValid(_) && _loc.Distance.ConvertToSi(_) >= MinimumAccuracyDistance,
                 string.Format(RS.AutoModeViewModel_Accuracy_ValidValue,
-                    _loc.Distance.FromSIToString(MinimumAccuracyDistance)))
+                    _loc.Distance.FromSiToString(MinimumAccuracyDistance)))
             .DisposeItWith(Disposable);
 
 #endregion
-
-        this.WhenAnyValue(_ => _._gbsDevice.MavlinkClient.Gbs.Status.Value.Observation)
-            .Subscribe(_ => Observation = _)
-            .DisposeItWith(Disposable);
-
-        this.WhenAnyValue(_ => _._gbsDevice.MavlinkClient.Gbs.Status.Value.Accuracy)
-            .Subscribe(_ => Accuracy = _loc.Distance.FromSIToString(_))
-            .DisposeItWith(Disposable);
     }
 
     public void ApplyDialog(ContentDialog dialog)
@@ -63,22 +66,29 @@ public class AutoModeViewModel : ViewModelBaseWithValidation
         if (dialog == null) throw new ArgumentNullException(nameof(dialog));
 
         dialog.PrimaryButtonCommand = ReactiveCommand
-            .Create(SetUpAutoMode, this.IsValid().Do(_ => dialog.IsPrimaryButtonEnabled = _))
+            .CreateFromTask(SetUpAutoMode, this.IsValid().Do(_ => dialog.IsPrimaryButtonEnabled = _))
             .DisposeItWith(Disposable);
     }
 
-    private void SetUpAutoMode()
+    private async Task SetUpAutoMode(CancellationToken cancel)
     {
         if (_gbsDevice == null) return;
-
+        var acc = _loc.Distance.ConvertToSi(Accuracy); 
+        _configuration.Set(new AutoModeConfig
+        {
+            Accuracy = acc,
+            Observation = Observation,
+        });
         try
         {
-            _gbsDevice.DeviceClient.StartAutoMode(Observation, (float)_loc.Distance.ConvertToSI(Accuracy), _ctx);
+            await _gbsDevice.DeviceClient.StartAutoMode(Observation, (float)acc, cancel);
         }
         catch (Exception e)
         {
             _logService.Error("", string.Format(RS.AutoModeViewModel_StartFailed, e.Message), e);
         }
+        
+        
     }
 
     [Reactive] public ushort Observation { get; set; }

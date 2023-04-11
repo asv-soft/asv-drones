@@ -25,7 +25,7 @@ namespace Asv.Drones.Gui.Core
     /// <summary>
     /// Anchor on map
     /// </summary>
-    public interface IMapAnchor : IMapAnchorViewModel,IViewModel
+    public interface IMapAnchor : IMapAnchorViewModel, IViewModel
     {
         IMapAnchor Init(IMap map);
     }

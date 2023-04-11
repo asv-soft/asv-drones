@@ -9,14 +9,14 @@ using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav
 {
-    public class UavMissionMapLayer:DisposableViewModelBase
+    public class UavPlaningMissionMapLayer : DisposableViewModelBase
     {
-        private readonly ReadOnlyObservableCollection<UavMissionAnchor> _items;
+        private readonly ReadOnlyObservableCollection<UavPlaningMissionAnchor> _items;
 
-        public UavMissionMapLayer(IVehicle vehicle)
+        public UavPlaningMissionMapLayer(IVehicle vehicle)
         {
             vehicle.MissionItems
-                .Transform(_=>new UavMissionAnchor(_,vehicle))
+                .Transform(_=>new UavPlaningMissionAnchor(_,vehicle))
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .DisposeMany()
                 .Bind(out _items)
@@ -28,7 +28,7 @@ namespace Asv.Drones.Gui.Uav
             });
         }
 
-        public ReadOnlyObservableCollection<UavMissionAnchor> Items => _items;
+        public ReadOnlyObservableCollection<UavPlaningMissionAnchor> Items => _items;
 
     }
 }

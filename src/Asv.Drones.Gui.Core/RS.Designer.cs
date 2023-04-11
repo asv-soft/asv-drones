@@ -789,11 +789,11 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Latitude &amp; Longitude.
+        ///   Looks up a localized string similar to Latitude.
         /// </summary>
-        public static string MeasureUnitsSettingsViewModel_LatitudeLongitude {
+        public static string MeasureUnitsSettingsViewModel_Latitude {
             get {
-                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_LatitudeLongitude", resourceCulture);
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_Latitude", resourceCulture);
             }
         }
         
@@ -821,6 +821,15 @@ namespace Asv.Drones.Gui.Core {
         public static string MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds {
             get {
                 return ResourceManager.GetString("MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_Longitude {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_Longitude", resourceCulture);
             }
         }
         

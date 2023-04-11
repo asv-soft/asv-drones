@@ -217,8 +217,11 @@
   <data name="MeasureUnitsSettingsViewModel_AltitudeDescription" xml:space="preserve">
     <value>Change the current measure units of altitude.</value>
   </data>
-  <data name="MeasureUnitsSettingsViewModel_LatitudeLongitude" xml:space="preserve">
-    <value>Latitude &amp; Longitude</value>
+  <data name="MeasureUnitsSettingsViewModel_Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="MeasureUnitsSettingsViewModel_Longitude" xml:space="preserve">
+    <value>Longitude</value>
   </data>
   <data name="MeasureUnitsSettingsViewModel_LatitudeLongitudeDescription" xml:space="preserve">
     <value>Change the current measure units of latitude &amp; longitude.</value>

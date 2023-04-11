@@ -52,6 +52,7 @@ namespace Asv.Drones.Gui.Core
         public PortViewModel(Guid id):base(new Uri(ConnectionsViewModel.BaseUri, $"port.{id}"))
         {
             PortId = id;
+            
         }
 
         public PortViewModel(IMavlinkDevicesService svc, ILocalizationService localization, ILogService logService, Guid id):this(id)
@@ -153,22 +154,22 @@ namespace Asv.Drones.Gui.Core
         public MaterialIconKind Icon { get; set; }
 
         [Reactive]
-        public string RxText { get; set; }
+        public string? RxText { get; set; }
         [Reactive]
-        public string RxUnitText { get; set; }
+        public string? RxUnitText { get; set; }
         [Reactive]
-        public string RxPktUnitText { get; set; }
+        public string? RxPktUnitText { get; set; }
         [Reactive]
         public string RxPktText { get; set; }
 
         
         
         [Reactive]
-        public string TxText { get; set; }
+        public string? TxText { get; set; }
         [Reactive]
-        public string TxUnitText { get; set; }
+        public string? TxUnitText { get; set; }
         [Reactive]
-        public string TxPktUnitText { get; set; }
+        public string? TxPktUnitText { get; set; }
         [Reactive]
         public string TxPktText { get; set; }
 
@@ -179,11 +180,11 @@ namespace Asv.Drones.Gui.Core
         [Reactive]
         public bool IsPortEnabled { get; set; }
 
-        public ICommand EnableDisableCommand { get; }
-        
-        public ICommand EditPortCommand { get; }
+        public ICommand? EnableDisableCommand { get; }
 
-        public ICommand ChangeSelectionCommand { get; }
+        public ICommand? EditPortCommand { get; }
+
+        public ICommand? ChangeSelectionCommand { get; }
         
         private async Task EditPortImpl(CancellationToken cancel)
         {
@@ -288,12 +289,12 @@ namespace Asv.Drones.Gui.Core
         public ICommand DeletePortCommand { get; }
 
         [Reactive]
-        public string SkippedText { get; set; }
+        public string? SkippedText { get; set; }
         [Reactive]
-        public string SkippedUnitText { get; set; }
+        public string? SkippedUnitText { get; set; }
 
         [Reactive]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Reactive]
         public string? Error { get; set; }

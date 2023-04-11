@@ -14,6 +14,8 @@
     <PackageReference Include="Asv.Mavlink.Vehicle" Version="2.1.1" />
     <PackageReference Include="Avalonia" Version="11.0.0-preview4" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview4" />
+    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.0.0-preview4" />
+    <PackageReference Include="Avalonia.Xaml.Interactions" Version="11.0.0-preview4" />
     <PackageReference Include="DynamicData" Version="7.12.11" />
     <PackageReference Include="FluentAvaloniaUI" Version="2.0.0-preview4" />
     <PackageReference Include="Material.Icons.Avalonia" Version="2.0.0-preview1" />
@@ -48,6 +50,10 @@
     </Compile>
     <Compile Update="Shell\Pages\Flight\Widgets\Uav\Attitude\AttitudeView.axaml.cs">
       <DependentUpon>AttitudeView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Shell\Pages\Parameters\ParametersEditorPageView.axaml.cs">
+      <DependentUpon>ParametersEditorPageView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

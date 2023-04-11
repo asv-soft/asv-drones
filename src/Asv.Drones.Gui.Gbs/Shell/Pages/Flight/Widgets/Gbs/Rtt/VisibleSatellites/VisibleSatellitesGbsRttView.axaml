@@ -10,7 +10,7 @@
     <Design.DataContext>
         <gbs:VisibleSatellitesGbsRttViewModel/>
     </Design.DataContext>
-    <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="GBS observe this amount of satellites">
+    <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="{x:Static gbs:RS.VisibleSatellitesGbsRttView_ToolTip}">
         <avalonia:MaterialIcon Kind="Satellite"/>
         <TextBlock VerticalAlignment="Center" Text="{CompiledBinding VisibleSatellites}"/>
     </StackPanel>
