@@ -1,18 +1,20 @@
+using System.Text.RegularExpressions;
 using Asv.Cfg;
+using Asv.Common;
 
 namespace Asv.Drones.Gui.Core;
 
 public enum LatitudeUnits
 {
-    Degrees,
-    DegreesMinutesSeconds
+    Deg,
+    Dms
 }
 
 public class Latitude : MeasureUnitBase<double,LatitudeUnits>
 {
     private static readonly IMeasureUnitItem<double, LatitudeUnits>[] Units = {
-        new LatitudeUnitDegrees(),
-        new LatitudeUnitDegreesMinutesSeconds()
+        new LatitudeUnitDeg(),
+        new LatitudeUnitDms()
     };
     public Latitude(IConfiguration cfgSvc,string cfgKey):base(cfgSvc,cfgKey,Units)
     {
@@ -23,67 +25,85 @@ public class Latitude : MeasureUnitBase<double,LatitudeUnits>
     public override string Description => "Units of latitude";
 }
 
-public class LatitudeUnitDegrees : DoubleMeasureUnitItem<LatitudeUnits>
+public class LatitudeUnitDeg : IMeasureUnitItem<double, LatitudeUnits>
 {
-    public LatitudeUnitDegrees() : base(LatitudeUnits.Degrees, "Degrees", "°", true, "F7", 1)
+    public LatitudeUnits Id => LatitudeUnits.Deg;
+    public string Title => "[Deg]°";
+    public string Unit => "°";
+    public bool IsSiUnit => true;
+    public double ConvertFromSi(double siValue)
     {
-
+        return siValue;
     }
 
-    public override bool IsValid(string value)
+    public double ConvertToSi(double value)
     {
-        if (base.IsValid(value) == false) return false;
-        var val = ConvertToSi(value);
-        return val is >= -90 and <= 90;
+        return value;
     }
 
-    public override string? GetErrorMessage(string value)
+    public bool IsValid(string value)
     {
-        var msg = base.GetErrorMessage(value);
-        if (msg != null) return msg;
-        var val = ConvertToSi(value);
-        if (val < -90) return "Latitude must be greater than -90°"; // TODO: Localize
-        if (val > 90) return "Latitude must be less than 90°"; // TODO: Localize
-        return null;
+        return GeoPointLatitude.IsValid(value);
+    }
 
+    public string? GetErrorMessage(string value)
+    {
+        return GeoPointLatitude.GetErrorMessage(value);
+    }
+
+    public double ConvertToSi(string value)
+    {
+        return GeoPointLatitude.TryParse(value, out var result) ? result : double.NaN;
+    }
+
+    public string FromSiToString(double value)
+    {
+        return value.ToString("F7");
+    }
+
+    public string FromSiToStringWithUnits(double value)
+    {
+        return $"{value:F7}°";
     }
 }
 
-public class LatitudeUnitDegreesMinutesSeconds : DoubleMeasureUnitItem<LatitudeUnits>
+public class LatitudeUnitDms : IMeasureUnitItem<double, LatitudeUnits>
 {
-    public LatitudeUnitDegreesMinutesSeconds() : base(LatitudeUnits.DegreesMinutesSeconds,
-        "Degrees, minutes, seconds", "°", true, "F7", 1)
+    public LatitudeUnits Id => LatitudeUnits.Dms;
+    public string Title => "[Deg]°[Min]′[Sec]′′";
+    public string Unit => "°";
+    public bool IsSiUnit => false;
+    public double ConvertFromSi(double siValue)
     {
-
+        return siValue;
     }
 
-    public override bool IsValid(string value)
+    public double ConvertToSi(double value)
     {
-        //TODO: Parse strings like "N 40° 26.771′"
-        if (base.IsValid(value) == false) return false;
-        var val = ConvertToSi(value);
-        return val is >= -90 and <= 90;
+        return value;
     }
 
-    public override string? GetErrorMessage(string value)
+    public bool IsValid(string value)
     {
-        //TODO: Parse strings like "N 40° 26.771′"
-        var msg = base.GetErrorMessage(value);
-        if (msg != null) return msg;
-        var val = ConvertToSi(value);
-        if (val < -90) return "Latitude must be greater than -90°"; // TODO: Localize
-        if (val > 90) return "Latitude must be less than 90°"; // TODO: Localize
-        return null;
-
+        return GeoPointLatitude.IsValid(value);
     }
 
-    public override string FromSiToString(double value)
+    public string? GetErrorMessage(string value)
     {
-        var minutes = (value - (int)value) * 60;
-        return $"{value:F0}°{minutes:F0}'{(minutes - (int)minutes) * 60:F2}''";
+        return GeoPointLatitude.GetErrorMessage(value);
     }
 
-    public override string FromSiToStringWithUnits(double value)
+    public double ConvertToSi(string value)
+    {
+        return GeoPointLatitude.TryParse(value, out var result) ? result : double.NaN;
+    }
+
+    public string FromSiToString(double value)
+    {
+        return GeoPointLatitude.PrintDms(value);
+    }
+
+    public string FromSiToStringWithUnits(double value)
     {
         return FromSiToString(value);
     }

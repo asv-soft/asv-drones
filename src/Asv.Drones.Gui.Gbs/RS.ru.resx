@@ -96,6 +96,15 @@
     <data name="VisibleSatellitesGbsRttView_ToolTip" xml:space="preserve">
         <value>НБС наблюдает это число спутников</value>
     </data>
+    <data name="FlightGbsView_Cancel_Content" xml:space="preserve">
+        <value>Отмена</value>
+    </data>
+    <data name="FlightGbsView_EnableAuto_Content" xml:space="preserve">
+        <value>Включить Auto</value>
+    </data>
+    <data name="FlightGbsView_EnableFixed_Content" xml:space="preserve">
+        <value>Включить Fixed</value>
+    </data>
     <data name="GbsAnchor_GNSS_Altitude" xml:space="preserve">
         <value>Высота GNSS: {0}</value>
     </data>
