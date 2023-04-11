@@ -2,7 +2,7 @@ namespace Asv.Drones.Gui.Core;
 
 public class Current : IReadOnlyMeasureUnit<double>
 {
-    public string GetUnit(double value)
+    public string? GetUnit(double value)
     {
         return "A";
     }

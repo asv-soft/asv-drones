@@ -54,8 +54,8 @@ namespace Asv.Drones.Gui.Uav
 
             if (result == ContentDialogResult.Primary)
             {
-                var altInMeters = _loc.Altitude.ConvertToSI(viewModel.Altitude);
-                _log.Info(LogName, string.Format(RS.TakeOffAnchorActionViewModel_LogMessage,_loc.Altitude.FromSIToStringWithUnits(altInMeters), Vehicle.Name.Value));
+                var altInMeters = _loc.Altitude.ConvertToSi(viewModel.Altitude);
+                _log.Info(LogName, string.Format(RS.TakeOffAnchorActionViewModel_LogMessage,_loc.Altitude.FromSiToStringWithUnits(altInMeters), Vehicle.Name.Value));
                 await Vehicle.TakeOff(altInMeters, cancel);
             }
 

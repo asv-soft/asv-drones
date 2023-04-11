@@ -23,6 +23,7 @@ namespace Asv.Drones.Gui.Core
         public LocalizationServiceBase(IConfiguration cfgSvc):base(cfgSvc)
         {
             #region CurrentLanguageInit
+            
             var selectedLang = default(LanguageInfo);
             var langFromConfig = InternalGetConfig(_ => _.CurrentLanguage);
             if (string.IsNullOrWhiteSpace(langFromConfig) == false)
@@ -33,12 +34,14 @@ namespace Asv.Drones.Gui.Core
             selectedLang ??= _languages.First();
             CurrentLanguage = new RxValue<LanguageInfo>(selectedLang).DisposeItWith(Disposable);
             CurrentLanguage.Subscribe(SetLanguage).DisposeItWith(Disposable);
+            
             #endregion
 
             Altitude = new Altitude(cfgSvc, nameof(Altitude)).DisposeItWith(Disposable);
             Velocity = new Velocity(cfgSvc, nameof(Velocity)).DisposeItWith(Disposable);
             Distance = new Distance(cfgSvc, nameof(Distance)).DisposeItWith(Disposable);
-            LatitudeAndLongitude = new LatitudeAndLongitude(cfgSvc, nameof(LatitudeAndLongitude)).DisposeItWith(Disposable);
+            Latitude = new Latitude(cfgSvc, nameof(Latitude)).DisposeItWith(Disposable);
+            Longitude = new Longitude(cfgSvc, nameof(Longitude)).DisposeItWith(Disposable);
         }
 
         public IRxEditableValue<LanguageInfo> CurrentLanguage { get; }
@@ -57,9 +60,7 @@ namespace Asv.Drones.Gui.Core
         #region Units
 
         public IReadOnlyMeasureUnit<double> ByteRate { get; } = new BytesRate();
-
         public IReadOnlyMeasureUnit<double> ItemsRate { get; } = new ItemsRate();
-
         public IReadOnlyMeasureUnit<long> ByteSize { get; } = new ByteSize();
         public IReadOnlyMeasureUnit<TimeSpan> RelativeTime { get; } = new RelativeTime();
         public IReadOnlyMeasureUnit<double> Voltage { get; } = new Voltage();
@@ -67,7 +68,8 @@ namespace Asv.Drones.Gui.Core
 
         public IMeasureUnit<double, AltitudeUnits> Altitude { get; }
         public IMeasureUnit<double, DistanceUnits> Distance { get; }
-        public IMeasureUnit<double, LatitudeLongitudeUnits> LatitudeAndLongitude { get; }
+        public IMeasureUnit<double, LatitudeUnits> Latitude { get; }
+        public IMeasureUnit<double, LongitudeUnits> Longitude { get; }
         public IMeasureUnit<double, VelocityUnits> Velocity { get; }
 
         #endregion

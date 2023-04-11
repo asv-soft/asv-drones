@@ -186,33 +186,6 @@ namespace Asv.Drones.Gui.Gbs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Altitude must be greater or equal {0}..
-        /// </summary>
-        public static string FixedModeViewModel_Altitude_ValidValue {
-            get {
-                return ResourceManager.GetString("FixedModeViewModel_Altitude_ValidValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Latitude must be greater or equal {0}..
-        /// </summary>
-        public static string FixedModeViewModel_Latitude_ValidValue {
-            get {
-                return ResourceManager.GetString("FixedModeViewModel_Latitude_ValidValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Longitude must be greater or equal {0}..
-        /// </summary>
-        public static string FixedModeViewModel_Longitude_ValidValue {
-            get {
-                return ResourceManager.GetString("FixedModeViewModel_Longitude_ValidValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Fixed mode start failed: {0}.
         /// </summary>
         public static string FixedModeViewModel_StartFailed {

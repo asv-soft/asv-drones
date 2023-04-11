@@ -23,7 +23,7 @@ public class HomeDistanceUavRttViewModel : UavRttItem
             .DistinctUntilChanged()
             .Sample(TimeSpan.FromMilliseconds(500))
             .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(_ => HomeDistance = localization.Distance.FromSIToStringWithUnits(_.Value))
+            .Subscribe(_ => HomeDistance = localization.Distance.FromSiToStringWithUnits(_.Value))
             .DisposeWith(Disposable);
         
     }

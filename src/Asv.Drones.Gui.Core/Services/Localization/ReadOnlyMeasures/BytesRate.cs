@@ -6,7 +6,7 @@
         private const double OneMb = OneKb * OneKb;
         private const double OneGb = OneMb * OneKb;
 
-        public string GetUnit(double bytesPerSec)
+        public string? GetUnit(double bytesPerSec)
         {
             return bytesPerSec switch
             {

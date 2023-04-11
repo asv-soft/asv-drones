@@ -13,19 +13,19 @@ public class NlogExceptionHandler : IObserver<Exception>
     {
         if (Debugger.IsAttached) Debugger.Break();
         _logger.Fatal(e, "Unhandled RxApp exception:{0}", e.Message);
-        RxApp.MainThreadScheduler.Schedule(() => throw e);
+        //RxApp.MainThreadScheduler.Schedule(() => throw e);
     }
 
     public void OnError(Exception e)
     {
         if (Debugger.IsAttached) Debugger.Break();
         _logger.Fatal(e, "Unhandled RxApp exception:{0}", e.Message);
-        RxApp.MainThreadScheduler.Schedule(() => throw e);
+        //RxApp.MainThreadScheduler.Schedule(() => throw e);
     }
 
     public void OnCompleted()
     {
         if (Debugger.IsAttached) Debugger.Break();
-        RxApp.MainThreadScheduler.Schedule(() => throw new NotImplementedException());
+        //RxApp.MainThreadScheduler.Schedule(() => throw new NotImplementedException());
     }
 }

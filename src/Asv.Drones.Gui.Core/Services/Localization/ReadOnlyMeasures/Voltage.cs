@@ -2,7 +2,7 @@ namespace Asv.Drones.Gui.Core;
 
 public class Voltage : IReadOnlyMeasureUnit<double>
 {
-    public string GetUnit(double value)
+    public string? GetUnit(double value)
     {
         return RS.Voltage_Unit;
     }

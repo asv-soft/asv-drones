@@ -39,15 +39,6 @@
     <data name="AutoModeView_Observation_Name" xml:space="preserve">
         <value>Observation</value>
     </data>
-    <data name="FixedModeViewModel_Latitude_ValidValue" xml:space="preserve">
-        <value>Latitude must be greater or equal {0}.</value>
-    </data>
-    <data name="FixedModeViewModel_Longitude_ValidValue" xml:space="preserve">
-        <value>Longitude must be greater or equal {0}.</value>
-    </data>
-    <data name="FixedModeViewModel_Altitude_ValidValue" xml:space="preserve">
-        <value>Altitude must be greater or equal {0}.</value>
-    </data>
     <data name="FixedModeViewModel_StartFailed" xml:space="preserve">
         <value>Fixed mode start failed: {0}</value>
     </data>
