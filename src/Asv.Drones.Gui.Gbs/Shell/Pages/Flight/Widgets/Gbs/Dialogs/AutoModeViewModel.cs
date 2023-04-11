@@ -26,7 +26,7 @@ public class AutoModeViewModel : ViewModelBaseWithValidation
     private readonly ILocalizationService _loc;
     private readonly IConfiguration _configuration;
 
-    private const double MinimumAccuracyDistance = 0.01;
+    private const double MinimumAccuracyDistance = 0.1;
     private const double MinimumObservationTime = 1;
     
     public AutoModeViewModel() : base(new Uri(FlightGbsViewModel.Uri, "auto"))
