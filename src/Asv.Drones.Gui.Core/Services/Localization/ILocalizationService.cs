@@ -75,8 +75,9 @@ namespace Asv.Drones.Gui.Core
 
         IMeasureUnit<double,DistanceUnits> Distance { get; }
 
-        IMeasureUnit<double,LatitudeLongitudeUnits> LatitudeAndLongitude { get; }
-        
+        IMeasureUnit<double,LatitudeUnits> Latitude { get; }
+        IMeasureUnit<double,LongitudeUnits> Longitude { get; }
+
         IMeasureUnit<double,VelocityUnits> Velocity { get; }
 
        

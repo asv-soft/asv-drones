@@ -11,7 +11,7 @@
     <Design.DataContext>
         <gbs:ObservationGbsRttViewModel/>
     </Design.DataContext>
-    <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="GBS observe time">
+    <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="{x:Static gbs:RS.ObservationGbsRttView_ToolTip}">
         <avalonia:MaterialIcon Kind="Eye"/>
         <TextBlock VerticalAlignment="Center" Text="{CompiledBinding Observation}"/>
     </StackPanel>

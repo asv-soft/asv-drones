@@ -39,15 +39,6 @@
     <data name="AutoModeView_Observation_Name" xml:space="preserve">
         <value>Наблюдение</value>
     </data>
-    <data name="FixedModeViewModel_Latitude_ValidValue" xml:space="preserve">
-        <value>Широта должна быть больше или равна {0}.</value>
-    </data>
-    <data name="FixedModeViewModel_Longitude_ValidValue" xml:space="preserve">
-        <value>Долгота должна быть больше или равна {0}.</value>
-    </data>
-    <data name="FixedModeViewModel_Altitude_ValidValue" xml:space="preserve">
-        <value>Высота должна быть больше или равна {0}.</value>
-    </data>
     <data name="FixedModeViewModel_StartFailed" xml:space="preserve">
         <value>Ошибка старта Фиксированного режима: {0}</value>
     </data>
@@ -86,6 +77,24 @@
     </data>
     <data name="FixedModeView_Longitude_Name" xml:space="preserve">
         <value>Долгота</value>
+    </data>
+    <data name="AccuracyGbsRttView_ToolTip" xml:space="preserve">
+        <value>Точность НБС</value>
+    </data>
+    <data name="BaseStationModeGbsRttView_ToolTip" xml:space="preserve">
+        <value>Режим НБС</value>
+    </data>
+    <data name="DGpsRateGbsRttView_ToolTip" xml:space="preserve">
+        <value>Частота DGps на НБС</value>
+    </data>
+    <data name="LinkQualityGbsRttView_ToolTip" xml:space="preserve">
+        <value>Качество связи с НБС</value>
+    </data>
+    <data name="ObservationGbsRttView_ToolTip" xml:space="preserve">
+        <value>Время наблюдения НБС</value>
+    </data>
+    <data name="VisibleSatellitesGbsRttView_ToolTip" xml:space="preserve">
+        <value>НБС наблюдает это число спутников</value>
     </data>
     <data name="GbsAnchor_GNSS_Altitude" xml:space="preserve">
         <value>Высота GNSS: {0}</value>

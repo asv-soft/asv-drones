@@ -217,8 +217,11 @@
   <data name="MeasureUnitsSettingsViewModel_AltitudeDescription" xml:space="preserve">
     <value>Change the current measure units of altitude.</value>
   </data>
-  <data name="MeasureUnitsSettingsViewModel_LatitudeLongitude" xml:space="preserve">
-    <value>Latitude &amp; Longitude</value>
+  <data name="MeasureUnitsSettingsViewModel_Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="MeasureUnitsSettingsViewModel_Longitude" xml:space="preserve">
+    <value>Longitude</value>
   </data>
   <data name="MeasureUnitsSettingsViewModel_LatitudeLongitudeDescription" xml:space="preserve">
     <value>Change the current measure units of latitude &amp; longitude.</value>
@@ -539,5 +542,20 @@
   </data>
   <data name="Voltage_Unit" xml:space="preserve">
     <value>V</value>
+  </data>
+  <data name="ConnectionsViewModel_EditDialogPort_Accept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="ConnectionsViewModel_EditSerialPortDialog_Title" xml:space="preserve">
+    <value>Edit selected Mavlink serial port</value>
+  </data>
+  <data name="ConnectionsViewModel_EditTcpPortDialog_Title" xml:space="preserve">
+    <value>Edit selected Mavlink TCP port</value>
+  </data>
+  <data name="ConnectionsViewModel_EditUdpPortDialog_Title" xml:space="preserve">
+    <value>Edit selected Mavlink UDP port</value>
+  </data>
+  <data name="ConnectionsViewModel_EditDialogPort_Cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
 </root>

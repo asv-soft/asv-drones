@@ -2,7 +2,7 @@
 
 public class RelativeTime : IReadOnlyMeasureUnit<TimeSpan>
 {
-    public string GetUnit(TimeSpan value)
+    public string? GetUnit(TimeSpan value)
     {
         return value.Ticks switch
         {

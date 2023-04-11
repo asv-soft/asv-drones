@@ -12,7 +12,7 @@
     <Design.DataContext>
         <gbs:DGpsRateGbsRttViewModel/>
     </Design.DataContext>
-    <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="GBS DGps bytes rate">
+    <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="{x:Static gbs:RS.DGpsRateGbsRttView_ToolTip}">
         <avalonia:MaterialIcon Kind="Download"/>
         <TextBlock VerticalAlignment="Center" Text="{CompiledBinding DGpsRate}"/>
     </StackPanel>

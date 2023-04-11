@@ -5,6 +5,7 @@ using System.Reactive.Subjects;
 using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Uav;
+using Asv.Mavlink;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using ReactiveUI;
@@ -60,22 +61,16 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
         _cmd = cmd;
 
         _packetsSource = new SourceList<PacketMessageViewModel>();
+        _packetsSource.LimitSizeTo(MaxPacketSize).Subscribe().DisposeItWith(Disposable);
         _filtersSource = new SourceCache<PacketFilterViewModel, string>(_ => _.Source);
         _filtersSourceType = new SourceCache<PacketFilterViewModel, string>(_ => _.Type);
         
         mavlinkDevicesService.Router
             .Where(_=>IsPause == false)
+            .Buffer(TimeSpan.FromSeconds(1)) // fix slow rendering when high rate of packets: buffer it 1 sec and then render
             .ObserveOn(RxApp.MainThreadScheduler)
-            .Select(_=>new PacketMessageViewModel(_))
-            .Do(UpdateFilterSource)
-            .Subscribe(_=>
-            {
-                while (_packets.Count > MaxPacketSize)
-                {
-                    _packetsSource.RemoveAt(0);
-                }
-                _packetsSource.Add(_);
-            })
+            .Select(ConvertPacketToMessagesAndUpdateFilters)
+            .Subscribe(_packetsSource.AddRange)
             .DisposeItWith(Disposable);
         
         _sourceFilterUpdate.OnNext(FilterBySourcePredicate);
@@ -128,32 +123,41 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
         {
             _filtersSource.Items.ForEach(_=>_.UpdateRateText());
             _filtersSourceType.Items.ForEach(_=>_.UpdateRateText());
+            
         }).DisposeItWith(Disposable);
     }
 
     
 
-    private void UpdateFilterSource(PacketMessageViewModel obj)
+    private IList<PacketMessageViewModel> ConvertPacketToMessagesAndUpdateFilters(IList<IPacketV2<IPayload>> items)
     {
-        var sourceExists = _filtersSource.Lookup(obj.Source);
-        if (sourceExists.HasValue)
+        var result = new List<PacketMessageViewModel>(items.Count);
+        foreach (var packet in items)
         {
-            sourceExists.Value.UpdateRates();
-        }
-        else
-        {
-            _filtersSource.AddOrUpdate(new PacketFilterViewModel(obj,_localization));
-        }
+            var obj = new PacketMessageViewModel(packet);
+            result.Add(obj);
+            var sourceExists = _filtersSource.Lookup(obj.Source);
+            if (sourceExists.HasValue)
+            {
+                sourceExists.Value.UpdateRates();
+            }
+            else
+            {
+                _filtersSource.AddOrUpdate(new PacketFilterViewModel(obj,_localization));
+            }
         
-        var typeExists = _filtersSourceType.Lookup(obj.Type);
-        if (typeExists.HasValue)
-        {
-            typeExists.Value.UpdateRates();
+            var typeExists = _filtersSourceType.Lookup(obj.Type);
+            if (typeExists.HasValue)
+            {
+                typeExists.Value.UpdateRates();
+            }
+            else
+            {
+                _filtersSourceType.AddOrUpdate(new PacketFilterViewModel(obj,_localization));
+            }
         }
-        else
-        {
-            _filtersSourceType.AddOrUpdate(new PacketFilterViewModel(obj,_localization));
-        }
+
+        return result;
     }
 
     public ICommand ClearAll { get; }

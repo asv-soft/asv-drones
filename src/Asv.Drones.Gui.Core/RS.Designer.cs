@@ -366,6 +366,51 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accept.
+        /// </summary>
+        public static string ConnectionsViewModel_EditDialogPort_Accept {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditDialogPort_Accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string ConnectionsViewModel_EditDialogPort_Cancel {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditDialogPort_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit selected Mavlink serial port.
+        /// </summary>
+        public static string ConnectionsViewModel_EditSerialPortDialog_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditSerialPortDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit selected Mavlink TCP port.
+        /// </summary>
+        public static string ConnectionsViewModel_EditTcpPortDialog_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditTcpPortDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit selected Mavlink UDP port.
+        /// </summary>
+        public static string ConnectionsViewModel_EditUdpPortDialog_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditUdpPortDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In this section you can see all found devices on the network.
         /// </summary>
         public static string DeviceBrowserView_Description {
@@ -744,11 +789,11 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Latitude &amp; Longitude.
+        ///   Looks up a localized string similar to Latitude.
         /// </summary>
-        public static string MeasureUnitsSettingsViewModel_LatitudeLongitude {
+        public static string MeasureUnitsSettingsViewModel_Latitude {
             get {
-                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_LatitudeLongitude", resourceCulture);
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_Latitude", resourceCulture);
             }
         }
         
@@ -776,6 +821,15 @@ namespace Asv.Drones.Gui.Core {
         public static string MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds {
             get {
                 return ResourceManager.GetString("MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_Longitude {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_Longitude", resourceCulture);
             }
         }
         

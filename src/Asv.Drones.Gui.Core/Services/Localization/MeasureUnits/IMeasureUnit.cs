@@ -10,13 +10,13 @@ namespace Asv.Drones.Gui.Core
         public string Title { get; }
         public string Unit { get; }
         public bool IsSiUnit { get; }
-        public TValue ConvertFromSI(TValue siValue);
-        public TValue ConvertToSI(TValue value);
+        public TValue ConvertFromSi(TValue siValue);
+        public TValue ConvertToSi(TValue value);
         bool IsValid(string value);
-        string GetErrorMessage(string value);
-        TValue ConvertToSI(string value);
-        string FromSIToString(TValue value);
-        string FromSIToStringWithUnits(TValue value);
+        string? GetErrorMessage(string value);
+        TValue ConvertToSi(string value);
+        string FromSiToString(TValue value);
+        string FromSiToStringWithUnits(TValue value);
     }
     
     public interface IMeasureUnit<TValue,TEnum>
@@ -25,27 +25,28 @@ namespace Asv.Drones.Gui.Core
         string Description { get; }
         IEnumerable<IMeasureUnitItem<TValue,TEnum>> AvailableUnits { get; }
         IRxEditableValue<IMeasureUnitItem<TValue,TEnum>> CurrentUnit { get; }
+        IMeasureUnitItem<TValue,TEnum> SiUnit { get; }
     }
     
     public static class MeasureUnitExtensions
     {
-        public static string FromSIToStringWithUnits<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, TValue value)
+        public static string FromSiToStringWithUnits<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, TValue value)
         {
-            return src.CurrentUnit.Value.FromSIToStringWithUnits(value);
+            return src.CurrentUnit.Value.FromSiToStringWithUnits(value);
         }
         
-        public static string FromSIToString<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, TValue value)
+        public static string FromSiToString<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, TValue value)
         {
-            return src.CurrentUnit.Value.FromSIToString(value);
+            return src.CurrentUnit.Value.FromSiToString(value);
         }
 
         public static TValue ConvertFromSi<TValue,TEnum>(this IMeasureUnit<TValue,TEnum> src, TValue value)
        {
-           return src.CurrentUnit.Value.ConvertFromSI(value);
+           return src.CurrentUnit.Value.ConvertFromSi(value);
        }
-       public static TValue ConvertToSI<TValue,TEnum>(this IMeasureUnit<TValue,TEnum> src, TValue value)
+       public static TValue ConvertToSi<TValue,TEnum>(this IMeasureUnit<TValue,TEnum> src, TValue value)
        {
-           return src.CurrentUnit.Value.ConvertToSI(value);
+           return src.CurrentUnit.Value.ConvertToSi(value);
        }
 
        public static bool IsValid<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, string value)
@@ -53,14 +54,31 @@ namespace Asv.Drones.Gui.Core
            return src.CurrentUnit.Value.IsValid(value);
        }
 
-       public static string GetErrorMessage<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, string value)
+       public static bool IsValid<TEnum>(this IMeasureUnit<double, TEnum> src, double minSiValue, double maxSiValue, string value)
+       {
+           if (src.CurrentUnit.Value.IsValid(value) == false) return false;
+           if (src.CurrentUnit.Value.ConvertToSi(value) < minSiValue) return false;
+           if (src.CurrentUnit.Value.ConvertToSi(value) > maxSiValue) return false;
+           return true;
+       }
+
+       public static string? GetErrorMessage<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, string value)
        {
            return src.CurrentUnit.Value.GetErrorMessage(value);
        }
-
-       public static TValue ConvertToSI<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, string value)
+       public static string? GetErrorMessage<TEnum>(this IMeasureUnit<double, TEnum> src,double minSiValue, double maxSiValue, string value)
        {
-           return src.CurrentUnit.Value.ConvertToSI(value);
+           var msg = src.CurrentUnit.Value.GetErrorMessage(value);
+           if (msg.IsNullOrWhiteSpace() == false) return msg;
+           var siValue = src.CurrentUnit.Value.ConvertToSi(value);
+           if ( siValue< minSiValue) return $"Value must be greater than {src.CurrentUnit.Value.FromSiToStringWithUnits(minSiValue)} ({src.SiUnit.FromSiToStringWithUnits(siValue)})"; // TODO: Localize
+           if ( siValue> maxSiValue) return $"Value must be less than {src.CurrentUnit.Value.FromSiToStringWithUnits(minSiValue)} {src.SiUnit.FromSiToStringWithUnits(siValue)}"; // TODO: Localize
+           return null;
+       }
+
+       public static TValue ConvertToSi<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, string value)
+       {
+           return src.CurrentUnit.Value.ConvertToSi(value);
        }
     }
 }

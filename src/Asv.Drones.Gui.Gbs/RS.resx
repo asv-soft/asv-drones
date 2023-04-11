@@ -39,15 +39,6 @@
     <data name="AutoModeView_Observation_Name" xml:space="preserve">
         <value>Observation</value>
     </data>
-    <data name="FixedModeViewModel_Latitude_ValidValue" xml:space="preserve">
-        <value>Latitude must be greater or equal {0}.</value>
-    </data>
-    <data name="FixedModeViewModel_Longitude_ValidValue" xml:space="preserve">
-        <value>Longitude must be greater or equal {0}.</value>
-    </data>
-    <data name="FixedModeViewModel_Altitude_ValidValue" xml:space="preserve">
-        <value>Altitude must be greater or equal {0}.</value>
-    </data>
     <data name="FixedModeViewModel_StartFailed" xml:space="preserve">
         <value>Fixed mode start failed: {0}</value>
     </data>
@@ -86,6 +77,24 @@
     </data>
     <data name="FixedModeView_Accuracy_Name" xml:space="preserve">
         <value>Accuracy</value>
+    </data>
+    <data name="AccuracyGbsRttView_ToolTip" xml:space="preserve">
+        <value>GBS accuracy</value>
+    </data>
+    <data name="BaseStationModeGbsRttView_ToolTip" xml:space="preserve">
+        <value>GBS mode</value>
+    </data>
+    <data name="DGpsRateGbsRttView_ToolTip" xml:space="preserve">
+        <value>GBS DGps bytes rate</value>
+    </data>
+    <data name="LinkQualityGbsRttView_ToolTip" xml:space="preserve">
+        <value>GBS link quality</value>
+    </data>
+    <data name="ObservationGbsRttView_ToolTip" xml:space="preserve">
+        <value>GBS observe time</value>
+    </data>
+    <data name="VisibleSatellitesGbsRttView_ToolTip" xml:space="preserve">
+        <value>GBS observe this amount of satellites</value>
     </data>
     <data name="GbsAnchor_Latitude" xml:space="preserve">
         <value>Latitude: {0}</value>

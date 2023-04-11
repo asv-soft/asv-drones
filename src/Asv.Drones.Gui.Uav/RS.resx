@@ -174,4 +174,22 @@
   <data name="ParametersEditorPageViewModel_Total" xml:space="preserve">
     <value>Total: {0}</value>
   </data>
+  <data name="CpuLoadUavRttView_ToolTip" xml:space="preserve">
+    <value>CPU load of UAV</value>
+  </data>
+  <data name="CurrentUavRttView_ToolTip" xml:space="preserve">
+    <value>UAV current</value>
+  </data>
+  <data name="FlightTimeUavRttView_ToolTip" xml:space="preserve">
+    <value>UAV time in flight</value>
+  </data>
+  <data name="HomeDistanceUavRttView_ToolTip" xml:space="preserve">
+    <value>Distance from UAV to home</value>
+  </data>
+  <data name="LinkQualityUavRttView_ToolTip" xml:space="preserve">
+    <value>UAV link quality</value>
+  </data>
+  <data name="VoltageUavRttItemView_ToolTip" xml:space="preserve">
+    <value>UAV voltage</value>
+  </data>
 </root>
