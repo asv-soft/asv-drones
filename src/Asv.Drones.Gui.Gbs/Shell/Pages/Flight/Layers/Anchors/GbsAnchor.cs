@@ -33,8 +33,8 @@ public class GbsAnchor : GbsAnchorBase
 
     private void UpdateDescription()
     {
-        Description = string.Format(RS.GbsAnchor_Latitude, _loc.LatitudeAndLongitude.FromSIToStringWithUnits(Gbs.DeviceClient.Position.Value.Latitude)) + "\n" +
-                      string.Format(RS.GbsAnchor_Longitude, _loc.LatitudeAndLongitude.FromSIToStringWithUnits(Gbs.DeviceClient.Position.Value.Longitude)) + "\n" +
-                      string.Format(RS.GbsAnchor_GNSS_Altitude, _loc.Altitude.FromSIToStringWithUnits(Gbs.DeviceClient.Position.Value.Altitude)) + "\n";
+        Description = string.Format(RS.GbsAnchor_Latitude, _loc.Latitude.FromSiToStringWithUnits(Gbs.DeviceClient.Position.Value.Latitude)) + "\n" +
+                      string.Format(RS.GbsAnchor_Longitude, _loc.Longitude.FromSiToStringWithUnits(Gbs.DeviceClient.Position.Value.Longitude)) + "\n" +
+                      string.Format(RS.GbsAnchor_GNSS_Altitude, _loc.Altitude.FromSiToStringWithUnits(Gbs.DeviceClient.Position.Value.Altitude)) + "\n";
     }
 }
