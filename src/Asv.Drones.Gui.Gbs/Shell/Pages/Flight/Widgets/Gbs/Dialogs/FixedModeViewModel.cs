@@ -1,5 +1,6 @@
 using System.ComponentModel.Composition;
 using System.Reactive.Linq;
+using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using FluentAvalonia.UI.Controls;
@@ -9,6 +10,14 @@ using ReactiveUI.Validation.Extensions;
 
 namespace Asv.Drones.Gui.Gbs;
 
+public class FixedModeConfig
+{
+    public string Longitude { get; set; }
+    public string Latitude { get; set; }
+    public string Altitude { get; set; }
+    public string Accuracy { get; set; }
+}
+
 [Export]
 [PartCreationPolicy(CreationPolicy.NonShared)]
 public class FixedModeViewModel : ViewModelBaseWithValidation
@@ -16,6 +25,7 @@ public class FixedModeViewModel : ViewModelBaseWithValidation
     private readonly IGbsDevice _gbsDevice;
     private readonly ILogService _logService;
     private readonly ILocalizationService _loc;
+    private readonly IConfiguration _configuration;
     private readonly CancellationToken _ctx;
     
     private const double MinimumAccuracyDistance = 1;
@@ -27,12 +37,23 @@ public class FixedModeViewModel : ViewModelBaseWithValidation
     }
     
     [ImportingConstructor]
-    public FixedModeViewModel(IGbsDevice gbsDevice, ILogService logService, ILocalizationService loc, CancellationToken ctx) : this()
+    public FixedModeViewModel(IGbsDevice gbsDevice, ILogService logService, ILocalizationService loc, IConfiguration configuration, CancellationToken ctx) : this()
     {
         _gbsDevice = gbsDevice;
         _logService = logService;
+        _configuration = configuration;
         _loc = loc;
         _ctx = ctx;
+
+        if (_configuration.Exist<FixedModeConfig>(nameof(FixedModeViewModel)))
+        {
+            var fixedModeConfig = _configuration.Get<FixedModeConfig>(nameof(FixedModeViewModel));
+
+            Latitude = fixedModeConfig.Latitude;
+            Longitude = fixedModeConfig.Longitude;
+            Altitude = fixedModeConfig.Altitude;
+            Accuracy = fixedModeConfig.Accuracy;
+        }
 
 #region Validation Rules
 
@@ -119,6 +140,16 @@ public class FixedModeViewModel : ViewModelBaseWithValidation
         {
             _logService.Error("", string.Format(RS.FixedModeViewModel_StartFailed, e.Message), e);
         }
+
+        var fixedModeConfig = new FixedModeConfig()
+        {
+            Longitude = Longitude,
+            Latitude = Latitude,
+            Altitude = Altitude,
+            Accuracy = Accuracy
+        };
+        
+        _configuration.Set(nameof(FixedModeViewModel), fixedModeConfig);
     }
     
     [Reactive]
