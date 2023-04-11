@@ -258,6 +258,42 @@ namespace Asv.Drones.Gui.Gbs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GNSS Altitude: {0}.
+        /// </summary>
+        public static string GbsAnchor_GNSS_Altitude {
+            get {
+                return ResourceManager.GetString("GbsAnchor_GNSS_Altitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude: {0}.
+        /// </summary>
+        public static string GbsAnchor_Latitude {
+            get {
+                return ResourceManager.GetString("GbsAnchor_Latitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude: {0}.
+        /// </summary>
+        public static string GbsAnchor_Longitude {
+            get {
+                return ResourceManager.GetString("GbsAnchor_Longitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ground Base Station.
+        /// </summary>
+        public static string GbsAnchor_Title {
+            get {
+                return ResourceManager.GetString("GbsAnchor_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to N\A.
         /// </summary>
         public static string GbsRttItem_ValueNotAvailable {

@@ -96,4 +96,16 @@
     <data name="VisibleSatellitesGbsRttView_ToolTip" xml:space="preserve">
         <value>НБС наблюдает это число спутников</value>
     </data>
+    <data name="GbsAnchor_GNSS_Altitude" xml:space="preserve">
+        <value>Высота GNSS: {0}</value>
+    </data>
+    <data name="GbsAnchor_Latitude" xml:space="preserve">
+        <value>Широта: {0}</value>
+    </data>
+    <data name="GbsAnchor_Longitude" xml:space="preserve">
+        <value>Долгота: {0}</value>
+    </data>
+    <data name="GbsAnchor_Title" xml:space="preserve">
+        <value>Наземная базовая станция</value>
+    </data>
 </root>
