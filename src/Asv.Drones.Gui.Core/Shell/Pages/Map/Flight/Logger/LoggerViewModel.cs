@@ -1,8 +1,10 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using Asv.Common;
-using Asv.Drones.Gui.Core;
+using Avalonia.Controls;
+using DynamicData;
 using DynamicData.Binding;
 using Material.Icons;
 using ReactiveUI;
@@ -10,27 +12,64 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Core;
 
-public class FlightLogMessage
-{
-    public MaterialIconKind IconKind { get; set; }
-    public string Message { get; set; }
-    public bool IsError { get; set; }
-    public bool IsWarning { get; set; }
-    public bool IsInfo { get; set; }
-    public bool IsTrace { get; set; }
-}
-
 public class LoggerViewModel : FlightWidgetBase
 {
-    public LoggerViewModel(ILogService log) : base(new Uri(FlightWidgetBase.UriString + "logger"))
+    private readonly SourceList<FlightLogMessageViewModel> _logSource = new();
+    private readonly ReadOnlyObservableCollection<FlightLogMessageViewModel> _logs;
+
+    private readonly Subject<Func<FlightLogMessageViewModel, bool>> _filterUpdate = new();
+
+    private const int MaxLogSize = 30;
+
+    public LoggerViewModel() : base(new Uri(UriString + "logger"))
+    {
+        if (Design.IsDesignMode)
+        {
+            _logs = new ReadOnlyObservableCollection<FlightLogMessageViewModel>(
+                new ObservableCollection<FlightLogMessageViewModel>(new[]
+                {
+                    new FlightLogMessageViewModel(MaterialIconKind.Error, "ERROR", LogMessageType.Error),
+                    new FlightLogMessageViewModel(MaterialIconKind.InfoCircle, "INFO", LogMessageType.Info),
+                    new FlightLogMessageViewModel(MaterialIconKind.Warning, "WARNING", LogMessageType.Warning),
+                    new FlightLogMessageViewModel(MaterialIconKind.Abacus, "TRACE", LogMessageType.Trace)
+                }));
+        }
+    }
+    
+    [ImportingConstructor]
+    public LoggerViewModel(ILogService log) : this()
     {
         Location = WidgetLocation.Bottom;
         Title = "Logger";
-        
+
+        _logSource.LimitSizeTo(MaxLogSize).Subscribe().DisposeItWith(Disposable);
+        _filterUpdate.OnNext(FilterByTypePredicate);
+
         log.OnMessage
             .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(_ => UpdateLogMessages(Messages, _)).DisposeItWith(Disposable);
-        this.WhenValueChanged(_ => Messages).Subscribe().DisposeItWith(Disposable);
+            .Select(ConvertLogToMessage)
+            .Subscribe(_logSource.Add)
+            .DisposeItWith(Disposable);
+
+        _logSource
+            .Connect()
+            .Filter(_filterUpdate)
+            .Bind(out _logs)
+            .Subscribe()
+            .DisposeItWith(Disposable);
+
+        this.WhenValueChanged(_ => _.IsTraceSelected)
+            .Subscribe(_ => _filterUpdate.OnNext(FilterByTypePredicate))
+            .DisposeItWith(Disposable);
+        this.WhenValueChanged(_ => _.IsErrorSelected)
+            .Subscribe(_ => _filterUpdate.OnNext(FilterByTypePredicate))
+            .DisposeItWith(Disposable);
+        this.WhenValueChanged(_ => _.IsInfoSelected)
+            .Subscribe(_ => _filterUpdate.OnNext(FilterByTypePredicate))
+            .DisposeItWith(Disposable);
+        this.WhenValueChanged(_ => _.IsWarningSelected)
+            .Subscribe(_ => _filterUpdate.OnNext(FilterByTypePredicate))
+            .DisposeItWith(Disposable);
 
 #if DEBUG
         log.SendMessage(new LogMessage(DateTime.Now, LogMessageType.Error, "debug", "Test error", "This is a test log message"));
@@ -39,34 +78,35 @@ public class LoggerViewModel : FlightWidgetBase
 #endif        
     }
 
-    [Reactive] 
-    public ObservableCollection<FlightLogMessage> Messages { get; set; } = new();
+    public ReadOnlyObservableCollection<FlightLogMessageViewModel> Logs => _logs;
 
-    private static void UpdateLogMessages(ObservableCollection<FlightLogMessage> messages, LogMessage logMessage)
+    [Reactive] public bool IsWarningSelected { get; set; } = true;
+    [Reactive] public bool IsErrorSelected { get; set; } = true;
+    [Reactive] public bool IsInfoSelected { get; set; } = true;
+    [Reactive] public bool IsTraceSelected { get; set; } = true;
+
+    private static FlightLogMessageViewModel ConvertLogToMessage(LogMessage logMessage)
     {
-        switch (logMessage.Type)
+        return logMessage.Type switch
         {
-            case LogMessageType.Info:
-                messages.Insert(0, new FlightLogMessage { IconKind = MaterialIconKind.InfoCircle, Message = logMessage.Message, IsInfo = true });
-                break;
-            case LogMessageType.Error:
-                messages.Insert(0, new FlightLogMessage { IconKind = MaterialIconKind.Error, Message = logMessage.Message, IsError = true });
-                break;
-            case LogMessageType.Warning:
-                messages.Insert(0, new FlightLogMessage { IconKind = MaterialIconKind.Warning, Message = logMessage.Message, IsWarning = true });
-                break;
-            case LogMessageType.Trace:
-                messages.Insert(0, new FlightLogMessage { IconKind = MaterialIconKind.Abacus, Message = logMessage.Message, IsTrace = true });
-                break;
-            default:
-                messages.Insert(0, new FlightLogMessage { IconKind = MaterialIconKind.InfoCircle, Message = logMessage.Message, IsInfo = true });
-                break;
-        }
-
-        if (messages.Count > 30)
+            LogMessageType.Info => new FlightLogMessageViewModel(MaterialIconKind.InfoCircle, logMessage.Message, LogMessageType.Info),
+            LogMessageType.Error => new FlightLogMessageViewModel(MaterialIconKind.Error, logMessage.Message, LogMessageType.Error),
+            LogMessageType.Warning => new FlightLogMessageViewModel(MaterialIconKind.Warning, logMessage.Message, LogMessageType.Warning),
+            LogMessageType.Trace => new FlightLogMessageViewModel(MaterialIconKind.Abacus, logMessage.Message, LogMessageType.Trace),
+            _ => new FlightLogMessageViewModel(MaterialIconKind.InfoCircle, logMessage.Message, LogMessageType.Info)
+        };
+    }
+    
+    private bool FilterByTypePredicate(FlightLogMessageViewModel vm)
+    {
+        return vm.Type switch
         {
-            messages.RemoveAt(messages.Count - 1);
-        }
+            LogMessageType.Error => IsErrorSelected,
+            LogMessageType.Info => IsInfoSelected,
+            LogMessageType.Warning => IsWarningSelected,
+            LogMessageType.Trace => IsTraceSelected,
+            _ => false
+        };
     }
 
     protected override void InternalAfterMapInit(IMap map)
