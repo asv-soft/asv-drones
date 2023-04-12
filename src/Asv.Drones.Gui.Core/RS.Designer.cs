@@ -537,6 +537,42 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string LoggerView_ErrorFilter_Name {
+            get {
+                return ResourceManager.GetString("LoggerView_ErrorFilter_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string LoggerView_InfoFilter_Name {
+            get {
+                return ResourceManager.GetString("LoggerView_InfoFilter_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trace.
+        /// </summary>
+        public static string LoggerView_TraceFilter_Name {
+            get {
+                return ResourceManager.GetString("LoggerView_TraceFilter_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string LoggerView_WarningFilter_Name {
+            get {
+                return ResourceManager.GetString("LoggerView_WarningFilter_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to by .
         /// </summary>
         public static string LogMessagesPageView_By {

@@ -79,7 +79,7 @@
                     </Grid.ColumnDefinitions>
 
                     <avalonia:MaterialIcon Kind="Error" Foreground="Red" />
-                    <TextBlock Margin="3 0 0 0" Grid.Column="1" Text="Error" />
+                    <TextBlock Margin="3 0 0 0" Grid.Column="1" Text="{x:Static core:RS.LoggerView_ErrorFilter_Name}" />
                 </Grid>
             </ToggleButton>
             <ToggleButton HorizontalAlignment="Stretch" Grid.Row="2" HorizontalContentAlignment="Left" VerticalAlignment="Stretch" IsChecked="{Binding IsWarningSelected}">
@@ -90,7 +90,7 @@
                     </Grid.ColumnDefinitions>
 
                     <avalonia:MaterialIcon Kind="Warning" Foreground="Orange" />
-                    <TextBlock Margin="3 0 0 0" Grid.Column="1" Text="Warning" />
+                    <TextBlock Margin="3 0 0 0" Grid.Column="1" Text="{x:Static core:RS.LoggerView_WarningFilter_Name}" />
                 </Grid>
             </ToggleButton>
             <ToggleButton Grid.Row="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Stretch" IsChecked="{Binding IsInfoSelected}">
@@ -101,7 +101,7 @@
                     </Grid.ColumnDefinitions>
 
                     <avalonia:MaterialIcon Kind="InfoCircle" Foreground="White" />
-                    <TextBlock Margin="3 0 0 0" Grid.Column="1" Text="Info" />
+                    <TextBlock Margin="3 0 0 0" Grid.Column="1" Text="{x:Static core:RS.LoggerView_InfoFilter_Name}" />
                 </Grid>
             </ToggleButton>
             <ToggleButton Grid.Row="6" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Stretch" IsChecked="{Binding IsTraceSelected}">
@@ -112,7 +112,7 @@
                     </Grid.ColumnDefinitions>
 
                     <avalonia:MaterialIcon Kind="Abacus" Foreground="White" />
-                    <TextBlock Margin="3 0 0 0" Grid.Column="1" Text="Trace" />
+                    <TextBlock Margin="3 0 0 0" Grid.Column="1" Text="{x:Static core:RS.LoggerView_TraceFilter_Name}" />
                 </Grid>
             </ToggleButton>
         </Grid>
