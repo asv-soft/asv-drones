@@ -28,6 +28,10 @@ public class FixedModeViewModel : ViewModelBaseWithValidation
     private readonly IConfiguration _configuration;
     
     private const double MinimumAccuracyDistance = 0.01;
+    private const int MinimumLatitudeValue = -90;
+    private const int MaximumLatitudeValue = 90;
+    private const int MinimumLongitudeValue = -180;
+    private const int MaximumLongitudeValue = 180;
     
     public FixedModeViewModel() : base(new Uri(FlightGbsViewModel.Uri, "fixed"))
     {
@@ -50,20 +54,18 @@ public class FixedModeViewModel : ViewModelBaseWithValidation
 
 #region Validation Rules
 
-        this.ValidationRule(x => x.Accuracy, _ => _loc.Distance.IsValid(_), _ => _loc.Distance.GetErrorMessage(_))
-            .DisposeItWith(Disposable);
         this.ValidationRule(x => x.Accuracy,
-                _ => _loc.Distance.IsValid(_) && _loc.Distance.ConvertToSi(_) >= MinimumAccuracyDistance,
-                string.Format(RS.FixedModeViewModel_Accuracy_ValidValue,
+                _ => _loc.Distance.IsValid(MinimumAccuracyDistance, double.MaxValue, _),
+                string.Format(RS.AutoModeViewModel_Accuracy_ValidValue,
                     _loc.Distance.FromSiToString(MinimumAccuracyDistance)))
             .DisposeItWith(Disposable);
 
-        this.ValidationRule(x => x.Latitude, _ => _loc.Latitude.IsValid(_),
+        this.ValidationRule(x => x.Latitude, _ => _loc.Latitude.IsValid(MinimumLatitudeValue, MaximumLatitudeValue, _),
                 _ => _loc.Latitude.GetErrorMessage(_))
             .DisposeItWith(Disposable);
         
         
-        this.ValidationRule(x => x.Longitude, _ => _loc.Longitude.IsValid(_),
+        this.ValidationRule(x => x.Longitude, _ => _loc.Longitude.IsValid(MinimumLongitudeValue, MaximumLongitudeValue, _),
                 _ => _loc.Longitude.GetErrorMessage(_))
             .DisposeItWith(Disposable);
       
@@ -71,11 +73,8 @@ public class FixedModeViewModel : ViewModelBaseWithValidation
         this.ValidationRule(x => x.Altitude, _ => _loc.Altitude.IsValid(_),
                 _ => _loc.Altitude.GetErrorMessage(_))
             .DisposeItWith(Disposable);
-       
         
 #endregion
-        
-      
     }
 
     public void ApplyDialog(ContentDialog dialog)

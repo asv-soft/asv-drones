@@ -5,12 +5,13 @@
              xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
              xmlns:uav1="clr-namespace:Asv.Drones.Gui.Uav.Uav"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:missionStatus="clr-namespace:Asv.Drones.Gui.Uav.MissionStatus"
              mc:Ignorable="d" d:DesignWidth="380" d:DesignHeight="105"
              x:Class="Asv.Drones.Gui.Uav.Uav.MissionStatusView"
              x:CompileBindings="True"
-             x:DataType="uav1:MissionStatusViewModel">
+             x:DataType="missionStatus:MissionStatusViewModel">
     <Design.DataContext>
-        <uav1:MissionStatusViewModel/>
+        <missionStatus:MissionStatusViewModel/>
     </Design.DataContext>
     <DockPanel LastChildFill="True">
         <Grid DockPanel.Dock="Top">

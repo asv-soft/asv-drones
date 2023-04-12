@@ -1,6 +1,7 @@
 using System.Collections.Specialized;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Runtime.CompilerServices;
 using Asv.Common;
 using Avalonia;
 using Avalonia.Collections;
@@ -25,7 +26,7 @@ namespace Asv.Avalonia.Map
             SelectableMixin.Attach<MapViewItem>(IsSelectedProperty);
             PressedMixin.Attach<MapViewItem>();
             FocusableProperty.OverrideDefaultValue<MapViewItem>(true);
-
+            
         }
 
         public MapViewItem()
@@ -41,11 +42,10 @@ namespace Asv.Avalonia.Map
                 Observable.FromEventPattern<EventHandler<PointerEventArgs>, PointerEventArgs>(
                     handler => PointerMoved += handler,
                     handler => PointerMoved -= handler).Subscribe(_ => DragPointerMoved(_.EventArgs)).DisposeItWith(disp);
-                
                 // DisposableMixins.DisposeWith(this.Events().PointerReleased.Where(_ => IsEditable).Subscribe(DragPointerReleased), disp);
-                
-
+               
             });
+            
 
         }
 
@@ -111,12 +111,16 @@ namespace Asv.Avalonia.Map
             }
         }
 
+        private IDisposable _isVisibleSubscribe;
         protected override void LogicalChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             base.LogicalChildrenCollectionChanged(sender, e);
             if (LogicalChildren.FirstOrDefault() is not Visual child) return;
             ZIndex = MapView.GetZOrder(child);
             IsEditable = MapView.GetIsEditable(child);
+            _isVisibleSubscribe?.Dispose();
+            _isVisibleSubscribe = child.WhenAnyValue(_ => _.IsVisible).Subscribe(_ => IsVisible = _);
+
         }
 
         protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
@@ -166,8 +170,10 @@ namespace Asv.Avalonia.Map
             var child = LogicalChildren.FirstOrDefault() as Visual;
             if (child == null) return;
 
+            if (IsVisible == false) return;
+            
             var pathPoints = MapView.GetPath(child)?.ToArray();
-
+                        
             
                         
             
@@ -205,7 +211,10 @@ namespace Asv.Avalonia.Map
                     lastPointAdded = itemPoint;
                     newHash = HashCode.Combine(newHash, itemPoint);
                 }
-                
+                newHash = HashCode.Combine(newHash, Opacity);
+                newHash = HashCode.Combine(newHash, IsVisible);
+                newHash = HashCode.Combine(newHash, MapView.GetStroke(child));
+                newHash = HashCode.Combine(newHash, MapView.GetStrokeThickness(child));
                 if (localPath.Count < 2) return;
                 
                 // this is for optimization (if values not changed - no need to update)
@@ -348,6 +357,7 @@ namespace Asv.Avalonia.Map
             AvaloniaProperty.Register<MapViewItem, bool>(nameof(IsSelected));
 
         
+
 
         public bool IsSelected
         {

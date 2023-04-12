@@ -197,6 +197,33 @@ namespace Asv.Drones.Gui.Gbs {
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
+        public static string FlightGbsView_Cancel_Content {
+            get {
+                return ResourceManager.GetString("FlightGbsView_Cancel_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Auto.
+        /// </summary>
+        public static string FlightGbsView_EnableAuto_Content {
+            get {
+                return ResourceManager.GetString("FlightGbsView_EnableAuto_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Fixed.
+        /// </summary>
+        public static string FlightGbsView_EnableFixed_Content {
+            get {
+                return ResourceManager.GetString("FlightGbsView_EnableFixed_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
         public static string FlightGbsViewModel_AutoMode_CloseButtonText {
             get {
                 return ResourceManager.GetString("FlightGbsViewModel_AutoMode_CloseButtonText", resourceCulture);
@@ -254,6 +281,42 @@ namespace Asv.Drones.Gui.Gbs {
         public static string FlightGbsViewModel_Title {
             get {
                 return ResourceManager.GetString("FlightGbsViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GNSS Altitude: {0}.
+        /// </summary>
+        public static string GbsAnchor_GNSS_Altitude {
+            get {
+                return ResourceManager.GetString("GbsAnchor_GNSS_Altitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude: {0}.
+        /// </summary>
+        public static string GbsAnchor_Latitude {
+            get {
+                return ResourceManager.GetString("GbsAnchor_Latitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude: {0}.
+        /// </summary>
+        public static string GbsAnchor_Longitude {
+            get {
+                return ResourceManager.GetString("GbsAnchor_Longitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ground Base Station.
+        /// </summary>
+        public static string GbsAnchor_Title {
+            get {
+                return ResourceManager.GetString("GbsAnchor_Title", resourceCulture);
             }
         }
         
