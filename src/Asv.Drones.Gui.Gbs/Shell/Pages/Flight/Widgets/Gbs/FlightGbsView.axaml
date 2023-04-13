@@ -22,9 +22,9 @@
                 </Button>
             </DockPanel>
             <Grid ColumnDefinitions="* * *" IsVisible="{Binding !IsDisableShown}">
-                <Button Command="{Binding EnableAutoCommand}" Content="Enable Auto" HorizontalAlignment="Stretch" />
-                <Button Margin="5 0 0 0" Grid.Column="1" Command="{Binding EnableFixedCommand}" Content="Enable Fixed" HorizontalAlignment="Stretch" />
-                <Button Margin="5 0 0 0" Grid.Column="2" Command="{Binding CancelCommand}" Content="Cancel" HorizontalAlignment="Stretch" />
+                <Button Command="{Binding EnableAutoCommand}" Content="{x:Static gbs:RS.FlightGbsView_EnableAuto_Content}" HorizontalAlignment="Stretch" />
+                <Button Margin="5 0 0 0" Grid.Column="1" Command="{Binding EnableFixedCommand}" Content="{x:Static gbs:RS.FlightGbsView_EnableFixed_Content}" HorizontalAlignment="Stretch" />
+                <Button Margin="5 0 0 0" Grid.Column="2" Command="{Binding CancelCommand}" Content="{x:Static gbs:RS.FlightGbsView_Cancel_Content}" HorizontalAlignment="Stretch" />
             </Grid>
             <Button Command="{Binding EnableIdleCommand}" Content="Disable RTK" HorizontalAlignment="Stretch" IsVisible="{Binding IsDisableShown}" />
             <ProgressBar Height="5" CornerRadius="3" IsIndeterminate="True" IsVisible="{Binding IsProgressShown}" />

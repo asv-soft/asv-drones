@@ -215,6 +215,33 @@ namespace Asv.Drones.Gui.Gbs {
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
+        public static string FlightGbsView_Cancel_Content {
+            get {
+                return ResourceManager.GetString("FlightGbsView_Cancel_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Auto.
+        /// </summary>
+        public static string FlightGbsView_EnableAuto_Content {
+            get {
+                return ResourceManager.GetString("FlightGbsView_EnableAuto_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Fixed.
+        /// </summary>
+        public static string FlightGbsView_EnableFixed_Content {
+            get {
+                return ResourceManager.GetString("FlightGbsView_EnableFixed_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
         public static string FlightGbsViewModel_AutoMode_CloseButtonText {
             get {
                 return ResourceManager.GetString("FlightGbsViewModel_AutoMode_CloseButtonText", resourceCulture);

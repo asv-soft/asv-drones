@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Asv.Cfg" Version="1.5.0" />
-    <PackageReference Include="Asv.Common" Version="1.5.0" />
-    <PackageReference Include="Asv.IO" Version="1.5.0" />
-    <PackageReference Include="Asv.Mavlink" Version="2.1.1" />
-    <PackageReference Include="Asv.Mavlink.Vehicle" Version="2.1.1" />
+    <PackageReference Include="Asv.Cfg" Version="1.6.0" />
+    <PackageReference Include="Asv.Common" Version="1.6.0" />
+    <PackageReference Include="Asv.IO" Version="1.6.0" />
+    <PackageReference Include="Asv.Mavlink" Version="2.1.2" />
+    <PackageReference Include="Asv.Mavlink.Vehicle" Version="2.1.2" />
     <PackageReference Include="Avalonia" Version="11.0.0-preview4" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview4" />
     <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.0.0-preview4" />
@@ -62,6 +62,9 @@
     <EmbeddedResource Update="RS.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RS.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="RS.ru.resx">
+      <DependentUpon>RS.resx</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
 

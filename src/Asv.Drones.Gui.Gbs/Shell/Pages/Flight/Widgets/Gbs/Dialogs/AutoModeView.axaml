@@ -15,17 +15,34 @@
             <ColumnDefinition SharedSizeGroup="Icon" Width="Auto" />
             <ColumnDefinition SharedSizeGroup="Name" Width="Auto" />
             <ColumnDefinition SharedSizeGroup="Input" Width="350" />
-            <ColumnDefinition SharedSizeGroup="Units" Width="Auto" />
         </Grid.ColumnDefinitions>
         
         <avalonia:MaterialIcon Kind="CompareHorizontal" VerticalAlignment="Center" />
         <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Static gbs:RS.AutoModeView_Accuracy_Name}" VerticalAlignment="Center" Margin="5 0 0 0" />
-        <TextBox Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding Accuracy}" Margin="5 0 0 0" />
-        <TextBlock Grid.Row="0" Grid.Column="3" Text="{Binding AccuracyUnits}" VerticalAlignment="Center" Margin="5 0 0 0" />
+        <TextBox Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding Accuracy}" Margin="5 0 0 0">
+            <TextBox.Styles>
+                <Style Selector="TextBox">
+                    <Setter Property="InnerRightContent">
+                        <Template>
+                            <TextBlock Text="{Binding AccuracyUnits}" VerticalAlignment="Center" Margin="0 0 5 0" />
+                        </Template>
+                    </Setter>
+                </Style>
+            </TextBox.Styles>
+        </TextBox>
         
         <avalonia:MaterialIcon Grid.Row="2" Grid.Column="0"  Kind="Clockwise" />
         <TextBlock Grid.Row="2" Grid.Column="1" Text="{x:Static gbs:RS.AutoModeView_Observation_Name}" VerticalAlignment="Center" Margin="5 0 0 0" />
-        <TextBox Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding Observation}" Margin="5 0 0 0" />
-        <TextBlock Grid.Row="2" Grid.Column="3" Text="{x:Static gbs:RS.AutoModeViewModel_ObservationUnit_Name}" VerticalAlignment="Center" Margin="5 0 0 0" />
+        <TextBox Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding Observation}" Margin="5 0 0 0">
+            <TextBox.Styles>
+                <Style Selector="TextBox">
+                    <Setter Property="InnerRightContent">
+                        <Template>
+                            <TextBlock Text="{x:Static gbs:RS.AutoModeViewModel_ObservationUnit_Name}" VerticalAlignment="Center" Margin="0 0 5 0" />
+                        </Template>
+                    </Setter>
+                </Style>
+            </TextBox.Styles>
+        </TextBox>
     </Grid>
 </UserControl>

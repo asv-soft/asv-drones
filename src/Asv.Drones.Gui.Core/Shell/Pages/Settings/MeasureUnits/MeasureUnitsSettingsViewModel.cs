@@ -70,6 +70,7 @@ namespace Asv.Drones.Gui.Core
         public IMeasureUnitItem<double,LatitudeUnits> SelectedLatitudeUnit { get; set; }
         public IEnumerable<IMeasureUnitItem<double,LatitudeUnits>> LatitudeUnits => _localization.Latitude.AvailableUnits;
         
+        [Reactive]
         public IMeasureUnitItem<double,LongitudeUnits> SelectedLongitudeUnit { get; set; }
         public IEnumerable<IMeasureUnitItem<double,LongitudeUnits>> LongitudeUnits => _localization.Longitude.AvailableUnits;
         
