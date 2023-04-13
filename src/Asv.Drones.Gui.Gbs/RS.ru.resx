@@ -108,4 +108,10 @@
     <data name="GbsAnchor_Title" xml:space="preserve">
         <value>Наземная базовая станция</value>
     </data>
+    <data name="FlightGbsView_MoveToButton_ToolTip" xml:space="preserve">
+        <value>Перейти к этой НБС на карте</value>
+    </data>
+    <data name="FlightGbsView_Satellites_ToolTip" xml:space="preserve">
+        <value>Количество спутников для каждого созвездия</value>
+    </data>
 </root>

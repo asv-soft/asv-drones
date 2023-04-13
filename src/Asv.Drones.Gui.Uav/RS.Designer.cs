@@ -96,6 +96,15 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move to this UAV on map.
+        /// </summary>
+        public static string FlightUavView_MoveToButton_ToolTip {
+            get {
+                return ResourceManager.GetString("FlightUavView_MoveToButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Distance from UAV to home.
         /// </summary>
         public static string HomeDistanceUavRttView_ToolTip {
@@ -110,6 +119,96 @@ namespace Asv.Drones.Gui.Uav {
         public static string LinkQualityUavRttView_ToolTip {
             get {
                 return ResourceManager.GetString("LinkQualityUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disables mission trajectory and waypoints visibility.
+        /// </summary>
+        public static string MissionStatusView_DisableLayersButton_ToolTip {
+            get {
+                return ResourceManager.GetString("MissionStatusView_DisableLayersButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load mission from UAV.
+        /// </summary>
+        public static string MissionStatusView_GetMissionButton_ToolTip {
+            get {
+                return ResourceManager.GetString("MissionStatusView_GetMissionButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current mission progress.
+        /// </summary>
+        public static string MissionStatusView_MissionProgress_ToolTip {
+            get {
+                return ResourceManager.GetString("MissionStatusView_MissionProgress_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On/off mission trajectory visibility.
+        /// </summary>
+        public static string MissionStatusView_TogglePolygonButton_ToolTip {
+            get {
+                return ResourceManager.GetString("MissionStatusView_TogglePolygonButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On/off mission way points visibility.
+        /// </summary>
+        public static string MissionStatusView_ToggleWaypointsButton_ToolTip {
+            get {
+                return ResourceManager.GetString("MissionStatusView_ToggleWaypointsButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total: {0}.
+        /// </summary>
+        public static string MissionStatusView_Total {
+            get {
+                return ResourceManager.GetString("MissionStatusView_Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove all pinned parameters.
+        /// </summary>
+        public static string ParametersEditorPageView_PinsOffButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageView_PinsOffButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Star this parameter.
+        /// </summary>
+        public static string ParametersEditorPageView_StarButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageView_StarButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show only starred parameters.
+        /// </summary>
+        public static string ParametersEditorPageView_StarsToggleButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageView_StarsToggleButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update all parameters.
+        /// </summary>
+        public static string ParametersEditorPageView_UpdateButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageView_UpdateButton_ToolTip", resourceCulture);
             }
         }
         
@@ -137,6 +236,60 @@ namespace Asv.Drones.Gui.Uav {
         public static string ParametersEditorPageViewModel_Total {
             get {
                 return ResourceManager.GetString("ParametersEditorPageViewModel_Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On/off pin for this parameter.
+        /// </summary>
+        public static string ParametersEditorParameterView_PinToggleButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorParameterView_PinToggleButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reboot required.
+        /// </summary>
+        public static string ParametersEditorParameterView_RebootRequired {
+            get {
+                return ResourceManager.GetString("ParametersEditorParameterView_RebootRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string ParametersEditorParameterView_UpdateButton {
+            get {
+                return ResourceManager.GetString("ParametersEditorParameterView_UpdateButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update this parameter from UAV.
+        /// </summary>
+        public static string ParametersEditorParameterView_UpdateButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorParameterView_UpdateButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write.
+        /// </summary>
+        public static string ParametersEditorParameterView_WriteButton {
+            get {
+                return ResourceManager.GetString("ParametersEditorParameterView_WriteButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write this parameter to UAV.
+        /// </summary>
+        public static string ParametersEditorParameterView_WriteButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorParameterView_WriteButton_ToolTip", resourceCulture);
             }
         }
         

@@ -195,6 +195,24 @@ namespace Asv.Drones.Gui.Gbs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move to this GBS on map.
+        /// </summary>
+        public static string FlightGbsView_MoveToButton_ToolTip {
+            get {
+                return ResourceManager.GetString("FlightGbsView_MoveToButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of satellites for each constellation.
+        /// </summary>
+        public static string FlightGbsView_Satellites_ToolTip {
+            get {
+                return ResourceManager.GetString("FlightGbsView_Satellites_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string FlightGbsViewModel_AutoMode_CloseButtonText {
