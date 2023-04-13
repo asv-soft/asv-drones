@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="Asv.Drones.Gui.Core/App.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Core/Controls/BatteryIndicator.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Core/Controls/ConnectionQuality.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Core/Controls/GpsStatusIndicator.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Core/Shell/Pages/Connections/Ports/ConnectionsPortView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Core/Shell/Pages/Connections/Ports/PortView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Core/Shell/Pages/Logs/LogMessagesPageView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Core/Shell/Pages/Logs/LogsPageView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Core/Shell/Pages/Map/MapPageView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Core/Shell/Pages/Parameters/ParametersEditorPageView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Core/Shell/Pages/Settings/MeasureUnits/MeasureUnitsSettingsView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Core/Shell/Pages/Settings/SettignsView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Core/Shell/ShellView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Dialogs/AutoModeView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Dialogs/FixedModeView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/FlightGbsView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/Accuracy/AccuracyGbsRttView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/BaseStationMode/BaseStationModeGbsRttView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/DGpsRate/DGpsRateGbsRttView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/LinkQuality/LinkQualityGbsRttView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/Observation/ObservationGbsRttView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/VisibleSatellites/VisibleSatellitesGbsRttView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Map/MapAnchorView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Map/MapView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Map/MapViewItem.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Map/ToolKit.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/App.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Controls/AttitudeIndicator.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Controls/MissionStatusIndicator.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Connections/DeviceBrowser/DeviceBrowserView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Connections/Ports/PortView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/Dialogs/TakeOffView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Mission/FlightMissionView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Attitude/AttitudeView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/AttitudeView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/FlightUavView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Mission/PlaningMissionItemView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/MissionStatus/MissionStatusView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Battery/BatteryUavRttView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/CpuLoad/CpuLoadUavRttView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Current/CurrentUavRttView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/FlightTime/FlightTimeUavRttView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Gps/GpsUavRttView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/HomeDistance/HomeDistanceUavRttView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/LinkQuality/LinkQualityUavRttView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Voltage/VoltageUavRttItemView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParameterItemView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParametersEditorPageView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParametersEditorParameterView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Planing/Widgets/Mission/PlaningMissionItemView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Planing/Widgets/Mission/PlaningMissionView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Status/Ports/ShellStatusPortsView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui/MainWindow.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+      </map>
+    </option>
+  </component>
+</project>
