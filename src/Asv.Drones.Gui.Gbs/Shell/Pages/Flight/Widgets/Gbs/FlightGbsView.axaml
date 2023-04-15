@@ -14,7 +14,7 @@
     <Border Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8" CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True">
         <StackPanel Margin="10" Spacing="8">
             <DockPanel DockPanel.Dock="Top">
-                <Button DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Command="{Binding LocateBaseStationCommand}">
+                <Button ToolTip.Tip="{x:Static gbs:RS.FlightGbsView_MoveToButton_ToolTip}" DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Command="{Binding LocateBaseStationCommand}">
                     <StackPanel Orientation="Horizontal">
                         <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="{Binding Icon}" Foreground="Red"  Width="25" Height="25" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center" DockPanel.Dock="Top" Text="{Binding Title}" />      
@@ -37,7 +37,7 @@
             </ItemsControl>
             <Border CornerRadius="{DynamicResource ControlCornerRadius}" 
                     ClipToBounds="True">
-                <Grid>
+                <Grid Background="Transparent" ToolTip.Tip="{x:Static gbs:RS.FlightGbsView_Satellites_ToolTip}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition MinWidth="50" Width="{Binding BeidouSats}"/>
                         <ColumnDefinition MinWidth="50" Width="{Binding GalSats}"/>

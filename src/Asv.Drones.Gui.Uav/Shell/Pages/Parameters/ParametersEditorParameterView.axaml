@@ -17,7 +17,7 @@
             Margin="8">
         <StackPanel>
         <DockPanel>
-            <ToggleButton IsChecked="{Binding Parameter.Pinned}" Background="Transparent" BorderThickness="0" DockPanel.Dock="Right">
+            <ToggleButton ToolTip.Tip="{x:Static uav:RS.ParametersEditorParameterView_PinToggleButton_ToolTip}" IsChecked="{Binding Parameter.Pinned}" Background="Transparent" BorderThickness="0" DockPanel.Dock="Right">
                 <avalonia:MaterialIcon Width="25" Height="25" Kind="Pin"/>
             </ToggleButton>
             <TextBlock Text="{CompiledBinding Parameter.Parameter.Name}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -29,13 +29,13 @@
             </TextBox.InnerRightContent>
         </TextBox>
         <Grid Margin="10 5" ColumnDefinitions="*, 5, *">
-            <Button Command="{CompiledBinding Update}" HorizontalAlignment="Stretch" Grid.Column="0" Content="Update"/>
-            <Button Command="{CompiledBinding Write}" HorizontalAlignment="Stretch" Grid.Column="2" Content="Write"/>
+            <Button ToolTip.Tip="{x:Static uav:RS.ParametersEditorParameterView_UpdateButton_ToolTip}" Command="{CompiledBinding Update}" HorizontalAlignment="Stretch" Grid.Column="0" Content="{x:Static uav:RS.ParametersEditorParameterView_UpdateButton}"/>
+            <Button ToolTip.Tip="{x:Static uav:RS.ParametersEditorParameterView_WriteButton_ToolTip}" Command="{CompiledBinding Write}" HorizontalAlignment="Stretch" Grid.Column="2" Content="{x:Static uav:RS.ParametersEditorParameterView_WriteButton}"/>
         </Grid>
         <TextBlock Text="{CompiledBinding ValueDescription}" TextWrapping="Wrap" Margin="10 5"/>
         <TextBlock Text="{CompiledBinding Parameter.Description.Description}" TextWrapping="Wrap" Margin="10 5"/>
         <Border IsVisible="{CompiledBinding Parameter.Description.IsRebootRequired}" Margin="10 5" HorizontalAlignment="Left" Padding="5" Background="Red" CornerRadius="{StaticResource ControlCornerRadius}">
-            <TextBlock FontWeight="Bold" Text="Reboot required"/>
+            <TextBlock FontWeight="Bold" Text="{x:Static uav:RS.ParametersEditorParameterView_RebootRequired}"/>
         </Border>
     </StackPanel>
     </Border>

@@ -16,16 +16,16 @@
     <DockPanel LastChildFill="True">
         <Grid DockPanel.Dock="Top">
             <WrapPanel HorizontalAlignment="Left">
-                <Button Command="{Binding Download}">
+                <Button ToolTip.Tip="{x:Static uav:RS.MissionStatusView_GetMissionButton_ToolTip}" Command="{Binding Download}">
                     <avalonia:MaterialIcon Kind="Sync"/>
                 </Button>
-                <Button Command="{Binding DisableAll}">
+                <Button ToolTip.Tip="{x:Static uav:RS.MissionStatusView_DisableLayersButton_ToolTip}" Command="{Binding DisableAll}">
                     <avalonia:MaterialIcon Kind="LayersClear"/>
                 </Button>
-                <ToggleButton IsChecked="{CompiledBinding EnablePolygon}">
+                <ToggleButton ToolTip.Tip="{x:Static uav:RS.MissionStatusView_TogglePolygonButton_ToolTip}" IsChecked="{CompiledBinding EnablePolygon}">
                     <avalonia:MaterialIcon Kind="VectorPolygon"/>
                 </ToggleButton>
-                <ToggleButton IsChecked="{CompiledBinding EnableAnchors}">
+                <ToggleButton ToolTip.Tip="{x:Static uav:RS.MissionStatusView_ToggleWaypointsButton_ToolTip}" IsChecked="{CompiledBinding EnableAnchors}">
                     <avalonia:MaterialIcon Kind="Anchor"/>
                 </ToggleButton>
                 <StackPanel Margin="5 0" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
@@ -39,13 +39,12 @@
                         <Ellipse Fill="Black" Width="15" Height="15" Stroke="White" StrokeThickness="2"/>
                     </Grid>
                     <TextBlock Text="{Binding CurrentIndex, StringFormat='WP {0}'}"/>
-                    <!-- <TextBlock Margin="5 0" Text="{Binding Current, StringFormat='Current: {0:F1}'}"/> -->
-                    <TextBlock Margin="5 0" Text="{Binding Total, StringFormat='Total: {0:F1}'}"/>
+                    <TextBlock Margin="5 0" Text="{Binding Total, StringFormat={x:Static uav:RS.MissionStatusView_Total}}"/>
                 </StackPanel>
             </WrapPanel>
             
         </Grid>
-        <Grid Height="20" Margin="10">
+        <Grid ToolTip.Tip="{x:Static uav:RS.MissionStatusView_MissionProgress_ToolTip}" Height="20" Margin="10">
             <Rectangle>
                 <Rectangle.Fill>
                     <LinearGradientBrush>

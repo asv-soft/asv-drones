@@ -192,4 +192,55 @@
   <data name="VoltageUavRttItemView_ToolTip" xml:space="preserve">
     <value>Напряжение БПЛА</value>
   </data>
+  <data name="FlightUavView_MoveToButton_ToolTip" xml:space="preserve">
+    <value>Перейти к этому БПЛА на карте</value>
+  </data>
+  <data name="MissionStatusView_GetMissionButton_ToolTip" xml:space="preserve">
+    <value>Загрузить миссию с БПЛА</value>
+  </data>
+  <data name="MissionStatusView_DisableLayersButton_ToolTip" xml:space="preserve">
+    <value>Выключает видимость траектории и точек миссии</value>
+  </data>
+  <data name="MissionStatusView_TogglePolygonButton_ToolTip" xml:space="preserve">
+    <value>Включает/выключает видимость траектории миссии</value>
+  </data>
+  <data name="MissionStatusView_ToggleWaypointsButton_ToolTip" xml:space="preserve">
+    <value>Включает/выключает видимость точек миссии</value>
+  </data>
+  <data name="MissionStatusView_Total" xml:space="preserve">
+    <value>Всего: {0}</value>
+  </data>
+  <data name="MissionStatusView_MissionProgress_ToolTip" xml:space="preserve">
+    <value>Текущий прогресс миссии</value>
+  </data>
+  <data name="ParametersEditorPageView_StarsToggleButton_ToolTip" xml:space="preserve">
+    <value>Показать только избранные параметры</value>
+  </data>
+  <data name="ParametersEditorPageView_UpdateButton_ToolTip" xml:space="preserve">
+    <value>Обновить все параметры</value>
+  </data>
+  <data name="ParametersEditorPageView_PinsOffButton_ToolTip" xml:space="preserve">
+    <value>Убрать все прикреплённые параметры</value>
+  </data>
+  <data name="ParametersEditorParameterView_PinToggleButton_ToolTip" xml:space="preserve">
+    <value>Включить/выключить закрепление этого параметра</value>
+  </data>
+  <data name="ParametersEditorParameterView_UpdateButton_ToolTip" xml:space="preserve">
+    <value>Обновить этот парметр из БПЛА</value>
+  </data>
+  <data name="ParametersEditorParameterView_WriteButton_ToolTip" xml:space="preserve">
+    <value>Записать этот парметр в БПЛА</value>
+  </data>
+  <data name="ParametersEditorParameterView_RebootRequired" xml:space="preserve">
+    <value>Требуется перезагрузка</value>
+  </data>
+  <data name="ParametersEditorPageView_StarButton_ToolTip" xml:space="preserve">
+    <value>Добавить параметр в избранные</value>
+  </data>
+  <data name="ParametersEditorParameterView_UpdateButton" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="ParametersEditorParameterView_WriteButton" xml:space="preserve">
+    <value>Записать</value>
+  </data>
 </root>

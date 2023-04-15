@@ -75,8 +75,8 @@
             </ItemsControl.ItemTemplate>
         </ListBox>
 
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" Margin="0,8,0,0" Spacing="5" MinWidth="340">
-            <Expander Header="Message sourses">
+        <DockPanel Grid.Column="1" Grid.Row="1" Margin="0,8,0,0" MinWidth="340">
+            <Expander DockPanel.Dock="Top" Header="Message sourses">
                 <DockPanel>
                     <CheckBox DockPanel.Dock="Top" HorizontalAlignment="Left"  IsChecked="True" Checked="SourcesChecked" Unchecked="SourcesUnchecked" Content="{x:Static core:RS.PacketViewerView_CheckAll}" />
                     <ListBox HorizontalAlignment="Stretch" x:Name="SourceFilters" Items="{Binding FiltersBySource}" Grid.IsSharedSizeScope="True">
@@ -99,30 +99,29 @@
                     </ListBox>
                 </DockPanel>
             </Expander>
-            <Expander Header="Message types">
+            <Expander Header="Message types" Margin="0 5">
                 <DockPanel>
-                <CheckBox DockPanel.Dock="Top" HorizontalAlignment="Left"  IsChecked="True" Checked="TypesChecked" Unchecked="TypesUnchecked" Content="{x:Static core:RS.PacketViewerView_CheckAll}" />
-                <ListBox HorizontalAlignment="Stretch" x:Name="TypeFilters" Items="{Binding FiltersByType}" Grid.IsSharedSizeScope="True">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Rate" />
-                                </Grid.ColumnDefinitions>
-                                <CheckBox Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding IsChecked}" Padding="8 6 0 0">
-                                    <CheckBox.Content>
-                                        <TextBlock Text="{Binding Type}" />
-                                    </CheckBox.Content>
-                                </CheckBox>
-                                <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding MessageRateText}" />
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ListBox>
+                    <CheckBox DockPanel.Dock="Top" HorizontalAlignment="Left"  IsChecked="True" Checked="TypesChecked" Unchecked="TypesUnchecked" Content="{x:Static core:RS.PacketViewerView_CheckAll}" />
+                    <ListBox HorizontalAlignment="Stretch" x:Name="TypeFilters" Items="{Binding FiltersByType}" Grid.IsSharedSizeScope="True">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" SharedSizeGroup="Rate" />
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding IsChecked}" Padding="8 6 0 0">
+                                        <CheckBox.Content>
+                                            <TextBlock Text="{Binding Type}" />
+                                        </CheckBox.Content>
+                                    </CheckBox>
+                                    <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding MessageRateText}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ListBox>
                 </DockPanel>
             </Expander>
-            
-        </StackPanel>
+        </DockPanel>
     </Grid>
 </UserControl>

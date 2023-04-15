@@ -37,7 +37,7 @@ public class MissionStatusViewModel : ViewModelBase
             EnableAnchors = false;
         }).DisposeItWith(Disposable);
         
-        _vehicle.AllMissionsDistance.Subscribe(_ => Total = _ * 1000)
+        _vehicle.AllMissionsDistance.Subscribe(_ => Total = localization.Distance.FromSiToStringWithUnits(_ * 1000))
             .DisposeItWith(Disposable);
 
         _vehicle.MissionCurrent.Subscribe(_ => CurrentIndex = _)
@@ -85,9 +85,9 @@ public class MissionStatusViewModel : ViewModelBase
     
     [Reactive]
     public double Current { get; set; }
-    
-    [Reactive]
-    public double Total { get; set; }
+
+    [Reactive] 
+    public string Total { get; set; } = RS.UavRttItem_ValueNotAvailable;
 
     [Reactive] 
     public double PathProgress { get; set; }

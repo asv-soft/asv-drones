@@ -657,4 +657,19 @@
   <data name="LoggerView_WarningFilter_Name" xml:space="preserve">
 	  <value>Предупреждение</value>
   </data>
+  <data name="LogMessagesPageView_By_ToolTip" xml:space="preserve">
+	  <value>Число элементов на одной странице</value>
+  </data>
+  <data name="LogMessagesPageView_ClearAllButton_ToolTip" xml:space="preserve">
+	  <value>Очистить логи</value>
+  </data>
+  <data name="LogMessagesPageView_PrevButton_ToolTip" xml:space="preserve">
+	  <value>Перейти к предыдущей странице</value>
+  </data>
+  <data name="LogMessagesPageView_NextButton_ToolTip" xml:space="preserve">
+	  <value>Перейти к следующей странице</value>
+  </data>
+  <data name="LogMessagesPageView_RefreshButton_ToolTip" xml:space="preserve">
+	  <value>Обновить все элементы</value>
+  </data>
 </root>

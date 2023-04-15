@@ -582,6 +582,24 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of elements on one page .
+        /// </summary>
+        public static string LogMessagesPageView_By_ToolTip {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_By_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear all logs.
+        /// </summary>
+        public static string LogMessagesPageView_ClearAllButton_ToolTip {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_ClearAllButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filtered: {0}.
         /// </summary>
         public static string LogMessagesPageView_Filtered {
@@ -596,6 +614,33 @@ namespace Asv.Drones.Gui.Core {
         public static string LogMessagesPageView_From {
             get {
                 return ResourceManager.GetString("LogMessagesPageView_From", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to next page.
+        /// </summary>
+        public static string LogMessagesPageView_NextButton_ToolTip {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_NextButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to previous page.
+        /// </summary>
+        public static string LogMessagesPageView_PrevButton_ToolTip {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_PrevButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh all elements.
+        /// </summary>
+        public static string LogMessagesPageView_RefreshButton_ToolTip {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_RefreshButton_ToolTip", resourceCulture);
             }
         }
         
