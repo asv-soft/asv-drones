@@ -24,13 +24,13 @@
             </Grid.ColumnDefinitions>
             <DockPanel Margin="5" Grid.Column="0" LastChildFill="True">
                 <DockPanel DockPanel.Dock="Top" LastChildFill="True">
-                    <ToggleButton IsChecked="{Binding StarsOnly}" Margin="4 0 0 0" DockPanel.Dock="Right" Width="30" Height="30">
+                    <ToggleButton ToolTip.Tip="{x:Static uav:RS.ParametersEditorPageView_StarsToggleButton_ToolTip}" IsChecked="{Binding StarsOnly}" Margin="4 0 0 0" DockPanel.Dock="Right" Width="30" Height="30">
                         <avalonia:MaterialIcon Kind="Star"/>
                     </ToggleButton>
-                    <Button Command="{Binding UpdateParams}" Margin="4 0 0 0" DockPanel.Dock="Right" Width="30" Height="30">
+                    <Button ToolTip.Tip="{x:Static uav:RS.ParametersEditorPageView_UpdateButton_ToolTip}" Command="{Binding UpdateParams}" Margin="4 0 0 0" DockPanel.Dock="Right" Width="30" Height="30">
                         <avalonia:MaterialIcon Kind="Sync"/>
                     </Button>
-                    <Button Command="{Binding RemoveAllPins}" Margin="4 0 0 0" DockPanel.Dock="Right" Width="30" Height="30">
+                    <Button ToolTip.Tip="{x:Static uav:RS.ParametersEditorPageView_PinsOffButton_ToolTip}" Command="{Binding RemoveAllPins}" Margin="4 0 0 0" DockPanel.Dock="Right" Width="30" Height="30">
                         <avalonia:MaterialIcon Kind="PinOff"/>
                     </Button>
                     <TextBox x:Name="SearchBox" Text="{Binding Search}" Margin="4 0 0 0" Watermark="{x:Static uav:RS.ParametersEditorPageViewModel_Search}">
@@ -53,7 +53,7 @@
                                             Command="{Binding PinItem}" />
                                     </EventTriggerBehavior>
                                 </Interaction.Behaviors>
-                                <ToggleButton IsChecked="{Binding Starred}" Margin="10 0 0 0"
+                                <ToggleButton ToolTip.Tip="{x:Static uav:RS.ParametersEditorPageView_StarButton_ToolTip}" IsChecked="{Binding Starred}" Margin="10 0 0 0"
                                               BorderThickness="0" DockPanel.Dock="Right" Theme="{StaticResource TransparentToggleButton}">
                                     <avalonia:MaterialIcon Width="20" Height="20" Kind="{Binding StarKind}"/>
                                 </ToggleButton>

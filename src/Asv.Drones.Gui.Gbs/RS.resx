@@ -117,4 +117,10 @@
     <data name="GbsAnchor_Title" xml:space="preserve">
         <value>Ground Base Station</value>
     </data>
+    <data name="FlightGbsView_MoveToButton_ToolTip" xml:space="preserve">
+        <value>Move to this GBS on map</value>
+    </data>
+    <data name="FlightGbsView_Satellites_ToolTip" xml:space="preserve">
+        <value>Number of satellites for each constellation</value>
+    </data>
 </root>
