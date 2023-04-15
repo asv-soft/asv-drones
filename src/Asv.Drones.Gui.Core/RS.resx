@@ -573,4 +573,16 @@
   <data name="LogMessagesPageView_RefreshButton_ToolTip" xml:space="preserve">
     <value>Refresh all elements</value>
   </data>
+  <data name="LoggerView_ErrorFilter_Name" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="LoggerView_InfoFilter_Name" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="LoggerView_WarningFilter_Name" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="LoggerView_TraceFilter_Name" xml:space="preserve">
+    <value>Trace</value>
+  </data>
 </root>

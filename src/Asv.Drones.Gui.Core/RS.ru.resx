@@ -645,6 +645,18 @@
   <data name="ConnectionsViewModel_EditDialogPort_Cancel" xml:space="preserve">
 	  <value>Отмена</value>
   </data>
+  <data name="LoggerView_ErrorFilter_Name" xml:space="preserve">
+	  <value>Ошибка</value>
+  </data>
+  <data name="LoggerView_InfoFilter_Name" xml:space="preserve">
+	  <value>Инфо</value>
+  </data>
+  <data name="LoggerView_TraceFilter_Name" xml:space="preserve">
+	  <value>Отладка</value>
+  </data>
+  <data name="LoggerView_WarningFilter_Name" xml:space="preserve">
+	  <value>Предупреждение</value>
+  </data>
   <data name="LogMessagesPageView_By_ToolTip" xml:space="preserve">
 	  <value>Число элементов на одной странице</value>
   </data>

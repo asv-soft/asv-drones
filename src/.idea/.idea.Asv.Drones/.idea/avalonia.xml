@@ -8,6 +8,7 @@
         <entry key="Asv.Drones.Gui.Core/Controls/OptionsDisplayItem/OptionsDisplayItemStyles.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Core/Shell/Pages/Connections/Ports/PortView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Core/Shell/Pages/Flight/FlightView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Core/Shell/Pages/Map/Flight/Logger/LoggerView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Core/Shell/Pages/Map/MapPageView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Core/Shell/Pages/Map/MapView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Core/Shell/Pages/Map/Planing/PlaningView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
