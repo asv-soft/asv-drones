@@ -4,6 +4,7 @@ using System.Reactive.Linq;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
+using Asv.Mavlink;
 using FluentAvalonia.UI.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -21,7 +22,7 @@ public class AutoModeConfig
 [PartCreationPolicy(CreationPolicy.NonShared)]
 public class AutoModeViewModel : ViewModelBaseWithValidation
 {
-    private readonly IGbsDevice _gbsDevice;
+    private readonly IGbsClientDevice _gbsDevice;
     private readonly ILogService _logService;
     private readonly ILocalizationService _loc;
     private readonly IConfiguration _configuration;
@@ -34,7 +35,7 @@ public class AutoModeViewModel : ViewModelBaseWithValidation
     }
     
     [ImportingConstructor]
-    public AutoModeViewModel(IGbsDevice gbsDevice, ILogService logService, ILocalizationService loc, IConfiguration configuration, CancellationToken ctx) : this()
+    public AutoModeViewModel(IGbsClientDevice gbsDevice, ILogService logService, ILocalizationService loc, IConfiguration configuration, CancellationToken ctx) : this()
     {
         _gbsDevice = gbsDevice;
         _logService = logService;
@@ -81,7 +82,7 @@ public class AutoModeViewModel : ViewModelBaseWithValidation
         });
         try
         {
-            await _gbsDevice.DeviceClient.StartAutoMode((float)obs, (float)acc, cancel);
+            await _gbsDevice.Gbs.StartAutoMode((float)obs, (float)acc, cancel);
         }
         catch (Exception e)
         {

@@ -1,4 +1,5 @@
 using Asv.Common;
+using Asv.Mavlink;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Gbs;
@@ -10,11 +11,11 @@ public class VisibleSatellitesGbsRttViewModel : GbsRttItem
         
     }
 
-    public VisibleSatellitesGbsRttViewModel(IGbsDevice gbs) : base(gbs, GenerateUri(gbs,"visiblesatellites"))
+    public VisibleSatellitesGbsRttViewModel(IGbsClientDevice baseStation) : base(baseStation, GenerateUri(baseStation,"visiblesatellites"))
     {
         Order = 1;
         
-        Gbs.DeviceClient.AllSatellites
+        BaseStation.Gbs.AllSatellites
             .Subscribe(_ => VisibleSatellites = _.ToString())
             .DisposeItWith(Disposable);
     }

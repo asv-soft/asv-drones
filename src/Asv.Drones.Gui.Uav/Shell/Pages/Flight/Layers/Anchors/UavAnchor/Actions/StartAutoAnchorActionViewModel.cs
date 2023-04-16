@@ -12,20 +12,20 @@ namespace Asv.Drones.Gui.Uav
     {
         private readonly ILogService _log;
 
-        public StartAutoAnchorActionViewModel(IVehicle vehicle, IMap map, ILogService log) : base(vehicle, map, log)
+        public StartAutoAnchorActionViewModel(IVehicleClient vehicle, IMap map, ILogService log) : base(vehicle, map, log)
         {
             _log = log;
             // TODO: Localize
             Title = "Start mission";
             Icon = MaterialIconKind.RayStartArrow;
-            Vehicle.IsArmed.ObserveOn(RxApp.MainThreadScheduler).Select(_ => _).Subscribe(CanExecute).DisposeWith(Disposable);
+            Vehicle.Position.IsArmed.ObserveOn(RxApp.MainThreadScheduler).Select(_ => _).Subscribe(CanExecute).DisposeWith(Disposable);
         }
 
         protected override async Task ExecuteImpl(CancellationToken cancel)
         {
             // TODO: Localize
             _log.Info(LogName, $"User send Start mission for {Vehicle.Name.Value}");
-            await Vehicle.SetCurrentMissionItem(0, cancel);
+            await Vehicle.Missions.Base.MissionSetCurrent(0, cancel);
         }
     }
 }

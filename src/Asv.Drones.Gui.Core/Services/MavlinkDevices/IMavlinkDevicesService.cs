@@ -37,14 +37,17 @@ namespace Asv.Drones.Gui.Uav
         /// <summary>
         /// List of all founded vehicles in network
         /// </summary>
-        IObservable<IChangeSet<IVehicle, ushort>> Vehicles { get; }
-
+        IObservable<IChangeSet<IVehicleClient, ushort>> Vehicles { get; }
         /// <summary>
         /// Gets vehicle by it's id
         /// </summary>
         /// <param name="id">Id of searched vehicle</param>
         /// <returns>Vehicle object</returns>
-        public IVehicle? GetVehicleByFullId(ushort id);
+        public IVehicleClient? GetVehicleByFullId(ushort id);
+        IObservable<IChangeSet<IGbsClientDevice, ushort>> BaseStations { get; }
+        public IGbsClientDevice? GetGbsByFullId(ushort id);
+        IObservable<IChangeSet<ISdrClientDevice, ushort>> Payloads { get; }
+        public ISdrClientDevice? GetPayloadsByFullId(ushort id);
     }
 
     

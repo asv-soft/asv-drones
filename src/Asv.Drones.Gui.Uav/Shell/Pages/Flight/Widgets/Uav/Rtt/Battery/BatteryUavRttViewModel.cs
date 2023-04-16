@@ -12,10 +12,10 @@ public class BatteryUavRttViewModel:UavRttItem
         BatteryLevelString = "0.7";
     }
     
-    public BatteryUavRttViewModel(IVehicle vehicle) : base(vehicle, GenerateRtt(vehicle,"battery"))
+    public BatteryUavRttViewModel(IVehicleClient vehicle) : base(vehicle, GenerateRtt(vehicle,"battery"))
     {
-        Vehicle.BatteryCharge.Subscribe(_ => BatteryLevel = _.Value).DisposeItWith(Disposable);
-        Vehicle.BatteryCharge.Subscribe(_ => BatteryLevelString = _.Value.ToString("P0")).DisposeItWith(Disposable);
+        Vehicle.Rtt.BatteryCharge.Subscribe(_ => BatteryLevel = _).DisposeItWith(Disposable);
+        Vehicle.Rtt.BatteryCharge.Subscribe(_ => BatteryLevelString = _.ToString("P0")).DisposeItWith(Disposable);
     }
 
     [Reactive]

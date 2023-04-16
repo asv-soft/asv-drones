@@ -13,9 +13,9 @@ public class UavFlightMissionPathPolygon : FlightAnchorBase
 {
     private readonly ReadOnlyObservableCollection<GeoPoint> _items;
 
-    public UavFlightMissionPathPolygon(IVehicle vehicle) : base(vehicle, "flight-mission-polygon")
+    public UavFlightMissionPathPolygon(IVehicleClient vehicle) : base(vehicle, "flight-mission-polygon")
     {
-        vehicle.MissionItems
+        vehicle.Missions.MissionItems
             .AutoRefreshOnObservable(_ => _.Location)
             .SortBy(_=>_.Index, SortDirection.Ascending, SortOptimisations.ComparesImmutableValuesOnly)
             .Filter(_=>_.Command.Value is MavCmd.MavCmdNavWaypoint or MavCmd.MavCmdNavSplineWaypoint )

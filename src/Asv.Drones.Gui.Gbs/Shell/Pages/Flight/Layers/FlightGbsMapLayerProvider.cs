@@ -1,5 +1,6 @@
 using System.ComponentModel.Composition;
 using Asv.Drones.Gui.Core;
+using Asv.Drones.Gui.Uav;
 using DynamicData;
 
 namespace Asv.Drones.Gui.Gbs;
@@ -9,7 +10,7 @@ namespace Asv.Drones.Gui.Gbs;
 public class FlightGbsMapLayerProvider : IViewModelProvider<IMapAnchor>
 {
     [ImportingConstructor]
-    public FlightGbsMapLayerProvider(IMavlinkGbsService devices, ILocalizationService loc)
+    public FlightGbsMapLayerProvider(IMavlinkDevicesService devices, ILocalizationService loc)
     {
         Items = devices.BaseStations.Transform(_ => new GbsAnchor(_, loc)).ChangeKey((k, _) => _.Id).Transform(_ => (IMapAnchor)_);
     }

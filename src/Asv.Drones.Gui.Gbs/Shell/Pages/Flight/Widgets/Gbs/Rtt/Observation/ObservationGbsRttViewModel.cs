@@ -1,5 +1,6 @@
 using Asv.Common;
 using Asv.Drones.Gui.Core;
+using Asv.Mavlink;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Gbs;
@@ -11,11 +12,11 @@ public class ObservationGbsRttViewModel : GbsRttItem
         Observation = "30%";
     }
 
-    public ObservationGbsRttViewModel(IGbsDevice gbs,ILocalizationService loc) : base(gbs, GenerateUri(gbs,"observation"))
+    public ObservationGbsRttViewModel(IGbsClientDevice baseStation,ILocalizationService loc) : base(baseStation, GenerateUri(baseStation,"observation"))
     {
         Order = 1;
         
-        Gbs.DeviceClient.ObservationSec
+        BaseStation.Gbs.ObservationSec
             .Subscribe(_ => Observation = loc.RelativeTime.ConvertToString(TimeSpan.FromSeconds(_)))
             .DisposeItWith(Disposable);
     }

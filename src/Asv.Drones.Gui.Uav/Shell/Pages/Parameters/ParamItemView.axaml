@@ -2,13 +2,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
-             mc:Ignorable="d"
-             x:Class="Asv.Drones.Gui.Uav.ParametersEditorParameterView"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Asv.Drones.Gui.Uav.ParamItemView"
              x:CompileBindings ="True"
              Width="400"
-             x:DataType="uav:ParametersEditorParameterViewModel">
+             MinHeight="300"
+             x:DataType="uav:ParamItemViewModel">
     <Border Padding="{DynamicResource ButtonPadding}"
             Background="{DynamicResource ControlFillColorDefaultBrush}"
             BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
@@ -17,15 +18,23 @@
             Margin="8">
         <StackPanel>
         <DockPanel>
-            <ToggleButton ToolTip.Tip="{x:Static uav:RS.ParametersEditorParameterView_PinToggleButton_ToolTip}" IsChecked="{Binding Parameter.Pinned}" Background="Transparent" BorderThickness="0" DockPanel.Dock="Right">
-                <avalonia:MaterialIcon Width="25" Height="25" Kind="Pin"/>
-            </ToggleButton>
-            <TextBlock Text="{CompiledBinding Parameter.Parameter.Name}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Button Command="{Binding PinItem}" ToolTip.Tip="{x:Static uav:RS.ParametersEditorParameterView_PinToggleButton_ToolTip}" Background="Transparent" BorderThickness="0" DockPanel.Dock="Right">
+                <Panel>
+                    <avalonia:MaterialIcon IsVisible="{Binding IsPinned}" Width="25" Height="25" Kind="Pin"/>
+                    <avalonia:MaterialIcon IsVisible="{Binding !IsPinned}" Width="25" Height="25" Kind="PinOutline"/>    
+                </Panel>
+            </Button>
+            <Button ToolTip.Tip="Need to save param" Background="Transparent" BorderThickness="0" DockPanel.Dock="Right" IsVisible="{Binding !IsSynced}">
+                <Panel>
+                    <avalonia:MaterialIcon  Width="25" Foreground="Green" Height="25" Kind="FloppyDisk"/>        
+                </Panel>
+            </Button>
+            <TextBlock Text="{CompiledBinding Name}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </DockPanel>
-        <TextBlock Text="{CompiledBinding Parameter.Description.Name}" TextWrapping="Wrap" Margin="10 5"/>
+        <TextBlock Text="{CompiledBinding DisplayName}" TextWrapping="Wrap" Margin="10 5"/>
         <TextBox Text="{CompiledBinding Value}" Margin="10 5">
             <TextBox.InnerRightContent>
-                <TextBlock Text="{CompiledBinding Parameter.Description.Units}" Margin="10 0" VerticalAlignment="Center"/>
+                <TextBlock Text="{CompiledBinding Units}" Margin="10 0" VerticalAlignment="Center"/>
             </TextBox.InnerRightContent>
         </TextBox>
         <Grid Margin="10 5" ColumnDefinitions="*, 5, *">
@@ -33,8 +42,8 @@
             <Button ToolTip.Tip="{x:Static uav:RS.ParametersEditorParameterView_WriteButton_ToolTip}" Command="{CompiledBinding Write}" HorizontalAlignment="Stretch" Grid.Column="2" Content="{x:Static uav:RS.ParametersEditorParameterView_WriteButton}"/>
         </Grid>
         <TextBlock Text="{CompiledBinding ValueDescription}" TextWrapping="Wrap" Margin="10 5"/>
-        <TextBlock Text="{CompiledBinding Parameter.Description.Description}" TextWrapping="Wrap" Margin="10 5"/>
-        <Border IsVisible="{CompiledBinding Parameter.Description.IsRebootRequired}" Margin="10 5" HorizontalAlignment="Left" Padding="5" Background="Red" CornerRadius="{StaticResource ControlCornerRadius}">
+        <TextBlock Text="{CompiledBinding Description}" TextWrapping="Wrap" Margin="10 5"/>
+        <Border IsVisible="{CompiledBinding IsRebootRequired}" Margin="10 5" HorizontalAlignment="Left" Padding="5" Background="Red" CornerRadius="{StaticResource ControlCornerRadius}">
             <TextBlock FontWeight="Bold" Text="{x:Static uav:RS.ParametersEditorParameterView_RebootRequired}"/>
         </Border>
     </StackPanel>

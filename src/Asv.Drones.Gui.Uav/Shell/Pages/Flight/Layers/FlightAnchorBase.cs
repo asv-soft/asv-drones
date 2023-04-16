@@ -9,11 +9,11 @@ namespace Asv.Drones.Gui.Uav
     {
         public const string UriString = FlightPageViewModel.UriString + "/layer/{0}/{1}";
         
-        public FlightAnchorBase(IVehicle vehicle, string name) : base(new Uri(UriString.FormatWith(vehicle.FullId,name)))
+        public FlightAnchorBase(IVehicleClient vehicle, string name) : base(new Uri(UriString.FormatWith(vehicle.Heartbeat.FullId,name)))
         {
             Vehicle = vehicle;
         }
         
-        protected IVehicle Vehicle { get; }
+        protected IVehicleClient Vehicle { get; }
     }
 }

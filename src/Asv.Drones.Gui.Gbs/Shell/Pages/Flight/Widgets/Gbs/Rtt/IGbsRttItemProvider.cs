@@ -1,6 +1,8 @@
-﻿namespace Asv.Drones.Gui.Gbs;
+﻿using Asv.Mavlink;
+
+namespace Asv.Drones.Gui.Gbs;
 
 public interface IGbsRttItemProvider
 {
-    public IEnumerable<IGbsRttItem> Create(IGbsDevice device);
+    public IEnumerable<IGbsRttItem> Create(IGbsClientDevice device);
 }

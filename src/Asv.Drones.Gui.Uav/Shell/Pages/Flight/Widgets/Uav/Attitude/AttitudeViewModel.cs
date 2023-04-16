@@ -11,7 +11,7 @@ namespace Asv.Drones.Gui.Uav
 {
     public class AttitudeViewModel:ViewModelBase
     {
-        private readonly IVehicle _vehicle;
+        private readonly IVehicleClient _vehicle;
         private readonly ILocalizationService _localization;
         
         public AttitudeViewModel():base(new Uri("designTime://attitude"))
@@ -19,44 +19,46 @@ namespace Asv.Drones.Gui.Uav
             
         }
 
-        public AttitudeViewModel(IVehicle vehicle, Uri id, ILocalizationService localization) : base(id)
+        public AttitudeViewModel(IVehicleClient vehicle, Uri id, ILocalizationService localization) : base(id)
         {
             _localization = localization;
             
             _vehicle = vehicle ?? throw new ArgumentNullException(nameof(vehicle));
-            _vehicle.Roll
+            _vehicle.Position.Roll
                 .DistinctUntilChanged()
                 .Subscribe(_ => Roll = Math.Round(-_ % 360))
                 .DisposeWith(Disposable);
-            _vehicle.Pitch
+            _vehicle.Position.Pitch
                 .Select(_=>Math.Round(_))
                 .DistinctUntilChanged()
                 .Subscribe(_ => Pitch = _)
                 .DisposeWith(Disposable);
-            _vehicle.Yaw.DistinctUntilChanged().Subscribe(_ =>
+            _vehicle.Position.Yaw.DistinctUntilChanged().Subscribe(_ =>
             {
                 var heading = Math.Round(_ % 360);
                 if (heading < 0) heading = 360 + heading;
                 Heading = heading;
             }).DisposeWith(Disposable);
-            _vehicle.AltitudeAboveHome
+            _vehicle.Position.AltitudeAboveHome
                 .Select(_localization.Altitude.ConvertFromSi)
                 .Select(_=>Math.Round(_))
                 .DistinctUntilChanged()
                 .Subscribe(_ => Altitude = _)
                 .DisposeWith(Disposable);
             _vehicle
-                .GpsGroundVelocity
+                .Gnss.Main.GroundVelocity
                 .Select(_localization.Velocity.ConvertFromSi)
                 .Select(_ => Math.Round(_))
                 .DistinctUntilChanged()
                 .Subscribe(_ => Velocity = _)
                 .DisposeWith(Disposable);
-            _vehicle.GlobalPosition
+            _vehicle.Position.Current
+                .Where(_=>_vehicle.Position.Home.Value.HasValue)
                 .DistinctUntilChanged()
-                .Subscribe(_ => UpdateHome(_, _vehicle.Home.Value))
+                .Subscribe(_ => UpdateHome(_, _vehicle.Position.Home.Value))
                 .DisposeWith(Disposable);
             _vehicle
+                .Position
                 .IsArmed
                 .DistinctUntilChanged()
                 .Subscribe(_ =>
@@ -64,7 +66,7 @@ namespace Asv.Drones.Gui.Uav
                 IsArmed = _;
                 UpdateStatusText(_ ? "Armed" : "Disarmed"); // TODO: Localize
             }).DisposeWith(Disposable);
-            _vehicle.ArmedTime
+            _vehicle.Position.ArmedTime
                 .DistinctUntilChanged()
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(_ => ArmedTime = _)

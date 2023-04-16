@@ -14,7 +14,7 @@ namespace Asv.Drones.Gui.Uav
     {
         private readonly ReadOnlyObservableCollection<GeoPoint> _path;
 
-        public UavTrackPolygon(IVehicle vehicle) : base(vehicle, "track-polygon")
+        public UavTrackPolygon(IVehicleClient vehicle) : base(vehicle, "track-polygon")
         {
             ZOrder = -1000;
             OffsetX = 0;
@@ -22,7 +22,7 @@ namespace Asv.Drones.Gui.Uav
             PathOpacity = 0.6;
             Stroke = Brushes.Honeydew;
             IsVisible = true;
-            vehicle.GlobalPosition
+            vehicle.Position.Current
                 .Where(_ => _.Latitude != 0 && _.Longitude != 0)
                 .Sample(TimeSpan.FromMilliseconds(300), RxApp.MainThreadScheduler)
                 .ToObservableChangeSet(limitSizeTo:100) // TODO: move history size to settings

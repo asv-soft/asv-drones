@@ -12,7 +12,7 @@ public class UavFlightMissionAnchor : FlightAnchorBase
 {
     private readonly MissionItem _missionItem;
 
-    public UavFlightMissionAnchor(MissionItem missionItem, IVehicle vehicle) : base(vehicle,$"flight-mission/{missionItem.Index}")
+    public UavFlightMissionAnchor(MissionItem missionItem, IVehicleClient vehicle) : base(vehicle,$"flight-mission/{missionItem.Index}")
     {
         Size = 16;
         OffsetX = OffsetXEnum.Center;

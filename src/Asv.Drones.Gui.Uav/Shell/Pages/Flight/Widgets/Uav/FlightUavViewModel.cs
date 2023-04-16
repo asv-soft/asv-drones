@@ -12,6 +12,7 @@ using DynamicData.Binding;
 using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using MavlinkHelper = Asv.Drones.Gui.Core.MavlinkHelper;
 
 namespace Asv.Drones.Gui.Uav
 {
@@ -19,7 +20,7 @@ namespace Asv.Drones.Gui.Uav
     {
         private readonly ReadOnlyObservableCollection<IUavRttItem> _rttItems;
         
-        public static Uri GenerateUri(IVehicle vehicle) => FlightVehicleWidgetBase.GenerateUri(vehicle,"uav");
+        public static Uri GenerateUri(IVehicleClient vehicle) => FlightVehicleWidgetBase.GenerateUri(vehicle,"uav");
         
         public FlightUavViewModel()
         {
@@ -36,11 +37,11 @@ namespace Asv.Drones.Gui.Uav
             }
         }
         
-        public FlightUavViewModel(IVehicle vehicle, ILogService log, ILocalizationService loc,
+        public FlightUavViewModel(IVehicleClient vehicle, ILogService log, ILocalizationService loc,
             IEnumerable<IUavRttItemProvider> rttItems):base(vehicle,GenerateUri(vehicle))
         {
             Vehicle.Name.Subscribe(_ => Title = _).DisposeItWith(Disposable);
-            Vehicle.Class.Select(MavlinkHelper.GetIcon).Subscribe(_ => Icon = _).DisposeItWith(Disposable);
+            Icon = MavlinkHelper.GetIcon(vehicle.Class);
             Attitude = new AttitudeViewModel(vehicle, new Uri(Id, "/id"),loc);
             MissionStatus = new MissionStatusViewModel(vehicle, log, new Uri(Id, "/id"),loc);
             
@@ -63,7 +64,7 @@ namespace Asv.Drones.Gui.Uav
             
             LocateVehicleCommand = ReactiveCommand.Create(() =>
             {
-                Map.Center = Vehicle.GlobalPosition.Value;
+                Map.Center = Vehicle.Position.Current.Value;
             }).DisposeItWith(Disposable);
             
             this.WhenValueChanged(_ => _.MissionStatus.EnableAnchors, false)

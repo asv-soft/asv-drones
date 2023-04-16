@@ -173,6 +173,7 @@ namespace Asv.Drones.Gui.Core
             set
             {
                 _selectedMenu = value;
+                if (_selectedMenu == null) return;
                 if (_selectedMenu.Type == ShellMenuItemType.PageNavigation)
                 {
                     _navigation.GoTo(_selectedMenu.NavigateTo);

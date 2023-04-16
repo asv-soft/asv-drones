@@ -1,4 +1,5 @@
 using Asv.Common;
+using Asv.Mavlink;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Gbs;
@@ -11,15 +12,15 @@ public class LinkQualityGbsRttViewModel : GbsRttItem
         LinkQualityString = "30%";
     }
 
-    public LinkQualityGbsRttViewModel(IGbsDevice gbs) : base(gbs, GenerateUri(gbs,"linkquality"))
+    public LinkQualityGbsRttViewModel(IGbsClientDevice baseStation) : base(baseStation, GenerateUri(baseStation,"linkquality"))
     {
         Order = 1;
         
-        Gbs.MavlinkClient.Heartbeat.LinkQuality
+        BaseStation.Heartbeat.LinkQuality
             .Subscribe(_ => LinkQuality = _)
             .DisposeItWith(Disposable);
 
-        Gbs.MavlinkClient.Heartbeat.LinkQuality
+        BaseStation.Heartbeat.LinkQuality
             .Subscribe(_ => LinkQualityString = _.ToString("P0"))
             .DisposeItWith(Disposable);
     }

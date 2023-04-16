@@ -1,5 +1,6 @@
 using Asv.Common;
 using Asv.Drones.Gui.Core;
+using Asv.Mavlink;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Gbs;
@@ -11,10 +12,10 @@ public class AccuracyGbsRttViewModel: GbsRttItem
         Accuracy = "5 m";
     }
 
-    public AccuracyGbsRttViewModel(IGbsDevice gbs, ILocalizationService localizationService) : base(gbs, GenerateUri(gbs,"accuracy"))
+    public AccuracyGbsRttViewModel(IGbsClientDevice baseStation, ILocalizationService localizationService) : base(baseStation, GenerateUri(baseStation,"accuracy"))
     {
         Order = 1;
-        Gbs.DeviceClient.AccuracyMeter
+        BaseStation.Gbs.AccuracyMeter
             .Subscribe(_ => Accuracy = localizationService.Distance.FromSiToStringWithUnits(_))
             .DisposeItWith(Disposable);
     }

@@ -13,10 +13,10 @@ public class CpuLoadUavRttViewModel : UavRttItem
         CpuLoad = 0.1;
     }
 
-    public CpuLoadUavRttViewModel(IVehicle vehicle) : base(vehicle, GenerateRtt(vehicle,"cpuload"))
+    public CpuLoadUavRttViewModel(IVehicleClient vehicle) : base(vehicle, GenerateRtt(vehicle,"cpuload"))
     {
         Order = 7;
-        Vehicle.CpuLoad
+        Vehicle.Rtt.CpuLoad
             .DistinctUntilChanged()
             .Sample(TimeSpan.FromMilliseconds(500))
             .ObserveOn(RxApp.MainThreadScheduler)

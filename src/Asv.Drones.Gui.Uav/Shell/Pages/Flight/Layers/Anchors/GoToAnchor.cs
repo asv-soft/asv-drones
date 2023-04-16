@@ -13,7 +13,7 @@ namespace Asv.Drones.Gui.Uav
 {
     public class GoToAnchor : FlightAnchorBase
     {
-        public GoToAnchor(IVehicle vehicle) 
+        public GoToAnchor(IVehicleClient vehicle) 
             : base(vehicle,"goto")
         {
             Size = 32;
@@ -23,31 +23,31 @@ namespace Asv.Drones.Gui.Uav
             IconBrush = Brushes.LightSeaGreen;
             IsVisible = false;
 
-            vehicle.GoToTarget.Select(_ => _.HasValue).DistinctUntilChanged().Subscribe(_ => IsVisible = _).DisposeWith(Disposable);
-            vehicle.GoToTarget.Where(_=>_.HasValue).Subscribe(_ => Location = _.Value).DisposeWith(Disposable);
+            vehicle.Position.Target.Select(_ => _.HasValue).DistinctUntilChanged().Subscribe(_ => IsVisible = _).DisposeWith(Disposable);
+            vehicle.Position.Target.Where(_=>_.HasValue).Subscribe(_ => Location = _.Value).DisposeWith(Disposable);
 
-            vehicle.GoToTarget.Where(_ => _.HasValue)
+            vehicle.Position.Target.Where(_ => _.HasValue)
                 .Sample(TimeSpan.FromSeconds(1), RxApp.MainThreadScheduler)
                 .Subscribe(_ => Description = TryCalculatteLeftTime(vehicle))
                 .DisposeWith(Disposable);
         }
 
-        private string TryCalculatteLeftTime(IVehicle vehicle)
+        private string TryCalculatteLeftTime(IVehicleClient vehicle)
         {
             var distance = 0.0;
-            if (vehicle.GoToTarget.Value != null)
+            if (vehicle.Position.Target.Value != null)
             {
-                distance = vehicle.GlobalPosition.Value.DistanceTo(vehicle.GoToTarget.Value.Value);
+                distance = vehicle.Position.Current.Value.DistanceTo(vehicle.Position.Target.Value.Value);
             }
             
-            if (vehicle.GpsGroundVelocity.Value != 0)
+            if (vehicle.Gnss.Main.GroundVelocity.Value != 0)
             {
                 // TODO: User Localize
                 // TODO: User IlocalizationService for speed, time and distance units 
-                var leftTime = TimeSpan.FromSeconds(distance / vehicle.GpsGroundVelocity.Value);
+                var leftTime = TimeSpan.FromSeconds(distance / vehicle.Gnss.Main.GroundVelocity.Value);
                 return $"Next target of     {vehicle.Name.Value}\n" +
                        $"Distance to target {distance:F0} m\n" +
-                       $"Ground speed       {vehicle.GpsGroundVelocity.Value:F0} m/s\n" +
+                       $"Ground speed       {vehicle.Gnss.Main.GroundVelocity.Value:F0} m/s\n" +
                        $"Left time ~        {(int)leftTime.TotalMinutes:00}:{leftTime.Seconds:00}";
             }
             else

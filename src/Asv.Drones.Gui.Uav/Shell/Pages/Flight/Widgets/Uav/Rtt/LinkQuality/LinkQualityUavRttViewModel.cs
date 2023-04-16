@@ -15,18 +15,18 @@ public class LinkQualityUavRttViewModel : UavRttItem
         LinkQualityString = "0.3";
     }
 
-    public LinkQualityUavRttViewModel(IVehicle vehicle) : base(vehicle, GenerateRtt(vehicle,"linkquality"))
+    public LinkQualityUavRttViewModel(IVehicleClient vehicle) : base(vehicle, GenerateRtt(vehicle,"linkquality"))
     {
         Order = 8;
         
-        Vehicle.LinkQuality
+        Vehicle.Heartbeat.LinkQuality
             .DistinctUntilChanged()
             .Sample(TimeSpan.FromMilliseconds(500))
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => LinkQuality = _)
             .DisposeWith(Disposable);
         
-        Vehicle.LinkQuality
+        Vehicle.Heartbeat.LinkQuality
             .Subscribe(_ => LinkQualityString = _.ToString("P0"))
             .DisposeItWith(Disposable);
     }

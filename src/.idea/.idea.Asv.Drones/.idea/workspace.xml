@@ -7,8 +7,91 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d945e635-7e01-48e8-ba67-033722652982" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Core/RS.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Core/RS.Designer.cs" afterDir="false" />
+    <list default="true" id="d945e635-7e01-48e8-ba67-033722652982" name="Changes" comment="Added tooltips for elements without description">
+      <change afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParamItemView.axaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParamItemView.axaml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParamItemViewModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParamPageView.axaml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParamPageViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Asv.Drones/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Asv.Drones/.idea/avalonia.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Asv.Drones/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Asv.Drones/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Asv.Drones.Gui.Core.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Asv.Drones.Gui.Core.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Asv.Drones.Gui.Core.csproj.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Asv.Drones.Gui.Core.csproj.DotSettings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Services/MavlinkDevices/IMavlinkDevicesService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Services/MavlinkDevices/IMavlinkDevicesService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Services/MavlinkDevices/MavlinkDevicesService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Services/MavlinkDevices/MavlinkDevicesService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Services/MavlinkDevices/MavlinkHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Services/MavlinkDevices/MavlinkHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Shell/ShellViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Shell/ShellViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Asv.Drones.Gui.Gbs.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Asv.Drones.Gui.Gbs.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Asv.Drones.Gui.Gbs.csproj.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Asv.Drones.Gui.Gbs.csproj.DotSettings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Services/GbsDevice.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Services/IMavlinkGbsService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Layers/Anchors/GbsAnchor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Layers/Anchors/GbsAnchor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Layers/FlightGbsMapLayerProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Layers/FlightGbsMapLayerProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Layers/GbsAnchorBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Layers/GbsAnchorBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/FlightGbsWidgetBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/FlightGbsWidgetBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/FlightMissionWidgetProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/FlightMissionWidgetProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Dialogs/AutoModeViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Dialogs/AutoModeViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Dialogs/FixedModeViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Dialogs/FixedModeViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/FlightGbsViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/FlightGbsViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/Accuracy/AccuracyGbsRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/Accuracy/AccuracyGbsRttViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/BaseStationMode/BaseStationModeGbsRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/BaseStationMode/BaseStationModeGbsRttViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/DGpsRate/DGpsRateGbsRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/DGpsRate/DGpsRateGbsRttViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/DefaultGbsRttItemProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/DefaultGbsRttItemProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/GbsRttItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/GbsRttItem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/IGbsRttItemProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/IGbsRttItemProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/LinkQuality/LinkQualityGbsRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/LinkQuality/LinkQualityGbsRttViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/Observation/ObservationGbsRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/Observation/ObservationGbsRttViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/VisibleSatellites/VisibleSatellitesGbsRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/VisibleSatellites/VisibleSatellitesGbsRttViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Asv.Drones.Gui.Uav.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Asv.Drones.Gui.Uav.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Asv.Drones.Gui.Uav.csproj.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Asv.Drones.Gui.Uav.csproj.DotSettings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/GoToAnchor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/GoToAnchor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/HomeAnchor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/HomeAnchor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/RoiAnchor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/RoiAnchor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/DefaultFlightUavActionProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/DefaultFlightUavActionProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/GoToMapAnchorActionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/GoToMapAnchorActionViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/LandAnchorActionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/LandAnchorActionViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/RoiAnchorActionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/RoiAnchorActionViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/RtlAnchorActionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/RtlAnchorActionViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/StartAutoAnchorActionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/StartAutoAnchorActionViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/TakeOffAnchorActionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/TakeOffAnchorActionViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/IFlightUavActionProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/IFlightUavActionProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/UavActionActionBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/UavActionActionBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/UavAnchor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/UavAnchor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavFlightMissionAnchor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavFlightMissionAnchor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavFlightMissionMapLayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavFlightMissionMapLayer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/FlightAnchorBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/FlightAnchorBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Polygons/UavFlightMissionPathPolygon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Polygons/UavFlightMissionPathPolygon.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Polygons/UavGoToPolygon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Polygons/UavGoToPolygon.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Polygons/UavTrackPolygon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Polygons/UavTrackPolygon.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/FlightVehicleWidgetBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/FlightVehicleWidgetBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Attitude/AttitudeViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Attitude/AttitudeViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/FlightUavViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/FlightUavViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/MissionStatus/MissionStatusViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/MissionStatus/MissionStatusViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Battery/BatteryUavRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Battery/BatteryUavRttViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/CpuLoad/CpuLoadUavRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/CpuLoad/CpuLoadUavRttViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Current/CurrentUavRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Current/CurrentUavRttViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/DefaultUavRttItemProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/DefaultUavRttItemProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/FlightTime/FlightTimeUavRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/FlightTime/FlightTimeUavRttViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Gps/GpsUavRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Gps/GpsUavRttViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/HomeDistance/HomeDistanceUavRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/HomeDistance/HomeDistanceUavRttViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/IUavRttItemProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/IUavRttItemProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/LinkQuality/LinkQualityUavRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/LinkQuality/LinkQualityUavRttViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/UavRttItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/UavRttItem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Voltage/VoltageUavRttItemViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Voltage/VoltageUavRttItemViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParametersEditorPageView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParamPageView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParametersEditorPageView.axaml.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParametersEditorPageViewModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParametersEditorParameterView.axaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParametersEditorParameterView.axaml.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParametersEditorParameterViewModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ShellMenuItemsProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ShellMenuItemsProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Layers/Anchors/UavPlaningMissionAnchor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Layers/Anchors/UavPlaningMissionAnchor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Layers/Anchors/UavPlaningMissionMapLayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Layers/Anchors/UavPlaningMissionMapLayer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Layers/Polygons/UavPlaningMissionPathPolygon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Layers/Polygons/UavPlaningMissionPathPolygon.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/PlaningAnchorBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/PlaningAnchorBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Widgets/Mission/PlaningMissionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Widgets/Mission/PlaningMissionViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Widgets/PlaningVehicleWidgetBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Widgets/PlaningVehicleWidgetBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,110 +119,51 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://C:/Projects/CSharp/asv-drones/src/Asv.Drones.Gui.Core/Shell/Pages/Connections/DeviceBrowser/MavlinkDeviceViewModel.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Projects/CSharp/asv-drones/src/Asv.Drones.Gui.Core/Shell/Pages/Connections/Ports/PortViewModel.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Projects/CSharp/asv-drones/src/Asv.Drones.Gui.Core/Shell/Pages/Connections/Ports/PortViewModel.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Projects/CSharp/asv-drones/src/Asv.Drones.Gui.Core/Shell/Pages/Connections/Ports/PortViewModel.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Projects/CSharp/asv-drones/src/Asv.Drones.Gui.Core/Shell/Pages/Connections/Ports/PortViewModel.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Projects/CSharp/asv-drones/src/Asv.Drones.Gui.Core/Shell/Pages/Connections/Ports/PortViewModel.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Projects/CSharp/asv-drones/src/Asv.Drones.Gui.Core/Shell/Pages/Connections/Ports/PortViewModel.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Projects/CSharp/asv-drones/src/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/FlightGbsView.axaml" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Projects/CSharp/asv-drones/src/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/FlightGbsView.axaml" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Projects/CSharp/asv-drones/src/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/Accuracy/AccuracyGbsRttView.axaml" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Projects/CSharp/asv-drones/src/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParametersEditorPageViewModel.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e885356471f4f0490dd31fecbf40097d5200/43/909933f3/MavParam.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e885356471f4f0490dd31fecbf40097d5200/55/1fb94f85/MissionItem.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e885356471f4f0490dd31fecbf40097d5200/72/64a8d59c/MavParamType.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e885356471f4f0490dd31fecbf40097d5200/97/42faf890/MissionItemIntPayload.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/45fd5867d6374761b54c1a680ebbc6b7159400/35/3992f108/IVehicle.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/45fd5867d6374761b54c1a680ebbc6b7159400/bb/210315e8/VehicleBase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5c6437efc2e14d6fb6429fc9db9c82b4aa00/72/bdb2dcfc/TextMessageQuery.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5c6437efc2e14d6fb6429fc9db9c82b4aa00/96/340d47bf/ITextStore.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5c6437efc2e14d6fb6429fc9db9c82b4aa00/a5/2d15db59/LiteDbTextStore.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5c6437efc2e14d6fb6429fc9db9c82b4aa00/f2/243b4e26/TextMessage.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/697c4766209f430cb5ed92bf6a92d950c2200/58/88b2f0d5/IMavlinkRouter.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6a1a77894eac4c7489b7af75c5b3e315159400/16/dcc97bee/VehicleArdupilot.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6a1a77894eac4c7489b7af75c5b3e315159400/3c/f6eb72cd/VehicleArdupilotCopter.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6a1a77894eac4c7489b7af75c5b3e315159400/85/121a6fd0/IVehicle.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6a1a77894eac4c7489b7af75c5b3e315159400/ee/a7656795/VehicleBase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/89940baa5ed54ae19d308f56a95193782e00/2c/1180dd18/ConfigurationExtentions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8f0048dcfd7845e5bb4f04f4bafb2cabf800/16/3bd62b43/DisposableHelper.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8f0048dcfd7845e5bb4f04f4bafb2cabf800/18/62ef2790/RxValue`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a5333f0baf64484c97adf371563dcad52e00/b6/888a23cb/ConfigurationExtentions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d2fb11f04a1e456ba34466edcebab22877800/e5/ff875def/LiteEngine.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/0b5567882521e02aa3d40a7bce81b7235ccac4db588866e3498e614c3bc/CastHelpers.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1428a018ba499271124df865e0911b3a97759160212f21b1b0c78ba31825461b/ItemsControl.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1681edfb7d22e92762a47f7ad24b9c3e49499c53750a9dbeedb20bd20615b/Double.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1721cd59e2a72378d52eee8cb75bc4f9d9f398f11d346fcc27cd27de2e1dcab/ObservableCollectionEx.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1942deacdf3e79aaf849374ebf851fe1a38ecc5be9ab1996ab3b8636fdea67f/AvaloniaScheduler.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0395bc5750f54518872c97a0034580df159400/7f/4c49747d/IVehicle.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0cbd201b05cb4baea02954c4dfe1daebf800/5e/22e9c349/RxValue`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4bb43b832af443f49e83965fd55c623cc5200/23/2e3ad3eb/MavlinkClientIdentity.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4bb43b832af443f49e83965fd55c623cc5200/84/aada3f2a/IMavlinkClient.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4bb43b832af443f49e83965fd55c623cc5200/f9/d8db6098/IMavlinkV2Connection.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9300c5e95ef147aebd94c5b41dcb01d81633d0/1d/c15aece1/QueryLanguage.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/cd5d4bd820914fd293bb7d7fa2dd16624ea8/ce/03296c9c/IsPinned.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fb5640ee6cdc4e27970c5f9369f69e9810c00/16/3c0fd1ae/DisposableOnce.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fb5640ee6cdc4e27970c5f9369f69e9810c00/3e/2b405c36/GeoPointLatitude.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fb5640ee6cdc4e27970c5f9369f69e9810c00/98/26d4c6b8/RxValue`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fb5640ee6cdc4e27970c5f9369f69e9810c00/f8/9acf3398/DisposableOnceWithCancel.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/17e74ab61fe0ba52377e6be4626e748b457547f6bc2e4353acda3221accd0/Subject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/198a6261cebc324728dcc4c178edc5f2894123f711722c80e8557cbfd27651/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1f15c7a06b7b34fd644f648b2941c42a26cdd1c457438814c5b74f32f32f719/QueryLanguage.Async.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2022ad4be4b830d6359e821e5fdbc433fe932f02426207364f2d611e361383/DataTemplates.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/23e31092363db7107ca21367adea927bccc2e7cf2075f9ee398ad1175b8e87/Nullable.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/24d1947502a27e1b178958676743d3832a12729dde0cb7d2a232df462a9fa9/CurrentThreadScheduler.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2656e3487208acb3487490904326ac4e1fdc62459bbaf6dc682863a3c37a/ParameterExpression.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/29ea32a76b2a6b8eb246f247df6a6a86d887384b4c31db2a35effccdd86c24/JsonSerializerInternalReader.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/338ef50cc58bdae852e58fd4765c2a7545c8ded49cd56c642afcfeafd5b72/Expander.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/339c241f891b7068967d37b4225e7f6ac60f1c1d584b8bd960a8396f1fd/QueryLanguage.Binding.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40d9c6632ca3993dcb82583ffa755fbbed8ad19f1b37a7654b7ffaff24b6c/Uri.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/47d890ae2d5130c59594c8be626a504e4f8a2377835a4c9c4ad2c731e5aa9caf/ObservableCache.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4a88ec0fdb53eae6ab56fcd129ea5d75f4eea8f9456ea861ec32e6f9a4da128/Merge.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4b1c74ada7f133ae4c2a62a31d1ffc2ea1b3888f8bc7792c348a1e65254df60/Throttle.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4d2bc283197bf8dcd6ed90d23292619b8d2bebdc9b35f2f4414fbf378a7179/NotifyPropertyChangedEx.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4f6c1d91774c61ac272e7b147acfbff913b50a829981344fe5a2e3722bcb3d/ExportProvider.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2ea2481ba2d04fb3aa796f939e8ae514e7d9cf9c81a463952d5cfc556947013/ObservableListEx.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/313715153757bb528b69de78215e75449ce66679b03bd2c034307db55ff2f8/DirtyVisuals.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/35fa60a7d156b14fd93aebcb0d1af5841fc37ec136332b776f619a8b44ce36/ExpressionMixins.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/476b583023a3971552567d68fd25f87d4a3b8c98183edf851648c4091eb31a8/ValueStore.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5028320658ac437c327e7d57cfe06dfc5a791c618d8c2bb0545639ff987b/Sink.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/533204c5246369b06cde3656829c729d74d1ad4f637359927712df6e2f/Style.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/56c668108a7075cb495c4944c018aaa9dd1e2dc736bbf72324c2c8f39ba7162/InvalidCastException.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/575c31ecc35a636b6f962cb71d53992552941a18982aae1c8e6c16305cc3761b/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5ae8ff7bb17d94f246f8d3083904881938ecedb5385ed816df6df84a2ad642e/ItemsPresenterBase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5f7395d0825093254233cefc92185384378221c7e41d1d3a0f42af1dfb45525/UserWorkItem.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/62eefe028b7ab72f69149eed8171ca78456fe453b48f8b533fefd68fe32ed/Ellipse.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6ebeca190776c70af8c8a1f0954dcca834d1183f60f8ad596f648b33f85a3/VariadicTemplates.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/72832e242b1b5b2b5f2cfe23f68fbfedefd417121b74c7b4f76b514a1c40/Observable.Extensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7390df233c4f3958d0b4312feef8c2cdb2bf15cfab1b9bc63e7ace105871/ObservableCacheEx.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/73e8b174d9274518fe4bbbeb798a74ac45aa923fa8675514fa88545af8d7a1d/Dispatcher.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/749e65e52170df446c91b6e9b5566f17abb2611249e45719db82d8568ba5616/UInt16.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5e3b2fa26859a032c46aa5c4f8db41c6723636853f8da2b3b18b7724449de053/CompositeDisposable.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6876ba261743cfba4b8c5a5eec26ee29c3d91653a6fe1190636da862ba7e7d/Disposable.Utils.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/73cbb2a6cda38662f9eae35e27e4f1429bd75a652d964a5e7f06bf36f11f27/SelectableTextBlock.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/74d1dea0891bd9f3515fc4d4fd5570c65da55efb64d7e992e68fd5821ebc24c0/AnonymousSafeObserver.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/767db1e17d404f86c3c73c54c6b20b5ff9ec43b79ef47681ae34b40a6852cf9/Where.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7710ad4af8a98338e28125edfd58e196ad92feddc5b5448ce5754284b649/WeakHashList.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7a1ad32abaee44480b66c2c1fcee9628cca92a4cd272eced5781564201180/Number.Parsing.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7fc7f96637abb2164c2cc4fc39467f55216425441394adddb3508d7291586c/Observable.Binding.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/81d12998a2b0f1d072b9e6edfb2611ade9fd8782e48a547faaedd88587fbc59/ReactiveCommand.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7b4aa586157605790fcf6968b96f8a83c3d621dbc435d196a8dbb7ed17f52e/AutoDetachObserver.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/80b15f2d608534da9f5aab25658043be68149611d0b6273818c29fb89a174d87/Select.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/887f2cd2fbef45b8c9108e8c556925bd1cd9bef0c1b26f28ccb3de2b16a6/AvaloniaObject.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/902c7234ac8172b6a14385988189f4d260e1831f5f3f40c681be9de3dd842c40/Thread.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/94c693a01596e61d112f2e6c9c46f773c6a565b3d6adb4d79783dc4f8b7ef66/Layoutable.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/97892987fb2a9bc79b06cbf7fbedf98a5ef75c6a588983bbc038064cfaba/Select.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/9986b7cb82fde80f8e0c56184e2a5f0862555f0c0f2b354e4924ac807e41a3/Button.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a17fc2f57c26a0fc1ad41ffcfe8d3a32d663be7848df6d9e737f0cd3bc/BindingExpression.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a2574172e81fbd302945d13b72846304a6b235c7d4055afa9ba450bdd83/ExpressionBuilder.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b095677330cfeeb8f27861383c7d94d1b1ba96b34207417c4b1631994e26/ListEx.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b2b7c362892dad7b80f31dc1b33a24aa617a3d078c850aaf151650e11ab48/ExceptionValidationPlugin.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b32f7fbea295f7c6743a43a8a3021cfa6e97a25efcad758657ad855cd9bd56/SelectMany.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b34cda9bf13421d0d691446062e86e73ba22b7a724d9d34a2425bb1cc627e1/SR.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/92e71ebdd24cd44171637a5ae6d4a86a2fd8b3842cb2cdebc838f9a3aa2bbb1/ScheduledObserver.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/9ebaa3616c93ca20146bfdd3bde4d2fa68ec84eb53f8cf3d8dfdec44ac352/SingleAssignmentDisposableValue.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a14989351a7a6d3ff4eb041365db0b8a43192cfdcfce2195ef0d9bca52891ea/AnonymousDisposable.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a842df8e44f05b1c16c9274ea5e2863515c5ddbcaaa81171bb2ca72834a/Assembly.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b2c66afceabede0107eef1a7e53aaa548bdf28d878c14952ca578c37f823f/AnonymousObserver.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b76b5f645d8fb42b848f84ed209ba97235bf67904a953a4bce1d86c41a95/ObservableCollection.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b95e6ef1ceb273358797fecf8d51fb950c44ec9b6874485dbb9caf81698eaf/PropertyInfoAccessorFactory.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bd4f82de9f299fdce0973b4d65483ce6564cfaa45dc939192e5b8f9eda5abfdb/TemplateBinding.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c33c30ad5fd7ee9334eef7fe887617ba9532eedc785c2c16f1880b6ce9fa11/PropertyAccessorNode.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c530c8285c48cc6c47fc572d6b8b324c6c2589d6758fe1e2fe3bebf6c7671a1/ClrPropertyInfo.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c5cfbb119658d4548624a787968302aafd4fbcd47ec2e2894f225d401240e4/TaskCompletionSource.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d13b66a02b91624f48b9db6ffa6ce5780a7e1716cabd1b66eec11025d191/Scheduler.Simple.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d16c6b27458ff82adc15b39777aa1e9a64b63a0516e9de9c71d5f9a411cdf6/Lookup.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d26e404ac58ca64352f82d63225af941b01d79f89cb16fe24ae7147f58237ba/ExpressionObserver.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d37e5484211a9bd5c35bcddd1ab4e415ab41877a64b131d52ca8e6a584f6292/SourceCache.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d82b8ac02bb43d6b94884e283d560e14f18f7caa55c2d41bb0fc59beb77a1d/UriExt.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c1da7b6c7c71a954fe3eb2531c6476711b3e6d93a8d76795386d326bb9dbc/ExecutionContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c533e927953f1759436a7a5ec963b3a89f79c2a2b6ed853d3824ab03170d2f/EnumerableEx.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d714b369470bc76bfa9cf723359299edfa17bbc3cab418d959187cee354e6/Point.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d9587aad52b8d79342e43db9c97f9965e971a24f2360b7d4cee79df3eaa99b8/SourceListEditConvenienceEx.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d9d9faea5e6ed6438a777ef8c6eed41261f81d8e86488ed923ad92564f54e/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/dbd65ac6359d4a90800c55b9611e0a92a238b0/_41dba/IProgress.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/de7177e8a31c1e501222daf218f2e9532ff54cdb767595dc7e94cc73c8e95f1/Int32.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/dedc50519afe4511eb474c62f8c6ed8e0b460d8b72bf736b876b36aa66e08c/IStorageProvider.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/df71358f7b7337a1eee3a65abe6d678dd9a065e256b8cc3fd44a2949754/Object.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e15b7d564ccc9c5bad5fff5763f6da0a5b1e2fdedf57f2958b195afcd284c/ObserverBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e4258f7550afc7d1f53685b3d6ee078ea33eda2b4be53f34663377d22b8/BindingBase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e7e231682be8652744726acc6de35323daa68061429db55e0c251114902f60/String.Manipulation.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/eb38aabe97927c56a117348747d7c79563b7872142e710df1f701d9df091e2fc/WeakEvent.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ee601c6faf1be3e32f8c94ad27a74dbdaa77d2cb3dd42b16596c471fdce595/SettableNode.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f0209fbfc9ad7d529f25ee1edd342dddb21d8630cf20ff7b2d595cff356a/Win32Platform.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f959d7357ac56ff5f97461b5365c4dd6551e56068b7ba6cb6c65d63eb95fc9/Observable.Creation.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f9e139f5c7f68652873aa85dab1a5aa347272d199ad1657de141e58cec768b/Buffer.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/fd3613e79f4141b726a234dc6b12c9e2fa50a7be28b045e19275c69bbf1166/CancellationToken.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/fec0b140479d5799dcee7cc7615853d0aacd10a0c117f07727df8656509138a3/EnumerableEx.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/edfcfbaf1a4bb8786bc759746b34952276a0f0889ed662565371123f73507/Synchronization.Synchronize.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../asv-common/src/Asv.Common/Reactive/RxValue.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../asv-common/src/Asv.IO/Streams/Ports/Tcp/TcpServerPort.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Protocol/Messages/common.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -162,9 +186,10 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "XThreadsFramesViewSplitterKey": "0.50109893",
+    "XThreadsFramesViewSplitterKey": "0.3794917",
     "full.screen.before.presentation.mode": "false",
-    "git-widget-placeholder": "feature/flight-logger-filter",
+    "git-widget-placeholder": "feature/mavlinkv3",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "tasks.servers",
     "vue.rearranger.settings.migration": "true"
@@ -254,13 +279,6 @@
       <workItem from="1680845908005" duration="10601000" />
       <workItem from="1680861663760" duration="65774000" />
       <workItem from="1681144390486" duration="24021000" />
-    </task>
-    <task id="LOCAL-00047" summary="Small edits">
-      <created>1679478618442</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1679478618442</updated>
     </task>
     <task id="LOCAL-00048" summary="Small edits">
       <created>1679479097637</created>
@@ -598,7 +616,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681364437990</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="Added workspace.xml">
+      <created>1681569774662</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1681569774662</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -641,7 +666,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="Implemented write and update command, changed properties and parent of ParametersItem" />
     <MESSAGE value="Added small changes view and vm" />
     <MESSAGE value="Small changes in functional" />
     <MESSAGE value="Removed group prop and button, this functionality is too hard to make" />
@@ -666,9 +690,27 @@
     <MESSAGE value="Replaced change selection -&gt; edit port command" />
     <MESSAGE value="Edited csproj" />
     <MESSAGE value="Added tooltips for elements without description" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added tooltips for elements without description" />
+    <MESSAGE value="Added workspace.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added workspace.xml" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Microservices/Params/Client/Ex/ParamItem.cs</url>
+          <line>67</line>
+          <properties documentPath="C:\asv\prj\asv-mavlink\src\Asv.Mavlink\Microservices\Params\Client\Ex\ParamItem.cs" initialLine="62" containingFunctionPresentation="Method 'Update'">
+            <startOffsets>
+              <option value="2439" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2440" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Type#System.Uri" memberName="Host" />

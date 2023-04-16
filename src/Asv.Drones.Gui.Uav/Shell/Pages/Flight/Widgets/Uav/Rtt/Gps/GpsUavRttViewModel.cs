@@ -15,7 +15,7 @@ public class GpsUavRttViewModel : UavRttItem
         FixTypeText = "RTK Fixed";
     }
 
-    public GpsUavRttViewModel(IVehicle vehicle, IRxValue<GpsInfo> gpsInfo) : base(vehicle, GenerateRtt(vehicle, "gps"))
+    public GpsUavRttViewModel(IVehicleClient vehicle, IRxValue<GpsInfo> gpsInfo) : base(vehicle, GenerateRtt(vehicle, "gps"))
     {
         IsVisible = false;
         gpsInfo.Subscribe(_ => IsVisible = _ != null && _.FixType != GpsFixType.GpsFixTypeNoGps);

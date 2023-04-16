@@ -1,5 +1,6 @@
 using Asv.Common;
 using Asv.Drones.Gui.Core;
+using Asv.Mavlink;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Gbs;
@@ -11,11 +12,11 @@ public class DGpsRateGbsRttViewModel : GbsRttItem
         DGpsRate = "30Kb/s";
     }
 
-    public DGpsRateGbsRttViewModel(IGbsDevice gbs, ILocalizationService localizationService) : base(gbs, GenerateUri(gbs,"dgpsrate"))
+    public DGpsRateGbsRttViewModel(IGbsClientDevice baseStation, ILocalizationService localizationService) : base(baseStation, GenerateUri(baseStation,"dgpsrate"))
     {
         Order = 2;
 
-        Gbs.DeviceClient.DgpsRate
+        BaseStation.Gbs.DgpsRate
             .Subscribe(_ => DGpsRate = localizationService.ByteRate.ConvertToStringWithUnits(_))
             .DisposeItWith(Disposable);
     }

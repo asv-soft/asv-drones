@@ -7,19 +7,19 @@ namespace Asv.Drones.Gui.Uav
 {
     public class FlightVehicleWidgetBase:FlightWidgetBase
     {
-        public static Uri GenerateUri(IVehicle vehicle, string name) => new(UriString + $"/{vehicle.FullId}/{name}");
+        public static Uri GenerateUri(IVehicleClient vehicle, string name) => new(UriString + $"/{vehicle.Heartbeat.FullId}/{name}");
         
         protected FlightVehicleWidgetBase():base(new Uri($"fordesigntime://{Guid.NewGuid()}"))
         {
             
         }
 
-        protected FlightVehicleWidgetBase(IVehicle vehicle,Uri uri) : base(uri)
+        protected FlightVehicleWidgetBase(IVehicleClient vehicle,Uri uri) : base(uri)
         {
             Vehicle = vehicle;
         }
         
-        protected IVehicle Vehicle { get; }
+        protected IVehicleClient Vehicle { get; }
         
         protected override void InternalAfterMapInit(IMap map)
         {

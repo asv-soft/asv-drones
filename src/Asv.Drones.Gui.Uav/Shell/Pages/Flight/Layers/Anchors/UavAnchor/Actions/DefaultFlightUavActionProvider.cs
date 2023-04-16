@@ -21,7 +21,7 @@ namespace Asv.Drones.Gui.Uav
             _loc = loc;
         }
         
-        public IEnumerable<UavActionActionBase> CreateActions(IVehicle vehicle, IMap map)
+        public IEnumerable<UavActionActionBase> CreateActions(IVehicleClient vehicle, IMap map)
         {
             yield return new GoToMapAnchorActionViewModel(vehicle,map, _log);
             yield return new TakeOffAnchorActionViewModel(vehicle, map, _log, _cfg, _loc);

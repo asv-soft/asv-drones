@@ -3,6 +3,7 @@ using System.Reactive.Linq;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
+using Asv.Mavlink;
 using FluentAvalonia.UI.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -22,7 +23,7 @@ public class FixedModeConfig
 [PartCreationPolicy(CreationPolicy.NonShared)]
 public class FixedModeViewModel : ViewModelBaseWithValidation
 {
-    private readonly IGbsDevice _gbsDevice;
+    private readonly IGbsClientDevice _gbsDevice;
     private readonly ILogService _logService;
     private readonly ILocalizationService _loc;
     private readonly IConfiguration _configuration;
@@ -38,7 +39,7 @@ public class FixedModeViewModel : ViewModelBaseWithValidation
     }
     
     [ImportingConstructor]
-    public FixedModeViewModel(IGbsDevice gbsDevice, ILogService logService, ILocalizationService loc, IConfiguration configuration, CancellationToken ctx) : this()
+    public FixedModeViewModel(IGbsClientDevice gbsDevice, ILogService logService, ILocalizationService loc, IConfiguration configuration, CancellationToken ctx) : this()
     {
         _gbsDevice = gbsDevice;
         _logService = logService;
@@ -102,7 +103,7 @@ public class FixedModeViewModel : ViewModelBaseWithValidation
         });
         try
         {
-            await _gbsDevice.DeviceClient.StartFixedMode(
+            await _gbsDevice.Gbs.StartFixedMode(
                 new GeoPoint(lat,lon, alt),
                 (float)_loc.Distance.ConvertToSi(Accuracy),
                 cancel);

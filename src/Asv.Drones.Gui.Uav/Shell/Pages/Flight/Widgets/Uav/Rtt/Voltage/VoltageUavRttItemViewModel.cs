@@ -15,16 +15,16 @@ public class VoltageUavRttItemViewModel : UavRttItem
         Voltage = "0.7 V";
     }
 
-    public VoltageUavRttItemViewModel(IVehicle vehicle, ILocalizationService localization) : base(vehicle,
+    public VoltageUavRttItemViewModel(IVehicleClient vehicle, ILocalizationService localization) : base(vehicle,
         GenerateRtt(vehicle, "voltage"))
     {
         Order = 5;
 
-        Vehicle.VoltageBattery
+        Vehicle.Rtt.BatteryVoltage
             .DistinctUntilChanged()
             .Sample(TimeSpan.FromMilliseconds(500))
             .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(_ => Voltage = $"{localization.Voltage.ConvertToString(_)} {localization.Voltage.GetUnit(_)}")
+            .Subscribe(_ => Voltage = $"{localization.Voltage.ConvertToStringWithUnits(_)}")
             .DisposeWith(Disposable);
 
     }

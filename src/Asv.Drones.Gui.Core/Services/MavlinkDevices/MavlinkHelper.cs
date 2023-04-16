@@ -2,7 +2,7 @@
 using Asv.Mavlink.V2.Common;
 using Material.Icons;
 
-namespace Asv.Drones.Gui.Uav
+namespace Asv.Drones.Gui.Core
 {
     public static class MavlinkHelper
     {
@@ -44,13 +44,13 @@ namespace Asv.Drones.Gui.Uav
             };
         }
 
-        public static MaterialIconKind GetIcon(VehicleClass type)
+        public static MaterialIconKind GetIcon(DeviceClass type)
         {
             return type switch
             {
-                VehicleClass.Plane => MaterialIconKind.Plane,
-                VehicleClass.Copter => MaterialIconKind.Navigation,
-                VehicleClass.Unknown => MaterialIconKind.Navigation,
+                DeviceClass.Plane => MaterialIconKind.Plane,
+                DeviceClass.Copter => MaterialIconKind.Navigation,
+                DeviceClass.Unknown => MaterialIconKind.Navigation,
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }

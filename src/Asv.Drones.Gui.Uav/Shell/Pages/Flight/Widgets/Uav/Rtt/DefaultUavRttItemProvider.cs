@@ -16,13 +16,13 @@ public class DefaultUavRttItemProvider : IUavRttItemProvider
         _localizationService = localizationService;
     }
     
-    public IEnumerable<IUavRttItem> Create(IVehicle vehicle)
+    public IEnumerable<IUavRttItem> Create(IVehicleClient vehicle)
     {
         yield return new FlightTimeUavRttViewModel(vehicle, _localizationService);
         yield return new BatteryUavRttViewModel(vehicle);
         yield return new HomeDistanceUavRttViewModel(vehicle, _localizationService);
-        yield return new GpsUavRttViewModel(vehicle, vehicle.GpsInfo);
-        yield return new GpsUavRttViewModel(vehicle, vehicle.Gps2Info);
+        yield return new GpsUavRttViewModel(vehicle, vehicle.Gnss.Main.Info);
+        yield return new GpsUavRttViewModel(vehicle, vehicle.Gnss.Additional.Info);
         yield return new VoltageUavRttItemViewModel(vehicle, _localizationService);
         yield return new CurrentUavRttViewModel(vehicle, _localizationService);
         yield return new LinkQualityUavRttViewModel(vehicle);

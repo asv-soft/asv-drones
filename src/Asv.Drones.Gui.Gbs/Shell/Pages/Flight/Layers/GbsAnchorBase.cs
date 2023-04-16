@@ -1,5 +1,6 @@
 using Asv.Common;
 using Asv.Drones.Gui.Core;
+using Asv.Mavlink;
 
 namespace Asv.Drones.Gui.Gbs;
 
@@ -7,10 +8,10 @@ public class GbsAnchorBase : MapAnchorBase
 {
     public const string UriString = FlightPageViewModel.UriString + "/layer/{0}/{1}";
     
-    public GbsAnchorBase(IGbsDevice gbs, string name) : base(new Uri(UriString.FormatWith(gbs.FullId,name)))
+    public GbsAnchorBase(IGbsClientDevice device, string name) : base(new Uri(UriString.FormatWith(device.Heartbeat.FullId,name)))
     {
-        Gbs = gbs;
+        Device = device;
     }
     
-    protected IGbsDevice Gbs { get; }
+    protected IGbsClientDevice Device { get; }
 }

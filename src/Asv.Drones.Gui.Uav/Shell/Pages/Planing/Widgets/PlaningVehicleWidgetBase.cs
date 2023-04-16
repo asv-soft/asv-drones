@@ -12,12 +12,12 @@ namespace Asv.Drones.Gui.Uav
             
         }
 
-        protected PlaningVehicleWidgetBase(IVehicle vehicle,string name) : base(new Uri(UriString + $"/{vehicle.FullId}/{name}"))
+        protected PlaningVehicleWidgetBase(IVehicleClient vehicle,string name) : base(new Uri(UriString + $"/{vehicle.FullId}/{name}"))
         {
             Vehicle = vehicle;
         }
         
-        protected IVehicle Vehicle { get; }
+        protected IVehicleClient Vehicle { get; }
         
         protected override void InternalAfterMapInit(IMap map)
         {

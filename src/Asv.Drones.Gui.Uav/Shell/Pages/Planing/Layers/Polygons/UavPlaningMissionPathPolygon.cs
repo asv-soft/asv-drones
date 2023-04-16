@@ -15,9 +15,9 @@ namespace Asv.Drones.Gui.Uav
     {
         private readonly ReadOnlyObservableCollection<GeoPoint> _items;
 
-        public UavPlaningMissionPathPolygon(IVehicle vehicle):base(vehicle,"planing-mission-polygon")
+        public UavPlaningMissionPathPolygon(IVehicleClient vehicle):base(vehicle,"planing-mission-polygon")
         {
-            vehicle.MissionItems
+            vehicle.Missions.MissionItems
                 .AutoRefreshOnObservable(_=> _.Location)
                 .SortBy(_=>_.Index, SortDirection.Ascending, SortOptimisations.ComparesImmutableValuesOnly)
                 .Filter(_=>_.Command.Value is MavCmd.MavCmdNavWaypoint or MavCmd.MavCmdNavSplineWaypoint )

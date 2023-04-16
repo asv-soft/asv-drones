@@ -12,9 +12,9 @@ public class UavFlightMissionMapLayer : DisposableViewModelBase
 {
     private readonly ReadOnlyObservableCollection<UavFlightMissionAnchor> _items;
 
-    public UavFlightMissionMapLayer(IVehicle vehicle)
+    public UavFlightMissionMapLayer(IVehicleClient vehicle)
     {
-        vehicle.MissionItems
+        vehicle.Missions.MissionItems
             .Transform(_ => new UavFlightMissionAnchor(_,vehicle))
             .ObserveOn(RxApp.MainThreadScheduler)
             .DisposeMany()

@@ -13,7 +13,7 @@ namespace Asv.Drones.Gui.Uav
     {
         private readonly MissionItem _missionItem;
 
-        public UavPlaningMissionAnchor(MissionItem missionItem, IVehicle vehicle):base(vehicle,$"planing-mission/{missionItem.Index}")
+        public UavPlaningMissionAnchor(MissionItem missionItem, IVehicleClient vehicle):base(vehicle,$"planing-mission/{missionItem.Index}")
         {
             Size = 16;
             OffsetX = OffsetXEnum.Center;

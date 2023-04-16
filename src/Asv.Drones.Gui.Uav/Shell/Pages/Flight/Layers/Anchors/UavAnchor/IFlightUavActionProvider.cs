@@ -6,6 +6,6 @@ namespace Asv.Drones.Gui.Uav
 {
     public interface IFlightUavActionProvider
     {
-        public IEnumerable<UavActionActionBase> CreateActions(IVehicle vehicle, IMap map);
+        public IEnumerable<UavActionActionBase> CreateActions(IVehicleClient vehicle, IMap map);
     }
 }

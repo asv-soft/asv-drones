@@ -6,9 +6,9 @@ namespace Asv.Drones.Gui.Uav;
 
 public abstract class UavRttItem : ViewModelBase, IUavRttItem
 {
-    protected IVehicle Vehicle { get; }
+    protected IVehicleClient Vehicle { get; }
 
-    public static Uri GenerateRtt(IVehicle vehicle, string name) =>
+    public static Uri GenerateRtt(IVehicleClient vehicle, string name) =>
         new(FlightUavViewModel.GenerateUri(vehicle), $"rtt/{name}");
 
     public UavRttItem():base(new Uri($"fordesigntime:{Guid.NewGuid()}"))
@@ -16,7 +16,7 @@ public abstract class UavRttItem : ViewModelBase, IUavRttItem
         
     }
     
-    protected UavRttItem(IVehicle vehicle,Uri id) : base(id)
+    protected UavRttItem(IVehicleClient vehicle,Uri id) : base(id)
     {
         IsVisible = true;
         Vehicle = vehicle;

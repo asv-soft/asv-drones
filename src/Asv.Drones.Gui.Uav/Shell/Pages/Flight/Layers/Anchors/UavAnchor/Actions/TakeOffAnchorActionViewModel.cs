@@ -19,7 +19,7 @@ namespace Asv.Drones.Gui.Uav
         private readonly IConfiguration _cfg;
         private readonly ILocalizationService _loc;
         
-        public TakeOffAnchorActionViewModel(IVehicle vehicle, IMap map, ILogService log, IConfiguration cfg, ILocalizationService loc) : base(vehicle, map, log)
+        public TakeOffAnchorActionViewModel(IVehicleClient vehicle, IMap map, ILogService log, IConfiguration cfg, ILocalizationService loc) : base(vehicle, map, log)
         {
             _log = log;
             _cfg = cfg;
@@ -29,7 +29,7 @@ namespace Asv.Drones.Gui.Uav
             Icon = MaterialIconKind.ArrowUpBoldHexagonOutline;
             
             Command = ReactiveCommand.CreateFromTask(ExecuteImpl, CanExecute);
-            Vehicle.IsArmed.ObserveOn(RxApp.MainThreadScheduler).Select(_ => !_).Subscribe(CanExecute).DisposeWith(Disposable);
+            Vehicle.Position.IsArmed.ObserveOn(RxApp.MainThreadScheduler).Select(_ => !_).Subscribe(CanExecute).DisposeWith(Disposable);
         }
 
         protected override async Task ExecuteImpl(CancellationToken cancel)

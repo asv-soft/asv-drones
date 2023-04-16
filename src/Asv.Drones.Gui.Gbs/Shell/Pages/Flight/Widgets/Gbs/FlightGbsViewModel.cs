@@ -6,6 +6,7 @@ using System.Windows.Input;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
+using Asv.Mavlink;
 using Asv.Mavlink.V2.AsvGbs;
 using Avalonia.Controls;
 using Avalonia.Styling;
@@ -23,15 +24,15 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
     private readonly ILogService _logService;
     private readonly ILocalizationService _loc;
     private readonly IConfiguration _configuration;
-    public static Uri GenerateUri(IGbsDevice gbs) => FlightGbsWidgetBase.GenerateUri(gbs,"gbs");
+    public static Uri GenerateUri(IGbsClientDevice gbs) => FlightGbsWidgetBase.GenerateUri(gbs,"gbs");
     
     private Subject<bool> _canExecuteAutoCommand = new();
     private Subject<bool> _canExecuteFixedCommand = new();
     private Subject<bool> _canExecuteIdleCommand = new();
     private Subject<bool> _canExecuteCancelCommand = new();
     
-    public FlightGbsViewModel(IGbsDevice gbsDevice, ILogService log, ILocalizationService loc, IConfiguration configuration, IEnumerable<IGbsRttItemProvider> rttItems)
-        :base(gbsDevice, GenerateUri(gbsDevice))
+    public FlightGbsViewModel(IGbsClientDevice baseStationDevice, ILogService log, ILocalizationService loc, IConfiguration configuration, IEnumerable<IGbsRttItemProvider> rttItems)
+        :base(baseStationDevice, GenerateUri(baseStationDevice))
     {
         _logService = log;
         _loc = loc;
@@ -41,7 +42,7 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
         Title = RS.FlightGbsViewModel_Title;
         
         rttItems
-            .SelectMany(_ => _.Create(gbsDevice))
+            .SelectMany(_ => _.Create(baseStationDevice))
             .OrderBy(_=>_.Order)
             .AsObservableChangeSet()
             .AutoRefresh(_=>_.IsVisible)
@@ -51,20 +52,20 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
             .Subscribe()
             .DisposeItWith(Disposable);
 
-        Gbs.DeviceClient.CustomMode.DistinctUntilChanged().Subscribe(SwitchMode).DisposeItWith(Disposable);
+        BaseStation.Gbs.CustomMode.DistinctUntilChanged().Subscribe(SwitchMode).DisposeItWith(Disposable);
         
         EnableAutoCommand = ReactiveCommand.CreateFromTask(EnableAutoMode, _canExecuteAutoCommand).DisposeItWith(Disposable);
         EnableFixedCommand = ReactiveCommand.CreateFromTask(EnableFixedMode, _canExecuteFixedCommand).DisposeItWith(Disposable);
         EnableIdleCommand = ReactiveCommand.CreateFromTask(EnableIdleMode, _canExecuteIdleCommand).DisposeItWith(Disposable);
         CancelCommand = ReactiveCommand.CreateFromTask(EnableIdleMode, _canExecuteCancelCommand).DisposeItWith(Disposable);
 
-        Gbs.DeviceClient.BeidouSatellites.Subscribe(_ => BeidouSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
-        Gbs.DeviceClient.GalSatellites.Subscribe(_ => GalSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
-        Gbs.DeviceClient.GlonassSatellites.Subscribe(_ => GlonassSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
-        Gbs.DeviceClient.GpsSatellites.Subscribe(_ => GpsSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
-        Gbs.DeviceClient.ImesSatellites.Subscribe(_ => ImesSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
-        Gbs.DeviceClient.QzssSatellites.Subscribe(_ => QzssSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
-        Gbs.DeviceClient.SbasSatellites.Subscribe(_ => SbasSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
+        BaseStation.Gbs.BeidouSatellites.Subscribe(_ => BeidouSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
+        BaseStation.Gbs.GalSatellites.Subscribe(_ => GalSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
+        BaseStation.Gbs.GlonassSatellites.Subscribe(_ => GlonassSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
+        BaseStation.Gbs.GpsSatellites.Subscribe(_ => GpsSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
+        BaseStation.Gbs.ImesSatellites.Subscribe(_ => ImesSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
+        BaseStation.Gbs.QzssSatellites.Subscribe(_ => QzssSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
+        BaseStation.Gbs.SbasSatellites.Subscribe(_ => SbasSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
     }
 
     private void SwitchMode(AsvGbsCustomMode mode)
@@ -136,7 +137,7 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
             CloseButtonText = RS.FlightGbsViewModel_AutoMode_CloseButtonText
         };
 
-        var viewModel = new AutoModeViewModel(Gbs, _logService, _loc, _configuration, ctx);
+        var viewModel = new AutoModeViewModel(BaseStation, _logService, _loc, _configuration, ctx);
         viewModel.ApplyDialog(dialog);
         dialog.Content = viewModel;
         var result = await dialog.ShowAsync();
@@ -152,7 +153,7 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
             CloseButtonText = RS.FlightGbsViewModel_FixedMode_CloseButtonText
         };
 
-        var viewModel = new FixedModeViewModel(Gbs, _logService, _loc, _configuration, ctx);
+        var viewModel = new FixedModeViewModel(BaseStation, _logService, _loc, _configuration, ctx);
         viewModel.ApplyDialog(dialog);
         dialog.Content = viewModel;
         var result = await dialog.ShowAsync();
@@ -160,7 +161,7 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
 
     private async Task EnableIdleMode(CancellationToken ctx)
     {
-        await Gbs.DeviceClient.StartIdleMode(ctx);
+        await BaseStation.Gbs.StartIdleMode(ctx);
     }
 
     protected override void InternalAfterMapInit(IMap map)
@@ -168,7 +169,7 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
         base.InternalAfterMapInit(map);
         LocateBaseStationCommand = ReactiveCommand.Create(() =>
         {
-            Map.Center = Gbs.DeviceClient.Position.Value;
+            Map.Center = BaseStation.Gbs.Position.Value;
         }).DisposeItWith(Disposable);
     }
 

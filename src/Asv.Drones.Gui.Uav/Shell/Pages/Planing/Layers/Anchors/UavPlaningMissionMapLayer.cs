@@ -13,9 +13,9 @@ namespace Asv.Drones.Gui.Uav
     {
         private readonly ReadOnlyObservableCollection<UavPlaningMissionAnchor> _items;
 
-        public UavPlaningMissionMapLayer(IVehicle vehicle)
+        public UavPlaningMissionMapLayer(IVehicleClient vehicle)
         {
-            vehicle.MissionItems
+            vehicle.Missions.MissionItems
                 .Transform(_=>new UavPlaningMissionAnchor(_,vehicle))
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .DisposeMany()

@@ -13,7 +13,7 @@ namespace Asv.Drones.Gui.Uav.MissionStatus;
 
 public class MissionStatusViewModel : ViewModelBase
 {
-    private readonly IVehicle _vehicle;
+    private readonly IVehicleClient _vehicle;
     private readonly ILogService _log; 
     //private ReadOnlyObservableCollection<RoundWayPointItem> _wayPoints;
 
@@ -22,7 +22,7 @@ public class MissionStatusViewModel : ViewModelBase
         
     }
 
-    public MissionStatusViewModel(IVehicle vehicle, ILogService log, Uri id, ILocalizationService localization) : base(id)
+    public MissionStatusViewModel(IVehicleClient vehicle, ILogService log, Uri id, ILocalizationService localization) : base(id)
     {
         _vehicle = vehicle;
 
@@ -37,16 +37,16 @@ public class MissionStatusViewModel : ViewModelBase
             EnableAnchors = false;
         }).DisposeItWith(Disposable);
         
-        _vehicle.AllMissionsDistance.Subscribe(_ => Total = localization.Distance.FromSiToStringWithUnits(_ * 1000))
+        _vehicle.Missions.AllMissionsDistance.Subscribe(_ => Total = localization.Distance.FromSiToStringWithUnits(_ * 1000))
             .DisposeItWith(Disposable);
 
-        _vehicle.MissionCurrent.Subscribe(_ => CurrentIndex = _)
+        _vehicle.Missions.Current.Subscribe(_ => CurrentIndex = _)
             .DisposeItWith(Disposable);
 
-        _vehicle.MissionReached.Subscribe(_ => ReachedIndex = _)
+        _vehicle.Missions.Reached.Subscribe(_ => ReachedIndex = _)
             .DisposeItWith(Disposable);
 
-        _vehicle.MissionItems.Filter(_ => _.Command.Value != MavCmd.MavCmdNavReturnToLaunch)
+        _vehicle.Missions.MissionItems.Filter(_ => _.Command.Value != MavCmd.MavCmdNavReturnToLaunch)
             .Count()
             .Subscribe(_ => WayPointsCount = _)
             .DisposeItWith(Disposable);
@@ -71,7 +71,7 @@ public class MissionStatusViewModel : ViewModelBase
 
     private async Task DownloadImpl(CancellationToken cancel)
     {
-        await _vehicle.DownloadMission(3, cancel,_ => DownloadProgress = _ * 100);
+        await _vehicle.Missions.Download(cancel,_ => DownloadProgress = _ * 100);
     }
     #endregion
 

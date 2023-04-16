@@ -16,14 +16,14 @@ public class CurrentUavRttViewModel : UavRttItem
         Current = "0.7 A";
     }
     
-    public CurrentUavRttViewModel(IVehicle vehicle, ILocalizationService localization) : base(vehicle, GenerateRtt(vehicle,"current"))
+    public CurrentUavRttViewModel(IVehicleClient vehicle, ILocalizationService localization) : base(vehicle, GenerateRtt(vehicle,"current"))
     {
         Order = 4;
-        Vehicle.CurrentBattery
+        Vehicle.Rtt.BatteryCurrent
             .DistinctUntilChanged()
             .Sample(TimeSpan.FromMilliseconds(500))
             .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(_ => Current = $"{localization.Current.ConvertToString(_.Value)} {localization.Current.GetUnit(_.Value)}")
+            .Subscribe(_ => Current = $"{localization.Current.ConvertToStringWithUnits(_)}")
             .DisposeWith(Disposable);
     }
     

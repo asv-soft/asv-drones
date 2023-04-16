@@ -12,7 +12,7 @@ namespace Asv.Drones.Gui.Uav
 {
     public class HomeAnchor : FlightAnchorBase
     {
-        public HomeAnchor(IVehicle vehicle): base(vehicle, "home")
+        public HomeAnchor(IVehicleClient vehicle): base(vehicle, "home")
         {
             Size = 32;
             OffsetX = OffsetXEnum.Center;
@@ -22,19 +22,18 @@ namespace Asv.Drones.Gui.Uav
             IsVisible = false;
             IsEditable = false;
 
-            vehicle.Home.Select(_ => _.HasValue).DistinctUntilChanged().ObserveOn(RxApp.MainThreadScheduler).Subscribe(_ => IsVisible = _).DisposeWith(Disposable);
-            vehicle.Home.Where(_ => _.HasValue).ObserveOn(RxApp.MainThreadScheduler).Subscribe(_ => Location = _.Value).DisposeWith(Disposable);
+            vehicle.Position.Home.Select(_ => _.HasValue).DistinctUntilChanged().ObserveOn(RxApp.MainThreadScheduler).Subscribe(_ => IsVisible = _).DisposeWith(Disposable);
+            vehicle.Position.Home.Where(_ => _.HasValue).ObserveOn(RxApp.MainThreadScheduler).Subscribe(_ => Location = _.Value).DisposeWith(Disposable);
 
-            vehicle.HomeDistance
+            vehicle.Position.HomeDistance
                 .Sample(TimeSpan.FromSeconds(1), RxApp.MainThreadScheduler)
-                .Where(_ => _.HasValue)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(_ =>
                 {
                     // TODO: User Localize
                     // TODO: User IlocalizationService for speed, time and distance units 
                     Description = $"Launch of       {vehicle.Name.Value}\n" +
-                                  $"Distance to UAV {vehicle.HomeDistance.Value:F0} m";
+                                  $"Distance to UAV {vehicle.Position.HomeDistance.Value:F0} m";
                 })
                 .DisposeWith(Disposable);
 

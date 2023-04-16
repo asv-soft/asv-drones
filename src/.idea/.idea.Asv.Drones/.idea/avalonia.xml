@@ -39,8 +39,10 @@
         <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/FlightUavView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/MissionStatus/MissionStatusView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/UavWidgetView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParamItemView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParametersEditorPageView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParametersEditorParameterView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParamsPageView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Planing/Widgets/Mission/PlaningMissionView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Planing/Widgets/MissionView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Planing/Widgets/PlaningMissionItemView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />

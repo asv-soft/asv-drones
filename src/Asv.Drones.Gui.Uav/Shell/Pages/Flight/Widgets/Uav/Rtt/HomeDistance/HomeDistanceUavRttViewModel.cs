@@ -15,15 +15,15 @@ public class HomeDistanceUavRttViewModel : UavRttItem
         HomeDistance = "0.7 m";
     }
     
-    public HomeDistanceUavRttViewModel(IVehicle vehicle, ILocalizationService localization) : base(vehicle, GenerateRtt(vehicle,"homedistance"))
+    public HomeDistanceUavRttViewModel(IVehicleClient vehicle, ILocalizationService localization) : base(vehicle, GenerateRtt(vehicle,"homedistance"))
     {
         Order = 1;
         
-        Vehicle.HomeDistance
+        Vehicle.Position.HomeDistance
             .DistinctUntilChanged()
             .Sample(TimeSpan.FromMilliseconds(500))
             .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(_ => HomeDistance = localization.Distance.FromSiToStringWithUnits(_.Value))
+            .Subscribe(_ => HomeDistance = localization.Distance.FromSiToStringWithUnits(_))
             .DisposeWith(Disposable);
         
     }

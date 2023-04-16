@@ -12,7 +12,7 @@ namespace Asv.Drones.Gui.Gbs
     {
         [ImportingConstructor]
         public FlightMissionWidgetProvider(
-            IMavlinkGbsService devices,ILogService log,
+            IMavlinkDevicesService devices,ILogService log,
             ILocalizationService localization,
             IConfiguration configuration,
             [ImportMany]IEnumerable<IGbsRttItemProvider> rttItems)

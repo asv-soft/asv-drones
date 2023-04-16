@@ -11,6 +11,7 @@ using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using MavlinkHelper = Asv.Drones.Gui.Core.MavlinkHelper;
 
 namespace Asv.Drones.Gui.Uav
 {
@@ -37,7 +38,7 @@ namespace Asv.Drones.Gui.Uav
             }
         }
         
-        public PlaningMissionViewModel(IVehicle vehicle,ILogService log) : base(vehicle, "planing-mission")
+        public PlaningMissionViewModel(IVehicleClient vehicle,ILogService log) : base(vehicle, "planing-mission")
         {
             _log = log;
             
@@ -75,7 +76,7 @@ namespace Asv.Drones.Gui.Uav
             _cancelClear = ReactiveCommand.Create(() => { }, _clear.IsExecuting)
                 .DisposeItWith(Disposable);;
             
-            vehicle.MissionItems
+            vehicle.Missions.MissionItems
                 .Transform(_=>new PlaningMissionItemViewModel(Id,_,this))
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(out _items)
@@ -95,7 +96,7 @@ namespace Asv.Drones.Gui.Uav
         {
             base.InternalAfterMapInit(map);
             // TODO: Localize
-            Vehicle.Class.Subscribe(_ => Icon = MavlinkHelper.GetIcon(_)).DisposeItWith(Disposable);
+            Icon = MavlinkHelper.GetIcon(Vehicle.Class);
             Vehicle.Name.Subscribe(_ => Title = $"{_} mission")
                 .DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.SelectedItem)
@@ -141,7 +142,7 @@ namespace Asv.Drones.Gui.Uav
 
         private async Task DownloadImpl(CancellationToken cancel)
         {
-            await Vehicle.DownloadMission(3, cancel, _ => Progress = _);
+            await Vehicle.Missions.Download(cancel, _ => Progress = _);
         }
 
         #endregion
@@ -165,8 +166,8 @@ namespace Asv.Drones.Gui.Uav
         protected async Task UploadImpl(CancellationToken cancel)
         {
             // var items = await _vehicle.Mavlink.Mission.MissionRequest(3, cancel);
-            await Vehicle.UploadMission(3, cancel, _=>Progress = _/2.0);
-            await Vehicle.DownloadMission(3, cancel, _ => Progress = 0.5+_/2.0);
+            await Vehicle.Missions.Upload(cancel, _=>Progress = _/2.0);
+            await Vehicle.Missions.Download( cancel, _ => Progress = 0.5+_/2.0);
         }
 
         #endregion
@@ -191,7 +192,7 @@ namespace Asv.Drones.Gui.Uav
 
         private async Task ClearImpl(CancellationToken cancel)
         {
-            await Vehicle.ClearRemoteMission(3, cancel);
+            await Vehicle.Missions.ClearRemote(cancel);
         }
 
         #endregion

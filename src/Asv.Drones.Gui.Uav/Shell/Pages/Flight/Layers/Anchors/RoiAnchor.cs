@@ -12,7 +12,7 @@ namespace Asv.Drones.Gui.Uav
 {
     public class RoiAnchor : FlightAnchorBase
     {
-        public RoiAnchor(IVehicle vehicle) : base(vehicle, "roi")
+        public RoiAnchor(IVehicleClient vehicle) : base(vehicle, "roi")
         {
             Size = 32;
             OffsetX = OffsetXEnum.Center;
@@ -21,12 +21,12 @@ namespace Asv.Drones.Gui.Uav
             IconBrush = Brushes.LightSeaGreen;
             IsVisible = false;
 
-            vehicle.Roi.Select(_ => _.HasValue).DistinctUntilChanged().Subscribe(_ => IsVisible = _).DisposeWith(Disposable);
-            vehicle.Roi.Where(_ => _.HasValue).Subscribe(_ => Location = _.Value).DisposeWith(Disposable);
+            vehicle.Position.Roi.Select(_ => _.HasValue).DistinctUntilChanged().Subscribe(_ => IsVisible = _).DisposeWith(Disposable);
+            vehicle.Position.Roi.Where(_ => _.HasValue).Subscribe(_ => Location = _.Value).DisposeWith(Disposable);
 
             vehicle.Name.Subscribe(_ => Title = $"{RS.RoiAnchor_Vehicle_Name} {_}").DisposeWith(Disposable);
 
-            vehicle.Yaw.Sample(TimeSpan.FromSeconds(1), RxApp.MainThreadScheduler).Subscribe(_ => Description = $"{RS.RoiAnchor_Vehicle_Yaw_Sample_Description}: {_:F0} {RS.RoiAnchor_Vehicle_Yaw_Sample_Unit}");
+            vehicle.Position.Yaw.Sample(TimeSpan.FromSeconds(1), RxApp.MainThreadScheduler).Subscribe(_ => Description = $"{RS.RoiAnchor_Vehicle_Yaw_Sample_Description}: {_:F0} {RS.RoiAnchor_Vehicle_Yaw_Sample_Unit}");
         }
 
     }

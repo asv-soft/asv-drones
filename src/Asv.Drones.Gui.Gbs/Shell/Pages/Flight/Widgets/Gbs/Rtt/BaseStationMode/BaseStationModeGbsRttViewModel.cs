@@ -1,6 +1,7 @@
 using System.Reactive.Disposables;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
+using Asv.Mavlink;
 using Asv.Mavlink.V2.AsvGbs;
 using ReactiveUI.Fody.Helpers;
 
@@ -13,11 +14,11 @@ public class BaseStationModeGbsRttViewModel : GbsRttItem
         BaseStationMode = "Idle";
     }
 
-    public BaseStationModeGbsRttViewModel(IGbsDevice gbs)  : base(gbs, GenerateUri(gbs,"basestationmode"))
+    public BaseStationModeGbsRttViewModel(IGbsClientDevice baseStation)  : base(baseStation, GenerateUri(baseStation,"basestationmode"))
     {
         Order = 2;
 
-        Gbs.DeviceClient.CustomMode
+        BaseStation.Gbs.CustomMode
             .Subscribe(_ => BaseStationMode = _.ToString().Replace(nameof(AsvGbsCustomMode),""))
             .DisposeItWith(Disposable);
     }

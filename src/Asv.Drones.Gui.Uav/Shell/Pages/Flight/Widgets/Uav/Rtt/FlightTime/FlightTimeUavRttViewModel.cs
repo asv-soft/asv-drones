@@ -14,10 +14,10 @@ public class FlightTimeUavRttViewModel : UavRttItem
         
     }
     
-    public FlightTimeUavRttViewModel(IVehicle vehicle, ILocalizationService localization) : base(vehicle, GenerateRtt(vehicle,"flighttime"))
+    public FlightTimeUavRttViewModel(IVehicleClient vehicle, ILocalizationService localization) : base(vehicle, GenerateRtt(vehicle,"flighttime"))
     {
         Order = 2;
-        Vehicle.ArmedTime
+        Vehicle.Position.ArmedTime
             .DistinctUntilChanged()
             .Sample(TimeSpan.FromMilliseconds(500))
             .ObserveOn(RxApp.MainThreadScheduler)

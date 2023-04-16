@@ -5,19 +5,19 @@ namespace Asv.Drones.Gui.Gbs
 {
     public class FlightGbsWidgetBase:FlightWidgetBase
     {
-        public static Uri GenerateUri(IGbsDevice gbs, string name) => new(UriString + $"/{gbs.FullId}/{name}");
+        public static Uri GenerateUri(IGbsClientDevice gbs, string name) => new(UriString + $"/{gbs.Heartbeat.FullId}/{name}");
         
         protected FlightGbsWidgetBase():base(new Uri($"fordesigntime://{Guid.NewGuid()}"))
         {
             
         }
 
-        protected FlightGbsWidgetBase(IGbsDevice gbs,Uri uri) : base(uri)
+        protected FlightGbsWidgetBase(IGbsClientDevice baseStation,Uri uri) : base(uri)
         {
-            Gbs = gbs;
+            BaseStation = baseStation;
         }
         
-        protected IGbsDevice Gbs { get; }
+        protected IGbsClientDevice BaseStation { get; }
         
         protected override void InternalAfterMapInit(IMap map)
         {

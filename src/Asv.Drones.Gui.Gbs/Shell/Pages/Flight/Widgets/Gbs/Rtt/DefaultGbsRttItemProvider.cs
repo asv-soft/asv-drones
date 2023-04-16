@@ -17,7 +17,7 @@ public class DefaultGbsRttItemProvider : IGbsRttItemProvider
         _localizationService = localizationService;
     }
     
-    public IEnumerable<IGbsRttItem> Create(IGbsDevice device)
+    public IEnumerable<IGbsRttItem> Create(IGbsClientDevice device)
     {
         yield return new LinkQualityGbsRttViewModel(device);
         yield return new VisibleSatellitesGbsRttViewModel(device);

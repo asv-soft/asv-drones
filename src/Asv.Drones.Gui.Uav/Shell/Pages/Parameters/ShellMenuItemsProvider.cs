@@ -1,10 +1,8 @@
 using System.ComponentModel.Composition;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
-using Avalonia.Controls.Mixins;
 using DynamicData;
 using Material.Icons;
-using Disposable = System.Reactive.Disposables.Disposable;
 
 namespace Asv.Drones.Gui.Uav;
 
@@ -19,7 +17,7 @@ public class ParametersShellPageProvider : ViewModelProviderBase<IShellMenuItem>
         svc.Vehicles.Transform(_ => (IShellMenuItem)new ShellMenuItem(new($"{ShellMenuItem.UriString}.parameters.{_.FullId}"))
         {
             Name = string.Format(RS.ParametersEditorPageViewModel_Title, _.FullId),
-            NavigateTo = new($"{ShellPage.UriString}.parameters?Id={_.FullId}"),
+            NavigateTo = ParamPageViewModel.GenerateUri(_.FullId, _.Class),
             Icon = MaterialIconDataProvider.GetData(MaterialIconKind.ViewList),
             Position = ShellMenuPosition.Top,
             Type = ShellMenuItemType.PageNavigation,
@@ -29,4 +27,6 @@ public class ParametersShellPageProvider : ViewModelProviderBase<IShellMenuItem>
             .PopulateInto(Source)
             .DisposeItWith(Disposable);
     }
+    
+    
 }
