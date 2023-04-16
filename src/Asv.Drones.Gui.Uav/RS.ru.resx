@@ -117,140 +117,44 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name" xml:space="preserve">
-    <value>Вы должны указать допустимое имя</value>
+  
+  <data name="RoiAnchor_Vehicle_Name" xml:space="preserve">
+    <value>ROI от</value>
   </data>
-  <data name="SerialPortViewModel_SerialPortViewModel_ValidSerialPort" xml:space="preserve">
-    <value>Вы должны указать действительное имя последовательного порта</value>
+  <data name="TakeOffAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Взлёт</value>
   </data>
-  <data name="SerialPortViewModel_SerialPortViewModel_BaudRateValid" xml:space="preserve">
-    <value>Скорость передачи данных должна быть значением от {0} до {1}</value>
+  <data name="TakeOffAnchorActionViewModel_DialogDescription" xml:space="preserve">
+    <value>Задайте высоту для взлёта относительно земли (AGL).</value>
   </data>
-  <data name="SerialPortViewModel_SerialPortViewModel_NewSerial" xml:space="preserve">
-    <value>Новый последовательный порт {0}</value>
+  <data name="TakeOffAnchorActionViewModel_DialogPrimaryButton" xml:space="preserve">
+    <value>Взлёт</value>
   </data>
-  <data name="SerialPortView_Title" xml:space="preserve">
-    <value>Название</value>
-  </data>
-  <data name="SerialPortView_PortName" xml:space="preserve">
-    <value>Порт</value>
-  </data>
-  <data name="SerialPortView_BaudRate" xml:space="preserve">
-    <value>Скорость порта</value>
-  </data>
-  <data name="ConnectionsShellMenuItem_Name" xml:space="preserve">
-    <value>Подключения</value>
-  </data>
-  <data name="ConnectionsViewModel_AddDialogPort_Add" xml:space="preserve">
-    <value>Добавить</value>
-  </data>
-  <data name="ConnectionsViewModel_AddDialogPort_Cancel" xml:space="preserve">
+  <data name="TakeOffAnchorActionViewModel_DialogSecondaryButton" xml:space="preserve">
     <value>Отмена</value>
   </data>
-  <data name="ConnectionsViewModel_AddSerialPortDialog_Title" xml:space="preserve">
-    <value>Новый последовательный порт</value>
+  <data name="TakeOffAnchorActionViewModel_ValidValue" xml:space="preserve">
+    <value>Высота должна быть больше или равна {0}.</value>
   </data>
-  <data name="ConnectionsViewModel_AddTcpPortDialog_Title" xml:space="preserve">
-    <value>Новый TCP порт</value>
+  <data name="TakeOffAnchorActionViewModel_LogMessage" xml:space="preserve">
+    <value>Пользователь отправил команду Взлёт на высоту {0} для {1}</value>
   </data>
-  <data name="ConnectionsViewModel_AddUdpPortDialog_Title" xml:space="preserve">
-    <value>Новый порт UDP</value>
+
+  <data name="BatteryUavRttView_ToolTip" xml:space="preserve">
+    <value>Заряд батареи</value>
   </data>
-  <data name="PortView_ToggleButton_Enabled" xml:space="preserve">
-    <value>Включен</value>
+  <data name="UavAnchor_Latitude" xml:space="preserve">
+    <value>Широта: {0}</value>
   </data>
-  <data name="PortView_ToggleButton_Disabled" xml:space="preserve">
-    <value>Выключен</value>
+  <data name="UavAnchor_Longitude" xml:space="preserve">
+    <value>Долгота: {0}</value>
   </data>
-  <data name="ConnectionsPortsView_AddSerialCommand_Title" xml:space="preserve">
-    <value>Новый COM</value>
+  <data name="UavAnchor_GNSS_Altitude" xml:space="preserve">
+    <value>Высота GNSS: {0}</value>
   </data>
-  <data name="ConnectionsPortsView_AddTcpCommand_Title" xml:space="preserve">
-    <value>Новый  TCP</value>
-  </data>
-  <data name="ConnectionsPortsView_AddUdpCommand_Title" xml:space="preserve">
-    <value>Новый  UDP</value>
-  </data>
-  <data name="ConnectionsPortsView_Header_Title" xml:space="preserve">
-    <value>Порты для подключения</value>
-  </data>
-  <data name="ConnectionsView_Header_Description" xml:space="preserve">
-    <value>Эта страница позволяет настроить основные параметры сети Mavlink</value>
-  </data>
-  <data name="ConnectionsPortsView_Header_Description" xml:space="preserve">
-    <value>Точка входа, позволяющая ему общаться с другими устройствами в сети Mavlink.</value>
-  </data>
-  <data name="ConnectionsView_Header_Title" xml:space="preserve">
-    <value>Сеть Mavlink</value>
-  </data>
-  <data name="DeviceBrowserView_Description" xml:space="preserve">
-    <value>В этом разделе можно посмотреть все найденные устройства в сети</value>
-  </data>
-  <data name="DeviceBrowserView_Header" xml:space="preserve">
-    <value>Список найденных устройств</value>
-  </data>
-  <data name="ConnectionsIdentificationView_HeartbeatRate_Description" xml:space="preserve">
-    <value>Частота, с которой сообщения HEARTBEAT должны передаваться, чтобы объявить о существовании системы в сети MAVLink</value>
-  </data>
-  <data name="ConnectionsIdentificationView_HeartbeatRate_Header" xml:space="preserve">
-    <value>Частота Heartbeat</value>
-  </data>
-  <data name="ConnectionsIdentificationView_HeartbeatTimeout_Description" xml:space="preserve">
-    <value>По истечении таймаута пакета Heartbeat устройство будет удалено из списка устройств</value>
-  </data>
-  <data name="ConnectionsIdentificationView_HeartbeatTimeout_Header" xml:space="preserve">
-    <value>Таймаут Heartbeat</value>
-  </data>
-  <data name="ConnectionsIdentificationView_SystemComponentId_Description" xml:space="preserve">
-    <value>Каждая система имеет идентификатор, и каждый компонент имеет идентификатор компонента системы, который можно использовать для адресации/маршрутизации</value>
-  </data>
-  <data name="ConnectionsIdentificationView_SystemComponentId_Header" xml:space="preserve">
-    <value>ID Системы \ Компонента</value>
-  </data>
-  <data name="MavlinkDeviceView_Mode_Name" xml:space="preserve">
-    <value>Пользовательский режим</value>
-  </data>
-  <data name="MavlinkDeviceView_Rate_Name" xml:space="preserve">
-    <value>Частота Heartbeat</value>
-  </data>
-  <data name="MavlinkDeviceView_Status_Name" xml:space="preserve">
-    <value>Статус системы</value>
-  </data>
-  <data name="TcpPortView_TcpIpAddress" xml:space="preserve">
-    <value>IP адрес </value>
-  </data>
-  <data name="TcpPortView_PortTitle" xml:space="preserve">
-    <value>Название</value>
-  </data>
-  <data name="TcpPortView_TcpIpPort" xml:space="preserve">
-    <value>Номер порта</value>
-  </data>
-  <data name="UdpPortView_LocalIpAddress" xml:space="preserve">
-    <value>IP адрес</value>
-  </data>
-  <data name="UdpPortView_LocalPortName" xml:space="preserve">
-    <value>Порт</value>
-  </data>
-  <data name="UdpPortView_PortTitle" xml:space="preserve">
-    <value>Название</value>
-  </data>
-  <data name="UdpPortView_RemoteIpAddress" xml:space="preserve">
-    <value>Удаленный IP адрес</value>
-  </data>
-  <data name="UdpPortView_RemotePortName" xml:space="preserve">
-    <value>Удаленный порт</value>
-  </data>
-  <data name="UdpPortView_ToggleName" xml:space="preserve">
-    <value>Указать удаленный хост</value>
-  </data>
-  <data name="ConnectionsIdentificationViewModel_DeviceTimeout" xml:space="preserve">
-    <value>Таймаут должен быть от {0} до {1}</value>
-  </data>
-  <data name="ConnectionsIdentificationViewModel_ToString" xml:space="preserve">
-    <value>Гц</value>
-  </data>
-  <data name="PortViewModel_SkippedUnitTest" xml:space="preserve">
-    <value>ошибка</value>
+  <data name="UavAnchor_AGL_Altitude" xml:space="preserve">
+    <value>Высота AGL: {0}</value>
+
   </data>
   <data name="RoiAnchor_Vehicle_Yaw_Sample_Description" xml:space="preserve">
     <value>Угол рыскания</value>
@@ -258,40 +162,85 @@
   <data name="RoiAnchor_Vehicle_Yaw_Sample_Unit" xml:space="preserve">
     <value>град</value>
   </data>
-  <data name="TcpPortViewModel_Title" xml:space="preserve">
-    <value>Новый TCP</value>
+  <data name="UavRttItem_ValueNotAvailable" xml:space="preserve">
+    <value>Н\Д</value>
   </data>
-  <data name="TcpPortViewModel_ValidTitle" xml:space="preserve">
-    <value>Вы должны указать действительное имя</value>
+  <data name="ParametersEditorPageViewModel_Title" xml:space="preserve">
+    <value>Редактор параметров [{0}]</value>
   </data>
-  <data name="TcpPortViewModel_ValidPort" xml:space="preserve">
-    <value>Номер порта должен иметь значение от 1 до 65535</value>
+  <data name="ParametersEditorPageViewModel_Search" xml:space="preserve">
+    <value>Найти</value>
   </data>
-  <data name="TcpPortViewModel_ValidIpAddress" xml:space="preserve">
-    <value>Вы должны ввести действительный IP-адрес</value>
+  <data name="ParametersEditorPageViewModel_Total" xml:space="preserve">
+    <value>Всего: {0}</value>
   </data>
-  <data name="TcpPortViewModel_LogService_Error" xml:space="preserve">
-    <value>Ошибка при создании порта</value>
+  <data name="CpuLoadUavRttView_ToolTip" xml:space="preserve">
+    <value>Загрузка процессора БПЛА</value>
   </data>
-  <data name="UdpPortViewModel_ValidTitle" xml:space="preserve">
-    <value>Вы должны указать действительное имя</value>
+  <data name="CurrentUavRttView_ToolTip" xml:space="preserve">
+    <value>Ток БПЛА</value>
   </data>
-  <data name="UdpPortViewModel_ValidLocalIpAddress" xml:space="preserve">
-    <value>Вы должны ввести действительный IP-адрес</value>
+  <data name="FlightTimeUavRttView_ToolTip" xml:space="preserve">
+    <value>Время полёта БПЛА</value>
   </data>
-  <data name="UdpPortViewModel_ValidLocalPort" xml:space="preserve">
-    <value>Номер порта должен иметь значение от 1 до 65535</value>
+  <data name="HomeDistanceUavRttView_ToolTip" xml:space="preserve">
+    <value>Дистанция от БПЛА до дома</value>
   </data>
-  <data name="UdpPortViewModel_ValidRemotePort" xml:space="preserve">
-    <value>Номер порта должен иметь значение от 1 до 65535</value>
+  <data name="LinkQualityUavRttView_ToolTip" xml:space="preserve">
+    <value>Качество связи с БПЛА</value>
   </data>
-  <data name="UdpPortViewModel_ValidRemoteIpAddress" xml:space="preserve">
-    <value>Вы должны ввести действительный IP-адрес</value>
+  <data name="VoltageUavRttItemView_ToolTip" xml:space="preserve">
+    <value>Напряжение БПЛА</value>
   </data>
-  <data name="UdpPortViewModel_Title" xml:space="preserve">
-    <value>Новый UDP</value>
+  <data name="FlightUavView_MoveToButton_ToolTip" xml:space="preserve">
+    <value>Перейти к этому БПЛА на карте</value>
   </data>
-  <data name="RoiAnchor_Vehicle_Name" xml:space="preserve">
-    <value>ROI от</value>
+  <data name="MissionStatusView_GetMissionButton_ToolTip" xml:space="preserve">
+    <value>Загрузить миссию с БПЛА</value>
+  </data>
+  <data name="MissionStatusView_DisableLayersButton_ToolTip" xml:space="preserve">
+    <value>Выключает видимость траектории и точек миссии</value>
+  </data>
+  <data name="MissionStatusView_TogglePolygonButton_ToolTip" xml:space="preserve">
+    <value>Включает/выключает видимость траектории миссии</value>
+  </data>
+  <data name="MissionStatusView_ToggleWaypointsButton_ToolTip" xml:space="preserve">
+    <value>Включает/выключает видимость точек миссии</value>
+  </data>
+  <data name="MissionStatusView_Total" xml:space="preserve">
+    <value>Всего: {0}</value>
+  </data>
+  <data name="MissionStatusView_MissionProgress_ToolTip" xml:space="preserve">
+    <value>Текущий прогресс миссии</value>
+  </data>
+  <data name="ParametersEditorPageView_StarsToggleButton_ToolTip" xml:space="preserve">
+    <value>Показать только избранные параметры</value>
+  </data>
+  <data name="ParametersEditorPageView_UpdateButton_ToolTip" xml:space="preserve">
+    <value>Обновить все параметры</value>
+  </data>
+  <data name="ParametersEditorPageView_PinsOffButton_ToolTip" xml:space="preserve">
+    <value>Убрать все прикреплённые параметры</value>
+  </data>
+  <data name="ParametersEditorParameterView_PinToggleButton_ToolTip" xml:space="preserve">
+    <value>Включить/выключить закрепление этого параметра</value>
+  </data>
+  <data name="ParametersEditorParameterView_UpdateButton_ToolTip" xml:space="preserve">
+    <value>Обновить этот парметр из БПЛА</value>
+  </data>
+  <data name="ParametersEditorParameterView_WriteButton_ToolTip" xml:space="preserve">
+    <value>Записать этот парметр в БПЛА</value>
+  </data>
+  <data name="ParametersEditorParameterView_RebootRequired" xml:space="preserve">
+    <value>Требуется перезагрузка</value>
+  </data>
+  <data name="ParametersEditorPageView_StarButton_ToolTip" xml:space="preserve">
+    <value>Добавить параметр в избранные</value>
+  </data>
+  <data name="ParametersEditorParameterView_UpdateButton" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="ParametersEditorParameterView_WriteButton" xml:space="preserve">
+    <value>Записать</value>
   </data>
 </root>

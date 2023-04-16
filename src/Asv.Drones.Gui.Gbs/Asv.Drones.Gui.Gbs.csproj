@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Asv.Drones.Gui.Core\Asv.Drones.Gui.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Asv.Cfg" Version="1.6.0" />
+        <PackageReference Include="Asv.Common" Version="1.6.0" />
+        <PackageReference Include="Asv.Mavlink" Version="3.0.0" />
+      <PackageReference Include="DynamicData" Version="7.12.11" />
+      <PackageReference Include="ReactiveUI.Fody" Version="18.4.20" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="RS.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>RS.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="RS.ru.resx">
+        <LastGenOutput>RS.ru.Designer.cs</LastGenOutput>
+        <DependentUpon>RS.resx</DependentUpon>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="RS.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>RS.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>

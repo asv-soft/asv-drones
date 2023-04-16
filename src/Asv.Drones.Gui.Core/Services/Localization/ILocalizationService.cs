@@ -24,79 +24,12 @@ namespace Asv.Drones.Gui.Core
         public CultureInfo Culture => _culture ??= _getCulture();
     }
     
-    public enum VelocityUnits
-    {
-        MetersPerSecond,
-        KilometersPerHour,
-        MilesPerHour
-    }
-
-    public enum AltitudeUnits
-    {
-        Meters,
-        Feets
-    }
-
-    public enum DistanceUnits
-    {
-        Meters,
-        NauticalMiles
-    }
-
-    public enum LatitudeLongitudeUnits
-    {
-        Degrees,
-        DegreesMinutesSeconds
-    }
-
-    public class VelocityUnitItem
-    {
-        public VelocityUnitItem(VelocityUnits id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
-        
-        public VelocityUnits Id { get; }
-        
-        public string Name { get; }
-    }
+  
     
-    public class AltitudeUnitItem
-    {
-        public AltitudeUnitItem(AltitudeUnits id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
 
-        public AltitudeUnits Id { get; }
-        public string Name { get; }
-    }
+    
 
-    public class DistanceUnitItem
-    {
-        public DistanceUnitItem(DistanceUnits id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
-
-        public DistanceUnits Id { get; }
-        public string Name { get; }
-    }
-
-    public class LatitudeLongitudeUnitItem
-    {
-        public LatitudeLongitudeUnitItem(LatitudeLongitudeUnits id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
-
-        public LatitudeLongitudeUnits Id { get; }
-        public string Name { get; }
-    }
+   
 
     public interface ILocalizationService
     {
@@ -109,19 +42,6 @@ namespace Asv.Drones.Gui.Core
         /// </summary>
         IEnumerable<LanguageInfo> AvailableLanguages { get; }
         
-        IRxEditableValue<AltitudeUnitItem> CurrentAltitudeUnit { get; }
-        IEnumerable<AltitudeUnitItem> AltitudeUnits { get; }
-
-        IRxEditableValue<DistanceUnitItem> CurrentDistanceUnit { get; }
-        IEnumerable<DistanceUnitItem> DistanceUnits { get; }
-        
-        IRxEditableValue<LatitudeLongitudeUnitItem> CurrentLatitudeLongitudeUnit { get; }
-        IEnumerable<LatitudeLongitudeUnitItem> LatitudeLongitudeUnits { get; }
-        
-        IRxEditableValue<VelocityUnitItem> CurrentVelocityUnit { get; }
-        IEnumerable<VelocityUnitItem> VelocityUnits { get; }
-
-        
         #region Units
 
         /// <summary>
@@ -129,31 +49,39 @@ namespace Asv.Drones.Gui.Core
         /// For example: 1024 => 1 KB/s
         /// </summary>
         /// <returns></returns>
-        IMeasureUnit<double> ByteRate { get; }
+        IReadOnlyMeasureUnit<double> ByteRate { get; }
 
         /// <summary>
         /// Convert items rate to short localized string
         /// For example: 1000 => 1 KHz
         /// </summary>
         /// <returns></returns>
-        IMeasureUnit<double> ItemsRate { get; }
+        IReadOnlyMeasureUnit<double> ItemsRate { get; }
 
         /// <summary>
         /// Convert bytes count to short localized string
         /// For example: 1024 => 1 KB
         /// </summary>
         /// <returns></returns>
-        IMeasureUnit<long> ByteSize { get; }
+        IReadOnlyMeasureUnit<long> ByteSize { get; }
 
-        IMeasureUnit<double> Altitude { get; }
+        IReadOnlyMeasureUnit<TimeSpan> RelativeTime { get; }
 
-        IMeasureUnit<double> Distance { get; }
+        IReadOnlyMeasureUnit<double> Voltage { get; }
 
-        IMeasureUnit<double> LatitudeAndLongitude { get; }
+        IReadOnlyMeasureUnit<double> Current { get; }
+
+        IMeasureUnit<double,AltitudeUnits> Altitude { get; }
+
+        IMeasureUnit<double,DistanceUnits> Distance { get; }
+
+        IMeasureUnit<double,LatitudeUnits> Latitude { get; }
+        IMeasureUnit<double,LongitudeUnits> Longitude { get; }
+
+        IMeasureUnit<double,VelocityUnits> Velocity { get; }
+
+       
         
-        IMeasureUnit<double> Velocity { get; }
-
-        IMeasureUnit<TimeSpan> RelativeTime { get; }
         #endregion
     }
 

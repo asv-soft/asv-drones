@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <!--Avalonia doesen't support TrimMode=link currently,but we are working on that https://github.com/AvaloniaUI/Avalonia/issues/6892 -->
     <TrimMode>copyused</TrimMode>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
@@ -28,7 +28,7 @@
     <TrimmableAssembly Include="Avalonia.Themes.Default" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Asv.Cfg" Version="1.4.6" />
+    <PackageReference Include="Asv.Cfg" Version="1.6.0" />
     <PackageReference Include="Avalonia" Version="11.0.0-preview4" />
     <PackageReference Include="Avalonia.Desktop" Version="11.0.0-preview4" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Asv.Drones.Gui.Core\Asv.Drones.Gui.Core.csproj" />
+    <ProjectReference Include="..\Asv.Drones.Gui.Gbs\Asv.Drones.Gui.Gbs.csproj" />
     <ProjectReference Include="..\Asv.Drones.Gui.Uav\Asv.Drones.Gui.Uav.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +59,9 @@
     <EmbeddedResource Update="RS.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RS.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="RS.ru.resx">
+      <DependentUpon>RS.resx</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

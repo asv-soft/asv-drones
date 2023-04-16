@@ -8,47 +8,8 @@ using Material.Icons;
 namespace Asv.Drones.Gui.Core;
 
 [PseudoClasses(":critical", ":warning", ":normal", ":unknown")]
-public class BatteryIndicator : TemplatedControl
+public class BatteryIndicator : IndicatorBase
 {
-
-    #region Brushes
-   
-    public static readonly StyledProperty<Brush> UnknownBrushProperty = AvaloniaProperty.Register<BatteryIndicator, Brush>(
-        "UnknownBrush");
-
-    public Brush UnknownBrush
-    {
-        get => GetValue(UnknownBrushProperty);
-        set => SetValue(UnknownBrushProperty, value);
-    }
-    
-    public static readonly StyledProperty<Brush> CriticalBrushProperty = AvaloniaProperty.Register<BatteryIndicator, Brush>(
-        "CriticalBrush");
-
-    public Brush CriticalBrush
-    {
-        get => GetValue(CriticalBrushProperty);
-        set => SetValue(CriticalBrushProperty, value);
-    }
-    public static readonly StyledProperty<Brush> WarningBrushProperty = AvaloniaProperty.Register<BatteryIndicator, Brush>(
-        "WarningBrush");
-
-    public Brush WarningBrush
-    {
-        get => GetValue(WarningBrushProperty);
-        set => SetValue(WarningBrushProperty, value);
-    }
-    public static readonly StyledProperty<Brush> NormalBrushProperty = AvaloniaProperty.Register<BatteryIndicator, Brush>(
-        "NormalBrush");
-
-    public Brush NormalBrush
-    {
-        get => GetValue(NormalBrushProperty);
-        set => SetValue(NormalBrushProperty, value);
-    }
-    
-    #endregion
-    
     #region Styled Props
     
     public static readonly StyledProperty<double> CriticalValueProperty = AvaloniaProperty.Register<BatteryIndicator, double>(
@@ -86,15 +47,6 @@ public class BatteryIndicator : TemplatedControl
         get => GetValue(ValueProperty);
         set => SetValue(ValueProperty, value);
     }
-
-    public static readonly StyledProperty<MaterialIconKind> IconKindProperty = AvaloniaProperty.Register<BatteryIndicator, MaterialIconKind>(
-        nameof(IconKind), MaterialIconKind.BatteryUnknown);
-
-    public MaterialIconKind IconKind
-    {
-        get => GetValue(IconKindProperty);
-        set => SetValue(IconKindProperty, value);
-    }
   
     #endregion
 
@@ -105,18 +57,15 @@ public class BatteryIndicator : TemplatedControl
 
     private static void SetPseudoClass(BatteryIndicator indicator)
     {
-  
         var value = indicator.Value;        
         indicator.PseudoClasses.Set(":unknown", value == null || double.IsFinite(value.Value) == false || value > indicator.MaxValue);
         indicator.PseudoClasses.Set(":critical", value <= indicator.CriticalValue);
         indicator.PseudoClasses.Set(":warning", value > indicator.CriticalValue & value <= indicator.WarningValue);
         indicator.PseudoClasses.Set(":normal", value > indicator.WarningValue & value <= indicator.MaxValue);
-        
     }
     
     private static void UpdateValue(IAvaloniaObject source, bool beforeChanged)
     {
-        
         if (source is not BatteryIndicator indicator) return;
 
         SetPseudoClass(indicator);

@@ -10,13 +10,13 @@ namespace Asv.Drones.Uav
 {
     public abstract class UavActionActionBase : MapAnchorActionViewModel,IDisposable
     {
-        private readonly IVehicle _vehicle;
+        private readonly IVehicleClient _vehicle;
         private readonly IMap _map;
         private readonly ILogService _log;
         private int _disposeFlag;
         private readonly BehaviorSubject<bool> _canExecuteSubject = new(false);
 
-        protected UavActionActionBase(IVehicle vehicle, IMap map,ILogService log)
+        protected UavActionActionBase(IVehicleClient vehicle, IMap map,ILogService log)
         {
             _vehicle = vehicle;
             _map = map;
@@ -39,7 +39,7 @@ namespace Asv.Drones.Uav
             _log.Error(Title, $"{sender} error",ex);
         }
 
-        protected IVehicle Vehicle => _vehicle;
+        protected IVehicleClient Vehicle => _vehicle;
         protected IMap Map => _map;
         protected CompositeDisposable Disposable { get; } = new();
         protected virtual void InternalDisposeOnce()

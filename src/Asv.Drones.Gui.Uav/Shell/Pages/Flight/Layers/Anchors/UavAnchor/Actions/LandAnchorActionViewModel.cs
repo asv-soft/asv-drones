@@ -12,13 +12,13 @@ namespace Asv.Drones.Gui.Uav
     {
         private readonly ILogService _log;
 
-        public LandAnchorActionViewModel(IVehicle vehicle, IMap map,ILogService log) : base(vehicle, map,log)
+        public LandAnchorActionViewModel(IVehicleClient vehicle, IMap map,ILogService log) : base(vehicle, map,log)
         {
             _log = log;
             // TODO: Localize
             Title = "Immediately land";
             Icon = MaterialIconKind.ArrowDownBoldHexagonOutline;
-            Vehicle.IsArmed.ObserveOn(RxApp.MainThreadScheduler).Select(_ => _).Subscribe(CanExecute).DisposeWith(Disposable);
+            Vehicle.Position.IsArmed.Select(_ => _).Subscribe(CanExecute).DisposeWith(Disposable);
         }
 
         protected override async Task ExecuteImpl(CancellationToken cancel)

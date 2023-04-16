@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             x:Class="Asv.Drones.Gui.Uav.FlightTimeUavRttView"
+             mc:Ignorable="d" d:DesignWidth="100" d:DesignHeight="30"
+             x:CompileBindings="True"
+             x:DataType="uav:FlightTimeUavRttViewModel">
+    <Design.DataContext>
+        <uav:FlightTimeUavRttViewModel/>
+    </Design.DataContext>
+    <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="{x:Static uav:RS.FlightTimeUavRttView_ToolTip}">
+        <avalonia:MaterialIcon Width="20" Height="20" Kind="Clock"/>   
+        <TextBlock VerticalAlignment="Center" Text="{CompiledBinding FlightTime}"/>
+    </StackPanel>
+</UserControl>

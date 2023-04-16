@@ -3,17 +3,19 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Asv.Cfg" Version="1.4.6" />
-    <PackageReference Include="Asv.Common" Version="1.4.6" />
-    <PackageReference Include="Asv.IO" Version="1.4.6" />
-    <PackageReference Include="Asv.Mavlink" Version="1.1.10" />
-    <PackageReference Include="Asv.Mavlink.Vehicle" Version="1.1.10" />
+    <PackageReference Include="Asv.Cfg" Version="1.6.0" />
+    <PackageReference Include="Asv.Common" Version="1.6.0" />
+    <PackageReference Include="Asv.IO" Version="1.6.0" />
+    <PackageReference Include="Asv.Mavlink" Version="3.0.0" />
     <PackageReference Include="Avalonia" Version="11.0.0-preview4" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview4" />
+    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.0.0-preview4" />
+    <PackageReference Include="Avalonia.Xaml.Interactions" Version="11.0.0-preview4" />
     <PackageReference Include="DynamicData" Version="7.12.11" />
     <PackageReference Include="FluentAvaloniaUI" Version="2.0.0-preview4" />
     <PackageReference Include="Material.Icons.Avalonia" Version="2.0.0-preview1" />
@@ -46,10 +48,10 @@
       <DependentUpon>UavWidgetView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Shell\Menu\" />
+    <Compile Update="Shell\Pages\Flight\Widgets\Uav\Attitude\AttitudeView.axaml.cs">
+      <DependentUpon>AttitudeView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -57,10 +59,23 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RS.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="RS.ru.resx">
+      <DependentUpon>RS.resx</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Shell\Pages\Connections\Ports\Dialogs\UdpPortView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Flight\Widgets\Logger\LoggerView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\ConnectionsView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\DeviceBrowser\DeviceBrowserView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\DeviceBrowser\MavlinkDeviceView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\Identification\ConnectionsIdentificationView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\Ports\ConnectionsPortView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\Ports\Dialogs\SerialPortView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\Ports\Dialogs\TcpPortView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\Ports\Dialogs\UdpPortView.axaml" />
+    <UpToDateCheckInput Remove="Shell\Pages\Connections\Ports\PortView.axaml" />
   </ItemGroup>
 
 </Project>

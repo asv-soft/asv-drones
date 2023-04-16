@@ -49,7 +49,7 @@ namespace Asv.Drones.Gui.Core
 
         private void UpdateDescription()
         {
-            MapStorageDescription = string.Format(RS.MapSettingsView_MapsInfo_Description, _mapService.MapCacheDirectory, _localizationService.ByteSize.GetValueWithUnits(_mapService.CalculateMapCacheSize()));
+            MapStorageDescription = string.Format(RS.MapSettingsView_MapsInfo_Description, _mapService.MapCacheDirectory, _localizationService.ByteSize.ConvertToStringWithUnits(_mapService.CalculateMapCacheSize()));
         }
 
         public override int Order => 1;

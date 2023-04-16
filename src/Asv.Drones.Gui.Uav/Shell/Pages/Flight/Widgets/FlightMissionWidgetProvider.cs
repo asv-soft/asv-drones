@@ -9,10 +9,13 @@ namespace Asv.Drones.Gui.Uav
     public class FlightMissionWidgetProvider:ViewModelProviderBase<IMapWidget>
     {
         [ImportingConstructor]
-        public FlightMissionWidgetProvider(IMavlinkDevicesService devices,ILogService log)
+        public FlightMissionWidgetProvider(
+            IMavlinkDevicesService devices,ILogService log,
+            ILocalizationService localization,
+            [ImportMany]IEnumerable<IUavRttItemProvider> rttItems)
         {
             devices.Vehicles
-                .Transform(_ => (IMapWidget)new FlightUavViewModel(_,log))
+                .Transform(_ => (IMapWidget)new FlightUavViewModel(_, log, localization, rttItems))
                 .ChangeKey( ((_, v) => v.Id) )
                 .PopulateInto(Source);
         }

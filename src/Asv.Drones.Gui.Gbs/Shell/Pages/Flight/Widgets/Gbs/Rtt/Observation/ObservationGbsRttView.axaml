@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:core="clr-namespace:Asv.Drones.Gui.Core;assembly=Asv.Drones.Gui.Core"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:gbs="clr-namespace:Asv.Drones.Gui.Gbs"
+             mc:Ignorable="d" d:DesignWidth="100" d:DesignHeight="30"
+             x:Class="Asv.Drones.Gui.Gbs.ObservationGbsRttView"
+             x:DataType="gbs:ObservationGbsRttViewModel">
+    <Design.DataContext>
+        <gbs:ObservationGbsRttViewModel/>
+    </Design.DataContext>
+    <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="{x:Static gbs:RS.ObservationGbsRttView_ToolTip}">
+        <avalonia:MaterialIcon Kind="Eye"/>
+        <TextBlock VerticalAlignment="Center" Text="{CompiledBinding Observation}"/>
+    </StackPanel>
+</UserControl>

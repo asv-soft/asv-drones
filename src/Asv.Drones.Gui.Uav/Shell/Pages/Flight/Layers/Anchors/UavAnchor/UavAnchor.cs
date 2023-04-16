@@ -8,40 +8,47 @@ using Asv.Mavlink;
 using Avalonia.Media;
 using DynamicData;
 using Material.Icons;
+using MavlinkHelper = Asv.Drones.Gui.Core.MavlinkHelper;
 
 namespace Asv.Drones.Gui.Uav
 {
-    public class UavAnchor: FlightAnchorBase
+    public class UavAnchor : FlightAnchorBase
     {
         private ReadOnlyObservableCollection<MapAnchorActionViewModel> _actions;
         private readonly IEnumerable<IFlightUavActionProvider> _actionsProviders;
-        private readonly ILocalizationService _localizationService;
+        private readonly ILocalizationService _loc;
 
-        public UavAnchor(IVehicle vehicle,ILocalizationService localizationService,IEnumerable<IFlightUavActionProvider> actionsProviders)
+        public const string BaseUriString = "asv:shell.pages.layers.anchors.uavanchor";
+        public static readonly Uri BaseUri = new(BaseUriString);
+
+        public UavAnchor(IVehicleClient vehicle,ILocalizationService loc,IEnumerable<IFlightUavActionProvider> actionsProviders)
             :base(vehicle,"uav")
         {
             _actionsProviders = actionsProviders;
-            _localizationService = localizationService;
+            _loc = loc;
             Size = 48;
             OffsetX = OffsetXEnum.Center;
             OffsetY = OffsetYEnum.Center;
+            StrokeThickness = 1;
+            Stroke = Brushes.Honeydew;
             IconBrush = Brushes.Red;
             IsVisible = true;
-            vehicle.Class.Subscribe(_ => Icon = MavlinkHelper.GetIcon(_)).DisposeItWith(Disposable);
-            vehicle.GlobalPosition.Subscribe(_ => Location = _).DisposeWith(Disposable);
-            vehicle.Yaw.Select(_ => Math.Round(_, 0)).DistinctUntilChanged().Subscribe(_ => RotateAngle = _).DisposeWith(Disposable);
+            Icon = MavlinkHelper.GetIcon(vehicle.Class);
+            vehicle.Position.Current.Subscribe(_ => Location = _).DisposeWith(Disposable);
+            vehicle.Position.Yaw.Select(_ => Math.Round(_, 0)).DistinctUntilChanged().Subscribe(_ => RotateAngle = _).DisposeWith(Disposable);
             Title = vehicle.Name.Value;
             vehicle.Name.Subscribe(_ => Title = _).DisposeWith(Disposable);
-            vehicle.GlobalPosition.Subscribe(_ => UpdateDescription()).DisposeWith(Disposable);
+            vehicle.Position.Current.Subscribe(_ => UpdateDescription()).DisposeWith(Disposable);
             
         }
         
         private void UpdateDescription()
         {
-            // TODO: Localize
-            Description = $"Lat:{_localizationService.LatitudeAndLongitude.GetValueWithUnits(Vehicle.GlobalPosition.Value.Latitude)}\n" +
-                          $"Lon:{_localizationService.LatitudeAndLongitude.GetValueWithUnits(Vehicle.GlobalPosition.Value.Longitude)}\n" +
-                          $"Alt:{_localizationService.Altitude.GetValueWithUnits(Vehicle.GlobalPosition.Value.Altitude)}\n";
+            Description = string.Format(RS.UavAnchor_Latitude, _loc.Latitude.FromSiToStringWithUnits(Vehicle.Position.Current.Value.Latitude)) + "\n" +
+                          string.Format(RS.UavAnchor_Longitude, _loc.Longitude.FromSiToStringWithUnits(Vehicle.Position.Current.Value.Longitude)) + "\n" +
+                          string.Format(RS.UavAnchor_GNSS_Altitude, _loc.Altitude.FromSiToStringWithUnits(Vehicle.Position.Current.Value.Altitude)) + "\n" +
+                          string.Format(RS.UavAnchor_AGL_Altitude, _loc.Altitude.FromSiToStringWithUnits(Vehicle.Position.AltitudeAboveHome.Value));
+
         }
 
         protected override void InternalWhenMapLoaded(IMap map)

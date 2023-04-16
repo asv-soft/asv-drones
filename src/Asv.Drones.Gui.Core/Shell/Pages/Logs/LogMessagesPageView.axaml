@@ -1,0 +1,110 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:core="clr-namespace:Asv.Drones.Gui.Core"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="800"
+             x:Class="Asv.Drones.Gui.Core.LogMessagesPageView"
+             x:CompileBindings ="True"
+             x:DataType="core:LogMessagesPageViewModel">
+    <Grid Margin="8" RowDefinitions="50, *, 16">
+        <Grid Grid.Row="0">
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                <avalonia:MaterialIcon Height="30" Width="30" Kind="Journal"/>
+                <TextBlock Margin="8 0" FontSize="30" Text="{x:Static core:RS.LogMessagesShellMenuItem_Name}"/>
+            </StackPanel>
+            <StackPanel Spacing="8" Margin="10 0" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+                <TextBox Width="200" Text="{Binding SearchText}" Watermark="{x:Static core:RS.LogMessagesPageView_SearchWatermark}">
+                    <TextBox.InnerRightContent>
+                        <avalonia:MaterialIcon Margin="0,0,5,0" Width="30" Height="30" Kind="Search"/>
+                    </TextBox.InnerRightContent>
+                </TextBox>
+                <ComboBox ToolTip.Tip="{x:Static core:RS.LogMessagesPageView_By_ToolTip}" Height="35" Width="120" SelectedItem="{Binding Take}" Items="{Binding PageLengths}">
+                  <ComboBox.ItemTemplate>
+                      <DataTemplate>
+                          <StackPanel Orientation="Horizontal">
+                              <TextBlock Text="{x:Static core:RS.LogMessagesPageView_By}"/>
+                              <TextBlock Text="{Binding}"/>
+                          </StackPanel>
+                      </DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Button ToolTip.Tip="{x:Static core:RS.LogMessagesPageView_ClearAllButton_ToolTip}"  Command="{CompiledBinding ClearAll}">
+                    <avalonia:MaterialIcon Width="22" Height="22" Kind="Delete"/>
+                </Button>
+                <Button ToolTip.Tip="{x:Static core:RS.LogMessagesPageView_PrevButton_ToolTip}" Command="{CompiledBinding Prev}">
+                  <avalonia:MaterialIcon Width="22" Height="22" Kind="ArrowLeftCircle"/>
+                </Button>
+                <Button ToolTip.Tip="{x:Static core:RS.LogMessagesPageView_RefreshButton_ToolTip}" Command="{CompiledBinding Refresh}">
+                  <avalonia:MaterialIcon Width="22" Height="22" Kind="Refresh"/>
+                </Button>
+                <Button ToolTip.Tip="{x:Static core:RS.LogMessagesPageView_NextButton_ToolTip}"  Command="{CompiledBinding Next}">
+                  <avalonia:MaterialIcon Width="22" Height="22" Kind="ArrowRightCircle"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+        
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.IsSharedSizeScope="True">
+            <ItemsControl Items="{Binding Messages}">
+                 <ItemsControl.Styles>
+                        <Style Selector="Grid#ItemGrid.Error > TextBlock">
+                            <Setter Property="Foreground" Value="Red"/>
+                        </Style>
+                        <Style Selector="Grid#ItemGrid.Error > avalonia|MaterialIcon">
+                            <Setter Property="Foreground" Value="Red"/>
+                        </Style>
+
+                        <Style Selector="Grid#ItemGrid.Warning > TextBlock">
+                            <Setter Property="Foreground" Value="Orange"/>
+                        </Style>
+                        <Style Selector="Grid#ItemGrid.Warning > avalonia|MaterialIcon">
+                            <Setter Property="Foreground" Value="Orange"/>
+                        </Style>
+
+                        <Style Selector="Grid#ItemGrid.Info > TextBlock">
+                            <Setter Property="Foreground" Value="White"/>
+                        </Style>
+                        <Style Selector="Grid#ItemGrid.Info > avalonia|MaterialIcon">
+                            <Setter Property="Foreground" Value="White"/>
+                        </Style>
+
+                        <Style Selector="Grid#ItemGrid.Trace > TextBlock">
+                            <Setter Property="Foreground" Value="Gray"/>
+                        </Style>
+                        <Style Selector="Grid#ItemGrid.Trace > avalonia|MaterialIcon">
+                            <Setter Property="Foreground" Value="Gray"/>
+                        </Style>
+                    </ItemsControl.Styles>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="core:RemoteLogMessageProxy">
+                        <Grid Name="ItemGrid" Classes.Error="{Binding IsError}"
+                              Classes.Warning="{Binding IsWarning}"
+                              Classes.Info="{Binding IsInfo}"
+                              Classes.Trace="{Binding IsTrace}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Icon"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="DateTime"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Sender"/>
+                                <ColumnDefinition Width="*" SharedSizeGroup="Message"/>
+                            </Grid.ColumnDefinitions>
+                            <avalonia:MaterialIcon HorizontalAlignment="Center" Grid.Column="0" Kind="{Binding Icon}"/>
+                            <TextBlock FontFamily="Consolas" Margin="8 0" Grid.Column="1" Text="{Binding DateTime}"/>
+                            <TextBlock FontFamily="Consolas" Margin="8 0" Grid.Column="2" Text="{Binding  Sender}"/>
+                            <TextBlock FontFamily="Consolas" Margin="8 0" Grid.Column="3" Text="{Binding Message}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        <StackPanel Spacing="8" Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
+            <TextBlock Text="{Binding Skip, StringFormat={x:Static core:RS.LogMessagesPageView_From}}"/>
+            <TextBlock Text="-"/>
+            <TextBlock Text="{Binding To, StringFormat={x:Static core:RS.LogMessagesPageView_To}}"/>
+            <TextBlock Text="{Binding Filtered, StringFormat={x:Static core:RS.LogMessagesPageView_Filtered}}"/>
+            <TextBlock Text="{Binding Total, StringFormat={x:Static core:RS.LogMessagesPageView_Total}}"/>
+        </StackPanel>
+    </Grid>
+    
+</UserControl>

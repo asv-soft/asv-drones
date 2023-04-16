@@ -1,31 +1,27 @@
-﻿namespace Asv.Drones.Gui.Core;
+﻿using Asv.Cfg;
 
-public class Altitude : IMeasureUnit<double>
+namespace Asv.Drones.Gui.Core;
+
+
+public enum AltitudeUnits
 {
-    private readonly AltitudeUnits _units;
-    
-    private const double Kilometer = 1000;
+    Meters,
+    Feets
+}
+
+public class Altitude : MeasureUnitBase<double,AltitudeUnits>
+{
     private const double MetersInFeet = 0.3048;
-    public Altitude(AltitudeUnits units)
+
+    private static readonly IMeasureUnitItem<double, AltitudeUnits>[] _units = {
+        new DoubleMeasureUnitItem<AltitudeUnits>(AltitudeUnits.Meters,RS.Altitude_Meter_Title,RS.Altitude_Meter_Unit,true, "F0",1),
+        new DoubleMeasureUnitItem<AltitudeUnits>(AltitudeUnits.Feets,RS.Altitude_Feet_Title,RS.Altitude_Feet_Unit,false,"F0",MetersInFeet),
+    };
+    public Altitude(IConfiguration cfgSvc, string cfgKey) : base(cfgSvc, cfgKey,_units)
     {
-        _units = units;
+        
     }
 
-    public string GetUnit(double altitude)
-    {
-        return _units switch
-        {
-            AltitudeUnits.Meters => RS.Altitude_MeterUnit,
-            AltitudeUnits.Feets => RS.Altitude_FeetUnit
-        };
-    }
-
-    public string GetValue(double altitude)
-    {
-        return _units switch
-        {
-            AltitudeUnits.Meters => altitude >= Kilometer ? $"{altitude/Kilometer:F1}" : $"{altitude:F1}",
-            AltitudeUnits.Feets => $"{altitude * MetersInFeet:F2}"
-        };
-    }
+    public override string Title => "Altitude";
+    public override string Description => "Units of measure for the altitude";
 }

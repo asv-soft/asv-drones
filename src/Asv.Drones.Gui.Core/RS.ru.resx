@@ -199,9 +199,9 @@
 	<data name="MeasureUnitsSettingsViewModel_AltitudeDescription" xml:space="preserve">
 		<value>Измените текущие единицы измерения высоты.</value>
 	</data>
-	<data name="MeasureUnitsSettingsViewModel_LatitudeLongitude" xml:space="preserve">
-		<value>Широта и долгота</value>
-	</data>
+  <data name="MeasureUnitsSettingsViewModel_Latitude" xml:space="preserve">
+	  <value>Широта</value>
+  </data>
 	<data name="MeasureUnitsSettingsViewModel_LatitudeLongitudeDescription" xml:space="preserve">
 		<value>Измените текущие единицы измерения широты и долготы.</value>
 	</data>
@@ -211,10 +211,10 @@
 	<data name="MeasureUnitsSettingsViewModel_DistanceInternationalNauticalMiles" xml:space="preserve">
 		<value>Морские мили</value>
 	</data>
-	<data name="MeasureUnitsSettingsViewModel_AltitudeMeters" xml:space="preserve">
+	<data name="Altitude_Meter_Title" xml:space="preserve">
 		<value>Метры</value>
 	</data>
-	<data name="MeasureUnitsSettingsViewModel_AltitudeFeets" xml:space="preserve">
+	<data name="Altitude_Feet_Title" xml:space="preserve">
 		<value>Футы</value>
 	</data>
 	<data name="MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegrees" xml:space="preserve">
@@ -223,19 +223,19 @@
 	<data name="MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds" xml:space="preserve">
 		<value>Градусы, минуты, секунды</value>
 	</data>
-	<data name="Altitude_FeetUnit" xml:space="preserve">
+	<data name="Altitude_Feet_Unit" xml:space="preserve">
 		<value>фут</value>
 	</data>
-	<data name="Altitude_MeterUnit" xml:space="preserve">
+	<data name="Altitude_Meter_Unit" xml:space="preserve">
 		<value>м</value>
 	</data>
-	<data name="Distance_MeterUnit" xml:space="preserve">
+	<data name="Distance_Meters_Unit" xml:space="preserve">
 		<value>м</value>
 	</data>
-	<data name="Distance_InternationalNauticalMileUnit" xml:space="preserve">
-		<value>nmi</value>
+  <data name="Distance_NauticalMiles_Unit" xml:space="preserve">
+	  <value>NM</value>
 
-	</data>
+  </data>
 	<data name="Velocity_MetersPerSecondUnit" xml:space="preserve">
 		<value>м/с</value>
 	</data>
@@ -391,5 +391,285 @@
   </data>
   <data name="MapSettingsViewModel_MapDialogTitle" xml:space="preserve">
     <value>Карты</value>
+  </data>
+  <data name="Distance_Meters_Title" xml:space="preserve">
+	  <value>Метры</value>
+  </data>
+  <data name="GlobalCommands_OpenStoreDialogTitle" xml:space="preserve">
+	  <value>Открыть файл</value>
+  </data>
+  <data name="Distance_NauticalMiles_Title" xml:space="preserve">
+	  <value>Морские мили</value>
+  </data>
+  <data name="LogMessagesShellMenuItem_Name" xml:space="preserve">
+	  <value>Сообщения лога</value>
+  </data>
+  <data name="LogMessagesPageView_By" xml:space="preserve">
+	  <value>по </value>
+  </data>
+  <data name="LogMessagesPageView_SearchWatermark" xml:space="preserve">
+	  <value>Найти</value>
+  </data>
+  <data name="LogMessagesPageView_From" xml:space="preserve">
+	  <value>От {0}</value>
+  </data>
+  <data name="LogMessagesPageView_To" xml:space="preserve">
+	  <value>до {0}</value>
+  </data>
+  <data name="LogMessagesPageView_Filtered" xml:space="preserve">
+	  <value>Фильтрованных: {0}</value>
+  </data>
+  <data name="LogMessagesPageView_Total" xml:space="preserve">
+	  <value>Всего: {0}</value>
+  </data>
+  <data name="LogMessagesPageViewModel_LogName" xml:space="preserve">
+	  <value>СообщенияЛога</value>
+  </data>
+  <data name="LogMessagesPageViewModel_RefreshErrorMessage" xml:space="preserve">
+	  <value>Ошибка при обновлении элементов</value>
+  </data>
+  <data name="LogMessagesPageViewModel_ClearAllMessage" xml:space="preserve">
+	  <value>Очистить все сообщения лога</value>
+  </data>
+	<data name="SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name" xml:space="preserve">
+    <value>Вы должны указать допустимое имя</value>
+  </data>
+	<data name="SerialPortViewModel_SerialPortViewModel_ValidSerialPort" xml:space="preserve">
+    <value>Вы должны указать действительное имя последовательного порта</value>
+  </data>
+	<data name="SerialPortViewModel_SerialPortViewModel_BaudRateValid" xml:space="preserve">
+    <value>Скорость передачи данных должна быть значением от {0} до {1}</value>
+  </data>
+	<data name="SerialPortViewModel_SerialPortViewModel_NewSerial" xml:space="preserve">
+    <value>Новый последовательный порт {0}</value>
+  </data>
+	<data name="SerialPortView_Title" xml:space="preserve">
+    <value>Название</value>
+  </data>
+	<data name="SerialPortView_PortName" xml:space="preserve">
+    <value>Порт</value>
+  </data>
+	<data name="SerialPortView_BaudRate" xml:space="preserve">
+    <value>Скорость порта</value>
+  </data>
+	<data name="ConnectionsShellMenuItem_Name" xml:space="preserve">
+    <value>Подключения</value>
+  </data>
+	<data name="ConnectionsViewModel_AddDialogPort_Add" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+	<data name="ConnectionsViewModel_AddDialogPort_Cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+	<data name="ConnectionsViewModel_AddSerialPortDialog_Title" xml:space="preserve">
+    <value>Новый последовательный порт</value>
+  </data>
+	<data name="ConnectionsViewModel_AddTcpPortDialog_Title" xml:space="preserve">
+    <value>Новый TCP порт</value>
+  </data>
+	<data name="ConnectionsViewModel_AddUdpPortDialog_Title" xml:space="preserve">
+    <value>Новый порт UDP</value>
+  </data>
+	<data name="PortView_ToggleButton_Enabled" xml:space="preserve">
+    <value>Включен</value>
+  </data>
+	<data name="PortView_ToggleButton_Disabled" xml:space="preserve">
+    <value>Выключен</value>
+  </data>
+	<data name="ConnectionsPortsView_AddSerialCommand_Title" xml:space="preserve">
+    <value>Новый COM</value>
+  </data>
+	<data name="ConnectionsPortsView_AddTcpCommand_Title" xml:space="preserve">
+    <value>Новый  TCP</value>
+  </data>
+	<data name="ConnectionsPortsView_AddUdpCommand_Title" xml:space="preserve">
+    <value>Новый  UDP</value>
+  </data>
+	<data name="ConnectionsPortsView_Header_Title" xml:space="preserve">
+    <value>Порты для подключения</value>
+  </data>
+	<data name="ConnectionsView_Header_Description" xml:space="preserve">
+    <value>Эта страница позволяет настроить основные параметры сети Mavlink</value>
+  </data>
+	<data name="ConnectionsPortsView_Header_Description" xml:space="preserve">
+    <value>Точка входа, позволяющая ему общаться с другими устройствами в сети Mavlink.</value>
+  </data>
+	<data name="ConnectionsView_Header_Title" xml:space="preserve">
+    <value>Сеть Mavlink</value>
+  </data>
+	<data name="DeviceBrowserView_Description" xml:space="preserve">
+    <value>В этом разделе можно посмотреть все найденные устройства в сети</value>
+  </data>
+	<data name="DeviceBrowserView_Header" xml:space="preserve">
+    <value>Список найденных устройств</value>
+  </data>
+	<data name="ConnectionsIdentificationView_HeartbeatRate_Description" xml:space="preserve">
+    <value>Частота, с которой сообщения HEARTBEAT должны передаваться, чтобы объявить о существовании системы в сети MAVLink</value>
+  </data>
+	<data name="ConnectionsIdentificationView_HeartbeatRate_Header" xml:space="preserve">
+    <value>Частота Heartbeat</value>
+  </data>
+	<data name="ConnectionsIdentificationView_HeartbeatTimeout_Description" xml:space="preserve">
+    <value>По истечении таймаута пакета Heartbeat устройство будет удалено из списка устройств</value>
+  </data>
+	<data name="ConnectionsIdentificationView_HeartbeatTimeout_Header" xml:space="preserve">
+    <value>Таймаут Heartbeat</value>
+  </data>
+	<data name="ConnectionsIdentificationView_SystemComponentId_Description" xml:space="preserve">
+    <value>Каждая система имеет идентификатор, и каждый компонент имеет идентификатор компонента системы, который можно использовать для адресации/маршрутизации</value>
+  </data>
+	<data name="ConnectionsIdentificationView_SystemComponentId_Header" xml:space="preserve">
+    <value>ID Системы \ Компонента</value>
+  </data>
+	<data name="MavlinkDeviceView_Mode_Name" xml:space="preserve">
+    <value>Пользовательский режим</value>
+  </data>
+	<data name="MavlinkDeviceView_Rate_Name" xml:space="preserve">
+    <value>Частота Heartbeat</value>
+  </data>
+	<data name="MavlinkDeviceView_Status_Name" xml:space="preserve">
+    <value>Статус системы</value>
+  </data>
+	<data name="TcpPortView_TcpIpAddress" xml:space="preserve">
+    <value>IP адрес </value>
+  </data>
+	<data name="TcpPortView_PortTitle" xml:space="preserve">
+    <value>Название</value>
+  </data>
+	<data name="TcpPortView_TcpIpPort" xml:space="preserve">
+    <value>Номер порта</value>
+  </data>
+	<data name="UdpPortView_LocalIpAddress" xml:space="preserve">
+    <value>IP адрес</value>
+  </data>
+	<data name="UdpPortView_LocalPortName" xml:space="preserve">
+    <value>Порт</value>
+  </data>
+	<data name="UdpPortView_PortTitle" xml:space="preserve">
+    <value>Название</value>
+  </data>
+	<data name="UdpPortView_RemoteIpAddress" xml:space="preserve">
+    <value>Удаленный IP адрес</value>
+  </data>
+	<data name="UdpPortView_RemotePortName" xml:space="preserve">
+    <value>Удаленный порт</value>
+  </data>
+	<data name="UdpPortView_ToggleName" xml:space="preserve">
+    <value>Указать удаленный хост</value>
+  </data>
+	<data name="ConnectionsIdentificationViewModel_DeviceTimeout" xml:space="preserve">
+    <value>Таймаут должен быть от {0} до {1}</value>
+  </data>
+	<data name="ConnectionsIdentificationViewModel_ToString" xml:space="preserve">
+    <value>Гц</value>
+  </data>
+	<data name="PortViewModel_SkippedUnitTest" xml:space="preserve">
+    <value>ошибка</value>
+  </data>
+	
+	<data name="TcpPortViewModel_Title" xml:space="preserve">
+    <value>Новый TCP</value>
+  </data>
+	<data name="TcpPortViewModel_ValidTitle" xml:space="preserve">
+    <value>Вы должны указать действительное имя</value>
+  </data>
+	<data name="TcpPortViewModel_ValidPort" xml:space="preserve">
+    <value>Номер порта должен иметь значение от 1 до 65535</value>
+  </data>
+	<data name="TcpPortViewModel_ValidIpAddress" xml:space="preserve">
+    <value>Вы должны ввести действительный IP-адрес</value>
+  </data>
+	<data name="TcpPortViewModel_LogService_Error" xml:space="preserve">
+    <value>Ошибка при создании порта</value>
+  </data>
+	<data name="UdpPortViewModel_ValidTitle" xml:space="preserve">
+    <value>Вы должны указать действительное имя</value>
+  </data>
+	<data name="UdpPortViewModel_ValidLocalIpAddress" xml:space="preserve">
+    <value>Вы должны ввести действительный IP-адрес</value>
+  </data>
+	<data name="UdpPortViewModel_ValidLocalPort" xml:space="preserve">
+    <value>Номер порта должен иметь значение от 1 до 65535</value>
+  </data>
+	<data name="UdpPortViewModel_ValidRemotePort" xml:space="preserve">
+    <value>Номер порта должен иметь значение от 1 до 65535</value>
+  </data>
+	<data name="UdpPortViewModel_ValidRemoteIpAddress" xml:space="preserve">
+    <value>Вы должны ввести действительный IP-адрес</value>
+  </data>
+	<data name="UdpPortViewModel_Title" xml:space="preserve">
+    <value>Новый UDP</value>
+  </data>
+  <data name="PacketViewerShellMenuItem_Name" xml:space="preserve">
+	  <value>Просмотр пакетов</value>
+  </data>
+  <data name="LogMessageTypeHelper_GetDisplayName_Info" xml:space="preserve">
+	  <value>Информация</value>
+  </data>
+  <data name="LogMessageTypeHelper_GetDisplayName_Warning" xml:space="preserve">
+	  <value>Предупреждение</value>
+  </data>
+  <data name="LogMessageTypeHelper_GetDisplayName_Error" xml:space="preserve">
+	  <value>Ошибка</value>
+  </data>
+  <data name="PacketViewerView_CheckAll" xml:space="preserve">
+	  <value>Показать/Скрыть все</value>
+  </data>
+  <data name="PacketViewerView_PlayPause" xml:space="preserve">
+	  <value>Возобновить/Остановить</value>
+  </data>
+  <data name="PacketViewerView_ClearAll" xml:space="preserve">
+	  <value>Очистить список пакетов</value>
+  </data>
+  <data name="PacketViewerView_Save" xml:space="preserve">
+	  <value>Сохранить как CSV</value>
+  </data>
+  <data name="Voltage_Unit" xml:space="preserve">
+	  <value>В</value>
+  </data>
+  <data name="MeasureUnitsSettingsViewModel_Longitude" xml:space="preserve">
+	  <value>Долгота</value>
+  </data>
+  <data name="ConnectionsViewModel_EditDialogPort_Accept" xml:space="preserve">
+	  <value>Принять</value>
+  </data>
+  <data name="ConnectionsViewModel_EditSerialPortDialog_Title" xml:space="preserve">
+	  <value>Редактировать выбранный последовательный порт</value>
+  </data>
+  <data name="ConnectionsViewModel_EditTcpPortDialog_Title" xml:space="preserve">
+	  <value>Редактировать выбранный TCP порт</value>
+  </data>
+  <data name="ConnectionsViewModel_EditUdpPortDialog_Title" xml:space="preserve">
+	  <value>Редактировать выбранный порт UDP</value>
+  </data>
+  <data name="ConnectionsViewModel_EditDialogPort_Cancel" xml:space="preserve">
+	  <value>Отмена</value>
+  </data>
+  <data name="LoggerView_ErrorFilter_Name" xml:space="preserve">
+	  <value>Ошибка</value>
+  </data>
+  <data name="LoggerView_InfoFilter_Name" xml:space="preserve">
+	  <value>Инфо</value>
+  </data>
+  <data name="LoggerView_TraceFilter_Name" xml:space="preserve">
+	  <value>Отладка</value>
+  </data>
+  <data name="LoggerView_WarningFilter_Name" xml:space="preserve">
+	  <value>Предупреждение</value>
+  </data>
+  <data name="LogMessagesPageView_By_ToolTip" xml:space="preserve">
+	  <value>Число элементов на одной странице</value>
+  </data>
+  <data name="LogMessagesPageView_ClearAllButton_ToolTip" xml:space="preserve">
+	  <value>Очистить логи</value>
+  </data>
+  <data name="LogMessagesPageView_PrevButton_ToolTip" xml:space="preserve">
+	  <value>Перейти к предыдущей странице</value>
+  </data>
+  <data name="LogMessagesPageView_NextButton_ToolTip" xml:space="preserve">
+	  <value>Перейти к следующей странице</value>
+  </data>
+  <data name="LogMessagesPageView_RefreshButton_ToolTip" xml:space="preserve">
+	  <value>Обновить все элементы</value>
   </data>
 </root>

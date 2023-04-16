@@ -1,6 +1,7 @@
 using System.Collections.Specialized;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Runtime.CompilerServices;
 using Asv.Common;
 using Avalonia;
 using Avalonia.Collections;
@@ -25,7 +26,7 @@ namespace Asv.Avalonia.Map
             SelectableMixin.Attach<MapViewItem>(IsSelectedProperty);
             PressedMixin.Attach<MapViewItem>();
             FocusableProperty.OverrideDefaultValue<MapViewItem>(true);
-
+            
         }
 
         public MapViewItem()
@@ -41,11 +42,10 @@ namespace Asv.Avalonia.Map
                 Observable.FromEventPattern<EventHandler<PointerEventArgs>, PointerEventArgs>(
                     handler => PointerMoved += handler,
                     handler => PointerMoved -= handler).Subscribe(_ => DragPointerMoved(_.EventArgs)).DisposeItWith(disp);
-                
                 // DisposableMixins.DisposeWith(this.Events().PointerReleased.Where(_ => IsEditable).Subscribe(DragPointerReleased), disp);
-                
-
+               
             });
+            
 
         }
 
@@ -111,12 +111,16 @@ namespace Asv.Avalonia.Map
             }
         }
 
+        private IDisposable _isVisibleSubscribe;
         protected override void LogicalChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             base.LogicalChildrenCollectionChanged(sender, e);
             if (LogicalChildren.FirstOrDefault() is not Visual child) return;
             ZIndex = MapView.GetZOrder(child);
             IsEditable = MapView.GetIsEditable(child);
+            _isVisibleSubscribe?.Dispose();
+            _isVisibleSubscribe = child.WhenAnyValue(_ => _.IsVisible).Subscribe(_ => IsVisible = _);
+
         }
 
         protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
@@ -139,6 +143,7 @@ namespace Asv.Avalonia.Map
 
         private IDisposable _collectionSubscribe;
         private bool _firstCall = true;
+        private int? _lastHash;
 
         public void UpdatePathCollection()
         {
@@ -165,19 +170,29 @@ namespace Asv.Avalonia.Map
             var child = LogicalChildren.FirstOrDefault() as Visual;
             if (child == null) return;
 
+            if (IsVisible == false) return;
+            
             var pathPoints = MapView.GetPath(child)?.ToArray();
+                        
+            
+                        
+            
             if (pathPoints is { Length: > 1 })
             {
-                
                 IsShapeNotAvailable = false;// this is for hide content and draw only path
                 if (_firstCall)
                 {
                     _firstCall = false;
                     UpdatePathCollection();
                 }
+                
+                var newHash = 0;
+                
+                
                 var localPath = new List<GPoint>(pathPoints.Length);
                 var minX = long.MaxValue;
                 var minY = long.MaxValue;
+                var lastPointAdded = GPoint.Empty;
                 foreach (var p in pathPoints)
                 {
                     var itemPoint = _map.FromLatLngToLocal(p);
@@ -190,9 +205,21 @@ namespace Asv.Avalonia.Map
                     {
                         minY = itemPoint.Y;
                     }
+                    // this is for optimization (if last two points are the same - no need to draw it)
+                    if (lastPointAdded == itemPoint) continue;
                     localPath.Add(itemPoint);
+                    lastPointAdded = itemPoint;
+                    newHash = HashCode.Combine(newHash, itemPoint);
                 }
-
+                newHash = HashCode.Combine(newHash, Opacity);
+                newHash = HashCode.Combine(newHash, IsVisible);
+                newHash = HashCode.Combine(newHash, MapView.GetStroke(child));
+                newHash = HashCode.Combine(newHash, MapView.GetStrokeThickness(child));
+                if (localPath.Count < 2) return;
+                
+                // this is for optimization (if values not changed - no need to update)
+                if (newHash == _lastHash) return;
+                _lastHash = newHash;
                 
                 Canvas.SetLeft(this, minX);
                 Canvas.SetTop(this, minY);
@@ -204,7 +231,50 @@ namespace Asv.Avalonia.Map
                     truePath.Add(new Point(p.X, p.Y));
                 }
                 
-                Shape = CreatePath(truePath, MapView.GetStroke(child), MapView.GetFill(child),MapView.GetStrokeThickness(child),MapView.GetStrokeDashArray(child),MapView.GetPathOpacity(child));
+                // Create a StreamGeometry to use to specify _myPath.
+                var geometry = new StreamGeometry();
+            
+                geometry.BeginBatchUpdate();
+                using (var ctx = geometry.Open())
+                {
+                    ctx.BeginFigure(truePath[0], false);
+                    // Draw a line to the next specified point.
+                    foreach (var path in truePath)
+                    {
+                        ctx.LineTo(path);
+                    }
+                    //ctx.PolyLineTo(localPath, true, true);
+                }
+            
+                // Freeze the geometry (make it unmodifiable)
+                // for additional performance benefits.
+                geometry.EndBatchUpdate();
+                if (Shape == null)
+                {
+                    // Create a path to draw a geometry with.
+                    Shape = new Path();
+                    {
+                        // Specify the shape of the Path using the StreamGeometry.
+                        Shape.Data = geometry;
+                        Shape.Stroke = MapView.GetStroke(child);
+                        Shape.StrokeThickness = MapView.GetStrokeThickness(child);
+                        Shape.StrokeDashArray = MapView.GetStrokeDashArray(child);
+                        Shape.Fill = MapView.GetFill(child);
+                        Shape.Opacity = MapView.GetPathOpacity(child);
+                        Shape.StrokeJoin = PenLineJoin.Round;
+                        Shape.StrokeLineCap = PenLineCap.Square;
+                        Shape.IsHitTestVisible = false;
+                    }
+                }
+                else
+                {
+                    Shape.Data = geometry;
+                    Shape.Stroke = MapView.GetStroke(child);
+                    Shape.StrokeThickness = MapView.GetStrokeThickness(child);
+                    Shape.StrokeDashArray = MapView.GetStrokeDashArray(child);
+                    Shape.Fill = MapView.GetFill(child);
+                    Shape.Opacity = MapView.GetPathOpacity(child);
+                }
             }
             else
             {
@@ -246,59 +316,8 @@ namespace Asv.Avalonia.Map
             set => SetValue(ShapeProperty, value);
         }
 
-        public Path CreatePath(List<Point> localPath, IBrush stroke, IBrush fill,double thickness, AvaloniaList<double> dash, double opacity )
-        {
-            // Create a StreamGeometry to use to specify _myPath.
-            var geometry = new StreamGeometry();
-            
-            
-            geometry.BeginBatchUpdate();
-            using (var ctx = geometry.Open())
-            {
-                
-                    
-
-                ctx.BeginFigure(localPath[0], false);
-                // Draw a line to the next specified point.
-                foreach (var path in localPath)
-                {
-                   ctx.LineTo(path);
-                }
-                //ctx.PolyLineTo(localPath, true, true);
-            }
-
-            // Freeze the geometry (make it unmodifiable)
-            // for additional performance benefits.
-            geometry.EndBatchUpdate();
-            if (_myPath == null)
-            {
-                // Create a path to draw a geometry with.
-                _myPath = new Path();
-                {
-                    // Specify the shape of the Path using the StreamGeometry.
-                    _myPath.Data = geometry;
-                    _myPath.Stroke = stroke;
-                    _myPath.StrokeThickness = thickness;
-                    _myPath.StrokeDashArray = dash;
-                    _myPath.Fill = fill;
-                    _myPath.Opacity = opacity;
-                    _myPath.StrokeJoin = PenLineJoin.Round;
-                    _myPath.StrokeLineCap = PenLineCap.Square;
-                    _myPath.IsHitTestVisible = false;
-                }
-            }
-            else
-            {
-                _myPath.Data = geometry;
-                _myPath.Stroke = stroke;
-                _myPath.StrokeThickness = thickness;
-                _myPath.StrokeDashArray = dash;
-                _myPath.Fill = fill;
-                _myPath.Opacity = opacity;
-            }
-            
-            return _myPath;
-        }
+        
+        
 
 
         public static IEnumerable<TSource[]> Chunked<TSource>(IEnumerable<TSource> source, int size)
@@ -337,7 +356,8 @@ namespace Asv.Avalonia.Map
         public static readonly StyledProperty<bool> IsSelectedProperty =
             AvaloniaProperty.Register<MapViewItem, bool>(nameof(IsSelected));
 
-        private Path _myPath;
+        
+
 
         public bool IsSelected
         {

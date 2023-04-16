@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="GbsRttItem_ValueNotAvailable" xml:space="preserve">
+        <value>N\A</value>
+    </data>
+    <data name="AutoModeViewModel_Accuracy_ValidValue" xml:space="preserve">
+        <value>Accuracy must be greater or equal {0}.</value>
+    </data>
+    <data name="AutoModeViewModel_Observation_ValidValue" xml:space="preserve">
+        <value>Observation time must be greater or equal {0}.</value>
+    </data>
+    <data name="AutoModeViewModel_StartFailed" xml:space="preserve">
+        <value>Auto mode start failed: {0}</value>
+    </data>
+    <data name="AutoModeViewModel_ObservationUnit_Name" xml:space="preserve">
+        <value>sec</value>
+    </data>
+    <data name="AutoModeView_Accuracy_Name" xml:space="preserve">
+        <value>Accuracy</value>
+    </data>
+    <data name="AutoModeView_Observation_Name" xml:space="preserve">
+        <value>Observation</value>
+    </data>
+    <data name="FixedModeViewModel_StartFailed" xml:space="preserve">
+        <value>Fixed mode start failed: {0}</value>
+    </data>
+    <data name="FixedModeViewModel_Accuracy_ValidValue" xml:space="preserve">
+        <value>Accuracy must be greater or equal {0}.</value>
+    </data>
+    <data name="FlightGbsViewModel_AutoMode_Title" xml:space="preserve">
+        <value>Auto Mode</value>
+    </data>
+    <data name="FlightGbsViewModel_AutoMode_PrimaryButtonText" xml:space="preserve">
+        <value>Ok</value>
+    </data>
+    <data name="FlightGbsViewModel_AutoMode_CloseButtonText" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="FlightGbsViewModel_FixedMode_Title" xml:space="preserve">
+        <value>Fixed Mode</value>
+    </data>
+    <data name="FlightGbsViewModel_FixedMode_PrimaryButtonText" xml:space="preserve">
+        <value>Ok</value>
+    </data>
+    <data name="FlightGbsViewModel_FixedMode_CloseButtonText" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="FlightGbsViewModel_Title" xml:space="preserve">
+        <value>Ground base station</value>
+    </data>
+    <data name="FixedModeView_Latitude_Name" xml:space="preserve">
+        <value>Latitude</value>
+    </data>
+    <data name="FixedModeView_Longitude_Name" xml:space="preserve">
+        <value>Longitude</value>
+    </data>
+    <data name="FixedModeView_Altitude_Name" xml:space="preserve">
+        <value>Altitude</value>
+    </data>
+    <data name="FixedModeView_Accuracy_Name" xml:space="preserve">
+        <value>Accuracy</value>
+    </data>
+    <data name="AccuracyGbsRttView_ToolTip" xml:space="preserve">
+        <value>GBS accuracy</value>
+    </data>
+    <data name="BaseStationModeGbsRttView_ToolTip" xml:space="preserve">
+        <value>GBS mode</value>
+    </data>
+    <data name="DGpsRateGbsRttView_ToolTip" xml:space="preserve">
+        <value>GBS DGps bytes rate</value>
+    </data>
+    <data name="LinkQualityGbsRttView_ToolTip" xml:space="preserve">
+        <value>GBS link quality</value>
+    </data>
+    <data name="ObservationGbsRttView_ToolTip" xml:space="preserve">
+        <value>GBS observe time</value>
+    </data>
+    <data name="VisibleSatellitesGbsRttView_ToolTip" xml:space="preserve">
+        <value>GBS observe this amount of satellites</value>
+    </data>
+    <data name="FlightGbsView_EnableAuto_Content" xml:space="preserve">
+        <value>Enable Auto</value>
+    </data>
+    <data name="FlightGbsView_EnableFixed_Content" xml:space="preserve">
+        <value>Enable Fixed</value>
+    </data>
+    <data name="FlightGbsView_Cancel_Content" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="GbsAnchor_Latitude" xml:space="preserve">
+        <value>Latitude: {0}</value>
+    </data>
+    <data name="GbsAnchor_Longitude" xml:space="preserve">
+        <value>Longitude: {0}</value>
+    </data>
+    <data name="GbsAnchor_GNSS_Altitude" xml:space="preserve">
+        <value>GNSS Altitude: {0}</value>
+    </data>
+    <data name="GbsAnchor_Title" xml:space="preserve">
+        <value>Ground Base Station</value>
+    </data>
+    <data name="FlightGbsView_MoveToButton_ToolTip" xml:space="preserve">
+        <value>Move to this GBS on map</value>
+    </data>
+    <data name="FlightGbsView_Satellites_ToolTip" xml:space="preserve">
+        <value>Number of satellites for each constellation</value>
+    </data>
+</root>

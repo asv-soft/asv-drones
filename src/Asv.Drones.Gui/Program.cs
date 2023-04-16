@@ -53,7 +53,7 @@ namespace Asv.Drones.Gui
                     // Avalonia 11.0.0-preview1 issue: sometimes might crash by collection enumerate fail
                     UseCompositor = false,
                     AllowEglInitialization = false,
-                    UseDeferredRendering = true
+                    UseDeferredRendering = true,
                 })
                 .With(new X11PlatformOptions
                 {

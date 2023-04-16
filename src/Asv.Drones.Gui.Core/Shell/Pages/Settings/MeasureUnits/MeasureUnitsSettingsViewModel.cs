@@ -13,7 +13,7 @@ namespace Asv.Drones.Gui.Core
         
         private readonly ILocalizationService _localization;
         
-        public override int Order => 1;
+        public override int Order => 2;
         
         public MeasureUnitsSettingsViewModel() : base(Uri)
         {
@@ -25,49 +25,58 @@ namespace Asv.Drones.Gui.Core
         {
             _localization = localization;
             
-            _localization.CurrentAltitudeUnit.Subscribe(_ => SelectedAltitudeUnit = _)
+            _localization.Altitude.CurrentUnit.Subscribe(_ => SelectedAltitudeUnit = _)
                 .DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.SelectedAltitudeUnit)
-                .Subscribe(_localization.CurrentAltitudeUnit)
+                .Subscribe(_localization.Altitude.CurrentUnit)
                 .DisposeItWith(Disposable);
             
-            _localization.CurrentDistanceUnit.Subscribe(_ => SelectedDistanceUnit = _)
+            _localization.Distance.CurrentUnit.Subscribe(_ => SelectedDistanceUnit = _)
                 .DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.SelectedDistanceUnit)
-                .Subscribe(_localization.CurrentDistanceUnit)
+                .Subscribe(_localization.Distance.CurrentUnit)
                 .DisposeItWith(Disposable);
 
-            _localization.CurrentLatitudeLongitudeUnit.Subscribe(_ => SelectedLatitudeLongitudeUnit = _)
+            _localization.Latitude.CurrentUnit.Subscribe(_ => SelectedLatitudeUnit = _)
                 .DisposeItWith(Disposable);
-            this.WhenAnyValue(_ => _.SelectedLatitudeLongitudeUnit)
-                .Subscribe(_localization.CurrentLatitudeLongitudeUnit)
+            this.WhenAnyValue(_ => _.SelectedLatitudeUnit)
+                .Subscribe( _localization.Latitude.CurrentUnit)
                 .DisposeItWith(Disposable);
             
-            _localization.CurrentVelocityUnit.Subscribe(_ => SelectedVelocityUnit = _)
+            _localization.Longitude.CurrentUnit.Subscribe(_ => SelectedLongitudeUnit = _)
+                .DisposeItWith(Disposable);
+            this.WhenAnyValue(_ => _.SelectedLongitudeUnit)
+                .Subscribe( _localization.Longitude.CurrentUnit)
+                .DisposeItWith(Disposable);
+            
+            _localization.Velocity.CurrentUnit.Subscribe(_ => SelectedVelocityUnit = _)
                 .DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.SelectedVelocityUnit)
-                .Subscribe(_localization.CurrentVelocityUnit)
+                .Subscribe(_localization.Velocity.CurrentUnit)
                 .DisposeItWith(Disposable);
         }
         
         [Reactive]
-        public AltitudeUnitItem SelectedAltitudeUnit { get; set; }
+        public IMeasureUnitItem<double,AltitudeUnits> SelectedAltitudeUnit { get; set; }
 
-        public IEnumerable<AltitudeUnitItem> AltitudeUnits => _localization.AltitudeUnits;
-
-        [Reactive]
-        public DistanceUnitItem SelectedDistanceUnit { get; set; }
-
-        public IEnumerable<DistanceUnitItem> DistanceUnits => _localization.DistanceUnits;
+        public IEnumerable<IMeasureUnitItem<double,AltitudeUnits>> AltitudeUnits => _localization.Altitude.AvailableUnits;
 
         [Reactive]
-        public LatitudeLongitudeUnitItem SelectedLatitudeLongitudeUnit { get; set; }
+        public IMeasureUnitItem<double,DistanceUnits> SelectedDistanceUnit { get; set; }
 
-        public IEnumerable<LatitudeLongitudeUnitItem> LatitudeLongitudeUnits => _localization.LatitudeLongitudeUnits;
+        public IEnumerable<IMeasureUnitItem<double,DistanceUnits>> DistanceUnits => _localization.Distance.AvailableUnits;
+
+        [Reactive]
+        public IMeasureUnitItem<double,LatitudeUnits> SelectedLatitudeUnit { get; set; }
+        public IEnumerable<IMeasureUnitItem<double,LatitudeUnits>> LatitudeUnits => _localization.Latitude.AvailableUnits;
         
         [Reactive]
-        public VelocityUnitItem SelectedVelocityUnit { get; set; }
+        public IMeasureUnitItem<double,LongitudeUnits> SelectedLongitudeUnit { get; set; }
+        public IEnumerable<IMeasureUnitItem<double,LongitudeUnits>> LongitudeUnits => _localization.Longitude.AvailableUnits;
+        
+        [Reactive]
+        public IMeasureUnitItem<double,VelocityUnits> SelectedVelocityUnit { get; set; }
 
-        public IEnumerable<VelocityUnitItem> VelocityUnits => _localization.VelocityUnits;
+        public IEnumerable<IMeasureUnitItem<double,VelocityUnits>> VelocityUnits => _localization.Velocity.AvailableUnits;
     }
 }

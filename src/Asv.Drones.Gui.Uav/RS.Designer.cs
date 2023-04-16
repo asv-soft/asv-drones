@@ -60,263 +60,236 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The rate at which the HEARTBEAT message must be transmitted to announce the existence of the system on the MAVLink network.
+        ///   Looks up a localized string similar to Battery level.
         /// </summary>
-        public static string ConnectionsIdentificationView_HeartbeatRate_Description {
+        public static string BatteryUavRttView_ToolTip {
             get {
-                return ResourceManager.GetString("ConnectionsIdentificationView_HeartbeatRate_Description", resourceCulture);
+                return ResourceManager.GetString("BatteryUavRttView_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Heartbeat rate.
+        ///   Looks up a localized string similar to CPU load of UAV.
         /// </summary>
-        public static string ConnectionsIdentificationView_HeartbeatRate_Header {
+        public static string CpuLoadUavRttView_ToolTip {
             get {
-                return ResourceManager.GetString("ConnectionsIdentificationView_HeartbeatRate_Header", resourceCulture);
+                return ResourceManager.GetString("CpuLoadUavRttView_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to After that timeout of Heartbeat packet deviceService will be removed from deviceService list.
+        ///   Looks up a localized string similar to UAV current.
         /// </summary>
-        public static string ConnectionsIdentificationView_HeartbeatTimeout_Description {
+        public static string CurrentUavRttView_ToolTip {
             get {
-                return ResourceManager.GetString("ConnectionsIdentificationView_HeartbeatTimeout_Description", resourceCulture);
+                return ResourceManager.GetString("CurrentUavRttView_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Heartbeat timeout.
+        ///   Looks up a localized string similar to UAV time in flight.
         /// </summary>
-        public static string ConnectionsIdentificationView_HeartbeatTimeout_Header {
+        public static string FlightTimeUavRttView_ToolTip {
             get {
-                return ResourceManager.GetString("ConnectionsIdentificationView_HeartbeatTimeout_Header", resourceCulture);
+                return ResourceManager.GetString("FlightTimeUavRttView_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Each system has a network-unique system id, and each component has a system-unique component id that can be used for addressing/routing.
+        ///   Looks up a localized string similar to Move to this UAV on map.
         /// </summary>
-        public static string ConnectionsIdentificationView_SystemComponentId_Description {
+        public static string FlightUavView_MoveToButton_ToolTip {
             get {
-                return ResourceManager.GetString("ConnectionsIdentificationView_SystemComponentId_Description", resourceCulture);
+                return ResourceManager.GetString("FlightUavView_MoveToButton_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to System \ Component ID.
+        ///   Looks up a localized string similar to Distance from UAV to home.
         /// </summary>
-        public static string ConnectionsIdentificationView_SystemComponentId_Header {
+        public static string HomeDistanceUavRttView_ToolTip {
             get {
-                return ResourceManager.GetString("ConnectionsIdentificationView_SystemComponentId_Header", resourceCulture);
+                return ResourceManager.GetString("HomeDistanceUavRttView_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Timeout must be from {0} to {1}.
+        ///   Looks up a localized string similar to UAV link quality.
         /// </summary>
-        public static string ConnectionsIdentificationViewModel_DeviceTimeout {
+        public static string LinkQualityUavRttView_ToolTip {
             get {
-                return ResourceManager.GetString("ConnectionsIdentificationViewModel_DeviceTimeout", resourceCulture);
+                return ResourceManager.GetString("LinkQualityUavRttView_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hz.
+        ///   Looks up a localized string similar to Disables mission trajectory and waypoints visibility.
         /// </summary>
-        public static string ConnectionsIdentificationViewModel_ToString {
+        public static string MissionStatusView_DisableLayersButton_ToolTip {
             get {
-                return ResourceManager.GetString("ConnectionsIdentificationViewModel_ToString", resourceCulture);
+                return ResourceManager.GetString("MissionStatusView_DisableLayersButton_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Serial.
+        ///   Looks up a localized string similar to Load mission from UAV.
         /// </summary>
-        public static string ConnectionsPortsView_AddSerialCommand_Title {
+        public static string MissionStatusView_GetMissionButton_ToolTip {
             get {
-                return ResourceManager.GetString("ConnectionsPortsView_AddSerialCommand_Title", resourceCulture);
+                return ResourceManager.GetString("MissionStatusView_GetMissionButton_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add TCP.
+        ///   Looks up a localized string similar to Current mission progress.
         /// </summary>
-        public static string ConnectionsPortsView_AddTcpCommand_Title {
+        public static string MissionStatusView_MissionProgress_ToolTip {
             get {
-                return ResourceManager.GetString("ConnectionsPortsView_AddTcpCommand_Title", resourceCulture);
+                return ResourceManager.GetString("MissionStatusView_MissionProgress_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add UDP.
+        ///   Looks up a localized string similar to On/off mission trajectory visibility.
         /// </summary>
-        public static string ConnectionsPortsView_AddUdpCommand_Title {
+        public static string MissionStatusView_TogglePolygonButton_ToolTip {
             get {
-                return ResourceManager.GetString("ConnectionsPortsView_AddUdpCommand_Title", resourceCulture);
+                return ResourceManager.GetString("MissionStatusView_TogglePolygonButton_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Point of entry that allows it to communicate with other devices in Mavlink network..
+        ///   Looks up a localized string similar to On/off mission way points visibility.
         /// </summary>
-        public static string ConnectionsPortsView_Header_Description {
+        public static string MissionStatusView_ToggleWaypointsButton_ToolTip {
             get {
-                return ResourceManager.GetString("ConnectionsPortsView_Header_Description", resourceCulture);
+                return ResourceManager.GetString("MissionStatusView_ToggleWaypointsButton_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connections ports.
+        ///   Looks up a localized string similar to Total: {0}.
         /// </summary>
-        public static string ConnectionsPortsView_Header_Title {
+        public static string MissionStatusView_Total {
             get {
-                return ResourceManager.GetString("ConnectionsPortsView_Header_Title", resourceCulture);
+                return ResourceManager.GetString("MissionStatusView_Total", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connections.
+        ///   Looks up a localized string similar to Remove all pinned parameters.
         /// </summary>
-        public static string ConnectionsShellMenuItem_Name {
+        public static string ParametersEditorPageView_PinsOffButton_ToolTip {
             get {
-                return ResourceManager.GetString("ConnectionsShellMenuItem_Name", resourceCulture);
+                return ResourceManager.GetString("ParametersEditorPageView_PinsOffButton_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This page allows you to configure the basic settings on the Mavlink network.
+        ///   Looks up a localized string similar to Star this parameter.
         /// </summary>
-        public static string ConnectionsView_Header_Description {
+        public static string ParametersEditorPageView_StarButton_ToolTip {
             get {
-                return ResourceManager.GetString("ConnectionsView_Header_Description", resourceCulture);
+                return ResourceManager.GetString("ParametersEditorPageView_StarButton_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mavlink network.
+        ///   Looks up a localized string similar to Show only starred parameters.
         /// </summary>
-        public static string ConnectionsView_Header_Title {
+        public static string ParametersEditorPageView_StarsToggleButton_ToolTip {
             get {
-                return ResourceManager.GetString("ConnectionsView_Header_Title", resourceCulture);
+                return ResourceManager.GetString("ParametersEditorPageView_StarsToggleButton_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add.
+        ///   Looks up a localized string similar to Update all parameters.
         /// </summary>
-        public static string ConnectionsViewModel_AddDialogPort_Add {
+        public static string ParametersEditorPageView_UpdateButton_ToolTip {
             get {
-                return ResourceManager.GetString("ConnectionsViewModel_AddDialogPort_Add", resourceCulture);
+                return ResourceManager.GetString("ParametersEditorPageView_UpdateButton_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel.
+        ///   Looks up a localized string similar to Search.
         /// </summary>
-        public static string ConnectionsViewModel_AddDialogPort_Cancel {
+        public static string ParametersEditorPageViewModel_Search {
             get {
-                return ResourceManager.GetString("ConnectionsViewModel_AddDialogPort_Cancel", resourceCulture);
+                return ResourceManager.GetString("ParametersEditorPageViewModel_Search", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add new Mavlink serial port.
+        ///   Looks up a localized string similar to Parameters editor [{0}].
         /// </summary>
-        public static string ConnectionsViewModel_AddSerialPortDialog_Title {
+        public static string ParametersEditorPageViewModel_Title {
             get {
-                return ResourceManager.GetString("ConnectionsViewModel_AddSerialPortDialog_Title", resourceCulture);
+                return ResourceManager.GetString("ParametersEditorPageViewModel_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add new Mavlink TCP port.
+        ///   Looks up a localized string similar to Total: {0}.
         /// </summary>
-        public static string ConnectionsViewModel_AddTcpPortDialog_Title {
+        public static string ParametersEditorPageViewModel_Total {
             get {
-                return ResourceManager.GetString("ConnectionsViewModel_AddTcpPortDialog_Title", resourceCulture);
+                return ResourceManager.GetString("ParametersEditorPageViewModel_Total", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add new Mavlink UDP port.
+        ///   Looks up a localized string similar to On/off pin for this parameter.
         /// </summary>
-        public static string ConnectionsViewModel_AddUdpPortDialog_Title {
+        public static string ParametersEditorParameterView_PinToggleButton_ToolTip {
             get {
-                return ResourceManager.GetString("ConnectionsViewModel_AddUdpPortDialog_Title", resourceCulture);
+                return ResourceManager.GetString("ParametersEditorParameterView_PinToggleButton_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In this section you can see all found devices on the network.
+        ///   Looks up a localized string similar to Reboot required.
         /// </summary>
-        public static string DeviceBrowserView_Description {
+        public static string ParametersEditorParameterView_RebootRequired {
             get {
-                return ResourceManager.GetString("DeviceBrowserView_Description", resourceCulture);
+                return ResourceManager.GetString("ParametersEditorParameterView_RebootRequired", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Device list.
+        ///   Looks up a localized string similar to Update.
         /// </summary>
-        public static string DeviceBrowserView_Header {
+        public static string ParametersEditorParameterView_UpdateButton {
             get {
-                return ResourceManager.GetString("DeviceBrowserView_Header", resourceCulture);
+                return ResourceManager.GetString("ParametersEditorParameterView_UpdateButton", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Custom mode.
+        ///   Looks up a localized string similar to Update this parameter from UAV.
         /// </summary>
-        public static string MavlinkDeviceView_Mode_Name {
+        public static string ParametersEditorParameterView_UpdateButton_ToolTip {
             get {
-                return ResourceManager.GetString("MavlinkDeviceView_Mode_Name", resourceCulture);
+                return ResourceManager.GetString("ParametersEditorParameterView_UpdateButton_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Heartbeat rate.
+        ///   Looks up a localized string similar to Write.
         /// </summary>
-        public static string MavlinkDeviceView_Rate_Name {
+        public static string ParametersEditorParameterView_WriteButton {
             get {
-                return ResourceManager.GetString("MavlinkDeviceView_Rate_Name", resourceCulture);
+                return ResourceManager.GetString("ParametersEditorParameterView_WriteButton", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to System status.
+        ///   Looks up a localized string similar to Write this parameter to UAV.
         /// </summary>
-        public static string MavlinkDeviceView_Status_Name {
+        public static string ParametersEditorParameterView_WriteButton_ToolTip {
             get {
-                return ResourceManager.GetString("MavlinkDeviceView_Status_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Disabled.
-        /// </summary>
-        public static string PortView_ToggleButton_Disabled {
-            get {
-                return ResourceManager.GetString("PortView_ToggleButton_Disabled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enabled.
-        /// </summary>
-        public static string PortView_ToggleButton_Enabled {
-            get {
-                return ResourceManager.GetString("PortView_ToggleButton_Enabled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to error.
-        /// </summary>
-        public static string PortViewModel_SkippedUnitTest {
-            get {
-                return ResourceManager.GetString("PortViewModel_SkippedUnitTest", resourceCulture);
+                return ResourceManager.GetString("ParametersEditorParameterView_WriteButton_ToolTip", resourceCulture);
             }
         }
         
@@ -348,245 +321,110 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Baud rate.
+        ///   Looks up a localized string similar to Set altitude above ground level (AGL) for takeoff command..
         /// </summary>
-        public static string SerialPortView_BaudRate {
+        public static string TakeOffAnchorActionViewModel_DialogDescription {
             get {
-                return ResourceManager.GetString("SerialPortView_BaudRate", resourceCulture);
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_DialogDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Port name.
+        ///   Looks up a localized string similar to Take off.
         /// </summary>
-        public static string SerialPortView_PortName {
+        public static string TakeOffAnchorActionViewModel_DialogPrimaryButton {
             get {
-                return ResourceManager.GetString("SerialPortView_PortName", resourceCulture);
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_DialogPrimaryButton", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Port title.
+        ///   Looks up a localized string similar to Cancel.
         /// </summary>
-        public static string SerialPortView_Title {
+        public static string TakeOffAnchorActionViewModel_DialogSecondaryButton {
             get {
-                return ResourceManager.GetString("SerialPortView_Title", resourceCulture);
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_DialogSecondaryButton", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Baud rate must be value from {0} to {1}.
+        ///   Looks up a localized string similar to User send TakeOff at {0} altitude for {1}.
         /// </summary>
-        public static string SerialPortViewModel_SerialPortViewModel_BaudRateValid {
+        public static string TakeOffAnchorActionViewModel_LogMessage {
             get {
-                return ResourceManager.GetString("SerialPortViewModel_SerialPortViewModel_BaudRateValid", resourceCulture);
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_LogMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New serial {0}.
+        ///   Looks up a localized string similar to Take off.
         /// </summary>
-        public static string SerialPortViewModel_SerialPortViewModel_NewSerial {
+        public static string TakeOffAnchorActionViewModel_Title {
             get {
-                return ResourceManager.GetString("SerialPortViewModel_SerialPortViewModel_NewSerial", resourceCulture);
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You must specify a valid serial port name.
+        ///   Looks up a localized string similar to Altitude must be greater or equal {0}..
         /// </summary>
-        public static string SerialPortViewModel_SerialPortViewModel_ValidSerialPort {
+        public static string TakeOffAnchorActionViewModel_ValidValue {
             get {
-                return ResourceManager.GetString("SerialPortViewModel_SerialPortViewModel_ValidSerialPort", resourceCulture);
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_ValidValue", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You must specify a valid name.
+        ///   Looks up a localized string similar to AGL Altitude: {0}.
         /// </summary>
-        public static string SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name {
+        public static string UavAnchor_AGL_Altitude {
             get {
-                return ResourceManager.GetString("SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name", resourceCulture);
+                return ResourceManager.GetString("UavAnchor_AGL_Altitude", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Port title.
+        ///   Looks up a localized string similar to GNSS Altitude: {0}.
         /// </summary>
-        public static string TcpPortView_PortTitle {
+        public static string UavAnchor_GNSS_Altitude {
             get {
-                return ResourceManager.GetString("TcpPortView_PortTitle", resourceCulture);
+                return ResourceManager.GetString("UavAnchor_GNSS_Altitude", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IP address.
+        ///   Looks up a localized string similar to Latitude: {0}.
         /// </summary>
-        public static string TcpPortView_TcpIpAddress {
+        public static string UavAnchor_Latitude {
             get {
-                return ResourceManager.GetString("TcpPortView_TcpIpAddress", resourceCulture);
+                return ResourceManager.GetString("UavAnchor_Latitude", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Port number.
+        ///   Looks up a localized string similar to Longitude: {0}.
         /// </summary>
-        public static string TcpPortView_TcpIpPort {
+        public static string UavAnchor_Longitude {
             get {
-                return ResourceManager.GetString("TcpPortView_TcpIpPort", resourceCulture);
+                return ResourceManager.GetString("UavAnchor_Longitude", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error to create port.
+        ///   Looks up a localized string similar to N\A.
         /// </summary>
-        public static string TcpPortViewModel_LogService_Error {
+        public static string UavRttItem_ValueNotAvailable {
             get {
-                return ResourceManager.GetString("TcpPortViewModel_LogService_Error", resourceCulture);
+                return ResourceManager.GetString("UavRttItem_ValueNotAvailable", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New TCP.
+        ///   Looks up a localized string similar to UAV voltage.
         /// </summary>
-        public static string TcpPortViewModel_Title {
+        public static string VoltageUavRttItemView_ToolTip {
             get {
-                return ResourceManager.GetString("TcpPortViewModel_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You must insert a valid ip address.
-        /// </summary>
-        public static string TcpPortViewModel_ValidIpAddress {
-            get {
-                return ResourceManager.GetString("TcpPortViewModel_ValidIpAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Port number must be value from 1 to 65535.
-        /// </summary>
-        public static string TcpPortViewModel_ValidPort {
-            get {
-                return ResourceManager.GetString("TcpPortViewModel_ValidPort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You must specify a valid name.
-        /// </summary>
-        public static string TcpPortViewModel_ValidTitle {
-            get {
-                return ResourceManager.GetString("TcpPortViewModel_ValidTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to IP Address.
-        /// </summary>
-        public static string UdpPortView_LocalIpAddress {
-            get {
-                return ResourceManager.GetString("UdpPortView_LocalIpAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Port Number.
-        /// </summary>
-        public static string UdpPortView_LocalPortName {
-            get {
-                return ResourceManager.GetString("UdpPortView_LocalPortName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Title.
-        /// </summary>
-        public static string UdpPortView_PortTitle {
-            get {
-                return ResourceManager.GetString("UdpPortView_PortTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remote IP Address.
-        /// </summary>
-        public static string UdpPortView_RemoteIpAddress {
-            get {
-                return ResourceManager.GetString("UdpPortView_RemoteIpAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remote port number.
-        /// </summary>
-        public static string UdpPortView_RemotePortName {
-            get {
-                return ResourceManager.GetString("UdpPortView_RemotePortName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Specify remote host.
-        /// </summary>
-        public static string UdpPortView_ToggleName {
-            get {
-                return ResourceManager.GetString("UdpPortView_ToggleName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New UDP.
-        /// </summary>
-        public static string UdpPortViewModel_Title {
-            get {
-                return ResourceManager.GetString("UdpPortViewModel_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You must enter a valid IP address.
-        /// </summary>
-        public static string UdpPortViewModel_ValidLocalIpAddress {
-            get {
-                return ResourceManager.GetString("UdpPortViewModel_ValidLocalIpAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Port number must be a value between 1 and 65535.
-        /// </summary>
-        public static string UdpPortViewModel_ValidLocalPort {
-            get {
-                return ResourceManager.GetString("UdpPortViewModel_ValidLocalPort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You must enter a valid IP address.
-        /// </summary>
-        public static string UdpPortViewModel_ValidRemoteIpAddress {
-            get {
-                return ResourceManager.GetString("UdpPortViewModel_ValidRemoteIpAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Port number must be a value between 1 and 65535.
-        /// </summary>
-        public static string UdpPortViewModel_ValidRemotePort {
-            get {
-                return ResourceManager.GetString("UdpPortViewModel_ValidRemotePort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You must specify a valid name.
-        /// </summary>
-        public static string UdpPortViewModel_ValidTitle {
-            get {
-                return ResourceManager.GetString("UdpPortViewModel_ValidTitle", resourceCulture);
+                return ResourceManager.GetString("VoltageUavRttItemView_ToolTip", resourceCulture);
             }
         }
     }

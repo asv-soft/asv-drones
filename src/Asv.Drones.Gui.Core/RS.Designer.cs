@@ -60,20 +60,38 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Feets.
+        /// </summary>
+        public static string Altitude_Feet_Title {
+            get {
+                return ResourceManager.GetString("Altitude_Feet_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ft.
         /// </summary>
-        public static string Altitude_FeetUnit {
+        public static string Altitude_Feet_Unit {
             get {
-                return ResourceManager.GetString("Altitude_FeetUnit", resourceCulture);
+                return ResourceManager.GetString("Altitude_Feet_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meters.
+        /// </summary>
+        public static string Altitude_Meter_Title {
+            get {
+                return ResourceManager.GetString("Altitude_Meter_Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to m.
         /// </summary>
-        public static string Altitude_MeterUnit {
+        public static string Altitude_Meter_Unit {
             get {
-                return ResourceManager.GetString("Altitude_MeterUnit", resourceCulture);
+                return ResourceManager.GetString("Altitude_Meter_Unit", resourceCulture);
             }
         }
         
@@ -159,20 +177,290 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to nmi.
+        ///   Looks up a localized string similar to The rate at which the HEARTBEAT message must be transmitted to announce the existence of the system on the MAVLink network.
         /// </summary>
-        public static string Distance_InternationalNauticalMileUnit {
+        public static string ConnectionsIdentificationView_HeartbeatRate_Description {
             get {
-                return ResourceManager.GetString("Distance_InternationalNauticalMileUnit", resourceCulture);
+                return ResourceManager.GetString("ConnectionsIdentificationView_HeartbeatRate_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heartbeat rate.
+        /// </summary>
+        public static string ConnectionsIdentificationView_HeartbeatRate_Header {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationView_HeartbeatRate_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to After that timeout of Heartbeat packet deviceService will be removed from deviceService list.
+        /// </summary>
+        public static string ConnectionsIdentificationView_HeartbeatTimeout_Description {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationView_HeartbeatTimeout_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heartbeat timeout.
+        /// </summary>
+        public static string ConnectionsIdentificationView_HeartbeatTimeout_Header {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationView_HeartbeatTimeout_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Each system has a network-unique system id, and each component has a system-unique component id that can be used for addressing/routing.
+        /// </summary>
+        public static string ConnectionsIdentificationView_SystemComponentId_Description {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationView_SystemComponentId_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System \ Component ID.
+        /// </summary>
+        public static string ConnectionsIdentificationView_SystemComponentId_Header {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationView_SystemComponentId_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timeout must be from {0} to {1}.
+        /// </summary>
+        public static string ConnectionsIdentificationViewModel_DeviceTimeout {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationViewModel_DeviceTimeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hz.
+        /// </summary>
+        public static string ConnectionsIdentificationViewModel_ToString {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationViewModel_ToString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Serial.
+        /// </summary>
+        public static string ConnectionsPortsView_AddSerialCommand_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsPortsView_AddSerialCommand_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add TCP.
+        /// </summary>
+        public static string ConnectionsPortsView_AddTcpCommand_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsPortsView_AddTcpCommand_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add UDP.
+        /// </summary>
+        public static string ConnectionsPortsView_AddUdpCommand_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsPortsView_AddUdpCommand_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Point of entry that allows it to communicate with other devices in Mavlink network..
+        /// </summary>
+        public static string ConnectionsPortsView_Header_Description {
+            get {
+                return ResourceManager.GetString("ConnectionsPortsView_Header_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connections ports.
+        /// </summary>
+        public static string ConnectionsPortsView_Header_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsPortsView_Header_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connections.
+        /// </summary>
+        public static string ConnectionsShellMenuItem_Name {
+            get {
+                return ResourceManager.GetString("ConnectionsShellMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This page allows you to configure the basic settings on the Mavlink network.
+        /// </summary>
+        public static string ConnectionsView_Header_Description {
+            get {
+                return ResourceManager.GetString("ConnectionsView_Header_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mavlink network.
+        /// </summary>
+        public static string ConnectionsView_Header_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsView_Header_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string ConnectionsViewModel_AddDialogPort_Add {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_AddDialogPort_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string ConnectionsViewModel_AddDialogPort_Cancel {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_AddDialogPort_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new Mavlink serial port.
+        /// </summary>
+        public static string ConnectionsViewModel_AddSerialPortDialog_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_AddSerialPortDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new Mavlink TCP port.
+        /// </summary>
+        public static string ConnectionsViewModel_AddTcpPortDialog_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_AddTcpPortDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new Mavlink UDP port.
+        /// </summary>
+        public static string ConnectionsViewModel_AddUdpPortDialog_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_AddUdpPortDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accept.
+        /// </summary>
+        public static string ConnectionsViewModel_EditDialogPort_Accept {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditDialogPort_Accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string ConnectionsViewModel_EditDialogPort_Cancel {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditDialogPort_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit selected Mavlink serial port.
+        /// </summary>
+        public static string ConnectionsViewModel_EditSerialPortDialog_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditSerialPortDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit selected Mavlink TCP port.
+        /// </summary>
+        public static string ConnectionsViewModel_EditTcpPortDialog_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditTcpPortDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit selected Mavlink UDP port.
+        /// </summary>
+        public static string ConnectionsViewModel_EditUdpPortDialog_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditUdpPortDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In this section you can see all found devices on the network.
+        /// </summary>
+        public static string DeviceBrowserView_Description {
+            get {
+                return ResourceManager.GetString("DeviceBrowserView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Device list.
+        /// </summary>
+        public static string DeviceBrowserView_Header {
+            get {
+                return ResourceManager.GetString("DeviceBrowserView_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meters.
+        /// </summary>
+        public static string Distance_Meters_Title {
+            get {
+                return ResourceManager.GetString("Distance_Meters_Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to m.
         /// </summary>
-        public static string Distance_MeterUnit {
+        public static string Distance_Meters_Unit {
             get {
-                return ResourceManager.GetString("Distance_MeterUnit", resourceCulture);
+                return ResourceManager.GetString("Distance_Meters_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nautical miles.
+        /// </summary>
+        public static string Distance_NauticalMiles_Title {
+            get {
+                return ResourceManager.GetString("Distance_NauticalMiles_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NM.
+        /// </summary>
+        public static string Distance_NauticalMiles_Unit {
+            get {
+                return ResourceManager.GetString("Distance_NauticalMiles_Unit", resourceCulture);
             }
         }
         
@@ -249,6 +537,204 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string LoggerView_ErrorFilter_Name {
+            get {
+                return ResourceManager.GetString("LoggerView_ErrorFilter_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string LoggerView_InfoFilter_Name {
+            get {
+                return ResourceManager.GetString("LoggerView_InfoFilter_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trace.
+        /// </summary>
+        public static string LoggerView_TraceFilter_Name {
+            get {
+                return ResourceManager.GetString("LoggerView_TraceFilter_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string LoggerView_WarningFilter_Name {
+            get {
+                return ResourceManager.GetString("LoggerView_WarningFilter_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to by .
+        /// </summary>
+        public static string LogMessagesPageView_By {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_By", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of elements on one page .
+        /// </summary>
+        public static string LogMessagesPageView_By_ToolTip {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_By_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear all logs.
+        /// </summary>
+        public static string LogMessagesPageView_ClearAllButton_ToolTip {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_ClearAllButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filtered: {0}.
+        /// </summary>
+        public static string LogMessagesPageView_Filtered {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_Filtered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From {0}.
+        /// </summary>
+        public static string LogMessagesPageView_From {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_From", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to next page.
+        /// </summary>
+        public static string LogMessagesPageView_NextButton_ToolTip {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_NextButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to previous page.
+        /// </summary>
+        public static string LogMessagesPageView_PrevButton_ToolTip {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_PrevButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh all elements.
+        /// </summary>
+        public static string LogMessagesPageView_RefreshButton_ToolTip {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_RefreshButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string LogMessagesPageView_SearchWatermark {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_SearchWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to to {0}.
+        /// </summary>
+        public static string LogMessagesPageView_To {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total: {0}.
+        /// </summary>
+        public static string LogMessagesPageView_Total {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear all log messages.
+        /// </summary>
+        public static string LogMessagesPageViewModel_ClearAllMessage {
+            get {
+                return ResourceManager.GetString("LogMessagesPageViewModel_ClearAllMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LogMessages.
+        /// </summary>
+        public static string LogMessagesPageViewModel_LogName {
+            get {
+                return ResourceManager.GetString("LogMessagesPageViewModel_LogName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error to refresh items.
+        /// </summary>
+        public static string LogMessagesPageViewModel_RefreshErrorMessage {
+            get {
+                return ResourceManager.GetString("LogMessagesPageViewModel_RefreshErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log messages.
+        /// </summary>
+        public static string LogMessagesShellMenuItem_Name {
+            get {
+                return ResourceManager.GetString("LogMessagesShellMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string LogMessageTypeHelper_GetDisplayName_Error {
+            get {
+                return ResourceManager.GetString("LogMessageTypeHelper_GetDisplayName_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string LogMessageTypeHelper_GetDisplayName_Info {
+            get {
+                return ResourceManager.GetString("LogMessageTypeHelper_GetDisplayName_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string LogMessageTypeHelper_GetDisplayName_Warning {
+            get {
+                return ResourceManager.GetString("LogMessageTypeHelper_GetDisplayName_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change current map provider for application.
         /// </summary>
         public static string MapSettingsView_MapProvider_Description {
@@ -303,6 +789,33 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom mode.
+        /// </summary>
+        public static string MavlinkDeviceView_Mode_Name {
+            get {
+                return ResourceManager.GetString("MavlinkDeviceView_Mode_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heartbeat rate.
+        /// </summary>
+        public static string MavlinkDeviceView_Rate_Name {
+            get {
+                return ResourceManager.GetString("MavlinkDeviceView_Rate_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System status.
+        /// </summary>
+        public static string MavlinkDeviceView_Status_Name {
+            get {
+                return ResourceManager.GetString("MavlinkDeviceView_Status_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Altitude.
         /// </summary>
         public static string MeasureUnitsSettingsViewModel_Altitude {
@@ -317,24 +830,6 @@ namespace Asv.Drones.Gui.Core {
         public static string MeasureUnitsSettingsViewModel_AltitudeDescription {
             get {
                 return ResourceManager.GetString("MeasureUnitsSettingsViewModel_AltitudeDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Feets.
-        /// </summary>
-        public static string MeasureUnitsSettingsViewModel_AltitudeFeets {
-            get {
-                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_AltitudeFeets", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Meters.
-        /// </summary>
-        public static string MeasureUnitsSettingsViewModel_AltitudeMeters {
-            get {
-                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_AltitudeMeters", resourceCulture);
             }
         }
         
@@ -375,11 +870,11 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Latitude &amp; Longitude.
+        ///   Looks up a localized string similar to Latitude.
         /// </summary>
-        public static string MeasureUnitsSettingsViewModel_LatitudeLongitude {
+        public static string MeasureUnitsSettingsViewModel_Latitude {
             get {
-                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_LatitudeLongitude", resourceCulture);
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_Latitude", resourceCulture);
             }
         }
         
@@ -407,6 +902,15 @@ namespace Asv.Drones.Gui.Core {
         public static string MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds {
             get {
                 return ResourceManager.GetString("MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_Longitude {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_Longitude", resourceCulture);
             }
         }
         
@@ -447,11 +951,83 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Packet Viewer.
+        /// </summary>
+        public static string PacketViewerShellMenuItem_Name {
+            get {
+                return ResourceManager.GetString("PacketViewerShellMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check/Uncheck All.
+        /// </summary>
+        public static string PacketViewerView_CheckAll {
+            get {
+                return ResourceManager.GetString("PacketViewerView_CheckAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear all packets.
+        /// </summary>
+        public static string PacketViewerView_ClearAll {
+            get {
+                return ResourceManager.GetString("PacketViewerView_ClearAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play/Pause.
+        /// </summary>
+        public static string PacketViewerView_PlayPause {
+            get {
+                return ResourceManager.GetString("PacketViewerView_PlayPause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save as CSV.
+        /// </summary>
+        public static string PacketViewerView_Save {
+            get {
+                return ResourceManager.GetString("PacketViewerView_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mission planing.
         /// </summary>
         public static string PlaningShellMenuItem_Name {
             get {
                 return ResourceManager.GetString("PlaningShellMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string PortView_ToggleButton_Disabled {
+            get {
+                return ResourceManager.GetString("PortView_ToggleButton_Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string PortView_ToggleButton_Enabled {
+            get {
+                return ResourceManager.GetString("PortView_ToggleButton_Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to error.
+        /// </summary>
+        public static string PortViewModel_SkippedUnitTest {
+            get {
+                return ResourceManager.GetString("PortViewModel_SkippedUnitTest", resourceCulture);
             }
         }
         
@@ -470,6 +1046,69 @@ namespace Asv.Drones.Gui.Core {
         public static string RelativeTime_SecondsUnit {
             get {
                 return ResourceManager.GetString("RelativeTime_SecondsUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Baud rate.
+        /// </summary>
+        public static string SerialPortView_BaudRate {
+            get {
+                return ResourceManager.GetString("SerialPortView_BaudRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port name.
+        /// </summary>
+        public static string SerialPortView_PortName {
+            get {
+                return ResourceManager.GetString("SerialPortView_PortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port title.
+        /// </summary>
+        public static string SerialPortView_Title {
+            get {
+                return ResourceManager.GetString("SerialPortView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Baud rate must be value from {0} to {1}.
+        /// </summary>
+        public static string SerialPortViewModel_SerialPortViewModel_BaudRateValid {
+            get {
+                return ResourceManager.GetString("SerialPortViewModel_SerialPortViewModel_BaudRateValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New serial {0}.
+        /// </summary>
+        public static string SerialPortViewModel_SerialPortViewModel_NewSerial {
+            get {
+                return ResourceManager.GetString("SerialPortViewModel_SerialPortViewModel_NewSerial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must specify a valid serial port name.
+        /// </summary>
+        public static string SerialPortViewModel_SerialPortViewModel_ValidSerialPort {
+            get {
+                return ResourceManager.GetString("SerialPortViewModel_SerialPortViewModel_ValidSerialPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must specify a valid name.
+        /// </summary>
+        public static string SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name {
+            get {
+                return ResourceManager.GetString("SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name", resourceCulture);
             }
         }
         
@@ -555,6 +1194,78 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Port title.
+        /// </summary>
+        public static string TcpPortView_PortTitle {
+            get {
+                return ResourceManager.GetString("TcpPortView_PortTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IP address.
+        /// </summary>
+        public static string TcpPortView_TcpIpAddress {
+            get {
+                return ResourceManager.GetString("TcpPortView_TcpIpAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port number.
+        /// </summary>
+        public static string TcpPortView_TcpIpPort {
+            get {
+                return ResourceManager.GetString("TcpPortView_TcpIpPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error to create port.
+        /// </summary>
+        public static string TcpPortViewModel_LogService_Error {
+            get {
+                return ResourceManager.GetString("TcpPortViewModel_LogService_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New TCP.
+        /// </summary>
+        public static string TcpPortViewModel_Title {
+            get {
+                return ResourceManager.GetString("TcpPortViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must insert a valid ip address.
+        /// </summary>
+        public static string TcpPortViewModel_ValidIpAddress {
+            get {
+                return ResourceManager.GetString("TcpPortViewModel_ValidIpAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port number must be value from 1 to 65535.
+        /// </summary>
+        public static string TcpPortViewModel_ValidPort {
+            get {
+                return ResourceManager.GetString("TcpPortViewModel_ValidPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must specify a valid name.
+        /// </summary>
+        public static string TcpPortViewModel_ValidTitle {
+            get {
+                return ResourceManager.GetString("TcpPortViewModel_ValidTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LeftToRight.
         /// </summary>
         public static string ThemeService_FlowDirections_LeftToRight {
@@ -600,6 +1311,114 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IP Address.
+        /// </summary>
+        public static string UdpPortView_LocalIpAddress {
+            get {
+                return ResourceManager.GetString("UdpPortView_LocalIpAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port Number.
+        /// </summary>
+        public static string UdpPortView_LocalPortName {
+            get {
+                return ResourceManager.GetString("UdpPortView_LocalPortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string UdpPortView_PortTitle {
+            get {
+                return ResourceManager.GetString("UdpPortView_PortTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote IP Address.
+        /// </summary>
+        public static string UdpPortView_RemoteIpAddress {
+            get {
+                return ResourceManager.GetString("UdpPortView_RemoteIpAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote port number.
+        /// </summary>
+        public static string UdpPortView_RemotePortName {
+            get {
+                return ResourceManager.GetString("UdpPortView_RemotePortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify remote host.
+        /// </summary>
+        public static string UdpPortView_ToggleName {
+            get {
+                return ResourceManager.GetString("UdpPortView_ToggleName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New UDP.
+        /// </summary>
+        public static string UdpPortViewModel_Title {
+            get {
+                return ResourceManager.GetString("UdpPortViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a valid IP address.
+        /// </summary>
+        public static string UdpPortViewModel_ValidLocalIpAddress {
+            get {
+                return ResourceManager.GetString("UdpPortViewModel_ValidLocalIpAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port number must be a value between 1 and 65535.
+        /// </summary>
+        public static string UdpPortViewModel_ValidLocalPort {
+            get {
+                return ResourceManager.GetString("UdpPortViewModel_ValidLocalPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a valid IP address.
+        /// </summary>
+        public static string UdpPortViewModel_ValidRemoteIpAddress {
+            get {
+                return ResourceManager.GetString("UdpPortViewModel_ValidRemoteIpAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port number must be a value between 1 and 65535.
+        /// </summary>
+        public static string UdpPortViewModel_ValidRemotePort {
+            get {
+                return ResourceManager.GetString("UdpPortViewModel_ValidRemotePort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must specify a valid name.
+        /// </summary>
+        public static string UdpPortViewModel_ValidTitle {
+            get {
+                return ResourceManager.GetString("UdpPortViewModel_ValidTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to km/h.
         /// </summary>
         public static string Velocity_KilometersPerHourUnit {
@@ -623,6 +1442,15 @@ namespace Asv.Drones.Gui.Core {
         public static string Velocity_MilesPerHourUnit {
             get {
                 return ResourceManager.GetString("Velocity_MilesPerHourUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to V.
+        /// </summary>
+        public static string Voltage_Unit {
+            get {
+                return ResourceManager.GetString("Voltage_Unit", resourceCulture);
             }
         }
     }

@@ -8,7 +8,20 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="core:MapPageViewModel"
              x:Class="Asv.Drones.Gui.Core.MapPageView">
-    <Design.DataContext>
+	<UserControl.Styles>
+		<Style Selector="Button.ZoomButton">
+			<Setter Property="Background" Value="Transparent" />
+			<Setter Property="BorderBrush" Value="{x:Null}" />
+			<Setter Property="BorderThickness" Value="0" />
+			<Setter Property="Width" Value="30" />
+			<Setter Property="Height" Value="30" />
+		</Style>
+		<Style Selector="Button:pointerover.ZoomButton /template/ ContentPresenter">
+			<Setter Property="BorderBrush" Value="{x:Null}" />
+			<Setter Property="Background" Value="Transparent" />
+		</Style>
+	</UserControl.Styles>
+	<Design.DataContext>
         <core:MapPageViewModel/>
     </Design.DataContext>
     <Grid d:ShowGridLines="True" ColumnDefinitions="*,5,3*,5,*" RowDefinitions="Auto,3*,5,*">
@@ -20,11 +33,12 @@
 			DialogTarget="{CompiledBinding DialogTarget, Mode=TwoWay}"
 			IsInDialogMode="{CompiledBinding IsInDialogMode, Mode=TwoWay}"
 			Zoom="{CompiledBinding Zoom, Mode=TwoWay}"
+			MaxZoom="{CompiledBinding MaxZoom}"
+			MinZoom="{CompiledBinding MinZoom}"
 			Grid.ColumnSpan="5"
 			Grid.Row="0"
 			Grid.RowSpan="4"
-			Items="{Binding Markers}"
-        >
+			Items="{Binding Markers}">
 			<map:MapView.ItemTemplate>
 				<DataTemplate x:DataType="map:MapAnchorViewModel">
 					<map:MapAnchorView
@@ -75,7 +89,7 @@
 	        </ItemsControl>
         </ScrollViewer>
 
-        <Grid Grid.Row="3" Grid.Column="2" Margin="5" Background="Transparent"> 
+        <Border Grid.Row="3" Grid.Column="2" Margin="5" IsVisible="{Binding BottomWidgets.Count}" Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8" CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True"> 
 	        <TabControl AutoScrollToSelectedItem="True" Items="{Binding BottomWidgets}" TabStripPlacement="Bottom" Background="Transparent">
 		        <TabControl.ItemTemplate>
 			        <DataTemplate x:DataType="core:IMapWidget">
@@ -86,7 +100,15 @@
 			        </DataTemplate>
 		        </TabControl.ItemTemplate>
 	        </TabControl>
-        </Grid>
+        </Border>
+	    
+	    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Spacing="5">
+		    <Button Classes="ZoomButton" Command="{CompiledBinding ZoomIn}" Content="{avalonia:MaterialIconExt ZoomIn}" />
+		    <Border CornerRadius="5" Background="White" Padding="5" VerticalAlignment="Center" Width="30">
+			    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Text="{Binding Zoom}" />
+		    </Border>
+		    <Button Classes="ZoomButton" Command="{CompiledBinding ZoomOut}" Content="{avalonia:MaterialIconExt ZoomOut}" />
+	    </StackPanel>
         <GridSplitter Width="5" Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" Background="Transparent" IsHitTestVisible="True" ResizeBehavior="PreviousAndNext"/>
         <GridSplitter Width="5" Grid.Row="0" Grid.RowSpan="4" Grid.Column="3" Background="Transparent" IsHitTestVisible="True" Opacity="1" ResizeBehavior="PreviousAndNext"/>
         <GridSplitter HorizontalAlignment="Stretch" Height="5" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="1" Background="Transparent" IsHitTestVisible="True" ResizeBehavior="PreviousAndNext"/>

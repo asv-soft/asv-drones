@@ -1,33 +1,24 @@
-﻿namespace Asv.Drones.Gui.Core;
+﻿using Asv.Cfg;
 
-public class Distance : IMeasureUnit<double>
+namespace Asv.Drones.Gui.Core;
+
+public enum DistanceUnits
 {
-    private readonly DistanceUnits _units;
-
-    private const double Kilometer = 1000;
-    
+    Meters,
+    NauticalMiles
+}
+public class Distance : MeasureUnitBase<double,DistanceUnits>
+{
     private const double MetersInInternationalNauticalMile = 1852;
-
-    public Distance(DistanceUnits units)
+    private static readonly IMeasureUnitItem<double, DistanceUnits>[] _units = {
+        new DoubleMeasureUnitItem<DistanceUnits>(DistanceUnits.Meters,RS.Distance_Meters_Title,RS.Distance_Meters_Unit,true,"F1",1),
+        new DoubleMeasureUnitItem<DistanceUnits>(DistanceUnits.NauticalMiles,RS.Distance_NauticalMiles_Title,RS.Distance_NauticalMiles_Unit,false,"F4",MetersInInternationalNauticalMile),
+    };
+    public Distance(IConfiguration cfgSvc,string cfgKey):base(cfgSvc,cfgKey,_units)
     {
-        _units = units;
+        
     }
+    public override string Title => "Distance";
+    public override string Description => "Units of measure for distance";
 
-    public string GetUnit(double distance)
-    {
-        return _units switch
-        {
-            DistanceUnits.Meters => RS.Distance_MeterUnit,
-            DistanceUnits.NauticalMiles => RS.Distance_InternationalNauticalMileUnit
-        };
-    }
-
-    public string GetValue(double distance)
-    {
-        return _units switch
-        {
-            DistanceUnits.Meters => distance >= Kilometer ? $"{distance/Kilometer:F0}" : $"{distance:F0}",
-            DistanceUnits.NauticalMiles => $"{distance/MetersInInternationalNauticalMile:F0}"
-        };
-    }
 }

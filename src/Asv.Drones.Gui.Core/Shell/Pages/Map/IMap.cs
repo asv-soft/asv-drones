@@ -12,6 +12,7 @@ namespace Asv.Drones.Gui.Core
     /// </summary>
     public interface IMap
     {
+        bool IsInDialogMode { get; set; }
         int MaxZoom { get; set; }
         int MinZoom { get; set; }
         double Zoom { get; set; }
@@ -24,7 +25,7 @@ namespace Asv.Drones.Gui.Core
     /// <summary>
     /// Anchor on map
     /// </summary>
-    public interface IMapAnchor : IMapAnchorViewModel,IViewModel
+    public interface IMapAnchor : IMapAnchorViewModel, IViewModel
     {
         IMapAnchor Init(IMap map);
     }

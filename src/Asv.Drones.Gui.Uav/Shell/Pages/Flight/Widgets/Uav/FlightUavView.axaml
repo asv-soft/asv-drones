@@ -17,26 +17,29 @@
     <Border Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8" CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True">
         <StackPanel Margin="10" Spacing="8">
             <DockPanel DockPanel.Dock="Top">
-                <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="{Binding Icon}" Foreground="Red"  Width="20" Height="20" Margin="0,0,5,0"/>
-                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Spacing="5">
+                <Button ToolTip.Tip="{x:Static uav:RS.FlightUavView_MoveToButton_ToolTip}" DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Command="{Binding LocateVehicleCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="{Binding Icon}" Foreground="Red"  Width="25" Height="25" Margin="0,0,5,0"/>
+                        <TextBlock VerticalAlignment="Center" DockPanel.Dock="Top" Text="{Binding Title}" />      
+                    </StackPanel>
+                </Button>
+                
+                <!--<StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Spacing="5">
                     <Button Padding="3" BorderBrush="Transparent" Background="Transparent" Command="{Binding LocateVehicleCommand}">
                         <avalonia:MaterialIcon Kind="Target" Width="20" Height="20" />    
                     </Button>
-                   
-                </StackPanel>
-                <TextBlock VerticalAlignment="Center" DockPanel.Dock="Top" Text="{Binding Title}" />    
+                </StackPanel>-->
+                  
             </DockPanel>    
             <uav1:AttitudeView DataContext="{Binding Attitude}"/>
-            <WrapPanel ItemHeight="30" ItemWidth="60">
-                <StackPanel Orientation="Horizontal" Spacing="5">
-                    <core:BatteryIndicator Width="20" Height="20" MaxValue="1" WarningValue="0.5" CriticalValue="0.2" Value="{Binding BatteryLevel}"/>   
-                    <TextBlock VerticalAlignment="Center" Text="{Binding BatteryLevel}"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Spacing="5">
-                    <avalonia:MaterialIcon Kind="Clock" Foreground="Green" Width="20" Height="20" />
-                    <TextBlock VerticalAlignment="Center" Text="76%"/>
-                </StackPanel>
-            </WrapPanel>
+            <uav1:MissionStatusView DataContext="{Binding MissionStatus}"/>
+            <ItemsControl Items="{Binding RttItems}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel ItemHeight="30" ItemWidth="110" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
         </StackPanel>    
     </Border>
 </UserControl>

@@ -8,7 +8,7 @@ namespace Asv.Drones.Gui.Core
         public const string UriString = ShellViewModel.UriString + ".menu";
         public static readonly Uri Uri = new(UriString);
 
-        protected ShellMenuItem(Uri id) : base(id)
+        public ShellMenuItem(Uri id) : base(id)
         {
             
         }

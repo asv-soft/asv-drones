@@ -14,7 +14,7 @@ namespace Asv.Drones.Gui.Uav
     {
         private readonly ReadOnlyObservableCollection<GeoPoint> _path;
 
-        public UavGoToPolygon(IVehicle vehicle) : base(vehicle, "goto-polygon")
+        public UavGoToPolygon(IVehicleClient vehicle) : base(vehicle, "goto-polygon")
         {
             ZOrder = -1000;
             OffsetX = 0;
@@ -22,17 +22,16 @@ namespace Asv.Drones.Gui.Uav
             PathOpacity = 0.6;
             StrokeThickness = 1;
             Stroke = Brushes.Honeydew;
-            IsVisible = true;
+            IsVisible = false;
             StrokeDashArray = new AvaloniaList<double>(2,2);
 
-            var cache = new SourceList<GeoPoint>();
+            var cache = new SourceList<GeoPoint>().DisposeItWith(Disposable);
             cache.Add(new GeoPoint(0, 0, 0));
             cache.Add(new GeoPoint(0, 0, 0));
-            cache.DisposeWith(Disposable);
 
-            vehicle.GoToTarget.Select(_ => _.HasValue).Subscribe(_ => IsVisible = _).DisposeWith(Disposable);
-            vehicle.GoToTarget.Where(_ => _.HasValue).Subscribe(_ => cache.ReplaceAt(1,_.Value)).DisposeWith(Disposable);
-            vehicle.GlobalPosition.Subscribe(_=>cache.ReplaceAt(0, _)).DisposeWith(Disposable);
+            vehicle.Position.Target.Select(_ => _.HasValue).Subscribe(_ => IsVisible = _).DisposeWith(Disposable);
+            vehicle.Position.Target.Where(_ => _.HasValue).Subscribe(_ => cache.ReplaceAt(1,_.Value)).DisposeWith(Disposable);
+            vehicle.Position.Current.Where(_=>vehicle.Position.Target.Value.HasValue).Subscribe(_=>cache.ReplaceAt(0, _)).DisposeWith(Disposable);
 
             cache.Connect()
                 .Bind(out _path)
