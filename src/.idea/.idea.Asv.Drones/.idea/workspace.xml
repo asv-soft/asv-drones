@@ -7,90 +7,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d945e635-7e01-48e8-ba67-033722652982" name="Changes" comment="Added tooltips for elements without description">
-      <change afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParamItemView.axaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParamItemView.axaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParamItemViewModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParamPageView.axaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParamPageViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Asv.Drones/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Asv.Drones/.idea/avalonia.xml" afterDir="false" />
+    <list default="true" id="d945e635-7e01-48e8-ba67-033722652982" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Asv.Drones/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Asv.Drones/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Asv.Drones.Gui.Core.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Asv.Drones.Gui.Core.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Asv.Drones.Gui.Core.csproj.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Asv.Drones.Gui.Core.csproj.DotSettings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Services/MavlinkDevices/IMavlinkDevicesService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Services/MavlinkDevices/IMavlinkDevicesService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Services/MavlinkDevices/MavlinkDevicesService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Services/MavlinkDevices/MavlinkDevicesService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Services/MavlinkDevices/MavlinkHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Services/MavlinkDevices/MavlinkHelper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Shell/ShellViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Shell/ShellViewModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Asv.Drones.Gui.Gbs.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Asv.Drones.Gui.Gbs.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Asv.Drones.Gui.Gbs.csproj.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Asv.Drones.Gui.Gbs.csproj.DotSettings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Services/GbsDevice.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Services/IMavlinkGbsService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Layers/Anchors/GbsAnchor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Layers/Anchors/GbsAnchor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Layers/FlightGbsMapLayerProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Layers/FlightGbsMapLayerProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Layers/GbsAnchorBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Layers/GbsAnchorBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/FlightGbsWidgetBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/FlightGbsWidgetBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/FlightMissionWidgetProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/FlightMissionWidgetProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Dialogs/AutoModeViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Dialogs/AutoModeViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Dialogs/FixedModeViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Dialogs/FixedModeViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/FlightGbsViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/FlightGbsViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/Accuracy/AccuracyGbsRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/Accuracy/AccuracyGbsRttViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/BaseStationMode/BaseStationModeGbsRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/BaseStationMode/BaseStationModeGbsRttViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/DGpsRate/DGpsRateGbsRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/DGpsRate/DGpsRateGbsRttViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/DefaultGbsRttItemProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/DefaultGbsRttItemProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/GbsRttItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/GbsRttItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/IGbsRttItemProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/IGbsRttItemProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/LinkQuality/LinkQualityGbsRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/LinkQuality/LinkQualityGbsRttViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/Observation/ObservationGbsRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/Observation/ObservationGbsRttViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/VisibleSatellites/VisibleSatellitesGbsRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/VisibleSatellites/VisibleSatellitesGbsRttViewModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Asv.Drones.Gui.Uav.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Asv.Drones.Gui.Uav.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Asv.Drones.Gui.Uav.csproj.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Asv.Drones.Gui.Uav.csproj.DotSettings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/GoToAnchor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/GoToAnchor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/HomeAnchor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/HomeAnchor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/RoiAnchor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/RoiAnchor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/DefaultFlightUavActionProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/DefaultFlightUavActionProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/GoToMapAnchorActionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/GoToMapAnchorActionViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/LandAnchorActionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/LandAnchorActionViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/RoiAnchorActionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/RoiAnchorActionViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/RtlAnchorActionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/RtlAnchorActionViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/StartAutoAnchorActionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/StartAutoAnchorActionViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/TakeOffAnchorActionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/TakeOffAnchorActionViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/IFlightUavActionProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/IFlightUavActionProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/UavActionActionBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/UavActionActionBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/UavAnchor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/UavAnchor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavFlightMissionAnchor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavFlightMissionAnchor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavFlightMissionMapLayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavFlightMissionMapLayer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/FlightAnchorBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/FlightAnchorBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Polygons/UavFlightMissionPathPolygon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Polygons/UavFlightMissionPathPolygon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Polygons/UavGoToPolygon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Polygons/UavGoToPolygon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Polygons/UavTrackPolygon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Polygons/UavTrackPolygon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/FlightVehicleWidgetBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/FlightVehicleWidgetBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Attitude/AttitudeViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Attitude/AttitudeViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/FlightUavViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/FlightUavViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/MissionStatus/MissionStatusViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/MissionStatus/MissionStatusViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Battery/BatteryUavRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Battery/BatteryUavRttViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/CpuLoad/CpuLoadUavRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/CpuLoad/CpuLoadUavRttViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Current/CurrentUavRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Current/CurrentUavRttViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/DefaultUavRttItemProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/DefaultUavRttItemProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/FlightTime/FlightTimeUavRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/FlightTime/FlightTimeUavRttViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Gps/GpsUavRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Gps/GpsUavRttViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/HomeDistance/HomeDistanceUavRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/HomeDistance/HomeDistanceUavRttViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/IUavRttItemProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/IUavRttItemProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/LinkQuality/LinkQualityUavRttViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/LinkQuality/LinkQualityUavRttViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/UavRttItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/UavRttItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Voltage/VoltageUavRttItemViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Rtt/Voltage/VoltageUavRttItemViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParametersEditorPageView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParamPageView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParametersEditorPageView.axaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParametersEditorPageViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParametersEditorParameterView.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParametersEditorParameterView.axaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ParametersEditorParameterViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ShellMenuItemsProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Parameters/ShellMenuItemsProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Layers/Anchors/UavPlaningMissionAnchor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Layers/Anchors/UavPlaningMissionAnchor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Layers/Anchors/UavPlaningMissionMapLayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Layers/Anchors/UavPlaningMissionMapLayer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Layers/Polygons/UavPlaningMissionPathPolygon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Layers/Polygons/UavPlaningMissionPathPolygon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/PlaningAnchorBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/PlaningAnchorBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Widgets/Mission/PlaningMissionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Widgets/Mission/PlaningMissionViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Widgets/PlaningVehicleWidgetBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Planing/Widgets/PlaningVehicleWidgetBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Asv.Drones.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -104,6 +25,7 @@
         <entry key="$PROJECT_DIR$/.." value="develop" />
       </map>
     </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -163,7 +85,17 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/edfcfbaf1a4bb8786bc759746b34952276a0f0889ed662565371123f73507/Synchronization.Synchronize.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../asv-common/src/Asv.Common/Reactive/RxValue.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../asv-common/src/Asv.IO/Streams/Ports/Tcp/TcpServerPort.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/asv/prj/asv-drones/src/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/Accuracy/AccuracyGbsRttViewModel.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Devices/Gbs/Client/GbsClientDevice.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Devices/Gbs/Client/IGbsClientDevice.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Devices/Gbs/Server/IGbsServerDevice.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Microservices/AsvGbs/Server/Ex/AsvGbsExServer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Microservices/AsvGbs/Server/Ex/IAsvGbsServerEx.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Microservices/Dgps/Client/DgpsClient.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Microservices/Dgps/Client/IDgpsClient.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Microservices/Params/Tools/MavParam.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Protocol/Messages/common.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Tools/Browser/MavlinkDeviceBrowser.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -189,6 +121,8 @@
     "XThreadsFramesViewSplitterKey": "0.3794917",
     "full.screen.before.presentation.mode": "false",
     "git-widget-placeholder": "feature/mavlinkv3",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "tasks.servers",
@@ -279,13 +213,7 @@
       <workItem from="1680845908005" duration="10601000" />
       <workItem from="1680861663760" duration="65774000" />
       <workItem from="1681144390486" duration="24021000" />
-    </task>
-    <task id="LOCAL-00048" summary="Small edits">
-      <created>1679479097637</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1679479097637</updated>
+      <workItem from="1681682007945" duration="1800000" />
     </task>
     <task id="LOCAL-00049" summary="Added mission status on widget panel">
       <created>1679493286937</created>
@@ -623,7 +551,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681569774662</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="Bug fixed">
+      <created>1681606722976</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1681606722976</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -666,7 +601,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="Added small changes view and vm" />
     <MESSAGE value="Small changes in functional" />
     <MESSAGE value="Removed group prop and button, this functionality is too hard to make" />
     <MESSAGE value="Removed group prop and button, this functionality is too hard to make for now" />
@@ -691,20 +625,21 @@
     <MESSAGE value="Edited csproj" />
     <MESSAGE value="Added tooltips for elements without description" />
     <MESSAGE value="Added workspace.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added workspace.xml" />
+    <MESSAGE value="Bug fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug fixed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Microservices/Params/Client/Ex/ParamItem.cs</url>
-          <line>67</line>
+          <line>66</line>
           <properties documentPath="C:\asv\prj\asv-mavlink\src\Asv.Mavlink\Microservices\Params\Client\Ex\ParamItem.cs" initialLine="62" containingFunctionPresentation="Method 'Update'">
             <startOffsets>
-              <option value="2439" />
+              <option value="2392" />
             </startOffsets>
             <endOffsets>
-              <option value="2440" />
+              <option value="2393" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="58" />
