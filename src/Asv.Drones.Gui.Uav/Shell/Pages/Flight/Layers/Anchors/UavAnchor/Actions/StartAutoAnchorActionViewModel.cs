@@ -26,7 +26,7 @@ namespace Asv.Drones.Gui.Uav
         {
             // TODO: Localize
             _log.Info(LogName, $"User send Start mission for {Vehicle.Name.Value}");
-            await Vehicle.Commands.DoSetMode(1, (uint)CopterMode.CopterModeAuto, 0, cancel);
+            await Vehicle.SetAutoMode(cancel);
             await Vehicle.Missions.Base.MissionSetCurrent(0, cancel);
         }
     }
