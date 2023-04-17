@@ -8,15 +8,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d945e635-7e01-48e8-ba67-033722652982" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Asv.Drones/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Asv.Drones/.idea/avalonia.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Asv.Drones/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Asv.Drones/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Controls/AttitudeIndicator.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Controls/AttitudeIndicator.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Controls/AttitudeIndicator.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Controls/AttitudeIndicator.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/RS.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/RS.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/RS.resx" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/RS.resx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/RS.ru.resx" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/RS.ru.resx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Attitude/AttitudeView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Attitude/AttitudeView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Attitude/AttitudeViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Attitude/AttitudeViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Layers/GbsAnchorBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Layers/GbsAnchorBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/FlightGbsViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/FlightGbsViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/UavAnchor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/UavAnchor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/FlightAnchorBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/FlightAnchorBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/FlightUavViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/FlightUavViewModel.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,29 +71,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.3794917&quot;,
-    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/mavlinkv3&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;tasks.servers&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "XThreadsFramesViewSplitterKey": "0.3794917",
+    "full.screen.before.presentation.mode": "false",
+    "git-widget-placeholder": "feature/uav-vibration",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "tasks.servers",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\VitalyAnofriev\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\VitalyAnofriev\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\VitalyAnofriev\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\VitalyAnofriev\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache",
+      "C:\\Users\\VitalyAnofriev\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache",
+      "C:\\Users\\VitalyAnofriev\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Asv.Drones.Gui" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/Asv.Drones.Gui/bin/Debug/net6.0/Asv.Drones.Gui.exe" />
@@ -529,6 +526,11 @@
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="81dcda21-e21e-41f7-bf1c-178caa69311e" value="TOOL_WINDOW" />
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="81dcda21-e21e-41f7-bf1c-178caa69311e">
@@ -553,11 +555,6 @@
             </State>
           </value>
         </entry>
-      </map>
-    </option>
-    <option name="OPEN_GENERIC_TABS">
-      <map>
-        <entry key="81dcda21-e21e-41f7-bf1c-178caa69311e" value="TOOL_WINDOW" />
       </map>
     </option>
   </component>

@@ -13,5 +13,5 @@ public class GbsAnchorBase : MapAnchorBase
         Device = device;
     }
     
-    protected IGbsClientDevice Device { get; }
+    public IGbsClientDevice Device { get; }
 }

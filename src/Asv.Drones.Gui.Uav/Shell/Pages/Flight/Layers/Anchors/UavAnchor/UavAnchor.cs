@@ -39,8 +39,9 @@ namespace Asv.Drones.Gui.Uav
             Title = vehicle.Name.Value;
             vehicle.Name.Subscribe(_ => Title = _).DisposeWith(Disposable);
             vehicle.Position.Current.Subscribe(_ => UpdateDescription()).DisposeWith(Disposable);
-            
         }
+        
+        
         
         private void UpdateDescription()
         {
