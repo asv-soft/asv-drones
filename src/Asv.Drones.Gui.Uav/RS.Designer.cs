@@ -69,6 +69,33 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Altitude.
+        /// </summary>
+        public static string AttitudeIndicator_Altitude_ToolTip {
+            get {
+                return ResourceManager.GetString("AttitudeIndicator_Altitude_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compass.
+        /// </summary>
+        public static string AttitudeIndicator_Compass_ToolTip {
+            get {
+                return ResourceManager.GetString("AttitudeIndicator_Compass_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velocity.
+        /// </summary>
+        public static string AttitudeIndicator_Velocity_ToolTip {
+            get {
+                return ResourceManager.GetString("AttitudeIndicator_Velocity_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Battery level.
         /// </summary>
         public static string BatteryUavRttView_ToolTip {
