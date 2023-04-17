@@ -243,4 +243,13 @@
   <data name="ParametersEditorParameterView_WriteButton" xml:space="preserve">
     <value>Write</value>
   </data>
+  <data name="AttitudeIndicator_Velocity_ToolTip" xml:space="preserve">
+    <value>Velocity</value>
+  </data>
+  <data name="AttitudeIndicator_Altitude_ToolTip" xml:space="preserve">
+    <value>Altitude</value>
+  </data>
+  <data name="AttitudeIndicator_Compass_ToolTip" xml:space="preserve">
+    <value>Compass</value>
+  </data>
 </root>

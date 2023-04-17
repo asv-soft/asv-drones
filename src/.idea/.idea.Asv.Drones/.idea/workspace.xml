@@ -8,11 +8,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d945e635-7e01-48e8-ba67-033722652982" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Asv.Drones/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Asv.Drones/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Asv.Drones.Gui.Core.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Asv.Drones.Gui.Core.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Asv.Drones.Gui.Gbs.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Asv.Drones.Gui.Gbs.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Asv.Drones.Gui.Uav.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Asv.Drones.Gui.Uav.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Controls/AttitudeIndicator.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Controls/AttitudeIndicator.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/RS.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/RS.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/RS.resx" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/RS.resx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/RS.ru.resx" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/RS.ru.resx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,61 +40,19 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0395bc5750f54518872c97a0034580df159400/7f/4c49747d/IVehicle.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0cbd201b05cb4baea02954c4dfe1daebf800/5e/22e9c349/RxValue`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4bb43b832af443f49e83965fd55c623cc5200/23/2e3ad3eb/MavlinkClientIdentity.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4bb43b832af443f49e83965fd55c623cc5200/84/aada3f2a/IMavlinkClient.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4bb43b832af443f49e83965fd55c623cc5200/f9/d8db6098/IMavlinkV2Connection.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9300c5e95ef147aebd94c5b41dcb01d81633d0/1d/c15aece1/QueryLanguage.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/cd5d4bd820914fd293bb7d7fa2dd16624ea8/ce/03296c9c/IsPinned.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fb5640ee6cdc4e27970c5f9369f69e9810c00/16/3c0fd1ae/DisposableOnce.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fb5640ee6cdc4e27970c5f9369f69e9810c00/3e/2b405c36/GeoPointLatitude.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fb5640ee6cdc4e27970c5f9369f69e9810c00/98/26d4c6b8/RxValue`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fb5640ee6cdc4e27970c5f9369f69e9810c00/f8/9acf3398/DisposableOnceWithCancel.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/17e74ab61fe0ba52377e6be4626e748b457547f6bc2e4353acda3221accd0/Subject.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/198a6261cebc324728dcc4c178edc5f2894123f711722c80e8557cbfd27651/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2ea2481ba2d04fb3aa796f939e8ae514e7d9cf9c81a463952d5cfc556947013/ObservableListEx.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/313715153757bb528b69de78215e75449ce66679b03bd2c034307db55ff2f8/DirtyVisuals.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/35fa60a7d156b14fd93aebcb0d1af5841fc37ec136332b776f619a8b44ce36/ExpressionMixins.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/476b583023a3971552567d68fd25f87d4a3b8c98183edf851648c4091eb31a8/ValueStore.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5028320658ac437c327e7d57cfe06dfc5a791c618d8c2bb0545639ff987b/Sink.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5e3b2fa26859a032c46aa5c4f8db41c6723636853f8da2b3b18b7724449de053/CompositeDisposable.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6876ba261743cfba4b8c5a5eec26ee29c3d91653a6fe1190636da862ba7e7d/Disposable.Utils.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/73cbb2a6cda38662f9eae35e27e4f1429bd75a652d964a5e7f06bf36f11f27/SelectableTextBlock.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/74d1dea0891bd9f3515fc4d4fd5570c65da55efb64d7e992e68fd5821ebc24c0/AnonymousSafeObserver.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7710ad4af8a98338e28125edfd58e196ad92feddc5b5448ce5754284b649/WeakHashList.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7a1ad32abaee44480b66c2c1fcee9628cca92a4cd272eced5781564201180/Number.Parsing.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7b4aa586157605790fcf6968b96f8a83c3d621dbc435d196a8dbb7ed17f52e/AutoDetachObserver.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/80b15f2d608534da9f5aab25658043be68149611d0b6273818c29fb89a174d87/Select.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/887f2cd2fbef45b8c9108e8c556925bd1cd9bef0c1b26f28ccb3de2b16a6/AvaloniaObject.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/92e71ebdd24cd44171637a5ae6d4a86a2fd8b3842cb2cdebc838f9a3aa2bbb1/ScheduledObserver.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/9ebaa3616c93ca20146bfdd3bde4d2fa68ec84eb53f8cf3d8dfdec44ac352/SingleAssignmentDisposableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a14989351a7a6d3ff4eb041365db0b8a43192cfdcfce2195ef0d9bca52891ea/AnonymousDisposable.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a842df8e44f05b1c16c9274ea5e2863515c5ddbcaaa81171bb2ca72834a/Assembly.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b2c66afceabede0107eef1a7e53aaa548bdf28d878c14952ca578c37f823f/AnonymousObserver.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b76b5f645d8fb42b848f84ed209ba97235bf67904a953a4bce1d86c41a95/ObservableCollection.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c1da7b6c7c71a954fe3eb2531c6476711b3e6d93a8d76795386d326bb9dbc/ExecutionContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c533e927953f1759436a7a5ec963b3a89f79c2a2b6ed853d3824ab03170d2f/EnumerableEx.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d714b369470bc76bfa9cf723359299edfa17bbc3cab418d959187cee354e6/Point.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d9587aad52b8d79342e43db9c97f9965e971a24f2360b7d4cee79df3eaa99b8/SourceListEditConvenienceEx.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d9d9faea5e6ed6438a777ef8c6eed41261f81d8e86488ed923ad92564f54e/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e15b7d564ccc9c5bad5fff5763f6da0a5b1e2fdedf57f2958b195afcd284c/ObserverBase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e4258f7550afc7d1f53685b3d6ee078ea33eda2b4be53f34663377d22b8/BindingBase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/eb38aabe97927c56a117348747d7c79563b7872142e710df1f701d9df091e2fc/WeakEvent.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/edfcfbaf1a4bb8786bc759746b34952276a0f0889ed662565371123f73507/Synchronization.Synchronize.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../asv-common/src/Asv.Common/Reactive/RxValue.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../asv-common/src/Asv.IO/Streams/Ports/Tcp/TcpServerPort.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/asv/prj/asv-drones/src/Asv.Drones.Gui.Gbs/Shell/Pages/Flight/Widgets/Gbs/Rtt/Accuracy/AccuracyGbsRttViewModel.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Devices/Gbs/Client/GbsClientDevice.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Devices/Gbs/Client/IGbsClientDevice.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Devices/Gbs/Server/IGbsServerDevice.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Microservices/AsvGbs/Server/Ex/AsvGbsExServer.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Microservices/AsvGbs/Server/Ex/IAsvGbsServerEx.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Microservices/Dgps/Client/DgpsClient.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Microservices/Dgps/Client/IDgpsClient.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Microservices/Params/Tools/MavParam.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Protocol/Messages/common.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Projects/CSharp/asv-drones/src/Asv.Drones.Gui.Uav/Controls/AttitudeIndicator.axaml" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Tools/Browser/MavlinkDeviceBrowser.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/198a6261cebc324728dcc4c178edc5f2894123f711722c80e8557cbfd27651/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5028320658ac437c327e7d57cfe06dfc5a791c618d8c2bb0545639ff987b/Sink.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/74d1dea0891bd9f3515fc4d4fd5570c65da55efb64d7e992e68fd5821ebc24c0/AnonymousSafeObserver.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7a1ad32abaee44480b66c2c1fcee9628cca92a4cd272eced5781564201180/Number.Parsing.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/887f2cd2fbef45b8c9108e8c556925bd1cd9bef0c1b26f28ccb3de2b16a6/AvaloniaObject.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b76b5f645d8fb42b848f84ed209ba97235bf67904a953a4bce1d86c41a95/ObservableCollection.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d9d9faea5e6ed6438a777ef8c6eed41261f81d8e86488ed923ad92564f54e/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e4258f7550afc7d1f53685b3d6ee078ea33eda2b4be53f34663377d22b8/BindingBase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/eb38aabe97927c56a117348747d7c79563b7872142e710df1f701d9df091e2fc/WeakEvent.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -113,29 +70,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "XThreadsFramesViewSplitterKey": "0.3794917",
-    "full.screen.before.presentation.mode": "false",
-    "git-widget-placeholder": "feature/mavlinkv3",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "tasks.servers",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.3794917&quot;,
+    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/mavlinkv3&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;tasks.servers&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\VitalyAnofriev\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\VitalyAnofriev\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\VitalyAnofriev\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\VitalyAnofriev\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\VitalyAnofriev\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\VitalyAnofriev\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Asv.Drones.Gui" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/Asv.Drones.Gui/bin/Debug/net6.0/Asv.Drones.Gui.exe" />
@@ -567,11 +524,6 @@
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="OPEN_GENERIC_TABS">
-      <map>
-        <entry key="81dcda21-e21e-41f7-bf1c-178caa69311e" value="TOOL_WINDOW" />
-      </map>
-    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="81dcda21-e21e-41f7-bf1c-178caa69311e">
@@ -596,6 +548,11 @@
             </State>
           </value>
         </entry>
+      </map>
+    </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="81dcda21-e21e-41f7-bf1c-178caa69311e" value="TOOL_WINDOW" />
       </map>
     </option>
   </component>
@@ -634,14 +591,7 @@
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/../../asv-mavlink/src/Asv.Mavlink/Microservices/Params/Client/Ex/ParamItem.cs</url>
           <line>66</line>
-          <properties documentPath="C:\asv\prj\asv-mavlink\src\Asv.Mavlink\Microservices\Params\Client\Ex\ParamItem.cs" initialLine="62" containingFunctionPresentation="Method 'Update'">
-            <startOffsets>
-              <option value="2392" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2393" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="C:\asv\prj\asv-mavlink\src\Asv.Mavlink\Microservices\Params\Client\Ex\ParamItem.cs" initialLine="62" containingFunctionPresentation="Method 'Update'" />
           <option name="timeStamp" value="58" />
         </line-breakpoint>
       </breakpoints>

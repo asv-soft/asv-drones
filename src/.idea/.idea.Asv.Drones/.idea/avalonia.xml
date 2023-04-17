@@ -3,6 +3,7 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="Asv.Drones.Gui.Core/App.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Core/Controls/BatteryIndicator.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Core/Controls/Controls.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Core/Controls/OptionsDisplayItem/OptionsDisplayItemStyles.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
@@ -35,6 +36,7 @@
         <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Connections/Ports/ConnectionsPortView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/Dialogs/TakeOffView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Telemetry/FlightUavView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/Attitude/AttitudeView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/AttitudeView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/FlightUavView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Widgets/Uav/MissionStatus/MissionStatusView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
