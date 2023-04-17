@@ -243,4 +243,13 @@
   <data name="ParametersEditorParameterView_WriteButton" xml:space="preserve">
     <value>Записать</value>
   </data>
+  <data name="AttitudeIndicator_Velocity_ToolTip" xml:space="preserve">
+    <value>Скорость</value>
+  </data>
+  <data name="AttitudeIndicator_Altitude_ToolTip" xml:space="preserve">
+    <value>Высота</value>
+  </data>
+  <data name="AttitudeIndicator_Compass_ToolTip" xml:space="preserve">
+    <value>Компас</value>
+  </data>
 </root>
