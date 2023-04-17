@@ -170,6 +170,12 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
         LocateBaseStationCommand = ReactiveCommand.Create(() =>
         {
             Map.Center = BaseStation.Gbs.Position.Value;
+            var selectedGbs = Map.Markers.Where(_=>_ is GbsAnchor).Cast<GbsAnchor>().FirstOrDefault(_=>_.Device.FullId == BaseStation.FullId);
+            if (selectedGbs != null)
+            {
+                selectedGbs.IsSelected = true;
+            }
+
         }).DisposeItWith(Disposable);
     }
 

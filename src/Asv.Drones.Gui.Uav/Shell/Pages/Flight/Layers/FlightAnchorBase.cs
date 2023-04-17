@@ -13,7 +13,7 @@ namespace Asv.Drones.Gui.Uav
         {
             Vehicle = vehicle;
         }
-        
-        protected IVehicleClient Vehicle { get; }
+
+        public IVehicleClient Vehicle { get; }
     }
 }

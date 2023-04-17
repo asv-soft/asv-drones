@@ -6,6 +6,7 @@
         <entry key="Asv.Drones.Gui.Core/App.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Core/Controls/BatteryIndicator.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Core/Controls/Controls.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Core/Controls/GpsStatusIndicator.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Core/Controls/OptionsDisplayItem/OptionsDisplayItemStyles.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Core/Shell/Pages/Connections/Ports/PortView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Core/Shell/Pages/Flight/FlightView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
@@ -32,6 +33,7 @@
         <entry key="Asv.Drones.Gui.Uav/App.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Uav/Controls/Attitude.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Uav/Controls/AttitudeIndicator.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
+        <entry key="Asv.Drones.Gui.Uav/Controls/MissionStatusIndicator.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Connections/ConnectionsView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Connections/Ports/ConnectionsPortView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />
         <entry key="Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/Dialogs/TakeOffView.axaml" value="Asv.Drones.Gui/Asv.Drones.Gui.csproj" />

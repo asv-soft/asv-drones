@@ -65,6 +65,12 @@ namespace Asv.Drones.Gui.Uav
             LocateVehicleCommand = ReactiveCommand.Create(() =>
             {
                 Map.Center = Vehicle.Position.Current.Value;
+                var findUavVehicle = Map.Markers.Where(_ => _ is UavAnchor).Cast<UavAnchor>()
+                    .FirstOrDefault(_ => _.Vehicle.FullId == Vehicle.FullId);
+                if (findUavVehicle != null)
+                {
+                    Map.SelectedItem = findUavVehicle;
+                }
             }).DisposeItWith(Disposable);
             
             this.WhenValueChanged(_ => _.MissionStatus.EnableAnchors, false)

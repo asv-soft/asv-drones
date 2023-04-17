@@ -240,17 +240,74 @@
                         <TextBlock ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Compass_ToolTip}" Canvas.Top="12" Canvas.Left="460" Foreground="White" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Heading}"
                                    VerticalAlignment="Center" TextAlignment="Center" FontWeight="DemiBold" FontSize="45" Width="80"/>
 
-                        <!-- Home -->
-                        <Polygon Canvas.Top="2" Canvas.Left="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HomeAzimuthPosition}" Points="-15,0 0,15 15,0" Fill="#e53935" StrokeThickness="3" Stroke="Red"/>
+                            <!-- Home -->
+                            <Polygon Canvas.Top="2" Canvas.Left="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HomeAzimuthPosition}" Points="-15,0 0,15 15,0" Fill="#e53935" StrokeThickness="3" Stroke="Red"/>
 
-                       
+                            
+                            <!-- Vibration -->
+                            
+                            <Border ToolTip.Tip="{x:Static controls:RS.AltitudeIndicator_Vibration_ToolTip}" BorderBrush="#e0e0e0" BorderThickness="5" CornerRadius="3" Canvas.Top="105" Canvas.Left="-3" Height="185" Width="170"/>
+                            <Border ToolTip.Tip="{x:Static controls:RS.AltitudeIndicator_Vibration_ToolTip}" Background="White" Opacity="0.3" CornerRadius="3" Canvas.Top="105" Canvas.Left="-3" Height="185" Width="170"/>
+                            <Grid ToolTip.Tip="{x:Static controls:RS.AltitudeIndicator_Vibration_ToolTip}" Canvas.Top="110" Canvas.Left="10" Height="175" ColumnDefinitions="*, 10, *, 10, *" RowDefinitions="40, *, 2, *, 2, *, 40">  
+                                <TextBlock Grid.Row="0" Grid.Column="0" FontSize="25" HorizontalAlignment="Center" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Clipping0}"/>  
+                                <TextBlock Grid.Row="0" Grid.Column="2" FontSize="25" HorizontalAlignment="Center" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Clipping1}"/>  
+                                <TextBlock Grid.Row="0" Grid.Column="4" FontSize="25" HorizontalAlignment="Center" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Clipping2}"/>  
+                                <TextBlock Grid.Row="6" Grid.Column="0" FontSize="25" HorizontalAlignment="Center" Text="X"/>  
+                                <TextBlock Grid.Row="6" Grid.Column="2" FontSize="25" HorizontalAlignment="Center" Text="Y"/>  
+                                <TextBlock Grid.Row="6" Grid.Column="4" FontSize="25" HorizontalAlignment="Center" Text="Z"/>  
 
-                       
-                        <TextBlock Canvas.Left="0" Canvas.Top="550" Foreground="#e53935" FontSize="100" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=StatusText, Mode=TwoWay}" Width="1000" TextAlignment="Center" HorizontalAlignment="Center"/>
+                                <Rectangle Grid.Column="0" Grid.Row="1" Width="40" Grid.RowSpan="5">  
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush>
+                                            <LinearGradientBrush.Transform>
+                                                <RotateTransform Angle="15"/>
+                                            </LinearGradientBrush.Transform>  
+                                            <GradientStops>  
+                                                <GradientStop Color="White" Offset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VibrationX}"/>  
+                                                <GradientStop Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BrushVibrationX}" Offset="0"/>  
+                                            </GradientStops>  
+                                        </LinearGradientBrush>  
+                                    </Rectangle.Fill>  
+                                </Rectangle>  
+                                <Rectangle Grid.Column="2" Grid.Row="1" Width="40" Grid.RowSpan="5">  
+                                    <Rectangle.Fill>  
+                                        <LinearGradientBrush>
+                                            <LinearGradientBrush.Transform>
+                                                <RotateTransform Angle="15"/>
+                                            </LinearGradientBrush.Transform>    
+                                            <GradientStops>  
+                                                <GradientStop Color="White" Offset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VibrationY}"/>  
+                                                <GradientStop Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BrushVibrationY}" Offset="0"/>  
+                                            </GradientStops>  
+                                        </LinearGradientBrush>  
+                                    </Rectangle.Fill>  
+                                </Rectangle>  
+                                <Rectangle Grid.Column="4" Grid.Row="1" Width="40" Grid.RowSpan="5">  
+                                    <Rectangle.Fill>  
+                                        <LinearGradientBrush>
+                                            <LinearGradientBrush.Transform>
+                                                <RotateTransform Angle="15"/>
+                                            </LinearGradientBrush.Transform>    
+                                            <GradientStops>
+                                                <GradientStop Color="White" Offset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VibrationZ}"/>  
+                                                <GradientStop Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BrushVibrationZ}" Offset="0"/>  
+                                            </GradientStops>  
+                                        </LinearGradientBrush>  
+                                    </Rectangle.Fill>  
+                                </Rectangle>  
 
-                    </Canvas>
-                </Viewbox>
-            </ControlTemplate>
-        </Setter>
+                                <Rectangle Grid.Row="2" Grid.Column="0" Fill="Red"/>  
+                                <Rectangle Grid.Row="4" Grid.Column="0" Fill="Red"/>  
+                                <Rectangle Grid.Row="2" Grid.Column="2" Fill="Red"/>  
+                                <Rectangle Grid.Row="4" Grid.Column="2" Fill="Red"/>  
+                                <Rectangle Grid.Row="2" Grid.Column="4" Fill="Red"/>  
+                                <Rectangle Grid.Row="4" Grid.Column="4" Fill="Red"/>  
+                            </Grid>
+                           
+                            <TextBlock Canvas.Left="0" Canvas.Top="550" Foreground="#e53935" FontSize="100" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=StatusText, Mode=TwoWay}" Width="1000" TextAlignment="Center" HorizontalAlignment="Center"/>
+                        </Canvas>
+                    </Viewbox>
+                </ControlTemplate>
+            </Setter>
     </Style>
 </Styles>
