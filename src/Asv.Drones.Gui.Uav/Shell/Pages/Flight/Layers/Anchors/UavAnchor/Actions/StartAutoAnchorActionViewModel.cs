@@ -3,6 +3,7 @@ using System.Reactive.Linq;
 using Asv.Drones.Gui.Core;
 using Asv.Drones.Uav;
 using Asv.Mavlink;
+using Asv.Mavlink.V2.Ardupilotmega;
 using Material.Icons;
 using ReactiveUI;
 
@@ -25,6 +26,7 @@ namespace Asv.Drones.Gui.Uav
         {
             // TODO: Localize
             _log.Info(LogName, $"User send Start mission for {Vehicle.Name.Value}");
+            await Vehicle.Commands.DoSetMode(1, (uint)CopterMode.CopterModeAuto, 0, cancel);
             await Vehicle.Missions.Base.MissionSetCurrent(0, cancel);
         }
     }
