@@ -2,6 +2,7 @@
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Cfg;
+using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Drones.Uav;
 using Asv.Mavlink;
@@ -27,9 +28,15 @@ namespace Asv.Drones.Gui.Uav
             
             Title = "TakeOff";
             Icon = MaterialIconKind.ArrowUpBoldHexagonOutline;
-            
-            Command = ReactiveCommand.CreateFromTask(ExecuteImpl, CanExecute);
-            Vehicle.Position.IsArmed.ObserveOn(RxApp.MainThreadScheduler).Select(_ => !_).Subscribe(CanExecute).DisposeWith(Disposable);
+            Vehicle.Position.IsArmed.Select(_ => !_).Subscribe(CanExecute).DisposeWith(Disposable);
+            var cmd = ReactiveCommand.CreateFromTask(ExecuteImpl, CanExecute);
+            cmd.ThrownExceptions.Subscribe(OnCommandError).DisposeItWith(Disposable);
+            Command = cmd;
+        }
+        
+        private void OnCommandError(Exception ex)
+        {
+            _log.Error("Arm",$"Error to arm/disarm {Vehicle.Name.Value}",ex);
         }
 
         protected override async Task ExecuteImpl(CancellationToken cancel)

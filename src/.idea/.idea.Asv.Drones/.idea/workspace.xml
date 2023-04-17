@@ -7,12 +7,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d945e635-7e01-48e8-ba67-033722652982" name="Changes" comment="">
+    <list default="true" id="d945e635-7e01-48e8-ba67-033722652982" name="Changes" comment="Remove Rider files form git">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Asv.Drones/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Asv.Drones/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Asv.Drones.Gui.Core.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Core/Asv.Drones.Gui.Core.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Asv.Drones.Gui.Gbs.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Gbs/Asv.Drones.Gui.Gbs.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Map/Asv.Drones.Gui.Map.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Map/Asv.Drones.Gui.Map.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Asv.Drones.Gui.Uav.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Asv.Drones.Gui.Uav.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asv.Drones.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/TakeOffAnchorActionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui.Uav/Shell/Pages/Flight/Layers/Anchors/UavAnchor/Actions/TakeOffAnchorActionViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asv.Drones.Gui/Asv.Drones.Gui.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Asv.Drones.Gui/Asv.Drones.Gui.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +122,7 @@
     "WebServerToolWindowFactoryState": "false",
     "XThreadsFramesViewSplitterKey": "0.3794917",
     "full.screen.before.presentation.mode": "false",
-    "git-widget-placeholder": "feature/mavlinkv3",
+    "git-widget-placeholder": "develop",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -214,13 +216,6 @@
       <workItem from="1680861663760" duration="65774000" />
       <workItem from="1681144390486" duration="24021000" />
       <workItem from="1681682007945" duration="1800000" />
-    </task>
-    <task id="LOCAL-00049" summary="Added mission status on widget panel">
-      <created>1679493286937</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1679493286937</updated>
     </task>
     <task id="LOCAL-00050" summary="Added button to sync waypoints with drone">
       <created>1679498920204</created>
@@ -558,7 +553,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681606722976</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="Remove Rider files form git">
+      <created>1681761549606</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1681761549606</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -601,7 +603,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="Small changes in functional" />
     <MESSAGE value="Removed group prop and button, this functionality is too hard to make" />
     <MESSAGE value="Removed group prop and button, this functionality is too hard to make for now" />
     <MESSAGE value="Small changes" />
@@ -626,7 +627,8 @@
     <MESSAGE value="Added tooltips for elements without description" />
     <MESSAGE value="Added workspace.xml" />
     <MESSAGE value="Bug fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug fixed" />
+    <MESSAGE value="Remove Rider files form git" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove Rider files form git" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

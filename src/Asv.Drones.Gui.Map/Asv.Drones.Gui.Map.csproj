@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Asv.Common" Version="1.6.0" />
+    <PackageReference Include="Asv.Common" Version="1.6.1" />
     <PackageReference Include="Avalonia" Version="11.0.0-preview4" />
     <PackageReference Include="FluentAvaloniaUI" Version="2.0.0-preview4" />
     <PackageReference Include="Material.Icons.Avalonia" Version="2.0.0-preview1" />
