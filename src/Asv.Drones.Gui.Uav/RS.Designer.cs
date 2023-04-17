@@ -60,6 +60,15 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vibration and clipping of UAV.
+        /// </summary>
+        public static string AltitudeIndicator_Vibration_ToolTip {
+            get {
+                return ResourceManager.GetString("AltitudeIndicator_Vibration_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Battery level.
         /// </summary>
         public static string BatteryUavRttView_ToolTip {

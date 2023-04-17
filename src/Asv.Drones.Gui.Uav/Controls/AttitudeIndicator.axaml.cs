@@ -3,6 +3,8 @@ using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Markup.Xaml.MarkupExtensions;
+using Avalonia.Media;
 using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav
@@ -37,6 +39,93 @@ namespace Asv.Drones.Gui.Uav
 
         public double Scale { get; }
 
+        private Color _brushVibrationX;
+
+        public static readonly DirectProperty<AttitudeIndicator, Color> brushVibrationXProperty = AvaloniaProperty.RegisterDirect<AttitudeIndicator, Color>(
+            nameof(BrushVibrationX), o => o.BrushVibrationX, (o, v) => o.BrushVibrationX = v);
+
+        public Color BrushVibrationX
+        {
+            get => _brushVibrationX;
+            set => SetAndRaise(brushVibrationXProperty, ref _brushVibrationX, value);
+        }
+
+        private Color _brushVibrationY;
+
+        public static readonly DirectProperty<AttitudeIndicator, Color> brushVibrationYProperty = AvaloniaProperty.RegisterDirect<AttitudeIndicator, Color>(
+            nameof(BrushVibrationY), o => o.BrushVibrationY, (o, v) => o.BrushVibrationY = v);
+
+        public Color BrushVibrationY
+        {
+            get => _brushVibrationY;
+            set => SetAndRaise(brushVibrationYProperty, ref _brushVibrationY, value);
+        }
+        
+        private Color _brushVibrationZ;
+
+        public static readonly DirectProperty<AttitudeIndicator, Color> brushVibrationZProperty = AvaloniaProperty.RegisterDirect<AttitudeIndicator, Color>(
+            nameof(BrushVibrationZ), o => o.BrushVibrationZ, (o, v) => o.BrushVibrationZ = v);
+
+        public Color BrushVibrationZ
+        {
+            get => _brushVibrationZ;
+            set => SetAndRaise(brushVibrationZProperty, ref _brushVibrationZ, value);
+        }
+        
+        public static readonly StyledProperty<float> VibrationXProperty = AvaloniaProperty.Register<AttitudeIndicator, float>(
+            nameof(VibrationX), notifying: UpdateColorX);
+        
+        public float VibrationX
+        {
+            get => GetValue(VibrationXProperty);
+            set => SetValue(VibrationXProperty, value);
+        }
+        
+        public static readonly StyledProperty<float> VibrationYProperty = AvaloniaProperty.Register<AttitudeIndicator, float>(
+            nameof(VibrationY), notifying: UpdateColorY);
+
+        public float VibrationY
+        {
+            get => GetValue(VibrationYProperty);
+            set => SetValue(VibrationYProperty, value);
+        }
+        
+        public static readonly StyledProperty<float> VibrationZProperty = AvaloniaProperty.Register<AttitudeIndicator, float>(
+            nameof(VibrationZ), notifying: UpdateColorZ);
+
+        public float VibrationZ
+        {
+            get => GetValue(VibrationZProperty);
+            set => SetValue(VibrationZProperty, value);
+        }
+        
+        public static readonly StyledProperty<uint> Clipping0Property = AvaloniaProperty.Register<AttitudeIndicator, uint>(
+            nameof(Clipping0));
+
+        public uint Clipping0
+        {
+            get => GetValue(Clipping0Property);
+            set => SetValue(Clipping0Property, value);
+        }
+        
+        public static readonly StyledProperty<uint> Clipping1Property = AvaloniaProperty.Register<AttitudeIndicator, uint>(
+            nameof(Clipping1));
+
+        public uint Clipping1
+        {
+            get => GetValue(Clipping1Property);
+            set => SetValue(Clipping1Property, value);
+        }
+        
+        public static readonly StyledProperty<uint> Clipping2Property = AvaloniaProperty.Register<AttitudeIndicator, uint>(
+            nameof(Clipping2));
+
+        public uint Clipping2
+        {
+            get => GetValue(Clipping2Property);
+            set => SetValue(Clipping2Property, value);
+        }
+        
         public static readonly StyledProperty<double> RollAngleProperty = AvaloniaProperty.Register<AttitudeIndicator, double>(nameof(RollAngle), default(double), notifying: UpdateRollAngle);
 
         public double RollAngle
@@ -62,7 +151,7 @@ namespace Asv.Drones.Gui.Uav
             get => GetValue(VelocityProperty);
             set => SetValue(VelocityProperty, value);
         }
-
+        
         public static readonly StyledProperty<double> AltitudeProperty = AvaloniaProperty.Register<AttitudeIndicator, double>(nameof(Altitude), default(double), notifying: UpdateAltitudeItems);
 
         public double Altitude
@@ -290,6 +379,60 @@ namespace Asv.Drones.Gui.Uav
             _headingCenterPosition = headingControlLength / 2;
         }
 
+        private static void UpdateColorX(IAvaloniaObject source, bool beforeChanged)
+        {
+            if (source is not AttitudeIndicator indicator) return;
+
+            if (indicator.VibrationX < 0.30)
+            {
+                indicator.BrushVibrationX = Colors.Red;
+            }
+            else if (indicator.VibrationX > 0.30 & indicator.VibrationX < 0.60)
+            {
+                indicator.BrushVibrationX = Colors.Yellow;
+            }
+            else if (indicator.VibrationX > 0.60)
+            {
+                indicator.BrushVibrationX = Colors.GreenYellow;
+            }
+        }
+        
+        private static void UpdateColorY(IAvaloniaObject source, bool beforeChanged)
+        {
+            if (source is not AttitudeIndicator indicator) return;
+
+            if (indicator.VibrationY < 0.30)
+            {
+                indicator.BrushVibrationY = Colors.Red;
+            }
+            else if (indicator.VibrationY > 0.30 & indicator.VibrationY < 0.60)
+            {
+                indicator.BrushVibrationY = Colors.Yellow;
+            }
+            else if (indicator.VibrationY > 0.60)
+            {
+                indicator.BrushVibrationY = Colors.GreenYellow;
+            }
+        }
+        
+        private static void UpdateColorZ(IAvaloniaObject source, bool beforeChanged)
+        {
+            if (source is not AttitudeIndicator indicator) return;
+
+            if (indicator.VibrationZ < 0.30)
+            {
+                indicator.BrushVibrationZ = Colors.Red;
+            }
+            else if (indicator.VibrationZ > 0.30 & indicator.VibrationZ < 0.60)
+            {
+                indicator.BrushVibrationZ = Colors.Yellow;
+            }
+            else if (indicator.VibrationZ > 0.60)
+            {
+                indicator.BrushVibrationZ = Colors.GreenYellow;
+            }
+        }
+        
         private static void UpdateAngle(IAvaloniaObject source, bool beforeChanged)
         {
             if (source is not AttitudeIndicator indicator) return;

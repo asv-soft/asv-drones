@@ -30,6 +30,12 @@
             IsArmed="{CompiledBinding IsArmed}"
             StatusText="{CompiledBinding StatusText}"
             ArmedTime="{CompiledBinding ArmedTime}"
-            RightStatusText="{CompiledBinding MissionDistance}"/>    
+            RightStatusText="{CompiledBinding MissionDistance}"
+            VibrationX="{CompiledBinding VibrationX}"
+            VibrationY="{CompiledBinding VibrationY}"
+            VibrationZ="{CompiledBinding VibrationZ}"
+            Clipping0="{CompiledBinding Clipping0}"
+            Clipping1="{CompiledBinding Clipping1}"
+            Clipping2="{CompiledBinding Clipping2}"/>    
     </Border>
 </UserControl>
