@@ -43,8 +43,7 @@ namespace Asv.Drones.Gui.Core
             this.WhenPropertyChanged(_ => _.Zoom)
                 .Subscribe(_ =>
                 {
-                    PlanningConfig.MapCenter = Center;
-                    PlanningConfig.Zoom = Zoom;
+                    PlanningConfig.Zoom = _.Value;
                     cfg.Set(PlanningConfig);
                 })
                 .DisposeItWith(Disposable);
@@ -52,8 +51,7 @@ namespace Asv.Drones.Gui.Core
             this.WhenPropertyChanged(_ => _.Center)
                 .Subscribe(_ =>
                 {
-                    PlanningConfig.MapCenter = Center;
-                    PlanningConfig.Zoom = Zoom;
+                    PlanningConfig.MapCenter = _.Value;
                     cfg.Set(PlanningConfig);
                 })
                 .DisposeItWith(Disposable);

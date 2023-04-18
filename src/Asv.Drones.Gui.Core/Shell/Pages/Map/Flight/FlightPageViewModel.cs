@@ -40,9 +40,6 @@ namespace Asv.Drones.Gui.Core
 
             Center = FlightConfig.MapCenter;
             
-            ZoomIn.Execute(null);
-            ZoomOut.Execute(null);
-            
             this.WhenPropertyChanged(_ => _.Zoom)
                 .Subscribe(_ =>
                 {
