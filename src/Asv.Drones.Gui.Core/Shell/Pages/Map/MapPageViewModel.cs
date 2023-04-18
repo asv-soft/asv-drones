@@ -125,9 +125,12 @@ namespace Asv.Drones.Gui.Core
         [Reactive] 
         public GMapProvider MapProvider { get; set; } = EmptyProvider.Instance;
 
-        [Reactive] public int MaxZoom { get; set; } = 20;
-        [Reactive] public int MinZoom { get; set; } = 1;
-        [Reactive] public double Zoom { get; set; } = 10;
+        [Reactive] 
+        public int MaxZoom { get; set; } = 20;
+        [Reactive] 
+        public int MinZoom { get; set; } = 1;
+        [Reactive] 
+        public double Zoom { get; set; }
         [Reactive]
         public GeoPoint Center { get; set; }
         [Reactive]
