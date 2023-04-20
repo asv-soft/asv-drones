@@ -37,7 +37,7 @@ namespace Asv.Drones.Gui.Core
             Name = $"{MavlinkHelper.GetTypeName(info.Type):G} [{info.SystemId}:{info.ComponentId}]";
             Description = $"Type: {info.Type.ToString("G").Replace("MavType","")}, System ID: {info.SystemId}, Component ID: {info.ComponentId}, Mavlink Version: {info.MavlinkVersion}";
 
-            Observable.Timer(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3)).Subscribe(_ =>
+            Observable.Timer(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3)).ObserveOn(RxApp.MainThreadScheduler).Subscribe(_ =>
             {
                 var now = DateTime.Now;
                 var rate = (((double)_rate - _lastRate) / (now - _lastUpdate).TotalSeconds);
@@ -52,7 +52,7 @@ namespace Asv.Drones.Gui.Core
                 ToggleLinkPing = true;
             }).DisposeItWith(Disposable);
 
-            info.Ping.Subscribe(_=>Interlocked.Increment(ref _rate)).DisposeItWith(Disposable);
+            info.Ping.ObserveOn(RxApp.MainThreadScheduler).Subscribe(_=>Interlocked.Increment(ref _rate)).DisposeItWith(Disposable);
 
             info.BaseMode.ObserveOn(RxApp.MainThreadScheduler).Subscribe(_ => BaseModeText = $"Mode: {_.ToString("F").Replace("MavModeFlag","")}").DisposeItWith(Disposable);
             info.SystemStatus.ObserveOn(RxApp.MainThreadScheduler).Subscribe(_ => SystemStatusText = _.ToString("G").Replace("MavState","")).DisposeItWith(Disposable);

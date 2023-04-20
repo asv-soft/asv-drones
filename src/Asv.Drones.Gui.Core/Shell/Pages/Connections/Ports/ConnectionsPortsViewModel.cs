@@ -49,10 +49,14 @@ namespace Asv.Drones.Gui.Core
                 .GetPorts()
                 .ForEach(_ => cache.AddOrUpdate(new PortViewModel(deviceSvc, localization, _logService,_)));
             deviceSvc.Router
-                .OnAddPort.Subscribe(_ => cache.AddOrUpdate(new PortViewModel(deviceSvc, localization, _logService,_)))
+                .OnAddPort
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(_ => cache.AddOrUpdate(new PortViewModel(deviceSvc, localization, _logService,_)))
                 .DisposeItWith(Disposable);
             deviceSvc.Router
-                .OnRemovePort.Subscribe(_ => cache.Remove(_)).DisposeItWith(Disposable);
+                .OnRemovePort
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(_ => cache.Remove(_)).DisposeItWith(Disposable);
 
             AddSerialPortCommand = ReactiveCommand.CreateFromTask(AddSerialPort).DisposeItWith(Disposable);
             AddTcpPortCommand = ReactiveCommand.CreateFromTask(AddTcpPort).DisposeItWith(Disposable);
