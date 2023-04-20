@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:core="clr-namespace:Asv.Drones.Gui.Core"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Asv.Drones.Gui.Core.RemoveMapPointView"
+             x:CompileBindings="True"
+             x:DataType="core:RemoveMapPointViewModel">
+    <Design.DataContext>
+        <core:RemoveMapPointViewModel />
+    </Design.DataContext>
+    <Grid RowDefinitions="Auto 10 Auto" Grid.IsSharedSizeScope="True">
+        <TextBlock Text="{x:Static core:RS.RemoveMapPointView_ConfirmationText}" />
+        <Grid Grid.Row="2" Grid.IsSharedSizeScope="True" RowDefinitions="Auto 5 Auto 5 Auto 5 Auto 5 Auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="PropertyName" Width="Auto" />
+                <ColumnDefinition SharedSizeGroup="Value" Width="Auto" />
+                <ColumnDefinition SharedSizeGroup="Units" Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static core:RS.RemoveMapPointView_Point_Name}" />
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static core:RS.RemoveMapPointView_Latitude_Name}" />
+            <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static core:RS.RemoveMapPointView_Longitude_Name}" />
+            <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static core:RS.RemoveMapPointView_Altitude_Name}" />
+            <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static core:RS.RemoveMapPointView_Accuracy_Name}" />
+            
+            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding FixedModeConfig.Name}" />
+            <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Latitude}" />
+            <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Longitude}" />
+            <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding Altitude}" />
+            <TextBlock Grid.Column="1" Grid.Row="8" Text="{Binding Accuracy}" />
+            
+            <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding LatitudeUnits}" />
+            <TextBlock Grid.Column="2" Grid.Row="4" Text="{Binding LongitudeUnits}" />
+            <TextBlock Grid.Column="2" Grid.Row="6" Text="{Binding AltitudeUnits}" />
+            <TextBlock Grid.Column="2" Grid.Row="8" Text="{Binding AccuracyUnits}" />
+        </Grid>
+    </Grid>
+</UserControl>

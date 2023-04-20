@@ -585,6 +585,75 @@
   <data name="LoggerView_TraceFilter_Name" xml:space="preserve">
     <value>Trace</value>
   </data>
+  <data name="SavedCoordsView_Header" xml:space="preserve">
+    <value>Saved Coordinates</value>
+  </data>
+  <data name="SavedCoordsView_Description" xml:space="preserve">
+    <value>in this section you can view and save new map coordinates for GBS Fixed Mode</value>
+  </data>
+  <data name="SavedCoordsView_AddNewButton_Name" xml:space="preserve">
+    <value>Add New</value>
+  </data>
+  <data name="SavedCoordsView_RemoveButton_Name" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="SavedCoordsViewModel_AddNewItem_Title" xml:space="preserve">
+    <value>Add new map coordinate</value>
+  </data>
+  <data name="SavedCoordsViewModel_AddNewItem_PrimaryButtonText" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="SavedCoordsViewModel_AddNewItem_CloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="AddNewMapPointView_Latitude_Name" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="AddNewMapPointView_Longitude_Name" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="AddNewMapPointView_Altitude_Name" xml:space="preserve">
+    <value>Altitude</value>
+  </data>
+  <data name="AddNewMapPointView_Accuracy_Name" xml:space="preserve">
+    <value>Accuracy</value>
+  </data>
+  <data name="SavedCoordsViewModel_RemoveItem_Title" xml:space="preserve">
+    <value>Remove Map Point</value>
+  </data>
+  <data name="SavedCoordsViewModel_RemoveItem_PrimaryButtonText" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="SavedCoordsViewModel_RemoveItem_CloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="RemoveMapPointView_ConfirmationText" xml:space="preserve">
+    <value>Are you sure you want to delete this map point?</value>
+  </data>
+  <data name="RemoveMapPointView_Point_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="RemoveMapPointView_Latitude_Name" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="RemoveMapPointView_Longitude_Name" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="RemoveMapPointView_Altitude_Name" xml:space="preserve">
+    <value>Altitude</value>
+  </data>
+  <data name="RemoveMapPointView_Accuracy_Name" xml:space="preserve">
+    <value>Accuracy</value>
+  </data>
+  <data name="AddNewMapPointView_Point_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="AddNewMapPointViewModel_Accuracy_ValidValue" xml:space="preserve">
+    <value>Accuracy must be greater or equal {0}.</value>
+  </data>
+  <data name="AddNewMapPointViewModel_Name_ValidValue" xml:space="preserve">
+    <value>Name can not be empty</value>
+  </data>
   <data name="LoggerView_Clear_Name" xml:space="preserve">
     <value>Clear</value>
   </data>
