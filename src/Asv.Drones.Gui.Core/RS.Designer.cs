@@ -600,6 +600,15 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string LoggerView_Clear_Name {
+            get {
+                return ResourceManager.GetString("LoggerView_Clear_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string LoggerView_ErrorFilter_Name {

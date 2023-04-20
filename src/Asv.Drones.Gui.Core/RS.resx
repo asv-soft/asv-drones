@@ -654,4 +654,7 @@
   <data name="AddNewMapPointViewModel_Name_ValidValue" xml:space="preserve">
     <value>Name can not be empty</value>
   </data>
+  <data name="LoggerView_Clear_Name" xml:space="preserve">
+    <value>Clear</value>
+  </data>
 </root>

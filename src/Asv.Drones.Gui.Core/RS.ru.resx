@@ -741,4 +741,7 @@
   <data name="AddNewMapPointViewModel_Name_ValidValue" xml:space="preserve">
 	  <value>Имя не может быть пустым</value>
   </data>
+  <data name="LoggerView_Clear_Name" xml:space="preserve">
+	  <value>Очистить</value>
+  </data>
 </root>
