@@ -1,8 +1,10 @@
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.AsvGbs;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Gbs;
@@ -19,6 +21,7 @@ public class BaseStationModeGbsRttViewModel : GbsRttItem
         Order = 2;
 
         BaseStation.Gbs.CustomMode
+            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => BaseStationMode = _.ToString().Replace(nameof(AsvGbsCustomMode),""))
             .DisposeItWith(Disposable);
     }
