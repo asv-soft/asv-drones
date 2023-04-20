@@ -94,10 +94,8 @@ namespace Asv.Drones.Gui.Uav
         {
             foreach (var anchor in Map.Markers)
             {
-                if (anchor is UavFlightMissionPathPolygon polygon)
-                {
+                if (anchor is UavFlightMissionPathPolygon polygon && polygon.Vehicle.FullId == Vehicle.FullId)
                     polygon.IsVisible = needTo;
-                }
             }
         }
         
@@ -105,7 +103,7 @@ namespace Asv.Drones.Gui.Uav
         {
             foreach (var anchor in Map.Markers)
             {
-                if (anchor is UavFlightMissionAnchor missionAnchor)
+                if (anchor is UavFlightMissionAnchor missionAnchor && missionAnchor.Vehicle.FullId == Vehicle.FullId)
                     missionAnchor.IsVisible = needTo;
             }
         }
