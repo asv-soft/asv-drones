@@ -11,6 +11,7 @@ namespace Asv.Drones.Gui.Core
         private readonly IConfiguration _configuration;
         public FlightPageView()
         {
+            
         }
         [ImportingConstructor]
         public FlightPageView(IConfiguration configuration)
