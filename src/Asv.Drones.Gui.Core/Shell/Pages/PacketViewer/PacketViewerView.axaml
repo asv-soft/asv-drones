@@ -51,7 +51,7 @@
             <TextBlock DockPanel.Dock="Left" Margin="8 0" FontSize="30" Text="Packet viewer"/>
         </DockPanel>
        
-        <ListBox Grid.Column="0" Grid.Row="1" Margin="0,0,8,0" Items="{Binding Packets}" Grid.IsSharedSizeScope="True">
+        <ListBox Grid.Column="0" Grid.Row="1" Margin="0,0,8,0" SelectedItem="{Binding SelectedPacket}" Items="{Binding Packets}" Grid.IsSharedSizeScope="True">
             <ListBox.Styles>
                 <Style Selector="ListBoxItem">
                     <Setter Property="MinHeight" Value="25"></Setter>
@@ -66,6 +66,7 @@
                             <ColumnDefinition SharedSizeGroup="Type" Width="Auto"/>
                             <ColumnDefinition SharedSizeGroup="Message" Width="Auto"/>
                         </Grid.ColumnDefinitions>
+                        <Panel Grid.ColumnSpan="4" Background="#5779C1" IsVisible="{Binding Highlight}"/>
                         <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="0" Text="{Binding DateTime, StringFormat={}{0:hh:mm:ss.fff}}"/>
                         <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="1" Text="{Binding Source}"/>
                         <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="2" Text="{Binding Type}"/>
