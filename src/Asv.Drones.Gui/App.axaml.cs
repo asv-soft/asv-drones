@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using Asv.Cfg;
 using Asv.Drones.Gui.Gbs;
+using Asv.Drones.Gui.Sdr;
 using Asv.Drones.Gui.Uav;
 using NLog;
 using Avalonia.Controls.Templates;
@@ -64,6 +65,7 @@ namespace Asv.Drones.Gui
             yield return typeof(CorePlugin).Assembly;            // Asv.Drones.Gui.Core
             yield return typeof(UavPlugin).Assembly;             // Asv.Drones.Gui.Uav
             yield return typeof(GbsPlugin).Assembly;             // Asv.Drones.Gui.Gbs
+            yield return typeof(FlightSdrWidgetBase).Assembly;   // Asv.Drones.Gui.Sdr
 
         }
 
