@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="using:Asv.Drones.Gui.Uav">
     <Design.PreviewWith>
-        <controls:AttitudeIndicator Width="500" Height="500" RollAngle="0" PitchAngle="0" Velocity="0" Altitude="150" Heading="57" HomeAzimuth="37" />
+        <controls:AttitudeIndicator Width="500" Height="500" RollAngle="0" PitchAngle="0" Velocity="0" Altitude="150" Heading="57" HomeAzimuth="37" VibrationX="0.6150423" VibrationY="0.4214542" VibrationZ="0.234787"/>
     </Design.PreviewWith>
 
     <Style Selector="controls|AttitudeIndicator">
@@ -260,7 +260,7 @@
                                     <Rectangle.Fill>
                                         <LinearGradientBrush>
                                             <LinearGradientBrush.Transform>
-                                                <RotateTransform Angle="15"/>
+                                                <RotateTransform Angle="22.5"/>
                                             </LinearGradientBrush.Transform>  
                                             <GradientStops>  
                                                 <GradientStop Color="White" Offset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VibrationX}"/>  
@@ -273,7 +273,7 @@
                                     <Rectangle.Fill>  
                                         <LinearGradientBrush>
                                             <LinearGradientBrush.Transform>
-                                                <RotateTransform Angle="15"/>
+                                                <RotateTransform Angle="22.5"/>
                                             </LinearGradientBrush.Transform>    
                                             <GradientStops>  
                                                 <GradientStop Color="White" Offset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VibrationY}"/>  
@@ -286,7 +286,7 @@
                                     <Rectangle.Fill>  
                                         <LinearGradientBrush>
                                             <LinearGradientBrush.Transform>
-                                                <RotateTransform Angle="15"/>
+                                                <RotateTransform Angle="22.5"/>
                                             </LinearGradientBrush.Transform>    
                                             <GradientStops>
                                                 <GradientStop Color="White" Offset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VibrationZ}"/>  

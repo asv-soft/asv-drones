@@ -34,36 +34,49 @@ namespace Asv.Drones.Gui.Core
         [ImportingConstructor]
         public ConnectionsIdentificationViewModel(IMavlinkDevicesService svc):this()
         {
-            svc.NeedReloadToApplyConfig.Subscribe(_ => IsRebootRequired = _).DisposeItWith(Disposable);
+            svc.NeedReloadToApplyConfig
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(_ => IsRebootRequired = _)
+                .DisposeItWith(Disposable);
             
             svc.SystemId
+                .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(_ => SystemId = _)
                 .DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.SystemId)
+                .ObserveOn(RxApp.MainThreadScheduler)
                 .Skip(1)
                 .DistinctUntilChanged()
                 .Subscribe(svc.SystemId)
                 .DisposeItWith(Disposable);
 
             svc.ComponentId
+                .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(_ => ComponentId = _)
                 .DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.ComponentId)
+                .ObserveOn(RxApp.MainThreadScheduler)
                 .Skip(1)
                 .DistinctUntilChanged()
                 .Subscribe(svc.ComponentId)
                 .DisposeItWith(Disposable);
 
-            svc.HeartbeatRate.Subscribe(_ => SelectedRate = new RateItem(_)).DisposeItWith(Disposable);
+            svc.HeartbeatRate
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(_ => SelectedRate = new RateItem(_))
+                .DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.SelectedRate)
+                .ObserveOn(RxApp.MainThreadScheduler)
                 .Skip(1)
                 .DistinctUntilChanged()
                 .Subscribe(_ => svc.HeartbeatRate.OnNext(_.Time)).DisposeItWith(Disposable);
 
             svc.DeviceTimeout
+                .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(_ => DeviceTimeout = (uint)_.TotalSeconds)
                 .DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.DeviceTimeout)
+                .ObserveOn(RxApp.MainThreadScheduler)
                 .Skip(1)
                 .Where(_=> HasErrors == false)
                 .DistinctUntilChanged()

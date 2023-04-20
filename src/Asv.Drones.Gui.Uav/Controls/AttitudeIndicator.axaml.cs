@@ -73,7 +73,7 @@ namespace Asv.Drones.Gui.Uav
         }
         
         public static readonly StyledProperty<float> VibrationXProperty = AvaloniaProperty.Register<AttitudeIndicator, float>(
-            nameof(VibrationX), notifying: UpdateColorX);
+            nameof(VibrationX), notifying: UpdateColorX, defaultValue: -1);
         
         public float VibrationX
         {
@@ -82,7 +82,7 @@ namespace Asv.Drones.Gui.Uav
         }
         
         public static readonly StyledProperty<float> VibrationYProperty = AvaloniaProperty.Register<AttitudeIndicator, float>(
-            nameof(VibrationY), notifying: UpdateColorY);
+            nameof(VibrationY), notifying: UpdateColorY, defaultValue: -1);
 
         public float VibrationY
         {
@@ -91,7 +91,7 @@ namespace Asv.Drones.Gui.Uav
         }
         
         public static readonly StyledProperty<float> VibrationZProperty = AvaloniaProperty.Register<AttitudeIndicator, float>(
-            nameof(VibrationZ), notifying: UpdateColorZ);
+            nameof(VibrationZ), notifying: UpdateColorZ, defaultValue: -1);
 
         public float VibrationZ
         {
