@@ -1,5 +1,7 @@
+using System.Reactive.Linq;
 using Asv.Common;
 using Asv.Mavlink;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Gbs;
@@ -16,6 +18,7 @@ public class VisibleSatellitesGbsRttViewModel : GbsRttItem
         Order = 1;
         
         BaseStation.Gbs.AllSatellites
+            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => VisibleSatellites = _.ToString())
             .DisposeItWith(Disposable);
     }
