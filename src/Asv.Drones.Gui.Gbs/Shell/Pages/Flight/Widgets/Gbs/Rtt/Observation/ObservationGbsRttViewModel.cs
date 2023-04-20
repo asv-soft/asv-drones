@@ -1,6 +1,8 @@
+using System.Reactive.Linq;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Gbs;
@@ -17,6 +19,7 @@ public class ObservationGbsRttViewModel : GbsRttItem
         Order = 1;
         
         BaseStation.Gbs.ObservationSec
+            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => Observation = loc.RelativeTime.ConvertToString(TimeSpan.FromSeconds(_)))
             .DisposeItWith(Disposable);
     }
