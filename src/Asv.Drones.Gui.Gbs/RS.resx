@@ -123,4 +123,28 @@
     <data name="FlightGbsView_Satellites_ToolTip" xml:space="preserve">
         <value>Number of satellites for each constellation</value>
     </data>
+    <data name="FixedModeView_CurrentValuesTab_Header" xml:space="preserve">
+        <value>Current values</value>
+    </data>
+    <data name="FixedModeView_SavedValuesTab_Header" xml:space="preserve">
+        <value>Saved values</value>
+    </data>
+    <data name="FixedModeView_SaveCurrentValues_Name" xml:space="preserve">
+        <value>Save current values</value>
+    </data>
+    <data name="SetCoordsNameViewModel_Name_ValidValue" xml:space="preserve">
+        <value>Name must not be empty</value>
+    </data>
+    <data name="FixedModeViewModel_SetCoordsName_Title" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="FixedModeViewModel_SetCoordsName_PrimaryButtonText" xml:space="preserve">
+        <value>Ok</value>
+    </data>
+    <data name="FixedModeViewModel_SetCoordsName_SecondaryButtonText" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="SetCoordsNameView_Description" xml:space="preserve">
+        <value>Set name</value>
+    </data>
 </root>
