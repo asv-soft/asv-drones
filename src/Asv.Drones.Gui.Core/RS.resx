@@ -585,4 +585,7 @@
   <data name="LoggerView_TraceFilter_Name" xml:space="preserve">
     <value>Trace</value>
   </data>
+  <data name="LoggerView_Clear_Name" xml:space="preserve">
+    <value>Clear</value>
+  </data>
 </root>

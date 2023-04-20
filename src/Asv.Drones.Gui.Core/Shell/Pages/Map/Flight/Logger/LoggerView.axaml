@@ -10,7 +10,7 @@
              Background="Transparent"
              x:Class="Asv.Drones.Gui.Core.LoggerView">
     <Design.DataContext>
-        <core:LoggerViewModel />
+        <core:LoggerViewModel/>
     </Design.DataContext>
     <UserControl.Resources>
         <core:EnumToBooleanConverter x:Key="EnumToBoolConverter" />
@@ -65,13 +65,24 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl></ScrollViewer>
-        <Grid Grid.Column="1" RowDefinitions="Auto 3 Auto 3 Auto 3 Auto" Margin="5 10 0 10">
+        <Grid Grid.Column="1" RowDefinitions="Auto 3 Auto 3 Auto 3 Auto 3 Auto" Margin="5 10 0 10">
             <Grid.Styles>
                 <Style Selector="ToggleButton:checked /template/ ContentPresenter">
                     <Setter Property="Background" Value="LightSlateGray" />
                 </Style>
             </Grid.Styles>
-            <ToggleButton HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Stretch" IsChecked="{Binding IsErrorSelected}">
+            <Button Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Stretch" Command="{Binding ClearLogs}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Icon" />
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                    </Grid.ColumnDefinitions>
+
+                    <avalonia:MaterialIcon Kind="Delete" Foreground="White" />
+                    <TextBlock Margin="3 0 0 0" Grid.Column="1" Text="{x:Static core:RS.LoggerView_Clear_Name}" />
+                </Grid>
+            </Button>
+            <ToggleButton Grid.Row="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Stretch" IsChecked="{Binding IsErrorSelected}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" SharedSizeGroup="Icon" />
@@ -82,7 +93,7 @@
                     <TextBlock Margin="3 0 0 0" Grid.Column="1" Text="{x:Static core:RS.LoggerView_ErrorFilter_Name}" />
                 </Grid>
             </ToggleButton>
-            <ToggleButton HorizontalAlignment="Stretch" Grid.Row="2" HorizontalContentAlignment="Left" VerticalAlignment="Stretch" IsChecked="{Binding IsWarningSelected}">
+            <ToggleButton HorizontalAlignment="Stretch" Grid.Row="4" HorizontalContentAlignment="Left" VerticalAlignment="Stretch" IsChecked="{Binding IsWarningSelected}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" SharedSizeGroup="Icon" />
@@ -93,7 +104,7 @@
                     <TextBlock Margin="3 0 0 0" Grid.Column="1" Text="{x:Static core:RS.LoggerView_WarningFilter_Name}" />
                 </Grid>
             </ToggleButton>
-            <ToggleButton Grid.Row="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Stretch" IsChecked="{Binding IsInfoSelected}">
+            <ToggleButton Grid.Row="6" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Stretch" IsChecked="{Binding IsInfoSelected}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" SharedSizeGroup="Icon" />
@@ -104,7 +115,7 @@
                     <TextBlock Margin="3 0 0 0" Grid.Column="1" Text="{x:Static core:RS.LoggerView_InfoFilter_Name}" />
                 </Grid>
             </ToggleButton>
-            <ToggleButton Grid.Row="6" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Stretch" IsChecked="{Binding IsTraceSelected}">
+            <ToggleButton Grid.Row="8" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Stretch" IsChecked="{Binding IsTraceSelected}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" SharedSizeGroup="Icon" />

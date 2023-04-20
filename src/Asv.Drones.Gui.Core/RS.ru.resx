@@ -672,4 +672,7 @@
   <data name="LogMessagesPageView_RefreshButton_ToolTip" xml:space="preserve">
 	  <value>Обновить все элементы</value>
   </data>
+  <data name="LoggerView_Clear_Name" xml:space="preserve">
+	  <value>Очистить</value>
+  </data>
 </root>
