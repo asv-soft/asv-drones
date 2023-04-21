@@ -28,7 +28,7 @@
     </Design.DataContext>
     <Grid ColumnDefinitions="* Auto" RowDefinitions="Auto *" Margin="8">
         <DockPanel Grid.Row="0" Grid.ColumnSpan="2" >
-            <Button DockPanel.Dock="Right" Grid.Row="0" Margin="5 0 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{Binding ExportToCsv}" Content="{avalonia:MaterialIconExt File}" ToolTip.Tip="{x:Static core:RS.PacketViewerView_Save}" />
+            <Button DockPanel.Dock="Right" Grid.Row="0" Margin="5 0 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{Binding ExportToCsv}" Content="{avalonia:MaterialIconExt ContentSave}" ToolTip.Tip="{x:Static core:RS.PacketViewerView_Save}" />
             <Button DockPanel.Dock="Right" Margin="5 0 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{CompiledBinding ClearAll}" Content="{avalonia:MaterialIconExt Bin}" ToolTip.Tip="{x:Static core:RS.PacketViewerView_ClearAll}" />
             <ToggleButton DockPanel.Dock="Right" Margin="5 0 5 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsChecked="{Binding IsPause, Mode=TwoWay}" ToolTip.Tip="{x:Static core:RS.PacketViewerView_PlayPause}">
                 <Panel>

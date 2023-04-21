@@ -744,4 +744,22 @@
   <data name="LoggerView_Clear_Name" xml:space="preserve">
 	  <value>Очистить</value>
   </data>
+  <data name="PacketViewerViewModel_SeparatorDialog_Title" xml:space="preserve">
+	  <value>Выберите разделитель</value>
+  </data>
+  <data name="PacketViewerViewModel_SeparatorDialog_DialogPrimaryButton" xml:space="preserve">
+	  <value>Выбрать</value>
+  </data>
+  <data name="PacketViewerViewModel_SeparatorDialog_DialogSecondaryButton" xml:space="preserve">
+	  <value>Отмена</value>
+  </data>
+  <data name="PacketViewerViewModel_SeparatorDialog_Tab" xml:space="preserve">
+	  <value>Горизонтальная табуляция [ Tab ]</value>
+  </data>
+  <data name="PacketViewerViewModel_SeparatorDialog_Semicolon" xml:space="preserve">
+	  <value>Точка с запятой [ ; ]</value>
+  </data>
+  <data name="PacketViewerViewModel_SeparatorDialog_Coma" xml:space="preserve">
+	  <value>Запятая [ , ]</value>
+  </data>
 </root>
