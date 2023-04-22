@@ -133,10 +133,27 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
             _filtersSource.Items.ForEach(_=>_.UpdateRateText());
             _filtersSourceType.Items.ForEach(_=>_.UpdateRateText());
         }).DisposeItWith(Disposable);
+
+        this.WhenValueChanged(_ => _.SelectedPacket)
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(_ =>
+            {
+                if (_ != null)
+                {
+                    foreach (var packet in _packets)
+                    {
+                        packet.Highlight = false;
+                    
+                        if (packet.Type == _.Type)
+                        {
+                            packet.Highlight = true;
+                        }
+                    }    
+                }
+            })
+            .DisposeItWith(Disposable);
     }
-
     
-
     private IList<PacketMessageViewModel> ConvertPacketToMessagesAndUpdateFilters(IList<IPacketV2<IPayload>> items)
     {
         var result = new List<PacketMessageViewModel>(items.Count);
@@ -177,6 +194,7 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
     
     [Reactive] public bool IsPause { get; set; }
     [Reactive] public string SearchText { get; set; }
+    [Reactive] public PacketMessageViewModel SelectedPacket { get; set; }
 
     private bool FilterBySourcePredicate(PacketMessageViewModel vm)
     {
