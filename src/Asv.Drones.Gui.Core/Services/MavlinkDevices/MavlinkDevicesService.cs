@@ -31,6 +31,7 @@ namespace Asv.Drones.Gui.Core
         public VehicleClientConfig Vehicle { get; set; } = new();
         public GbsClientDeviceConfig Gbs { get; set; } = new();
         public SdrClientDeviceConfig Sdr { get; set; } = new();
+        public bool WrapToV2ExtensionEnabled { get; set; } = true;
     }
 
     [Export(typeof(IMavlinkDevicesService))]
@@ -56,6 +57,7 @@ namespace Asv.Drones.Gui.Core
             #region InitUriHost mavlink router
 
             _mavlinkRouter = MavlinkRouter.CreateDefault().DisposeItWith(Disposable);
+            _mavlinkRouter.WrapToV2ExtensionEnabled = InternalGetConfig(_ => _.WrapToV2ExtensionEnabled);
             foreach (var port in InternalGetConfig(_ => _.Ports))
             {
                 _mavlinkRouter.AddPort(port);
@@ -222,7 +224,7 @@ namespace Asv.Drones.Gui.Core
         private string TryGetName(StatustextPacket pkt)
         {
             var name = _logNames.Lookup(pkt.FullId);
-            return name.HasValue ? name.Value : $"[{pkt.SystemId},{pkt.ComponenId}]";
+            return name.HasValue ? name.Value : $"[{pkt.SystemId},{pkt.ComponentId}]";
         }
         
         #endregion

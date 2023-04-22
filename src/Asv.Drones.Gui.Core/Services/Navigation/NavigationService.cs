@@ -19,7 +19,7 @@ namespace Asv.Drones.Gui.Core
 
     [Export(typeof(INavigationService))]
     [PartCreationPolicy(CreationPolicy.Shared)]
-    public class NavigationService: ServiceWithConfigBase<NavigationServiceConfig>,INavigationService
+    public class NavigationService: ServiceWithConfigBase<NavigationServiceConfig>, INavigationService
     {
         private readonly CompositionContainer _container;
         private IShell? _shell;

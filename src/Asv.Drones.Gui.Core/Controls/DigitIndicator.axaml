@@ -1,0 +1,24 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Asv.Drones.Gui.Core"
+        xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia">
+    <Design.PreviewWith>
+        <controls:DigitIndicator Title="Dejavu" Value="1337.3221234" FormatString="F4" Units="m/s"/>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|DigitIndicator">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel>
+                    <TextBlock FontSize="10" Text="{TemplateBinding Title}" HorizontalAlignment="Center"/>
+                    <DockPanel LastChildFill="True">
+                        <avalonia:MaterialIcon IsVisible="{TemplateBinding IsIncreased}" Width="8" Height="12" VerticalAlignment="Top" Foreground="Green" DockPanel.Dock="Right" Kind="ArrowUpBold"/>
+                        <avalonia:MaterialIcon IsVisible="{TemplateBinding IsDecreased}" Width="8" Height="12" VerticalAlignment="Bottom" Foreground="Red" DockPanel.Dock="Right" Kind="ArrowDownBold"/>
+                        <TextBlock FontSize="14" Text="{TemplateBinding FormatedValue}"/>
+                    </DockPanel>
+                    <TextBlock FontSize="8" Text="{TemplateBinding Units}" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

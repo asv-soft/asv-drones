@@ -1068,6 +1068,60 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Coma [ , ].
+        /// </summary>
+        public static string PacketViewerViewModel_SeparatorDialog_Coma {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_Coma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string PacketViewerViewModel_SeparatorDialog_DialogPrimaryButton {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_DialogPrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string PacketViewerViewModel_SeparatorDialog_DialogSecondaryButton {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_DialogSecondaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Semicolon [ ; ].
+        /// </summary>
+        public static string PacketViewerViewModel_SeparatorDialog_Semicolon {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_Semicolon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horizontal tabulation [ Tab ].
+        /// </summary>
+        public static string PacketViewerViewModel_SeparatorDialog_Tab {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_Tab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the separator.
+        /// </summary>
+        public static string PacketViewerViewModel_SeparatorDialog_Title {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mission planing.
         /// </summary>
         public static string PlaningShellMenuItem_Name {

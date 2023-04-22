@@ -1,0 +1,89 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Dialogs\AutoModeView.axaml.cs">
+        <DependentUpon>AutoModeView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Dialogs\FixedModeView.axaml.cs">
+        <DependentUpon>FixedModeView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\Accuracy\AccuracyGbsRttView.axaml.cs">
+        <DependentUpon>AccuracyGbsRttView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\Accuracy\AccuracyGbsRttView.axaml.cs">
+        <DependentUpon>AccuracyGbsRttView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\DGpsRate\DGpsRateGbsRttView.axaml.cs">
+        <DependentUpon>DGpsRateGbsRttView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\DGpsRate\DGpsRateGbsRttView.axaml.cs">
+        <DependentUpon>DGpsRateGbsRttView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\LinkQuality\LinkQualityGbsRttView.axaml.cs">
+        <DependentUpon>LinkQualityGbsRttView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\LinkQuality\LinkQualityGbsRttView.axaml.cs">
+        <DependentUpon>LinkQualityGbsRttView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\Observation\ObservationGbsRttView.axaml.cs">
+        <DependentUpon>ObservationGbsRttView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\Observation\ObservationGbsRttView.axaml.cs">
+        <DependentUpon>ObservationGbsRttView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\VisibleSatellites\VisibleSatellitesGbsRttView.axaml.cs">
+        <DependentUpon>VisibleSatellitesGbsRttView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\VisibleSatellites\VisibleSatellitesGbsRttView.axaml.cs">
+        <DependentUpon>VisibleSatellitesGbsRttView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\BaseStationMode\BaseStationModeGbsRttView.axaml.cs">
+        <DependentUpon>BaseStationModeGbsRttView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\BaseStationMode\BaseStationModeGbsRttView.axaml.cs">
+        <DependentUpon>BaseStationModeGbsRttView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\FlightGbsView.axaml.cs">
+        <DependentUpon>FlightGbsView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\FlightGbsView.axaml.cs">
+        <DependentUpon>FlightGbsView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Shell\Pages\Flight\Widgets\Sdr\FlightGbsView.axaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Asv.Drones.Gui.Core\Asv.Drones.Gui.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Asv.Mavlink" Version="3.2.0" />
+      <PackageReference Include="ReactiveUI.Fody" Version="18.4.20" />
+    </ItemGroup>
+
+</Project>
