@@ -17,7 +17,7 @@ public class PacketMessageViewModel
     public PacketMessageViewModel(IPacketV2<IPayload> packet)
     {
         DateTime = DateTime.Now;
-        Source = $"[{packet.SystemId},{packet.ComponenId}]";
+        Source = $"[{packet.SystemId},{packet.ComponentId}]";
         Message = JsonConvert.SerializeObject(packet.Payload);
         Type = packet.Name;
         Id = Guid.NewGuid();
