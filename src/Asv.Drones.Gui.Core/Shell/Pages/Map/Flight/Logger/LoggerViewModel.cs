@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Windows.Input;
 using Asv.Common;
 using Avalonia.Controls;
 using DynamicData;
@@ -71,11 +72,13 @@ public class LoggerViewModel : FlightWidgetBase
             .Subscribe(_ => _filterUpdate.OnNext(FilterByTypePredicate))
             .DisposeItWith(Disposable);
 
-#if DEBUG
-        log.SendMessage(new LogMessage(DateTime.Now, LogMessageType.Error, "debug", "Test error", "This is a test log message"));
-        log.SendMessage(new LogMessage(DateTime.Now, LogMessageType.Warning, "debug", "Test warning", "This is a test log message"));
-        log.SendMessage(new LogMessage(DateTime.Now, LogMessageType.Trace, "debug", "Test trace", "This is a test log message"));
-#endif        
+        ClearLogs = ReactiveCommand.Create(() => { _logSource.Clear(); }).DisposeItWith(Disposable);
+
+        //  #if DEBUG
+        //      log.SendMessage(new LogMessage(DateTime.Now, LogMessageType.Error, "debug", "Test error", "This is a test log message"));
+        //      log.SendMessage(new LogMessage(DateTime.Now, LogMessageType.Warning, "debug", "Test warning", "This is a test log message"));
+        //      log.SendMessage(new LogMessage(DateTime.Now, LogMessageType.Trace, "debug", "Test trace", "This is a test log message"));
+        //  #endif
     }
 
     public ReadOnlyObservableCollection<FlightLogMessageViewModel> Logs => _logs;
@@ -84,7 +87,8 @@ public class LoggerViewModel : FlightWidgetBase
     [Reactive] public bool IsErrorSelected { get; set; } = true;
     [Reactive] public bool IsInfoSelected { get; set; } = true;
     [Reactive] public bool IsTraceSelected { get; set; } = true;
-
+    public ICommand ClearLogs { get; }
+    
     private static FlightLogMessageViewModel ConvertLogToMessage(LogMessage logMessage)
     {
         return logMessage.Type switch

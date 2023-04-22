@@ -159,6 +159,15 @@ namespace Asv.Drones.Gui.Gbs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current values.
+        /// </summary>
+        public static string FixedModeView_CurrentValuesTab_Header {
+            get {
+                return ResourceManager.GetString("FixedModeView_CurrentValuesTab_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Latitude.
         /// </summary>
         public static string FixedModeView_Latitude_Name {
@@ -177,6 +186,24 @@ namespace Asv.Drones.Gui.Gbs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save current values.
+        /// </summary>
+        public static string FixedModeView_SaveCurrentValues_Name {
+            get {
+                return ResourceManager.GetString("FixedModeView_SaveCurrentValues_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saved values.
+        /// </summary>
+        public static string FixedModeView_SavedValuesTab_Header {
+            get {
+                return ResourceManager.GetString("FixedModeView_SavedValuesTab_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accuracy must be greater or equal {0}..
         /// </summary>
         public static string FixedModeViewModel_Accuracy_ValidValue {
@@ -186,29 +213,38 @@ namespace Asv.Drones.Gui.Gbs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string FixedModeViewModel_SetCoordsName_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("FixedModeViewModel_SetCoordsName_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string FixedModeViewModel_SetCoordsName_SecondaryButtonText {
+            get {
+                return ResourceManager.GetString("FixedModeViewModel_SetCoordsName_SecondaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string FixedModeViewModel_SetCoordsName_Title {
+            get {
+                return ResourceManager.GetString("FixedModeViewModel_SetCoordsName_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fixed mode start failed: {0}.
         /// </summary>
         public static string FixedModeViewModel_StartFailed {
             get {
                 return ResourceManager.GetString("FixedModeViewModel_StartFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move to this GBS on map.
-        /// </summary>
-        public static string FlightGbsView_MoveToButton_ToolTip {
-            get {
-                return ResourceManager.GetString("FlightGbsView_MoveToButton_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Number of satellites for each constellation.
-        /// </summary>
-        public static string FlightGbsView_Satellites_ToolTip {
-            get {
-                return ResourceManager.GetString("FlightGbsView_Satellites_ToolTip", resourceCulture);
             }
         }
         
@@ -236,6 +272,24 @@ namespace Asv.Drones.Gui.Gbs {
         public static string FlightGbsView_EnableFixed_Content {
             get {
                 return ResourceManager.GetString("FlightGbsView_EnableFixed_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to this GBS on map.
+        /// </summary>
+        public static string FlightGbsView_MoveToButton_ToolTip {
+            get {
+                return ResourceManager.GetString("FlightGbsView_MoveToButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of satellites for each constellation.
+        /// </summary>
+        public static string FlightGbsView_Satellites_ToolTip {
+            get {
+                return ResourceManager.GetString("FlightGbsView_Satellites_ToolTip", resourceCulture);
             }
         }
         
@@ -362,6 +416,24 @@ namespace Asv.Drones.Gui.Gbs {
         public static string ObservationGbsRttView_ToolTip {
             get {
                 return ResourceManager.GetString("ObservationGbsRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set name.
+        /// </summary>
+        public static string SetCoordsNameView_Description {
+            get {
+                return ResourceManager.GetString("SetCoordsNameView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name must not be empty.
+        /// </summary>
+        public static string SetCoordsNameViewModel_Name_ValidValue {
+            get {
+                return ResourceManager.GetString("SetCoordsNameViewModel_Name_ValidValue", resourceCulture);
             }
         }
         

@@ -1,5 +1,7 @@
-﻿using Asv.Common;
+﻿using System.Reactive.Linq;
+using Asv.Common;
 using Asv.Mavlink;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Uav;
@@ -14,8 +16,15 @@ public class BatteryUavRttViewModel:UavRttItem
     
     public BatteryUavRttViewModel(IVehicleClient vehicle) : base(vehicle, GenerateRtt(vehicle,"battery"))
     {
-        Vehicle.Rtt.BatteryCharge.Subscribe(_ => BatteryLevel = _).DisposeItWith(Disposable);
-        Vehicle.Rtt.BatteryCharge.Subscribe(_ => BatteryLevelString = _.ToString("P0")).DisposeItWith(Disposable);
+        Vehicle.Rtt.BatteryCharge
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(_ => BatteryLevel = _)
+            .DisposeItWith(Disposable);
+        
+        Vehicle.Rtt.BatteryCharge
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(_ => BatteryLevelString = _.ToString("P0"))
+            .DisposeItWith(Disposable);
     }
 
     [Reactive]

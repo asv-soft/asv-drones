@@ -36,7 +36,7 @@ namespace Asv.Drones.Gui.Core
             IEnumerable<IViewModelProvider<IMapAnchor>> markers,
             IEnumerable<IViewModelProvider<IMapWidget>> widgets):base(id)
         {
-            
+
             #region Map provider
 
             map.CurrentMapProvider.Subscribe(_ => MapProvider = _).DisposeItWith(Disposable);
@@ -125,9 +125,12 @@ namespace Asv.Drones.Gui.Core
         [Reactive] 
         public GMapProvider MapProvider { get; set; } = EmptyProvider.Instance;
 
-        [Reactive] public int MaxZoom { get; set; } = 20;
-        [Reactive] public int MinZoom { get; set; } = 1;
-        [Reactive] public double Zoom { get; set; } = 10;
+        [Reactive] 
+        public int MaxZoom { get; set; } = 20;
+        [Reactive] 
+        public int MinZoom { get; set; } = 1;
+        [Reactive] 
+        public double Zoom { get; set; } = 10;
         [Reactive]
         public GeoPoint Center { get; set; }
         [Reactive]

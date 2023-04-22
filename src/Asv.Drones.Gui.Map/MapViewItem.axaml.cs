@@ -34,6 +34,7 @@ namespace Asv.Avalonia.Map
             this.WhenActivated(disp =>
             {
                 DisposableMixins.DisposeWith(this.WhenAnyValue(_ => _.IsSelected).Subscribe(UpdateSelectableZindex), disp);
+                DisposableMixins.DisposeWith(this.WhenAnyValue(_ => _.IsSelected).Subscribe(_ => this.IsHitTestVisible = !_), disp);
                 DisposableMixins.DisposeWith(this.WhenAnyValue(_ => _.Bounds).Subscribe(_ => UpdateLocalPosition()), disp);
 
                 Observable.FromEventPattern<EventHandler<PointerPressedEventArgs>, PointerPressedEventArgs>(
