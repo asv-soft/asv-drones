@@ -7,6 +7,7 @@ using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.AsvSdr;
 using Asv.Mavlink.V2.Common;
+using Avalonia.Controls;
 using DynamicData;
 using Material.Icons;
 using ReactiveUI;
@@ -25,7 +26,10 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
 
     public FlightSdrViewModel()
     {
-        
+        if (Design.IsDesignMode)
+        {
+            Icon = MaterialIconKind.Memory;
+        }
     }
     
     public FlightSdrViewModel(ISdrClientDevice payload, ILogService log, ILocalizationService loc, IConfiguration configuration, IEnumerable<ISdrRttItemProvider> rttItems)
@@ -45,6 +49,9 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         payload.Sdr.CustomMode.DistinctUntilChanged()
             .Subscribe(UpdateSelectedMode)
             .DisposeItWith(Disposable);
+        payload.Sdr.IsRecordStarted.DistinctUntilChanged()
+            .Subscribe(_=>IsRecordStarted = _)
+            .DisposeItWith(Disposable);
         
         rttItems
             .SelectMany(_ => _.Create(payload))
@@ -56,8 +63,28 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             .DisposeMany()
             .Subscribe()
             .DisposeItWith(Disposable);
-        UpdateMode = ReactiveCommand.CreateFromTask(cancel=>Payload.Sdr.SetMode(SelectedMode.Mode,Frequency,1,1,cancel));
-        UpdateMode.ThrownExceptions.Subscribe(OnCommandError).DisposeItWith(Disposable);
+        
+        UpdateMode = ReactiveCommand.CreateFromTask(cancel=>Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode,Frequency,1,1,cancel));
+        UpdateMode.ThrownExceptions.Subscribe(ex =>
+        {
+            _logService.Error("Set mode",$"Error to set payload mode",ex); // TODO: Localize
+        }).DisposeItWith(Disposable);
+        
+        StartRecord = ReactiveCommand.CreateFromTask(async cancel=>
+        {
+            await Payload.Sdr.StartRecordAndCheckResult("Record1", cancel);
+            await Payload.Sdr.CurrentRecordSetTagAndCheckResult("tag1", 10, cancel);
+        },this.WhenAnyValue(_=>_.IsRecordStarted).Select(_=>!_));
+        StartRecord.ThrownExceptions.Subscribe(ex =>
+        {
+            _logService.Error("Rec start",$"Error to set payload mode",ex);
+        }).DisposeItWith(Disposable);
+        
+        StopRecord = ReactiveCommand.CreateFromTask(cancel=>Payload.Sdr.StopRecordAndCheckResult(cancel),this.WhenAnyValue(_=>_.IsRecordStarted));
+        StopRecord.ThrownExceptions.Subscribe(ex =>
+        {
+            _logService.Error("Rec stop",$"Error to set payload mode",ex);
+        }).DisposeItWith(Disposable);
         
     }
 
@@ -65,12 +92,6 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     {
         SelectedMode = Modes.FirstOrDefault(__ => __.Mode == mode);
     }
-
-    private void OnCommandError(Exception ex)
-    {
-        _logService.Error("Set mode",$"Error to set payload mode",ex); // TODO: Localize
-    }
-
     private void UpdateModes(AsvSdrCustomModeFlag flag)
     {
         Modes.Clear();
@@ -97,8 +118,12 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     public SdrModeViewModel? SelectedMode { get; set; }
     [Reactive]
     public ulong Frequency { get; set; }
-
-    public ReactiveCommand<Unit,MavResult> UpdateMode { get; }
+    [Reactive]
+    public bool IsRecordStarted { get; set; }
+    public ReactiveCommand<Unit,Unit> UpdateMode { get; }
+    public ReactiveCommand<Unit,Unit> StartRecord { get; }
+    public ReactiveCommand<Unit,Unit> StopRecord { get; }
+    
 }
 
 public class SdrModeViewModel:ReactiveObject

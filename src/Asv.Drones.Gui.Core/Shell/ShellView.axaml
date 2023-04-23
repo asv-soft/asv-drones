@@ -94,7 +94,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="core:LogMessageViewModel">
-                            <ui:InfoBar Tapped="InputElement_OnTapped" Title="{Binding Title}" IsOpen="{Binding IsOpen}" Severity="{Binding Severity}" Message="{Binding Message}" />
+                            <ui:InfoBar ToolTip.Tip="{Binding Description}" Tapped="InputElement_OnTapped" Title="{Binding Title}" IsOpen="{Binding IsOpen}" Severity="{Binding Severity}" Message="{Binding Message}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

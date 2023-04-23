@@ -14,12 +14,20 @@
     <Border Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8" CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True">
         <StackPanel Margin="10" Spacing="8">
             <DockPanel DockPanel.Dock="Top">
+                <Button IsVisible="{Binding IsRecordStarted}" Command="{Binding StopRecord}" DockPanel.Dock="Right" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
+                    <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="RecordRec" Foreground="DarkRed"  Width="25" Height="25" />
+                </Button>
+                <Button  IsVisible="{Binding !IsRecordStarted}" Command="{Binding StartRecord}" DockPanel.Dock="Right" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
+                    <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="RecordRec" Foreground="Gray"  Width="25" Height="25" />
+                </Button>
+                
                 <Button  DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
                     <StackPanel Orientation="Horizontal">
                         <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="{Binding Icon}" Foreground="BlueViolet"  Width="25" Height="25" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center" DockPanel.Dock="Top" Text="{Binding Title}" />      
                     </StackPanel>
                 </Button>
+                
             </DockPanel>
             <ComboBox HorizontalAlignment="Stretch" Items="{Binding Modes}" SelectedItem="{Binding SelectedMode, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
