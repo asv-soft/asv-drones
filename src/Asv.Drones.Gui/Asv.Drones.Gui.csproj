@@ -40,7 +40,7 @@
     <PackageReference Include="FluentAvaloniaUI" Version="2.0.0-preview4" />
     <PackageReference Include="Material.Icons.Avalonia" Version="2.0.0-preview1" />
     <PackageReference Include="NLog" Version="5.1.2" />
-    <PackageReference Include="ReactiveUI.Fody" Version="18.4.20" />
+    <PackageReference Include="ReactiveUI.Fody" Version="18.4.34" />
     <PackageReference Include="System.ComponentModel.Composition" Version="7.0.0" />
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.5.1" />
   </ItemGroup>

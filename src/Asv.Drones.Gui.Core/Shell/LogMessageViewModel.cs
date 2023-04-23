@@ -59,5 +59,6 @@ namespace Asv.Drones.Gui.Core
         }
 
         public string Message => _message.Message;
+        public string Description => _message.Description;
     }
 }

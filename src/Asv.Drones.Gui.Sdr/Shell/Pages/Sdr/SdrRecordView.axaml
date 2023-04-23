@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:sdr="clr-namespace:Asv.Drones.Gui.Sdr"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Asv.Drones.Gui.Sdr.SdrRecordView"
+             x:CompileBindings="True"
+             x:DataType="sdr:SdrRecordViewModel">
+    <Design.DataContext>
+        <sdr:SdrRecordViewModel/>
+    </Design.DataContext>
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top">
+            <avalonia:MaterialIcon DockPanel.Dock="Left" Margin="0,0,5,0" Kind="FileMarkerOutline"  Width="25" Height="25" />
+            <Button Margin="8,0,0,0" DockPanel.Dock="Right" Command="{Binding DownloadTags}">
+                <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="Refresh"  Width="25" Height="25" />
+            </Button>
+            <TextBlock FontSize="25" Text="{Binding Name}"/>
+        </DockPanel>
+        <ItemsControl DockPanel.Dock="Top" Items="{Binding TagItems}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" Spacing="4"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="CornflowerBlue" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
+                        <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
+                            <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
+                            <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <ListBox Items="{Binding Items}">
+            
+        </ListBox>
+    </DockPanel>
+</UserControl>
