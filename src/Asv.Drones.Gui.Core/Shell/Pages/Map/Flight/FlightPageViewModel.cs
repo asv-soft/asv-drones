@@ -30,13 +30,9 @@ namespace Asv.Drones.Gui.Core
             [ImportMany(UriString)] IEnumerable<IViewModelProvider<IMapAnchor>> markers,
             [ImportMany(UriString)] IEnumerable<IViewModelProvider<IMapWidget>> widgets):base(Uri,map,markers,widgets)
         {
-            FlightConfig = cfg.Get<FlightPageViewModelConfig>() ?? new FlightPageViewModelConfig()
-            {
-                Zoom = 10,
-                MapCenter = new GeoPoint(0, 0, 0)
-            };
+            FlightConfig = cfg.Get<FlightPageViewModelConfig>();
             
-            Zoom = FlightConfig.Zoom;
+            Zoom = FlightConfig.Zoom is 0 ? 1 : FlightConfig.Zoom;
 
             Center = FlightConfig.MapCenter;
             
