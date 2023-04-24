@@ -50,8 +50,8 @@
             <avalonia:MaterialIcon DockPanel.Dock="Left" Height="30" Width="30" Kind="Package"/>
             <TextBlock DockPanel.Dock="Left" Margin="8 0" FontSize="30" Text="Packet viewer"/>
         </DockPanel>
-       
-        <ListBox Grid.Column="0" Grid.Row="1" Margin="0,0,8,0" SelectedItem="{Binding SelectedPacket}" Items="{Binding Packets}" Grid.IsSharedSizeScope="True">
+
+        <ListBox ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Column="0" Grid.Row="1" Margin="0,0,8,0" SelectedItem="{Binding SelectedPacket}" Items="{Binding Packets}" Grid.IsSharedSizeScope="True">
             <ListBox.Styles>
                 <Style Selector="ListBoxItem">
                     <Setter Property="MinHeight" Value="25"></Setter>
