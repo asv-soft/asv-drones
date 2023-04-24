@@ -58,6 +58,8 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
 
         AddTag = ReactiveCommand.Create(() =>
         {
+            if (TagName.IsNullOrWhiteSpace() | TagValue.IsNullOrWhiteSpace() | RecordName.IsNullOrWhiteSpace()) return;
+            
             if (SelectedType == "String8")
             {
                 var tag = new StringTagViewModel()
@@ -118,24 +120,7 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
                 return isValid;
             }, _=>  "Not valid tag name" )
             .DisposeItWith(Disposable);
-            
-        this.ValidationRule(x => x.RecordName, _ =>
-            {
-                if (_.IsNullOrWhiteSpace()) return false;
-                
-                bool isValid = true;
-                try
-                {
-                    SdrWellKnown.CheckRecordName(_);
-                }
-                catch
-                {
-                    isValid = false;
-                }
-                return isValid;
-            }, _ =>  "Not valid record name" )
-            .DisposeItWith(Disposable);
-        
+
         this.ValidationRule(x => x.TagValue, _ => CheckTagValue(_), _ => GetTagValueValidationMessage())
             .DisposeItWith(Disposable);
     }
@@ -193,6 +178,25 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
     public void ApplyDialog(ContentDialog dialog)
     {
         if (dialog == null) throw new ArgumentNullException(nameof(dialog));
+        
+        this.ValidationRule(x => x.RecordName, _ =>
+            {
+                dialog.IsPrimaryButtonEnabled = false;
+                
+                if (_.IsNullOrWhiteSpace()) return dialog.IsPrimaryButtonEnabled;
+                
+                try
+                {
+                    SdrWellKnown.CheckRecordName(_);
+                    dialog.IsPrimaryButtonEnabled = true;
+                }
+                catch
+                {
+                }
+                
+                return dialog.IsPrimaryButtonEnabled;
+            }, _ =>  "Not valid record name" )
+            .DisposeItWith(Disposable);
     }
     
     public ICommand AddTag { get; }
