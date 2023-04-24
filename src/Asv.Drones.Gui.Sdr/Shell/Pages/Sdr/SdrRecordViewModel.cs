@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
@@ -83,10 +84,73 @@ public class TagViewModel:ReactiveObject
     {
         
     }
+    
     public TagViewModel(AsvSdrClientRecordTag tag)
     {
         Name = tag.ToString();
     }
     
     public string Name { get; set; } = null!;
+    
+    public ICommand Remove { get; set; }
+}
+
+public class LongTagViewModel : TagViewModel
+{
+    public LongTagViewModel()
+    {
+        
+    }
+    
+    public LongTagViewModel(AsvSdrClientRecordTag tag) : base(tag)
+    {
+        Value = tag.GetInt64();
+    }
+    
+    public long Value { get; set; }
+}
+
+public class ULongTagViewModel : TagViewModel
+{
+    public ULongTagViewModel()
+    {
+        
+    }
+    
+    public ULongTagViewModel(AsvSdrClientRecordTag tag) : base(tag)
+    {
+        Value = tag.GetUint64();
+    }
+    
+    public ulong Value { get; set; }
+}
+
+public class DoubleTagViewModel : TagViewModel
+{
+    public DoubleTagViewModel()
+    {
+        
+    }
+    
+    public DoubleTagViewModel(AsvSdrClientRecordTag tag) : base(tag)
+    {
+        Value = tag.GetReal64();
+    }
+    
+    public double Value { get; set; }
+}
+
+public class StringTagViewModel : TagViewModel
+{
+    public StringTagViewModel()
+    {
+        
+    }
+    
+    public StringTagViewModel(AsvSdrClientRecordTag tag) : base(tag)
+    {
+        Value = tag.GetString();
+    }
+    
+    public string Value { get; set; }
 }
