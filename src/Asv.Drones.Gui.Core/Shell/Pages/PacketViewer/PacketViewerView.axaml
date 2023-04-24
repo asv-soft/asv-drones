@@ -59,7 +59,7 @@
             </ListBox.Styles>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid ToolTip.Tip="{Binding Description}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition SharedSizeGroup="Date" Width="Auto"/>
                             <ColumnDefinition SharedSizeGroup="Source" Width="Auto"/>

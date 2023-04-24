@@ -32,9 +32,11 @@ public class PacketMessageViewModel : AvaloniaObject
         DateTime = DateTime.Now;
         Source = $"[{packet.SystemId},{packet.ComponentId}]";
         Message = JsonConvert.SerializeObject(packet.Payload);
+        Description = JsonConvert.SerializeObject(packet.Payload, Formatting.Indented);
         Type = packet.Name;
         Id = Guid.NewGuid();
     }
 
     public Guid Id { get; }
+    public string Description { get; }
 }

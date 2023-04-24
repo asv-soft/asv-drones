@@ -18,6 +18,6 @@ public class DefaultSdrRttItemProvider : ISdrRttItemProvider
     
     public IEnumerable<ISdrRttItem> Create(ISdrClientDevice device)
     {
-        yield break;
+        yield return new SdrRttItemLlzViewModel(device,_localizationService);
     }
 }

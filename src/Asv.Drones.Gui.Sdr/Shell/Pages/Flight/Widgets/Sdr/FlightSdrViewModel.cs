@@ -29,6 +29,12 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         if (Design.IsDesignMode)
         {
             Icon = MaterialIconKind.Memory;
+            _rttItems = new ReadOnlyObservableCollection<ISdrRttItem>(new ObservableCollection<ISdrRttItem>(new List<ISdrRttItem>
+            {
+                new SdrRttItemLlzViewModel(),
+                new SdrRttItemLlzViewModel(),
+                new SdrRttItemLlzViewModel(),
+            }));
         }
     }
     

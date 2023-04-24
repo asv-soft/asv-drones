@@ -44,7 +44,7 @@ public class DigitIndicator : IndicatorBase
         get => _value;
         set
         {
-            if (value == _value)
+            if (Math.Abs(value - _value) < double.Epsilon)
             {
                 IsDecreased = false;
                 IsIncreased = false;
@@ -61,6 +61,7 @@ public class DigitIndicator : IndicatorBase
             }
             
             SetAndRaise(ValueProperty, ref _value, value);
+            FormatedValue = Value.ToString(FormatString);
         }
     }
 
@@ -77,10 +78,10 @@ public class DigitIndicator : IndicatorBase
 
     private bool _isIncreased;
 
-    private static readonly DirectProperty<DigitIndicator, bool> IsIncreasedProperty = AvaloniaProperty.RegisterDirect<DigitIndicator, bool>(
+    public static readonly DirectProperty<DigitIndicator, bool> IsIncreasedProperty = AvaloniaProperty.RegisterDirect<DigitIndicator, bool>(
         nameof(IsIncreased), o => o.IsIncreased, (o, v) => o.IsIncreased = v);
 
-    private bool IsIncreased
+    public bool IsIncreased
     {
         get => _isIncreased;
         set => SetAndRaise(IsIncreasedProperty, ref _isIncreased, value);
@@ -88,10 +89,10 @@ public class DigitIndicator : IndicatorBase
 
     private bool _isDecreased;
 
-    private static readonly DirectProperty<DigitIndicator, bool> IsDecreasedProperty = AvaloniaProperty.RegisterDirect<DigitIndicator, bool>(
+    public static readonly DirectProperty<DigitIndicator, bool> IsDecreasedProperty = AvaloniaProperty.RegisterDirect<DigitIndicator, bool>(
         nameof(IsDecreased), o => o.IsDecreased, (o, v) => o.IsDecreased = v);
 
-    private bool IsDecreased
+    public bool IsDecreased
     {
         get => _isDecreased;
         set => SetAndRaise(IsDecreasedProperty, ref _isDecreased, value);
@@ -100,12 +101,12 @@ public class DigitIndicator : IndicatorBase
 
     private string _formatedValue;
 
-    private static readonly DirectProperty<DigitIndicator, string> FormatedValueProperty = AvaloniaProperty.RegisterDirect<DigitIndicator, string>(
+    public static readonly DirectProperty<DigitIndicator, string> FormatedValueProperty = AvaloniaProperty.RegisterDirect<DigitIndicator, string>(
         nameof(FormatedValue), o => o.FormatedValue, (o, v) => o.FormatedValue = v);
 
-    private string FormatedValue
+    public string FormatedValue
     {
-        get => Value.ToString(FormatString);
+        get => _formatedValue;
         set => SetAndRaise(FormatedValueProperty, ref _formatedValue, value);
     }
     

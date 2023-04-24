@@ -31,5 +31,6 @@
     <StyleInclude Source="/Controls/BatteryIndicator.axaml"/>
     <StyleInclude Source="/Controls/GpsStatusIndicator.axaml"/>
     <StyleInclude Source="/Controls/ConnectionQuality.axaml"/>
+    <StyleInclude Source="/Controls/DigitIndicator.axaml"/>
 
 </Styles>

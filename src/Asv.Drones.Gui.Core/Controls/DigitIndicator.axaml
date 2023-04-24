@@ -14,7 +14,7 @@
                     <DockPanel LastChildFill="True">
                         <avalonia:MaterialIcon IsVisible="{TemplateBinding IsIncreased}" Width="8" Height="12" VerticalAlignment="Top" Foreground="Green" DockPanel.Dock="Right" Kind="ArrowUpBold"/>
                         <avalonia:MaterialIcon IsVisible="{TemplateBinding IsDecreased}" Width="8" Height="12" VerticalAlignment="Bottom" Foreground="Red" DockPanel.Dock="Right" Kind="ArrowDownBold"/>
-                        <TextBlock FontSize="14" Text="{TemplateBinding FormatedValue}"/>
+                        <TextBlock HorizontalAlignment="Center" FontSize="14" Text="{TemplateBinding FormatedValue}"/>
                     </DockPanel>
                     <TextBlock FontSize="8" Text="{TemplateBinding Units}" HorizontalAlignment="Center"/>
                 </StackPanel>
