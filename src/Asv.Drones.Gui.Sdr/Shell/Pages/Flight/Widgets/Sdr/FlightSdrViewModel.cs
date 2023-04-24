@@ -120,19 +120,19 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             {
                 if (_ is LongTagViewModel longTag)
                 {
-                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(longTag.Name, longTag.Value, cancel);
+                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(longTag.Name, longTag.Value, new CancellationToken());
                 }
                 else if (_ is ULongTagViewModel ulongTag)
                 {
-                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(ulongTag.Name, ulongTag.Value, cancel);
+                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(ulongTag.Name, ulongTag.Value, new CancellationToken());
                 }
                 else if (_ is DoubleTagViewModel doubleTag)
                 {
-                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(doubleTag.Name, doubleTag.Value, cancel);
+                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(doubleTag.Name, doubleTag.Value, new CancellationToken());
                 }
                 else if (_ is StringTagViewModel stringTag)
                 {
-                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(stringTag.Name, stringTag.Value, cancel);
+                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(stringTag.Name, stringTag.Value, new CancellationToken());
                 }
             });
         }
