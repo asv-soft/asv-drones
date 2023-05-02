@@ -1,7 +1,12 @@
+using System.Globalization;
+using System.Text;
+using System.Text.Json;
 using Asv.Mavlink;
+using Asv.Mavlink.V2.Ardupilotmega;
 using Avalonia;
 using Newtonsoft.Json;
 using ReactiveUI.Fody.Helpers;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace Asv.Drones.Gui.Core;
 
@@ -27,12 +32,12 @@ public class PacketMessageViewModel : AvaloniaObject
     {
         
     }
-    public PacketMessageViewModel(IPacketV2<IPayload> packet)
+    public PacketMessageViewModel(IPacketV2<IPayload> packet, IPacketConverter converter)
     {
         DateTime = DateTime.Now;
         Source = $"[{packet.SystemId},{packet.ComponentId}]";
-        Message = JsonConvert.SerializeObject(packet.Payload);
-        Description = JsonConvert.SerializeObject(packet.Payload, Formatting.Indented);
+        Message = converter.Convert(packet);
+        Description = converter.Convert(packet, PacketFormatting.Indented);
         Type = packet.Name;
         Id = Guid.NewGuid();
     }

@@ -42,7 +42,8 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
     
     private readonly SourceList<PacketMessageViewModel> _packetsSource;
     private readonly ReadOnlyObservableCollection<PacketMessageViewModel> _packets;
-
+    private readonly IEnumerable<IPacketConverter> _converters;
+    
     public PacketViewerViewModel() : base(Uri)
     {
         
@@ -62,13 +63,17 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
     }
     
     [ImportingConstructor]
-    public PacketViewerViewModel(IMavlinkDevicesService mavlinkDevicesService, INavigationService nav, IConfiguration cfg, ILocalizationService localizationService, IGlobalCommandsService cmd) : this()
+    public PacketViewerViewModel(IMavlinkDevicesService mavlinkDevicesService, INavigationService nav, 
+        IConfiguration cfg, ILocalizationService localizationService, IGlobalCommandsService cmd,
+        [ImportMany]IEnumerable<IPacketConverter> converters) : this()
     {
         _localization = localizationService;
         _cmd = cmd;
         _cfg = cfg;
         _nav = nav;
-
+        
+        _converters = converters.OrderBy(_ => _.Order);
+        
         _packetsSource = new SourceList<PacketMessageViewModel>();
         _packetsSource.LimitSizeTo(MaxPacketSize).Subscribe().DisposeItWith(Disposable);
         _filtersSource = new SourceCache<PacketFilterViewModel, string>(_ => _.Source);
@@ -159,7 +164,10 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
         var result = new List<PacketMessageViewModel>(items.Count);
         foreach (var packet in items)
         {
-            var obj = new PacketMessageViewModel(packet);
+            var converter = _converters.FirstOrDefault(_ => _.CanConvert(packet), new DefaultPacketConverter());
+            
+            var obj = new PacketMessageViewModel(packet, converter);
+            
             result.Add(obj);
             var sourceExists = _filtersSource.Lookup(obj.Source);
             if (sourceExists.HasValue)
