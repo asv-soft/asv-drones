@@ -6,7 +6,7 @@ using Asv.Mavlink.V2.Common;
 namespace Asv.Drones.Gui.Core;
 
 /// <summary>
-/// Default packet converter. Uses when there is no specialized converter for some packet type.
+/// StatusText packet converter.
 /// </summary>
 [Export(typeof(IPacketConverter))]
 [PartCreationPolicy(CreationPolicy.Shared)]
@@ -24,7 +24,7 @@ public class StatusTextConverter : IPacketConverter
     public string Convert(IPacketV2<IPayload> packet, PacketFormatting formatting = PacketFormatting.None)
     {
         if (packet == null) throw new ArgumentException("Incoming packet was not initialized!");
-        if (!CanConvert(packet)) throw new ArgumentException("Conveter can not convert incoming packet!");
+        if (!CanConvert(packet)) throw new ArgumentException("Converter can not convert incoming packet!");
         
         StringBuilder sb = new StringBuilder();
         

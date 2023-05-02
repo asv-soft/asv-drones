@@ -1,12 +1,5 @@
-using System.Globalization;
-using System.Text;
-using System.Text.Json;
 using Asv.Mavlink;
-using Asv.Mavlink.V2.Ardupilotmega;
 using Avalonia;
-using Newtonsoft.Json;
-using ReactiveUI.Fody.Helpers;
-using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace Asv.Drones.Gui.Core;
 

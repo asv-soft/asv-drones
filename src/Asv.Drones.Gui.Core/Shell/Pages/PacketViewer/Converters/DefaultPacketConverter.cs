@@ -5,13 +5,13 @@ using Newtonsoft.Json;
 namespace Asv.Drones.Gui.Core;
 
 /// <summary>
-/// Default packet converter. Uses when there is no specialized converter for some packet type.
+/// Default packet converter. Used when there is no specialized converter for some packet type.
 /// </summary>
 [Export(typeof(IPacketConverter))]
 [PartCreationPolicy(CreationPolicy.Shared)]
 public class DefaultPacketConverter : IPacketConverter
 {
-    public int Order => Int32.MaxValue; 
+    public int Order => int.MaxValue; 
 
     public bool CanConvert(IPacketV2<IPayload> packet)
     {
@@ -23,7 +23,7 @@ public class DefaultPacketConverter : IPacketConverter
     public string Convert(IPacketV2<IPayload> packet, PacketFormatting formatting = PacketFormatting.None)
     {
         if (packet == null) throw new ArgumentException("Incoming packet was not initialized!");
-        if (!CanConvert(packet)) throw new ArgumentException("Conveter can not convert incoming packet!");
+        if (!CanConvert(packet)) throw new ArgumentException("Converter can not convert incoming packet!");
         
         string result = string.Empty;
         
