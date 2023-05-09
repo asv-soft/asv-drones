@@ -86,4 +86,8 @@
       <PackageReference Include="ReactiveUI.Fody" Version="18.4.34" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Shell\Pages\Flight\Widgets\Sdr\Rtt\Vor\" />
+    </ItemGroup>
+
 </Project>
