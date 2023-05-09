@@ -8,7 +8,9 @@ using Asv.Mavlink;
 using Asv.Mavlink.V2.AsvSdr;
 using Asv.Mavlink.V2.Common;
 using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 using DynamicData;
+using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -60,10 +62,11 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             .DisposeItWith(Disposable);
         
         rttItems
-            .SelectMany(_ => _.Create(payload, payload.Sdr.CustomMode.Value))
+            .SelectMany(_ => _.Create(payload))
             .OrderBy(_=>_.Order)
             .AsObservableChangeSet()
-            .AutoRefreshOnObservable(_=> payload.Sdr.CustomMode.DistinctUntilChanged())
+            .AutoRefresh(_=>_.IsVisible)
+            .Filter(_=>_.IsVisible)
             .Bind(out _rttItems)
             .DisposeMany()
             .Subscribe()
@@ -75,19 +78,15 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             _logService.Error("Set mode",$"Error to set payload mode",ex); // TODO: Localize
         }).DisposeItWith(Disposable);
         
-        StartRecord = ReactiveCommand.CreateFromTask(async cancel=>
-        {
-            await Payload.Sdr.StartRecordAndCheckResult("Record1", cancel);
-            await Payload.Sdr.CurrentRecordSetTagAndCheckResult("tag1", 10, cancel);
-            await Payload.Sdr.CurrentRecordSetTagAndCheckResult("tag2", 10.0, cancel);
-            await Payload.Sdr.CurrentRecordSetTagAndCheckResult("tag3", "12345678", cancel);
-        },this.WhenAnyValue(_=>_.IsRecordStarted).Select(_=>!_));
+        StartRecord = ReactiveCommand.CreateFromTask(RecordStartImpl,
+            this.WhenAnyValue(_=>_.IsRecordStarted).Select(_=>!_));
         StartRecord.ThrownExceptions.Subscribe(ex =>
         {
             _logService.Error("Rec start",$"Error to set payload mode",ex);
         }).DisposeItWith(Disposable);
         
-        StopRecord = ReactiveCommand.CreateFromTask(cancel=>Payload.Sdr.StopRecordAndCheckResult(cancel),this.WhenAnyValue(_=>_.IsRecordStarted));
+        StopRecord = ReactiveCommand.CreateFromTask(cancel=>Payload.Sdr.StopRecordAndCheckResult(cancel),
+            this.WhenAnyValue(_=>_.IsRecordStarted));
         StopRecord.ThrownExceptions.Subscribe(ex =>
         {
             _logService.Error("Rec stop",$"Error to set payload mode",ex);
@@ -95,6 +94,49 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         
     }
 
+    private async Task RecordStartImpl(CancellationToken cancel)
+    {
+        var dialog = new ContentDialog()
+        {
+            Title = "New",
+            PrimaryButtonText = "Start",
+            IsSecondaryButtonEnabled = true,
+            SecondaryButtonText = "Cancel"
+        };
+            
+        var viewModel = new RecordStartViewModel();
+            
+        viewModel.ApplyDialog(dialog);
+            
+        dialog.Content = viewModel;
+
+        var result = await dialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
+        {
+            await Payload.Sdr.StartRecordAndCheckResult(viewModel.RecordName, cancel);
+            
+            viewModel.Tags.ForEach(async _ =>
+            {
+                if (_ is LongTagViewModel longTag)
+                {
+                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(longTag.Name, longTag.Value, new CancellationToken());
+                }
+                else if (_ is ULongTagViewModel ulongTag)
+                {
+                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(ulongTag.Name, ulongTag.Value, new CancellationToken());
+                }
+                else if (_ is DoubleTagViewModel doubleTag)
+                {
+                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(doubleTag.Name, doubleTag.Value, new CancellationToken());
+                }
+                else if (_ is StringTagViewModel stringTag)
+                {
+                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(stringTag.Name, stringTag.Value, new CancellationToken());
+                }
+            });
+        }
+    }
     private void UpdateSelectedMode(AsvSdrCustomMode mode)
     {
         SelectedMode = Modes.FirstOrDefault(__ => __.Mode == mode);

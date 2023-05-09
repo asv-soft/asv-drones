@@ -70,6 +70,7 @@ public class SdrViewModel:ViewModelBase,IShellPage
         if (ParseUri(link, out var id) == false) return;
         _payload = _mavlink.GetPayloadsByFullId(id);
         if (_payload == null) return;
+        
         _payload.Sdr.Records
             .Transform(_=>new SdrRecordViewModel(_payload.Heartbeat.FullId,_,_log))
             .SortBy(_=>_.CreatedDateTime)
@@ -77,7 +78,6 @@ public class SdrViewModel:ViewModelBase,IShellPage
             .DisposeMany()
             .Subscribe()
             .DisposeItWith(Disposable);
-
         
         DownloadRecords = ReactiveCommand.CreateFromTask(cancel =>
                 _payload.Sdr.DownloadRecordList(new Progress<double>(_ => Progress = _), cancel))

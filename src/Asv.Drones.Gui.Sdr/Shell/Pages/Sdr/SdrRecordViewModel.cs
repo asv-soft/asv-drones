@@ -2,9 +2,11 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
+using Asv.Mavlink.V2.AsvSdr;
 using Avalonia.Controls;
 using DynamicData;
 using ReactiveUI;
@@ -44,16 +46,8 @@ public class SdrRecordViewModel:ViewModelBase
         record.Created.Subscribe(_=>CreatedDateTime = _).DisposeItWith(Disposable);
         record.DataType.Subscribe(_=>Description = _.ToString("G")).DisposeItWith(Disposable);
         
-        DownloadTags = ReactiveCommand.CreateFromTask(cancel =>
-                record.UploadTagList(new Progress<double>(_ => TagsProgress = _), cancel))
-            .DisposeItWith(Disposable);
-        DownloadTags.ThrownExceptions.Subscribe(_ =>
-            {
-                if (Name != null) log.Error(Name, "Error to download records", _);
-            })
-            .DisposeItWith(Disposable);
         record.Tags
-            .Transform(_=>new TagViewModel(_))
+            .Transform(_ => TransformRecordTag(_))
             .SortBy(_=>_.Name)
             .Bind(out _tagItems)
             .DisposeMany()
@@ -62,6 +56,36 @@ public class SdrRecordViewModel:ViewModelBase
         record.ByteSize.Subscribe(_=>Description = $"{record.DataCount.Value} rec. ({record.ByteSize} bytes)").DisposeItWith(Disposable);
         record.DataCount.Subscribe(_=>Description = $"{record.DataCount.Value} rec. ({record.ByteSize} bytes)").DisposeItWith(Disposable);
         
+        DownloadTags = ReactiveCommand.CreateFromTask(cancel =>
+                record.UploadTagList(new Progress<double>(_ => TagsProgress = _), cancel))
+            .DisposeItWith(Disposable);
+        DownloadTags.ThrownExceptions.Subscribe(_ =>
+            {
+                if (Name != null) log.Error(Name, "Error to download records", _);
+            })
+            .DisposeItWith(Disposable);
+    }
+
+    public TagViewModel TransformRecordTag(AsvSdrClientRecordTag tag)
+    {
+        if (tag.Type == AsvSdrRecordTagType.AsvSdrRecordTagTypeInt64)
+        {
+            return new LongTagViewModel(tag);
+        }
+        else if (tag.Type == AsvSdrRecordTagType.AsvSdrRecordTagTypeUint64)
+        {
+            return new ULongTagViewModel(tag);
+        }
+        else if (tag.Type == AsvSdrRecordTagType.AsvSdrRecordTagTypeReal64)
+        {
+            return new DoubleTagViewModel(tag);  
+        }
+        else if (tag.Type == AsvSdrRecordTagType.AsvSdrRecordTagTypeString8)
+        {
+            return new StringTagViewModel(tag);
+        }
+
+        return new TagViewModel(tag);
     }
     
     [Reactive]
@@ -83,10 +107,73 @@ public class TagViewModel:ReactiveObject
     {
         
     }
+    
     public TagViewModel(AsvSdrClientRecordTag tag)
     {
         Name = tag.ToString();
     }
     
     public string Name { get; set; } = null!;
+    
+    public ICommand Remove { get; set; }
+}
+
+public class LongTagViewModel : TagViewModel
+{
+    public LongTagViewModel()
+    {
+        
+    }
+    
+    public LongTagViewModel(AsvSdrClientRecordTag tag) : base(tag)
+    {
+        Value = tag.GetInt64();
+    }
+    
+    public long Value { get; set; }
+}
+
+public class ULongTagViewModel : TagViewModel
+{
+    public ULongTagViewModel()
+    {
+        
+    }
+    
+    public ULongTagViewModel(AsvSdrClientRecordTag tag) : base(tag)
+    {
+        Value = tag.GetUint64();
+    }
+    
+    public ulong Value { get; set; }
+}
+
+public class DoubleTagViewModel : TagViewModel
+{
+    public DoubleTagViewModel()
+    {
+        
+    }
+    
+    public DoubleTagViewModel(AsvSdrClientRecordTag tag) : base(tag)
+    {
+        Value = tag.GetReal64();
+    }
+    
+    public double Value { get; set; }
+}
+
+public class StringTagViewModel : TagViewModel
+{
+    public StringTagViewModel()
+    {
+        
+    }
+    
+    public StringTagViewModel(AsvSdrClientRecordTag tag) : base(tag)
+    {
+        Value = tag.GetString();
+    }
+    
+    public string Value { get; set; }
 }

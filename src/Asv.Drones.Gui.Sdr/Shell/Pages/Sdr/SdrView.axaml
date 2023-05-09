@@ -31,6 +31,7 @@
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
+                    
                 </ListBox>
             </DockPanel>
             <ContentControl DataContext="{Binding SelectedItem}" Grid.Column="2" Content="{Binding }"/>

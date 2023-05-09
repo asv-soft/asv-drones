@@ -17,7 +17,7 @@
                 <Button IsVisible="{Binding IsRecordStarted}" Command="{Binding StopRecord}" DockPanel.Dock="Right" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
                     <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="RecordRec" Foreground="DarkRed"  Width="25" Height="25" />
                 </Button>
-                <Button  IsVisible="{Binding !IsRecordStarted}" Command="{Binding StartRecord}" DockPanel.Dock="Right" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
+                <Button IsVisible="{Binding !IsRecordStarted}" Command="{Binding StartRecord}" DockPanel.Dock="Right" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
                     <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="RecordRec" Foreground="Gray"  Width="25" Height="25" />
                 </Button>
                 
