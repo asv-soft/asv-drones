@@ -60,11 +60,10 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             .DisposeItWith(Disposable);
         
         rttItems
-            .SelectMany(_ => _.Create(payload))
+            .SelectMany(_ => _.Create(payload, payload.Sdr.CustomMode.Value))
             .OrderBy(_=>_.Order)
             .AsObservableChangeSet()
-            .AutoRefresh(_=>_.IsVisible)
-            .Filter(_=>_.IsVisible)
+            .AutoRefreshOnObservable(_=> payload.Sdr.CustomMode.DistinctUntilChanged())
             .Bind(out _rttItems)
             .DisposeMany()
             .Subscribe()
@@ -80,6 +79,8 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         {
             await Payload.Sdr.StartRecordAndCheckResult("Record1", cancel);
             await Payload.Sdr.CurrentRecordSetTagAndCheckResult("tag1", 10, cancel);
+            await Payload.Sdr.CurrentRecordSetTagAndCheckResult("tag2", 10.0, cancel);
+            await Payload.Sdr.CurrentRecordSetTagAndCheckResult("tag3", "12345678", cancel);
         },this.WhenAnyValue(_=>_.IsRecordStarted).Select(_=>!_));
         StartRecord.ThrownExceptions.Subscribe(ex =>
         {
