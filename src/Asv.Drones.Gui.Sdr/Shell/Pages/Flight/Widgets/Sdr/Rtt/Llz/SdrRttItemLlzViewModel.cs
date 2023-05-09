@@ -25,15 +25,14 @@ public class SdrRttItemLlzViewModel:SdrRttItem
     public SdrRttItemLlzViewModel(ISdrClientDevice device, ILocalizationService localizationService)
     :base(device, SdrRttItem.GenerateUri(device,"llz"))
     {
-        device.Sdr.CustomMode.Subscribe(_ => IsVisible = _ == AsvSdrCustomMode.AsvSdrCustomModeLlz)
-            .DisposeItWith(Disposable);
+        IsVisible = true;
         device.Sdr.Base.OnRecordData.Where(_ => _.MessageId == AsvSdrRecordDataLlzPacket.PacketMessageId)
             .Cast<AsvSdrRecordDataLlzPacket>()
-            .Subscribe(_=>Value = _.Payload.TotalAm90)
+            .Subscribe(_=>Value = (_.Payload.TotalAm90 - _.Payload.TotalAm150)*100.0)
             .DisposeItWith(Disposable);
     }
 
-    public string Title { get; } = "SDM";
+    public string Title { get; } = "DDM";
 
     public string Units { get; } = "%";
 
