@@ -9,7 +9,7 @@
              x:CompileBindings="True"
              x:DataType="sdr:SdrRttItemLlzViewModel">
     <Design.DataContext>
-        <sdr:SdrRttItemLlzViewModel/>
+        <sdr:SdrRttItemLlzViewModelDesignMock/>
     </Design.DataContext>
-    <core:DigitIndicator Title="{Binding Title}" FormatString="F2" Units="{Binding Units}" Value="{Binding Value, Mode=TwoWay}"/>
+    <core:DigitIndicator Margin="4,0" Title="{Binding Title}" FormatString="{Binding FormatString}" Units="{Binding Units}" Value="{Binding Value, Mode=TwoWay}"/>
 </UserControl>

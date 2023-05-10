@@ -44,7 +44,7 @@
             <ItemsControl Items="{Binding RttItems}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel ItemWidth="50" />
+                        <WrapPanel ItemWidth="60" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>

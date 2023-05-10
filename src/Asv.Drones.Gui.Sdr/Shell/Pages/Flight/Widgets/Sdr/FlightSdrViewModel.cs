@@ -20,10 +20,11 @@ namespace Asv.Drones.Gui.Sdr;
 
 public class FlightSdrViewModel:FlightSdrWidgetBase
 {
-    private readonly ReadOnlyObservableCollection<ISdrRttItem> _rttItems;
+    private readonly ObservableCollection<ISdrRttItem> _rttItems = new();
     private readonly ILogService _logService;
     private readonly ILocalizationService _loc;
     private readonly IConfiguration _configuration;
+    private readonly ISdrRttItemProvider[] _providers;
     public static Uri GenerateUri(ISdrClientDevice sdr) => FlightSdrWidgetBase.GenerateUri(sdr,"sdr");
 
     public FlightSdrViewModel()
@@ -31,21 +32,24 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         if (Design.IsDesignMode)
         {
             Icon = MaterialIconKind.Memory;
-            _rttItems = new ReadOnlyObservableCollection<ISdrRttItem>(new ObservableCollection<ISdrRttItem>(new List<ISdrRttItem>
+            _rttItems = new ObservableCollection<ISdrRttItem>(new List<ISdrRttItem>
             {
-                new SdrRttItemLlzViewModel(),
-                new SdrRttItemLlzViewModel(),
-                new SdrRttItemLlzViewModel(),
-            }));
+                new SdrRttItemLlzViewModelDesignMock(),
+                new SdrRttItemLlzViewModelDesignMock(),
+                new SdrRttItemLlzViewModelDesignMock(),
+            });
         }
     }
     
     public FlightSdrViewModel(ISdrClientDevice payload, ILogService log, ILocalizationService loc, IConfiguration configuration, IEnumerable<ISdrRttItemProvider> rttItems)
         :base(payload, GenerateUri(payload))
     {
-        _logService = log;
-        _loc = loc;
-        _configuration = configuration;
+        if (rttItems == null) throw new ArgumentNullException(nameof(rttItems));
+        _providers = rttItems.ToArray();
+        _logService = log ?? throw new ArgumentNullException(nameof(log));
+        _loc = loc ?? throw new ArgumentNullException(nameof(loc));
+        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+       
         
         Icon = MaterialIconKind.Memory;
         Title = "Payload";
@@ -61,16 +65,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             .Subscribe(_=>IsRecordStarted = _)
             .DisposeItWith(Disposable);
         
-        rttItems
-            .SelectMany(_ => _.Create(payload))
-            .OrderBy(_=>_.Order)
-            .AsObservableChangeSet()
-            .AutoRefresh(_=>_.IsVisible)
-            .Filter(_=>_.IsVisible)
-            .Bind(out _rttItems)
-            .DisposeMany()
-            .Subscribe()
-            .DisposeItWith(Disposable);
+       
         
         UpdateMode = ReactiveCommand.CreateFromTask(cancel=>Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode,Frequency,1,1,cancel));
         UpdateMode.ThrownExceptions.Subscribe(ex =>
@@ -91,7 +86,16 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         {
             _logService.Error("Rec stop",$"Error to set payload mode",ex);
         }).DisposeItWith(Disposable);
-        
+
+        Disposable.AddAction(() =>
+        {
+            foreach (var item in _rttItems)
+            {
+                item.Dispose();
+            }
+            _rttItems.Clear();
+        });
+
     }
 
     private async Task RecordStartImpl(CancellationToken cancel)
@@ -140,6 +144,18 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     private void UpdateSelectedMode(AsvSdrCustomMode mode)
     {
         SelectedMode = Modes.FirstOrDefault(__ => __.Mode == mode);
+        foreach (var item in _rttItems)
+        {
+            item.Dispose();
+        }
+        _rttItems.Clear();
+
+        var items = _providers
+            .SelectMany(_ => _.Create(Payload, Payload.Sdr.CustomMode.Value))
+            .OrderBy(_ => _.Order);
+        _rttItems.AddRange(items);
+
+
     }
     private void UpdateModes(AsvSdrCustomModeFlag flag)
     {
@@ -161,7 +177,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         UpdateSelectedMode(Payload.Sdr.CustomMode.Value);
     }
 
-    public ReadOnlyObservableCollection<ISdrRttItem> RttItems => _rttItems;
+    public ObservableCollection<ISdrRttItem> RttItems => _rttItems;
     public ObservableCollection<SdrModeViewModel> Modes { get; } = new();
     [Reactive]
     public SdrModeViewModel? SelectedMode { get; set; }

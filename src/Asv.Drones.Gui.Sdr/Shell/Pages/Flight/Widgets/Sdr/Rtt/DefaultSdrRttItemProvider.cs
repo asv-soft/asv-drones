@@ -24,7 +24,16 @@ public class DefaultSdrRttItemProvider : ISdrRttItemProvider
             case AsvSdrCustomMode.AsvSdrCustomModeIdle:
                 break;
             case AsvSdrCustomMode.AsvSdrCustomModeLlz:
-                yield return new SdrRttItemLlzViewModel(device,_localizationService);
+                yield return new SdrRttItemLlzDdmViewModel(device);
+                yield return new SdrRttItemLlzSdmViewModel(device);
+                yield return new SdrRttItemLlzPowViewModel(device);
+                
+                yield return new SdrRttItemLlzCrsSdmViewModel(device);
+                yield return new SdrRttItemLlzCrsDdmViewModel(device);
+                
+                yield return new SdrRttItemLlzClrSdmViewModel(device);
+                yield return new SdrRttItemLlzClrDdmViewModel(device);
+                
                 break;
             case AsvSdrCustomMode.AsvSdrCustomModeGp:
                 break;

@@ -1,7 +1,6 @@
 using System.ComponentModel.Composition;
 using System.Reactive.Linq;
 using Asv.Common;
-using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.AsvSdr;
 using Avalonia.Controls;
@@ -9,33 +8,52 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Sdr;
 
-[Export(typeof(ISdrRttItem))]
-[PartCreationPolicy(CreationPolicy.NonShared)]
-public class SdrRttItemLlzViewModel:SdrRttItem
+public class SdrRttItemLlzViewModelDesignMock : SdrRttItemLlzViewModel
 {
-    public SdrRttItemLlzViewModel()
+    public SdrRttItemLlzViewModelDesignMock()
     {
-        if (Design.IsDesignMode)
-        {
-            Value = 40.02;
-        }
+        Title = "DDM";
+        Units = "%";
+        FormatString = "P2";
+        Value = 0.5;
+    }
+
+    public override double GetValue(AsvSdrRecordDataLlzPayload payload)
+    {
+        return 0;
+    }
+
+    public override string Title { get; }
+    public override string Units { get; }
+    public override string FormatString { get; }
+}
+
+
+public abstract class SdrRttItemLlzViewModel:SdrRttItem
+{
+    protected SdrRttItemLlzViewModel()
+    {
+        
     }
     
     [ImportingConstructor]
-    public SdrRttItemLlzViewModel(ISdrClientDevice device, ILocalizationService localizationService)
-    :base(device, SdrRttItem.GenerateUri(device,"llz"))
+    protected SdrRttItemLlzViewModel(ISdrClientDevice device,string name)
+    :base(device, SdrRttItem.GenerateUri(device,$"llz/{name}"))
     {
-        IsVisible = true;
         device.Sdr.Base.OnRecordData.Where(_ => _.MessageId == AsvSdrRecordDataLlzPacket.PacketMessageId)
             .Cast<AsvSdrRecordDataLlzPacket>()
-            .Subscribe(_=>Value = (_.Payload.TotalAm90 - _.Payload.TotalAm150)*100.0)
+            .Subscribe(_=>Value = GetValue(_.Payload))
             .DisposeItWith(Disposable);
     }
 
-    public string Title { get; } = "DDM";
+    public abstract double GetValue(AsvSdrRecordDataLlzPayload payload);
+    
+    public abstract string Title { get; }
 
-    public string Units { get; } = "%";
+    public abstract string Units { get; }
 
     [Reactive] 
     public double Value { get; set; } = 0.1;
+
+    public abstract string FormatString { get; }
 }
