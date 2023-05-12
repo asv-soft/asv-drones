@@ -57,7 +57,7 @@ public class SdrRecordViewModel:ViewModelBase
         record.DataCount.Subscribe(_=>Description = $"{record.DataCount.Value} rec. ({record.ByteSize} bytes)").DisposeItWith(Disposable);
         
         DownloadTags = ReactiveCommand.CreateFromTask(cancel =>
-                record.UploadTagList(new Progress<double>(_ => TagsProgress = _), cancel))
+                record.DownloadTagList(new Progress<double>(_ => TagsProgress = _), cancel))
             .DisposeItWith(Disposable);
         DownloadTags.ThrownExceptions.Subscribe(_ =>
             {
