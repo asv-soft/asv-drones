@@ -63,13 +63,15 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition SharedSizeGroup="Date" Width="Auto"/>
                             <ColumnDefinition SharedSizeGroup="Source" Width="Auto"/>
+                            <ColumnDefinition SharedSizeGroup="Size" Width="Auto"/>
                             <ColumnDefinition SharedSizeGroup="Type" Width="Auto"/>
                             <ColumnDefinition SharedSizeGroup="Message" Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Panel Grid.ColumnSpan="4" Background="#5779C1" IsVisible="{Binding Highlight}"/>
                         <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="0" Text="{Binding DateTime, StringFormat={}{0:hh:mm:ss.fff}}"/>
                         <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="1" Text="{Binding Source}"/>
-                        <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="2" Text="{Binding Type}"/>
+                        <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="2" Text="{Binding Source}"/>
+                        <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="3" Text="{Binding Type}"/>
                         <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="3" Text="{Binding Message}"/>
                     </Grid>
                 </DataTemplate>
