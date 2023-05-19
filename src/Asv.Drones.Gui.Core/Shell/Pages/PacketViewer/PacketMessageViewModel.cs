@@ -7,6 +7,7 @@ public class PacketMessageViewModel : AvaloniaObject
 {
     public DateTime DateTime { get; set; }
     public string Source { get; set; }
+    public int Size { get; set; }
     public string Message { get; set; }
     public string Type { get; set; }
 
@@ -33,6 +34,7 @@ public class PacketMessageViewModel : AvaloniaObject
         Description = converter.Convert(packet, PacketFormatting.Indented);
         Type = packet.Name;
         Id = Guid.NewGuid();
+        Size = packet.GetCurrentByteSize();
     }
 
     public Guid Id { get; }
