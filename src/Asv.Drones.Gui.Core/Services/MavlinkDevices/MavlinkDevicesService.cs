@@ -31,6 +31,7 @@ namespace Asv.Drones.Gui.Core
         public VehicleClientConfig Vehicle { get; set; } = new();
         public GbsClientDeviceConfig Gbs { get; set; } = new();
         public SdrClientDeviceConfig Sdr { get; set; } = new();
+        public AdsbClientDeviceConfig Adsb { get; set; } = new();
         public bool WrapToV2ExtensionEnabled { get; set; } = true;
     }
 
@@ -149,6 +150,11 @@ namespace Asv.Drones.Gui.Core
                 .Transform(CreateSdrDevice)
                 .DisposeMany()
                 .RefCount();
+            AdsbDevices = Devices
+                .Filter(_ => _.Type == MavType.MavTypeAdsb)
+                .Transform(CreateAdsbDevice)
+                .DisposeMany()
+                .RefCount();
 
             #endregion
 
@@ -188,6 +194,17 @@ namespace Asv.Drones.Gui.Core
                 SystemId = _systemId.Value,
                 ComponentId = _componentId.Value,
             }, _sequenceCalculator, RxApp.MainThreadScheduler, InternalGetConfig(_ => _.Gbs));
+        }
+
+        private IAdsbClientDevice CreateAdsbDevice(IMavlinkDevice device)
+        {
+            return new AdsbClientDevice(Router, new MavlinkClientIdentity
+            {
+                TargetSystemId = device.SystemId,
+                TargetComponentId = device.ComponentId,
+                SystemId = _systemId.Value,
+                ComponentId = _componentId.Value,
+            }, _sequenceCalculator, RxApp.MainThreadScheduler, InternalGetConfig(_ => _.Adsb));
         }
 
         #region Logs
@@ -256,6 +273,14 @@ namespace Asv.Drones.Gui.Core
         {
             using var a = Payloads.BindToObservableList(out var list).Subscribe();
             return list.Items.FirstOrDefault(_=>_.Heartbeat.FullId == id);
+        }
+        
+        public IObservable<IChangeSet<IAdsbClientDevice, ushort>> AdsbDevices { get; }
+
+        public IAdsbClientDevice? GetAdsbVehicleByFullId(ushort id)
+        {
+            AdsbDevices.BindToObservableList(out var list).Subscribe();
+            return list.Items.FirstOrDefault(_ => _.FullId == id);
         }
 
         private IVehicleClient CreateVehicle(IMavlinkDevice device)
