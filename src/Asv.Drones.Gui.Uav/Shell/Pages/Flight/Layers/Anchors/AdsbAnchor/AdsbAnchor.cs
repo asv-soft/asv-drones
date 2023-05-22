@@ -1,21 +1,20 @@
-using System.Reactive.Linq;
 using Asv.Avalonia.Map;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.Vehicle;
 using Avalonia.Media;
-using DynamicData;
+using DynamicData.Binding;
 using Material.Icons;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav;
 
-public class AdsbAnchor : AdsbAnchorBase
+public class AdsbAnchor : MapAnchorBase
 {
     private readonly ILocalizationService _loc;
     
-    public AdsbAnchor(IAdsbClientDevice device, ILocalizationService loc) : base(device, "adsb")
+    public AdsbAnchor(IAdsbVehicle device, ILocalizationService loc, ushort deviceFullId) 
+        : base(new Uri($"adsb/{deviceFullId}/{device.IcaoAddress}"))
     {
         _loc = loc;
         Size = 48;
@@ -28,12 +27,7 @@ public class AdsbAnchor : AdsbAnchorBase
         Icon = MaterialIconKind.Plane;
         
         // TODO: create device subscriptions
-        device.Name.Subscribe(_ => Title = _).DisposeItWith(Disposable);
-        device.Adsb.OnTarget.ObserveOn(RxApp.MainThreadScheduler).Subscribe(_ =>
-            {
-                Location = new GeoPoint(_.Lat, _.Lon, _.Altitude);
-            })
-            .DisposeItWith(Disposable);
-        
+        device.CallSign.Subscribe(_ => Title = _).DisposeItWith(Disposable);
+        device.Location.Subscribe(_=>Location = _).DisposeItWith(Disposable);
     }
 }

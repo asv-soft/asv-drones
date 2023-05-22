@@ -2,6 +2,7 @@
 using System.ComponentModel.Composition;
 using System.Reactive.Linq;
 using Asv.Drones.Gui.Core;
+using DynamicData.PLinq;
 
 namespace Asv.Drones.Gui.Uav
 {
@@ -21,7 +22,13 @@ namespace Asv.Drones.Gui.Uav
             var goTo = svc.Vehicles.Transform(_ => new GoToAnchor(_)).ChangeKey((k, _) => _.Id).Transform(_ => (IMapAnchor)_);
             var goToLine = svc.Vehicles.Transform(_ => new UavGoToPolygon(_)).ChangeKey((k, _) => _.Id).Transform(_ => (IMapAnchor)_);
             var track = svc.Vehicles.Transform(_ => new UavTrackPolygon(_)).ChangeKey((k, _) => _.Id).Transform(_ => (IMapAnchor)_);
-            var adsb = svc.AdsbDevices.Transform(_ => new AdsbAnchor(_, loc)).ChangeKey((k, _) => _.Id).Transform(_ => (IMapAnchor)_);
+            
+            var adsb = svc.AdsbDevices
+                .Transform(_ => new AdsbMapLayer(_,loc))
+                .DisposeMany()
+                .TransformMany(_ => _.Items, _ => _.Id)
+                .Transform(_ => (IMapAnchor)_);
+                
 
             var anchors = svc.Vehicles
                 .Transform(_ => new UavFlightMissionMapLayer(_))

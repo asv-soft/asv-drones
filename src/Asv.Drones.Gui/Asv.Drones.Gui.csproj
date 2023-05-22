@@ -15,9 +15,6 @@
     <None Remove="program-logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <AvaloniaResource Include="program-logo.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
