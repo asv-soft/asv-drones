@@ -21,6 +21,7 @@ public class SdrViewModel:ViewModelBase,IShellPage
 {
     private readonly IMavlinkDevicesService _mavlink;
     private readonly ILogService _log;
+    private readonly ILocalizationService _loc;
 
     #region URI
     
@@ -59,10 +60,11 @@ public class SdrViewModel:ViewModelBase,IShellPage
     }
 
     [ImportingConstructor]
-    public SdrViewModel(IMavlinkDevicesService mavlink, ILogService log) : base(Uri)
+    public SdrViewModel(IMavlinkDevicesService mavlink, ILogService log, ILocalizationService loc) : base(Uri)
     {
         _mavlink = mavlink ?? throw new ArgumentNullException(nameof(mavlink));
         _log = log ?? throw new ArgumentNullException(nameof(log));
+        _loc = loc;
     }
 
     public void SetArgs(Uri link)
@@ -72,7 +74,7 @@ public class SdrViewModel:ViewModelBase,IShellPage
         if (_payload == null) return;
         
         _payload.Sdr.Records
-            .Transform(_=>new SdrRecordViewModel(_payload.Heartbeat.FullId,_,_log))
+            .Transform(_=>new SdrRecordViewModel(_payload.Heartbeat.FullId,_,_log,_loc))
             .SortBy(_=>_.CreatedDateTime)
             .Bind(out _records)
             .DisposeMany()
@@ -87,8 +89,7 @@ public class SdrViewModel:ViewModelBase,IShellPage
         DownloadRecords.ThrownExceptions.Subscribe(_ => _log.Error(Title, "Error to download records", _))
             .DisposeItWith(Disposable);
 
-        this.WhenAnyValue(_ => _.SelectedItem).Subscribe(_ => _?.DownloadTags.Execute())
-            .DisposeItWith(Disposable);
+        
     }
 
     [Reactive]

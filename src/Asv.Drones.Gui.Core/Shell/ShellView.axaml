@@ -85,6 +85,7 @@
                            FooterMenuItems="{Binding FooterMenuItems}"
                            MenuItemTemplateSelector="{x:Static core:MenuItemTemplateSelector.Instance}">
             <Panel>
+                <!-- <Image Margin="100" Source="../Assets/program-logo.png"/> -->
                 <ContentControl Content="{CompiledBinding CurrentPage}"/>
                 <ItemsControl HorizontalAlignment="Center" MinWidth="600" Items="{Binding Messages}" Margin="8">
                     <ItemsControl.ItemsPanel>

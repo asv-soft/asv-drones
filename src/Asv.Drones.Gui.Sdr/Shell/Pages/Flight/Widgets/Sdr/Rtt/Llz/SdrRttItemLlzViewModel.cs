@@ -33,7 +33,7 @@ public abstract class SdrRttItemLlzViewModel:SdrRttItem
 {
     protected SdrRttItemLlzViewModel()
     {
-        
+       
     }
     
     [ImportingConstructor]

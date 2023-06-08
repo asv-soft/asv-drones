@@ -14,7 +14,7 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Sdr;
 
-public class SdrRecordViewModel:ViewModelBase
+public class SdrRecordViewModel:ViewModelBase, IActivatableViewModel
 {
     private readonly ReadOnlyObservableCollection<TagViewModel> _tagItems;
     private readonly ReadOnlyObservableCollection<TagViewModel> _items;
@@ -40,21 +40,21 @@ public class SdrRecordViewModel:ViewModelBase
         }
     }
     
-    public SdrRecordViewModel(ushort deviceFullId, IAsvSdrClientRecord record,ILogService log):base(GenerateUri(deviceFullId,record))
+    public SdrRecordViewModel(ushort deviceFullId, IAsvSdrClientRecord record,ILogService log, ILocalizationService loc):base(GenerateUri(deviceFullId,record))
     {
         record.Name.Subscribe(_=>Name = _).DisposeItWith(Disposable);
         record.Created.Subscribe(_=>CreatedDateTime = _).DisposeItWith(Disposable);
         record.DataType.Subscribe(_=>Description = _.ToString("G")).DisposeItWith(Disposable);
         
         record.Tags
-            .Transform(_ => TransformRecordTag(_))
+            .Transform(TransformRecordTag)
             .SortBy(_=>_.Name)
             .Bind(out _tagItems)
             .DisposeMany()
             .Subscribe()
             .DisposeItWith(Disposable);
-        record.ByteSize.Subscribe(_=>Description = $"{record.DataCount.Value} rec. ({record.ByteSize} bytes)").DisposeItWith(Disposable);
-        record.DataCount.Subscribe(_=>Description = $"{record.DataCount.Value} rec. ({record.ByteSize} bytes)").DisposeItWith(Disposable);
+        record.ByteSize.Subscribe(_=>Description = $"{record.DataCount.Value} rec. ({loc.ByteSize.ConvertToStringWithUnits(record.ByteSize.Value)})").DisposeItWith(Disposable);
+        record.DataCount.Subscribe(_=>Description = $"{record.DataCount.Value} rec. ({loc.ByteSize.ConvertToStringWithUnits(record.ByteSize.Value)})").DisposeItWith(Disposable);
         
         DownloadTags = ReactiveCommand.CreateFromTask(cancel =>
                 record.DownloadTagList(new Progress<double>(_ => TagsProgress = _), cancel))
@@ -64,9 +64,13 @@ public class SdrRecordViewModel:ViewModelBase
                 if (Name != null) log.Error(Name, "Error to download records", _);
             })
             .DisposeItWith(Disposable);
+        this.WhenActivated(disp =>
+        {
+            disp.Add(DownloadTags.Execute().Subscribe());
+        });
     }
 
-    public TagViewModel TransformRecordTag(AsvSdrClientRecordTag tag)
+    private TagViewModel TransformRecordTag(AsvSdrClientRecordTag tag)
     {
         if (tag.Type == AsvSdrRecordTagType.AsvSdrRecordTagTypeInt64)
         {
@@ -99,6 +103,8 @@ public class SdrRecordViewModel:ViewModelBase
     public ReactiveCommand<Unit,bool> DownloadTags { get; }
     public ReadOnlyObservableCollection<TagViewModel> TagItems => _tagItems;
     public ReadOnlyObservableCollection<TagViewModel> Items => _items;
+    
+    public ViewModelActivator Activator { get; } = new();
 }
 
 public class TagViewModel:ReactiveObject

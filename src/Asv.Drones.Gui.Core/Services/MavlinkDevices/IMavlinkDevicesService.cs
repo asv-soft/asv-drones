@@ -48,6 +48,8 @@ namespace Asv.Drones.Gui.Uav
         public IGbsClientDevice? GetGbsByFullId(ushort id);
         IObservable<IChangeSet<ISdrClientDevice, ushort>> Payloads { get; }
         public ISdrClientDevice? GetPayloadsByFullId(ushort id);
+        public IObservable<IChangeSet<IAdsbClientDevice, ushort>> AdsbDevices { get; }
+        public IAdsbClientDevice? GetAdsbVehicleByFullId(ushort id);
     }
 
     
