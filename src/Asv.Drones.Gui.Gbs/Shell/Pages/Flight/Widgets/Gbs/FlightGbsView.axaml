@@ -7,20 +7,24 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:CompileBindings="True"
              x:Class="Asv.Drones.Gui.Gbs.FlightGbsView"
-             x:DataType="gbs:FlightGbsViewModel">
+             x:DataType="gbs:FlightGbsViewModel"
+             IsVisible="{CompiledBinding IsVisible}">
     <Design.DataContext>
         <gbs:FlightGbsViewModel/>
     </Design.DataContext>
     <Border Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8" CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True">
         <StackPanel Margin="10" Spacing="8">
-            <DockPanel DockPanel.Dock="Top">
-                <Button ToolTip.Tip="{x:Static gbs:RS.FlightGbsView_MoveToButton_ToolTip}" DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Command="{Binding LocateBaseStationCommand}">
+            <Grid>
+                <Button ToolTip.Tip="{x:Static gbs:RS.FlightGbsView_MoveToButton_ToolTip}" HorizontalAlignment="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Command="{Binding LocateBaseStationCommand}">
                     <StackPanel Orientation="Horizontal">
-                        <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="{Binding Icon}" Foreground="Red"  Width="25" Height="25" Margin="0,0,5,0"/>
+                        <avalonia:MaterialIcon Kind="{Binding Icon}" Foreground="Red"  Width="25" Height="25" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center" DockPanel.Dock="Top" Text="{Binding Title}" />      
                     </StackPanel>
                 </Button>
-            </DockPanel>
+                <Button ToolTip.Tip="{x:Static gbs:RS.FlightGbsView_Minimize_ToolTip}" HorizontalAlignment="Right" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Command="{Binding MinimizeCommand}">
+                    <avalonia:MaterialIcon Kind="ExpandLess" Width="25" Height="25" Margin="0,0,0,0"/>
+                </Button>
+            </Grid>
             <Grid ColumnDefinitions="* * *" IsVisible="{Binding !IsDisableShown}">
                 <Button Command="{Binding EnableAutoCommand}" Content="{x:Static gbs:RS.FlightGbsView_EnableAuto_Content}" HorizontalAlignment="Stretch" />
                 <Button Margin="5 0 0 0" Grid.Column="1" Command="{Binding EnableFixedCommand}" Content="{x:Static gbs:RS.FlightGbsView_EnableFixed_Content}" HorizontalAlignment="Stretch" />

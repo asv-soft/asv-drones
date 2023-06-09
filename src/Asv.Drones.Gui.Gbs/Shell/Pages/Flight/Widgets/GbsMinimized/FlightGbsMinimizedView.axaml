@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:gbs="clr-namespace:Asv.Drones.Gui.Gbs"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:CompileBindings="True"
+             x:Class="Asv.Drones.Gui.Gbs.FlightGbsMinimizedView"
+             x:DataType="gbs:FlightGbsMinimizedViewModel"
+             IsVisible="{CompiledBinding IsVisible}">
+    <Design.DataContext>
+        <gbs:FlightGbsMinimizedViewModel/>
+    </Design.DataContext>
+    <Border Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8" CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True">
+        <StackPanel Margin="10" Spacing="8">
+            <Grid>
+                <Button ToolTip.Tip="{x:Static gbs:RS.FlightGbsView_MoveToButton_ToolTip}" HorizontalAlignment="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Command="{Binding LocateBaseStationCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <avalonia:MaterialIcon Kind="{Binding Icon}" Foreground="Red"  Width="25" Height="25" Margin="0,0,5,0"/>
+                        <TextBlock VerticalAlignment="Center" DockPanel.Dock="Top" Text="{Binding Title}" />      
+                    </StackPanel>
+                </Button>
+                <Button ToolTip.Tip="{x:Static gbs:RS.FlightGbsView_Maximize_ToolTip}" HorizontalAlignment="Right" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Command="{Binding MaximizeCommand}">
+                    <avalonia:MaterialIcon Kind="ExpandMore" Width="25" Height="25"/>
+                </Button>
+            </Grid>
+            <ItemsControl Items="{Binding RttItems}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel ItemHeight="30" ItemWidth="110" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </StackPanel>
+    </Border>
+</UserControl>

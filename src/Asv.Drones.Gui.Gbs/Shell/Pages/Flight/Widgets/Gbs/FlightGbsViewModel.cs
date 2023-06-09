@@ -11,6 +11,7 @@ using Asv.Mavlink.V2.AsvGbs;
 using Avalonia.Controls;
 using Avalonia.Styling;
 using DynamicData;
+using DynamicData.Binding;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using ReactiveUI;
@@ -18,7 +19,7 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Gbs;
 
-public class FlightGbsViewModel:FlightGbsWidgetBase
+public class FlightGbsViewModel : FlightGbsWidgetBase
 {
     private readonly ReadOnlyObservableCollection<IGbsRttItem> _rttItems;
     private readonly ILogService _logService;
@@ -31,7 +32,7 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
     private Subject<bool> _canExecuteIdleCommand = new();
     private Subject<bool> _canExecuteCancelCommand = new();
     
-    public FlightGbsViewModel(IGbsClientDevice baseStationDevice, ILogService log, ILocalizationService loc, IConfiguration configuration, IEnumerable<IGbsRttItemProvider> rttItems)
+    public FlightGbsViewModel(IGbsClientDevice baseStationDevice, ILogService log, ILocalizationService loc, IConfiguration configuration, RxValue<bool> collapsed, IEnumerable<IGbsRttItemProvider> rttItems)
         :base(baseStationDevice, GenerateUri(baseStationDevice))
     {
         _logService = log;
@@ -66,8 +67,15 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
         BaseStation.Gbs.ImesSatellites.Subscribe(_ => ImesSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
         BaseStation.Gbs.QzssSatellites.Subscribe(_ => QzssSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
         BaseStation.Gbs.SbasSatellites.Subscribe(_ => SbasSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
+        
+        MinimizeCommand = ReactiveCommand.Create(() =>
+        {
+            collapsed.Value = true;
+        }).DisposeItWith(Disposable);
+        
+        collapsed.Subscribe(_ => IsVisible = !_).DisposeItWith(Disposable);
     }
-
+    
     private void SwitchMode(AsvGbsCustomMode mode)
     {
         IsProgressShown = false;
@@ -175,7 +183,6 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
             {
                 selectedGbs.IsSelected = true;
             }
-
         }).DisposeItWith(Disposable);
     }
 
@@ -184,9 +191,11 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
     public ICommand EnableFixedCommand { get; set; }
     public ICommand EnableIdleCommand { get; set; }
     public ICommand CancelCommand { get; set; }
-    
+    public ICommand MinimizeCommand { get; set; }
     public ReadOnlyObservableCollection<IGbsRttItem> RttItems => _rttItems;
-    
+
+    [Reactive]
+    public bool IsVisible { get; set; }
     [Reactive]
     public bool IsProgressShown { get; set; }
     [Reactive]
@@ -206,5 +215,4 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
     public GridLength QzssSats { get; set; }
     [Reactive]
     public GridLength SbasSats { get; set; }
-   
 }
