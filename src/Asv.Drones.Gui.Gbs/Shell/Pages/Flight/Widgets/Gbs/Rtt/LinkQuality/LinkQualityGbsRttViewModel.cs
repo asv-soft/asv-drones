@@ -27,6 +27,8 @@ public class LinkQualityGbsRttViewModel : GbsRttItem
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => LinkQualityString = _.ToString("P0"))
             .DisposeItWith(Disposable);
+
+        IsMinimizedVisible = true;
     }
     
     [Reactive]
