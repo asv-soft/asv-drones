@@ -6,4 +6,5 @@ public interface IUavRttItem:IViewModel
 {
     int Order { get; }
     bool IsVisible { get; set; }
+    bool IsMinimizedVisible { get; set; }
 }

@@ -30,6 +30,8 @@ public class LinkQualityUavRttViewModel : UavRttItem
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => LinkQualityString = _.ToString("P0"))
             .DisposeItWith(Disposable);
+
+        IsMinimizedVisible = true;
     }
     
     [Reactive]
