@@ -147,4 +147,7 @@
     <data name="SetCoordsNameView_Description" xml:space="preserve">
         <value>Укажите имя</value>
     </data>
+    <data name="FlightGbsView_Minimize_ToolTip" xml:space="preserve">
+        <value>Свернуть/Развернуть НБС</value>
+    </data>
 </root>
