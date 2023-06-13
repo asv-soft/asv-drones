@@ -49,14 +49,21 @@ namespace Asv.Drones.Gui.Uav
                 .SelectMany(_ => _.Create(Vehicle))
                 .OrderBy(_=>_.Order)
                 .AsObservableChangeSet()
-                .AutoRefresh(_=>_.IsVisible)
-                .Filter(_=>_.IsVisible)
+                //TODO: check this rtt item behavior
+                .AutoRefreshOnObservable(_ => this.WhenAnyValue(__ => __.IsMinimized), TimeSpan.FromMilliseconds(100))
+                .Filter(_ =>
+                {
+                    if (!IsMinimized)
+                    {
+                        return _.IsVisible;
+                    }
+                    
+                    return _.IsVisible & _.IsMinimizedVisible;
+                })
                 .Bind(out _rttItems)
                 .DisposeMany()
                 .Subscribe()
                 .DisposeItWith(Disposable);
-
-            FilteredRttItems = _rttItems.Where(_ => _.IsMinimizedVisible);
 
             ChangeStateCommand = ReactiveCommand.Create(() =>
             {
@@ -119,7 +126,6 @@ namespace Asv.Drones.Gui.Uav
         public AttitudeViewModel Attitude { get; }
         public MissionStatusViewModel MissionStatus { get; }
         public ReadOnlyObservableCollection<IUavRttItem> RttItems => _rttItems;
-        public IEnumerable<IUavRttItem> FilteredRttItems { get; }
 
         [Reactive] 
         public bool IsMinimized { get; set; } = false;

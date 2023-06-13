@@ -41,14 +41,7 @@
                 <uav1:AttitudeView DataContext="{Binding Attitude}" />
                 <uav1:MissionStatusView DataContext="{Binding MissionStatus}" />
             </StackPanel>
-            <ItemsControl Items="{Binding RttItems}" IsVisible="{CompiledBinding !IsMinimized}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel ItemHeight="30" ItemWidth="110" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-            <ItemsControl Items="{Binding FilteredRttItems}" IsVisible="{CompiledBinding IsMinimized}">
+            <ItemsControl Items="{Binding RttItems}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel ItemHeight="30" ItemWidth="110" />
