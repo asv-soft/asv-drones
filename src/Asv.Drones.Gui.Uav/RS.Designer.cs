@@ -132,6 +132,15 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minimize/Maximize UAV.
+        /// </summary>
+        public static string FlightUavView_Minimize_ToolTip {
+            get {
+                return ResourceManager.GetString("FlightUavView_Minimize_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Move to this UAV on map.
         /// </summary>
         public static string FlightUavView_MoveToButton_ToolTip {

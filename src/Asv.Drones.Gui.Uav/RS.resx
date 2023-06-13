@@ -255,4 +255,7 @@
   <data name="AttitudeIndicator_Compass_ToolTip" xml:space="preserve">
     <value>Compass</value>
   </data>
+  <data name="FlightUavView_Minimize_ToolTip" xml:space="preserve">
+    <value>Minimize/Maximize UAV</value>
+  </data>
 </root>

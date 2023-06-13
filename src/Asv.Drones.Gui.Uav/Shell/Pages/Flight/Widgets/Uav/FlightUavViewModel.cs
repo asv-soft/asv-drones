@@ -19,7 +19,7 @@ namespace Asv.Drones.Gui.Uav
     public class FlightUavViewModel:FlightVehicleWidgetBase
     {
         private readonly ReadOnlyObservableCollection<IUavRttItem> _rttItems;
-        
+
         public static Uri GenerateUri(IVehicleClient vehicle) => FlightVehicleWidgetBase.GenerateUri(vehicle,"uav");
         
         public FlightUavViewModel()
@@ -55,7 +55,13 @@ namespace Asv.Drones.Gui.Uav
                 .DisposeMany()
                 .Subscribe()
                 .DisposeItWith(Disposable);
-            
+
+            FilteredRttItems = _rttItems.Where(_ => _.IsMinimizedVisible);
+
+            ChangeStateCommand = ReactiveCommand.Create(() =>
+            {
+                IsMinimized = !IsMinimized;
+            });
         }
 
         protected override void InternalAfterMapInit(IMap map)
@@ -109,8 +115,13 @@ namespace Asv.Drones.Gui.Uav
         }
         
         public ICommand LocateVehicleCommand { get; set; }
+        public ICommand ChangeStateCommand { get; set; }
         public AttitudeViewModel Attitude { get; }
         public MissionStatusViewModel MissionStatus { get; }
         public ReadOnlyObservableCollection<IUavRttItem> RttItems => _rttItems;
+        public IEnumerable<IUavRttItem> FilteredRttItems { get; }
+
+        [Reactive] 
+        public bool IsMinimized { get; set; } = false;
     }
 }
