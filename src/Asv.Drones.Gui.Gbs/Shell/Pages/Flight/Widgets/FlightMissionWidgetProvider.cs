@@ -22,24 +22,21 @@ namespace Asv.Drones.Gui.Gbs
             IConfiguration configuration,
             [ImportMany]IEnumerable<IGbsRttItemProvider> rttItems)
         {
-            Collapsed = new RxValue<bool>(false);
+            var collapsed = new RxValue<bool>(false);
             
             devices.BaseStations
                 .Transform(_ => 
-                    (IMapWidget)new FlightGbsViewModel(_, log, localization, configuration, Collapsed, rttItems))
+                    (IMapWidget)new FlightGbsViewModel(_, log, localization, configuration, collapsed, rttItems))
                 .ChangeKey((_, v) => v.Id)
                 .PopulateInto(Source)
                 .DisposeItWith(Disposable);
             
             devices.BaseStations
                 .Transform(_ => 
-                    (IMapWidget)new FlightGbsMinimizedViewModel(_, log, localization, Collapsed, rttItems))
+                    (IMapWidget)new FlightGbsMinimizedViewModel(_, log, localization, collapsed, rttItems))
                 .ChangeKey((_, v) => v.Id)
                 .PopulateInto(Source)
                 .DisposeItWith(Disposable);
         }
-        
-        [Reactive]
-        public RxValue<bool> Collapsed { get; set; }
     }
 }
