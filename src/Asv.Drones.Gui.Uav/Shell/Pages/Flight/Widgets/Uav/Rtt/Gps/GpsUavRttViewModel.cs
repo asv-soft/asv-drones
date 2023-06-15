@@ -41,8 +41,8 @@ public class GpsUavRttViewModel : UavRttItem
             ToolTipText = _.GetDescription();
             DopStatus = _;
         }).DisposeItWith(Disposable);
-        
-        
+
+        IsMinimizedVisible = true;
     }
 
     private static string SetFixTypeText(GpsFixType fixType)

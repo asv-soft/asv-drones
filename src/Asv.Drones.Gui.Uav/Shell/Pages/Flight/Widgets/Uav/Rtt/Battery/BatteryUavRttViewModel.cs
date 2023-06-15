@@ -25,6 +25,8 @@ public class BatteryUavRttViewModel:UavRttItem
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => BatteryLevelString = _.ToString("P0"))
             .DisposeItWith(Disposable);
+
+        IsMinimizedVisible = true;
     }
 
     [Reactive]

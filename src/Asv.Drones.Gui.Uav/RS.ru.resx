@@ -255,4 +255,7 @@
   <data name="AttitudeIndicator_Compass_ToolTip" xml:space="preserve">
     <value>Компас</value>
   </data>
+  <data name="FlightUavView_Minimize_ToolTip" xml:space="preserve">
+    <value>Свернуть/Развернуть БПЛА</value>
+  </data>
 </root>
