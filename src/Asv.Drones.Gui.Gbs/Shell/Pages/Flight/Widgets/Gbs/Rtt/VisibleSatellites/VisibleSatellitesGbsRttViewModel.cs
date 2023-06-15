@@ -21,6 +21,8 @@ public class VisibleSatellitesGbsRttViewModel : GbsRttItem
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => VisibleSatellites = _.ToString())
             .DisposeItWith(Disposable);
+
+        IsMinimizedVisible = true;
     }
     
     [Reactive]

@@ -13,21 +13,33 @@
     </Design.DataContext>
     <Border Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8" CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True">
         <StackPanel Margin="10" Spacing="8">
-            <DockPanel DockPanel.Dock="Top">
+            <Grid>
                 <Button ToolTip.Tip="{x:Static gbs:RS.FlightGbsView_MoveToButton_ToolTip}" DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Command="{Binding LocateBaseStationCommand}">
                     <StackPanel Orientation="Horizontal">
                         <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="{Binding Icon}" Foreground="Red"  Width="25" Height="25" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center" DockPanel.Dock="Top" Text="{Binding Title}" />      
                     </StackPanel>
                 </Button>
-            </DockPanel>
-            <Grid ColumnDefinitions="* * *" IsVisible="{Binding !IsDisableShown}">
-                <Button Command="{Binding EnableAutoCommand}" Content="{x:Static gbs:RS.FlightGbsView_EnableAuto_Content}" HorizontalAlignment="Stretch" />
-                <Button Margin="5 0 0 0" Grid.Column="1" Command="{Binding EnableFixedCommand}" Content="{x:Static gbs:RS.FlightGbsView_EnableFixed_Content}" HorizontalAlignment="Stretch" />
-                <Button Margin="5 0 0 0" Grid.Column="2" Command="{Binding CancelCommand}" Content="{x:Static gbs:RS.FlightGbsView_Cancel_Content}" HorizontalAlignment="Stretch" />
+                <Button ToolTip.Tip="{x:Static gbs:RS.FlightGbsView_Minimize_ToolTip}" HorizontalAlignment="Right" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Command="{Binding ChangeStateCommand}">
+                    <Grid>
+                        <avalonia:MaterialIcon Kind="ExpandLess" Width="25" Height="25" Margin="0,0,0,0" IsVisible="{CompiledBinding !IsMinimized}" />
+                        <avalonia:MaterialIcon Kind="ExpandMore" Width="25" Height="25" Margin="0,0,0,0" IsVisible="{CompiledBinding IsMinimized}" />
+                    </Grid>
+                </Button>
             </Grid>
-            <Button Command="{Binding EnableIdleCommand}" Content="Disable RTK" HorizontalAlignment="Stretch" IsVisible="{Binding IsDisableShown}" />
-            <ProgressBar Height="5" CornerRadius="3" IsIndeterminate="True" IsVisible="{Binding IsProgressShown}" />
+            <StackPanel IsVisible="{CompiledBinding !IsMinimized}">
+                <Grid ColumnDefinitions="* * *" IsVisible="{Binding !IsDisableShown}">
+                    <Button Command="{Binding EnableAutoCommand}"
+                            Content="{x:Static gbs:RS.FlightGbsView_EnableAuto_Content}" HorizontalAlignment="Stretch" />
+                    <Button Margin="5 0 0 0" Grid.Column="1" Command="{Binding EnableFixedCommand}"
+                            Content="{x:Static gbs:RS.FlightGbsView_EnableFixed_Content}" HorizontalAlignment="Stretch" />
+                    <Button Margin="5 0 0 0" Grid.Column="2" Command="{Binding CancelCommand}"
+                            Content="{x:Static gbs:RS.FlightGbsView_Cancel_Content}" HorizontalAlignment="Stretch" />
+                </Grid>
+                <Button Command="{Binding EnableIdleCommand}" Content="Disable RTK" HorizontalAlignment="Stretch"
+                        IsVisible="{Binding IsDisableShown}" />
+                <ProgressBar Height="5" CornerRadius="3" IsIndeterminate="True" IsVisible="{Binding IsProgressShown}" />
+            </StackPanel>
             <ItemsControl Items="{Binding RttItems}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -35,8 +47,7 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
-            <Border CornerRadius="{DynamicResource ControlCornerRadius}" 
-                    ClipToBounds="True">
+            <Border CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True" IsVisible="{CompiledBinding !IsMinimized}">
                 <Grid Background="Transparent" ToolTip.Tip="{x:Static gbs:RS.FlightGbsView_Satellites_ToolTip}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition MinWidth="50" Width="{Binding BeidouSats}"/>

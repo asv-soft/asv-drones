@@ -26,4 +26,6 @@ public abstract class GbsRttItem : ViewModelBase, IGbsRttItem
     public int Order { get; set; }
     [Reactive]
     public bool IsVisible { get; set; }
+    [Reactive] 
+    public bool IsMinimizedVisible { get; set; }
 }

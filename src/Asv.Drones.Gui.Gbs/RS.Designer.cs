@@ -276,6 +276,15 @@ namespace Asv.Drones.Gui.Gbs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minimize/Maximize GBS.
+        /// </summary>
+        public static string FlightGbsView_Minimize_ToolTip {
+            get {
+                return ResourceManager.GetString("FlightGbsView_Minimize_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Move to this GBS on map.
         /// </summary>
         public static string FlightGbsView_MoveToButton_ToolTip {

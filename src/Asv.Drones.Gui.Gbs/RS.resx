@@ -147,4 +147,7 @@
     <data name="SetCoordsNameView_Description" xml:space="preserve">
         <value>Set name</value>
     </data>
+    <data name="FlightGbsView_Minimize_ToolTip" xml:space="preserve">
+        <value>Minimize/Maximize GBS</value>
+    </data>
 </root>
