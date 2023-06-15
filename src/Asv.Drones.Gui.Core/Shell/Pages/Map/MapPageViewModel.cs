@@ -100,6 +100,10 @@ namespace Asv.Drones.Gui.Core
             ZoomOut = ReactiveCommand.Create(() => ChangeZoomValue(MapZoomValue.Decrease)).DisposeItWith(Disposable);
 
             #endregion
+
+            this.WhenValueChanged(_ => _.IsRulerEnabled)
+                .Subscribe(SetUpRuler)
+                .DisposeItWith(Disposable);
         }
 
         private void ChangeZoomValue(MapZoomValue value)
@@ -113,6 +117,23 @@ namespace Asv.Drones.Gui.Core
             {
                 Zoom--;
             }
+        }
+
+        private async void SetUpRuler(bool isVisible)
+        {
+            var rulerPolygon = _markers.Where(x => x.GetType() == typeof(RulerPolygon)).ToArray();
+            var polygon = (RulerPolygon)rulerPolygon[0];
+            
+            if (isVisible)
+            {
+                var start = await ShowTargetDialog("start", CancellationToken.None);
+                var stop = await ShowTargetDialog("stop", CancellationToken.None);
+
+                polygon.Ruler.Value.Start.OnNext(start);
+                polygon.Ruler.Value.Stop.OnNext(stop);
+            }
+            
+            polygon.Ruler.Value.IsVisible.OnNext(isVisible);
         }
 
         public ReadOnlyObservableCollection<IMapAnchor> Markers => _markers;
@@ -135,6 +156,8 @@ namespace Asv.Drones.Gui.Core
         public GeoPoint Center { get; set; }
         [Reactive]
         public IMapAnchor SelectedItem { get; set; }
+        [Reactive]
+        public bool IsRulerEnabled { get; set; }
         public ICommand ZoomIn { get; }
         public ICommand ZoomOut { get; }
 
