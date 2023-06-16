@@ -9,13 +9,15 @@ using Asv.Avalonia.Map;
 
 namespace Asv.Drones.Gui.Core
 {
-    [PluginEntryPoint("Core", LoadingOrder)]
+    [PluginEntryPoint(Name)]
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class CorePlugin: IPluginEntryPoint
     {
+        public const string Name = "Core";
+        
         private readonly IDataTemplateHost _applicationDataTemplateHost;
         private readonly ViewLocator _defaultViewLocator;
-        public const int LoadingOrder = int.MinValue; // we need this module to be initialized first
+        
 
         [ImportingConstructor]
         public CorePlugin(CompositionContainer container, IDataTemplateHost applicationDataTemplateHost)

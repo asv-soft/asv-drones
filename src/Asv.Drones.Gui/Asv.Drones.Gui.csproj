@@ -10,6 +10,25 @@
     <Copyright>Asv Soft</Copyright>
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DefineConstants>TRACE;PROPRIETARY</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>TRACE;PROPRIETARY</DefineConstants>
+  </PropertyGroup>
+
+
+  <Choose>
+    <When Condition="$([System.Text.RegularExpressions.Regex]::IsMatch( $(DefineConstants), '^(.*;)*PROPRIETARY(;.*)*$'))">
+      <!-- When PROPRIETARY is defined. -->
+      <ItemGroup>
+        <ProjectReference Include="..\..\..\asv-drones-gui-afis\src\Asv.Drones.Gui.Afis\Asv.Drones.Gui.Afis.csproj" />
+      </ItemGroup>
+    </When>
+    <!-- other conditions -->
+  </Choose>
+  
+  
   <ItemGroup>
     <None Remove=".gitignore" />
     <None Remove="program-logo.png" />
