@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asv.Drones.Gui.Gbs", "Asv.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asv.Drones.Gui.Sdr", "Asv.Drones.Gui.Sdr\Asv.Drones.Gui.Sdr.csproj", "{180E67D5-776F-4704-9C25-B6512A5AC05C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Proprietary", "Proprietary", "{F243A694-3E1B-4068-96BE-1C78AC6F2CA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asv.Drones.Gui.Afis", "..\..\asv-drones-gui-afis\src\Asv.Drones.Gui.Afis\Asv.Drones.Gui.Afis.csproj", "{EDD20064-9D9E-45BB-A88A-3D373705B7F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,11 +49,18 @@ Global
 		{180E67D5-776F-4704-9C25-B6512A5AC05C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{180E67D5-776F-4704-9C25-B6512A5AC05C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{180E67D5-776F-4704-9C25-B6512A5AC05C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDD20064-9D9E-45BB-A88A-3D373705B7F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDD20064-9D9E-45BB-A88A-3D373705B7F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDD20064-9D9E-45BB-A88A-3D373705B7F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDD20064-9D9E-45BB-A88A-3D373705B7F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8F428AD7-95DB-4DC1-B6D4-F064C2338AB5}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EDD20064-9D9E-45BB-A88A-3D373705B7F0} = {F243A694-3E1B-4068-96BE-1C78AC6F2CA3}
 	EndGlobalSection
 EndGlobal

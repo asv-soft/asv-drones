@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.ComponentModel.Composition.Primitives;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using Asv.Cfg;
+using Asv.Common;
 using Asv.Drones.Gui.Gbs;
 using Asv.Drones.Gui.Sdr;
 using Asv.Drones.Gui.Uav;
@@ -37,17 +37,22 @@ namespace Asv.Drones.Gui
 
             #region loading plugins entry points
 
-            foreach (var plugin in _container.GetExports<IPluginEntryPoint, IPluginMetadata>().OrderBy(_ => _.Metadata.LoadingOrder))
+            var plugins = _container.GetExports<IPluginEntryPoint, IPluginMetadata>().ToArray();
+            var sort = plugins.ToDictionary(_=>_.Metadata.Name, _=>_.Metadata.Dependency);
+            Logger.Info($"Begin loading plugins [{plugins.Length} items]");
+            foreach (var name in DepthFirstSearch.Sort(sort))
             {
                 try
                 {
+                    Logger.Trace($"Init {name}");
+                    var plugin = plugins.First(_ => _.Metadata.Name == name);
                     var item = new KeyValuePair<IPluginMetadata, IPluginEntryPoint>(plugin.Metadata, plugin.Value);
                     _plugins.Push(item);
-                    Logger.Debug($"Load plugin entry point '{plugin.Metadata.Name}' with order={plugin.Metadata.LoadingOrder}");
+                    Logger.Debug($"Load plugin entry point '{plugin.Metadata.Name}' depended on [{string.Join(",", plugin.Metadata.Dependency)}]");
                 }
                 catch (Exception e)
                 {
-                    Logger.Error(e,$"Error to load plugin entry point: {plugin.Metadata.Name}:{e.Message}");
+                    Logger.Error(e,$"Error to load plugin entry point: {name}:{e.Message}");
                     if (Debugger.IsAttached)
                     {
                         Debugger.Break();
@@ -66,6 +71,11 @@ namespace Asv.Drones.Gui
             yield return typeof(UavPlugin).Assembly;             // Asv.Drones.Gui.Uav
             yield return typeof(GbsPlugin).Assembly;             // Asv.Drones.Gui.Gbs
             yield return typeof(FlightSdrWidgetBase).Assembly;   // Asv.Drones.Gui.Sdr
+            // This section is for private plugins
+#if PROPRIETARY
+            yield return typeof(Afis.AfisPlugin).Assembly;        // [Asv.Drones.Gui.Afis]
+#endif
+            
 
         }
 
@@ -99,7 +109,7 @@ namespace Asv.Drones.Gui
                 try
                 {
                     plugin.Value.Initialize();
-                    Logger.Trace($"Initialize plugin entry point '{plugin.Key.Name}' with order={plugin.Key.LoadingOrder}");
+                    Logger.Trace($"Initialize plugin entry point '{plugin.Key.Name}'");
                 }
                 catch (Exception e)
                 {
@@ -125,7 +135,7 @@ namespace Asv.Drones.Gui
                         try
                         {
                             plugin.Value.OnShutdownRequested();
-                            Logger.Trace($"Call plugin {plugin.Key.Name}.{nameof(plugin.Value.OnShutdownRequested)}() with order={plugin.Key.LoadingOrder}");
+                            Logger.Trace($"Call plugin {plugin.Key.Name}.{nameof(plugin.Value.OnShutdownRequested)}()");
                         }
                         catch (Exception e)
                         {
@@ -153,7 +163,7 @@ namespace Asv.Drones.Gui
                 try
                 {
                     plugin.Value.OnFrameworkInitializationCompleted();
-                    Logger.Trace($"Call plugin {plugin.Key.Name}.{nameof(plugin.Value.OnFrameworkInitializationCompleted)}() with order={plugin.Key.LoadingOrder}");
+                    Logger.Trace($"Call plugin {plugin.Key.Name}.{nameof(plugin.Value.OnFrameworkInitializationCompleted)}()");
                 }
                 catch (Exception e)
                 {
