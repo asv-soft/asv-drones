@@ -1,3 +1,4 @@
+using System.ComponentModel.Composition;
 using System.Reactive.Linq;
 using Asv.Common;
 using Asv.Mavlink;
@@ -13,8 +14,10 @@ public class LinkQualitySdrRttViewModel : SdrRttItem
     {
         
     }
-
-    public LinkQualitySdrRttViewModel(ISdrClientDevice device, string name) : base(device, SdrRttItem.GenerateUri(device,$"linkquality/{name}"))
+    
+    [ImportingConstructor]
+    public LinkQualitySdrRttViewModel(ISdrClientDevice device) 
+        : base(device, SdrRttItem.GenerateUri(device,$"linkquality"))
     {
         device.Heartbeat.LinkQuality
             .ObserveOn(RxApp.MainThreadScheduler)
