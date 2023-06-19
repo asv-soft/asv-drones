@@ -95,7 +95,8 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             }
             _rttItems.Clear();
         });
-
+        
+        LinkQuality = new LinkQualitySdrRttViewModel(payload);
     }
 
     private async Task RecordStartImpl(CancellationToken cancel)
@@ -185,6 +186,9 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     public ulong Frequency { get; set; }
     [Reactive]
     public bool IsRecordStarted { get; set; }
+    
+    [Reactive]
+    public SdrRttItem LinkQuality { get; set; }
     public ReactiveCommand<Unit,Unit> UpdateMode { get; }
     public ReactiveCommand<Unit,Unit> StartRecord { get; }
     public ReactiveCommand<Unit,Unit> StopRecord { get; }
