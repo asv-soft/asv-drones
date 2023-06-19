@@ -45,20 +45,14 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
             .SelectMany(_ => _.Create(baseStationDevice))
             .OrderBy(_=>_.Order)
             .AsObservableChangeSet()
-            .AutoRefreshOnObservable(_ => this.WhenAnyValue(__ => __.IsMinimized), TimeSpan.FromMilliseconds(100))
-            .Filter(_ =>
-            {
-                if (!IsMinimized)
-                {
-                    return _.IsVisible;
-                }
-                    
-                return _.IsVisible & _.IsMinimizedVisible;
-            })
+            .AutoRefresh()
+            .Filter(_ => _.IsVisible)
             .Bind(out _rttItems)
             .DisposeMany()
             .Subscribe()
             .DisposeItWith(Disposable);
+
+        MinimizedRttItems = _rttItems.Where(_ => _.IsMinimizedVisible);
 
         BaseStation.Gbs.CustomMode.DistinctUntilChanged().Subscribe(SwitchMode).DisposeItWith(Disposable);
         
@@ -199,7 +193,8 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
     public ICommand ChangeStateCommand { get; set; }
     
     public ReadOnlyObservableCollection<IGbsRttItem> RttItems => _rttItems;
-    
+    public IEnumerable<IGbsRttItem> MinimizedRttItems { get; set; }
+
     [Reactive]
     public bool IsProgressShown { get; set; }
     [Reactive]
