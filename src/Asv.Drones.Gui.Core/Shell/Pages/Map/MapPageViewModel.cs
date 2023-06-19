@@ -122,6 +122,15 @@ namespace Asv.Drones.Gui.Core
         private async void SetUpRuler(bool isVisible)
         {
             var rulerPolygon = _markers.Where(x => x.GetType() == typeof(RulerPolygon)).ToArray();
+
+            if (rulerPolygon.Length == 0)
+            {
+                IsRulerVisible = false;
+                return;
+            }
+
+            IsRulerVisible = true;
+            
             var polygon = (RulerPolygon)rulerPolygon[0];
             
             if (isVisible)
@@ -158,6 +167,8 @@ namespace Asv.Drones.Gui.Core
         public IMapAnchor SelectedItem { get; set; }
         [Reactive]
         public bool IsRulerEnabled { get; set; }
+        [Reactive]
+        public bool IsRulerVisible { get; set; }
         public ICommand ZoomIn { get; }
         public ICommand ZoomOut { get; }
 

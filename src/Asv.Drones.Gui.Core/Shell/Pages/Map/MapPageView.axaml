@@ -108,7 +108,7 @@
 			    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Text="{Binding Zoom}" />
 		    </Border>
 		    <Button Classes="MapBottomButton" Command="{CompiledBinding ZoomOut}" Content="{avalonia:MaterialIconExt ZoomOut}" />
-		    <ToggleButton Classes="MapBottomButton" IsChecked="{Binding IsRulerEnabled}" Content="{avalonia:MaterialIconExt TapeMeasure}" />
+		    <ToggleButton Classes="MapBottomButton" IsVisible="{CompiledBinding IsRulerVisible}" IsChecked="{Binding IsRulerEnabled}" Content="{avalonia:MaterialIconExt TapeMeasure}" />
 	    </StackPanel>
         <GridSplitter Width="5" Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" Background="Transparent" IsHitTestVisible="True" ResizeBehavior="PreviousAndNext"/>
         <GridSplitter Width="5" Grid.Row="0" Grid.RowSpan="4" Grid.Column="3" Background="Transparent" IsHitTestVisible="True" Opacity="1" ResizeBehavior="PreviousAndNext"/>
