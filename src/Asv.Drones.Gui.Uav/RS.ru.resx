@@ -258,4 +258,7 @@
   <data name="FlightUavView_Minimize_ToolTip" xml:space="preserve">
     <value>Свернуть/Развернуть БПЛА</value>
   </data>
+  <data name="FlightUavView_FollowButton_ToolTip" xml:space="preserve">
+    <value>Следовать/Прекратить следование за БПЛА</value>
+  </data>
 </root>
