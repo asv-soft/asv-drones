@@ -49,7 +49,7 @@ namespace Asv.Drones.Gui.Uav
                 .SelectMany(_ => _.Create(Vehicle))
                 .OrderBy(_=>_.Order)
                 .AsObservableChangeSet()
-                .AutoRefresh()
+                .AutoRefresh(_ => _.IsVisible)
                 .Filter(_ => _.IsVisible)
                 .Bind(out _rttItems)
                 .DisposeMany()

@@ -45,7 +45,7 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
             .SelectMany(_ => _.Create(baseStationDevice))
             .OrderBy(_=>_.Order)
             .AsObservableChangeSet()
-            .AutoRefresh()
+            .AutoRefresh(_ => _.IsVisible)
             .Filter(_ => _.IsVisible)
             .Bind(out _rttItems)
             .DisposeMany()
