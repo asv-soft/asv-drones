@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:core="clr-namespace:Asv.Drones.Gui.Core;assembly=Asv.Drones.Gui.Core"
+             xmlns:sdr="clr-namespace:Asv.Drones.Gui.Sdr"
+             x:CompileBindings="True"
+             x:Class="Asv.Drones.Gui.Sdr.LinkQualitySdrRttView"
+             x:DataType="sdr:LinkQualitySdrRttViewModel">
+    <Design.DataContext>
+        <sdr:LinkQualitySdrRttViewModel/>
+    </Design.DataContext>
+    <StackPanel Orientation="Horizontal" Spacing="5" ToolTip.Tip="{x:Static sdr:RS.LinkQualitySdrRttView_ToolTip}">
+        <core:ConnectionQuality Width="20" Height="20" MaxValue="1" WarningValue="0.5" CriticalValue="0.2" Value="{CompiledBinding LinkQuality}"/>
+        <TextBlock VerticalAlignment="Center" Text="{CompiledBinding LinkQualityString}"/>
+    </StackPanel>
+</UserControl>
