@@ -40,7 +40,14 @@
                         IsVisible="{Binding IsDisableShown}" />
                 <ProgressBar Height="5" CornerRadius="3" IsIndeterminate="True" IsVisible="{Binding IsProgressShown}" />
             </StackPanel>
-            <ItemsControl Items="{Binding RttItems}">
+            <ItemsControl Items="{Binding RttItems}" IsVisible="{CompiledBinding !IsMinimized}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel ItemHeight="30" ItemWidth="110" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+            <ItemsControl Items="{Binding MinimizedRttItems}" IsVisible="{CompiledBinding IsMinimized}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel ItemHeight="30" ItemWidth="110" />
