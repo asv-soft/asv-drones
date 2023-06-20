@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.ComponentModel.Composition.Primitives;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using Asv.Cfg;
 using Asv.Common;
