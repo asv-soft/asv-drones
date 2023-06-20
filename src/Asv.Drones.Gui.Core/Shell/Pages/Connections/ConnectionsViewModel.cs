@@ -39,7 +39,6 @@ namespace Asv.Drones.Gui.Core
         {
             partProviders.Select(_ => _.Items)
                 .Merge()
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .SortBy(_ => _.Order)
                 .Bind(out _items)
                 .DisposeMany()

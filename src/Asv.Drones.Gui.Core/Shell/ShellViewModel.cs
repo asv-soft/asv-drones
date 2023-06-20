@@ -90,7 +90,6 @@ namespace Asv.Drones.Gui.Core
 
             headerMenuProviders.Select(_ => _.Items)
                 .Merge()
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .SortBy(_ => _.Order)
                 .Bind(out _headerMenu)
                 .DisposeMany()
@@ -103,7 +102,6 @@ namespace Asv.Drones.Gui.Core
 
             _messageSourceList
                 .Connect()
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .Transform(_ => new LogMessageViewModel(_messageSourceList, _))
                 .Bind(out _messages)
                 .DisposeMany()
@@ -126,7 +124,6 @@ namespace Asv.Drones.Gui.Core
             menuItemsProviders.Select(_ => _.Items)
                 .Merge()
                 .Filter(_ => _.Position == ShellMenuPosition.Top)
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .SortBy(_ => _.Order)
                 .Bind(out _menuItems)
                 .DisposeMany()
@@ -136,7 +133,6 @@ namespace Asv.Drones.Gui.Core
             menuItemsProviders.Select(_ => _.Items)
                 .Merge()
                 .Filter(_ => _.Position == ShellMenuPosition.Bottom)
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .SortBy(_ => _.Order)
                 .Bind(out _footerMenuItems)
                 .DisposeMany()
@@ -149,7 +145,6 @@ namespace Asv.Drones.Gui.Core
 
             statusProviders.Select(_ => _.Items)
                 .Merge()
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .SortBy(_ => _.Order)
                 .Bind(out _statusItems)
                 .DisposeMany()

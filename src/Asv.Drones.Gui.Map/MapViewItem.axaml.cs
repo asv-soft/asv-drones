@@ -154,7 +154,9 @@ namespace Asv.Avalonia.Map
             if (pathPoints is INotifyCollectionChanged coll)
             {
                 _collectionSubscribe = Observable.FromEventPattern<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
-                    _ => coll.CollectionChanged += _, _ => coll.CollectionChanged -= _).ObserveOn(RxApp.MainThreadScheduler).Subscribe(_=>UpdateLocalPosition());
+                    _ => coll.CollectionChanged += _, _ => coll.CollectionChanged -= _)
+                    .ObserveOn(RxApp.MainThreadScheduler)
+                    .Subscribe(_=>UpdateLocalPosition());
             }
         }
 

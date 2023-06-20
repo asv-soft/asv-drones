@@ -16,7 +16,6 @@ public class AdsbMapLayer : DisposableViewModelBase
     {
         device.Adsb.Targets
             .Transform(_ => new AdsbAnchor(_,loc,device.FullId))
-            .ObserveOn(RxApp.MainThreadScheduler)
             .DisposeMany()
             .Bind(out _items)
             .Subscribe()

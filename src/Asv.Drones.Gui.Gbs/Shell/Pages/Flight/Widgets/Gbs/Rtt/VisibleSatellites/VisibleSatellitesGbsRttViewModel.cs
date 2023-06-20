@@ -18,7 +18,6 @@ public class VisibleSatellitesGbsRttViewModel : GbsRttItem
         Order = 1;
         
         BaseStation.Gbs.AllSatellites
-            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => VisibleSatellites = _.ToString())
             .DisposeItWith(Disposable);
 

@@ -40,7 +40,6 @@ namespace Asv.Drones.Gui.Core
         {
             svc.Devices
                 .Do(_ => { })
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .Transform(_=>new MavlinkDeviceViewModel(_))
                 .Bind(out _items)
                 .DisposeMany()

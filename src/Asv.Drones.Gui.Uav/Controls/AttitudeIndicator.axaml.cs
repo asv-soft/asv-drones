@@ -324,7 +324,7 @@ namespace Asv.Drones.Gui.Uav
             {
                 
                 var status = new[] { "Armed", "Disarmed" };
-                Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).ObserveOn(RxApp.MainThreadScheduler).Subscribe(_ =>
+                Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1),RxApp.MainThreadScheduler).Subscribe(_ =>
                 {
                     StatusText = status[_ % 2];
                 });

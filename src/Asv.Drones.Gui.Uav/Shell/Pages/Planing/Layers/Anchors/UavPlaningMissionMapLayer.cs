@@ -17,7 +17,6 @@ namespace Asv.Drones.Gui.Uav
         {
             vehicle.Missions.MissionItems
                 .Transform(_=>new UavPlaningMissionAnchor(_,vehicle))
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .DisposeMany()
                 .Bind(out _items)
                 .Subscribe()

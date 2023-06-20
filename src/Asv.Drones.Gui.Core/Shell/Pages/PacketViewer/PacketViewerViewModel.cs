@@ -81,8 +81,7 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
         
         mavlinkDevicesService.Router
             .Where(_=>IsPause == false)
-            .Buffer(TimeSpan.FromSeconds(1)) // fix slow rendering when high rate of packets: buffer it 1 sec and then render
-            .ObserveOn(RxApp.MainThreadScheduler)
+            .Buffer(TimeSpan.FromSeconds(1),RxApp.MainThreadScheduler) // fix slow rendering when high rate of packets: buffer it 1 sec and then render
             .Select(ConvertPacketToMessagesAndUpdateFilters)
             .Subscribe(_packetsSource.AddRange)
             .DisposeItWith(Disposable);
@@ -133,14 +132,14 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
 
         #endregion
 
-        Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).Subscribe(_ =>
+        Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1), RxApp.MainThreadScheduler).Subscribe(_ =>
         {
             _filtersSource.Items.ForEach(_=>_.UpdateRateText());
             _filtersSourceType.Items.ForEach(_=>_.UpdateRateText());
         }).DisposeItWith(Disposable);
 
         this.WhenValueChanged(_ => _.SelectedPacket)
-            .ObserveOn(RxApp.MainThreadScheduler)
+            
             .Subscribe(_ =>
             {
                 if (_ != null)

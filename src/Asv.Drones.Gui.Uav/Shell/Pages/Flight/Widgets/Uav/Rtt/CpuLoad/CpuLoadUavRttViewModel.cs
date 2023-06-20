@@ -18,8 +18,7 @@ public class CpuLoadUavRttViewModel : UavRttItem
         Order = 7;
         Vehicle.Rtt.CpuLoad
             .DistinctUntilChanged()
-            .Sample(TimeSpan.FromMilliseconds(500))
-            .ObserveOn(RxApp.MainThreadScheduler)
+            .Sample(TimeSpan.FromMilliseconds(500), RxApp.MainThreadScheduler)
             .Subscribe(_ => CpuLoad = _)
             .DisposeWith(Disposable);
     }

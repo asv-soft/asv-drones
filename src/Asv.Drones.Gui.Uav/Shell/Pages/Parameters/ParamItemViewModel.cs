@@ -106,7 +106,7 @@ public class ParamItemViewModel:ViewModelBase
     [Reactive]
     public bool IsSynced { get; set; }
     [Reactive]
-    public decimal Value { get; set; }
+    public MavParamValue Value { get; set; }
     [Reactive]
     public bool Starred { get; set; }
     [Reactive]

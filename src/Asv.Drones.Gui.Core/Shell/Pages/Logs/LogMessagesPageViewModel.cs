@@ -53,7 +53,7 @@ namespace Asv.Drones.Gui.Core
                 
             this.WhenAnyValue(_ => _.SearchText)
                 .ObserveOn(RxApp.MainThreadScheduler)
-                .Throttle(TimeSpan.FromMilliseconds(200))
+                .Throttle(TimeSpan.FromMilliseconds(200),RxApp.MainThreadScheduler)
                 .Skip(1)
                 .Subscribe(_ => Refresh.Execute())
                 .DisposeItWith(Disposable);
@@ -73,6 +73,7 @@ namespace Asv.Drones.Gui.Core
         {
             if (Skip < 0) Skip = 0;
             var query = new TextMessageQuery { Take = Take, Skip = Skip, Search = SearchText ?? "" };
+            
             Messages = _logService.LogStore.Find(query).Select(_ => new RemoteLogMessageProxy(_)).ToList();
 
             Filtered = _logService.LogStore.Count(query);
@@ -87,6 +88,7 @@ namespace Asv.Drones.Gui.Core
             CanNext.OnNext(To < Filtered);
             CanPrev.OnNext(Skip > 0);
             _configuration.Set("TakePageLength", Take);
+           
         }
         
         private void ClearAllImpl()

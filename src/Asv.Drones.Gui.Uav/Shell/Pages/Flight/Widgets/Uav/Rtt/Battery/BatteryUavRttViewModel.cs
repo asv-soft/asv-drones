@@ -17,12 +17,10 @@ public class BatteryUavRttViewModel:UavRttItem
     public BatteryUavRttViewModel(IVehicleClient vehicle) : base(vehicle, GenerateRtt(vehicle,"battery"))
     {
         Vehicle.Rtt.BatteryCharge
-            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => BatteryLevel = _)
             .DisposeItWith(Disposable);
         
         Vehicle.Rtt.BatteryCharge
-            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => BatteryLevelString = _.ToString("P0"))
             .DisposeItWith(Disposable);
 

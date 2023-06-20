@@ -21,7 +21,6 @@ public class BaseStationModeGbsRttViewModel : GbsRttItem
         Order = 2;
 
         BaseStation.Gbs.CustomMode
-            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => BaseStationMode = _.ToString().Replace(nameof(AsvGbsCustomMode),""))
             .DisposeItWith(Disposable);
     }
