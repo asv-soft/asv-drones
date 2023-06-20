@@ -807,6 +807,24 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select ruler starting point.
+        /// </summary>
+        public static string MapPageViewModel_RulerStartPoint_Description {
+            get {
+                return ResourceManager.GetString("MapPageViewModel_RulerStartPoint_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select ruler end point.
+        /// </summary>
+        public static string MapPageViewModel_RulerStopPoint_Description {
+            get {
+                return ResourceManager.GetString("MapPageViewModel_RulerStopPoint_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change current map provider for application.
         /// </summary>
         public static string MapSettingsView_MapProvider_Description {

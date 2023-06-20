@@ -675,4 +675,10 @@
   <data name="PacketViewerViewModel_SeparatorDialog_Tab" xml:space="preserve">
     <value>Horizontal tabulation [ Tab ]</value>
   </data>
+  <data name="MapPageViewModel_RulerStartPoint_Description" xml:space="preserve">
+    <value>Select ruler starting point</value>
+  </data>
+  <data name="MapPageViewModel_RulerStopPoint_Description" xml:space="preserve">
+    <value>Select ruler end point</value>
+  </data>
 </root>
