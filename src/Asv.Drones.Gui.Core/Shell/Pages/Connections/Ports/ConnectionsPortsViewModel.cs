@@ -40,7 +40,6 @@ namespace Asv.Drones.Gui.Core
             _logService = logService ?? throw new ArgumentNullException(nameof(logService));
             var cache = new SourceCache<PortViewModel, Guid>(_ => _.PortId).DisposeItWith(Disposable);
             cache.Connect()
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(out _items)
                 .DisposeMany()
                 .Subscribe()
@@ -50,12 +49,10 @@ namespace Asv.Drones.Gui.Core
                 .ForEach(_ => cache.AddOrUpdate(new PortViewModel(deviceSvc, localization, _logService,_)));
             deviceSvc.Router
                 .OnAddPort
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(_ => cache.AddOrUpdate(new PortViewModel(deviceSvc, localization, _logService,_)))
                 .DisposeItWith(Disposable);
             deviceSvc.Router
                 .OnRemovePort
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(_ => cache.Remove(_)).DisposeItWith(Disposable);
 
             AddSerialPortCommand = ReactiveCommand.CreateFromTask(AddSerialPort).DisposeItWith(Disposable);

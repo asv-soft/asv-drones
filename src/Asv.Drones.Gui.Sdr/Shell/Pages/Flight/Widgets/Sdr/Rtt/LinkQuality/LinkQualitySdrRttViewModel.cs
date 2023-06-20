@@ -20,14 +20,13 @@ public class LinkQualitySdrRttViewModel : SdrRttItem
         : base(device, SdrRttItem.GenerateUri(device,$"linkquality"))
     {
         device.Heartbeat.LinkQuality
-            .ObserveOn(RxApp.MainThreadScheduler)
             .DistinctUntilChanged()
             .Sample(TimeSpan.FromMilliseconds(500))
+            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => LinkQuality = _)
             .DisposeWith(Disposable);
         
         device.Heartbeat.LinkQuality
-            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => LinkQualityString = _.ToString("P0"))
             .DisposeItWith(Disposable);
     }

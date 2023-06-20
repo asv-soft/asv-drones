@@ -22,7 +22,6 @@ namespace Asv.Drones.Gui.Uav
                 .SortBy(_=>_.Index, SortDirection.Ascending, SortOptimisations.ComparesImmutableValuesOnly)
                 .Filter(_=>_.Command.Value is MavCmd.MavCmdNavWaypoint or MavCmd.MavCmdNavSplineWaypoint )
                 .Transform(_ => _.Location.Value, true)
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .DisposeMany()
                 .Bind(out _items, useReplaceForUpdates:true)
                 .Subscribe()

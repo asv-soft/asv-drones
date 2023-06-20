@@ -18,7 +18,7 @@ namespace Asv.Drones.Gui
         [STAThread]
         public static void Main(string[] args)
         {
-            TaskScheduler.UnobservedTaskException += (sender, eventArgs) =>
+            TaskScheduler.UnobservedTaskException += (_, eventArgs) =>
             {
                 if (Debugger.IsAttached) Debugger.Break();
                 Logger.Fatal(eventArgs.Exception, "Unobserved task exception:{0}", eventArgs.Exception.Message);

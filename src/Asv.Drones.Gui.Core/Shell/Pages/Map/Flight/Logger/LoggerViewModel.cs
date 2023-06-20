@@ -47,7 +47,6 @@ public class LoggerViewModel : FlightWidgetBase
         _filterUpdate.OnNext(FilterByTypePredicate);
 
         log.OnMessage
-            .ObserveOn(RxApp.MainThreadScheduler)
             .Select(ConvertLogToMessage)
             .Subscribe(_logSource.Add)
             .DisposeItWith(Disposable);

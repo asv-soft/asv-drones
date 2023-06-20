@@ -22,8 +22,7 @@ public class VoltageUavRttItemViewModel : UavRttItem
 
         Vehicle.Rtt.BatteryVoltage
             .DistinctUntilChanged()
-            .Sample(TimeSpan.FromMilliseconds(500))
-            .ObserveOn(RxApp.MainThreadScheduler)
+            .Sample(TimeSpan.FromMilliseconds(500), RxApp.MainThreadScheduler)
             .Subscribe(_ => Voltage = $"{localization.Voltage.ConvertToStringWithUnits(_)}")
             .DisposeWith(Disposable);
 

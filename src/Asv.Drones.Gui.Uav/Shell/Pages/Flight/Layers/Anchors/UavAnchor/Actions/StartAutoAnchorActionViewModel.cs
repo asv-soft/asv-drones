@@ -19,7 +19,7 @@ namespace Asv.Drones.Gui.Uav
             // TODO: Localize
             Title = "Start mission";
             Icon = MaterialIconKind.RayStartArrow;
-            Vehicle.Position.IsArmed.ObserveOn(RxApp.MainThreadScheduler).Select(_ => _).Subscribe(CanExecute).DisposeWith(Disposable);
+            Vehicle.Position.IsArmed.Select(_ => _).Subscribe(CanExecute).DisposeWith(Disposable);
         }
 
         protected override async Task ExecuteImpl(CancellationToken cancel)

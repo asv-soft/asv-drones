@@ -18,7 +18,7 @@ namespace Asv.Drones.Gui.Uav
             // TODO: Localize
             Title = "Return to launch (RTL)";
             Icon = MaterialIconKind.HomeCircleOutline;
-            Vehicle.Position.IsArmed.ObserveOn(RxApp.MainThreadScheduler).Select(_ => _).Subscribe(CanExecute).DisposeWith(Disposable);
+            Vehicle.Position.IsArmed.Select(_ => _).Subscribe(CanExecute).DisposeWith(Disposable);
         }
 
         protected override async Task ExecuteImpl(CancellationToken cancel)

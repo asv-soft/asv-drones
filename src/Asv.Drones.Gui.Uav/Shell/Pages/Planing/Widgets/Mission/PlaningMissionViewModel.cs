@@ -78,7 +78,6 @@ namespace Asv.Drones.Gui.Uav
             
             vehicle.Missions.MissionItems
                 .Transform(_=>new PlaningMissionItemViewModel(Id,_,this))
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(out _items)
                 .DisposeMany()
                 .Subscribe()

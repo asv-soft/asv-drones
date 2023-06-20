@@ -57,8 +57,7 @@ public class ParamPageViewModel:ViewModelBase, IShellPage
         _cfg = cfg ?? throw new ArgumentNullException(nameof(cfg));
         FilterPipe.DisposeItWith(Disposable);
         this.WhenAnyValue(_=>_.SearchText)
-            .Throttle(TimeSpan.FromMilliseconds(100))
-            .ObserveOn(RxApp.MainThreadScheduler)
+            .Throttle(TimeSpan.FromMilliseconds(100), RxApp.MainThreadScheduler)
             .Subscribe(_ =>FilterPipe.OnNext(item=>item.Filter(SearchText,ShowStaredOnly)))
             .DisposeItWith(Disposable);
          _viewedParamsList = new SourceList<ParamItemViewModel>().DisposeItWith(Disposable);

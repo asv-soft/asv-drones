@@ -20,9 +20,9 @@ public class LinkQualityUavRttViewModel : UavRttItem
         Order = 8;
         
         Vehicle.Heartbeat.LinkQuality
-            .ObserveOn(RxApp.MainThreadScheduler)
             .DistinctUntilChanged()
             .Sample(TimeSpan.FromMilliseconds(500))
+            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => LinkQuality = _)
             .DisposeWith(Disposable);
         

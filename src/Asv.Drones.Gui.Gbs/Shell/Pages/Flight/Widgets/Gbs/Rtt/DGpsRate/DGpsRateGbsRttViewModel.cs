@@ -19,7 +19,6 @@ public class DGpsRateGbsRttViewModel : GbsRttItem
         Order = 2;
 
         BaseStation.Gbs.DgpsRate
-            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => DGpsRate = localizationService.ByteRate.ConvertToStringWithUnits(_))
             .DisposeItWith(Disposable);
     }

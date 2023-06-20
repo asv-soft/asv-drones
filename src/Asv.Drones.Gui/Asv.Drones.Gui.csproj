@@ -11,10 +11,10 @@
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DefineConstants>TRACE;</DefineConstants>
+    <DefineConstants>TRACE;PROPRIETARY</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DefineConstants>TRACE;</DefineConstants>
+    <DefineConstants>TRACE;PROPRIETARY</DefineConstants>
   </PropertyGroup>
 
 
@@ -22,7 +22,7 @@
     <When Condition="$([System.Text.RegularExpressions.Regex]::IsMatch( $(DefineConstants), '^(.*;)*PROPRIETARY(;.*)*$'))">
       <!-- When PROPRIETARY is defined. -->
       <ItemGroup>
-        <ProjectReference Include="..\..\..\asv-drones-gui-afis\src\Asv.Drones.Gui.Afis\Asv.Drones.Gui.Afis.csproj"/>
+        <ProjectReference Include="..\..\..\asv-drones-gui-afis\src\Asv.Drones.Gui.Afis\Asv.Drones.Gui.Afis.csproj" />
       </ItemGroup>
     </When>
     <!-- other conditions -->
@@ -44,7 +44,7 @@
     <TrimmableAssembly Include="Avalonia.Themes.Default" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Asv.Cfg" Version="1.8.0" />
+    <PackageReference Include="Asv.Cfg" Version="1.8.1" />
     <PackageReference Include="Avalonia" Version="11.0.0-preview4" />
     <PackageReference Include="Avalonia.Desktop" Version="11.0.0-preview4" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->

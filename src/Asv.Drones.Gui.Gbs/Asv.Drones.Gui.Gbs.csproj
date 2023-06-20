@@ -11,9 +11,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Asv.Cfg" Version="1.8.0" />
-      <PackageReference Include="Asv.Common" Version="1.8.0" />
-      <PackageReference Include="Asv.Mavlink" Version="3.2.5-alpha-06" />
+      <PackageReference Include="Asv.Cfg" Version="1.8.1" />
+      <PackageReference Include="Asv.Common" Version="1.8.1" />
+      <PackageReference Include="Asv.Mavlink" Version="3.2.5-alpha-07" />
       <PackageReference Include="DynamicData" Version="7.13.5" />
       <PackageReference Include="ReactiveUI.Fody" Version="18.4.34" />
     </ItemGroup>

@@ -35,7 +35,7 @@ namespace Asv.Drones.Gui.Uav
             IconBrush = Brushes.Red;
             IsVisible = true;
             Icon = MavlinkHelper.GetIcon(vehicle.Class);
-            vehicle.Position.Current.ObserveOn(RxApp.MainThreadScheduler).Subscribe(_ => Location = _).DisposeWith(Disposable);
+            vehicle.Position.Current.Subscribe(_ => Location = _).DisposeWith(Disposable);
             vehicle.Position.Yaw.Select(_ => Math.Round(_, 0)).DistinctUntilChanged().Subscribe(_ => RotateAngle = _).DisposeWith(Disposable);
             Title = vehicle.Name.Value;
             vehicle.Name.Subscribe(_ => Title = _).DisposeWith(Disposable);

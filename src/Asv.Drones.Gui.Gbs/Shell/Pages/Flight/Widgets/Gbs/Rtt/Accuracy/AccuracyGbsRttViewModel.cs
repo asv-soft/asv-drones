@@ -18,7 +18,6 @@ public class AccuracyGbsRttViewModel: GbsRttItem
     {
         Order = 1;
         BaseStation.Gbs.AccuracyMeter
-            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => Accuracy = localizationService.Distance.FromSiToStringWithUnits(_))
             .DisposeItWith(Disposable);
     }

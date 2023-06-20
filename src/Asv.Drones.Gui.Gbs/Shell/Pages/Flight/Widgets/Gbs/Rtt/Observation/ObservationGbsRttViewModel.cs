@@ -19,7 +19,6 @@ public class ObservationGbsRttViewModel : GbsRttItem
         Order = 1;
         
         BaseStation.Gbs.ObservationSec
-            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => Observation = loc.RelativeTime.ConvertToString(TimeSpan.FromSeconds(_)))
             .DisposeItWith(Disposable);
     }

@@ -19,12 +19,10 @@ public class LinkQualityGbsRttViewModel : GbsRttItem
         Order = 1;
         
         BaseStation.Heartbeat.LinkQuality
-            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => LinkQuality = _)
             .DisposeItWith(Disposable);
 
         BaseStation.Heartbeat.LinkQuality
-            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => LinkQualityString = _.ToString("P0"))
             .DisposeItWith(Disposable);
 
