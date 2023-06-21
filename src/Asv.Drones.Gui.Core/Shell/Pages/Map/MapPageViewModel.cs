@@ -135,8 +135,8 @@ namespace Asv.Drones.Gui.Core
             
             if (isVisible)
             {
-                var start = await ShowTargetDialog("start", CancellationToken.None);
-                var stop = await ShowTargetDialog("stop", CancellationToken.None);
+                var start = await ShowTargetDialog(RS.MapPageViewModel_RulerStartPoint_Description, CancellationToken.None);
+                var stop = await ShowTargetDialog(RS.MapPageViewModel_RulerStopPoint_Description, CancellationToken.None);
 
                 polygon.Ruler.Value.Start.OnNext(start);
                 polygon.Ruler.Value.Stop.OnNext(stop);

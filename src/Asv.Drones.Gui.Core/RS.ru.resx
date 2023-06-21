@@ -762,4 +762,10 @@
   <data name="PacketViewerViewModel_SeparatorDialog_Coma" xml:space="preserve">
 	  <value>Запятая [ , ]</value>
   </data>
+  <data name="MapPageViewModel_RulerStartPoint_Description" xml:space="preserve">
+	  <value>Укажите начальную точку линейки</value>
+  </data>
+  <data name="MapPageViewModel_RulerStopPoint_Description" xml:space="preserve">
+	  <value>Укажите конечную точку линейки</value>
+  </data>
 </root>
