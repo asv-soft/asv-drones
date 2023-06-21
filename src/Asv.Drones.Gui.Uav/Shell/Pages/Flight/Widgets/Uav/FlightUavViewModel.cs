@@ -78,6 +78,16 @@ namespace Asv.Drones.Gui.Uav
                     Map.SelectedItem = findUavVehicle;
                 }
             }).DisposeItWith(Disposable);
+
+            FollowUavCommand = ReactiveCommand.Create(() =>
+            {
+                var findUavVehicle = Map.Markers.Where(_ => _ is UavAnchor).Cast<UavAnchor>()
+                    .FirstOrDefault(_ => _.Vehicle.FullId == Vehicle.FullId);
+                if (findUavVehicle != null)
+                {
+                    Map.ItemToFollow = IsFollowed ? findUavVehicle : null;
+                }
+            }).DisposeItWith(Disposable);
             
             this.WhenValueChanged(_ => _.MissionStatus.EnableAnchors, false)
                 .Subscribe(ChangeAnchorsVisibility)
@@ -116,6 +126,7 @@ namespace Asv.Drones.Gui.Uav
         
         public ICommand LocateVehicleCommand { get; set; }
         public ICommand ChangeStateCommand { get; set; }
+        public ICommand FollowUavCommand { get; set; }
         public AttitudeViewModel Attitude { get; }
         public MissionStatusViewModel MissionStatus { get; }
         public ReadOnlyObservableCollection<IUavRttItem> RttItems => _rttItems;
@@ -123,5 +134,7 @@ namespace Asv.Drones.Gui.Uav
 
         [Reactive] 
         public bool IsMinimized { get; set; } = false;
+        [Reactive]
+        public bool IsFollowed { get; set; }
     }
 }

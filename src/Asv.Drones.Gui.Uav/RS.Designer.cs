@@ -132,6 +132,15 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Follow/Unfollow UAV.
+        /// </summary>
+        public static string FlightUavView_FollowButton_ToolTip {
+            get {
+                return ResourceManager.GetString("FlightUavView_FollowButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minimize/Maximize UAV.
         /// </summary>
         public static string FlightUavView_Minimize_ToolTip {

@@ -258,4 +258,7 @@
   <data name="FlightUavView_Minimize_ToolTip" xml:space="preserve">
     <value>Minimize/Maximize UAV</value>
   </data>
+  <data name="FlightUavView_FollowButton_ToolTip" xml:space="preserve">
+    <value>Follow/Unfollow UAV</value>
+  </data>
 </root>
