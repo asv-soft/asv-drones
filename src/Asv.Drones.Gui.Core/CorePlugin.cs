@@ -2,6 +2,7 @@
 using Asv.Cfg;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Reflection;
 using Avalonia.Controls.Templates;
 using Avalonia;
 
