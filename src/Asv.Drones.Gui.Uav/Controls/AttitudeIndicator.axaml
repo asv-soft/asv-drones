@@ -12,7 +12,6 @@
             <ControlTemplate>
                 <Viewbox >
                     <Canvas x:Name="Canvas"
-                             
                             Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InternalWidth}"
                             Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InternalHeight}"
                             ClipToBounds="True" Background="Transparent">
@@ -103,7 +102,7 @@
                                                 <RotateTransform CenterX="0" CenterY="0" Angle="{CompiledBinding Value}" />
                                             </TransformGroup>
                                         </StackPanel.RenderTransform>
-                                        <TextBlock Text="{CompiledBinding Title}" TextAlignment="Center" Foreground="#e0e0e0" Margin="0,-5" Width="100" FontSize="40" />
+                                        <TextBlock Text="{CompiledBinding Title}" TextAlignment="Center" Foreground="#e0e0e0" Margin="0,-5" Width="100" FontSize="37" />
                                         <Line Stroke="#e0e0e0" StartPoint="350,0" EndPoint="350,10" Margin="0,0,0,0" StrokeThickness="5" >
                                         </Line>
                                     </StackPanel>
@@ -137,7 +136,7 @@
                                                 <TranslateTransform X="0" Y="{CompiledBinding Value}"/>
                                             </TransformGroup>
                                         </StackPanel.RenderTransform>
-                                        <TextBlock Margin="0,-25,10,0" Foreground="#e0e0e0" Text="{CompiledBinding Title}" TextAlignment="Right" Width="90" FontSize="40" />
+                                        <TextBlock Margin="0,-25,10,0" Foreground="#e0e0e0" Text="{CompiledBinding Title}" TextAlignment="Right" Width="90" FontSize="35" />
                                         <Line Stroke="#e0e0e0" Width="300" HorizontalAlignment="Center" StartPoint="{CompiledBinding StartLine}" EndPoint="{CompiledBinding StopLine}" StrokeThickness="3" />
                                     </StackPanel>
                                 </DataTemplate>
@@ -169,15 +168,15 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Grid x:DataType="controls:ScaleItem" ColumnDefinitions="90,20" IsVisible="{CompiledBinding IsVisible}" Width="110" HorizontalAlignment="Stretch">
-                                        <TextBlock Grid.Column="0" Foreground="White" Text="{CompiledBinding Title}" Margin="0,-23,0,0" TextAlignment="Right" Width="85" FontSize="40"/>
+                                        <TextBlock Grid.Column="0" Foreground="White" Text="{CompiledBinding Title}" Margin="0,-25,0,0" TextAlignment="Right" Width="85" FontSize="35"/>
                                         <Line Grid.Column="1" StartPoint="0,0" EndPoint="20,0" Stroke="#e0e0e0" StrokeThickness="5"/>
                                     </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                         <Polygon ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Velocity_ToolTip}" Opacity="0.7" Canvas.Top="470" Canvas.Left="-1" Points="2,5 2,55 90,55 105,30 90,5" Fill="#000a12" StrokeThickness="3" Stroke="#eceff1"/>
-                        <TextBlock ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Velocity_ToolTip}" Canvas.Left="-1" Canvas.Top="470" Margin="0,3,0,0" Foreground="White" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Velocity}"
-                                   TextAlignment="Right" FontSize="45" Width="87" FontWeight="DemiBold"/>
+                        <TextBlock ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Velocity_ToolTip}" Canvas.Left="-1" Canvas.Top="470" Margin="0,0,0,0" Foreground="White" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Velocity}"
+                                   TextAlignment="Right" FontSize="40" Width="87" FontWeight="DemiBold"/>
                         <Border ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Velocity_ToolTip}" BorderBrush="#e0e0e0" Canvas.Top="300"  Canvas.Left="-3" BorderThickness="5" CornerRadius="3" Width="113" Height="400"/>
 
 
@@ -199,15 +198,15 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Grid x:DataType="controls:ScaleItem" ColumnDefinitions="20,90" IsVisible="{CompiledBinding IsVisible}" Width="110" HorizontalAlignment="Stretch">
-                                        <TextBlock Grid.Column="1" Foreground="White" Text="{CompiledBinding Title}" Margin="0,-23,0,0" TextAlignment="Left" Width="85" FontSize="40"/>
+                                        <TextBlock Grid.Column="1" Foreground="White" Text="{CompiledBinding Title}" Margin="0,-25,0,0" TextAlignment="Left" Width="85" FontSize="35"/>
                                         <Line Grid.Column="0" StartPoint="0,0" EndPoint="20,0" Stroke="#e0e0e0" StrokeThickness="5"/>
                                     </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                         <Polygon ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Altitude_ToolTip}" Opacity="0.7" Canvas.Right="-1" Canvas.Top="470" Points="105,5 105,55 15,55 0,30 15,5" Fill="#000a12" StrokeThickness="3" Stroke="#eceff1"/>
-                        <TextBlock ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Altitude_ToolTip}" Canvas.Right="-1" Canvas.Top="470" Margin="0,3,0,0" Foreground="White" FontWeight="DemiBold" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Altitude}"
-                                   VerticalAlignment="Center" TextAlignment="Left" FontSize="45" Width="87"/>
+                        <TextBlock ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Altitude_ToolTip}" Canvas.Right="-1" Canvas.Top="470" Margin="0,0,0,0" Foreground="White" FontWeight="DemiBold" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Altitude}"
+                                   VerticalAlignment="Center" TextAlignment="Left" FontSize="40" Width="87"/>
                         <Border ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Altitude_ToolTip}" BorderBrush="#e0e0e0" Canvas.Right="-3" Canvas.Top="300" BorderThickness="5" CornerRadius="3" Width="113" Height="400"/>
 
                         <!-- Сompass -->
@@ -230,7 +229,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Grid x:DataType="controls:HeadingScaleItem" RowDefinitions="40,20" IsVisible="{CompiledBinding IsVisible}" HorizontalAlignment="Stretch" Margin="-40,15,0,0">
-                                        <TextBlock Grid.Row="0" Foreground="White" Text="{CompiledBinding Title}"  HorizontalAlignment="Center" TextAlignment="Center" Width="80" FontSize="40"/>
+                                        <TextBlock Grid.Row="0" Foreground="White" Text="{CompiledBinding Title}"  HorizontalAlignment="Center" TextAlignment="Center" Width="80" FontSize="35"/>
                                         <Line Grid.Row="1" StartPoint="40,25" EndPoint="40,5" Stroke="#e0e0e0" StrokeThickness="5"/>
                                     </Grid>
                                 </DataTemplate>
