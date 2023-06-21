@@ -6,15 +6,12 @@ using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.AsvSdr;
-using Asv.Mavlink.V2.Common;
 using Avalonia.Controls;
-using Avalonia.Platform.Storage;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using Splat.ModeDetection;
 
 namespace Asv.Drones.Gui.Sdr;
 

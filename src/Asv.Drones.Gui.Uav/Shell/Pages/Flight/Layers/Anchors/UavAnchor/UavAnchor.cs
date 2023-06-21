@@ -2,13 +2,10 @@
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Avalonia.Map;
-using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Media;
 using DynamicData;
-using Material.Icons;
-using ReactiveUI;
 using MavlinkHelper = Asv.Drones.Gui.Core.MavlinkHelper;
 
 namespace Asv.Drones.Gui.Uav

@@ -1,7 +1,5 @@
 using System.ComponentModel.Composition;
 using System.Reactive;
-using System.Windows.Input;
-using Avalonia.Platform.Storage;
 using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core

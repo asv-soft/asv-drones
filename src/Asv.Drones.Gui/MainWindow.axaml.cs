@@ -1,19 +1,14 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
-using Avalonia.Platform;
 using FluentAvalonia.UI.Windowing;
 using System;
 using System.ComponentModel;
-using Avalonia.Media.Imaging;
 using Avalonia.Media.Immutable;
 using FluentAvalonia.Styling;
 using FluentAvalonia.UI.Media;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using Asv.Cfg;
-using Asv.Drones.Gui.Core;
-using Avalonia.Platform.Storage;
 
 namespace Asv.Drones.Gui
 {

@@ -1,13 +1,10 @@
-﻿using System.ComponentModel.Composition;
-using System.Reactive.Disposables;
+﻿using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Drones.Uav;
 using Asv.Mavlink;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using ReactiveUI;

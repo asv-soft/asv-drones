@@ -9,13 +9,11 @@ using Asv.Drones.Gui.Uav;
 using Asv.Mavlink;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
-using Avalonia.Platform.Storage.FileIO;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using DynamicData;
 using DynamicData.Binding;
 using FluentAvalonia.UI.Controls;
-using Path = Avalonia.Controls.Shapes.Path;
 
 namespace Asv.Drones.Gui.Core;
 

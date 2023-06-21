@@ -3,9 +3,7 @@ using System.Reactive.Linq;
 using Asv.Drones.Gui.Core;
 using Asv.Drones.Uav;
 using Asv.Mavlink;
-using Asv.Mavlink.V2.Ardupilotmega;
 using Material.Icons;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav
 {

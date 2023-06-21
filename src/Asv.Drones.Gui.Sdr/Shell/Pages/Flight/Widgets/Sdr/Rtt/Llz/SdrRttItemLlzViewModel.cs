@@ -3,7 +3,6 @@ using System.Reactive.Linq;
 using Asv.Common;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.AsvSdr;
-using Avalonia.Controls;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Sdr;

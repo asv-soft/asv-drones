@@ -1,6 +1,4 @@
-using System.ComponentModel.Composition;
 using System.Reactive.Linq;
-using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Controls.Mixins;

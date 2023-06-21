@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using Material.Icons;
 
 namespace Asv.Drones.Gui.Core
@@ -8,9 +7,7 @@ namespace Asv.Drones.Gui.Core
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class FlightShellMenuItem : ShellMenuItem
     {
-        public const string UriString = ShellMenuItem.UriString + ".flight";
-        public static readonly Uri Uri = new(UriString);
-        public FlightShellMenuItem():base(Uri)
+        public FlightShellMenuItem():base("asv:shell.menu.flight")
         {
             Name = RS.FlightShellMenuItem_Name;
             NavigateTo = FlightPageViewModel.Uri;

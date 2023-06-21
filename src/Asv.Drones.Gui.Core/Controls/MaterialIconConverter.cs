@@ -1,10 +1,7 @@
-using System.Drawing;
 using System.Globalization;
-using Asv.Avalonia.Map;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 using Material.Icons;
-using Geometry = Asv.Avalonia.Map.Geometry;
 
 namespace Asv.Drones.Gui.Core
 {

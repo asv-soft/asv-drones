@@ -1,8 +1,6 @@
 ﻿using Asv.Avalonia.Map;
 using Asv.Common;
-using DynamicData;
 using System.Collections.ObjectModel;
-using System.Reactive.Disposables;
 using Material.Icons;
 
 namespace Asv.Drones.Gui.Core

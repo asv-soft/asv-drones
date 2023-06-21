@@ -5,11 +5,9 @@ using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Controls;
 using FluentAvalonia.UI.Controls;
-using HarfBuzzSharp;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
-using RS = Asv.Drones.Gui.Core.RS;
 
 namespace Asv.Drones.Gui.Sdr;
 

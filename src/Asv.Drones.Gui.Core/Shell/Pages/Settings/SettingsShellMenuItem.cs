@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using Material.Icons;
 
 namespace Asv.Drones.Gui.Core
@@ -8,9 +7,7 @@ namespace Asv.Drones.Gui.Core
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class SettingsShellMenuItem : ShellMenuItem
     {
-        public const string UriString = ShellMenuItem.UriString + ".settings";
-        public static readonly Uri Uri = new(UriString);
-        public SettingsShellMenuItem() : base(Uri)
+        public SettingsShellMenuItem() : base("asv:shell.menu.settings")
         {
             Name = RS.SettingsShellMenuProvider_SettingsShellMenuProvider_Settings;
             NavigateTo = SettingsViewModel.Uri;

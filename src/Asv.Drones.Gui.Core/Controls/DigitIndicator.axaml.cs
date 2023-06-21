@@ -1,11 +1,4 @@
-using System.Reactive.Disposables;
-using System.Reactive.Linq;
-using Asv.Common;
 using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using DynamicData.Binding;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core;
 

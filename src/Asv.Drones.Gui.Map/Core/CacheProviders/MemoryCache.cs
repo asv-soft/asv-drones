@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace Asv.Avalonia.Map
+﻿namespace Asv.Avalonia.Map
 {
     public class MemoryCache : IDisposable
     {

@@ -1,7 +1,5 @@
-using System.ComponentModel.Composition;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
-using Material.Icons;
 
 namespace Asv.Drones.Gui.Uav
 {

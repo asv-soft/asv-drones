@@ -1,10 +1,8 @@
 using System.Collections.ObjectModel;
-using System.Reactive.Linq;
 using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Drones.Gui.Uav.MissionStatus;
-using Asv.Drones.Gui.Uav.Uav;
 using Asv.Mavlink;
 using Avalonia.Controls;
 using DynamicData;

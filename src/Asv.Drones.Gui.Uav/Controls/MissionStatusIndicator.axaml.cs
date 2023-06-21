@@ -1,23 +1,11 @@
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Reactive.Linq;
 using Asv.Common;
 using Asv.Mavlink;
 using Asv.Mavlink.Vehicle;
 using Avalonia;
-using Avalonia.Collections;
-using Avalonia.Controls;
-using Avalonia.Controls.Mixins;
 using Avalonia.Controls.Primitives;
-using Avalonia.Data;
-using Avalonia.Media;
 using DynamicData;
 using DynamicData.Binding;
-using FluentAvalonia.Core;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
-using Disposable = System.Reactive.Disposables.Disposable;
-using Location = Asv.Avalonia.Map.Location;
 
 namespace Asv.Drones.Gui.Uav;
 

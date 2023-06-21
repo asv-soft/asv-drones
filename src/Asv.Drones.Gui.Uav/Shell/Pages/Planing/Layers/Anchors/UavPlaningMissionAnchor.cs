@@ -1,6 +1,5 @@
 using Asv.Avalonia.Map;
 using Asv.Common;
-using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
 using Avalonia.Media;
