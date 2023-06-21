@@ -95,6 +95,7 @@ namespace Asv.Drones.Gui.Core
         {
             _logService.Warning(RS.LogMessagesPageViewModel_LogName,RS.LogMessagesPageViewModel_ClearAllMessage);
             _logService.LogStore.ClearAll();
+            RefreshItemsImpl();
         }
         
         public bool IsRefreshing => _isRefreshing.Value;
