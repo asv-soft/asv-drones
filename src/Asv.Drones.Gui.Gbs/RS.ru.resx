@@ -123,4 +123,31 @@
     <data name="FlightGbsView_Satellites_ToolTip" xml:space="preserve">
         <value>Количество спутников для каждого созвездия</value>
     </data>
+    <data name="FixedModeView_CurrentValuesTab_Header" xml:space="preserve">
+        <value>Текущие значения</value>
+    </data>
+    <data name="FixedModeView_SavedValuesTab_Header" xml:space="preserve">
+        <value>Сохраненные значения</value>
+    </data>
+    <data name="FixedModeView_SaveCurrentValues_Name" xml:space="preserve">
+        <value>Сохранить текущие значения</value>
+    </data>
+    <data name="SetCoordsNameViewModel_Name_ValidValue" xml:space="preserve">
+        <value>Имя не должно быть пустым</value>
+    </data>
+    <data name="FixedModeViewModel_SetCoordsName_Title" xml:space="preserve">
+        <value>Имя</value>
+    </data>
+    <data name="FixedModeViewModel_SetCoordsName_PrimaryButtonText" xml:space="preserve">
+        <value>Ок</value>
+    </data>
+    <data name="FixedModeViewModel_SetCoordsName_SecondaryButtonText" xml:space="preserve">
+        <value>Отмена</value>
+    </data>
+    <data name="SetCoordsNameView_Description" xml:space="preserve">
+        <value>Укажите имя</value>
+    </data>
+    <data name="FlightGbsView_Minimize_ToolTip" xml:space="preserve">
+        <value>Свернуть/Развернуть НБС</value>
+    </data>
 </root>

@@ -2,11 +2,8 @@
 using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
 using Asv.Cfg;
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using Avalonia.Platform.Storage.FileIO;
-using FluentAvalonia.UI.Controls;
 
 namespace Asv.Drones.Gui.Core
 {
@@ -19,7 +16,7 @@ namespace Asv.Drones.Gui.Core
 
     [Export(typeof(INavigationService))]
     [PartCreationPolicy(CreationPolicy.Shared)]
-    public class NavigationService: ServiceWithConfigBase<NavigationServiceConfig>,INavigationService
+    public class NavigationService: ServiceWithConfigBase<NavigationServiceConfig>, INavigationService
     {
         private readonly CompositionContainer _container;
         private IShell? _shell;

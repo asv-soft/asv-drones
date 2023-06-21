@@ -1,8 +1,6 @@
 ﻿using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Avalonia.Map;
-using Asv.Common;
-using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Media;
 using Material.Icons;
@@ -22,12 +20,11 @@ namespace Asv.Drones.Gui.Uav
             IsVisible = false;
             IsEditable = false;
 
-            vehicle.Position.Home.Select(_ => _.HasValue).DistinctUntilChanged().ObserveOn(RxApp.MainThreadScheduler).Subscribe(_ => IsVisible = _).DisposeWith(Disposable);
-            vehicle.Position.Home.Where(_ => _.HasValue).ObserveOn(RxApp.MainThreadScheduler).Subscribe(_ => Location = _.Value).DisposeWith(Disposable);
+            vehicle.Position.Home.Select(_ => _.HasValue).DistinctUntilChanged().Subscribe(_ => IsVisible = _).DisposeWith(Disposable);
+            vehicle.Position.Home.Where(_ => _.HasValue).Subscribe(_ => Location = _.Value).DisposeWith(Disposable);
 
             vehicle.Position.HomeDistance
                 .Sample(TimeSpan.FromSeconds(1), RxApp.MainThreadScheduler)
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(_ =>
                 {
                     // TODO: User Localize

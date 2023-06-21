@@ -3,6 +3,7 @@ using System.ComponentModel.Composition;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Windows.Input;
+using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Uav;
 using Asv.Mavlink;
@@ -12,6 +13,7 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using DynamicData;
 using DynamicData.Binding;
+using FluentAvalonia.UI.Controls;
 
 namespace Asv.Drones.Gui.Core;
 
@@ -19,6 +21,8 @@ namespace Asv.Drones.Gui.Core;
 [PartCreationPolicy(CreationPolicy.NonShared)]
 public class PacketViewerViewModel : ViewModelBase, IShellPage
 {
+    private readonly INavigationService _nav;
+    private readonly IConfiguration _cfg;
     private readonly ILocalizationService _localization;
     private readonly IGlobalCommandsService _cmd;
     public const string UriString = ShellPage.UriString + ".packetViewer";
@@ -36,12 +40,14 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
     
     private readonly SourceList<PacketMessageViewModel> _packetsSource;
     private readonly ReadOnlyObservableCollection<PacketMessageViewModel> _packets;
-
+    private readonly IEnumerable<IPacketConverter> _converters;
+    
     public PacketViewerViewModel() : base(Uri)
     {
-        //TODO: Implement export to CSV
-        //ExportToCsv = ReactiveCommand.Create(Export);
+        
+        ExportToCsv = ReactiveCommand.CreateFromTask(Export, this.WhenValueChanged(_ => _.IsPause));
         ClearAll = ReactiveCommand.Create(() => _packetsSource.Clear());
+        
         if (Design.IsDesignMode)
         {
             _packets = new ReadOnlyObservableCollection<PacketMessageViewModel>(
@@ -55,11 +61,17 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
     }
     
     [ImportingConstructor]
-    public PacketViewerViewModel(IMavlinkDevicesService mavlinkDevicesService, ILocalizationService localizationService, IGlobalCommandsService cmd) : this()
+    public PacketViewerViewModel(IMavlinkDevicesService mavlinkDevicesService, INavigationService nav, 
+        IConfiguration cfg, ILocalizationService localizationService, IGlobalCommandsService cmd,
+        [ImportMany]IEnumerable<IPacketConverter> converters) : this()
     {
         _localization = localizationService;
         _cmd = cmd;
-
+        _cfg = cfg;
+        _nav = nav;
+        
+        _converters = converters.OrderBy(_ => _.Order);
+        
         _packetsSource = new SourceList<PacketMessageViewModel>();
         _packetsSource.LimitSizeTo(MaxPacketSize).Subscribe().DisposeItWith(Disposable);
         _filtersSource = new SourceCache<PacketFilterViewModel, string>(_ => _.Source);
@@ -67,8 +79,7 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
         
         mavlinkDevicesService.Router
             .Where(_=>IsPause == false)
-            .Buffer(TimeSpan.FromSeconds(1)) // fix slow rendering when high rate of packets: buffer it 1 sec and then render
-            .ObserveOn(RxApp.MainThreadScheduler)
+            .Buffer(TimeSpan.FromSeconds(1),RxApp.MainThreadScheduler) // fix slow rendering when high rate of packets: buffer it 1 sec and then render
             .Select(ConvertPacketToMessagesAndUpdateFilters)
             .Subscribe(_packetsSource.AddRange)
             .DisposeItWith(Disposable);
@@ -119,22 +130,41 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
 
         #endregion
 
-        Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).Subscribe(_ =>
+        Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1), RxApp.MainThreadScheduler).Subscribe(_ =>
         {
             _filtersSource.Items.ForEach(_=>_.UpdateRateText());
             _filtersSourceType.Items.ForEach(_=>_.UpdateRateText());
-            
         }).DisposeItWith(Disposable);
+
+        this.WhenValueChanged(_ => _.SelectedPacket)
+            
+            .Subscribe(_ =>
+            {
+                if (_ != null)
+                {
+                    foreach (var packet in _packets)
+                    {
+                        packet.Highlight = false;
+                    
+                        if (packet.Type == _.Type)
+                        {
+                            packet.Highlight = true;
+                        }
+                    }    
+                }
+            })
+            .DisposeItWith(Disposable);
     }
-
     
-
     private IList<PacketMessageViewModel> ConvertPacketToMessagesAndUpdateFilters(IList<IPacketV2<IPayload>> items)
     {
         var result = new List<PacketMessageViewModel>(items.Count);
         foreach (var packet in items)
         {
-            var obj = new PacketMessageViewModel(packet);
+            var converter = _converters.FirstOrDefault(_ => _.CanConvert(packet), new DefaultPacketConverter());
+            
+            var obj = new PacketMessageViewModel(packet, converter);
+            
             result.Add(obj);
             var sourceExists = _filtersSource.Lookup(obj.Source);
             if (sourceExists.HasValue)
@@ -169,6 +199,7 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
     
     [Reactive] public bool IsPause { get; set; }
     [Reactive] public string SearchText { get; set; }
+    [Reactive] public PacketMessageViewModel SelectedPacket { get; set; }
 
     private bool FilterBySourcePredicate(PacketMessageViewModel vm)
     {
@@ -190,22 +221,61 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
         return vm.Message.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
     }
 
-    public async void Export()
+    public async Task Export()
     {
-        var file = await new Window().StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions(){Title = "Save to CSV..."});
+        var dialog = new ContentDialog()
+        {
+            Title = RS.PacketViewerViewModel_SeparatorDialog_Title,
+            PrimaryButtonText = RS.PacketViewerViewModel_SeparatorDialog_DialogPrimaryButton,
+            IsSecondaryButtonEnabled = true,
+            SecondaryButtonText = RS.PacketViewerViewModel_SeparatorDialog_DialogSecondaryButton
+        };
+            
+        var viewModel = new SeparatorViewModel();
+        viewModel.ApplyDialog(dialog);
+        dialog.Content = viewModel;
+            
+        var result = await dialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
+        {
+            var separator = ";";
+            var shieldSymbol = ",";
+                
+            if (viewModel.IsComa)
+            {
+                separator = ",";
+                shieldSymbol = ";";
+            }
+            else if (viewModel.IsTab)
+            {
+                separator = "\t";
+            }
+
+            var startLocation = System.IO.Path.GetDirectoryName(_cfg.Get<AppServiceConfig>().LastAppStorePath);
+            
+            var fileName = await _nav.ShowSaveFileDialogAsync("Save to CSV...", startLocation, "Packets","csv", new FilePickerFileType []
+            {
+                new ("*.csv") { Patterns = new [] {"csv"} }
+            });
+
+            if (fileName != null)
+            {
+                try
+                {
+                    CsvHelper.SaveToCsv(_packets, fileName, separator, shieldSymbol,
+                        new CsvColumn<PacketMessageViewModel>("Date", _ => _.DateTime.ToString("G")),
+                        new CsvColumn<PacketMessageViewModel>("Type", _ => _.Type),
+                        new CsvColumn<PacketMessageViewModel>("Source", _ => _.Source),
+                        new CsvColumn<PacketMessageViewModel>("Message", _ => _.Message));
+                }
+                catch(Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
         
-        try
-        {
-            CsvHelper.SaveToCsv(_packets, "", ";", ",",
-                new CsvColumn<PacketMessageViewModel>("Date", _ => _.DateTime.ToString("G")),
-                new CsvColumn<PacketMessageViewModel>("Type", _ => _.Type),
-                new CsvColumn<PacketMessageViewModel>("Source", _ => _.Source),
-                new CsvColumn<PacketMessageViewModel>("Message", _ => _.Message));
-        }
-        catch(Exception ex)
-        {
-            throw;
-        }
     }
 
     public void SetArgs(Uri link)

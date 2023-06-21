@@ -1,8 +1,6 @@
 using System;
 using System.Diagnostics;
-using System.Reactive.Concurrency;
 using NLog;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui;
 

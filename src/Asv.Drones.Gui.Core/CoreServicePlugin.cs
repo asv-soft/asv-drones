@@ -8,12 +8,13 @@ namespace Asv.Drones.Gui.Core
     /// <summary>
     /// This module only imports all core services to be created by IoC container
     /// </summary>
-    [PluginEntryPoint("CoreServices", LoadingOrder)]
+    [PluginEntryPoint(Name, CorePlugin.Name)]
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class CoreServicePlugin:IPluginEntryPoint
     {
+        public const string Name = "CoreServices";
         private readonly CompositionContainer _container;
-        public const int LoadingOrder = CorePlugin.LoadingOrder + byte.MaxValue; // load after core plugin
+        
 
         [ImportingConstructor]
         public CoreServicePlugin(CompositionContainer container)

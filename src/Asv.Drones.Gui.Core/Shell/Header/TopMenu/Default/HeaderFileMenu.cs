@@ -3,9 +3,7 @@ using System.ComponentModel.Composition;
 using System.Reactive.Linq;
 using Asv.Common;
 using DynamicData;
-using DynamicData.Binding;
 using Material.Icons;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core
 {
@@ -23,7 +21,6 @@ namespace Asv.Drones.Gui.Core
             fileItemProviders
                 .Select(_ => _.Items)
                 .Merge()
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .SortBy(_ => _.Order)
                 .Bind(out _items)
                 .Subscribe()

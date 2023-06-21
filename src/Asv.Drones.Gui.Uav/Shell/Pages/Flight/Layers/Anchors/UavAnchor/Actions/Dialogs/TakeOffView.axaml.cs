@@ -3,7 +3,6 @@ using Asv.Drones.Gui.Core;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.ReactiveUI;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Asv.Drones.Gui.Uav;
 

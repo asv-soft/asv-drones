@@ -1,6 +1,4 @@
-using System.Reactive.Disposables;
 using Asv.Common;
-using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.AsvGbs;
 using ReactiveUI.Fody.Helpers;

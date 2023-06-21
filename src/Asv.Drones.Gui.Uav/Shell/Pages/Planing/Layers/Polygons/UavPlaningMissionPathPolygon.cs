@@ -1,13 +1,10 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Reactive.Linq;
 using Asv.Common;
-using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
 using DynamicData;
 using DynamicData.Binding;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav
 {
@@ -22,7 +19,6 @@ namespace Asv.Drones.Gui.Uav
                 .SortBy(_=>_.Index, SortDirection.Ascending, SortOptimisations.ComparesImmutableValuesOnly)
                 .Filter(_=>_.Command.Value is MavCmd.MavCmdNavWaypoint or MavCmd.MavCmdNavSplineWaypoint )
                 .Transform(_ => _.Location.Value, true)
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .DisposeMany()
                 .Bind(out _items, useReplaceForUpdates:true)
                 .Subscribe()

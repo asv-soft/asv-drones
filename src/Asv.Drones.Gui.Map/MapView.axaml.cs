@@ -15,6 +15,7 @@ using Avalonia.LogicalTree;
 using Avalonia.Media;
 using Avalonia.VisualTree;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using GeoPoint = Asv.Common.GeoPoint;
 
 namespace Asv.Avalonia.Map
@@ -86,7 +87,6 @@ namespace Asv.Avalonia.Map
             Position = new GeoPoint(55.1644, 61.4368,0);
             if (Design.IsDesignMode)
             {
-                
                 
             }
             _core.OnMapZoomChanged += ForceUpdateOverlays;
@@ -354,6 +354,8 @@ namespace Asv.Avalonia.Map
         public static readonly DirectProperty<MapView, double> ZoomProperty =
             AvaloniaProperty.RegisterDirect<MapView, double>(nameof(Zoom), o => o.Zoom, (o, v) => o.Zoom = v);
         private double _zoom;
+        
+        [Reactive]
         public double Zoom
         {
             get => _zoom;

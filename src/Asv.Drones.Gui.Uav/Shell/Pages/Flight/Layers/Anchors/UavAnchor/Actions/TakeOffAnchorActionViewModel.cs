@@ -1,12 +1,10 @@
-﻿using System.ComponentModel.Composition;
-using System.Reactive.Disposables;
+﻿using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Cfg;
+using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Drones.Uav;
 using Asv.Mavlink;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using ReactiveUI;
@@ -25,11 +23,17 @@ namespace Asv.Drones.Gui.Uav
             _cfg = cfg;
             _loc = loc;
             
-            Title = "TakeOff";
+            Title = "TakeOff"; // TODO: Localize
             Icon = MaterialIconKind.ArrowUpBoldHexagonOutline;
-            
-            Command = ReactiveCommand.CreateFromTask(ExecuteImpl, CanExecute);
-            Vehicle.Position.IsArmed.ObserveOn(RxApp.MainThreadScheduler).Select(_ => !_).Subscribe(CanExecute).DisposeWith(Disposable);
+            Vehicle.Position.IsArmed.Select(_ => !_).Subscribe(CanExecute).DisposeWith(Disposable);
+            var cmd = ReactiveCommand.CreateFromTask(ExecuteImpl, CanExecute);
+            cmd.ThrownExceptions.Subscribe(OnCommandError).DisposeItWith(Disposable);
+            Command = cmd;
+        }
+        
+        private void OnCommandError(Exception ex)
+        {
+            _log.Error("Arm",$"Error to arm/disarm {Vehicle.Name.Value}",ex); // TODO: Localize
         }
 
         protected override async Task ExecuteImpl(CancellationToken cancel)

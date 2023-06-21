@@ -1,15 +1,12 @@
-﻿using System.ComponentModel.Composition;
+﻿#nullable enable
+using System.ComponentModel.Composition;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Uav;
 using Asv.Mavlink;
-using Asv.Mavlink.V2.Ardupilotmega;
-using Asv.Mavlink.V2.AsvGbs;
 using Asv.Mavlink.V2.Common;
-using Asv.Mavlink.V2.Icarous;
-using Asv.Mavlink.V2.Uavionix;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
@@ -31,6 +28,8 @@ namespace Asv.Drones.Gui.Core
         public VehicleClientConfig Vehicle { get; set; } = new();
         public GbsClientDeviceConfig Gbs { get; set; } = new();
         public SdrClientDeviceConfig Sdr { get; set; } = new();
+        public AdsbClientDeviceConfig Adsb { get; set; } = new();
+        public bool WrapToV2ExtensionEnabled { get; set; } = true;
     }
 
     [Export(typeof(IMavlinkDevicesService))]
@@ -55,7 +54,8 @@ namespace Asv.Drones.Gui.Core
             
             #region InitUriHost mavlink router
 
-            _mavlinkRouter = MavlinkRouter.CreateDefault().DisposeItWith(Disposable);
+            _mavlinkRouter = new MavlinkRouter(MavlinkV2Connection.RegisterDefaultDialects,publishScheduler: RxApp.MainThreadScheduler).DisposeItWith(Disposable);
+            _mavlinkRouter.WrapToV2ExtensionEnabled = InternalGetConfig(_ => _.WrapToV2ExtensionEnabled);
             foreach (var port in InternalGetConfig(_ => _.Ports))
             {
                 _mavlinkRouter.AddPort(port);
@@ -116,7 +116,7 @@ namespace Asv.Drones.Gui.Core
             #region Mavlink devices
 
             var deviceTimeout = InternalGetConfig(_ => TimeSpan.FromMilliseconds(_.DeviceHeartbeatTimeoutMs));
-            _deviceBrowser = new MavlinkDeviceBrowser(_mavlinkRouter, deviceTimeout).DisposeItWith(Disposable);
+            _deviceBrowser = new MavlinkDeviceBrowser(_mavlinkRouter, deviceTimeout, RxApp.MainThreadScheduler).DisposeItWith(Disposable);
             _deviceBrowser.DeviceTimeout
                 .Throttle(TimeSpan.FromSeconds(1))
                 .DistinctUntilChanged()
@@ -147,6 +147,11 @@ namespace Asv.Drones.Gui.Core
                 .Transform(CreateSdrDevice)
                 .DisposeMany()
                 .RefCount();
+            AdsbDevices = Devices
+                .Filter(_ => _.Type == MavType.MavTypeAdsb)
+                .Transform(CreateAdsbDevice)
+                .DisposeMany()
+                .RefCount();
 
             #endregion
 
@@ -159,6 +164,7 @@ namespace Asv.Drones.Gui.Core
                 .AsObservableCache();
             _mavlinkRouter
                 .Filter<StatustextPacket>()
+                .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(SaveToLog)
                 .DisposeItWith(Disposable);
 
@@ -185,7 +191,18 @@ namespace Asv.Drones.Gui.Core
                 TargetComponentId = device.ComponentId,
                 SystemId = _systemId.Value,
                 ComponentId = _componentId.Value,
-            }, _sequenceCalculator, RxApp.MainThreadScheduler, InternalGetConfig(_ => _.Gbs));
+            }, _sequenceCalculator, InternalGetConfig(_ => _.Gbs));
+        }
+
+        private IAdsbClientDevice CreateAdsbDevice(IMavlinkDevice device)
+        {
+            return new AdsbClientDevice(Router, new MavlinkClientIdentity
+            {
+                TargetSystemId = device.SystemId,
+                TargetComponentId = device.ComponentId,
+                SystemId = _systemId.Value,
+                ComponentId = _componentId.Value,
+            }, _sequenceCalculator, InternalGetConfig(_ => _.Adsb));
         }
 
         #region Logs
@@ -222,7 +239,7 @@ namespace Asv.Drones.Gui.Core
         private string TryGetName(StatustextPacket pkt)
         {
             var name = _logNames.Lookup(pkt.FullId);
-            return name.HasValue ? name.Value : $"[{pkt.SystemId},{pkt.ComponenId}]";
+            return name.HasValue ? name.Value : $"[{pkt.SystemId},{pkt.ComponentId}]";
         }
         
         #endregion
@@ -255,8 +272,16 @@ namespace Asv.Drones.Gui.Core
             using var a = Payloads.BindToObservableList(out var list).Subscribe();
             return list.Items.FirstOrDefault(_=>_.Heartbeat.FullId == id);
         }
+        
+        public IObservable<IChangeSet<IAdsbClientDevice, ushort>> AdsbDevices { get; }
 
-        private IVehicleClient CreateVehicle(IMavlinkDevice device)
+        public IAdsbClientDevice? GetAdsbVehicleByFullId(ushort id)
+        {
+            AdsbDevices.BindToObservableList(out var list).Subscribe();
+            return list.Items.FirstOrDefault(_ => _.FullId == id);
+        }
+
+        private IVehicleClient? CreateVehicle(IMavlinkDevice device)
         {
             if (device.Autopilot == MavAutopilot.MavAutopilotArdupilotmega)
             {
@@ -271,7 +296,7 @@ namespace Asv.Drones.Gui.Core
                             TargetComponentId = device.ComponentId,
                             SystemId = _systemId.Value,
                             ComponentId = _componentId.Value,
-                        },InternalGetConfig(_ => _.Vehicle), _sequenceCalculator,RxApp.MainThreadScheduler);
+                        },InternalGetConfig(_ => _.Vehicle), _sequenceCalculator);
                     case MavType.MavTypeFixedWing:
                         return new ArduPlaneClient(Router,new MavlinkClientIdentity
                         {
@@ -279,7 +304,7 @@ namespace Asv.Drones.Gui.Core
                             TargetComponentId = device.ComponentId,
                             SystemId = _systemId.Value,
                             ComponentId = _componentId.Value,
-                        },InternalGetConfig(_ => _.Vehicle), _sequenceCalculator,RxApp.MainThreadScheduler);
+                        },InternalGetConfig(_ => _.Vehicle), _sequenceCalculator,null);
                     default:
                         return null;
                 }

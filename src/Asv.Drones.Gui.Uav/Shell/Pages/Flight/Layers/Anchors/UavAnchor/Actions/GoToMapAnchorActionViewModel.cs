@@ -5,7 +5,6 @@ using Asv.Drones.Gui.Core;
 using Asv.Drones.Uav;
 using Asv.Mavlink;
 using Material.Icons;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav
 {
@@ -19,7 +18,7 @@ namespace Asv.Drones.Gui.Uav
             // TODO: Localize
             Title = "GoTo";
             Icon = MaterialIconKind.Target;
-            Vehicle.Position.IsArmed.ObserveOn(RxApp.MainThreadScheduler).Select(_ => _).Subscribe(CanExecute).DisposeWith(Disposable);
+            Vehicle.Position.IsArmed.Select(_ => _).Subscribe(CanExecute).DisposeWith(Disposable);
         }
 
         protected override async Task ExecuteImpl(CancellationToken cancel)

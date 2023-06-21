@@ -10,9 +10,7 @@ using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using DynamicData;
-using DynamicData.Binding;
 using JetBrains.Annotations;
-using NLog.Filters;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -32,33 +30,25 @@ public class ParamPageViewModel:ViewModelBase, IShellPage
 
     #region Uri
 
-    public const string UriString = ShellPage.UriString + ".parameters";
-    public static Uri GenerateUri(ushort id, DeviceClass @class) => new(UriString + $"?id={id}&class={@class:G}");
-    public static bool ParseUri(Uri uri, out ushort id, out DeviceClass deviceClass)
-    {
-        var query =  HttpUtility.ParseQueryString(uri.Query);
-        if (ushort.TryParse(query["id"], out id)) return Enum.TryParse(query["class"], true, out deviceClass);
-        deviceClass = DeviceClass.Unknown;
-        return false;
-    }
+    public const string UriString = "asv:shell.page.params";
+    public static Uri GenerateUri(ushort id, DeviceClass @class) => new($"{UriString}?id={id}&class={@class:G}");
 
     #endregion
 
-    public ParamPageViewModel():base(new("asv:designTime"))
+    public ParamPageViewModel():base(UriString)
     {
         DeviceName = "Params";
     }
     
     [ImportingConstructor]
-    public ParamPageViewModel([NotNull] IMavlinkDevicesService svc, [NotNull] ILogService log, [NotNull] IConfiguration cfg) : base(new Uri(UriString))
+    public ParamPageViewModel([NotNull] IMavlinkDevicesService svc, [NotNull] ILogService log, [NotNull] IConfiguration cfg) : base(UriString)
     {
         _svc = svc ?? throw new ArgumentNullException(nameof(svc));
         _log = log ?? throw new ArgumentNullException(nameof(log));
         _cfg = cfg ?? throw new ArgumentNullException(nameof(cfg));
         FilterPipe.DisposeItWith(Disposable);
         this.WhenAnyValue(_=>_.SearchText)
-            .Throttle(TimeSpan.FromMilliseconds(100))
-            .ObserveOn(RxApp.MainThreadScheduler)
+            .Throttle(TimeSpan.FromMilliseconds(100), RxApp.MainThreadScheduler)
             .Subscribe(_ =>FilterPipe.OnNext(item=>item.Filter(SearchText,ShowStaredOnly)))
             .DisposeItWith(Disposable);
          _viewedParamsList = new SourceList<ParamItemViewModel>().DisposeItWith(Disposable);
@@ -68,11 +58,12 @@ public class ParamPageViewModel:ViewModelBase, IShellPage
              .DisposeItWith(Disposable);
     }
 
-    
-
     public void SetArgs(Uri link)
     {
-        if (!ParseUri(link, out var id, out var deviceClass)) return;
+        var query =  HttpUtility.ParseQueryString(link.Query);
+        if (ushort.TryParse(query["id"], out var id) == false) return;
+        if (Enum.TryParse<DeviceClass>(query["class"], true, out var deviceClass) == false) return;
+        
         switch (deviceClass)
         {
             case DeviceClass.Unknown:

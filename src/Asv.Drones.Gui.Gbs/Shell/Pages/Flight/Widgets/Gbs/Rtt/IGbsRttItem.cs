@@ -6,4 +6,5 @@ public interface IGbsRttItem:IViewModel
 {
     int Order { get; }
     bool IsVisible { get; set; }
+    bool IsMinimizedVisible { get; set; }
 }

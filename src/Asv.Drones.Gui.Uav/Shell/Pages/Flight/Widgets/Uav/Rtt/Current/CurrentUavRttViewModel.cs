@@ -1,6 +1,4 @@
-using System.ComponentModel.Composition;
 using System.Reactive.Linq;
-using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Controls.Mixins;
@@ -21,8 +19,7 @@ public class CurrentUavRttViewModel : UavRttItem
         Order = 4;
         Vehicle.Rtt.BatteryCurrent
             .DistinctUntilChanged()
-            .Sample(TimeSpan.FromMilliseconds(500))
-            .ObserveOn(RxApp.MainThreadScheduler)
+            .Sample(TimeSpan.FromMilliseconds(500), RxApp.MainThreadScheduler)
             .Subscribe(_ => Current = $"{localization.Current.ConvertToStringWithUnits(_)}")
             .DisposeWith(Disposable);
     }

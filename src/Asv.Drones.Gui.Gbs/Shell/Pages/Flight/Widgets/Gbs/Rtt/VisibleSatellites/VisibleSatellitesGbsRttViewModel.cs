@@ -18,6 +18,8 @@ public class VisibleSatellitesGbsRttViewModel : GbsRttItem
         BaseStation.Gbs.AllSatellites
             .Subscribe(_ => VisibleSatellites = _.ToString())
             .DisposeItWith(Disposable);
+
+        IsMinimizedVisible = true;
     }
     
     [Reactive]

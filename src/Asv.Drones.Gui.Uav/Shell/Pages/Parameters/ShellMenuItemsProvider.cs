@@ -14,7 +14,7 @@ public class ParametersShellPageProvider : ViewModelProviderBase<IShellMenuItem>
     [ImportingConstructor]
     public ParametersShellPageProvider(IMavlinkDevicesService svc)
     {
-        svc.Vehicles.Transform(_ => (IShellMenuItem)new ShellMenuItem(new($"{ShellMenuItem.UriString}.parameters.{_.FullId}"))
+        svc.Vehicles.Transform(_ => (IShellMenuItem)new ShellMenuItem($"asv:shell.menu.params.{_.FullId}")
         {
             Name = string.Format(RS.ParametersEditorPageViewModel_Title, _.FullId),
             NavigateTo = ParamPageViewModel.GenerateUri(_.FullId, _.Class),

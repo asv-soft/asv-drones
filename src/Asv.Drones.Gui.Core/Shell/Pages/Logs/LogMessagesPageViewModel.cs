@@ -4,7 +4,6 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Asv.Cfg;
 using Asv.Common;
-using Asv.Store;
 using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -15,7 +14,7 @@ namespace Asv.Drones.Gui.Core
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class LogMessagesPageViewModel : ViewModelBase, IShellPage
     {
-        public const string UriString = ShellPage.UriString + ".logs";
+        public const string UriString = "asv:shell.page.logs";
         public static readonly Uri Uri = new Uri(UriString);
 
         public List<int> PageLengths { get; }
@@ -53,7 +52,7 @@ namespace Asv.Drones.Gui.Core
                 
             this.WhenAnyValue(_ => _.SearchText)
                 .ObserveOn(RxApp.MainThreadScheduler)
-                .Throttle(TimeSpan.FromMilliseconds(200))
+                .Throttle(TimeSpan.FromMilliseconds(200),RxApp.MainThreadScheduler)
                 .Skip(1)
                 .Subscribe(_ => Refresh.Execute())
                 .DisposeItWith(Disposable);
@@ -72,27 +71,30 @@ namespace Asv.Drones.Gui.Core
         private void RefreshItemsImpl()
         {
             if (Skip < 0) Skip = 0;
-            var query = new TextMessageQuery { Take = Take, Skip = Skip, Search = SearchText ?? "" };
-            Messages = _logService.LogStore.Find(query).Select(_ => new RemoteLogMessageProxy(_)).ToList();
+            var query = new LogQuery { Take = Take, Skip = Skip, Search = SearchText ?? string.Empty };
+            
+            Messages = _logService.Find(query).Select(_ => new RemoteLogMessageProxy(_)).ToList();
 
-            Filtered = _logService.LogStore.Count(query);
+            Filtered = _logService.Count(query);
             
             if (Messages?.Count == 0 && Filtered != 0)
             {
                 Skip = 0;
             }
             
-            Total = _logService.LogStore.Count();
+            Total = _logService.Count();
             To = Skip + Take;
             CanNext.OnNext(To < Filtered);
             CanPrev.OnNext(Skip > 0);
             _configuration.Set("TakePageLength", Take);
+           
         }
         
         private void ClearAllImpl()
         {
             _logService.Warning(RS.LogMessagesPageViewModel_LogName,RS.LogMessagesPageViewModel_ClearAllMessage);
-            _logService.LogStore.ClearAll();
+            _logService.ClearAll();
+            RefreshItemsImpl();
         }
         
         public bool IsRefreshing => _isRefreshing.Value;
@@ -140,9 +142,9 @@ namespace Asv.Drones.Gui.Core
 
     public class RemoteLogMessageProxy
     {
-        public RemoteLogMessageProxy(TextMessage textMessage)
+        public RemoteLogMessageProxy(LogMessage textMessage)
         {
-            switch ((LogMessageType)textMessage.IntTag)
+            switch (textMessage.Type)
             {
                 case LogMessageType.Info:
                     IsInfo = true;
@@ -165,9 +167,9 @@ namespace Asv.Drones.Gui.Core
                     break;
             }
 
-            DateTime = textMessage.Date;
-            Sender = textMessage.StrTag;
-            Message = textMessage.Text;
+            DateTime = textMessage.DateTime;
+            Sender = textMessage.Source;
+            Message = textMessage.Message;
         }
         
         public bool IsError { get; }

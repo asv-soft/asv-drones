@@ -1,6 +1,5 @@
 using System.Collections.ObjectModel;
 using System.Reactive;
-using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using Asv.Common;
@@ -8,7 +7,6 @@ using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Controls;
 using DynamicData;
-using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using MavlinkHelper = Asv.Drones.Gui.Core.MavlinkHelper;
@@ -78,7 +76,6 @@ namespace Asv.Drones.Gui.Uav
             
             vehicle.Missions.MissionItems
                 .Transform(_=>new PlaningMissionItemViewModel(Id,_,this))
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(out _items)
                 .DisposeMany()
                 .Subscribe()

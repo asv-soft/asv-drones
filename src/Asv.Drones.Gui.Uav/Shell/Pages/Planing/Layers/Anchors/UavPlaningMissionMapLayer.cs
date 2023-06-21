@@ -1,11 +1,8 @@
 ﻿using System.Collections.ObjectModel;
-using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using DynamicData;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav
 {
@@ -17,7 +14,6 @@ namespace Asv.Drones.Gui.Uav
         {
             vehicle.Missions.MissionItems
                 .Transform(_=>new UavPlaningMissionAnchor(_,vehicle))
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .DisposeMany()
                 .Bind(out _items)
                 .Subscribe()

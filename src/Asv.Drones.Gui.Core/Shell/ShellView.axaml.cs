@@ -1,7 +1,4 @@
 using System.ComponentModel.Composition;
-using Asv.Avalonia.Map;
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.ReactiveUI;
 using FluentAvalonia.UI.Controls;

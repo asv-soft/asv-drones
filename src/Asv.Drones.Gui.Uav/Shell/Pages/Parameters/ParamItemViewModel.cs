@@ -1,6 +1,4 @@
 using System.Reactive;
-using System.Reactive.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
@@ -79,9 +77,7 @@ public class ParamItemViewModel:ViewModelBase
 
         });
     }
-
     
-
     private void OnWriteError(Exception ex)
     {
         _log.Error("Params",$"Write {Name} error",ex);
@@ -97,8 +93,8 @@ public class ParamItemViewModel:ViewModelBase
     
     public string DisplayName { get; set; }
     public string Units { get; set; }
-    public ReactiveCommand<Unit,Unit> Update { get;set; }
-    public ReactiveCommand<Unit,Unit> Write { get; }
+    public ReactiveCommand<Unit, Unit> Update { get; set; }
+    public ReactiveCommand<Unit, Unit> Write { get; }
     public ICommand PinItem { get; }
     public string ValueDescription { get; }
     public string Description { get; }
@@ -108,13 +104,12 @@ public class ParamItemViewModel:ViewModelBase
     [Reactive]
     public bool IsSynced { get; set; }
     [Reactive]
-    public decimal Value { get; set; }
+    public MavParamValue Value { get; set; }
     [Reactive]
     public bool Starred { get; set; }
     [Reactive]
     public MaterialIconKind StarKind { get; set; }
     
-
     public bool Filter(string searchText, bool starredOnly)
     {
         if (starredOnly)

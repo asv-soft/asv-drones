@@ -85,6 +85,7 @@
                            FooterMenuItems="{Binding FooterMenuItems}"
                            MenuItemTemplateSelector="{x:Static core:MenuItemTemplateSelector.Instance}">
             <Panel>
+                <!-- <Image Margin="100" Source="../Assets/program-logo.png"/> -->
                 <ContentControl Content="{CompiledBinding CurrentPage}"/>
                 <ItemsControl HorizontalAlignment="Center" MinWidth="600" Items="{Binding Messages}" Margin="8">
                     <ItemsControl.ItemsPanel>
@@ -94,7 +95,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="core:LogMessageViewModel">
-                            <ui:InfoBar Tapped="InputElement_OnTapped" Title="{Binding Title}" IsOpen="{Binding IsOpen}" Severity="{Binding Severity}" Message="{Binding Message}" />
+                            <ui:InfoBar ToolTip.Tip="{Binding Description}" Tapped="InputElement_OnTapped" Title="{Binding Title}" IsOpen="{Binding IsOpen}" Severity="{Binding Severity}" Message="{Binding Message}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

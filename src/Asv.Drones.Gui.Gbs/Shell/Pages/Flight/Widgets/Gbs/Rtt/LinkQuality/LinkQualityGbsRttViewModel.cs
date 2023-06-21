@@ -12,7 +12,7 @@ public class LinkQualityGbsRttViewModel : GbsRttItem
         LinkQualityString = "30%";
     }
 
-    public LinkQualityGbsRttViewModel(IGbsClientDevice baseStation) : base(baseStation, GenerateUri(baseStation,"linkquality"))
+    public LinkQualityGbsRttViewModel(IGbsClientDevice baseStation) : base(baseStation, GenerateUri(baseStation,"gbslinkquality"))
     {
         Order = 1;
         
@@ -23,6 +23,8 @@ public class LinkQualityGbsRttViewModel : GbsRttItem
         BaseStation.Heartbeat.LinkQuality
             .Subscribe(_ => LinkQualityString = _.ToString("P0"))
             .DisposeItWith(Disposable);
+
+        IsMinimizedVisible = true;
     }
     
     [Reactive]

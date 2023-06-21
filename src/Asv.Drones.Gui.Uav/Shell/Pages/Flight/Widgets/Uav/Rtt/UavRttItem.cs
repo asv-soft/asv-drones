@@ -26,4 +26,6 @@ public abstract class UavRttItem : ViewModelBase, IUavRttItem
     public int Order { get; set; }
     [Reactive]
     public bool IsVisible { get; set; }
+    [Reactive] 
+    public bool IsMinimizedVisible { get; set; } = false;
 }

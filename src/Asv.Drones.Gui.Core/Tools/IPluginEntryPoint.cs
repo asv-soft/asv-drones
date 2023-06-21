@@ -24,22 +24,23 @@ namespace Asv.Drones.Gui.Core
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class PluginEntryPointAttribute : ExportAttribute, IPluginMetadata
     {
-        public PluginEntryPointAttribute(string name, int loadingOrder = 0)
+        public PluginEntryPointAttribute(string name, params string[] dependency)
             : base(typeof(IPluginEntryPoint))
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(name));
             Name = name;
-            LoadingOrder = loadingOrder;
+            Dependency = dependency;
         }
 
+        public string[] Dependency { get; }
         public string Name { get; }
         public int LoadingOrder { get; }
     }
 
     public interface IPluginMetadata
     {
-        int LoadingOrder { get; }
+        string[] Dependency { get; }
         string Name { get; }
     }
 }

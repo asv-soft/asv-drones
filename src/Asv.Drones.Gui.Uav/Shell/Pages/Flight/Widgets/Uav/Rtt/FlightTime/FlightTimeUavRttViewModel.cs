@@ -19,8 +19,7 @@ public class FlightTimeUavRttViewModel : UavRttItem
         Order = 2;
         Vehicle.Position.ArmedTime
             .DistinctUntilChanged()
-            .Sample(TimeSpan.FromMilliseconds(500))
-            .ObserveOn(RxApp.MainThreadScheduler)
+            .Sample(TimeSpan.FromMilliseconds(500), RxApp.MainThreadScheduler)
             .Subscribe(_ => FlightTime = $"{localization.RelativeTime.ConvertToString(_)} {localization.RelativeTime.GetUnit(_)}")
             .DisposeWith(Disposable);
     }

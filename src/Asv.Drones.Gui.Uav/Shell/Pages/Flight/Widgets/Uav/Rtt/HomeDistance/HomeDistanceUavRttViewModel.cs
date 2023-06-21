@@ -21,8 +21,7 @@ public class HomeDistanceUavRttViewModel : UavRttItem
         
         Vehicle.Position.HomeDistance
             .DistinctUntilChanged()
-            .Sample(TimeSpan.FromMilliseconds(500))
-            .ObserveOn(RxApp.MainThreadScheduler)
+            .Sample(TimeSpan.FromMilliseconds(500), RxApp.MainThreadScheduler)
             .Subscribe(_ => HomeDistance = localization.Distance.FromSiToStringWithUnits(_))
             .DisposeWith(Disposable);
         

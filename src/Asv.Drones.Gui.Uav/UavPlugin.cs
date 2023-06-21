@@ -6,12 +6,10 @@ namespace Asv.Drones.Gui.Uav
     /// <summary>
     /// This module only imports all UAV services to be created by IoC container
     /// </summary>
-    [PluginEntryPoint("Core", LoadingOrder)]
+    [PluginEntryPoint("Uav", CoreServicePlugin.Name)]
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class UavPlugin:IPluginEntryPoint
     {
-        public const int LoadingOrder = CoreServicePlugin.LoadingOrder + byte.MaxValue; // load after services loaded
-
         [ImportingConstructor]
         public UavPlugin(IMavlinkDevicesService mavlinkDevices)
         {

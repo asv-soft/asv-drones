@@ -24,6 +24,8 @@ namespace Asv.Drones.Gui.Core
         private readonly ReadOnlyObservableCollection<IMapWidget> _rightWidgets;
         private readonly ReadOnlyObservableCollection<IMapWidget> _bottomWidgets;
         
+        private IDisposable _disposableMapUpdate;
+        
         /// <summary>
         /// This constructor is used for design time
         /// </summary>
@@ -36,7 +38,7 @@ namespace Asv.Drones.Gui.Core
             IEnumerable<IViewModelProvider<IMapAnchor>> markers,
             IEnumerable<IViewModelProvider<IMapWidget>> widgets):base(id)
         {
-            
+
             #region Map provider
 
             map.CurrentMapProvider.Subscribe(_ => MapProvider = _).DisposeItWith(Disposable);
@@ -100,6 +102,24 @@ namespace Asv.Drones.Gui.Core
             ZoomOut = ReactiveCommand.Create(() => ChangeZoomValue(MapZoomValue.Decrease)).DisposeItWith(Disposable);
 
             #endregion
+
+            this.WhenValueChanged(_ => _.IsRulerEnabled)
+                .Subscribe(SetUpRuler)
+                .DisposeItWith(Disposable);
+
+            this.WhenValueChanged(_ => _.ItemToFollow, false)
+                .Subscribe(SetUpFollow)
+                .DisposeItWith(Disposable);
+
+            Disposable.AddAction(() => _disposableMapUpdate?.Dispose());
+        }
+
+        private void SetUpFollow(IMapAnchor anchor)
+        {
+            _disposableMapUpdate?.Dispose();
+
+            _disposableMapUpdate = anchor?.WhenAnyValue(_ => _.Location)
+                .Subscribe(_ => Center = _);
         }
 
         private void ChangeZoomValue(MapZoomValue value)
@@ -115,6 +135,32 @@ namespace Asv.Drones.Gui.Core
             }
         }
 
+        private async void SetUpRuler(bool isVisible)
+        {
+            var rulerPolygon = _markers.Where(x => x.GetType() == typeof(RulerPolygon)).ToArray();
+
+            if (rulerPolygon.Length == 0)
+            {
+                IsRulerVisible = false;
+                return;
+            }
+
+            IsRulerVisible = true;
+            
+            var polygon = (RulerPolygon)rulerPolygon[0];
+            
+            if (isVisible)
+            {
+                var start = await ShowTargetDialog(RS.MapPageViewModel_RulerStartPoint_Description, CancellationToken.None);
+                var stop = await ShowTargetDialog(RS.MapPageViewModel_RulerStopPoint_Description, CancellationToken.None);
+
+                polygon.Ruler.Value.Start.OnNext(start);
+                polygon.Ruler.Value.Stop.OnNext(stop);
+            }
+            
+            polygon.Ruler.Value.IsVisible.OnNext(isVisible);
+        }
+
         public ReadOnlyObservableCollection<IMapAnchor> Markers => _markers;
         public ReadOnlyObservableCollection<IMapWidget> LeftWidgets => _leftWidgets;
         public ReadOnlyObservableCollection<IMapWidget> RightWidgets => _rightWidgets;
@@ -125,13 +171,22 @@ namespace Asv.Drones.Gui.Core
         [Reactive] 
         public GMapProvider MapProvider { get; set; } = EmptyProvider.Instance;
 
-        [Reactive] public int MaxZoom { get; set; } = 20;
-        [Reactive] public int MinZoom { get; set; } = 1;
-        [Reactive] public double Zoom { get; set; } = 10;
+        [Reactive] 
+        public int MaxZoom { get; set; } = 20;
+        [Reactive] 
+        public int MinZoom { get; set; } = 1;
+        [Reactive] 
+        public double Zoom { get; set; } = 10;
         [Reactive]
         public GeoPoint Center { get; set; }
         [Reactive]
         public IMapAnchor SelectedItem { get; set; }
+        [Reactive]
+        public IMapAnchor ItemToFollow { get; set; }
+        [Reactive]
+        public bool IsRulerEnabled { get; set; }
+        [Reactive]
+        public bool IsRulerVisible { get; set; }
         public ICommand ZoomIn { get; }
         public ICommand ZoomOut { get; }
 

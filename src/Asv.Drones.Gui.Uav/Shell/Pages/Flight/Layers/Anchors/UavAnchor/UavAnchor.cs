@@ -2,12 +2,10 @@
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Avalonia.Map;
-using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Media;
 using DynamicData;
-using Material.Icons;
 using MavlinkHelper = Asv.Drones.Gui.Core.MavlinkHelper;
 
 namespace Asv.Drones.Gui.Uav
@@ -39,8 +37,9 @@ namespace Asv.Drones.Gui.Uav
             Title = vehicle.Name.Value;
             vehicle.Name.Subscribe(_ => Title = _).DisposeWith(Disposable);
             vehicle.Position.Current.Subscribe(_ => UpdateDescription()).DisposeWith(Disposable);
-            
         }
+        
+        
         
         private void UpdateDescription()
         {

@@ -1,10 +1,8 @@
 using System.Collections.Specialized;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Runtime.CompilerServices;
 using Asv.Common;
 using Avalonia;
-using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Mixins;
@@ -34,6 +32,7 @@ namespace Asv.Avalonia.Map
             this.WhenActivated(disp =>
             {
                 DisposableMixins.DisposeWith(this.WhenAnyValue(_ => _.IsSelected).Subscribe(UpdateSelectableZindex), disp);
+                DisposableMixins.DisposeWith(this.WhenAnyValue(_ => _.IsSelected).Subscribe(_ => this.IsHitTestVisible = !_), disp);
                 DisposableMixins.DisposeWith(this.WhenAnyValue(_ => _.Bounds).Subscribe(_ => UpdateLocalPosition()), disp);
 
                 Observable.FromEventPattern<EventHandler<PointerPressedEventArgs>, PointerPressedEventArgs>(
@@ -153,7 +152,9 @@ namespace Asv.Avalonia.Map
             if (pathPoints is INotifyCollectionChanged coll)
             {
                 _collectionSubscribe = Observable.FromEventPattern<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
-                    _ => coll.CollectionChanged += _, _ => coll.CollectionChanged -= _).ObserveOn(RxApp.MainThreadScheduler).Subscribe(_=>UpdateLocalPosition());
+                    _ => coll.CollectionChanged += _, _ => coll.CollectionChanged -= _)
+                    .ObserveOn(RxApp.MainThreadScheduler)
+                    .Subscribe(_=>UpdateLocalPosition());
             }
         }
 

@@ -243,4 +243,22 @@
   <data name="ParametersEditorParameterView_WriteButton" xml:space="preserve">
     <value>Write</value>
   </data>
+  <data name="AltitudeIndicator_Vibration_ToolTip" xml:space="preserve">
+    <value>Vibration and clipping of UAV</value>
+  </data>
+  <data name="AttitudeIndicator_Velocity_ToolTip" xml:space="preserve">
+    <value>Velocity</value>
+  </data>
+  <data name="AttitudeIndicator_Altitude_ToolTip" xml:space="preserve">
+    <value>Altitude</value>
+  </data>
+  <data name="AttitudeIndicator_Compass_ToolTip" xml:space="preserve">
+    <value>Compass</value>
+  </data>
+  <data name="FlightUavView_Minimize_ToolTip" xml:space="preserve">
+    <value>Minimize/Maximize UAV</value>
+  </data>
+  <data name="FlightUavView_FollowButton_ToolTip" xml:space="preserve">
+    <value>Follow/Unfollow UAV</value>
+  </data>
 </root>

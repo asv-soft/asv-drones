@@ -1,10 +1,8 @@
-﻿using System.Reactive;
-using System.Reactive.Linq;
+﻿using System.Reactive.Linq;
 using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Uav;
 using Asv.IO;
-using Asv.Mavlink;
 using Avalonia.Controls;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
@@ -61,7 +59,7 @@ namespace Asv.Drones.Gui.Core
             _localization = localization ?? throw new ArgumentNullException(nameof(localization));
             _id = id;
             _logService = logService;
-            Observable.Timer(TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(1)).ObserveOn(RxApp.MainThreadScheduler).Subscribe(Update).DisposeItWith(Disposable);
+            Observable.Timer(TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(1),RxApp.MainThreadScheduler).Subscribe(Update).DisposeItWith(Disposable);
             EnableDisableCommand = ReactiveCommand.Create(() => _svc.Router.SetEnabled(_id, IsPortEnabled)).DisposeItWith(Disposable);
             DeletePortCommand = ReactiveCommand.Create(() => _svc.Router.RemovePort(_id)).DisposeItWith(Disposable);
             EditPortCommand = ReactiveCommand.CreateFromTask(EditPortImpl).DisposeItWith(Disposable);

@@ -60,6 +60,42 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vibration and clipping of UAV.
+        /// </summary>
+        public static string AltitudeIndicator_Vibration_ToolTip {
+            get {
+                return ResourceManager.GetString("AltitudeIndicator_Vibration_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude.
+        /// </summary>
+        public static string AttitudeIndicator_Altitude_ToolTip {
+            get {
+                return ResourceManager.GetString("AttitudeIndicator_Altitude_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compass.
+        /// </summary>
+        public static string AttitudeIndicator_Compass_ToolTip {
+            get {
+                return ResourceManager.GetString("AttitudeIndicator_Compass_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velocity.
+        /// </summary>
+        public static string AttitudeIndicator_Velocity_ToolTip {
+            get {
+                return ResourceManager.GetString("AttitudeIndicator_Velocity_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Battery level.
         /// </summary>
         public static string BatteryUavRttView_ToolTip {
@@ -92,6 +128,24 @@ namespace Asv.Drones.Gui.Uav {
         public static string FlightTimeUavRttView_ToolTip {
             get {
                 return ResourceManager.GetString("FlightTimeUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Follow/Unfollow UAV.
+        /// </summary>
+        public static string FlightUavView_FollowButton_ToolTip {
+            get {
+                return ResourceManager.GetString("FlightUavView_FollowButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimize/Maximize UAV.
+        /// </summary>
+        public static string FlightUavView_Minimize_ToolTip {
+            get {
+                return ResourceManager.GetString("FlightUavView_Minimize_ToolTip", resourceCulture);
             }
         }
         

@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Windows.Input;
@@ -9,7 +8,6 @@ using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.AsvGbs;
 using Avalonia.Controls;
-using Avalonia.Styling;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
@@ -45,12 +43,14 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
             .SelectMany(_ => _.Create(baseStationDevice))
             .OrderBy(_=>_.Order)
             .AsObservableChangeSet()
-            .AutoRefresh(_=>_.IsVisible)
-            .Filter(_=>_.IsVisible)
+            .AutoRefresh(_ => _.IsVisible)
+            .Filter(_ => _.IsVisible)
             .Bind(out _rttItems)
             .DisposeMany()
             .Subscribe()
             .DisposeItWith(Disposable);
+
+        MinimizedRttItems = _rttItems.Where(_ => _.IsMinimizedVisible);
 
         BaseStation.Gbs.CustomMode.DistinctUntilChanged().Subscribe(SwitchMode).DisposeItWith(Disposable);
         
@@ -58,6 +58,10 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
         EnableFixedCommand = ReactiveCommand.CreateFromTask(EnableFixedMode, _canExecuteFixedCommand).DisposeItWith(Disposable);
         EnableIdleCommand = ReactiveCommand.CreateFromTask(EnableIdleMode, _canExecuteIdleCommand).DisposeItWith(Disposable);
         CancelCommand = ReactiveCommand.CreateFromTask(EnableIdleMode, _canExecuteCancelCommand).DisposeItWith(Disposable);
+        ChangeStateCommand = ReactiveCommand.Create(() =>
+        {
+            IsMinimized = !IsMinimized;
+        });
 
         BaseStation.Gbs.BeidouSatellites.Subscribe(_ => BeidouSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
         BaseStation.Gbs.GalSatellites.Subscribe(_ => GalSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
@@ -170,6 +174,12 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
         LocateBaseStationCommand = ReactiveCommand.Create(() =>
         {
             Map.Center = BaseStation.Gbs.Position.Value;
+            var selectedGbs = Map.Markers.Where(_=>_ is GbsAnchor).Cast<GbsAnchor>().FirstOrDefault(_=>_.Device.FullId == BaseStation.FullId);
+            if (selectedGbs != null)
+            {
+                selectedGbs.IsSelected = true;
+            }
+
         }).DisposeItWith(Disposable);
     }
 
@@ -178,13 +188,17 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
     public ICommand EnableFixedCommand { get; set; }
     public ICommand EnableIdleCommand { get; set; }
     public ICommand CancelCommand { get; set; }
+    public ICommand ChangeStateCommand { get; set; }
     
     public ReadOnlyObservableCollection<IGbsRttItem> RttItems => _rttItems;
-    
+    public IEnumerable<IGbsRttItem> MinimizedRttItems { get; set; }
+
     [Reactive]
     public bool IsProgressShown { get; set; }
     [Reactive]
     public bool IsDisableShown { get; set; }
+    [Reactive] 
+    public bool IsMinimized { get; set; } = false;
     
     [Reactive]
     public GridLength BeidouSats { get; set; }

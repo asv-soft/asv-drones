@@ -1,9 +1,7 @@
 using System.ComponentModel.Composition;
 using System.Reactive.Linq;
 using Asv.Common;
-using Asv.Drones.Core;
 using Avalonia.Controls;
-using LiteDB;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Core;

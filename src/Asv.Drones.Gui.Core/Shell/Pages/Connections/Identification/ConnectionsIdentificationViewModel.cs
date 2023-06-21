@@ -34,7 +34,9 @@ namespace Asv.Drones.Gui.Core
         [ImportingConstructor]
         public ConnectionsIdentificationViewModel(IMavlinkDevicesService svc):this()
         {
-            svc.NeedReloadToApplyConfig.Subscribe(_ => IsRebootRequired = _).DisposeItWith(Disposable);
+            svc.NeedReloadToApplyConfig
+                .Subscribe(_ => IsRebootRequired = _)
+                .DisposeItWith(Disposable);
             
             svc.SystemId
                 .Subscribe(_ => SystemId = _)
@@ -54,7 +56,9 @@ namespace Asv.Drones.Gui.Core
                 .Subscribe(svc.ComponentId)
                 .DisposeItWith(Disposable);
 
-            svc.HeartbeatRate.Subscribe(_ => SelectedRate = new RateItem(_)).DisposeItWith(Disposable);
+            svc.HeartbeatRate
+                .Subscribe(_ => SelectedRate = new RateItem(_))
+                .DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.SelectedRate)
                 .Skip(1)
                 .DistinctUntilChanged()

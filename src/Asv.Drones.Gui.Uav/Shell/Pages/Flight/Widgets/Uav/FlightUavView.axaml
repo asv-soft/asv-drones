@@ -5,7 +5,6 @@
              xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:uav1="clr-namespace:Asv.Drones.Gui.Uav.Uav"
-             xmlns:core="clr-namespace:Asv.Drones.Gui.Core;assembly=Asv.Drones.Gui.Core"
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
              x:CompileBindings="True"
              x:DataType="uav:FlightUavViewModel"
@@ -16,12 +15,23 @@
     </Design.DataContext>
     <Border Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8" CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True">
         <StackPanel Margin="10" Spacing="8">
-            <DockPanel DockPanel.Dock="Top">
+            <Grid ColumnDefinitions="Auto,*,Auto">
                 <Button ToolTip.Tip="{x:Static uav:RS.FlightUavView_MoveToButton_ToolTip}" DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Command="{Binding LocateVehicleCommand}">
                     <StackPanel Orientation="Horizontal">
                         <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="{Binding Icon}" Foreground="Red"  Width="25" Height="25" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center" DockPanel.Dock="Top" Text="{Binding Title}" />      
                     </StackPanel>
+                </Button>
+                
+                <ToggleButton Grid.Column="1" ToolTip.Tip="{x:Static uav:RS.FlightUavView_FollowButton_ToolTip}" Command="{Binding FollowUavCommand}" IsChecked="{CompiledBinding IsFollowed}" Padding="5" HorizontalAlignment="Center" BorderBrush="Transparent" BorderThickness="0" Background="Transparent">
+                    <avalonia:MaterialIcon Kind="ArrowAll" />
+                </ToggleButton>
+                
+                <Button Grid.Column="2" ToolTip.Tip="{x:Static uav:RS.FlightUavView_Minimize_ToolTip}" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Command="{Binding ChangeStateCommand}">
+                    <Grid>
+                        <avalonia:MaterialIcon Kind="ExpandLess" Width="25" Height="25" Margin="0,0,0,0" IsVisible="{CompiledBinding !IsMinimized}" />
+                        <avalonia:MaterialIcon Kind="ExpandMore" Width="25" Height="25" Margin="0,0,0,0" IsVisible="{CompiledBinding IsMinimized}" />
+                    </Grid>
                 </Button>
                 
                 <!--<StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Spacing="5">
@@ -30,10 +40,19 @@
                     </Button>
                 </StackPanel>-->
                   
-            </DockPanel>    
-            <uav1:AttitudeView DataContext="{Binding Attitude}"/>
-            <uav1:MissionStatusView DataContext="{Binding MissionStatus}"/>
-            <ItemsControl Items="{Binding RttItems}">
+            </Grid>
+            <StackPanel IsVisible="{CompiledBinding !IsMinimized}">
+                <uav1:AttitudeView DataContext="{Binding Attitude}" />
+                <uav1:MissionStatusView DataContext="{Binding MissionStatus}" />
+            </StackPanel>
+            <ItemsControl Items="{Binding RttItems}" IsVisible="{CompiledBinding !IsMinimized}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel ItemHeight="30" ItemWidth="110" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+            <ItemsControl Items="{Binding MinimizedRttItems}" IsVisible="{CompiledBinding IsMinimized}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel ItemHeight="30" ItemWidth="110" />

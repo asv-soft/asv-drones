@@ -3,8 +3,8 @@ using Avalonia.Controls;
 using ReactiveUI.Fody.Helpers;
 using System.ComponentModel.Composition;
 using System.Reactive.Linq;
-using System.Reactive.Subjects;
 using Asv.Common;
+using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav
 {
@@ -34,7 +34,7 @@ namespace Asv.Drones.Gui.Uav
         [ImportingConstructor]
         public ShellStatusPortsViewModel(IMavlinkDevicesService deviceSvc, ILocalizationService localization) : this()
         {
-            Observable.Timer(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)).Subscribe(_ =>
+            Observable.Timer(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1),RxApp.MainThreadScheduler).Subscribe(_ =>
             {
 
                 var totalRx = deviceSvc.Router.RxBytes;

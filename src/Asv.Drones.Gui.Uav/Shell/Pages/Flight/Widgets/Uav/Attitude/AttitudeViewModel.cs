@@ -3,8 +3,8 @@ using System.Reactive.Linq;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
+using Asv.Mavlink.V2.Common;
 using Asv.Mavlink.Vehicle;
-using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Uav
@@ -68,8 +68,44 @@ namespace Asv.Drones.Gui.Uav
             }).DisposeWith(Disposable);
             _vehicle.Position.ArmedTime
                 .DistinctUntilChanged()
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(_ => ArmedTime = _)
+                .DisposeWith(Disposable);
+            
+            vehicle.Connection
+                .Where(_=>_.SystemId == vehicle.Identity.TargetSystemId && _.MessageId == VibrationPacket.PacketMessageId)
+                .Cast<VibrationPacket>()
+                .Subscribe(_=> VibrationX = 1 - _.Payload.VibrationX)
+                .DisposeWith(Disposable);
+
+            vehicle.Connection
+                .Where(_=>_.SystemId == vehicle.Identity.TargetSystemId && _.MessageId == VibrationPacket.PacketMessageId)
+                .Cast<VibrationPacket>()
+                
+                .Subscribe(_=> VibrationY = 1 - _.Payload.VibrationY)
+                .DisposeWith(Disposable);
+            
+            vehicle.Connection
+                .Where(_=>_.SystemId == vehicle.Identity.TargetSystemId && _.MessageId == VibrationPacket.PacketMessageId)
+                .Cast<VibrationPacket>()
+                .Subscribe(_=> VibrationZ = 1 - _.Payload.VibrationZ)
+                .DisposeWith(Disposable);
+            
+            vehicle.Connection
+                .Where(_=>_.SystemId == vehicle.Identity.TargetSystemId && _.MessageId == VibrationPacket.PacketMessageId)
+                .Cast<VibrationPacket>()
+                .Subscribe(_=> Clipping0 = _.Payload.Clipping0)
+                .DisposeWith(Disposable);
+            
+            vehicle.Connection
+                .Where(_=>_.SystemId == vehicle.Identity.TargetSystemId && _.MessageId == VibrationPacket.PacketMessageId)
+                .Cast<VibrationPacket>()
+                .Subscribe(_=> Clipping1 = _.Payload.Clipping1)
+                .DisposeWith(Disposable);
+            
+            vehicle.Connection
+                .Where(_=>_.SystemId == vehicle.Identity.TargetSystemId && _.MessageId == VibrationPacket.PacketMessageId)
+                .Cast<VibrationPacket>()
+                .Subscribe(_=> Clipping2 = _.Payload.Clipping2)
                 .DisposeWith(Disposable);
         }
         
@@ -94,6 +130,24 @@ namespace Asv.Drones.Gui.Uav
             }
         }
         
+        [Reactive]
+        public float VibrationX { get; set; }
+        
+        [Reactive]
+        public float VibrationY { get; set; }
+
+        [Reactive]
+        public float VibrationZ { get; set; }
+
+        [Reactive]
+        public uint Clipping0 { get; set; }
+        
+        [Reactive]
+        public uint Clipping1 { get; set; }
+
+        [Reactive]
+        public uint Clipping2 { get; set; }
+
         [Reactive]
         public double Roll { get; set; }
 

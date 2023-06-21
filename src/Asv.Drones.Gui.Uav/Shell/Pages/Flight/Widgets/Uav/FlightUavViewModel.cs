@@ -1,10 +1,8 @@
 using System.Collections.ObjectModel;
-using System.Reactive.Linq;
 using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Drones.Gui.Uav.MissionStatus;
-using Asv.Drones.Gui.Uav.Uav;
 using Asv.Mavlink;
 using Avalonia.Controls;
 using DynamicData;
@@ -19,7 +17,7 @@ namespace Asv.Drones.Gui.Uav
     public class FlightUavViewModel:FlightVehicleWidgetBase
     {
         private readonly ReadOnlyObservableCollection<IUavRttItem> _rttItems;
-        
+
         public static Uri GenerateUri(IVehicleClient vehicle) => FlightVehicleWidgetBase.GenerateUri(vehicle,"uav");
         
         public FlightUavViewModel()
@@ -49,13 +47,19 @@ namespace Asv.Drones.Gui.Uav
                 .SelectMany(_ => _.Create(Vehicle))
                 .OrderBy(_=>_.Order)
                 .AsObservableChangeSet()
-                .AutoRefresh(_=>_.IsVisible)
-                .Filter(_=>_.IsVisible)
+                .AutoRefresh(_ => _.IsVisible)
+                .Filter(_ => _.IsVisible)
                 .Bind(out _rttItems)
                 .DisposeMany()
                 .Subscribe()
                 .DisposeItWith(Disposable);
-            
+
+            MinimizedRttItems = _rttItems.Where(_ => _.IsMinimizedVisible).ToList();
+
+            ChangeStateCommand = ReactiveCommand.Create(() =>
+            {
+                IsMinimized = !IsMinimized;
+            });
         }
 
         protected override void InternalAfterMapInit(IMap map)
@@ -65,6 +69,22 @@ namespace Asv.Drones.Gui.Uav
             LocateVehicleCommand = ReactiveCommand.Create(() =>
             {
                 Map.Center = Vehicle.Position.Current.Value;
+                var findUavVehicle = Map.Markers.Where(_ => _ is UavAnchor).Cast<UavAnchor>()
+                    .FirstOrDefault(_ => _.Vehicle.FullId == Vehicle.FullId);
+                if (findUavVehicle != null)
+                {
+                    Map.SelectedItem = findUavVehicle;
+                }
+            }).DisposeItWith(Disposable);
+
+            FollowUavCommand = ReactiveCommand.Create(() =>
+            {
+                var findUavVehicle = Map.Markers.Where(_ => _ is UavAnchor).Cast<UavAnchor>()
+                    .FirstOrDefault(_ => _.Vehicle.FullId == Vehicle.FullId);
+                if (findUavVehicle != null)
+                {
+                    Map.ItemToFollow = IsFollowed ? findUavVehicle : null;
+                }
             }).DisposeItWith(Disposable);
             
             this.WhenValueChanged(_ => _.MissionStatus.EnableAnchors, false)
@@ -88,10 +108,8 @@ namespace Asv.Drones.Gui.Uav
         {
             foreach (var anchor in Map.Markers)
             {
-                if (anchor is UavFlightMissionPathPolygon polygon)
-                {
+                if (anchor is UavFlightMissionPathPolygon polygon && polygon.Vehicle.FullId == Vehicle.FullId)
                     polygon.IsVisible = needTo;
-                }
             }
         }
         
@@ -99,14 +117,22 @@ namespace Asv.Drones.Gui.Uav
         {
             foreach (var anchor in Map.Markers)
             {
-                if (anchor is UavFlightMissionAnchor missionAnchor)
+                if (anchor is UavFlightMissionAnchor missionAnchor && missionAnchor.Vehicle.FullId == Vehicle.FullId)
                     missionAnchor.IsVisible = needTo;
             }
         }
         
         public ICommand LocateVehicleCommand { get; set; }
+        public ICommand ChangeStateCommand { get; set; }
+        public ICommand FollowUavCommand { get; set; }
         public AttitudeViewModel Attitude { get; }
         public MissionStatusViewModel MissionStatus { get; }
         public ReadOnlyObservableCollection<IUavRttItem> RttItems => _rttItems;
+        public IEnumerable<IUavRttItem> MinimizedRttItems { get; set; }
+
+        [Reactive] 
+        public bool IsMinimized { get; set; } = false;
+        [Reactive]
+        public bool IsFollowed { get; set; }
     }
 }

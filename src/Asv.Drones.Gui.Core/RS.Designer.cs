@@ -60,6 +60,69 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accuracy.
+        /// </summary>
+        public static string AddNewMapPointView_Accuracy_Name {
+            get {
+                return ResourceManager.GetString("AddNewMapPointView_Accuracy_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude.
+        /// </summary>
+        public static string AddNewMapPointView_Altitude_Name {
+            get {
+                return ResourceManager.GetString("AddNewMapPointView_Altitude_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude.
+        /// </summary>
+        public static string AddNewMapPointView_Latitude_Name {
+            get {
+                return ResourceManager.GetString("AddNewMapPointView_Latitude_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude.
+        /// </summary>
+        public static string AddNewMapPointView_Longitude_Name {
+            get {
+                return ResourceManager.GetString("AddNewMapPointView_Longitude_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string AddNewMapPointView_Point_Name {
+            get {
+                return ResourceManager.GetString("AddNewMapPointView_Point_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accuracy must be greater or equal {0}..
+        /// </summary>
+        public static string AddNewMapPointViewModel_Accuracy_ValidValue {
+            get {
+                return ResourceManager.GetString("AddNewMapPointViewModel_Accuracy_ValidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name can not be empty.
+        /// </summary>
+        public static string AddNewMapPointViewModel_Name_ValidValue {
+            get {
+                return ResourceManager.GetString("AddNewMapPointViewModel_Name_ValidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Feets.
         /// </summary>
         public static string Altitude_Feet_Title {
@@ -537,6 +600,15 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string LoggerView_Clear_Name {
+            get {
+                return ResourceManager.GetString("LoggerView_Clear_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string LoggerView_ErrorFilter_Name {
@@ -731,6 +803,24 @@ namespace Asv.Drones.Gui.Core {
         public static string LogMessageTypeHelper_GetDisplayName_Warning {
             get {
                 return ResourceManager.GetString("LogMessageTypeHelper_GetDisplayName_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select ruler starting point.
+        /// </summary>
+        public static string MapPageViewModel_RulerStartPoint_Description {
+            get {
+                return ResourceManager.GetString("MapPageViewModel_RulerStartPoint_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select ruler end point.
+        /// </summary>
+        public static string MapPageViewModel_RulerStopPoint_Description {
+            get {
+                return ResourceManager.GetString("MapPageViewModel_RulerStopPoint_Description", resourceCulture);
             }
         }
         
@@ -996,6 +1086,60 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Coma [ , ].
+        /// </summary>
+        public static string PacketViewerViewModel_SeparatorDialog_Coma {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_Coma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string PacketViewerViewModel_SeparatorDialog_DialogPrimaryButton {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_DialogPrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string PacketViewerViewModel_SeparatorDialog_DialogSecondaryButton {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_DialogSecondaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Semicolon [ ; ].
+        /// </summary>
+        public static string PacketViewerViewModel_SeparatorDialog_Semicolon {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_Semicolon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horizontal tabulation [ Tab ].
+        /// </summary>
+        public static string PacketViewerViewModel_SeparatorDialog_Tab {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_Tab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the separator.
+        /// </summary>
+        public static string PacketViewerViewModel_SeparatorDialog_Title {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mission planing.
         /// </summary>
         public static string PlaningShellMenuItem_Name {
@@ -1046,6 +1190,150 @@ namespace Asv.Drones.Gui.Core {
         public static string RelativeTime_SecondsUnit {
             get {
                 return ResourceManager.GetString("RelativeTime_SecondsUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accuracy.
+        /// </summary>
+        public static string RemoveMapPointView_Accuracy_Name {
+            get {
+                return ResourceManager.GetString("RemoveMapPointView_Accuracy_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude.
+        /// </summary>
+        public static string RemoveMapPointView_Altitude_Name {
+            get {
+                return ResourceManager.GetString("RemoveMapPointView_Altitude_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this map point?.
+        /// </summary>
+        public static string RemoveMapPointView_ConfirmationText {
+            get {
+                return ResourceManager.GetString("RemoveMapPointView_ConfirmationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude.
+        /// </summary>
+        public static string RemoveMapPointView_Latitude_Name {
+            get {
+                return ResourceManager.GetString("RemoveMapPointView_Latitude_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude.
+        /// </summary>
+        public static string RemoveMapPointView_Longitude_Name {
+            get {
+                return ResourceManager.GetString("RemoveMapPointView_Longitude_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string RemoveMapPointView_Point_Name {
+            get {
+                return ResourceManager.GetString("RemoveMapPointView_Point_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New.
+        /// </summary>
+        public static string SavedCoordsView_AddNewButton_Name {
+            get {
+                return ResourceManager.GetString("SavedCoordsView_AddNewButton_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to in this section you can view and save new map coordinates for GBS Fixed Mode.
+        /// </summary>
+        public static string SavedCoordsView_Description {
+            get {
+                return ResourceManager.GetString("SavedCoordsView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saved Coordinates.
+        /// </summary>
+        public static string SavedCoordsView_Header {
+            get {
+                return ResourceManager.GetString("SavedCoordsView_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string SavedCoordsView_RemoveButton_Name {
+            get {
+                return ResourceManager.GetString("SavedCoordsView_RemoveButton_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string SavedCoordsViewModel_AddNewItem_CloseButtonText {
+            get {
+                return ResourceManager.GetString("SavedCoordsViewModel_AddNewItem_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string SavedCoordsViewModel_AddNewItem_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("SavedCoordsViewModel_AddNewItem_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new map coordinate.
+        /// </summary>
+        public static string SavedCoordsViewModel_AddNewItem_Title {
+            get {
+                return ResourceManager.GetString("SavedCoordsViewModel_AddNewItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string SavedCoordsViewModel_RemoveItem_CloseButtonText {
+            get {
+                return ResourceManager.GetString("SavedCoordsViewModel_RemoveItem_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string SavedCoordsViewModel_RemoveItem_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("SavedCoordsViewModel_RemoveItem_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Map Point.
+        /// </summary>
+        public static string SavedCoordsViewModel_RemoveItem_Title {
+            get {
+                return ResourceManager.GetString("SavedCoordsViewModel_RemoveItem_Title", resourceCulture);
             }
         }
         

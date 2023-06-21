@@ -2,7 +2,6 @@
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Common;
-using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Collections;
 using Avalonia.Media;
@@ -30,6 +29,7 @@ namespace Asv.Drones.Gui.Uav
             cache.Add(new GeoPoint(0, 0, 0));
 
             vehicle.Position.Target.Select(_ => _.HasValue).Subscribe(_ => IsVisible = _).DisposeWith(Disposable);
+            // ReSharper disable once PossibleInvalidOperationException
             vehicle.Position.Target.Where(_ => _.HasValue).Subscribe(_ => cache.ReplaceAt(1,_.Value)).DisposeWith(Disposable);
             vehicle.Position.Current.Where(_=>vehicle.Position.Target.Value.HasValue).Subscribe(_=>cache.ReplaceAt(0, _)).DisposeWith(Disposable);
 
