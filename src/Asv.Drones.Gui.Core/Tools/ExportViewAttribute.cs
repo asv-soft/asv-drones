@@ -1,5 +1,4 @@
 using System.ComponentModel.Composition;
-using Avalonia.Controls;
 
 namespace Asv.Drones.Gui.Core
 {

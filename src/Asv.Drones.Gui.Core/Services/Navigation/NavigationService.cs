@@ -2,11 +2,8 @@
 using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
 using Asv.Cfg;
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using Avalonia.Platform.Storage.FileIO;
-using FluentAvalonia.UI.Controls;
 
 namespace Asv.Drones.Gui.Core
 {

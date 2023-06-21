@@ -4,7 +4,6 @@ using Asv.Drones.Gui.Core;
 using Asv.Drones.Uav;
 using Asv.Mavlink;
 using Material.Icons;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav
 {

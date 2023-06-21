@@ -56,12 +56,17 @@
 
   <ItemGroup>
     <EmbeddedResource Update="RS.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>RS.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="RS.ru.resx">
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="RS.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>RS.resx</DependentUpon>
-    </EmbeddedResource>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

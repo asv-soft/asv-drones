@@ -8,16 +8,12 @@ namespace Asv.Drones.Gui.Core;
 [PartCreationPolicy(CreationPolicy.NonShared)]
 public class LogMessagesShellMenuItem : ShellMenuItem
 {
-    
-    public const string UriString = ShellMenuItem.UriString + ".logs";
-    public static readonly Uri Uri = new(UriString);
-    
-    public LogMessagesShellMenuItem() : base(Uri)
+    public LogMessagesShellMenuItem() : base("asv:shell.menu.logs")
     {
         Name = RS.LogMessagesShellMenuItem_Name;
         NavigateTo = LogMessagesPageViewModel.Uri;
         Icon = MaterialIconDataProvider.GetData(MaterialIconKind.Journal);
-        Position = ShellMenuPosition.Top;
+        Position = ShellMenuPosition.Bottom;
         Type = ShellMenuItemType.PageNavigation;
         Order = 1;
     }

@@ -1,12 +1,23 @@
-﻿using Asv.Store;
+﻿using System.Reactive;
 
 namespace Asv.Drones.Gui.Core
 {
     public interface ILogService
     {
-        void SendMessage(LogMessage message);
+        IObservable<Unit> OnNeedReload { get; }
+        void SaveMessage(LogMessage message);
         IObservable<LogMessage> OnMessage { get; }
-        ITextStore LogStore { get; }
+        void ClearAll();
+        int Count();
+        IReadOnlyList<LogMessage> Find(LogQuery query);
+        int Count(LogQuery query);
+    }
+
+    public class LogQuery
+    {
+        public int Take { get; set; }
+        public int Skip { get; set; }
+        public string Search { get; set; }
     }
 
     public static class LogServiceHelper
@@ -14,19 +25,19 @@ namespace Asv.Drones.Gui.Core
         public static void Error(this ILogService src, string sender, string message,
             Exception ex = default)
         {
-            src.SendMessage(new LogMessage(DateTime.Now, LogMessageType.Error, sender, message, ex?.Message));
+            src.SaveMessage(new LogMessage(DateTime.Now, LogMessageType.Error, sender, message, ex?.Message));
         }
         public static void Info(this ILogService src, string sender, string message)
         {
-            src.SendMessage(new LogMessage(DateTime.Now, LogMessageType.Info, sender, message, default));
+            src.SaveMessage(new LogMessage(DateTime.Now, LogMessageType.Info, sender, message, default));
         }
         public static void Warning(this ILogService src, string sender, string message)
         {
-            src.SendMessage(new LogMessage(DateTime.Now, LogMessageType.Warning, sender, message, default));
+            src.SaveMessage(new LogMessage(DateTime.Now, LogMessageType.Warning, sender, message, default));
         }
         public static void Trace(this ILogService src, string sender, string message)
         {
-            src.SendMessage(new LogMessage(DateTime.Now, LogMessageType.Trace, sender, message, default));
+            src.SaveMessage(new LogMessage(DateTime.Now, LogMessageType.Trace, sender, message, default));
         }
     }
 
@@ -50,7 +61,7 @@ namespace Asv.Drones.Gui.Core
         }
         public DateTime DateTime { get; }
         public LogMessageType Type { get; }
-        public string Source { get; }
+        public string Source { get; internal set; }
         public string Message { get; }
         public string Description { get; }
 

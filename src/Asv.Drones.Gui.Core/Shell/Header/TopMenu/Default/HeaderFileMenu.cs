@@ -3,9 +3,7 @@ using System.ComponentModel.Composition;
 using System.Reactive.Linq;
 using Asv.Common;
 using DynamicData;
-using DynamicData.Binding;
 using Material.Icons;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core
 {

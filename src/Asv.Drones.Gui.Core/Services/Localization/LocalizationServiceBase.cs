@@ -2,7 +2,6 @@
 using System.Globalization;
 using Asv.Cfg;
 using Asv.Common;
-using Avalonia.Controls.Mixins;
 
 namespace Asv.Drones.Gui.Core
 {

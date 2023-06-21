@@ -74,9 +74,9 @@ public class LoggerViewModel : FlightWidgetBase
         ClearLogs = ReactiveCommand.Create(() => { _logSource.Clear(); }).DisposeItWith(Disposable);
 
         //  #if DEBUG
-        //      log.SendMessage(new LogMessage(DateTime.Now, LogMessageType.Error, "debug", "Test error", "This is a test log message"));
-        //      log.SendMessage(new LogMessage(DateTime.Now, LogMessageType.Warning, "debug", "Test warning", "This is a test log message"));
-        //      log.SendMessage(new LogMessage(DateTime.Now, LogMessageType.Trace, "debug", "Test trace", "This is a test log message"));
+        //      log.SaveMessage(new LogMessage(DateTime.Now, LogMessageType.Error, "debug", "Test error", "This is a test log message"));
+        //      log.SaveMessage(new LogMessage(DateTime.Now, LogMessageType.Warning, "debug", "Test warning", "This is a test log message"));
+        //      log.SaveMessage(new LogMessage(DateTime.Now, LogMessageType.Trace, "debug", "Test trace", "This is a test log message"));
         //  #endif
     }
 

@@ -1,8 +1,6 @@
 ﻿using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Avalonia.Map;
-using Asv.Common;
-using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.Vehicle;
 using Avalonia.Media;

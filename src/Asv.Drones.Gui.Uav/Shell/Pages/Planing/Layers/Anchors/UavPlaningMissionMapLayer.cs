@@ -1,11 +1,8 @@
 ﻿using System.Collections.ObjectModel;
-using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using DynamicData;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui.Uav
 {

@@ -1,8 +1,6 @@
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Reactive;
-using System.Reactive.Linq;
 using System.Web;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
@@ -19,32 +17,19 @@ namespace Asv.Drones.Gui.Sdr;
 [PartCreationPolicy(CreationPolicy.NonShared)]
 public class SdrViewModel:ViewModelBase,IShellPage
 {
+    public const string UriString = "asv:shell.page.sdr";
+    public static Uri GenerateUri(ushort id) => new($"{UriString}?id={id}");
+   
     private readonly IMavlinkDevicesService _mavlink;
     private readonly ILogService _log;
     private readonly ILocalizationService _loc;
 
-    #region URI
     
-    public const string UriString = ShellPage.UriString + ".sdr";
-    public static readonly Uri Uri = new(UriString);
     private ISdrClientDevice? _payload;
     private ReadOnlyObservableCollection<SdrRecordViewModel> _records;
     private ObservableAsPropertyHelper<bool> _isExecuting;
-
-    public static Uri GenerateUri(ushort id) => new(UriString + $"?id={id}");
-    public static bool ParseUri(Uri uri, out ushort id)
-    {
-        var query =  HttpUtility.ParseQueryString(uri.Query);
-        if (ushort.TryParse(query["id"], out id))
-        {
-            return true;
-        }
-        return false;
-    }
     
-    #endregion
-    
-    public SdrViewModel() : base(Uri)
+    public SdrViewModel() : base(UriString)
     {
         if (Design.IsDesignMode)
         {
@@ -60,7 +45,7 @@ public class SdrViewModel:ViewModelBase,IShellPage
     }
 
     [ImportingConstructor]
-    public SdrViewModel(IMavlinkDevicesService mavlink, ILogService log, ILocalizationService loc) : base(Uri)
+    public SdrViewModel(IMavlinkDevicesService mavlink, ILogService log, ILocalizationService loc) : base(UriString)
     {
         _mavlink = mavlink ?? throw new ArgumentNullException(nameof(mavlink));
         _log = log ?? throw new ArgumentNullException(nameof(log));
@@ -69,7 +54,9 @@ public class SdrViewModel:ViewModelBase,IShellPage
 
     public void SetArgs(Uri link)
     {
-        if (ParseUri(link, out var id) == false) return;
+        var query =  HttpUtility.ParseQueryString(link.Query);
+        if (ushort.TryParse(query["id"], out var id) == false) return;
+        
         _payload = _mavlink.GetPayloadsByFullId(id);
         if (_payload == null) return;
         

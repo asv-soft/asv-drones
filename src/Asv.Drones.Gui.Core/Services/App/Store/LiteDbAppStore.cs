@@ -1,16 +1,16 @@
-﻿using System;
-using Asv.Store;
+﻿using Asv.Common;
 using LiteDB;
 
 namespace Asv.Drones.Core
 {
     
-    public class LiteDbAppStore : LiteDbFileStore, IAppStore
+    public class LiteDbAppStore : DisposableOnceWithCancel, IAppStore
     {
         private readonly LiteDatabase _db;
 
-        public LiteDbAppStore(LiteDatabase db, string sourceName) : base(db, sourceName)
+        public LiteDbAppStore(LiteDatabase db, string sourceName)
         {
+            SourceName = sourceName;
             _db = db;
         }
         
@@ -23,5 +23,8 @@ namespace Asv.Drones.Core
 
             return result[0]["used"].AsInt32;
         }
+
+        public ILiteDatabase Db => _db;
+        public string SourceName { get; }
     }
 }

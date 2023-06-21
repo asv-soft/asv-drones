@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Windows.Input;
@@ -9,7 +8,6 @@ using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.AsvGbs;
 using Avalonia.Controls;
-using Avalonia.Styling;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;

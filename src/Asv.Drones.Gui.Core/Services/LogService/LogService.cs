@@ -1,11 +1,10 @@
-﻿using System.ComponentModel.Composition;
-using System.Reactive.Linq;
+﻿using System.Collections.Immutable;
+using System.ComponentModel.Composition;
+using System.Reactive;
 using System.Reactive.Subjects;
 using Asv.Cfg;
 using Asv.Common;
-using Asv.Store;
 using LiteDB;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core
 {
@@ -20,7 +19,9 @@ namespace Asv.Drones.Gui.Core
     {
         private readonly Subject<LogMessage> _onMessage;
         private readonly string _hostName;
-        private ITextStore _store;
+        private ILiteCollection<LogMessage> _coll;
+        private readonly object _collectionSync = new();
+        private readonly Subject<Unit> _onNeedReload;
         private const string StoreTextCollectionName = "log";
 
         [ImportingConstructor]
@@ -28,14 +29,29 @@ namespace Asv.Drones.Gui.Core
         {
             _onMessage = new Subject<LogMessage>().DisposeItWith(Disposable);
             _hostName = $"{Environment.MachineName}.{Environment.UserName}";
-            
-            app.Store.Subscribe(_ => _store = _.GetText(StoreTextCollectionName)).DisposeItWith(Disposable);
+            _onNeedReload = new Subject<Unit>().DisposeItWith(Disposable);
+            app.Store.Subscribe(_ =>
+            {
+                lock (_collectionSync)
+                {
+                    _coll = _.Db.GetCollection<LogMessage>(StoreTextCollectionName);
+                    _coll.EnsureIndex(x => x.Type);
+                    _coll.EnsureIndex(x => x.DateTime);
+                    _coll.EnsureIndex(x => x.Source);
+                    _coll.EnsureIndex(x => x.Message);
+                }
+                _onNeedReload.OnNext(Unit.Default);
+            }).DisposeItWith(Disposable);
             _onMessage.Subscribe(SaveToStore,DisposeCancel);
         }
         
         private void SaveToStore(LogMessage logMessage)
         {
-            _store?.Insert(new TextMessage{Date = logMessage.DateTime, Id = ObjectId.NewObjectId(), IntTag = (int)logMessage.Type, StrTag = GetSourceName(logMessage.Source), Text = logMessage.Message + logMessage.Description });
+            lock (_collectionSync)
+            {
+                logMessage.Source = GetSourceName(logMessage.Source);
+                _coll.Insert(logMessage);
+            }
         }
         
         private string GetSourceName(string rootSource)
@@ -44,12 +60,56 @@ namespace Asv.Drones.Gui.Core
         }
 
         public IObservable<LogMessage> OnMessage => _onMessage;
+        public void ClearAll()
+        {
+            lock (_collectionSync)
+            {
+                _coll.DeleteAll();
+            }
+            this.Info(nameof(LogService),"User clear all messages");
+        }
 
-        public void SendMessage(LogMessage message)
+        public int Count()
+        {
+            lock (_collectionSync)
+            {
+                return _coll.Count();
+            }
+        }
+
+        public IReadOnlyList<LogMessage> Find(LogQuery query)
+        {
+            lock (_collectionSync)
+            {
+                return _coll.Find(Convert(query), query.Skip, query.Take).ToImmutableList();
+            }
+        }
+
+        public int Count(LogQuery query)
+        {
+            lock (_collectionSync)
+            {
+                return _coll.Count(Convert(query));
+            }
+        }
+
+        public IObservable<Unit> OnNeedReload => _onNeedReload;
+
+        public void SaveMessage(LogMessage message)
         {
             _onMessage.OnNext(message);
         }
+        private static Query Convert(LogQuery query)
+        {
+            var q = Query.All(nameof(LogMessage.DateTime));
+
+            if (!query.Search.IsNullOrWhiteSpace())
+            {
+                q.Where.Add(Query.Contains(nameof(LogMessage.Message), query.Search));
+            }
+
+            return q;
+        }
         
-        public ITextStore LogStore => _store;
     }
 }

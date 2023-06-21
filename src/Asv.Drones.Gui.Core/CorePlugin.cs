@@ -4,8 +4,6 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using Avalonia.Controls.Templates;
 using Avalonia;
-using System.Reflection;
-using Asv.Avalonia.Map;
 
 namespace Asv.Drones.Gui.Core
 {

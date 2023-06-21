@@ -5,7 +5,6 @@ using Asv.Common;
 using Asv.Drones.Gui.Uav;
 using Avalonia.Controls;
 using DynamicData;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core
 {
