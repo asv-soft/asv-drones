@@ -18,6 +18,30 @@ using Splat.ModeDetection;
 
 namespace Asv.Drones.Gui.Sdr;
 
+
+public class FlightSdrLlzViewModel : FlightSdrWidgetBase
+{
+    private readonly ObservableCollection<ISdrRttItem> _rttItems = new();
+    private readonly ILogService _logService;
+    private readonly ILocalizationService _loc;
+    private readonly IConfiguration _configuration;
+    private readonly ISdrRttItemProvider[] _providers;
+    public static Uri GenerateUri(ISdrClientDevice sdr) => FlightSdrWidgetBase.GenerateUri(sdr,"sdr.llz");
+
+    public FlightSdrLlzViewModel()
+    {
+        if (Design.IsDesignMode)
+        {
+            Icon = MaterialIconKind.Memory;
+            _rttItems = new ObservableCollection<ISdrRttItem>(new List<ISdrRttItem>
+            {
+                new SdrRttItemLlzViewModelDesignMock(),
+                new SdrRttItemLlzViewModelDesignMock(),
+                new SdrRttItemLlzViewModelDesignMock(),
+            });
+        }
+    }
+}
 public class FlightSdrViewModel:FlightSdrWidgetBase
 {
     private readonly ObservableCollection<ISdrRttItem> _rttItems = new();

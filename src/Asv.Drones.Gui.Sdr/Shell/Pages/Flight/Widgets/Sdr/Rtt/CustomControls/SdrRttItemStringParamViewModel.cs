@@ -3,22 +3,20 @@ using System.Reactive.Linq;
 using Asv.Common;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.AsvSdr;
-using Avalonia.Controls;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Sdr;
 
-
-public class SdrRttItemLlzViewModelDesignMock : SdrRttItemLlzViewModel
+public class SdrRttItemStringParamViewModelDesignMode : SdrRttItemStringParamViewModel
 {
-    public SdrRttItemLlzViewModelDesignMock()
+    public SdrRttItemStringParamViewModelDesignMode()
     {
         Title = "DDM";
         Units = "%";
         FormatString = "P2";
         Value = 0.5;
     }
-
+    
     public override double GetValue(AsvSdrRecordDataLlzPayload payload)
     {
         return 0;
@@ -29,24 +27,24 @@ public class SdrRttItemLlzViewModelDesignMock : SdrRttItemLlzViewModel
     public override string FormatString { get; }
 }
 
-
-public abstract class SdrRttItemLlzViewModel:SdrRttItem
+public abstract class SdrRttItemStringParamViewModel : SdrRttItem
 {
-    protected SdrRttItemLlzViewModel()
+
+
+    protected SdrRttItemStringParamViewModel()
     {
-       
+        
     }
     
     [ImportingConstructor]
-    protected SdrRttItemLlzViewModel(ISdrClientDevice device,string name)
-    :base(device, SdrRttItem.GenerateUri(device,$"llz/{name}"))
+    protected SdrRttItemStringParamViewModel(ISdrClientDevice device,string name)
+        :base(device, SdrRttItem.GenerateUri(device,$"llz/{name}"))
     {
         device.Sdr.Base.OnRecordData.Where(_ => _.MessageId == AsvSdrRecordDataLlzPacket.PacketMessageId)
             .Cast<AsvSdrRecordDataLlzPacket>()
             .Subscribe(_=>Value = GetValue(_.Payload))
             .DisposeItWith(Disposable);
     }
-
     public abstract double GetValue(AsvSdrRecordDataLlzPayload payload);
     
     public abstract string Title { get; }

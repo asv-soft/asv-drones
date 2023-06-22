@@ -76,6 +76,10 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>RS.resx</DependentUpon>
       </Compile>
+      <Compile Update="Shell\Pages\Flight\Widgets\Sdr\Rtt\CustomControls\SdrRttItemStringParamView.axaml.cs">
+        <DependentUpon>SdrRttItemStringParamView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>

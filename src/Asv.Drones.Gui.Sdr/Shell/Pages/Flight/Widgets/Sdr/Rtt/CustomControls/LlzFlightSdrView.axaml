@@ -1,0 +1,102 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sdr="clr-namespace:Asv.Drones.Gui.Sdr"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="450"
+             x:CompileBindings="True"
+             x:DataType="sdr:LlzFlightSdrViewModel"
+             x:Class="Asv.Drones.Gui.Sdr.LlzFlightSdrView">
+    <Design.DataContext>
+        <sdr:LlzFlightSdrViewModel/>
+    </Design.DataContext>
+    <Border Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8" CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True">
+        <TabControl Margin="10">
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock VerticalAlignment="Center">Total</TextBlock>
+                </TabItem.Header>
+                <StackPanel>
+                    <Grid ColumnDefinitions="1*, 1*" Margin="10">
+                        <Grid Grid.Column="0" ColumnDefinitions="0.40*,0.40*,0.20*" RowDefinitions="1*, 1*, 1*, 1*, 1*, 1*, 1*, 1*">
+                        <TextBlock Grid.Column="0" Grid.Row="0" FontSize="12" Text="Level" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Column="1" Grid.Row="0" FontSize="12" Text="-37.47" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Grid.Row="0" FontSize="12" Text="dBm" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <!-- <TextBlock Grid.Column="1" Grid.Row="0" FontSize="12" Text="{Binding TotalPowerValue}" VerticalAlignment="Center" HorizontalAlignment="Right"/> -->
+                        <!-- <TextBlock Grid.Column="2" Grid.Row="0" FontSize="12" Text="{Binding TotalPowerUnits}" VerticalAlignment="Center" HorizontalAlignment="Right"/> -->
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="1" FontSize="12" Text="DDM" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Column="1" Grid.Row="1" FontSize="12" Text="0.0000" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Grid.Row="1" FontSize="12" Text="%" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <!-- <TextBlock Grid.Column="1" Grid.Row="1" FontSize="12" Text="{Binding TotalDdmValue}" VerticalAlignment="Center" HorizontalAlignment="Right"/> -->
+                        <!-- <TextBlock Grid.Column="2" Grid.Row="1" FontSize="12" Text="{Binding TotalDdmUnits}" VerticalAlignment="Center" HorizontalAlignment="Right"/> -->
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="2" FontSize="12" Text="SDM" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Column="1" Grid.Row="2" FontSize="12" Text="40.0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Grid.Row="2" FontSize="12" Text="%" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <!-- <TextBlock Grid.Column="1" Grid.Row="2" FontSize="12" Text="{Binding TotalSdmValue}" VerticalAlignment="Center" HorizontalAlignment="Right"/> -->
+                        <!-- <TextBlock Grid.Column="2" Grid.Row="2" FontSize="12" Text="{Binding TotalSdmUnits}" VerticalAlignment="Center" HorizontalAlignment="Right"/> -->
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="3" FontSize="12" Text="AM 90 Hz" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Column="1" Grid.Row="3" FontSize="12" Text="20.0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Grid.Row="3" FontSize="12" Text="%" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <!-- <TextBlock Grid.Column="1" Grid.Row="3" FontSize="12" Text="{Binding TotalAm90Value}" VerticalAlignment="Center" HorizontalAlignment="Right"/> -->
+                        <!-- <TextBlock Grid.Column="2" Grid.Row="3" FontSize="12" Text="{Binding TotalAm90Units}" VerticalAlignment="Center" HorizontalAlignment="Right"/> -->
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="4" FontSize="12" Text="AM 150 Hz" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Column="1" Grid.Row="4" FontSize="12" Text="20.0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Grid.Row="4" FontSize="12" Text="%" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <!-- <TextBlock Grid.Column="1" Grid.Row="4" FontSize="12" Text="{Binding TotalAm150Value}" VerticalAlignment="Center" HorizontalAlignment="Right"/> -->
+                        <!-- <TextBlock Grid.Column="2" Grid.Row="4" FontSize="12" Text="{Binding TotalAm150Units}" VerticalAlignment="Center" HorizontalAlignment="Right"/> -->
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="5" FontSize="12" Text="PHI 90" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Column="1" Grid.Row="5" FontSize="12" Text="-0.01" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Grid.Row="5" FontSize="12" Text="°" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <!-- <TextBlock Grid.Column="1" Grid.Row="5" FontSize="12" Text="{Binding TotalPhi90Value}" VerticalAlignment="Center" HorizontalAlignment="Right"/> -->
+                        <!-- <TextBlock Grid.Column="2" Grid.Row="5" FontSize="12" Text="{Binding TotalPh90Units}" VerticalAlignment="Center" HorizontalAlignment="Right"/> -->
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="6" FontSize="12" Text="PHI 150" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Column="1" Grid.Row="6" FontSize="12" Text="0.02" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Grid.Row="6" FontSize="12" Text="°" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <!-- <TextBlock Grid.Column="1" Grid.Row="6" FontSize="12" Text="{Binding TotalPh150Value}" VerticalAlignment="Center" HorizontalAlignment="Right"/> -->
+                        <!-- <TextBlock Grid.Column="2" Grid.Row="6" FontSize="12" Text="{Binding TotalPhi150Units}" VerticalAlignment="Center" HorizontalAlignment="Right"/> -->
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="7" FontSize="12" Text="ID CODE" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Column="1" Grid.Row="7" FontSize="12" Text="CEK" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Grid.Row="7" FontSize="12" Text="" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <!-- <TextBlock Grid.Column="1" Grid.Row="7" FontSize="12" Text="{Binding TotalIdCodeValue}" VerticalAlignment="Center" HorizontalAlignment="Right"/> -->
+                        <!-- <TextBlock Grid.Column="2" Grid.Row="7" FontSize="12" Text="{Binding TotalIdCodeUnits}" VerticalAlignment="Center" HorizontalAlignment="Right"/> -->
+                        </Grid>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock VerticalAlignment="Center">CRS</TextBlock>
+                </TabItem.Header>
+                <StackPanel>
+                    <ContentControl Content="{CompiledBinding CrsPower}" />
+                    <ContentControl Content="{CompiledBinding CrsDdm}" />
+                    <ContentControl Content="{CompiledBinding CrsSdm}" />
+                    <ContentControl Content="{CompiledBinding CrsAm90}" />
+                    <ContentControl Content="{CompiledBinding CrsAm150}" />
+                    <ContentControl Content="{CompiledBinding CrsFrequency}" />
+                </StackPanel>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock VerticalAlignment="Center">CLR</TextBlock>
+                </TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <ContentControl Content="{CompiledBinding ClrPower}" />
+                    <ContentControl Content="{CompiledBinding ClrDdm}" />
+                    <ContentControl Content="{CompiledBinding ClrSdm}" />
+                    <ContentControl Content="{CompiledBinding ClrAm90}" />
+                    <ContentControl Content="{CompiledBinding ClrAm150}" /> 
+                    <ContentControl Content="{CompiledBinding ClrFrequency}" />
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </Border>
+</UserControl>

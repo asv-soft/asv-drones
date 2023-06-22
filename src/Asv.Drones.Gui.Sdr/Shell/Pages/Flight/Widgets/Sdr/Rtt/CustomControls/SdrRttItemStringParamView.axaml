@@ -1,0 +1,14 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sdr="clr-namespace:Asv.Drones.Gui.Sdr"
+             mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="30"
+             x:Class="Asv.Drones.Gui.Sdr.SdrRttItemStringParamView"
+             x:CompileBindings="True"
+             x:DataType="sdr:SdrRttItemStringParamViewModel">
+    <Design.DataContext>
+        <sdr:SdrRttItemStringParamViewModelDesignMode/>
+    </Design.DataContext>
+   <sdr:CustomDigitIndicator Margin="4,0" Title="{Binding Title}" FormatString="{Binding FormatString}" Units="{Binding Units}" Value="{Binding Value, Mode=TwoWay}"/>
+</UserControl>

@@ -1,0 +1,20 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Asv.Drones.Gui.Sdr"
+        xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia">
+    <Design.PreviewWith>
+        <controls:CustomDigitIndicator Title="Dejavu" Value="1337.3221234" FormatString="F4" Units="m/s"/>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|CustomDigitIndicator">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid ColumnDefinitions="0.45*,0.45*,0.1*">
+                    <TextBlock Grid.Column="0" FontSize="12" Text="{TemplateBinding Title}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Column="1" FontSize="12" Text="{TemplateBinding FormatedValue}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="2" FontSize="12" Text="{TemplateBinding Units}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>
