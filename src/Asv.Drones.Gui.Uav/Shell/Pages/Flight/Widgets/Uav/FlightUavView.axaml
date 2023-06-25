@@ -44,6 +44,12 @@
             <StackPanel IsVisible="{CompiledBinding !IsMinimized}">
                 <uav1:AttitudeView DataContext="{Binding Attitude}" />
                 <uav1:MissionStatusView DataContext="{Binding MissionStatus}" />
+                <Button ToolTip.Tip="{Binding  CurrentMode.Mode.Description}" Command="{Binding SelectModeCommand}">
+                    <Grid Margin="5" ColumnDefinitions="*, Auto">
+                        <avalonia:MaterialIcon Kind="{Binding CurrentMode.Icon}" />
+                        <TextBlock Grid.Column="1" Margin="5 0 0 0" Text="{Binding CurrentMode.Mode.Name}" />
+                    </Grid>
+                </Button>
             </StackPanel>
             <ItemsControl Items="{Binding RttItems}" IsVisible="{CompiledBinding !IsMinimized}">
                 <ItemsControl.ItemsPanel>

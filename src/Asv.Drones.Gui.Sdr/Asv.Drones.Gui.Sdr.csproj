@@ -87,7 +87,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Asv.Mavlink" Version="3.2.5-alpha-07" />
+      <PackageReference Include="Asv.Mavlink" Version="3.2.5-alpha-13" />
       <PackageReference Include="ReactiveUI.Fody" Version="18.4.34" />
     </ItemGroup>
 

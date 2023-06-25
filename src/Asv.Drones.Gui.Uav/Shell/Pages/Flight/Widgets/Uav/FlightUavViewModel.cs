@@ -7,6 +7,7 @@ using Asv.Mavlink;
 using Avalonia.Controls;
 using DynamicData;
 using DynamicData.Binding;
+using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -42,6 +43,7 @@ namespace Asv.Drones.Gui.Uav
             Icon = MavlinkHelper.GetIcon(vehicle.Class);
             Attitude = new AttitudeViewModel(vehicle, new Uri(Id, "/id"),loc);
             MissionStatus = new MissionStatusViewModel(vehicle, log, new Uri(Id, "/id"),loc);
+            CurrentMode = new VehicleModeWithIcons(Vehicle.CurrentMode.Value);
             
             rttItems
                 .SelectMany(_ => _.Create(Vehicle))
@@ -60,6 +62,30 @@ namespace Asv.Drones.Gui.Uav
             {
                 IsMinimized = !IsMinimized;
             });
+
+            SelectModeCommand = ReactiveCommand.Create(async () =>
+            {
+                var dialog = new ContentDialog()
+                {
+                    Title = RS.SelectModeAnchorActionViewModel_Title,
+                    PrimaryButtonText = RS.SelectModeAnchorActionViewModel_DialogPrimaryButton,
+                    IsSecondaryButtonEnabled = true,
+                    SecondaryButtonText = RS.SelectModeAnchorActionViewModel_DialogSecondaryButton
+                };
+        
+                var viewModel = new SelectModeViewModel(Vehicle);
+                dialog.Content = viewModel;
+
+                var result = await dialog.ShowAsync();
+
+                if (result == ContentDialogResult.Primary)
+                {
+                    log.Info(LogName, string.Format(RS.SelectModeAnchorActionViewModel_LogMessage, CurrentMode.Mode.Name, viewModel.SelectedMode.Mode.Name));
+                    await Vehicle.SetVehicleMode(viewModel.SelectedMode.Mode, CancellationToken.None);
+                }
+            });
+
+            vehicle.CurrentMode.Subscribe(_ => CurrentMode = new VehicleModeWithIcons(_)).DisposeItWith(Disposable);
         }
 
         protected override void InternalAfterMapInit(IMap map)
@@ -125,14 +151,19 @@ namespace Asv.Drones.Gui.Uav
         public ICommand LocateVehicleCommand { get; set; }
         public ICommand ChangeStateCommand { get; set; }
         public ICommand FollowUavCommand { get; set; }
+        public ICommand SelectModeCommand { get; set; }
         public AttitudeViewModel Attitude { get; }
         public MissionStatusViewModel MissionStatus { get; }
         public ReadOnlyObservableCollection<IUavRttItem> RttItems => _rttItems;
         public IEnumerable<IUavRttItem> MinimizedRttItems { get; set; }
+        
+        public string LogName => "Map." + Title;
 
         [Reactive] 
         public bool IsMinimized { get; set; } = false;
         [Reactive]
         public bool IsFollowed { get; set; }
+        [Reactive]
+        public VehicleModeWithIcons CurrentMode { get; set; }
     }
 }
