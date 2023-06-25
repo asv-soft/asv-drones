@@ -261,4 +261,19 @@
   <data name="FlightUavView_FollowButton_ToolTip" xml:space="preserve">
     <value>Follow/Unfollow UAV</value>
   </data>
+  <data name="SelectModeAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Select UAV mode</value>
+  </data>
+  <data name="SelectModeAnchorActionViewModel_DialogPrimaryButton" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="SelectModeAnchorActionViewModel_DialogSecondaryButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="SelectModeAnchorActionViewModel_LogMessage" xml:space="preserve">
+    <value>User sent SetVehicleMode from {0} to {1}</value>
+  </data>
+  <data name="SelectModeAnchorActionView_DialogDescription" xml:space="preserve">
+    <value>Change UAV mode from list</value>
+  </data>
 </root>
