@@ -22,7 +22,7 @@ namespace Asv.Drones.Uav
             _vehicle = vehicle;
             _map = map;
             _log = log;
-            var cmd = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(ExecuteImpl).SubscribeOn(RxApp.TaskpoolScheduler), _canExecuteSubject);
+            var cmd = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(ExecuteImpl).SubscribeOn(RxApp.MainThreadScheduler), _canExecuteSubject);
             cmd.ThrownExceptions.Subscribe(OnExecuteError);
             Command = cmd;
             _canExecuteSubject.DisposeItWith(Disposable);
