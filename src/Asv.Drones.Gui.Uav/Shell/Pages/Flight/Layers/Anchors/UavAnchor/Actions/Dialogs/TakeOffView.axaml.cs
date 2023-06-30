@@ -29,14 +29,14 @@ public partial class TakeOffView : ReactiveUserControl<TakeOffViewModel>
         {
             case Key.Enter:
                 e.Handled = true;
-
-                var current = FocusManager.Instance?.Current;
+                
+                var current = TopLevel.GetTopLevel(this).FocusManager.GetFocusedElement();
                 if (current != null)
                 {
                     var next = KeyboardNavigationHandler.GetNext(current, NavigationDirection.Next);
                     if (next != null && next.Focusable && next.IsEnabled)
                     {
-                        FocusManager.Instance?.Focus(next, NavigationMethod.Directional);
+                        next.Focus();
                     }
                 }
                 

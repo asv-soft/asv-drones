@@ -29,7 +29,7 @@ namespace Asv.Drones.Gui.Core
         /// <summary>
         /// This constructor is used for design time
         /// </summary>
-        public MapPageViewModel():base(new Uri(WellKnownUri.Shell + Guid.NewGuid()))
+        public MapPageViewModel():base("asv:shell.page.map")
         {
             
         }

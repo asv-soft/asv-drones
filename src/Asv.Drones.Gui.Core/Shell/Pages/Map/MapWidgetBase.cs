@@ -15,14 +15,14 @@ namespace Asv.Drones.Gui.Core
         public string Title { get;set; }
         [Reactive]
         public MaterialIconKind Icon { get; set; }
-        public IMapWidget Init(IMap map)
+        public IMapWidget Init(IMap context)
         {
-            Map = map;
-            InternalAfterMapInit(map);
+            Map = context;
+            InternalAfterMapInit(context);
             return this;
         }
 
-        protected abstract void InternalAfterMapInit(IMap map);
+        protected abstract void InternalAfterMapInit(IMap context);
 
         protected IMap Map { get; private set; }
     }

@@ -1,4 +1,5 @@
 using System.Reactive.Linq;
+using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Controls.Mixins;
@@ -21,7 +22,7 @@ public class CurrentUavRttViewModel : UavRttItem
             .DistinctUntilChanged()
             .Sample(TimeSpan.FromMilliseconds(500), RxApp.MainThreadScheduler)
             .Subscribe(_ => Current = $"{localization.Current.ConvertToStringWithUnits(_)}")
-            .DisposeWith(Disposable);
+            .DisposeItWith(Disposable);
     }
     
     [Reactive]

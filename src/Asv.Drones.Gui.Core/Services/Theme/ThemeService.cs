@@ -2,8 +2,10 @@
 using Asv.Cfg;
 using Asv.Common;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media;
+using Avalonia.Styling;
 using FluentAvalonia.Styling;
 
 namespace Asv.Drones.Gui.Core
@@ -19,9 +21,8 @@ namespace Asv.Drones.Gui.Core
     public class ThemeService : ServiceWithConfigBase<ThemeServiceConfig>, IThemeService
     {
         private readonly ThemeItem[] _themes = {
-            new(FluentAvaloniaTheme.DarkModeString, RS.ThemeService_Themes_Dark),
-            new(FluentAvaloniaTheme.LightModeString, RS.ThemeService_Themes_Light),
-            new(FluentAvaloniaTheme.HighContrastModeString, RS.ThemeService_Themes_Contrast),
+            new(FluentAvaloniaTheme.DarkModeString, RS.ThemeService_Themes_Dark, ThemeVariant.Dark),
+            new(FluentAvaloniaTheme.LightModeString, RS.ThemeService_Themes_Light, ThemeVariant.Light),
         };
 
         private readonly FlowDirectionItem[] _flowDirections = {
@@ -30,13 +31,13 @@ namespace Asv.Drones.Gui.Core
         };
 
 
-        private readonly FluentAvaloniaTheme _faTheme;
+        
         private readonly object _sync = new();
 
         [ImportingConstructor]
         public ThemeService(IConfiguration cfgSvc):base(cfgSvc)
         {
-            _faTheme = AvaloniaLocator.Current.GetService<FluentAvaloniaTheme>() ?? throw new InvalidOperationException();
+            Application.Current.RequestedThemeVariant = ThemeVariant.Default;
             var selectedTheme = default(ThemeItem);
 
             var themeFromConfig = InternalGetConfig(_ => _.Theme);
@@ -70,15 +71,30 @@ namespace Asv.Drones.Gui.Core
         private void SetTheme(ThemeItem theme)
         {
             if (theme == null) throw new ArgumentNullException(nameof(theme));
-            _faTheme.RequestedTheme = theme.Id;
+            Application.Current.RequestedThemeVariant = theme.Theme;
+            
             InternalSaveConfig(_ => _.Theme = theme.Id);
         }
 
-        private void SetFlowDirection(FlowDirectionItem item)
+        private void SetFlowDirection(FlowDirectionItem value)
         {
-            var mainWindow = (Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
-            if (mainWindow != null) mainWindow.FlowDirection = item.Id;
-            InternalSaveConfig(_=>_.FlowDirection = item.Id);
+            var lifetime = Application.Current.ApplicationLifetime;
+            if (lifetime is IClassicDesktopStyleApplicationLifetime cdl)
+            {
+                if (cdl.MainWindow.FlowDirection == value.Id)
+                    return;
+                cdl.MainWindow.FlowDirection = value.Id;
+            }
+            else if (lifetime is ISingleViewApplicationLifetime single)
+            {
+                var mainWindow = TopLevel.GetTopLevel(single.MainView);
+                if (mainWindow.FlowDirection == value.Id)
+                    return;
+                mainWindow.FlowDirection = value.Id;
+            }
+            
+            
+            InternalSaveConfig(_=>_.FlowDirection = value.Id);
         }
         
     }

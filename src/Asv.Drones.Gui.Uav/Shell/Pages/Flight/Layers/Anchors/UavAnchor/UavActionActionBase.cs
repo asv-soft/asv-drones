@@ -2,6 +2,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Asv.Avalonia.Map;
+using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using ReactiveUI;
@@ -24,7 +25,7 @@ namespace Asv.Drones.Uav
             var cmd = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(ExecuteImpl).SubscribeOn(RxApp.TaskpoolScheduler), _canExecuteSubject);
             cmd.ThrownExceptions.Subscribe(OnExecuteError);
             Command = cmd;
-            _canExecuteSubject.DisposeWith(Disposable);
+            _canExecuteSubject.DisposeItWith(Disposable);
         }
 
         public string LogName => "Map." + Title;

@@ -11,7 +11,7 @@ public class BatteryIndicator : IndicatorBase
     #region Styled Props
     
     public static readonly StyledProperty<double> CriticalValueProperty = AvaloniaProperty.Register<BatteryIndicator, double>(
-        nameof(CriticalValue), 20, notifying: UpdateValue);
+        nameof(CriticalValue), 20);
 
     public double CriticalValue
     {
@@ -20,7 +20,7 @@ public class BatteryIndicator : IndicatorBase
     }
     
     public static readonly StyledProperty<double> WarningValueProperty = AvaloniaProperty.Register<BatteryIndicator, double>(
-        nameof(WarningValue),50, notifying: UpdateValue);
+        nameof(WarningValue),50);
 
     public double WarningValue
     {
@@ -29,7 +29,7 @@ public class BatteryIndicator : IndicatorBase
     }
     
     public static readonly StyledProperty<double> MaxValueProperty = AvaloniaProperty.Register<BatteryIndicator, double>(
-        nameof(MaxValue), 100, notifying: UpdateValue);
+        nameof(MaxValue), 100);
     
     public double MaxValue
     {
@@ -38,7 +38,7 @@ public class BatteryIndicator : IndicatorBase
     }
 
     public static readonly StyledProperty<double?> ValueProperty = AvaloniaProperty.Register<BatteryIndicator, double?>(
-        nameof(Value), default(double?), notifying: UpdateValue);
+        nameof(Value), default(double?));
 
     public double? Value
     {
@@ -55,23 +55,25 @@ public class BatteryIndicator : IndicatorBase
 
     private static void SetPseudoClass(BatteryIndicator indicator)
     {
-        var value = indicator.Value;        
-        indicator.PseudoClasses.Set(":unknown", value == null || double.IsFinite(value.Value) == false || value > indicator.MaxValue);
-        indicator.PseudoClasses.Set(":critical", value <= indicator.CriticalValue);
-        indicator.PseudoClasses.Set(":warning", value > indicator.CriticalValue & value <= indicator.WarningValue);
-        indicator.PseudoClasses.Set(":normal", value > indicator.WarningValue & value <= indicator.MaxValue);
+        
     }
-    
-    private static void UpdateValue(IAvaloniaObject source, bool beforeChanged)
-    {
-        if (source is not BatteryIndicator indicator) return;
 
-        SetPseudoClass(indicator);
-        if (indicator.MaxValue == 0 || double.IsFinite(indicator.MaxValue) == false)
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+        if (change.Property == ValueProperty || change.Property == MaxValueProperty || change.Property == CriticalValueProperty || change.Property == WarningValueProperty)
         {
+            var value = Value;        
+            PseudoClasses.Set(":unknown", value == null || double.IsFinite(value.Value) == false || value > MaxValue);
+            PseudoClasses.Set(":critical", value <= CriticalValue);
+            PseudoClasses.Set(":warning", value > CriticalValue & value <= WarningValue);
+            PseudoClasses.Set(":normal", value > WarningValue & value <= MaxValue);
+            if (MaxValue == 0 || double.IsFinite(MaxValue) == false)
+            {
             
+            }
+            IconKind = GetIcon(Value/MaxValue);
         }
-        indicator.IconKind = GetIcon(indicator.Value/indicator.MaxValue);
     }
 
     private static MaterialIconKind GetIcon(double? normalizedValue)
