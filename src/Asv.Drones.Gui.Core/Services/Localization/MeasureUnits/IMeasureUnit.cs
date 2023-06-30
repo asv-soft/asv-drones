@@ -1,4 +1,5 @@
-﻿using Asv.Common;
+﻿#nullable enable
+using Asv.Common;
 
 namespace Asv.Drones.Gui.Core
 {

@@ -72,7 +72,7 @@ namespace Asv.Drones.Gui.Uav
         }
         
         public static readonly StyledProperty<float> VibrationXProperty = AvaloniaProperty.Register<AttitudeIndicator, float>(
-            nameof(VibrationX), notifying: UpdateColorX, defaultValue: -1);
+            nameof(VibrationX), defaultValue: -1);
         
         public float VibrationX
         {
@@ -81,7 +81,7 @@ namespace Asv.Drones.Gui.Uav
         }
         
         public static readonly StyledProperty<float> VibrationYProperty = AvaloniaProperty.Register<AttitudeIndicator, float>(
-            nameof(VibrationY), notifying: UpdateColorY, defaultValue: -1);
+            nameof(VibrationY), defaultValue: -1);
 
         public float VibrationY
         {
@@ -90,7 +90,7 @@ namespace Asv.Drones.Gui.Uav
         }
         
         public static readonly StyledProperty<float> VibrationZProperty = AvaloniaProperty.Register<AttitudeIndicator, float>(
-            nameof(VibrationZ), notifying: UpdateColorZ, defaultValue: -1);
+            nameof(VibrationZ),  defaultValue: -1);
 
         public float VibrationZ
         {
@@ -125,7 +125,7 @@ namespace Asv.Drones.Gui.Uav
             set => SetValue(Clipping2Property, value);
         }
         
-        public static readonly StyledProperty<double> RollAngleProperty = AvaloniaProperty.Register<AttitudeIndicator, double>(nameof(RollAngle), default(double), notifying: UpdateRollAngle);
+        public static readonly StyledProperty<double> RollAngleProperty = AvaloniaProperty.Register<AttitudeIndicator, double>(nameof(RollAngle), default(double));
 
         public double RollAngle
         {
@@ -133,7 +133,7 @@ namespace Asv.Drones.Gui.Uav
             set => SetValue(RollAngleProperty, value);
         }
 
-        public static readonly StyledProperty<double> PitchAngleProperty = AvaloniaProperty.Register<AttitudeIndicator, double>(nameof(PitchAngle), default(double), notifying: UpdateAngle);
+        public static readonly StyledProperty<double> PitchAngleProperty = AvaloniaProperty.Register<AttitudeIndicator, double>(nameof(PitchAngle), default(double));
 
         public double PitchAngle
         {
@@ -142,8 +142,7 @@ namespace Asv.Drones.Gui.Uav
         }
 
         public static readonly StyledProperty<double> VelocityProperty =
-            AvaloniaProperty.Register<AttitudeIndicator, double>(nameof(Velocity), default(double),
-                notifying: UpdateVelocityItems);
+            AvaloniaProperty.Register<AttitudeIndicator, double>(nameof(Velocity), default(double));
 
         public double Velocity
         {
@@ -151,7 +150,7 @@ namespace Asv.Drones.Gui.Uav
             set => SetValue(VelocityProperty, value);
         }
         
-        public static readonly StyledProperty<double> AltitudeProperty = AvaloniaProperty.Register<AttitudeIndicator, double>(nameof(Altitude), default(double), notifying: UpdateAltitudeItems);
+        public static readonly StyledProperty<double> AltitudeProperty = AvaloniaProperty.Register<AttitudeIndicator, double>(nameof(Altitude), default(double));
 
         public double Altitude
         {
@@ -159,7 +158,7 @@ namespace Asv.Drones.Gui.Uav
             set => SetValue(AltitudeProperty, value);
         }
 
-        public static readonly StyledProperty<double> HeadingProperty = AvaloniaProperty.Register<AttitudeIndicator, double>(nameof(Heading), default(double), notifying: UpdateHeadingItems);
+        public static readonly StyledProperty<double> HeadingProperty = AvaloniaProperty.Register<AttitudeIndicator, double>(nameof(Heading), default(double));
 
         public double Heading
         {
@@ -167,7 +166,7 @@ namespace Asv.Drones.Gui.Uav
             set => SetValue(HeadingProperty, value);
         }
 
-        public static readonly StyledProperty<double?> HomeAzimuthProperty = AvaloniaProperty.Register<AttitudeIndicator, double?>(nameof(HomeAzimuth), default(double?), notifying: UpdateHomeAzimuthPosition);
+        public static readonly StyledProperty<double?> HomeAzimuthProperty = AvaloniaProperty.Register<AttitudeIndicator, double?>(nameof(HomeAzimuth), default(double?));
 
         public double? HomeAzimuth
         {
@@ -378,7 +377,52 @@ namespace Asv.Drones.Gui.Uav
             _headingCenterPosition = headingControlLength / 2;
         }
 
-        private static void UpdateColorX(IAvaloniaObject source, bool beforeChanged)
+        protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+        {
+            base.OnPropertyChanged(change);
+            if (change.Property == VibrationXProperty)
+            {
+                UpdateColorX(change.Sender);
+            }
+            else if (change.Property == VibrationYProperty)
+            {
+                UpdateColorY(change.Sender);
+            }
+            else if (change.Property == VibrationZProperty)
+            {
+                UpdateColorZ(change.Sender);
+            }
+            else if (change.Property == VelocityProperty)
+            {
+                UpdateVelocityItems(change.Sender);
+            }
+            else if (change.Property == RollAngleProperty)
+            {
+                UpdateRollAngle(change.Sender);
+            }
+            else if (change.Property == PitchAngleProperty)
+            {
+                UpdateAngle(change.Sender);
+            }
+            else if (change.Property == AltitudeProperty)
+            {
+                UpdateAltitudeItems(change.Sender);
+            }
+            else if (change.Property == HeadingProperty)
+            {
+                UpdateHeadingItems(change.Sender);
+            }
+            else if (change.Property == HomeAzimuthProperty)
+            {
+                UpdateHomeAzimuthPosition(change.Sender);
+            }
+            else if (change.Property == HomeAzimuthProperty)
+            {
+                UpdateHomeAzimuthPosition(change.Sender);
+            }
+        }
+
+        private static void UpdateColorX(AvaloniaObject source)
         {
             if (source is not AttitudeIndicator indicator) return;
 
@@ -396,7 +440,7 @@ namespace Asv.Drones.Gui.Uav
             }
         }
         
-        private static void UpdateColorY(IAvaloniaObject source, bool beforeChanged)
+        private static void UpdateColorY(AvaloniaObject source)
         {
             if (source is not AttitudeIndicator indicator) return;
 
@@ -414,7 +458,7 @@ namespace Asv.Drones.Gui.Uav
             }
         }
         
-        private static void UpdateColorZ(IAvaloniaObject source, bool beforeChanged)
+        private static void UpdateColorZ(AvaloniaObject source)
         {
             if (source is not AttitudeIndicator indicator) return;
 
@@ -432,18 +476,18 @@ namespace Asv.Drones.Gui.Uav
             }
         }
         
-        private static void UpdateAngle(IAvaloniaObject source, bool beforeChanged)
+        private static void UpdateAngle(AvaloniaObject source)
         {
             if (source is not AttitudeIndicator indicator) return;
             var pitch = indicator.PitchAngle;
-            UpdateRollAngle(source, beforeChanged);
+            UpdateRollAngle(source);
             foreach (var item in indicator.PitchItems)
             {
                 item.UpdateVisibility(pitch);
             }
         }
 
-        private static void UpdateRollAngle(IAvaloniaObject source, bool beforeChanged)
+        private static void UpdateRollAngle(AvaloniaObject source)
         {
             if (source is not AttitudeIndicator indicator) return;
             var roll = indicator.RollAngle;
@@ -452,7 +496,7 @@ namespace Asv.Drones.Gui.Uav
             indicator.PitchTranslateY = pitch * indicator.Scale * Math.Sin((90 - roll) * Math.PI / 180.0);
         }
 
-        private static void UpdateVelocityItems(IAvaloniaObject source, bool beforeChanged)
+        private static void UpdateVelocityItems(AvaloniaObject source)
         {
             if (source is not AttitudeIndicator indicator) return;
             var velocity = indicator.Velocity;
@@ -462,7 +506,7 @@ namespace Asv.Drones.Gui.Uav
             }
         }
 
-        private static void UpdateAltitudeItems(IAvaloniaObject source, bool beforeChanged)
+        private static void UpdateAltitudeItems(AvaloniaObject source)
         {
             if (source is not AttitudeIndicator indicator) return;
             var altitude = indicator.Altitude;
@@ -472,7 +516,7 @@ namespace Asv.Drones.Gui.Uav
             }
         }
 
-        private static void UpdateHeadingItems(IAvaloniaObject source, bool beforeChanged)
+        private static void UpdateHeadingItems(AvaloniaObject source)
         {
             if (source is not AttitudeIndicator indicator) return;
             var heading = indicator.Heading;
@@ -483,7 +527,7 @@ namespace Asv.Drones.Gui.Uav
             indicator.HomeAzimuthPosition = GetHomeAzimuthPosition(indicator.HomeAzimuth, indicator.Heading);
         }
 
-        private static void UpdateHomeAzimuthPosition(IAvaloniaObject source, bool beforeChanged)
+        private static void UpdateHomeAzimuthPosition(AvaloniaObject source)
         {
             if (source is not AttitudeIndicator indicator) return;
             indicator.HomeAzimuthPosition = GetHomeAzimuthPosition(indicator.HomeAzimuth, indicator.Heading);

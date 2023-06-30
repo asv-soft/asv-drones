@@ -18,9 +18,9 @@
 
 			<core:OptionsDisplayItem.ActionButton>
                 <StackPanel Orientation="Horizontal" Spacing="8">
-                    <ComboBox Items="{Binding Ids, Mode=OneTime}"
+                    <ComboBox ItemsSource="{Binding Ids, Mode=OneTime}"
                               SelectedItem="{Binding SystemId}"/>
-                    <ComboBox Items="{Binding Ids, Mode=OneTime}"
+                    <ComboBox ItemsSource="{Binding Ids, Mode=OneTime}"
                               SelectedItem="{Binding ComponentId}"/>
 					</StackPanel>
 			</core:OptionsDisplayItem.ActionButton>
@@ -33,7 +33,7 @@
 
             <core:OptionsDisplayItem.ActionButton>
 
-				<ComboBox Width="140" Items="{Binding Rates, Mode=OneTime}" SelectedItem="{Binding SelectedRate}"/>
+				<ComboBox Width="140" ItemsSource="{Binding Rates, Mode=OneTime}" SelectedItem="{Binding SelectedRate}"/>
                 
             </core:OptionsDisplayItem.ActionButton>
 

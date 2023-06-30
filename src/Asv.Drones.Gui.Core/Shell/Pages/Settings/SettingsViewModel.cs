@@ -15,7 +15,7 @@ namespace Asv.Drones.Gui.Core
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class SettingsViewModel:ViewModelBase,IShellPage
     {
-        public const string UriString = ShellPage.UriString + ".settings";
+        public const string UriString = "asv:shell.page.settings";
         public static readonly Uri Uri = new Uri(UriString);
         
         private readonly ReadOnlyObservableCollection<ISettingsPart> _items;

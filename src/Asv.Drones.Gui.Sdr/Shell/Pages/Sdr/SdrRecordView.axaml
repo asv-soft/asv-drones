@@ -19,7 +19,7 @@
             </Button>
             <TextBlock FontSize="25" Text="{Binding Name}"/>
         </DockPanel>
-        <ItemsControl DockPanel.Dock="Top" Items="{Binding TagItems}">
+        <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding TagItems}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" Spacing="4"/>
@@ -70,7 +70,7 @@
                 </DataTemplate>
             </ItemsControl.DataTemplates>
         </ItemsControl>
-        <ListBox Items="{Binding Items}">
+        <ListBox ItemsSource="{Binding Items}">
             
         </ListBox>
     </DockPanel>

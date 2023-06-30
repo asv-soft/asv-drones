@@ -18,7 +18,7 @@ namespace Asv.Drones.Gui.Uav
             // TODO: Localize
             Title = "Set ROI";
             Icon = MaterialIconKind.ImageFilterCenterFocus;
-            Vehicle.Position.IsArmed.Select(_ => _).Subscribe(CanExecute).DisposeWith(Disposable);
+            Vehicle.Position.IsArmed.Select(_ => _).Subscribe(CanExecute).DisposeItWith(Disposable);
         }
 
         protected override async Task ExecuteImpl(CancellationToken cancel)

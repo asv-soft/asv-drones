@@ -1,4 +1,5 @@
 using System.Reactive.Linq;
+using Asv.Common;
 using Asv.Mavlink;
 using Avalonia.Controls.Mixins;
 using ReactiveUI;
@@ -20,7 +21,7 @@ public class CpuLoadUavRttViewModel : UavRttItem
             .DistinctUntilChanged()
             .Sample(TimeSpan.FromMilliseconds(500), RxApp.MainThreadScheduler)
             .Subscribe(_ => CpuLoad = _)
-            .DisposeWith(Disposable);
+            .DisposeItWith(Disposable);
     }
     
     [Reactive]

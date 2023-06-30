@@ -27,7 +27,7 @@ namespace Asv.Drones.Gui.Uav
                 .ToObservableChangeSet(limitSizeTo:100) // TODO: move history size to settings
                 .Bind(out _path)
                 .Subscribe()
-                .DisposeWith(Disposable);
+                .DisposeItWith(Disposable);
         }
 
         public override ReadOnlyObservableCollection<GeoPoint> Path => _path;

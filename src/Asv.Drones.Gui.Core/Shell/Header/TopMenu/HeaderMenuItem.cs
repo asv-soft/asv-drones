@@ -8,9 +8,8 @@ namespace Asv.Drones.Gui.Core
 {
     public class HeaderMenuItem : ViewModelBase, IHeaderMenuItem
     {
-        public const string UriString = ShellViewModel.UriString + ".header.menu";
-        public static readonly Uri Uri = new (UriString);
-        
+        public const string? UriString = "asv:shell.header.menu";
+
         public HeaderMenuItem(Uri id) : base(id)
         {
             
