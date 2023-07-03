@@ -7,10 +7,7 @@ namespace Asv.Drones.Gui.Core;
 [PartCreationPolicy(CreationPolicy.NonShared)]
 public class PacketViewerShellMenuItem : ShellMenuItem
 {
-    public const string UriString = ShellMenuItem.UriString + ".packetViewer";
-    public static readonly Uri Uri = new(UriString);
-    
-    public PacketViewerShellMenuItem() : base(Uri)
+    public PacketViewerShellMenuItem() : base("asv:shell.menu.packets")
     {
         Name = RS.PacketViewerShellMenuItem_Name;
         NavigateTo = PacketViewerViewModel.Uri;

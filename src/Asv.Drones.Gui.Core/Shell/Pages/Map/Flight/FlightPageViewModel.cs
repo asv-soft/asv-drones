@@ -1,13 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel.Composition;
-using System.Reactive.Linq;
-using Asv.Avalonia.Map;
+﻿using System.ComponentModel.Composition;
 using Asv.Cfg;
 using Asv.Common;
-using Avalonia.Controls;
-using DynamicData;
 using DynamicData.Binding;
-using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Core
@@ -19,10 +13,10 @@ namespace Asv.Drones.Gui.Core
     }
     
     [ExportShellPage(UriString)]
-    [PartCreationPolicy(CreationPolicy.Shared)] //Important shared mode
+    [PartCreationPolicy(CreationPolicy.NonShared)]
     public class FlightPageViewModel: MapPageViewModel
     {
-        public const string UriString = ShellPage.UriString + ".flight";
+        public const string UriString = "asv:shell.page.map.flight";
         public static readonly Uri Uri = new(UriString);
         
         [ImportingConstructor]

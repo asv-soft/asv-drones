@@ -14,7 +14,7 @@
     <StackPanel Margin="8" Spacing="8">
         <TextBlock Text="Record name" FontSize="20"/>
         <TextBox Watermark="Enter new record name" Text="{Binding RecordName}"/>
-        <ItemsControl DockPanel.Dock="Top" Items="{Binding Tags}">
+        <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Tags}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal"/>
@@ -85,7 +85,7 @@
         </ItemsControl>
         <Grid ColumnDefinitions="*, 4, 100, 4, Auto">
             <TextBox Grid.Column="0" Watermark="Enter new tag name" Text="{Binding TagName}"/>
-            <ComboBox Grid.Column="2" Width="100" Items="{Binding Types}" SelectedItem="{Binding SelectedType}"/>
+            <ComboBox Grid.Column="2" Width="100" ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}"/>
             <Button Grid.Column="4" Content="Add" Command="{Binding AddTag}" VerticalAlignment="Top"/>
         </Grid>
         <TextBox Watermark="Enter new tag value" Text="{Binding TagValue}"/>

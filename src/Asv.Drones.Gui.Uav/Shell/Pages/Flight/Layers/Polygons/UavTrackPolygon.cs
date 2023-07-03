@@ -2,7 +2,6 @@
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Common;
-using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Media;
 using DynamicData;
@@ -28,7 +27,7 @@ namespace Asv.Drones.Gui.Uav
                 .ToObservableChangeSet(limitSizeTo:100) // TODO: move history size to settings
                 .Bind(out _path)
                 .Subscribe()
-                .DisposeWith(Disposable);
+                .DisposeItWith(Disposable);
         }
 
         public override ReadOnlyObservableCollection<GeoPoint> Path => _path;

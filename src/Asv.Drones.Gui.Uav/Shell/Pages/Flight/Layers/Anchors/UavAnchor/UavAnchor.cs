@@ -7,8 +7,6 @@ using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Media;
 using DynamicData;
-using Material.Icons;
-using ReactiveUI;
 using MavlinkHelper = Asv.Drones.Gui.Core.MavlinkHelper;
 
 namespace Asv.Drones.Gui.Uav
@@ -35,11 +33,11 @@ namespace Asv.Drones.Gui.Uav
             IconBrush = Brushes.Red;
             IsVisible = true;
             Icon = MavlinkHelper.GetIcon(vehicle.Class);
-            vehicle.Position.Current.Subscribe(_ => Location = _).DisposeWith(Disposable);
-            vehicle.Position.Yaw.Select(_ => Math.Round(_, 0)).DistinctUntilChanged().Subscribe(_ => RotateAngle = _).DisposeWith(Disposable);
+            vehicle.Position.Current.Subscribe(_ => Location = _).DisposeItWith(Disposable);
+            vehicle.Position.Yaw.Select(_ => Math.Round(_, 0)).DistinctUntilChanged().Subscribe(_ => RotateAngle = _).DisposeItWith(Disposable);
             Title = vehicle.Name.Value;
-            vehicle.Name.Subscribe(_ => Title = _).DisposeWith(Disposable);
-            vehicle.Position.Current.Subscribe(_ => UpdateDescription()).DisposeWith(Disposable);
+            vehicle.Name.Subscribe(_ => Title = _).DisposeItWith(Disposable);
+            vehicle.Position.Current.Subscribe(_ => UpdateDescription()).DisposeItWith(Disposable);
         }
         
         
@@ -63,7 +61,7 @@ namespace Asv.Drones.Gui.Uav
                 .Bind(out _actions)
                 .DisposeMany()
                 .Subscribe()
-                .DisposeWith(Disposable);
+                .DisposeItWith(Disposable);
         }
         
         public override ReadOnlyObservableCollection<MapAnchorActionViewModel> Actions => _actions;

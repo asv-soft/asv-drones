@@ -1,6 +1,5 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
-using System.Reactive.Linq;
 using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Uav;

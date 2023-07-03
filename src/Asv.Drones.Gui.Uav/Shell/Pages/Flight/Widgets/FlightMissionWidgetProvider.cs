@@ -1,4 +1,5 @@
 using System.ComponentModel.Composition;
+using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Avalonia.Controls.Mixins;
 using DynamicData;
@@ -19,7 +20,7 @@ namespace Asv.Drones.Gui.Uav
                 .Transform(_ => (IMapWidget)new FlightUavViewModel(_, log, localization, rttItems))
                 .ChangeKey( ((_, v) => v.Id) )
                 .PopulateInto(Source)
-                .DisposeWith(Disposable);
+                .DisposeItWith(Disposable);
         }
     }
 }

@@ -24,7 +24,7 @@ public class LinkQualityUavRttViewModel : UavRttItem
             .Sample(TimeSpan.FromMilliseconds(500))
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => LinkQuality = _)
-            .DisposeWith(Disposable);
+            .DisposeItWith(Disposable);
         
         Vehicle.Heartbeat.LinkQuality
             .ObserveOn(RxApp.MainThreadScheduler)

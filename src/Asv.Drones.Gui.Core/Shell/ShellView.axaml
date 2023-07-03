@@ -9,16 +9,15 @@
              x:CompileBindings="True"
              x:Class="Asv.Drones.Gui.Core.ShellView"
              x:DataType="core:ShellViewModel">
-    
     <Design.DataContext>
-		<core:ShellViewModel/>
-	</Design.DataContext>
+        <core:ShellViewModel/>
+    </Design.DataContext>
     <UserControl.Styles>
         <Style Selector="ui|NavigationViewItem">
             <Setter Property="Content" Value="{Binding Title}"/>
         </Style>
     </UserControl.Styles>
-	<DockPanel>
+    <DockPanel>
         <Grid DockPanel.Dock="Top" Name="TitleBarHost" ColumnDefinitions="Auto,Auto,*,Auto" HorizontalAlignment="Stretch">
             <Image Margin="13 10"
                    IsHitTestVisible="False"
@@ -26,7 +25,7 @@
                    Width="25" Height="25"
                    DockPanel.Dock="Left"
                    Name="WindowIcon"/>
-            <Menu Grid.Column="1" Items="{Binding HeaderMenuItems}" >
+            <Menu Grid.Column="1" ItemsSource="{Binding HeaderMenuItems}" >
                 <Menu.ItemTemplate>
                     <DataTemplate>
                                 
@@ -41,21 +40,21 @@
                         <Setter Property="IsEnabled" Value="{Binding IsEnabled}"/>
                         <Setter Property="IsVisible" Value="{Binding IsVisible}"/>
                         <Setter Property="StaysOpenOnClick" Value="{Binding StaysOpenOnClick}"/>
-                        <Setter Property="Items" Value="{Binding Items}"/>
+                        <Setter Property="ItemsSource" Value="{Binding Items}"/>
                         <Setter Property="HotKey" Value="{Binding HotKey}"/>
                         <Setter Property="InputGesture" Value="{Binding HotKey}"/>
                     </Style>
                 </Menu.Styles>
             </Menu>
-            <Border Padding="10,5" Margin="5" CornerRadius="{DynamicResource ControlCornerRadius}" VerticalAlignment="Center"  Grid.Column="2" HorizontalAlignment="Center" Background="#366ace">
-                <StackPanel Orientation="Horizontal" Spacing="5">
-                    <avalonia:MaterialIcon Width="20" Height="20" Kind="DatabaseOutline" Foreground="#40b5e0"/>
-                    <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>    
-                </StackPanel>
-            </Border>
+            <!-- <Border Padding="10,5" Margin="5" CornerRadius="{DynamicResource ControlCornerRadius}" VerticalAlignment="Center"  Grid.Column="2" HorizontalAlignment="Center" Background="#366ace"> -->
+            <!--     <StackPanel Orientation="Horizontal" Spacing="5"> -->
+            <!--         <avalonia:MaterialIcon Width="20" Height="20" Kind="DatabaseOutline" Foreground="#40b5e0"/> -->
+            <!--         <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>     -->
+            <!--     </StackPanel> -->
+            <!-- </Border> -->
             
         </Grid>
-        <ItemsControl Items="{Binding StatusItems}" Height="25" DockPanel.Dock="Bottom" Background="{DynamicResource InfoBarErrorSeverityBackgroundBrush}">
+        <ItemsControl ItemsSource="{Binding StatusItems}" Height="25" DockPanel.Dock="Bottom" Background="{DynamicResource InfoBarErrorSeverityBackgroundBrush}">
 			<ItemsControl.ItemContainerTheme>
               <ControlTheme TargetType="ContentPresenter">
                   <ControlTheme.Setters>
@@ -81,13 +80,13 @@
                            Name="NavView"
                            IsSettingsVisible="False"
                            SelectedItem="{Binding SelectedMenu}"
-                           MenuItems="{Binding MenuItems}"
-                           FooterMenuItems="{Binding FooterMenuItems}"
+                           MenuItemsSource="{Binding MenuItems}"
+                           FooterMenuItemsSource="{Binding FooterMenuItems}"
                            MenuItemTemplateSelector="{x:Static core:MenuItemTemplateSelector.Instance}">
             <Panel>
                 <!-- <Image Margin="100" Source="../Assets/program-logo.png"/> -->
-                <ContentControl Content="{CompiledBinding CurrentPage}"/>
-                <ItemsControl HorizontalAlignment="Center" MinWidth="600" Items="{Binding Messages}" Margin="8">
+                <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{CompiledBinding CurrentPage}"/>
+                <ItemsControl HorizontalAlignment="Center" MinWidth="600" ItemsSource="{Binding Messages}" Margin="8">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Spacing="8"></StackPanel>
@@ -103,7 +102,4 @@
         </ui:NavigationView>
         
 	</DockPanel>
-	
-    
 </UserControl>
-

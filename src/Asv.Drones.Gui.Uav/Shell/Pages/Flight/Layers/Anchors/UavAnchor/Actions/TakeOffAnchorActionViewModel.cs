@@ -1,13 +1,10 @@
-﻿using System.ComponentModel.Composition;
-using System.Reactive.Disposables;
+﻿using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Drones.Uav;
 using Asv.Mavlink;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using ReactiveUI;
@@ -28,7 +25,7 @@ namespace Asv.Drones.Gui.Uav
             
             Title = "TakeOff"; // TODO: Localize
             Icon = MaterialIconKind.ArrowUpBoldHexagonOutline;
-            Vehicle.Position.IsArmed.Select(_ => !_).Subscribe(CanExecute).DisposeWith(Disposable);
+            Vehicle.Position.IsArmed.Select(_ => !_).Subscribe(CanExecute).DisposeItWith(Disposable);
             var cmd = ReactiveCommand.CreateFromTask(ExecuteImpl, CanExecute);
             cmd.ThrownExceptions.Subscribe(OnCommandError).DisposeItWith(Disposable);
             Command = cmd;

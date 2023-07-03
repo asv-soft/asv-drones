@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using Material.Icons;
 
 namespace Asv.Drones.Gui.Core
@@ -8,10 +7,7 @@ namespace Asv.Drones.Gui.Core
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class PlaningShellMenuItem : ShellMenuItem
     {
-        public const string UriString = ShellMenuItem.UriString + ".planing";
-        public static readonly Uri Uri = new(UriString);
-        
-        public PlaningShellMenuItem():base(Uri)
+        public PlaningShellMenuItem():base("asv:shell.menu.planning")
         {
             Name = RS.PlaningShellMenuItem_Name;
             NavigateTo = PlaningPageViewModel.Uri;

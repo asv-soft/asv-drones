@@ -1,23 +1,11 @@
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Reactive.Linq;
 using Asv.Common;
 using Asv.Mavlink;
 using Asv.Mavlink.Vehicle;
 using Avalonia;
-using Avalonia.Collections;
-using Avalonia.Controls;
-using Avalonia.Controls.Mixins;
 using Avalonia.Controls.Primitives;
-using Avalonia.Data;
-using Avalonia.Media;
 using DynamicData;
 using DynamicData.Binding;
-using FluentAvalonia.Core;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
-using Disposable = System.Reactive.Disposables.Disposable;
-using Location = Asv.Avalonia.Map.Location;
 
 namespace Asv.Drones.Gui.Uav;
 
@@ -137,7 +125,7 @@ public class MissionStatusIndicator : TemplatedControl
     #region Styled props
         #region Current distance
         public static readonly StyledProperty<double> CurrentDistanceProperty = AvaloniaProperty.Register<MissionStatusIndicator, double>(
-            nameof(CurrentDistance), notifying: UpdateCurrentDistance);
+            nameof(CurrentDistance));
         
         public double CurrentDistance
         {
@@ -148,7 +136,7 @@ public class MissionStatusIndicator : TemplatedControl
 
         #region Max distance
         private static readonly StyledProperty<double> MaxDistanceProperty = AvaloniaProperty.Register<MissionStatusIndicator, double>(
-            nameof(MaxDistance), defaultValue: 0, notifying: UpdateAngles);
+            nameof(MaxDistance), defaultValue: 0);
 
 
         private double MaxDistance
@@ -205,7 +193,7 @@ public class MissionStatusIndicator : TemplatedControl
     }
 
     
-    private static void UpdateAngles(IAvaloniaObject source, bool beforeChanged)
+    private static void UpdateAngles(AvaloniaObject source, bool beforeChanged)
     {
         if (source is not MissionStatusIndicator indicator) return;
         
@@ -220,8 +208,22 @@ public class MissionStatusIndicator : TemplatedControl
             indicator.WayPoints[i].Angle = GetAngle(aggregatedDistance, indicator.MaxDistance + (indicator.MaxDistance * 0.1));
         }
     }
-    
-    private static void UpdateCurrentDistance(IAvaloniaObject source, bool beforeChanged)
+
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+        if (change.Property == CurrentDistanceProperty)
+        {
+            UpdateCurrentDistance(this, false);
+        }
+        if (change.Property == MaxDistanceProperty)
+        {
+            UpdateAngles(this, false);
+        }
+        
+    }
+
+    private static void UpdateCurrentDistance(AvaloniaObject source, bool beforeChanged)
     {
         if (source is not MissionStatusIndicator indicator) return;
         

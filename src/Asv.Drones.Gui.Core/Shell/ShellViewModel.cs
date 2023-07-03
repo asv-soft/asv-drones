@@ -1,23 +1,19 @@
 using Avalonia.Controls;
 using DynamicData;
-using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
-using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Common;
-using Asv.Drones.Core;
-using DynamicData.Binding;
 using Material.Icons;
 
 namespace Asv.Drones.Gui.Core
 {
-    [Export]
+    [Export(typeof(IShell))]
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class ShellViewModel : ViewModelBase, IShell
     {
-        public const string UriString = $"{WellKnownUri.UriScheme}:shell";
+        public const string UriString = $"asv:shell";
         public static readonly Uri Uri = new(UriString);
         
         private readonly INavigationService _navigation;

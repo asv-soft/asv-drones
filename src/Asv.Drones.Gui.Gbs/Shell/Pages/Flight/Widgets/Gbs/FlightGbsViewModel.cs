@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Windows.Input;
@@ -9,7 +8,6 @@ using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.AsvGbs;
 using Avalonia.Controls;
-using Avalonia.Styling;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
@@ -24,6 +22,7 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
     private readonly ILogService _logService;
     private readonly ILocalizationService _loc;
     private readonly IConfiguration _configuration;
+    private readonly ISoundNotificationService _soundNotification;
     public static Uri GenerateUri(IGbsClientDevice gbs) => FlightGbsWidgetBase.GenerateUri(gbs,"gbs");
     
     private Subject<bool> _canExecuteAutoCommand = new();
@@ -31,10 +30,11 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
     private Subject<bool> _canExecuteIdleCommand = new();
     private Subject<bool> _canExecuteCancelCommand = new();
     
-    public FlightGbsViewModel(IGbsClientDevice baseStationDevice, ILogService log, ILocalizationService loc, IConfiguration configuration, IEnumerable<IGbsRttItemProvider> rttItems)
+    public FlightGbsViewModel(IGbsClientDevice baseStationDevice, ILogService log, ISoundNotificationService soundNotification, ILocalizationService loc, IConfiguration configuration, IEnumerable<IGbsRttItemProvider> rttItems)
         :base(baseStationDevice, GenerateUri(baseStationDevice))
     {
         _logService = log;
+        _soundNotification = soundNotification;
         _loc = loc;
         _configuration = configuration;
         
@@ -94,6 +94,8 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
                 _canExecuteFixedCommand.OnNext(true);
                 _canExecuteIdleCommand.OnNext(false);
                 _canExecuteCancelCommand.OnNext(false);
+                
+                _soundNotification.Notify();
                 break;
             case AsvGbsCustomMode.AsvGbsCustomModeError:
                 //TODO: Implement error state
@@ -113,6 +115,7 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
                 _canExecuteCancelCommand.OnNext(false);
 
                 IsDisableShown = true;
+                _soundNotification.Notify();
                 break;
             case AsvGbsCustomMode.AsvGbsCustomModeFixedInProgress:
                 _canExecuteAutoCommand.OnNext(false);
@@ -129,6 +132,7 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
                 _canExecuteCancelCommand.OnNext(false);
                 
                 IsDisableShown = true;
+                _soundNotification.Notify();
                 break;
         }
     }
@@ -146,7 +150,7 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
         var viewModel = new AutoModeViewModel(BaseStation, _logService, _loc, _configuration, ctx);
         viewModel.ApplyDialog(dialog);
         dialog.Content = viewModel;
-        var result = await dialog.ShowAsync();
+        await dialog.ShowAsync();
     }
 
     private async Task EnableFixedMode(CancellationToken ctx)
@@ -162,7 +166,7 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
         var viewModel = new FixedModeViewModel(BaseStation, _logService, _loc, _configuration, ctx);
         viewModel.ApplyDialog(dialog);
         dialog.Content = viewModel;
-        var result = await dialog.ShowAsync();
+        await dialog.ShowAsync();
     }
 
     private async Task EnableIdleMode(CancellationToken ctx)
@@ -170,9 +174,9 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
         await BaseStation.Gbs.StartIdleMode(ctx);
     }
 
-    protected override void InternalAfterMapInit(IMap map)
+    protected override void InternalAfterMapInit(IMap context)
     {
-        base.InternalAfterMapInit(map);
+        base.InternalAfterMapInit(context);
         LocateBaseStationCommand = ReactiveCommand.Create(() =>
         {
             Map.Center = BaseStation.Gbs.Position.Value;

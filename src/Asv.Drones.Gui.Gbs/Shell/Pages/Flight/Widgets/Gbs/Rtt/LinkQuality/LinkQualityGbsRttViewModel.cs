@@ -1,7 +1,5 @@
-using System.Reactive.Linq;
 using Asv.Common;
 using Asv.Mavlink;
-using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Gbs;

@@ -1,5 +1,4 @@
 using System.ComponentModel.Composition;
-using System.Globalization;
 using System.Reactive.Linq;
 using Asv.Cfg;
 using Asv.Common;

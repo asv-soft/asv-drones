@@ -18,7 +18,7 @@ namespace Asv.Drones.Gui.Core {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class RS {
@@ -938,6 +938,24 @@ namespace Asv.Drones.Gui.Core {
         public static string LogMessageTypeHelper_GetDisplayName_Warning {
             get {
                 return ResourceManager.GetString("LogMessageTypeHelper_GetDisplayName_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select ruler starting point.
+        /// </summary>
+        public static string MapPageViewModel_RulerStartPoint_Description {
+            get {
+                return ResourceManager.GetString("MapPageViewModel_RulerStartPoint_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select ruler end point.
+        /// </summary>
+        public static string MapPageViewModel_RulerStopPoint_Description {
+            get {
+                return ResourceManager.GetString("MapPageViewModel_RulerStopPoint_Description", resourceCulture);
             }
         }
         

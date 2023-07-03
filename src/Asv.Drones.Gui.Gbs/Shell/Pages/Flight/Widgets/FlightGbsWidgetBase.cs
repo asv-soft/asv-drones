@@ -19,7 +19,7 @@ namespace Asv.Drones.Gui.Gbs
         
         protected IGbsClientDevice BaseStation { get; }
         
-        protected override void InternalAfterMapInit(IMap map)
+        protected override void InternalAfterMapInit(IMap context)
         {
             
         }

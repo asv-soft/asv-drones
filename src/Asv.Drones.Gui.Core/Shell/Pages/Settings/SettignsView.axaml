@@ -59,7 +59,7 @@
                 </DockPanel>
 			</Grid>
             <controls:InfoBar Margin="0 8" Title="{x:Static core:RS.SettingsView_RebootRequiredTitle}" IsClosable="False" IsOpen="{Binding IsRebootRequired}" Severity="Warning" Message="{x:Static core:RS.SettingsView_RebootRequiredDescription}" />
-            <ItemsControl Items="{Binding Items}">
+            <ItemsControl ItemsSource="{Binding Items}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Spacing="8"></StackPanel>

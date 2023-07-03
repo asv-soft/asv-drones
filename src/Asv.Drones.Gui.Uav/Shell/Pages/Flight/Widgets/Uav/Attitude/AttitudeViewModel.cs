@@ -5,7 +5,6 @@ using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
 using Asv.Mavlink.Vehicle;
-using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Uav
@@ -28,36 +27,36 @@ namespace Asv.Drones.Gui.Uav
             _vehicle.Position.Roll
                 .DistinctUntilChanged()
                 .Subscribe(_ => Roll = Math.Round(-_ % 360))
-                .DisposeWith(Disposable);
+                .DisposeItWith(Disposable);
             _vehicle.Position.Pitch
                 .Select(_=>Math.Round(_))
                 .DistinctUntilChanged()
                 .Subscribe(_ => Pitch = _)
-                .DisposeWith(Disposable);
+                .DisposeItWith(Disposable);
             _vehicle.Position.Yaw.DistinctUntilChanged().Subscribe(_ =>
             {
                 var heading = Math.Round(_ % 360);
                 if (heading < 0) heading = 360 + heading;
                 Heading = heading;
-            }).DisposeWith(Disposable);
+            }).DisposeItWith(Disposable);
             _vehicle.Position.AltitudeAboveHome
                 .Select(_localization.Altitude.ConvertFromSi)
                 .Select(_=>Math.Round(_))
                 .DistinctUntilChanged()
                 .Subscribe(_ => Altitude = _)
-                .DisposeWith(Disposable);
+                .DisposeItWith(Disposable);
             _vehicle
                 .Gnss.Main.GroundVelocity
                 .Select(_localization.Velocity.ConvertFromSi)
                 .Select(_ => Math.Round(_))
                 .DistinctUntilChanged()
                 .Subscribe(_ => Velocity = _)
-                .DisposeWith(Disposable);
+                .DisposeItWith(Disposable);
             _vehicle.Position.Current
                 .Where(_=>_vehicle.Position.Home.Value.HasValue)
                 .DistinctUntilChanged()
                 .Subscribe(_ => UpdateHome(_, _vehicle.Position.Home.Value))
-                .DisposeWith(Disposable);
+                .DisposeItWith(Disposable);
             _vehicle
                 .Position
                 .IsArmed
@@ -66,48 +65,48 @@ namespace Asv.Drones.Gui.Uav
             {
                 IsArmed = _;
                 UpdateStatusText(_ ? "Armed" : "Disarmed"); // TODO: Localize
-            }).DisposeWith(Disposable);
+            }).DisposeItWith(Disposable);
             _vehicle.Position.ArmedTime
                 .DistinctUntilChanged()
                 .Subscribe(_ => ArmedTime = _)
-                .DisposeWith(Disposable);
+                .DisposeItWith(Disposable);
             
             vehicle.Connection
                 .Where(_=>_.SystemId == vehicle.Identity.TargetSystemId && _.MessageId == VibrationPacket.PacketMessageId)
                 .Cast<VibrationPacket>()
                 .Subscribe(_=> VibrationX = 1 - _.Payload.VibrationX)
-                .DisposeWith(Disposable);
+                .DisposeItWith(Disposable);
 
             vehicle.Connection
                 .Where(_=>_.SystemId == vehicle.Identity.TargetSystemId && _.MessageId == VibrationPacket.PacketMessageId)
                 .Cast<VibrationPacket>()
                 
                 .Subscribe(_=> VibrationY = 1 - _.Payload.VibrationY)
-                .DisposeWith(Disposable);
+                .DisposeItWith(Disposable);
             
             vehicle.Connection
                 .Where(_=>_.SystemId == vehicle.Identity.TargetSystemId && _.MessageId == VibrationPacket.PacketMessageId)
                 .Cast<VibrationPacket>()
                 .Subscribe(_=> VibrationZ = 1 - _.Payload.VibrationZ)
-                .DisposeWith(Disposable);
+                .DisposeItWith(Disposable);
             
             vehicle.Connection
                 .Where(_=>_.SystemId == vehicle.Identity.TargetSystemId && _.MessageId == VibrationPacket.PacketMessageId)
                 .Cast<VibrationPacket>()
                 .Subscribe(_=> Clipping0 = _.Payload.Clipping0)
-                .DisposeWith(Disposable);
+                .DisposeItWith(Disposable);
             
             vehicle.Connection
                 .Where(_=>_.SystemId == vehicle.Identity.TargetSystemId && _.MessageId == VibrationPacket.PacketMessageId)
                 .Cast<VibrationPacket>()
                 .Subscribe(_=> Clipping1 = _.Payload.Clipping1)
-                .DisposeWith(Disposable);
+                .DisposeItWith(Disposable);
             
             vehicle.Connection
                 .Where(_=>_.SystemId == vehicle.Identity.TargetSystemId && _.MessageId == VibrationPacket.PacketMessageId)
                 .Cast<VibrationPacket>()
                 .Subscribe(_=> Clipping2 = _.Payload.Clipping2)
-                .DisposeWith(Disposable);
+                .DisposeItWith(Disposable);
         }
         
         private void UpdateStatusText(string text)

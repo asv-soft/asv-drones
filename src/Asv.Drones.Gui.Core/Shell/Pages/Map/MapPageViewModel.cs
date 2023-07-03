@@ -24,10 +24,12 @@ namespace Asv.Drones.Gui.Core
         private readonly ReadOnlyObservableCollection<IMapWidget> _rightWidgets;
         private readonly ReadOnlyObservableCollection<IMapWidget> _bottomWidgets;
         
+        private IDisposable _disposableMapUpdate;
+        
         /// <summary>
         /// This constructor is used for design time
         /// </summary>
-        public MapPageViewModel():base(new Uri(WellKnownUri.Shell + Guid.NewGuid()))
+        public MapPageViewModel():base("asv:shell.page.map")
         {
             
         }
@@ -104,6 +106,20 @@ namespace Asv.Drones.Gui.Core
             this.WhenValueChanged(_ => _.IsRulerEnabled)
                 .Subscribe(SetUpRuler)
                 .DisposeItWith(Disposable);
+
+            this.WhenValueChanged(_ => _.ItemToFollow, false)
+                .Subscribe(SetUpFollow)
+                .DisposeItWith(Disposable);
+
+            Disposable.AddAction(() => _disposableMapUpdate?.Dispose());
+        }
+
+        private void SetUpFollow(IMapAnchor anchor)
+        {
+            _disposableMapUpdate?.Dispose();
+
+            _disposableMapUpdate = anchor?.WhenAnyValue(_ => _.Location)
+                .Subscribe(_ => Center = _);
         }
 
         private void ChangeZoomValue(MapZoomValue value)
@@ -135,8 +151,8 @@ namespace Asv.Drones.Gui.Core
             
             if (isVisible)
             {
-                var start = await ShowTargetDialog("start", CancellationToken.None);
-                var stop = await ShowTargetDialog("stop", CancellationToken.None);
+                var start = await ShowTargetDialog(RS.MapPageViewModel_RulerStartPoint_Description, CancellationToken.None);
+                var stop = await ShowTargetDialog(RS.MapPageViewModel_RulerStopPoint_Description, CancellationToken.None);
 
                 polygon.Ruler.Value.Start.OnNext(start);
                 polygon.Ruler.Value.Stop.OnNext(stop);
@@ -165,6 +181,8 @@ namespace Asv.Drones.Gui.Core
         public GeoPoint Center { get; set; }
         [Reactive]
         public IMapAnchor SelectedItem { get; set; }
+        [Reactive]
+        public IMapAnchor ItemToFollow { get; set; }
         [Reactive]
         public bool IsRulerEnabled { get; set; }
         [Reactive]

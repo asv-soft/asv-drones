@@ -5,7 +5,7 @@ using Avalonia.Controls;
 namespace Asv.Drones.Gui.Core
 {
     [ExportView(typeof(FlightPageViewModel))]
-    [PartCreationPolicy(CreationPolicy.Shared)]
+    [PartCreationPolicy(CreationPolicy.NonShared)]
     public class FlightPageView:MapPageView
     {
         private readonly IConfiguration _configuration;

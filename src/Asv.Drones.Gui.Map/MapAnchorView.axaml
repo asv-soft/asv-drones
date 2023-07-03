@@ -28,7 +28,7 @@
     <Style Selector="controls|MapAnchorView:pointerover /template/ Border#PART_TitleBorder">
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="White"/>
-        <Setter Property="BorderDashArray" Value="2,2"/>
+        <!--<Setter Property="BorderDashArray" Value="2,2"/> TODO: AVALONIA11-->
         <Setter Property="Background" Value="#7c43bd"/>
     </Style>
 
@@ -39,7 +39,7 @@
     </Style>
     <Style Selector="controls|MapAnchorView:selected /template/ Border#PART_TitleBorder">
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderDashArray" Value="{x:Null}"/>
+        <!--<Setter Property="BorderDashArray" Value="{x:Null}"/> TODO: AVALONIA11 -->
         <Setter Property="Background" Value="#4a148c"/>
     </Style>
 
@@ -53,7 +53,7 @@
     </Style>
     <Style Selector="controls|MapAnchorView:selected:pointerover /template/ Border#PART_TitleBorder">
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderDashArray" Value="{x:Null}"/>
+        <!--<Setter Property="BorderDashArray" Value="{x:Null}"/> TODO: AVALONIA11 -->
         <Setter Property="Background" Value="#4a148c"/>
     </Style>
 
@@ -82,7 +82,7 @@
                         <Border IsVisible="{TemplateBinding IsPopupNotEmpty}" Background="{DynamicResource SolidBackgroundFillColorBase}" Padding="10" CornerRadius="{DynamicResource ControlCornerRadius}" >
                             <StackPanel>
                                 <TextBlock Text="{TemplateBinding Description}"/>
-                                <ItemsControl Items="{TemplateBinding Actions}">
+                                <ItemsControl ItemsSource="{TemplateBinding Actions}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate DataType="controls:MapAnchorActionViewModel">
                                             <Button HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" Margin="3" Command="{CompiledBinding Command}" CommandParameter="{CompiledBinding CommandParameter}" Classes="Outline Light" >

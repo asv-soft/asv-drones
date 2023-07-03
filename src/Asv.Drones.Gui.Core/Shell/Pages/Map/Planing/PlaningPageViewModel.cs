@@ -1,13 +1,7 @@
-using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
-using System.Reactive.Linq;
-using Asv.Avalonia.Map;
 using Asv.Cfg;
 using Asv.Common;
-using Avalonia.Controls;
-using DynamicData;
 using DynamicData.Binding;
-using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Core
@@ -22,7 +16,7 @@ namespace Asv.Drones.Gui.Core
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class PlaningPageViewModel:MapPageViewModel
     {
-        public const string UriString = ShellPage.UriString + ".planing";
+        public const string UriString = "asv:shell.page.map.planing";
         public static readonly Uri Uri = new(UriString);
         
         [ImportingConstructor]

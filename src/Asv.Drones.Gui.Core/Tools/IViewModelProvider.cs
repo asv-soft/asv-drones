@@ -33,6 +33,10 @@ namespace Asv.Drones.Gui.Core
         {
             Id = id;
         }
+        protected ViewModelBase(string id): this(new Uri(id))
+        {
+            
+        }
 
         public Uri Id { get; }
     }

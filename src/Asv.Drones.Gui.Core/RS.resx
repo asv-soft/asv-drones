@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -674,6 +674,12 @@
   </data>
   <data name="PacketViewerViewModel_SeparatorDialog_Tab" xml:space="preserve">
     <value>Horizontal tabulation [ Tab ]</value>
+  </data>
+    <data name="MapPageViewModel_RulerStartPoint_Description" xml:space="preserve">
+    <value>Select ruler starting point</value>
+  </data>
+    <data name="MapPageViewModel_RulerStopPoint_Description" xml:space="preserve">
+    <value>Select ruler end point</value>
   </data>
   <data name="Ddm_InParts_Title" xml:space="preserve">
     <value>In parts</value>

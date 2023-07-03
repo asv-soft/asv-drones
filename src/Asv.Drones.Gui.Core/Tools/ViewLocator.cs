@@ -1,56 +1,46 @@
-using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using Asv.Drones.Gui.Core;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using ReactiveUI;
 
-namespace Asv.Drones.Gui
+namespace Asv.Drones.Gui.Core;
+
+public class ViewLocator : IDataTemplate
 {
-    public class ViewLocator : IDataTemplate,IDisposable
+    public static readonly Type BaseViewType = typeof(Control);
+    private readonly CompositionContainer _container;
+    
+
+    public ViewLocator(CompositionContainer container)
     {
-        public static readonly Type BaseViewType = typeof(IControl);
+        _container = container ?? throw new ArgumentNullException(nameof(container));
+    }
+    
+    public Control? Build(object? data)
+    {
+        if (data is null)
+            return null;
+        var viewModelType = data.GetType();
+        // try to find view by attribute
+        var defaultView = _container.GetExports<Control, IViewMetadata>().FirstOrDefault(_ => _.Metadata.ViewModelType == viewModelType);
+        if (defaultView != null) return defaultView.Value;
+        // try to find view for base class
+        defaultView = _container.GetExports<Control, IViewMetadata>().FirstOrDefault(view => viewModelType.IsSubclassOf(view.Metadata.ViewModelType));
+        if (defaultView != null) return defaultView.Value;
+        
+        var name = data.GetType().FullName!.Replace("ViewModel", "View");
+        var type = Type.GetType(name);
 
-        private readonly CompositionContainer _container;
-        private bool _isDisposed;
-
-        public ViewLocator(CompositionContainer container)
+        if (type != null)
         {
-            _container = container;
+            return (Control)Activator.CreateInstance(type)!;
         }
 
-        public IControl? Build(object? data)
-        {
-            if (_isDisposed || data == null) return null;
-            var viewModelType = data.GetType();
-            var defaultView = _container.GetExports<IControl, IViewMetadata>().FirstOrDefault(_ => _.Metadata.ViewModelType == viewModelType);
-            if (defaultView != null) return defaultView.Value;
-            defaultView = _container.GetExports<IControl, IViewMetadata>().FirstOrDefault(_ => viewModelType.IsSubclassOf(_.Metadata.ViewModelType));
-            if (defaultView != null) return defaultView.Value;
-            // if have no attribute, just search view by name
-            var name = viewModelType.FullName!.Replace("ViewModel", "View");
-            var type = Type.GetType(name);
-            if (type == null) return new TextBlock { Text = "Not Found: " + name };
-            var contract = AttributedModelServices.GetContractName(type);
-            try
-            {
-                return (IControl)_container.GetExportedValue<object>(contract)!;
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-            
-        }
+        return new TextBlock { Text = name };
+    }
 
-        public bool Match(object? data)
-        {
-            return data is ReactiveObject;
-        }
-
-        public void Dispose()
-        {
-            _isDisposed = true;
-        }
+    public bool Match(object? data)
+    {
+        return data is ReactiveObject;
     }
 }

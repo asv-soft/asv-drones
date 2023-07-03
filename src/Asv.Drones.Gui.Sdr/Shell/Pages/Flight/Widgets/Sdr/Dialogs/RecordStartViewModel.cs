@@ -5,11 +5,9 @@ using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Controls;
 using FluentAvalonia.UI.Controls;
-using HarfBuzzSharp;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
-using RS = Asv.Drones.Gui.Core.RS;
 
 namespace Asv.Drones.Gui.Sdr;
 
@@ -58,7 +56,8 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
 
         AddTag = ReactiveCommand.Create(() =>
         {
-            if (TagName.IsNullOrWhiteSpace() | TagValue.IsNullOrWhiteSpace() | RecordName.IsNullOrWhiteSpace()) return;
+            if (TagName.IsNullOrWhiteSpace() | TagValue.IsNullOrWhiteSpace() | RecordName.IsNullOrWhiteSpace() | 
+                Tags.Where(__ => __.Name == TagName).Count() > 0) return;
             
             if (SelectedType == "String8")
             {
@@ -100,6 +99,9 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
                 tag.Remove = ReactiveCommand.Create(() => { Tags.Remove(tag); });
                 Tags.Add(tag);
             }
+            
+            TagName = "";
+            TagValue = "";
         });
         
         SelectedType = Types.First();
@@ -107,7 +109,7 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
         this.ValidationRule(x => x.TagName, _ =>
             {
                 if (_.IsNullOrWhiteSpace()) return false;
-                
+                if (Tags.Where(__ => __.Name == _).Count() > 0) return false;
                 bool isValid = true;
                 try
                 {

@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.Composition;
 using Asv.Drones.Gui.Core;
-using Asv.Drones.Gui.Uav;
 using Asv.Mavlink;
 
 namespace Asv.Drones.Gui.Gbs;

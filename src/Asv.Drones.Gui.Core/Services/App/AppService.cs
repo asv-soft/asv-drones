@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.Composition;
-using System.Reactive.Linq;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Core;

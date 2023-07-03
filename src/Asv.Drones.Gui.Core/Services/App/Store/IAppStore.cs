@@ -1,5 +1,4 @@
-﻿using System;
-using Asv.Store;
+﻿using LiteDB;
 
 namespace Asv.Drones.Core
 {
@@ -11,9 +10,11 @@ namespace Asv.Drones.Core
         void TryCopy(IAppStore from,IAppStore to);
     }
     
-    public interface IAppStore:IStore
+    public interface IAppStore:IDisposable
     {
         int GetFileSizeInBytes();
+        ILiteDatabase Db { get; }
+        string SourceName { get; }
     }
 
     

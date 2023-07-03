@@ -1,14 +1,14 @@
 using System.Collections.Specialized;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Runtime.CompilerServices;
 using Asv.Common;
 using Avalonia;
-using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Mixins;
+using Avalonia.Controls.Primitives;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
 using Avalonia.Media;
 using ReactiveUI;
@@ -19,6 +19,8 @@ namespace Asv.Avalonia.Map
     [PseudoClasses(":pressed", ":selected")]
     public class MapViewItem : ContentControl, ISelectable, IActivatableView
     {
+        private static readonly Point s_invalidPoint = new Point(double.NaN, double.NaN);
+        private Point _pointerDownPoint = s_invalidPoint;
         private MapView _map;
 
         static MapViewItem()
@@ -26,6 +28,10 @@ namespace Asv.Avalonia.Map
             SelectableMixin.Attach<MapViewItem>(IsSelectedProperty);
             PressedMixin.Attach<MapViewItem>();
             FocusableProperty.OverrideDefaultValue<MapViewItem>(true);
+        }
+
+        private void OnIsSelectedChanged(RoutedEventArgs routedEventArgs)
+        {
             
         }
 
@@ -33,9 +39,9 @@ namespace Asv.Avalonia.Map
         {
             this.WhenActivated(disp =>
             {
-                DisposableMixins.DisposeWith(this.WhenAnyValue(_ => _.IsSelected).Subscribe(UpdateSelectableZindex), disp);
-                DisposableMixins.DisposeWith(this.WhenAnyValue(_ => _.IsSelected).Subscribe(_ => this.IsHitTestVisible = !_), disp);
-                DisposableMixins.DisposeWith(this.WhenAnyValue(_ => _.Bounds).Subscribe(_ => UpdateLocalPosition()), disp);
+                this.WhenAnyValue(_ => _.IsSelected).Subscribe(UpdateSelectableZindex).DisposeWith(disp);
+                this.WhenAnyValue(_ => _.IsSelected).Subscribe(_ => this.IsHitTestVisible = !_).DisposeWith(disp);
+                this.WhenAnyValue(_ => _.Bounds).Subscribe(_ => UpdateLocalPosition()).DisposeWith(disp);
 
                 Observable.FromEventPattern<EventHandler<PointerPressedEventArgs>, PointerPressedEventArgs>(
                     handler => PointerPressed += handler,
@@ -128,7 +134,7 @@ namespace Asv.Avalonia.Map
         {
             base.OnAttachedToVisualTree(e);
 
-            IControl a = this;
+            StyledElement a = this;
             while (a != null)
             {
                 a = a.Parent;
@@ -166,6 +172,67 @@ namespace Asv.Avalonia.Map
             UpdateLocalPosition();
         }
 
+        protected override void OnPointerPressed(PointerPressedEventArgs e)
+        {
+            base.OnPointerPressed(e);
+
+            _pointerDownPoint = s_invalidPoint;
+
+            if (e.Handled)
+                return;
+
+            if (!e.Handled && ItemsControl.ItemsControlFromItemContaner(this) is MapView owner)
+            {
+                var p = e.GetCurrentPoint(this);
+
+                if (p.Properties.PointerUpdateKind is PointerUpdateKind.LeftButtonPressed or 
+                    PointerUpdateKind.RightButtonPressed)
+                {
+                    if (p.Pointer.Type == PointerType.Mouse)
+                    {
+                        // If the pressed point comes from a mouse, perform the selection immediately.
+                        e.Handled = owner.UpdateSelectionFromPointerEvent(this, e);
+                    }
+                    else
+                    {
+                        // Otherwise perform the selection when the pointer is released as to not
+                        // interfere with gestures.
+                        _pointerDownPoint = p.Position;
+
+                        // Ideally we'd set handled here, but that would prevent the scroll gesture
+                        // recognizer from working.
+                        ////e.Handled = true;
+                    }
+                }
+            }
+        }
+        
+        protected override void OnPointerReleased(PointerReleasedEventArgs e)
+        {
+            base.OnPointerReleased(e);
+
+            if (!e.Handled && 
+                !double.IsNaN(_pointerDownPoint.X) &&
+                e.InitialPressMouseButton is MouseButton.Left or MouseButton.Right)
+            {
+                var point = e.GetCurrentPoint(this);
+                var settings = TopLevel.GetTopLevel(e.Source as Visual)?.PlatformSettings;
+                var tapSize = settings?.GetTapSize(point.Pointer.Type) ?? new Size(4, 4);
+                var tapRect = new Rect(_pointerDownPoint, new Size())
+                    .Inflate(new Thickness(tapSize.Width, tapSize.Height));
+
+                if (new Rect(Bounds.Size).ContainsExclusive(point.Position) &&
+                    tapRect.ContainsExclusive(point.Position) &&
+                    ItemsControl.ItemsControlFromItemContaner(this) is MapView owner)
+                {
+                    if (owner.UpdateSelectionFromPointerEvent(this, e))
+                        e.Handled = true;
+                }
+            }
+
+            _pointerDownPoint = s_invalidPoint;
+        }
+        
         public void UpdateLocalPosition()
         {
             if (_map == null) return;
@@ -237,7 +304,7 @@ namespace Asv.Avalonia.Map
                 // Create a StreamGeometry to use to specify _myPath.
                 var geometry = new StreamGeometry();
             
-                geometry.BeginBatchUpdate();
+                
                 using (var ctx = geometry.Open())
                 {
                     ctx.BeginFigure(truePath[0], false);
@@ -249,9 +316,6 @@ namespace Asv.Avalonia.Map
                     //ctx.PolyLineTo(localPath, true, true);
                 }
             
-                // Freeze the geometry (make it unmodifiable)
-                // for additional performance benefits.
-                geometry.EndBatchUpdate();
                 if (Shape == null)
                 {
                     // Create a path to draw a geometry with.

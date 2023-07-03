@@ -3,108 +3,44 @@
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>disable</Nullable>
+        <Nullable>enable</Nullable>
+        <AssemblyVersion>$(ProductStrongVersion)</AssemblyVersion>
+        <FileVersion>$(ProductExtendedVersion)</FileVersion>
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Dialogs\AutoModeView.axaml.cs">
-        <DependentUpon>AutoModeView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Dialogs\FixedModeView.axaml.cs">
-        <DependentUpon>FixedModeView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\Accuracy\AccuracyGbsRttView.axaml.cs">
-        <DependentUpon>AccuracyGbsRttView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\Accuracy\AccuracyGbsRttView.axaml.cs">
-        <DependentUpon>AccuracyGbsRttView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\DGpsRate\DGpsRateGbsRttView.axaml.cs">
-        <DependentUpon>DGpsRateGbsRttView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\DGpsRate\DGpsRateGbsRttView.axaml.cs">
-        <DependentUpon>DGpsRateGbsRttView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\LinkQuality\LinkQualityGbsRttView.axaml.cs">
-        <DependentUpon>LinkQualityGbsRttView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\LinkQuality\LinkQualityGbsRttView.axaml.cs">
-        <DependentUpon>LinkQualityGbsRttView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\Observation\ObservationGbsRttView.axaml.cs">
-        <DependentUpon>ObservationGbsRttView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\Observation\ObservationGbsRttView.axaml.cs">
-        <DependentUpon>ObservationGbsRttView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\VisibleSatellites\VisibleSatellitesGbsRttView.axaml.cs">
-        <DependentUpon>VisibleSatellitesGbsRttView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\VisibleSatellites\VisibleSatellitesGbsRttView.axaml.cs">
-        <DependentUpon>VisibleSatellitesGbsRttView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\BaseStationMode\BaseStationModeGbsRttView.axaml.cs">
-        <DependentUpon>BaseStationModeGbsRttView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\Rtt\BaseStationMode\BaseStationModeGbsRttView.axaml.cs">
-        <DependentUpon>BaseStationModeGbsRttView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\FlightGbsView.axaml.cs">
-        <DependentUpon>FlightGbsView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Shell\Pages\Flight\Widgets\Gbs\FlightGbsView.axaml.cs">
-        <DependentUpon>FlightGbsView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="RS.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>RS.resx</DependentUpon>
-      </Compile>
+        <PackageReference Include="Asv.Cfg" Version="$(AsvCommonVersion)" />
+        <PackageReference Include="Asv.Common" Version="$(AsvCommonVersion)" />
+        <PackageReference Include="Asv.Mavlink" Version="$(AsvMavlinkVersion)" />
+        <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
+        <PackageReference Include="Avalonia.Xaml.Interactions" Version="$(AvaloniaVersion)" />
+        <PackageReference Include="FluentAvaloniaUI" Version="2.0.0-rc1" />
+        <PackageReference Include="Material.Icons.Avalonia" Version="2.0.1" />
+        <PackageReference Include="ReactiveUI" Version="19.2.1" />
+        <PackageReference Include="ReactiveUI.Fody" Version="19.2.1" />
+        <PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
+        <PackageReference Include="System.ComponentModel.Composition" Version="7.0.0" />
+        <PackageReference Include="LiteDB" Version="5.0.16" />
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Update="RS.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>RS.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="Shell\Pages\Flight\Widgets\Sdr\FlightGbsView.axaml" />
+        <Compile Update="RS.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>RS.resx</DependentUpon>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Asv.Drones.Gui.Core\Asv.Drones.Gui.Core.csproj" />
+        <ProjectReference Include="..\Asv.Drones.Gui.Core\Asv.Drones.Gui.Core.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="Asv.Mavlink" Version="3.2.5-alpha-07" />
-      <PackageReference Include="ReactiveUI.Fody" Version="18.4.34" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Shell\Pages\Flight\Widgets\Sdr\Rtt\Vor\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Update="RS.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-        <LastGenOutput>RS.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
-    </ItemGroup>
-
-    <ItemGroup>
-      <UpToDateCheckInput Remove="Controls\IlsParamsIndicator.axaml" />
-      <UpToDateCheckInput Remove="Controls\VorParamsIndicator.axaml" />
-    </ItemGroup>
 
 </Project>

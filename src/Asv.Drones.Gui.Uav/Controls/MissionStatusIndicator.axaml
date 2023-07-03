@@ -36,7 +36,7 @@
                         <ItemsControl Name="RoundPoints" Margin="0 72 0 0"
                                       Width="{Binding InternalWidth, RelativeSource={RelativeSource TemplatedParent}}" 
                                       Height="{Binding InternalRoundHeight, RelativeSource={RelativeSource TemplatedParent}}"
-                                      Items="{Binding WayPoints, RelativeSource={RelativeSource TemplatedParent}}">
+                                      ItemsSource="{Binding WayPoints, RelativeSource={RelativeSource TemplatedParent}}">
                             <ItemsControl.RenderTransform>
                                 <TransformGroup>
                                     <RotateTransform Angle="{Binding RelativeSource={RelativeSource TemplatedParent}, Path= CurrentAngle}"/>

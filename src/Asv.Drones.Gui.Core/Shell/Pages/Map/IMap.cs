@@ -1,8 +1,6 @@
 ﻿using Asv.Avalonia.Map;
 using Asv.Common;
-using DynamicData;
 using System.Collections.ObjectModel;
-using System.Reactive.Disposables;
 using Material.Icons;
 
 namespace Asv.Drones.Gui.Core
@@ -19,6 +17,7 @@ namespace Asv.Drones.Gui.Core
         GeoPoint Center { get; set; }
         ReadOnlyObservableCollection<IMapAnchor> Markers { get; }
         IMapAnchor SelectedItem { get; set; }
+        IMapAnchor ItemToFollow { get; set; }
         Task<GeoPoint> ShowTargetDialog(string text, CancellationToken cancel);
     }
     
@@ -41,6 +40,6 @@ namespace Asv.Drones.Gui.Core
         WidgetLocation Location { get; }
         public string Title { get; }
         public MaterialIconKind Icon { get; }
-        IMapWidget Init(IMap map);
+        IMapWidget Init(IMap context);
     }
 }

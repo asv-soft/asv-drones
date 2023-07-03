@@ -53,7 +53,7 @@
             <ProgressBar DockPanel.Dock="Top" Minimum="0"  Maximum="1" IsVisible="{Binding IsInProgress}" Value="{CompiledBinding Progress}" IsIndeterminate="False" VerticalAlignment="Center" Margin="0,5" Classes="notransitions"/>
 		
             <ScrollViewer>
-                <ListBox Items="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" Grid.IsSharedSizeScope="True">
+                <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" Grid.IsSharedSizeScope="True">
                     
                 </ListBox>    
             </ScrollViewer>

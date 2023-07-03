@@ -1,261 +1,191 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
-    Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
-    associated with the data types.
-    
-    Example:
-    
-    ... ado.net/XML headers & schema ...
-    <resheader name="resmimetype">text/microsoft-resx</resheader>
-    <resheader name="version">2.0</resheader>
-    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-        <value>[base64 mime encoded serialized .NET Framework object]</value>
-    </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-        <comment>This is a comment</comment>
-    </data>
-                
-    There are any number of "resheader" rows that contain simple 
-    name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
-    mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
-    extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
-    read any of the formats listed below.
-    
-    mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-            : and then encoded with base64 encoding.
-    
-    mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-            : and then encoded with base64 encoding.
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
 
-    mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
-            : using a System.ComponentModel.TypeConverter
-            : and then encoded with base64 encoding.
-    -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  
-  <data name="RoiAnchor_Vehicle_Name" xml:space="preserve">
+    <data name="RoiAnchor_Vehicle_Name" xml:space="preserve">
     <value>ROI от</value>
   </data>
-  <data name="TakeOffAnchorActionViewModel_Title" xml:space="preserve">
+    <data name="TakeOffAnchorActionViewModel_Title" xml:space="preserve">
     <value>Взлёт</value>
   </data>
-  <data name="TakeOffAnchorActionViewModel_DialogDescription" xml:space="preserve">
+    <data name="TakeOffAnchorActionViewModel_DialogDescription" xml:space="preserve">
     <value>Задайте высоту для взлёта относительно земли (AGL).</value>
   </data>
-  <data name="TakeOffAnchorActionViewModel_DialogPrimaryButton" xml:space="preserve">
+    <data name="TakeOffAnchorActionViewModel_DialogPrimaryButton" xml:space="preserve">
     <value>Взлёт</value>
   </data>
-  <data name="TakeOffAnchorActionViewModel_DialogSecondaryButton" xml:space="preserve">
+    <data name="TakeOffAnchorActionViewModel_DialogSecondaryButton" xml:space="preserve">
     <value>Отмена</value>
   </data>
-  <data name="TakeOffAnchorActionViewModel_ValidValue" xml:space="preserve">
+    <data name="TakeOffAnchorActionViewModel_ValidValue" xml:space="preserve">
     <value>Высота должна быть больше или равна {0}.</value>
   </data>
-  <data name="TakeOffAnchorActionViewModel_LogMessage" xml:space="preserve">
+    <data name="TakeOffAnchorActionViewModel_LogMessage" xml:space="preserve">
     <value>Пользователь отправил команду Взлёт на высоту {0} для {1}</value>
   </data>
 
-  <data name="BatteryUavRttView_ToolTip" xml:space="preserve">
+    <data name="BatteryUavRttView_ToolTip" xml:space="preserve">
     <value>Заряд батареи</value>
   </data>
-  <data name="UavAnchor_Latitude" xml:space="preserve">
+    <data name="UavAnchor_Latitude" xml:space="preserve">
     <value>Широта: {0}</value>
   </data>
-  <data name="UavAnchor_Longitude" xml:space="preserve">
+    <data name="UavAnchor_Longitude" xml:space="preserve">
     <value>Долгота: {0}</value>
   </data>
-  <data name="UavAnchor_GNSS_Altitude" xml:space="preserve">
+    <data name="UavAnchor_GNSS_Altitude" xml:space="preserve">
     <value>Высота GNSS: {0}</value>
   </data>
-  <data name="UavAnchor_AGL_Altitude" xml:space="preserve">
+    <data name="UavAnchor_AGL_Altitude" xml:space="preserve">
     <value>Высота AGL: {0}</value>
 
   </data>
-  <data name="RoiAnchor_Vehicle_Yaw_Sample_Description" xml:space="preserve">
+    <data name="RoiAnchor_Vehicle_Yaw_Sample_Description" xml:space="preserve">
     <value>Угол рыскания</value>
   </data>
-  <data name="RoiAnchor_Vehicle_Yaw_Sample_Unit" xml:space="preserve">
+    <data name="RoiAnchor_Vehicle_Yaw_Sample_Unit" xml:space="preserve">
     <value>град</value>
   </data>
-  <data name="UavRttItem_ValueNotAvailable" xml:space="preserve">
+    <data name="UavRttItem_ValueNotAvailable" xml:space="preserve">
     <value>Н\Д</value>
   </data>
-  <data name="ParametersEditorPageViewModel_Title" xml:space="preserve">
+    <data name="ParametersEditorPageViewModel_Title" xml:space="preserve">
     <value>Редактор параметров [{0}]</value>
   </data>
-  <data name="ParametersEditorPageViewModel_Search" xml:space="preserve">
+    <data name="ParametersEditorPageViewModel_Search" xml:space="preserve">
     <value>Найти</value>
   </data>
-  <data name="ParametersEditorPageViewModel_Total" xml:space="preserve">
+    <data name="ParametersEditorPageViewModel_Total" xml:space="preserve">
     <value>Всего: {0}</value>
   </data>
-  <data name="CpuLoadUavRttView_ToolTip" xml:space="preserve">
+    <data name="CpuLoadUavRttView_ToolTip" xml:space="preserve">
     <value>Загрузка процессора БПЛА</value>
   </data>
-  <data name="CurrentUavRttView_ToolTip" xml:space="preserve">
+    <data name="CurrentUavRttView_ToolTip" xml:space="preserve">
     <value>Ток БПЛА</value>
   </data>
-  <data name="FlightTimeUavRttView_ToolTip" xml:space="preserve">
+    <data name="FlightTimeUavRttView_ToolTip" xml:space="preserve">
     <value>Время полёта БПЛА</value>
   </data>
-  <data name="HomeDistanceUavRttView_ToolTip" xml:space="preserve">
+    <data name="HomeDistanceUavRttView_ToolTip" xml:space="preserve">
     <value>Дистанция от БПЛА до дома</value>
   </data>
-  <data name="LinkQualityUavRttView_ToolTip" xml:space="preserve">
+    <data name="LinkQualityUavRttView_ToolTip" xml:space="preserve">
     <value>Качество связи с БПЛА</value>
   </data>
-  <data name="VoltageUavRttItemView_ToolTip" xml:space="preserve">
+    <data name="VoltageUavRttItemView_ToolTip" xml:space="preserve">
     <value>Напряжение БПЛА</value>
   </data>
-  <data name="FlightUavView_MoveToButton_ToolTip" xml:space="preserve">
+    <data name="FlightUavView_MoveToButton_ToolTip" xml:space="preserve">
     <value>Перейти к этому БПЛА на карте</value>
   </data>
-  <data name="MissionStatusView_GetMissionButton_ToolTip" xml:space="preserve">
+    <data name="MissionStatusView_GetMissionButton_ToolTip" xml:space="preserve">
     <value>Загрузить миссию с БПЛА</value>
   </data>
-  <data name="MissionStatusView_DisableLayersButton_ToolTip" xml:space="preserve">
+    <data name="MissionStatusView_DisableLayersButton_ToolTip" xml:space="preserve">
     <value>Выключает видимость траектории и точек миссии</value>
   </data>
-  <data name="MissionStatusView_TogglePolygonButton_ToolTip" xml:space="preserve">
+    <data name="MissionStatusView_TogglePolygonButton_ToolTip" xml:space="preserve">
     <value>Включает/выключает видимость траектории миссии</value>
   </data>
-  <data name="MissionStatusView_ToggleWaypointsButton_ToolTip" xml:space="preserve">
+    <data name="MissionStatusView_ToggleWaypointsButton_ToolTip" xml:space="preserve">
     <value>Включает/выключает видимость точек миссии</value>
   </data>
-  <data name="MissionStatusView_Total" xml:space="preserve">
+    <data name="MissionStatusView_Total" xml:space="preserve">
     <value>Всего: {0}</value>
   </data>
-  <data name="MissionStatusView_MissionProgress_ToolTip" xml:space="preserve">
+    <data name="MissionStatusView_MissionProgress_ToolTip" xml:space="preserve">
     <value>Текущий прогресс миссии</value>
   </data>
-  <data name="ParametersEditorPageView_StarsToggleButton_ToolTip" xml:space="preserve">
+    <data name="ParametersEditorPageView_StarsToggleButton_ToolTip" xml:space="preserve">
     <value>Показать только избранные параметры</value>
   </data>
-  <data name="ParametersEditorPageView_UpdateButton_ToolTip" xml:space="preserve">
+    <data name="ParametersEditorPageView_UpdateButton_ToolTip" xml:space="preserve">
     <value>Обновить все параметры</value>
   </data>
-  <data name="ParametersEditorPageView_PinsOffButton_ToolTip" xml:space="preserve">
+    <data name="ParametersEditorPageView_PinsOffButton_ToolTip" xml:space="preserve">
     <value>Убрать все прикреплённые параметры</value>
   </data>
-  <data name="ParametersEditorParameterView_PinToggleButton_ToolTip" xml:space="preserve">
+    <data name="ParametersEditorParameterView_PinToggleButton_ToolTip" xml:space="preserve">
     <value>Включить/выключить закрепление этого параметра</value>
   </data>
-  <data name="ParametersEditorParameterView_UpdateButton_ToolTip" xml:space="preserve">
+    <data name="ParametersEditorParameterView_UpdateButton_ToolTip" xml:space="preserve">
     <value>Обновить этот парметр из БПЛА</value>
   </data>
-  <data name="ParametersEditorParameterView_WriteButton_ToolTip" xml:space="preserve">
+    <data name="ParametersEditorParameterView_WriteButton_ToolTip" xml:space="preserve">
     <value>Записать этот парметр в БПЛА</value>
   </data>
-  <data name="ParametersEditorParameterView_RebootRequired" xml:space="preserve">
+    <data name="ParametersEditorParameterView_RebootRequired" xml:space="preserve">
     <value>Требуется перезагрузка</value>
   </data>
-  <data name="ParametersEditorPageView_StarButton_ToolTip" xml:space="preserve">
+    <data name="ParametersEditorPageView_StarButton_ToolTip" xml:space="preserve">
     <value>Добавить параметр в избранные</value>
   </data>
-  <data name="ParametersEditorParameterView_UpdateButton" xml:space="preserve">
+    <data name="ParametersEditorParameterView_UpdateButton" xml:space="preserve">
     <value>Обновить</value>
   </data>
-  <data name="ParametersEditorParameterView_WriteButton" xml:space="preserve">
+    <data name="ParametersEditorParameterView_WriteButton" xml:space="preserve">
     <value>Записать</value>
   </data>
-  <data name="AltitudeIndicator_Vibration_ToolTip" xml:space="preserve">
+    <data name="AltitudeIndicator_Vibration_ToolTip" xml:space="preserve">
     <value>Вибрация и клиппинг БПЛА</value>
   </data>
-  <data name="AttitudeIndicator_Velocity_ToolTip" xml:space="preserve">
+    <data name="AttitudeIndicator_Velocity_ToolTip" xml:space="preserve">
     <value>Скорость</value>
   </data>
-  <data name="AttitudeIndicator_Altitude_ToolTip" xml:space="preserve">
+    <data name="AttitudeIndicator_Altitude_ToolTip" xml:space="preserve">
     <value>Высота</value>
   </data>
-  <data name="AttitudeIndicator_Compass_ToolTip" xml:space="preserve">
+    <data name="AttitudeIndicator_Compass_ToolTip" xml:space="preserve">
     <value>Компас</value>
   </data>
-  <data name="FlightUavView_Minimize_ToolTip" xml:space="preserve">
+    <data name="FlightUavView_Minimize_ToolTip" xml:space="preserve">
     <value>Свернуть/Развернуть БПЛА</value>
+  </data>
+    <data name="FlightUavView_FollowButton_ToolTip" xml:space="preserve">
+    <value>Следовать/Прекратить следование за БПЛА</value>
+  </data>
+  <data name="RebootAutopilotView_AutopilotReboot_Description" xml:space="preserve">
+    <value>Выберите режим перезапуска/отключения автопилота</value>
+  </data>
+  <data name="RebootAutopilotView_CompanionReboot_Description" xml:space="preserve">
+    <value>Выберите режим перезапуска/отключения бортового компьютера</value>
+  </data>
+  <data name="RebootAutopilotAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Перезагрузить/Выключить автопилот</value>
+  </data>
+  <data name="RebootAutopilotAnchorActionViewModel_DialogPrimaryButton" xml:space="preserve">
+    <value>Ок</value>
+  </data>
+  <data name="RebootAutopilotAnchorActionViewModel_DialogSecondaryButton" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="RebootAutopilotAnchorActionViewModel_LogMessage" xml:space="preserve">
+    <value>Пользователь отправил комманду перезагрузки автопилота с параметрами {0} и {1}</value>
+  </data>
+  <data name="SelectModeAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Выбор режима БПЛА</value>
+  </data>
+  <data name="SelectModeAnchorActionViewModel_DialogPrimaryButton" xml:space="preserve">
+    <value>Ок</value>
+  </data>
+  <data name="SelectModeAnchorActionViewModel_DialogSecondaryButton" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="SelectModeAnchorActionViewModel_LogMessage" xml:space="preserve">
+    <value>Пользователь отправил команду на изменение режима с {0} на {1}</value>
+  </data>
+  <data name="SelectModeAnchorActionView_DialogDescription" xml:space="preserve">
+    <value>Измените режим БПЛА на режим из списка</value>
   </data>
 </root>

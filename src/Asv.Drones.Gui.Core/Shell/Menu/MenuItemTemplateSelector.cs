@@ -15,9 +15,9 @@ namespace Asv.Drones.Gui.Core
             SimpleItem = new FuncDataTemplate<IShellMenuItem>((value, namescope) =>
                 new NavigationViewItem
                 {
-                    [!NavigationViewItem.IconProperty] = new Binding(nameof(IShellMenuItem.Icon)),
+                    [!NavigationViewItem.IconSourceProperty] = new Binding(nameof(IShellMenuItem.Icon)),
                     [!ContentControl.ContentProperty] = new Binding(nameof(IShellMenuItem.Name)),
-                    [!NavigationViewItem.MenuItemsProperty] = new Binding(nameof(IShellMenuItem.Items)),
+                    [!NavigationViewItem.MenuItemsSourceProperty] = new Binding(nameof(IShellMenuItem.Items)),
                 });
             HeaderTemplate = new FuncDataTemplate<IShellMenuItem>((value, namescope) =>
                 new NavigationViewItemHeader()
@@ -45,7 +45,7 @@ namespace Asv.Drones.Gui.Core
             return null;
         }
 
-        protected override IDataTemplate SelectTemplateCore(object item, IControl container)
+        protected override IDataTemplate SelectTemplateCore(object item, Control container)
         {
             return SelectTemplateCore(item);
         }

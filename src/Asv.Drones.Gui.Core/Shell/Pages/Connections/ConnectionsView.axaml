@@ -28,10 +28,10 @@
 					</StackPanel>
 				</Grid>
                 <controls:InfoBar Title="Reboot required" IsClosable="False" IsOpen="{Binding IsReloadRequired}" Severity="Warning" Message="You must reload the program to apply the changes." />
-                <ItemsControl Items="{Binding Items}">
+                <ItemsControl ItemsSource="{Binding Items}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <StackPanel Spacing="8"></StackPanel>
+                            <StackPanel Spacing="8"/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>

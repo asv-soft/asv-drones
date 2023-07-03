@@ -1,6 +1,5 @@
 using System.Collections.ObjectModel;
 using System.Reactive;
-using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using Asv.Common;
@@ -8,7 +7,6 @@ using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Controls;
 using DynamicData;
-using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using MavlinkHelper = Asv.Drones.Gui.Core.MavlinkHelper;
@@ -91,9 +89,9 @@ namespace Asv.Drones.Gui.Uav
 
         
 
-        protected override void InternalAfterMapInit(IMap map)
+        protected override void InternalAfterMapInit(IMap context)
         {
-            base.InternalAfterMapInit(map);
+            base.InternalAfterMapInit(context);
             // TODO: Localize
             Icon = MavlinkHelper.GetIcon(Vehicle.Class);
             Vehicle.Name.Subscribe(_ => Title = $"{_} mission")

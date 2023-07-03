@@ -1,6 +1,4 @@
 using System.Reactive;
-using System.Reactive.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Core;

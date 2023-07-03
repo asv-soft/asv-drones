@@ -14,7 +14,7 @@ public class GpsStatusIndicator : IndicatorBase
 
     public static readonly StyledProperty<GpsFixType> FixTypeProperty =
         AvaloniaProperty.Register<GpsStatusIndicator, GpsFixType>(
-            nameof(FixType), GpsFixType.GpsFixTypeNoGps, notifying: UpdateValue);
+            nameof(FixType), GpsFixType.GpsFixTypeNoGps,coerce: UpdateValue);
 
     public GpsFixType FixType
     {
@@ -34,7 +34,13 @@ public class GpsStatusIndicator : IndicatorBase
 
     public static readonly StyledProperty<DopStatusEnum> DopStatusProperty =
         AvaloniaProperty.Register<GpsStatusIndicator, DopStatusEnum>(
-            nameof(DopStatus), DopStatusEnum.Unknown, notifying: UpdateValue);
+            nameof(DopStatus), DopStatusEnum.Unknown, coerce:UpdateValue);
+
+    private static DopStatusEnum UpdateValue(AvaloniaObject arg1, DopStatusEnum arg2)
+    {
+        // TODO: AVALONIA11 => implement this
+        return DopStatusEnum.Excellent;
+    }
 
     public DopStatusEnum DopStatus
     {
@@ -57,11 +63,12 @@ public class GpsStatusIndicator : IndicatorBase
         indicator.ToolTipText = indicator.FixType.GetShortDisplayName();
     }
 
-    private static void UpdateValue(IAvaloniaObject source, bool beforeChanged)
+    private static GpsFixType UpdateValue(AvaloniaObject avaloniaObject, GpsFixType gpsFixType)
     {
-        if (source is not GpsStatusIndicator indicator) return;
-        
+        // TODO: AVALONIA11 => implement this
+        if (avaloniaObject is not GpsStatusIndicator indicator) return GpsFixType.GpsFixType2dFix;
         SetPseudoClass(indicator);
+        return GpsFixType.GpsFixType2dFix;
     }
 
     private static MaterialIconKind GetIcon(GpsFixType fixType)

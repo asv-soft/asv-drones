@@ -9,10 +9,10 @@ namespace Asv.Drones.Gui.Core
         private readonly object _sync = new();
         private readonly TConfig _config;
 
-        public ServiceWithConfigBase(IConfiguration cfgService)
+        public ServiceWithConfigBase(IConfiguration cfg)
         {
-            _cfgService = cfgService ?? throw new ArgumentNullException(nameof(cfgService));
-            _config = cfgService.Get<TConfig>();
+            _cfgService = cfg ?? throw new ArgumentNullException(nameof(cfg));
+            _config = cfg.Get<TConfig>();
         }
 
         protected TConfigValue InternalGetConfig<TConfigValue>(Func<TConfig, TConfigValue> getProperty)

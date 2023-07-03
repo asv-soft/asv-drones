@@ -24,7 +24,7 @@
                         
                         <core:OptionsDisplayItem.ActionButton>
                             <ComboBox MinWidth="150" SelectedItem="{Binding SelectedDistanceUnit}" 
-                                      Items="{Binding DistanceUnits}">
+                                      ItemsSource="{Binding DistanceUnits}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Title}"/>
@@ -40,7 +40,7 @@
 
                         <core:OptionsDisplayItem.ActionButton>
                             <ComboBox MinWidth="150" SelectedItem="{Binding SelectedAltitudeUnit}" 
-                                      Items="{Binding AltitudeUnits}">
+                                      ItemsSource="{Binding AltitudeUnits}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Title}"/>
@@ -56,7 +56,7 @@
 
                         <core:OptionsDisplayItem.ActionButton>
                             <ComboBox MinWidth="150" SelectedItem="{Binding SelectedLatitudeUnit}" 
-                                      Items="{Binding LatitudeUnits}">
+                                      ItemsSource="{Binding LatitudeUnits}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Title}"/>
@@ -72,7 +72,7 @@
 
                         <core:OptionsDisplayItem.ActionButton>
                             <ComboBox MinWidth="150" SelectedItem="{Binding SelectedLongitudeUnit}" 
-                                      Items="{Binding LongitudeUnits}">
+                                      ItemsSource="{Binding LongitudeUnits}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Title}"/>
@@ -88,7 +88,7 @@
 
                         <core:OptionsDisplayItem.ActionButton>
                             <ComboBox MinWidth="150" SelectedItem="{Binding SelectedVelocityUnit}" 
-                                      Items="{Binding VelocityUnits}">
+                                      ItemsSource="{Binding VelocityUnits}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Title}"/>

@@ -2,7 +2,6 @@
 using System.Globalization;
 using Asv.Cfg;
 using Asv.Common;
-using Avalonia.Controls.Mixins;
 
 namespace Asv.Drones.Gui.Core
 {
@@ -10,7 +9,7 @@ namespace Asv.Drones.Gui.Core
     {
         public string? CurrentLanguage { get; set; }
     }
-
+    
     public class LocalizationServiceBase : ServiceWithConfigBase<LocalizationServiceConfig>, ILocalizationService
     {
         private readonly List<LanguageInfo> _languages = new()

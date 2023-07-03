@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Reactive.Linq;
-using Asv.Common;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
@@ -71,7 +69,7 @@ namespace Asv.Avalonia.Map
 
         public static readonly StyledProperty<string> TitleProperty = AvaloniaProperty.Register<MapAnchorView, string>(nameof(Title),String.Empty, coerce:OnTitleChanged);
 
-        private static string OnTitleChanged(IAvaloniaObject arg1, string arg2)
+        private static string OnTitleChanged(AvaloniaObject avaloniaObject, string arg2)
         {
             return arg2 ?? string.Empty;
         }

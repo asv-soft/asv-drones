@@ -75,7 +75,7 @@ namespace Asv.Drones.Gui.Core
                 {
                     Name = Title,
                     ConnectionString = $"udp://{LocalIpAddress}:{LocalPort}" + (IsRemote ? $"?rhost={RemoteIpAddress}&rport={RemotePort}":string.Empty),
-                    IsEnabled = false
+                    IsEnabled = true
                 });
             }
             catch (Exception e)

@@ -2,7 +2,6 @@
 using System.Reactive.Linq;
 using Asv.Avalonia.Map;
 using Asv.Common;
-using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Media;
 using Material.Icons;
@@ -22,8 +21,8 @@ namespace Asv.Drones.Gui.Uav
             IsVisible = false;
             IsEditable = false;
 
-            vehicle.Position.Home.Select(_ => _.HasValue).DistinctUntilChanged().Subscribe(_ => IsVisible = _).DisposeWith(Disposable);
-            vehicle.Position.Home.Where(_ => _.HasValue).Subscribe(_ => Location = _.Value).DisposeWith(Disposable);
+            vehicle.Position.Home.Select(_ => _.HasValue).DistinctUntilChanged().Subscribe(_ => IsVisible = _).DisposeItWith(Disposable);
+            vehicle.Position.Home.Where(_ => _.HasValue).Subscribe(_ => Location = _.Value).DisposeItWith(Disposable);
 
             vehicle.Position.HomeDistance
                 .Sample(TimeSpan.FromSeconds(1), RxApp.MainThreadScheduler)
@@ -34,7 +33,7 @@ namespace Asv.Drones.Gui.Uav
                     Description = $"Launch of       {vehicle.Name.Value}\n" +
                                   $"Distance to UAV {vehicle.Position.HomeDistance.Value:F0} m";
                 })
-                .DisposeWith(Disposable);
+                .DisposeItWith(Disposable);
 
         }
     }
