@@ -4,11 +4,13 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <AssemblyVersion>$(ProductStrongVersion)</AssemblyVersion>
+        <FileVersion>$(ProductExtendedVersion)</FileVersion>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Asv.Cfg" Version="$(AsvCommonVersion)" />
         <PackageReference Include="Asv.Common" Version="$(AsvCommonVersion)" />
-        <PackageReference Include="Asv.Mavlink" Version="3.2.5-alpha-15" />
+        <PackageReference Include="Asv.Mavlink" Version="$(AsvMavlinkVersion)" />
         <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.Xaml.Interactions" Version="$(AvaloniaVersion)" />

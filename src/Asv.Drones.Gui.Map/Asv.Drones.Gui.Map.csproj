@@ -5,6 +5,8 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <AssemblyVersion>$(ProductStrongVersion)</AssemblyVersion>
+        <FileVersion>$(ProductExtendedVersion)</FileVersion>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Asv.Cfg" Version="$(AsvCommonVersion)" />

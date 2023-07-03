@@ -4,6 +4,8 @@
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <AssemblyVersion>$(ProductStrongVersion)</AssemblyVersion>
+        <FileVersion>$(ProductExtendedVersion)</FileVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
       <DefineConstants>TRACE;PROPRIETARY</DefineConstants>
