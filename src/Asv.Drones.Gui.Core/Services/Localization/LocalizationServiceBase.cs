@@ -42,6 +42,13 @@ namespace Asv.Drones.Gui.Core
             Distance = new Distance(cfgSvc, nameof(Distance)).DisposeItWith(Disposable);
             Latitude = new Latitude(cfgSvc, nameof(Latitude)).DisposeItWith(Disposable);
             Longitude = new Longitude(cfgSvc, nameof(Longitude)).DisposeItWith(Disposable);
+
+            DdmLlz = new DdmLlz(cfgSvc, nameof(DdmLlz)).DisposeItWith(Disposable);
+            Sdm = new Sdm(cfgSvc, nameof(Sdm)).DisposeItWith(Disposable);
+            Power = new Power(cfgSvc, nameof(Power)).DisposeItWith(Disposable);
+            AmplitudeModulation = new AmplitudeModulation(cfgSvc, nameof(AmplitudeModulation)).DisposeItWith(Disposable);
+            Frequency = new Frequency(cfgSvc, nameof(Frequency)).DisposeItWith(Disposable);
+            Phase = new Phase(cfgSvc, nameof(Phase)).DisposeItWith(Disposable);
         }
 
         public IRxEditableValue<LanguageInfo> CurrentLanguage { get; }
@@ -71,6 +78,12 @@ namespace Asv.Drones.Gui.Core
         public IMeasureUnit<double, LatitudeUnits> Latitude { get; }
         public IMeasureUnit<double, LongitudeUnits> Longitude { get; }
         public IMeasureUnit<double, VelocityUnits> Velocity { get; }
+        public IMeasureUnit<double, DdmUnits> DdmLlz { get; }
+        public IMeasureUnit<double, SdmUnits> Sdm { get; }
+        public IMeasureUnit<double, PowerUnits> Power { get; }
+        public IMeasureUnit<double, AmplitudeModulationUnits> AmplitudeModulation { get; }
+        public IMeasureUnit<double, FrequencyUnits> Frequency { get; }
+        public IMeasureUnit<double, PhaseUnits> Phase { get; }
 
         #endregion
 

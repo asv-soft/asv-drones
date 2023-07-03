@@ -24,4 +24,46 @@
     <data name="LinkQualitySdrRttView_ToolTip" xml:space="preserve">
         <value>SDR link quality</value>
     </data>
+    <data name="SdrRttViewModel_Rf_Header" xml:space="preserve">
+        <value>RF</value>
+    </data>
+    <data name="IlsSdrRttViewModel_Crs_Header" xml:space="preserve">
+        <value>CRS</value>
+    </data>
+    <data name="IlsSdrRttViewModel_Clr_Header" xml:space="preserve">
+        <value>CLR</value>
+    </data>
+    <data name="SdrRttViewModel_Main_Header" xml:space="preserve">
+        <value>Main</value>
+    </data>
+    <data name="SdrRttViewModel_SumPower_Title" xml:space="preserve">
+        <value>Sum</value>
+    </data>
+    <data name="IlsSdrRttViewModel_AM_90_Hz_Title" xml:space="preserve">
+        <value>AM 90 Hz</value>
+    </data>
+    <data name="IlsSdrRttViewModel_AM_150_Hz_Title" xml:space="preserve">
+        <value>AM 150 Hz</value>
+    </data>
+    <data name="LlzSdrRttViewModel_ID_Code_Title" xml:space="preserve">
+        <value>ID Code</value>
+    </data>
+    <data name="IlsSdrRttViewModel_Freq_90_Hz_Title" xml:space="preserve">
+        <value>Freq 90 Hz</value>
+    </data>
+    <data name="IlsSdrRttViewModel_Freq_150_Hz_Title" xml:space="preserve">
+        <value>Freq 150 Hz</value>
+    </data>
+    <data name="IlsSdrRttViewModel_CRSPower_Title" xml:space="preserve">
+        <value>CRS</value>
+    </data>
+    <data name="IlsSdrRttViewModel_CLRPower_Title" xml:space="preserve">
+        <value>CLR</value>
+    </data>
+    <data name="IlsSdrRttViewModel_DDM_Title" xml:space="preserve">
+        <value>DDM</value>
+    </data>
+    <data name="IlsSdrRttViewModel_SDM_Title" xml:space="preserve">
+        <value>SDM</value>
+    </data>
 </root>

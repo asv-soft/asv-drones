@@ -76,10 +76,6 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>RS.resx</DependentUpon>
       </Compile>
-      <Compile Update="Shell\Pages\Flight\Widgets\Sdr\Rtt\CustomControls\SdrRttItemStringParamView.axaml.cs">
-        <DependentUpon>SdrRttItemStringParamView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -104,6 +100,11 @@
         <Generator>PublicResXFileCodeGenerator</Generator>
         <LastGenOutput>RS.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Controls\IlsParamsIndicator.axaml" />
+      <UpToDateCheckInput Remove="Controls\VorParamsIndicator.axaml" />
     </ItemGroup>
 
 </Project>

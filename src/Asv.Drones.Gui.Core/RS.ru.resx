@@ -762,4 +762,70 @@
   <data name="PacketViewerViewModel_SeparatorDialog_Coma" xml:space="preserve">
 	  <value>Запятая [ , ]</value>
   </data>
+  <data name="Ddm_InParts_Title" xml:space="preserve">
+	  <value>В частях</value>
+  </data>
+  <data name="Ddm_Percent_Title" xml:space="preserve">
+	  <value>Процент</value>
+  </data>
+  <data name="Ddm_Microamp_Title" xml:space="preserve">
+	  <value>Микроампер</value>
+  </data>
+  <data name="Ddm_µA_Unit" xml:space="preserve">
+	  <value>мкА</value>
+  </data>
+  <data name="Ddm_MicroampRus_Title" xml:space="preserve">
+	  <value>Микроампер (Рус)</value>
+  </data>
+  <data name="MeasureUnitsSettingsViewModel_DdmLlz" xml:space="preserve">
+	  <value>РГМ (Курс)</value>
+  </data>
+  <data name="MeasureUnitsSettingsViewModel_DdmLlzDescription" xml:space="preserve">
+	  <value>Измените текущие единицы измерения РГМ (Курс).</value>
+  </data>
+  <data name="Power_Dbm_Title" xml:space="preserve">
+	  <value>Децибел по отношению к 1 милливатт</value>
+  </data>
+  <data name="Power_Dbm_Unit" xml:space="preserve">
+	  <value>дБм</value>
+  </data>
+  <data name="AmplitudeModulation_Percent_Title" xml:space="preserve">
+	  <value>Процент</value>
+  </data>
+  <data name="AmplitudeModulation_InParts_Unit" xml:space="preserve">
+	  <value>В частях</value>
+  </data>
+  <data name="Frequency_Hertz_Title" xml:space="preserve">
+	  <value>Герц</value>
+  </data>
+  <data name="Frequency_Kilohertz_Title" xml:space="preserve">
+	  <value>Килогерц</value>
+  </data>
+  <data name="Frequency_Megahertz_Title" xml:space="preserve">
+	  <value>Мегагерц</value>
+  </data>
+  <data name="Frequency_Gigahertz_Title" xml:space="preserve">
+	  <value>Гигагерц</value>
+  </data>
+  <data name="Frequency_Hertz_Unit" xml:space="preserve">
+	  <value>Гц</value>
+  </data>
+  <data name="Frequency_Kilohertz_Unit" xml:space="preserve">
+	  <value>кГц</value>
+  </data>
+  <data name="Frequency_Megahertz_Unit" xml:space="preserve">
+	  <value>МГц</value>
+  </data>
+  <data name="Frequency_Gigahertz_Unit" xml:space="preserve">
+	  <value>ГГц</value>
+  </data>
+  <data name="Phase_Degree_Title" xml:space="preserve">
+	  <value>Градус</value>
+  </data>
+  <data name="Phase_Radian_Title" xml:space="preserve">
+	  <value>Радиан</value>
+  </data>
+  <data name="Phase_Radian_Unit" xml:space="preserve">
+	  <value>Рад</value>
+  </data>
 </root>

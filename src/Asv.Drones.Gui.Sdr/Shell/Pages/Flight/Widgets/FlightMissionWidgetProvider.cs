@@ -6,11 +6,11 @@ using DynamicData;
 
 namespace Asv.Drones.Gui.Sdr
 {
-    [Export(FlightPageViewModel.UriString, typeof(IViewModelProvider<IMapWidget>))]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
+    // [Export(FlightPageViewModel.UriString, typeof(IViewModelProvider<IMapWidget>))]
+    // [PartCreationPolicy(CreationPolicy.NonShared)]
     public class FlightMissionWidgetProvider:ViewModelProviderBase<IMapWidget>
     {
-        [ImportingConstructor]
+        // [ImportingConstructor]
         public FlightMissionWidgetProvider(
             IMavlinkDevicesService devices,ILogService log,
             ILocalizationService localization,

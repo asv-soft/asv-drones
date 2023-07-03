@@ -54,6 +54,12 @@ namespace Asv.Drones.Gui.Core
             this.WhenAnyValue(_ => _.SelectedVelocityUnit)
                 .Subscribe(_localization.Velocity.CurrentUnit)
                 .DisposeItWith(Disposable);
+            
+            _localization.DdmLlz.CurrentUnit.Subscribe(_ => SelectedDdmLlzUnit = _)
+                .DisposeItWith(Disposable);
+            this.WhenAnyValue(_ => _.SelectedDdmLlzUnit)
+                .Subscribe(_localization.DdmLlz.CurrentUnit)
+                .DisposeItWith(Disposable);
         }
         
         [Reactive]
@@ -78,5 +84,10 @@ namespace Asv.Drones.Gui.Core
         public IMeasureUnitItem<double,VelocityUnits> SelectedVelocityUnit { get; set; }
 
         public IEnumerable<IMeasureUnitItem<double,VelocityUnits>> VelocityUnits => _localization.Velocity.AvailableUnits;
+        
+        [Reactive]
+        public IMeasureUnitItem<double,DdmUnits> SelectedDdmLlzUnit { get; set; }
+
+        public IEnumerable<IMeasureUnitItem<double,DdmUnits>> DdmLlzUnits => _localization.DdmLlz.AvailableUnits;
     }
 }

@@ -22,6 +22,7 @@
                                              Expands="True"
                                              Content="Hello World" />
                     <core:BatteryIndicator Width="50" Height="50" Value="0" CriticalValue="0.2" WarningValue="0.45" MaxValue="1.1"/>
+                    <core:LevelIndicator Width="350" Height="41" ValueFrom="-120" ValueTo="20" Value="-57" Foreground="SteelBlue"/>
                 </StackPanel>
                 
             </Border>
@@ -32,5 +33,6 @@
     <StyleInclude Source="/Controls/GpsStatusIndicator.axaml"/>
     <StyleInclude Source="/Controls/ConnectionQuality.axaml"/>
     <StyleInclude Source="/Controls/DigitIndicator.axaml"/>
+    <StyleInclude Source="/Controls/LevelIndicator.axaml"/>
 
 </Styles>
