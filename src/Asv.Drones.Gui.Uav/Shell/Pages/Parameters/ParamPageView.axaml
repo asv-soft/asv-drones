@@ -43,7 +43,7 @@
                 </DockPanel>
                 <TextBlock DockPanel.Dock="Bottom" Text="{Binding Total, StringFormat={x:Static uav:RS.ParametersEditorPageViewModel_Total}}"/>
                 <ListBox SelectedItem="{Binding SelectedItem}" 
-                         Items="{Binding Params}">
+                         ItemsSource="{Binding Params}">
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="uav:ParamItemViewModel">
                             <DockPanel Background="Transparent" Name="ItemDockPanel" LastChildFill="True">
@@ -73,7 +73,7 @@
                 </StackPanel>
                 
                 <ScrollViewer IsVisible="{Binding !IsRefreshing}">
-                    <ItemsControl HorizontalAlignment="Stretch" Items="{Binding ViewedParams}">
+                    <ItemsControl HorizontalAlignment="Stretch" ItemsSource="{Binding ViewedParams}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel/>

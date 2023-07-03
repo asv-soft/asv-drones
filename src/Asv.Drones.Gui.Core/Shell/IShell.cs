@@ -5,6 +5,6 @@
     /// </summary>
     public interface IShell
     {
-        IShellPage CurrentPage { get; set; }
+        IShellPage? CurrentPage { get; set; }
     }
 }

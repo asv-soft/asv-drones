@@ -13,7 +13,7 @@
     </Design.DataContext>
     <StackPanel Spacing="10" Margin="10">
         <TextBlock Text="{x:Static uav:RS.SelectModeAnchorActionView_DialogDescription}" />
-        <ListBox Items="{CompiledBinding AvailableModes}" SelectedItem="{Binding SelectedMode, Mode=TwoWay}" Grid.IsSharedSizeScope="True">
+        <ListBox ItemsSource="{CompiledBinding AvailableModes}" SelectedItem="{Binding SelectedMode, Mode=TwoWay}" Grid.IsSharedSizeScope="True">
             <ListBox.Styles>
                 <Style Selector="ListBoxItem">
                     <Setter Property="MinHeight" Value="50" />

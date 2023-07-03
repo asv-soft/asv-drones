@@ -80,7 +80,7 @@
         </TabItem>
         <TabItem Header="{x:Static gbs:RS.FixedModeView_SavedValuesTab_Header}">
             <Grid RowDefinitions="* 5 Auto" MinHeight="450">
-                <ListBox Items="{Binding MapCoords}" SelectedItem="{Binding SelectedConfigItem, Mode=TwoWay}" Grid.IsSharedSizeScope="True">
+                <ListBox ItemsSource="{Binding MapCoords}" SelectedItem="{Binding SelectedConfigItem, Mode=TwoWay}" Grid.IsSharedSizeScope="True">
                     <ListBox.Styles>
                         <Style Selector="ListBoxItem">
                             <Setter Property="MinHeight" Value="20"></Setter>

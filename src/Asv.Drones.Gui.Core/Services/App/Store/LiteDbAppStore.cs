@@ -11,7 +11,7 @@ namespace Asv.Drones.Core
         public LiteDbAppStore(LiteDatabase db, string sourceName)
         {
             SourceName = sourceName;
-            _db = db;
+            _db = db.DisposeItWith(Disposable);
         }
         
         public int GetFileSizeInBytes()

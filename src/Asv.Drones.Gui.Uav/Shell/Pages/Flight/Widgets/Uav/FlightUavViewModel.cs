@@ -88,9 +88,9 @@ namespace Asv.Drones.Gui.Uav
             vehicle.CurrentMode.Subscribe(_ => CurrentMode = new VehicleModeWithIcons(_)).DisposeItWith(Disposable);
         }
 
-        protected override void InternalAfterMapInit(IMap map)
+        protected override void InternalAfterMapInit(IMap context)
         {
-            base.InternalAfterMapInit(map);
+            base.InternalAfterMapInit(context);
             
             LocateVehicleCommand = ReactiveCommand.Create(() =>
             {

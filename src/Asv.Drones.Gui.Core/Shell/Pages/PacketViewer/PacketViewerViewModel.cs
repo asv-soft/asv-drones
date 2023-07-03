@@ -25,7 +25,7 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
     private readonly IConfiguration _cfg;
     private readonly ILocalizationService _localization;
     private readonly IGlobalCommandsService _cmd;
-    public const string UriString = ShellPage.UriString + ".packetViewer";
+    public const string UriString = "asv:shell.page.packetViewer";
     public static readonly Uri Uri = new Uri(UriString);
     public const int MaxPacketSize = 1000; 
 

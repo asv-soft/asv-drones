@@ -16,9 +16,9 @@
             <TextBlock Text="{x:Static core:RS.SerialPortView_Title}"/>
             <TextBox Text="{Binding Title}"/>
             <TextBlock Text="{x:Static core:RS.SerialPortView_PortName}"/>
-            <AutoCompleteBox Margin="0,0" SelectedItem="{Binding SelectedPort}" Items="{Binding Ports}"/>
+            <AutoCompleteBox Margin="0,0" SelectedItem="{Binding SelectedPort}" ItemsSource="{Binding Ports}"/>
             <TextBlock Text="{x:Static core:RS.SerialPortView_BaudRate}"/>
-            <AutoCompleteBox SelectedItem="{Binding SelectedBaudRate}" Items="{Binding BaudRates}"/>
+            <AutoCompleteBox SelectedItem="{Binding SelectedBaudRate}" ItemsSource="{Binding BaudRates}"/>
         </StackPanel>
 	</Panel>
 

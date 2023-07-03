@@ -51,14 +51,14 @@
                     </Grid>
                 </Button>
             </StackPanel>
-            <ItemsControl Items="{Binding RttItems}" IsVisible="{CompiledBinding !IsMinimized}">
+            <ItemsControl ItemsSource="{Binding RttItems}" IsVisible="{CompiledBinding !IsMinimized}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel ItemHeight="30" ItemWidth="110" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
-            <ItemsControl Items="{Binding MinimizedRttItems}" IsVisible="{CompiledBinding IsMinimized}">
+            <ItemsControl ItemsSource="{Binding MinimizedRttItems}" IsVisible="{CompiledBinding IsMinimized}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel ItemHeight="30" ItemWidth="110" />

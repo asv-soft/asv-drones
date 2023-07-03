@@ -9,11 +9,11 @@ namespace Asv.Drones.Gui.Core
 
     public class WindowHelper
     {
-        public static readonly AttachedProperty<bool> EnableDragProperty = AvaloniaProperty.RegisterAttached<WindowHelper, IControl, bool>("EnableDrag");
+        public static readonly AttachedProperty<bool> EnableDragProperty = AvaloniaProperty.RegisterAttached<WindowHelper, Control, bool>("EnableDrag");
 
-        public static readonly AttachedProperty<bool> DoubleTappedWindowStateProperty = AvaloniaProperty.RegisterAttached<WindowHelper, IControl, bool>("DoubleTappedWindowState");
+        public static readonly AttachedProperty<bool> DoubleTappedWindowStateProperty = AvaloniaProperty.RegisterAttached<WindowHelper, Control, bool>("DoubleTappedWindowState");
 
-        public static readonly AttachedProperty<bool> IgnoreDragProperty = AvaloniaProperty.RegisterAttached<WindowHelper, IControl, bool>("IgnoreDrag");
+        public static readonly AttachedProperty<bool> IgnoreDragProperty = AvaloniaProperty.RegisterAttached<WindowHelper, Control, bool>("IgnoreDrag");
 
         static WindowHelper()
         {
@@ -53,7 +53,7 @@ namespace Asv.Drones.Gui.Core
 
         private static void DoubleTappedHandler(object? sender, RoutedEventArgs e)
         {
-            if (sender is not IVisual uiElement) return;
+            if (sender is not Visual uiElement) return;
             if (uiElement is AvaloniaObject avalonia)
             {
                 if (GetIgnoreDrag(avalonia)) return;
@@ -112,7 +112,7 @@ namespace Asv.Drones.Gui.Core
 
         private static void MouseDownHandler(object sender, PointerPressedEventArgs e)
         {
-            if (sender is not IVisual uiElement) return;
+            if (sender is not Visual uiElement) return;
             var parent = uiElement;
             var avoidInfiniteLoop = 0;
             // Search up the visual tree to find the first parent window.

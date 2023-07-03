@@ -35,7 +35,6 @@ namespace Asv.Drones.Gui.Core
 
         public string[] Dependency { get; }
         public string Name { get; }
-        public int LoadingOrder { get; }
     }
 
     public interface IPluginMetadata

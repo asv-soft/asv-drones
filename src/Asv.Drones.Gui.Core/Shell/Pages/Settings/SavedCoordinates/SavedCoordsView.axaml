@@ -17,7 +17,7 @@
                              Icon="{Binding MapIcon}">
         <core:OptionsDisplayItem.Content>
             <Grid RowDefinitions="300 5 35">
-                <ListBox Items="{Binding SavedCoordinates}" SelectedItem="{Binding SelectedCoordsItem, Mode=TwoWay}" Grid.IsSharedSizeScope="True">
+                <ListBox ItemsSource="{Binding SavedCoordinates}" SelectedItem="{Binding SelectedCoordsItem, Mode=TwoWay}" Grid.IsSharedSizeScope="True">
                     <ListBox.Styles>
                         <Style Selector="ListBoxItem">
                             <Setter Property="MinHeight" Value="20"></Setter>

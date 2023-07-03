@@ -16,7 +16,7 @@ namespace Asv.Drones.Gui.Core
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class PlaningPageViewModel:MapPageViewModel
     {
-        public const string UriString = ShellPage.UriString + ".planing";
+        public const string UriString = "asv:shell.page.map.planing";
         public static readonly Uri Uri = new(UriString);
         
         [ImportingConstructor]

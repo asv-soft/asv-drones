@@ -9,11 +9,11 @@ using Material.Icons;
 
 namespace Asv.Drones.Gui.Core
 {
-    [Export]
+    [Export(typeof(IShell))]
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class ShellViewModel : ViewModelBase, IShell
     {
-        public const string UriString = $"{WellKnownUri.UriScheme}:shell";
+        public const string UriString = $"asv:shell";
         public static readonly Uri Uri = new(UriString);
         
         private readonly INavigationService _navigation;
