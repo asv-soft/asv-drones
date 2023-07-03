@@ -429,6 +429,51 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change UAV mode from list.
+        /// </summary>
+        public static string SelectModeAnchorActionView_DialogDescription {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionView_DialogDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string SelectModeAnchorActionViewModel_DialogPrimaryButton {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionViewModel_DialogPrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string SelectModeAnchorActionViewModel_DialogSecondaryButton {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionViewModel_DialogSecondaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User sent SetVehicleMode from {0} to {1}.
+        /// </summary>
+        public static string SelectModeAnchorActionViewModel_LogMessage {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionViewModel_LogMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select UAV mode.
+        /// </summary>
+        public static string SelectModeAnchorActionViewModel_Title {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set altitude above ground level (AGL) for takeoff command..
         /// </summary>
         public static string TakeOffAnchorActionViewModel_DialogDescription {

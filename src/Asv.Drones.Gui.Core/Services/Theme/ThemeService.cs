@@ -78,16 +78,23 @@ namespace Asv.Drones.Gui.Core
 
         private void SetFlowDirection(FlowDirectionItem value)
         {
+            if (value == null) throw new ArgumentNullException(nameof(value));
+            if (Application.Current == null)
+                throw new InvalidOperationException("Application.Current is null. May be you try to set FlowDirection before Avalonia startup");
             var lifetime = Application.Current.ApplicationLifetime;
             if (lifetime is IClassicDesktopStyleApplicationLifetime cdl)
             {
+                if (cdl.MainWindow == null)
+                    throw new InvalidOperationException("Can't find main window. May be you try to set FlowDirection before Avalonia startup");
                 if (cdl.MainWindow.FlowDirection == value.Id)
                     return;
                 cdl.MainWindow.FlowDirection = value.Id;
             }
             else if (lifetime is ISingleViewApplicationLifetime single)
             {
-                var mainWindow = TopLevel.GetTopLevel(single.MainView);
+                var mainWindow = TopLevel.GetTopLevel(single.MainView) ?? single.MainView;
+                if (mainWindow == null)
+                    throw new InvalidOperationException("Can't find main window");
                 if (mainWindow.FlowDirection == value.Id)
                     return;
                 mainWindow.FlowDirection = value.Id;

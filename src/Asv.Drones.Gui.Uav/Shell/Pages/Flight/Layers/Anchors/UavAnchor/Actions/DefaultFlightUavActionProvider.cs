@@ -30,6 +30,7 @@ namespace Asv.Drones.Gui.Uav
             yield return new LandAnchorActionViewModel(vehicle, map, _log);
             yield return new StartAutoAnchorActionViewModel(vehicle, map, _log);
             yield return new RebootAutopilotAnchorActionViewModel(vehicle, map, _log);
+            yield return new SelectModeAnchorActionViewModel(vehicle, map, _log);
         }
     }
 }
