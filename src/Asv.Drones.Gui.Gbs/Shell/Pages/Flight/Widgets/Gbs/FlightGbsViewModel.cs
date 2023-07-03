@@ -168,9 +168,9 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
         await BaseStation.Gbs.StartIdleMode(ctx);
     }
 
-    protected override void InternalAfterMapInit(IMap map)
+    protected override void InternalAfterMapInit(IMap context)
     {
-        base.InternalAfterMapInit(map);
+        base.InternalAfterMapInit(context);
         LocateBaseStationCommand = ReactiveCommand.Create(() =>
         {
             Map.Center = BaseStation.Gbs.Position.Value;

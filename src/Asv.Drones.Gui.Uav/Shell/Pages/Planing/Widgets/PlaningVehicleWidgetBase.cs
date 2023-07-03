@@ -17,7 +17,7 @@ namespace Asv.Drones.Gui.Uav
         
         protected IVehicleClient Vehicle { get; }
         
-        protected override void InternalAfterMapInit(IMap map)
+        protected override void InternalAfterMapInit(IMap context)
         {
             
         }

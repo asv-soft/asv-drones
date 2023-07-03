@@ -1,6 +1,7 @@
 ﻿using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Asv.Avalonia.Map;
+using Asv.Common;
 using Asv.Mavlink;
 using Asv.Mavlink.Vehicle;
 using Avalonia.Media;
@@ -21,13 +22,13 @@ namespace Asv.Drones.Gui.Uav
             IconBrush = Brushes.LightSeaGreen;
             IsVisible = false;
 
-            vehicle.Position.Target.Select(_ => _.HasValue).DistinctUntilChanged().Subscribe(_ => IsVisible = _).DisposeWith(Disposable);
-            vehicle.Position.Target.Where(_=>_.HasValue).Subscribe(_ => Location = _.Value).DisposeWith(Disposable);
+            vehicle.Position.Target.Select(_ => _.HasValue).DistinctUntilChanged().Subscribe(_ => IsVisible = _).DisposeItWith(Disposable);
+            vehicle.Position.Target.Where(_=>_.HasValue).Subscribe(_ => Location = _.Value).DisposeItWith(Disposable);
 
             vehicle.Position.Target.Where(_ => _.HasValue)
                 .Sample(TimeSpan.FromSeconds(1), RxApp.MainThreadScheduler)
                 .Subscribe(_ => Description = TryCalculatteLeftTime(vehicle))
-                .DisposeWith(Disposable);
+                .DisposeItWith(Disposable);
         }
 
         private string TryCalculatteLeftTime(IVehicleClient vehicle)

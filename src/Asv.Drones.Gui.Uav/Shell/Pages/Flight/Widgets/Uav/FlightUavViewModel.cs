@@ -62,9 +62,9 @@ namespace Asv.Drones.Gui.Uav
             });
         }
 
-        protected override void InternalAfterMapInit(IMap map)
+        protected override void InternalAfterMapInit(IMap context)
         {
-            base.InternalAfterMapInit(map);
+            base.InternalAfterMapInit(context);
             
             LocateVehicleCommand = ReactiveCommand.Create(() =>
             {

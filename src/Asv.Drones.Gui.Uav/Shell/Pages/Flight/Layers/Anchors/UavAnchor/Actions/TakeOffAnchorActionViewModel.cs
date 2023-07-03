@@ -25,7 +25,7 @@ namespace Asv.Drones.Gui.Uav
             
             Title = "TakeOff"; // TODO: Localize
             Icon = MaterialIconKind.ArrowUpBoldHexagonOutline;
-            Vehicle.Position.IsArmed.Select(_ => !_).Subscribe(CanExecute).DisposeWith(Disposable);
+            Vehicle.Position.IsArmed.Select(_ => !_).Subscribe(CanExecute).DisposeItWith(Disposable);
             var cmd = ReactiveCommand.CreateFromTask(ExecuteImpl, CanExecute);
             cmd.ThrownExceptions.Subscribe(OnCommandError).DisposeItWith(Disposable);
             Command = cmd;

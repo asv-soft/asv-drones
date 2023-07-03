@@ -13,10 +13,10 @@ namespace Asv.Drones.Gui.Core
     }
     
     [ExportShellPage(UriString)]
-    [PartCreationPolicy(CreationPolicy.Shared)] //Important shared mode
+    [PartCreationPolicy(CreationPolicy.NonShared)]
     public class FlightPageViewModel: MapPageViewModel
     {
-        public const string UriString = ShellPage.UriString + ".flight";
+        public const string UriString = "asv:shell.page.map.flight";
         public static readonly Uri Uri = new(UriString);
         
         [ImportingConstructor]

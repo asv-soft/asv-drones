@@ -1,27 +1,25 @@
-using System.ComponentModel.Composition;
+using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.ReactiveUI;
-using FluentAvalonia.UI.Controls;
+using Avalonia.Markup.Xaml;
 
-namespace Asv.Drones.Gui.Core
+namespace Asv.Drones.Gui.Core;
+
+[ExportView(typeof(ShellViewModel))]
+public partial class ShellView : UserControl
 {
-    [ExportView(typeof(ShellViewModel))]
-    [PartCreationPolicy(CreationPolicy.Shared)]
-    public partial class ShellView : ReactiveUserControl<ShellViewModel>
+    public ShellView()
     {
-        public ShellView()
-        {
-            InitializeComponent();
-            
-        }
+        InitializeComponent();
+    }
 
-        private void InputElement_OnTapped(object? sender, TappedEventArgs e)
-        {
-            if (sender is InfoBar { DataContext: LogMessageViewModel vm })
-            {
-                vm.Close();
-            }
-            
-        }
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
+    }
+
+    private void InputElement_OnTapped(object? sender, TappedEventArgs e)
+    {
+        
     }
 }

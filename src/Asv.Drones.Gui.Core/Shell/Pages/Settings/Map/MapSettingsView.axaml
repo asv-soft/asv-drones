@@ -18,7 +18,7 @@
 
             <core:OptionsDisplayItem.ActionButton>
                 <ComboBox SelectedItem="{Binding CurrentMapProvider}"
-                          Items="{Binding AvailableProviders}"
+                          ItemsSource="{Binding AvailableProviders}"
                           MinWidth="150">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>

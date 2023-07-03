@@ -21,7 +21,7 @@
                     </Button>
                     <TextBox></TextBox>
                 </DockPanel>
-                <ListBox Items="{Binding Items}" SelectedItem="{Binding SelectedItem}">
+                <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid ColumnDefinitions="25,Auto" RowDefinitions="Auto,Auto">

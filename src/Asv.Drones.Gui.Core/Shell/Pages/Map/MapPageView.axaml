@@ -38,7 +38,7 @@
 			Grid.ColumnSpan="5"
 			Grid.Row="0"
 			Grid.RowSpan="4"
-			Items="{Binding Markers}">
+			ItemsSource="{Binding Markers}">
 			<map:MapView.ItemTemplate>
 				<DataTemplate x:DataType="map:MapAnchorViewModel">
 					<map:MapAnchorView
@@ -71,7 +71,7 @@
 			</map:MapView.ItemTemplate>
 		</map:MapView>
         <ScrollViewer Margin="8,8,0,8" Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Background="{x:Null}">
-	        <ItemsControl Items="{Binding LeftWidgets}" Background="{x:Null}">
+	        <ItemsControl ItemsSource="{Binding LeftWidgets}" Background="{x:Null}">
 		        <ItemsControl.ItemsPanel>
 			        <ItemsPanelTemplate>
 				        <StackPanel Spacing="8"/>
@@ -80,7 +80,7 @@
 	        </ItemsControl>
         </ScrollViewer>
         <ScrollViewer Margin="0,8,8,8" Grid.Row="0" Grid.Column="4" Grid.RowSpan="4" Background="{x:Null}" >
-	        <ItemsControl Items="{Binding RightWidgets}" Background="{x:Null}">
+	        <ItemsControl ItemsSource="{Binding RightWidgets}" Background="{x:Null}">
 		        <ItemsControl.ItemsPanel>
 			        <ItemsPanelTemplate>
 				        <StackPanel Spacing="8" />
@@ -90,7 +90,7 @@
         </ScrollViewer>
 
         <Border Grid.Row="3" Grid.Column="2" Margin="5" IsVisible="{Binding BottomWidgets.Count}" Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8" CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True"> 
-	        <TabControl AutoScrollToSelectedItem="True" Items="{Binding BottomWidgets}" TabStripPlacement="Bottom" Background="Transparent">
+	        <TabControl AutoScrollToSelectedItem="True" ItemsSource="{Binding BottomWidgets}" TabStripPlacement="Bottom" Background="Transparent">
 		        <TabControl.ItemTemplate>
 			        <DataTemplate x:DataType="core:IMapWidget">
 				        <StackPanel Orientation="Horizontal" Spacing="8">
