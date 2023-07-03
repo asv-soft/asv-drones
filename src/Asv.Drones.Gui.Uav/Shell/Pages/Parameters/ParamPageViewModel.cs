@@ -41,7 +41,7 @@ public class ParamPageViewModel:ViewModelBase, IShellPage
     }
     
     [ImportingConstructor]
-    public ParamPageViewModel([NotNull] IMavlinkDevicesService svc, [NotNull] ILogService log, [NotNull] IConfiguration cfg) : base(UriString)
+    public ParamPageViewModel(IMavlinkDevicesService svc, ILogService log, IConfiguration cfg) : base(UriString)
     {
         _svc = svc ?? throw new ArgumentNullException(nameof(svc));
         _log = log ?? throw new ArgumentNullException(nameof(log));

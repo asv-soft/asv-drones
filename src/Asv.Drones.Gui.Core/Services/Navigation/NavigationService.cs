@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.Composition;
+﻿#nullable enable
+using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
 using Asv.Cfg;
@@ -18,6 +19,7 @@ namespace Asv.Drones.Gui.Core
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class NavigationService: ServiceWithConfigBase<NavigationServiceConfig>, INavigationService
     {
+        public const string UriScheme = "asv";
         private readonly CompositionContainer _container;
         private IShell? _shell;
         private IStorageProvider? _windowStorageProvider;
@@ -46,9 +48,9 @@ namespace Asv.Drones.Gui.Core
                     $"The order of loading services was broken. At this point the variable {nameof(_shell)} must be initialized.");
             }
             if (link == null) throw new ArgumentNullException(nameof(link));
-            if (link.Scheme.Equals(WellKnownUri.UriScheme) == false)
+            if (link.Scheme.Equals(UriScheme) == false)
             {
-                throw new Exception($"Unknown uri scheme. Want {WellKnownUri.UriScheme}. Got:{link.Scheme}");
+                throw new Exception($"Unknown uri scheme. Want {UriScheme}. Got:{link.Scheme}");
             }
             
             var current = _shell.CurrentPage;
@@ -72,13 +74,13 @@ namespace Asv.Drones.Gui.Core
             var file = await _windowStorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
             {
                 Title = title,
-                SuggestedStartLocation = suggestedStartLocation != null ? new BclStorageFolder(suggestedStartLocation) : null,
+                //SuggestedStartLocation = suggestedStartLocation != null ? new BclStorageFolder(suggestedStartLocation) : null,
                 AllowMultiple = false,
                 FileTypeFilter = fileTypes.Length == 0 ? null : fileTypes,
             });
             var selectedItem = file.FirstOrDefault();
             if (selectedItem == null) return null;
-            return selectedItem.TryGetUri(out var uri) == false ? null : uri.AbsolutePath;
+            return selectedItem.Path.AbsolutePath;
         }
         
         public async Task<string?> ShowOpenFolderDialogAsync(string title, string? suggestedStartLocation)
@@ -91,13 +93,13 @@ namespace Asv.Drones.Gui.Core
             if (title == null) throw new ArgumentNullException(nameof(title));
             var file = await _windowStorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
             {
-                SuggestedStartLocation = suggestedStartLocation != null ? new BclStorageFolder(suggestedStartLocation):null,
+                //SuggestedStartLocation = suggestedStartLocation != null ? new BclStorageFolder(suggestedStartLocation):null,
                 AllowMultiple = false,
                 Title = title
             });
             var selectedItem = file.FirstOrDefault();
             if (selectedItem == null) return null;
-            return selectedItem.TryGetUri(out var uri) == false ? null : uri.AbsolutePath;
+            return selectedItem.Path.AbsolutePath;
         }
 
         public async Task<string?> ShowSaveFileDialogAsync(string title, string? suggestedStartLocation, string? suggestedFileName, string? defaultExtension, params FilePickerFileType[] fileTypes)
@@ -110,14 +112,14 @@ namespace Asv.Drones.Gui.Core
             var file = await _windowStorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
             {
                 Title = title,
-                SuggestedStartLocation = suggestedStartLocation != null ? new BclStorageFolder(suggestedStartLocation) : null,
+                //SuggestedStartLocation = suggestedStartLocation != null ? new BclStorageFolder(suggestedStartLocation) : null,
                 SuggestedFileName = suggestedFileName,
                 DefaultExtension = defaultExtension,
                 FileTypeChoices = fileTypes.Length == 0 ? null : fileTypes,
                 ShowOverwritePrompt = true,
             });
             if (file == null) return null;
-            return file.TryGetUri(out var uri) == false ? null : uri.AbsolutePath;
+            return file.Path.AbsolutePath;
         }
     }
     

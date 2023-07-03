@@ -9,7 +9,7 @@ namespace Asv.Drones.Gui.Core
     {
         public string? CurrentLanguage { get; set; }
     }
-
+    
     public class LocalizationServiceBase : ServiceWithConfigBase<LocalizationServiceConfig>, ILocalizationService
     {
         private readonly List<LanguageInfo> _languages = new()

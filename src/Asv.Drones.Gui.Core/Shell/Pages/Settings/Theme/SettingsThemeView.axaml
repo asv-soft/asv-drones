@@ -17,7 +17,7 @@
 
             <core:OptionsDisplayItem.ActionButton>
                 <ComboBox SelectedItem="{Binding SelectedTheme}"
-                          Items="{Binding AppThemes}"
+                          ItemsSource="{Binding AppThemes}"
                           MinWidth="150">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
@@ -34,7 +34,7 @@
 
             <core:OptionsDisplayItem.ActionButton>
                 <ComboBox SelectedItem="{Binding SelectedLanguage}"
-                          Items="{Binding AppLanguages}"
+                          ItemsSource="{Binding AppLanguages}"
                           MinWidth="150">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
@@ -51,7 +51,7 @@
 
             <core:OptionsDisplayItem.ActionButton>
                 <ComboBox SelectedItem="{Binding FlowDirection}"
-                          Items="{Binding AppFlowDirections}"
+                          ItemsSource="{Binding AppFlowDirections}"
                           MinWidth="150">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>

@@ -80,7 +80,7 @@
                         </Path>
 
                         <ItemsControl x:Name="Ticks" Canvas.Left="150" Canvas.Top="150" Width="700" Height="700"
-                                      Items="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RollItems}"
+                                      ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RollItems}"
                                       HorizontalAlignment="Center" VerticalAlignment="Center">
                             <ItemsControl.RenderTransform>
                                 <TransformGroup>
@@ -111,7 +111,7 @@
                         </ItemsControl>
 
                         <ItemsControl x:Name="Ticks2" Canvas.Left="300" Canvas.Top="-920" Width="400" Height="2840"
-                                      Items="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchItems}"
+                                      ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchItems}"
                                       HorizontalAlignment="Center" VerticalAlignment="Center">
                             <ItemsControl.RenderTransform>
                                 <TransformGroup>
@@ -154,7 +154,7 @@
                         <Rectangle ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Velocity_ToolTip}" Canvas.Top="301"  Canvas.Left="-3" Fill="#e0e0e0" Opacity="0.3" StrokeThickness="0" HorizontalAlignment="Stretch" Width="111" Height="398"/>
                         <ItemsControl ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Velocity_ToolTip}" x:Name="Velocity" Canvas.Left="0" Canvas.Top="300" Width="110" Height="400"
                                       HorizontalAlignment="Center" VerticalAlignment="Center"
-                                      Items="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VelocityItems}">
+                                      ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VelocityItems}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <Canvas Width="110" Height="400" ClipToBounds="True" Background="Transparent"/>
@@ -184,7 +184,7 @@
                         <Rectangle ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Altitude_ToolTip}" Canvas.Top="301" Canvas.Right="-3" Fill="#e0e0e0" Opacity="0.3" StrokeThickness="0" HorizontalAlignment="Stretch" Width="111" Height="398"/>
                         <ItemsControl ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Altitude_ToolTip}" x:Name="Altitude" Canvas.Right="0" Canvas.Top="300" Width="110" Height="400"
                                       HorizontalAlignment="Center" VerticalAlignment="Center"
-                                      Items="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=AltitudeItems}">
+                                      ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=AltitudeItems}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <Canvas Width="110" Height="400" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -215,7 +215,7 @@
                         <ItemsControl x:Name="Heading" Canvas.Left="0" Canvas.Top="0" Width="1000" Height="80"
                                       ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Compass_ToolTip}"
                                       HorizontalAlignment="Center" VerticalAlignment="Center"
-                                      Items="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeadingItems}">
+                                      ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeadingItems}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <Canvas Width="1000" Height="80" ClipToBounds="True" Background="Transparent"/>

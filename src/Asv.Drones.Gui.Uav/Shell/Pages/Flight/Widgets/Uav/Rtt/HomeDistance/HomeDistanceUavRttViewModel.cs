@@ -1,4 +1,5 @@
 using System.Reactive.Linq;
+using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Controls.Mixins;
@@ -23,7 +24,7 @@ public class HomeDistanceUavRttViewModel : UavRttItem
             .DistinctUntilChanged()
             .Sample(TimeSpan.FromMilliseconds(500), RxApp.MainThreadScheduler)
             .Subscribe(_ => HomeDistance = localization.Distance.FromSiToStringWithUnits(_))
-            .DisposeWith(Disposable);
+            .DisposeItWith(Disposable);
         
     }
 

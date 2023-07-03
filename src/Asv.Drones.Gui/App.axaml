@@ -1,14 +1,16 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Asv.Drones.Gui"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:styling="clr-namespace:FluentAvalonia.Styling;assembly=FluentAvalonia"
-             x:Class="Asv.Drones.Gui.App">
+             x:Class="Asv.Drones.Gui.App"
+             RequestedThemeVariant="Default">
+    
     <Application.Styles>
-        <styling:FluentAvaloniaTheme />
-        <StyleInclude Source="avares://FluentAvalonia.UI.Windowing/Styles/FAWindowingStyles.axaml" />
-        <StyleInclude Source="avares://Asv.Drones.Gui.Map/ToolKit.axaml"/>
+        <styling:FluentAvaloniaTheme PreferSystemTheme="True" PreferUserAccentColor="True"  />
+        <avalonia:MaterialIconStyles />
+        <StyleInclude Source="avares://Asv.Drones.Gui.Map/App.axaml"/>
         <StyleInclude Source="avares://Asv.Drones.Gui.Core/App.axaml"/>
         <StyleInclude Source="avares://Asv.Drones.Gui.Uav/App.axaml"/>
-        <StyleInclude Source="avares://Material.Icons.Avalonia/App.xaml"></StyleInclude>
     </Application.Styles>
 </Application>

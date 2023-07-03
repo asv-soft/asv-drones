@@ -51,7 +51,7 @@
             <TextBlock DockPanel.Dock="Left" Margin="8 0" FontSize="30" Text="Packet viewer"/>
         </DockPanel>
 
-        <ListBox ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Column="0" Grid.Row="1" Margin="0,0,8,0" SelectedItem="{Binding SelectedPacket}" Items="{Binding Packets}" Grid.IsSharedSizeScope="True">
+        <ListBox ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Column="0" Grid.Row="1" Margin="0,0,8,0" SelectedItem="{Binding SelectedPacket}" ItemsSource="{Binding Packets}" Grid.IsSharedSizeScope="True">
             <ListBox.Styles>
                 <Style Selector="ListBoxItem">
                     <Setter Property="MinHeight" Value="25"></Setter>
@@ -82,7 +82,7 @@
             <Expander DockPanel.Dock="Top" Header="Message sourses">
                 <DockPanel>
                     <CheckBox DockPanel.Dock="Top" HorizontalAlignment="Left"  IsChecked="True" Checked="SourcesChecked" Unchecked="SourcesUnchecked" Content="{x:Static core:RS.PacketViewerView_CheckAll}" />
-                    <ListBox HorizontalAlignment="Stretch" x:Name="SourceFilters" Items="{Binding FiltersBySource}" Grid.IsSharedSizeScope="True">
+                    <ListBox HorizontalAlignment="Stretch" x:Name="SourceFilters" ItemsSource="{Binding FiltersBySource}" Grid.IsSharedSizeScope="True">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -105,7 +105,7 @@
             <Expander Header="Message types" Margin="0 5">
                 <DockPanel>
                     <CheckBox DockPanel.Dock="Top" HorizontalAlignment="Left"  IsChecked="True" Checked="TypesChecked" Unchecked="TypesUnchecked" Content="{x:Static core:RS.PacketViewerView_CheckAll}" />
-                    <ListBox HorizontalAlignment="Stretch" x:Name="TypeFilters" Items="{Binding FiltersByType}" Grid.IsSharedSizeScope="True">
+                    <ListBox HorizontalAlignment="Stretch" x:Name="TypeFilters" ItemsSource="{Binding FiltersByType}" Grid.IsSharedSizeScope="True">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid>

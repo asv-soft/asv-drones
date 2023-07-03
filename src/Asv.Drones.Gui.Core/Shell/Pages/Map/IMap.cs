@@ -40,6 +40,6 @@ namespace Asv.Drones.Gui.Core
         WidgetLocation Location { get; }
         public string Title { get; }
         public MaterialIconKind Icon { get; }
-        IMapWidget Init(IMap map);
+        IMapWidget Init(IMap context);
     }
 }

@@ -1,4 +1,5 @@
 using System.Reactive.Linq;
+using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Controls.Mixins;
@@ -24,7 +25,7 @@ public class VoltageUavRttItemViewModel : UavRttItem
             .DistinctUntilChanged()
             .Sample(TimeSpan.FromMilliseconds(500), RxApp.MainThreadScheduler)
             .Subscribe(_ => Voltage = $"{localization.Voltage.ConvertToStringWithUnits(_)}")
-            .DisposeWith(Disposable);
+            .DisposeItWith(Disposable);
 
     }
 

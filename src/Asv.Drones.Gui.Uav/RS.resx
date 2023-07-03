@@ -1,264 +1,180 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<root>
-  <!-- 
-    Microsoft ResX Schema 
-    
-    Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
-    associated with the data types.
-    
-    Example:
-    
-    ... ado.net/XML headers & schema ...
-    <resheader name="resmimetype">text/microsoft-resx</resheader>
-    <resheader name="version">2.0</resheader>
-    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-        <value>[base64 mime encoded serialized .NET Framework object]</value>
-    </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-        <comment>This is a comment</comment>
-    </data>
-                
-    There are any number of "resheader" rows that contain simple 
-    name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
-    mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
-    extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
-    read any of the formats listed below.
-    
-    mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-            : and then encoded with base64 encoding.
-    
-    mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-            : and then encoded with base64 encoding.
+<?xml version="1.0" encoding="utf-8"?>
 
-    mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
-            : using a System.ComponentModel.TypeConverter
-            : and then encoded with base64 encoding.
-    -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  
-  <data name="RoiAnchor_Vehicle_Name" xml:space="preserve">
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+
+    <data name="RoiAnchor_Vehicle_Name" xml:space="preserve">
     <value>ROI of</value>
   </data>
-  <data name="TakeOffAnchorActionViewModel_Title" xml:space="preserve">
+    <data name="TakeOffAnchorActionViewModel_Title" xml:space="preserve">
     <value>Take off</value>
   </data>
-  <data name="TakeOffAnchorActionViewModel_DialogDescription" xml:space="preserve">
+    <data name="TakeOffAnchorActionViewModel_DialogDescription" xml:space="preserve">
     <value>Set altitude above ground level (AGL) for takeoff command.</value>
   </data>
-  <data name="TakeOffAnchorActionViewModel_DialogPrimaryButton" xml:space="preserve">
+    <data name="TakeOffAnchorActionViewModel_DialogPrimaryButton" xml:space="preserve">
     <value>Take off</value>
   </data>
-  <data name="TakeOffAnchorActionViewModel_DialogSecondaryButton" xml:space="preserve">
+    <data name="TakeOffAnchorActionViewModel_DialogSecondaryButton" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="TakeOffAnchorActionViewModel_ValidValue" xml:space="preserve">
+    <data name="TakeOffAnchorActionViewModel_ValidValue" xml:space="preserve">
     <value>Altitude must be greater or equal {0}.</value>
   </data>
-  <data name="TakeOffAnchorActionViewModel_LogMessage" xml:space="preserve">
+    <data name="TakeOffAnchorActionViewModel_LogMessage" xml:space="preserve">
     <value>User send TakeOff at {0} altitude for {1}</value>
   </data>
 
-  <data name="BatteryUavRttView_ToolTip" xml:space="preserve">
+    <data name="BatteryUavRttView_ToolTip" xml:space="preserve">
     <value>Battery level</value>
   </data>
-  <data name="UavAnchor_Latitude" xml:space="preserve">
+    <data name="UavAnchor_Latitude" xml:space="preserve">
     <value>Latitude: {0}</value>
   </data>
-  <data name="UavAnchor_Longitude" xml:space="preserve">
+    <data name="UavAnchor_Longitude" xml:space="preserve">
     <value>Longitude: {0}</value>
   </data>
-  <data name="UavAnchor_GNSS_Altitude" xml:space="preserve">
+    <data name="UavAnchor_GNSS_Altitude" xml:space="preserve">
     <value>GNSS Altitude: {0}</value>
   </data>
-  <data name="UavAnchor_AGL_Altitude" xml:space="preserve">
+    <data name="UavAnchor_AGL_Altitude" xml:space="preserve">
     <value>AGL Altitude: {0}</value>
 
   </data>
-  <data name="RoiAnchor_Vehicle_Yaw_Sample_Description" xml:space="preserve">
+    <data name="RoiAnchor_Vehicle_Yaw_Sample_Description" xml:space="preserve">
     <value>Yaw angle</value>
   </data>
-  <data name="RoiAnchor_Vehicle_Yaw_Sample_Unit" xml:space="preserve">
+    <data name="RoiAnchor_Vehicle_Yaw_Sample_Unit" xml:space="preserve">
     <value>deg</value>
   </data>
-  <data name="UavRttItem_ValueNotAvailable" xml:space="preserve">
+    <data name="UavRttItem_ValueNotAvailable" xml:space="preserve">
     <value>N\A</value>
   </data>
-  <data name="ParametersEditorPageViewModel_Title" xml:space="preserve">
+    <data name="ParametersEditorPageViewModel_Title" xml:space="preserve">
     <value>Parameters editor [{0}]</value>
   </data>
-  <data name="ParametersEditorPageViewModel_Search" xml:space="preserve">
+    <data name="ParametersEditorPageViewModel_Search" xml:space="preserve">
     <value>Search</value>
   </data>
-  <data name="ParametersEditorPageViewModel_Total" xml:space="preserve">
+    <data name="ParametersEditorPageViewModel_Total" xml:space="preserve">
     <value>Total: {0}</value>
   </data>
-  <data name="CpuLoadUavRttView_ToolTip" xml:space="preserve">
+    <data name="CpuLoadUavRttView_ToolTip" xml:space="preserve">
     <value>CPU load of UAV</value>
   </data>
-  <data name="CurrentUavRttView_ToolTip" xml:space="preserve">
+    <data name="CurrentUavRttView_ToolTip" xml:space="preserve">
     <value>UAV current</value>
   </data>
-  <data name="FlightTimeUavRttView_ToolTip" xml:space="preserve">
+    <data name="FlightTimeUavRttView_ToolTip" xml:space="preserve">
     <value>UAV time in flight</value>
   </data>
-  <data name="HomeDistanceUavRttView_ToolTip" xml:space="preserve">
+    <data name="HomeDistanceUavRttView_ToolTip" xml:space="preserve">
     <value>Distance from UAV to home</value>
   </data>
-  <data name="LinkQualityUavRttView_ToolTip" xml:space="preserve">
+    <data name="LinkQualityUavRttView_ToolTip" xml:space="preserve">
     <value>UAV link quality</value>
   </data>
-  <data name="VoltageUavRttItemView_ToolTip" xml:space="preserve">
+    <data name="VoltageUavRttItemView_ToolTip" xml:space="preserve">
     <value>UAV voltage</value>
   </data>
-  <data name="FlightUavView_MoveToButton_ToolTip" xml:space="preserve">
+    <data name="FlightUavView_MoveToButton_ToolTip" xml:space="preserve">
     <value>Move to this UAV on map</value>
   </data>
-  <data name="MissionStatusView_GetMissionButton_ToolTip" xml:space="preserve">
+    <data name="MissionStatusView_GetMissionButton_ToolTip" xml:space="preserve">
     <value>Load mission from UAV</value>
   </data>
-  <data name="MissionStatusView_DisableLayersButton_ToolTip" xml:space="preserve">
+    <data name="MissionStatusView_DisableLayersButton_ToolTip" xml:space="preserve">
     <value>Disables mission trajectory and waypoints visibility</value>
   </data>
-  <data name="MissionStatusView_TogglePolygonButton_ToolTip" xml:space="preserve">
+    <data name="MissionStatusView_TogglePolygonButton_ToolTip" xml:space="preserve">
     <value>On/off mission trajectory visibility</value>
   </data>
-  <data name="MissionStatusView_ToggleWaypointsButton_ToolTip" xml:space="preserve">
+    <data name="MissionStatusView_ToggleWaypointsButton_ToolTip" xml:space="preserve">
     <value>On/off mission way points visibility</value>
   </data>
-  <data name="MissionStatusView_Total" xml:space="preserve">
+    <data name="MissionStatusView_Total" xml:space="preserve">
     <value>Total: {0}</value>
   </data>
-  <data name="MissionStatusView_MissionProgress_ToolTip" xml:space="preserve">
+    <data name="MissionStatusView_MissionProgress_ToolTip" xml:space="preserve">
     <value>Current mission progress</value>
   </data>
-  <data name="ParametersEditorPageView_StarsToggleButton_ToolTip" xml:space="preserve">
+    <data name="ParametersEditorPageView_StarsToggleButton_ToolTip" xml:space="preserve">
     <value>Show only starred parameters</value>
   </data>
-  <data name="ParametersEditorPageView_UpdateButton_ToolTip" xml:space="preserve">
+    <data name="ParametersEditorPageView_UpdateButton_ToolTip" xml:space="preserve">
     <value>Update all parameters</value>
   </data>
-  <data name="ParametersEditorPageView_PinsOffButton_ToolTip" xml:space="preserve">
+    <data name="ParametersEditorPageView_PinsOffButton_ToolTip" xml:space="preserve">
     <value>Remove all pinned parameters</value>
   </data>
-  <data name="ParametersEditorParameterView_PinToggleButton_ToolTip" xml:space="preserve">
+    <data name="ParametersEditorParameterView_PinToggleButton_ToolTip" xml:space="preserve">
     <value>On/off pin for this parameter</value>
   </data>
-  <data name="ParametersEditorParameterView_UpdateButton_ToolTip" xml:space="preserve">
+    <data name="ParametersEditorParameterView_UpdateButton_ToolTip" xml:space="preserve">
     <value>Update this parameter from UAV</value>
   </data>
-  <data name="ParametersEditorParameterView_WriteButton_ToolTip" xml:space="preserve">
+    <data name="ParametersEditorParameterView_WriteButton_ToolTip" xml:space="preserve">
     <value>Write this parameter to UAV</value>
   </data>
-  <data name="ParametersEditorParameterView_RebootRequired" xml:space="preserve">
+    <data name="ParametersEditorParameterView_RebootRequired" xml:space="preserve">
     <value>Reboot required</value>
   </data>
-  <data name="ParametersEditorPageView_StarButton_ToolTip" xml:space="preserve">
+    <data name="ParametersEditorPageView_StarButton_ToolTip" xml:space="preserve">
     <value>Star this parameter</value>
   </data>
-  <data name="ParametersEditorParameterView_UpdateButton" xml:space="preserve">
+    <data name="ParametersEditorParameterView_UpdateButton" xml:space="preserve">
     <value>Update</value>
   </data>
-  <data name="ParametersEditorParameterView_WriteButton" xml:space="preserve">
+    <data name="ParametersEditorParameterView_WriteButton" xml:space="preserve">
     <value>Write</value>
   </data>
-  <data name="AltitudeIndicator_Vibration_ToolTip" xml:space="preserve">
+    <data name="AltitudeIndicator_Vibration_ToolTip" xml:space="preserve">
     <value>Vibration and clipping of UAV</value>
   </data>
-  <data name="AttitudeIndicator_Velocity_ToolTip" xml:space="preserve">
+    <data name="AttitudeIndicator_Velocity_ToolTip" xml:space="preserve">
     <value>Velocity</value>
   </data>
-  <data name="AttitudeIndicator_Altitude_ToolTip" xml:space="preserve">
+    <data name="AttitudeIndicator_Altitude_ToolTip" xml:space="preserve">
     <value>Altitude</value>
   </data>
-  <data name="AttitudeIndicator_Compass_ToolTip" xml:space="preserve">
+    <data name="AttitudeIndicator_Compass_ToolTip" xml:space="preserve">
     <value>Compass</value>
   </data>
-  <data name="FlightUavView_Minimize_ToolTip" xml:space="preserve">
+    <data name="FlightUavView_Minimize_ToolTip" xml:space="preserve">
     <value>Minimize/Maximize UAV</value>
   </data>
-  <data name="FlightUavView_FollowButton_ToolTip" xml:space="preserve">
+    <data name="FlightUavView_FollowButton_ToolTip" xml:space="preserve">
     <value>Follow/Unfollow UAV</value>
+  </data>
+  <data name="SelectModeAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Select UAV mode</value>
+  </data>
+  <data name="SelectModeAnchorActionViewModel_DialogPrimaryButton" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="SelectModeAnchorActionViewModel_DialogSecondaryButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="SelectModeAnchorActionViewModel_LogMessage" xml:space="preserve">
+    <value>User sent SetVehicleMode from {0} to {1}</value>
+  </data>
+  <data name="SelectModeAnchorActionView_DialogDescription" xml:space="preserve">
+    <value>Change UAV mode from list</value>
   </data>
 </root>

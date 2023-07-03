@@ -1,6 +1,6 @@
 using System.ComponentModel.Composition;
+using Asv.Common;
 using Asv.Drones.Gui.Core;
-using Avalonia.Controls.Mixins;
 using DynamicData;
 
 namespace Asv.Drones.Gui.Uav
@@ -15,7 +15,7 @@ namespace Asv.Drones.Gui.Uav
             devices.Vehicles
                 .Transform(_ => (IMapWidget)new PlaningMissionViewModel(_,log))
                 .ChangeKey( ((_, v) => v.Id) )
-                .PopulateInto(Source).DisposeWith(Disposable);
+                .PopulateInto(Source).DisposeItWith(Disposable);
         }
     }
 }

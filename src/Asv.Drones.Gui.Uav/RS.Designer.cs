@@ -18,7 +18,7 @@ namespace Asv.Drones.Gui.Uav {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class RS {
@@ -371,6 +371,51 @@ namespace Asv.Drones.Gui.Uav {
         public static string RoiAnchor_Vehicle_Yaw_Sample_Unit {
             get {
                 return ResourceManager.GetString("RoiAnchor_Vehicle_Yaw_Sample_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change UAV mode from list.
+        /// </summary>
+        public static string SelectModeAnchorActionView_DialogDescription {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionView_DialogDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string SelectModeAnchorActionViewModel_DialogPrimaryButton {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionViewModel_DialogPrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string SelectModeAnchorActionViewModel_DialogSecondaryButton {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionViewModel_DialogSecondaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User sent SetVehicleMode from {0} to {1}.
+        /// </summary>
+        public static string SelectModeAnchorActionViewModel_LogMessage {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionViewModel_LogMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select UAV mode.
+        /// </summary>
+        public static string SelectModeAnchorActionViewModel_Title {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionViewModel_Title", resourceCulture);
             }
         }
         

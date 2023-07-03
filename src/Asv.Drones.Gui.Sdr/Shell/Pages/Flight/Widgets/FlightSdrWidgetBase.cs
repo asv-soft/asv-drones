@@ -19,7 +19,7 @@ namespace Asv.Drones.Gui.Sdr
         
         protected ISdrClientDevice Payload { get; }
         
-        protected override void InternalAfterMapInit(IMap map)
+        protected override void InternalAfterMapInit(IMap context)
         {
             
         }

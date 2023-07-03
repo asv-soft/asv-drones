@@ -24,7 +24,7 @@ public class LinkQualitySdrRttViewModel : SdrRttItem
             .Sample(TimeSpan.FromMilliseconds(500))
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(_ => LinkQuality = _)
-            .DisposeWith(Disposable);
+            .DisposeItWith(Disposable);
         
         device.Heartbeat.LinkQuality
             .Subscribe(_ => LinkQualityString = _.ToString("P0"))

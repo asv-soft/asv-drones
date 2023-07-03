@@ -1,84 +1,69 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Assets\avalonia-logo.ico" />
-    <None Remove="icon.ico" />
-  </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Asv.Cfg" Version="$(AsvCommonVersion)" />
+      <PackageReference Include="Asv.Common" Version="$(AsvCommonVersion)" />
+      <PackageReference Include="Asv.Mavlink" Version="$(AsvMavlinkVersion)" />
+      <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+      <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
+      <PackageReference Include="Avalonia.Xaml.Interactions" Version="$(AvaloniaVersion)" />
+      <PackageReference Include="FluentAvaloniaUI" Version="2.0.0-rc1" />
+      <PackageReference Include="Material.Icons.Avalonia" Version="2.0.1" />
+      <PackageReference Include="ReactiveUI" Version="19.2.1" />
+      <PackageReference Include="ReactiveUI.Fody" Version="19.2.1" />
+      <PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
+      <PackageReference Include="System.ComponentModel.Composition" Version="7.0.0" />  
+      <PackageReference Include="LiteDB" Version="5.0.16" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <AvaloniaResource Include="Assets\avalonia-logo.ico" />
-    <AvaloniaResource Include="Assets\icon.ico" />
-    <AvaloniaResource Include="Assets\program-logo.png" />
-  </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Asv.Cfg" Version="1.8.1" />
-    <PackageReference Include="Asv.Mavlink" Version="3.2.5-alpha-07" />
-    <PackageReference Include="Avalonia" Version="11.0.0-preview4" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview4" />
-    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.0.0-preview4" />
-    <PackageReference Include="Avalonia.Xaml.Interactions" Version="11.0.0-preview4" />
-    <PackageReference Include="FluentAvalonia.UI.Windowing" Version="2.0.0-preview4" />
-    <PackageReference Include="FluentAvaloniaUI" Version="2.0.0-preview4" />
-    <PackageReference Include="LiteDB" Version="5.0.15" />
-    <PackageReference Include="Material.Icons.Avalonia" Version="2.0.0-preview1" />
-    <PackageReference Include="NLog" Version="5.1.2" />
-    <PackageReference Include="ReactiveUI.Fody" Version="18.4.34" />
-    <PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
-    <PackageReference Include="System.ComponentModel.Composition" Version="7.0.0" />
-    <PackageReference Include="XamlNameReferenceGenerator" Version="1.5.1" />
-  </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Asv.Drones.Gui.Map\Asv.Drones.Gui.Map.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="RS.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>RS.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\MapService\" />
-    <Folder Include="Services\Theme\" />
-  </ItemGroup>
+    <ItemGroup>
+      <Compile Update="RS.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>RS.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Shell\Pages\Planing\PlaningView.axaml.cs">
-      <DependentUpon>PlaningView.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Shell\Pages\Settings\SettignsView.axaml.cs">
-      <DependentUpon>SettignsView.axaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Services\LogService\Status\FileStorage\ShellStatusFileStorageView.axaml" />
+      <UpToDateCheckInput Remove="Services\LogService\Status\MapCache\ShellStatusMapCacheView.axaml" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="RS.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>RS.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+    <ItemGroup>
+      <AdditionalFiles Include="Shell\Status\FileStorage\ShellStatusFileStorageView.axaml" />
+      <AdditionalFiles Include="Shell\Status\MapCache\ShellStatusMapCacheView.axaml" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="RS.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>RS.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Asv.Drones.Gui.Map\Asv.Drones.Gui.Map.csproj" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <AdditionalFiles Include="Shell\Pages\Connections\ConnectionsView.axaml" />
-    <AdditionalFiles Include="Shell\Pages\Connections\DeviceBrowser\DeviceBrowserView.axaml" />
-    <AdditionalFiles Include="Shell\Pages\Connections\DeviceBrowser\MavlinkDeviceView.axaml" />
-    <AdditionalFiles Include="Shell\Pages\Connections\Identification\ConnectionsIdentificationView.axaml" />
-    <AdditionalFiles Include="Shell\Pages\Connections\Ports\ConnectionsPortView.axaml" />
-    <AdditionalFiles Include="Shell\Pages\Connections\Ports\Dialogs\SerialPortView.axaml" />
-    <AdditionalFiles Include="Shell\Pages\Connections\Ports\Dialogs\TcpPortView.axaml" />
-    <AdditionalFiles Include="Shell\Pages\Connections\Ports\Dialogs\UdpPortView.axaml" />
-    <AdditionalFiles Include="Shell\Pages\Connections\Ports\PortView.axaml" />
-    <AdditionalFiles Include="Shell\Pages\Map\Flight\Logger\LoggerView.axaml" />
-  </ItemGroup>
+    <ItemGroup>
+      <None Remove="Assets\avalonia-logo.ico" />
+      <AvaloniaResource Include="Assets\avalonia-logo.ico" />
+      <None Remove="Assets\icon.ico" />
+      <AvaloniaResource Include="Assets\icon.ico" />
+      <None Remove="Assets\program-logo.png" />
+      <AvaloniaResource Include="Assets\program-logo.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Shell\Pages\Map\Planing\Widgets\" />
+    </ItemGroup>
 
 </Project>

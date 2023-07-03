@@ -112,7 +112,7 @@ public class LoggerViewModel : FlightWidgetBase
         };
     }
 
-    protected override void InternalAfterMapInit(IMap map)
+    protected override void InternalAfterMapInit(IMap context)
     {
     }
 }

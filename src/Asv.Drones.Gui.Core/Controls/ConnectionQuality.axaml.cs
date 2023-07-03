@@ -50,7 +50,7 @@ public class ConnectionQuality : IndicatorBase
     #region Styled Props
     
     public static readonly StyledProperty<double> CriticalValueProperty = AvaloniaProperty.Register<ConnectionQuality, double>(
-        nameof(CriticalValue), 0.2, notifying: UpdateValue);
+        nameof(CriticalValue), 0.2);
 
     public double CriticalValue
     {
@@ -59,7 +59,7 @@ public class ConnectionQuality : IndicatorBase
     }
     
     public static readonly StyledProperty<double> WarningValueProperty = AvaloniaProperty.Register<ConnectionQuality, double>(
-        nameof(WarningValue),0.5, notifying: UpdateValue);
+        nameof(WarningValue),0.5);
 
     public double WarningValue
     {
@@ -68,7 +68,7 @@ public class ConnectionQuality : IndicatorBase
     }
     
     public static readonly StyledProperty<double> MaxValueProperty = AvaloniaProperty.Register<ConnectionQuality, double>(
-        nameof(MaxValue), 1, notifying: UpdateValue);
+        nameof(MaxValue), 1);
     
     public double MaxValue
     {
@@ -77,7 +77,7 @@ public class ConnectionQuality : IndicatorBase
     }
 
     public static readonly StyledProperty<double?> ValueProperty = AvaloniaProperty.Register<ConnectionQuality, double?>(
-        nameof(Value), default(double?), notifying: UpdateValue);
+        nameof(Value), default(double?));
 
     public double? Value
     {
@@ -100,25 +100,22 @@ public class ConnectionQuality : IndicatorBase
     {
         
     }
-    
-    private static void UpdateValue(IAvaloniaObject source, bool beforeChanged)
-    {
-        if (source is not ConnectionQuality indicator) return;
 
-        SetPseudoClass(indicator);
-        
-        indicator.IconKind = GetIcon(indicator.Value/indicator.MaxValue);
-    }
-    
-    private static void SetPseudoClass(ConnectionQuality connection)
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
-        var value = connection.Value;        
-        connection.PseudoClasses.Set(":unknown", value == null || double.IsFinite(value.Value) == false || value > connection.MaxValue);
-        connection.PseudoClasses.Set(":critical", value <= connection.CriticalValue);
-        connection.PseudoClasses.Set(":warning", value > connection.CriticalValue & value <= connection.WarningValue);
-        connection.PseudoClasses.Set(":normal", value > connection.WarningValue & value <= connection.MaxValue);
+        base.OnPropertyChanged(change);
+        if (change.Property == ValueProperty)
+        {
+            var value = Value;        
+            PseudoClasses.Set(":unknown", value == null || double.IsFinite(value.Value) == false || value > MaxValue);
+            PseudoClasses.Set(":critical", value <= CriticalValue);
+            PseudoClasses.Set(":warning", value > CriticalValue & value <= WarningValue);
+            PseudoClasses.Set(":normal", value > WarningValue & value <= MaxValue);
+            IconKind = GetIcon(Value/MaxValue);
+        }
     }
-    
+
+   
     private static MaterialIconKind GetIcon(double? normalizedValue)
     {
         return (normalizedValue ?? double.NaN) switch
