@@ -20,6 +20,7 @@ jobs:
       - name: Restore dependencies
         run: |
           cd src
+          dotnet workload restore
           dotnet restore
 
       - name: Build application
