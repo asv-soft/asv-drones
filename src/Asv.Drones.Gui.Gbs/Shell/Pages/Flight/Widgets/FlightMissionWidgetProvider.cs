@@ -15,10 +15,11 @@ namespace Asv.Drones.Gui.Gbs
             IMavlinkDevicesService devices,ILogService log,
             ILocalizationService localization,
             IConfiguration configuration,
+            ISoundNotificationService soundNotification,
             [ImportMany]IEnumerable<IGbsRttItemProvider> rttItems)
         {
             devices.BaseStations
-                .Transform(_ => (IMapWidget)new FlightGbsViewModel(_,log, localization,configuration,rttItems))
+                .Transform(_ => (IMapWidget)new FlightGbsViewModel(_,log, soundNotification, localization,configuration,rttItems))
                 .ChangeKey( ((_, v) => v.Id) )
                 .PopulateInto(Source);
         }
