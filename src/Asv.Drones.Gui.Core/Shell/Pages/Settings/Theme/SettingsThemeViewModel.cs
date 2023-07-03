@@ -1,4 +1,5 @@
 using System.ComponentModel.Composition;
+using System.Reactive.Linq;
 using Asv.Common;
 using Material.Icons;
 using ReactiveUI;
@@ -31,21 +32,27 @@ namespace Asv.Drones.Gui.Core
             _localization = localization;
 
             _themeService.CurrentTheme.Subscribe(_ => SelectedTheme = _).DisposeItWith(Disposable);
+            
             this.WhenAnyValue(_ => _.SelectedTheme)
+                .Skip(1) // skip first because it is set in constructor
                 .Subscribe(_themeService.CurrentTheme)
                 .DisposeItWith(Disposable);
 
             _themeService.FlowDirection.Subscribe(_ => FlowDirection = _)
                 .DisposeItWith(Disposable);
+            
             this.WhenAnyValue(_ => _.FlowDirection)
+                .Skip(1) // skip first because it is set in constructor
                 .Subscribe(_themeService.FlowDirection)
                 .DisposeItWith(Disposable);
 
             this.WhenAnyValue(_ => _.SelectedLanguage)
+                .Skip(1) // skip first because it is set in constructor
                 .Subscribe(_ => IsRebootRequired = _ != _localization.CurrentLanguage.Value).DisposeItWith(Disposable);
             
             _localization.CurrentLanguage.Subscribe(_ => SelectedLanguage = _).DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.SelectedLanguage)
+                .Skip(1) // skip first because it is set in constructor
                 .Subscribe(_localization.CurrentLanguage)
                 .DisposeItWith(Disposable);
         }
