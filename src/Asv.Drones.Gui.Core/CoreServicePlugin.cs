@@ -25,13 +25,13 @@ namespace Asv.Drones.Gui.Core
         public void Initialize()
         {
             // We need the plugin to ask the container to create services to make them work
-            var svc1 = _container.GetExport<IConfiguration>();
-            var svc2 = _container.GetExport<IAppService>();
-            var svc3 = _container.GetExport<IThemeService>();
-            var svc4 = _container.GetExport<INavigationService>();
-            var svc5 = _container.GetExport<ILocalizationService>();
-            var svc6 = _container.GetExport<IMapService>();
-            var svc7 = _container.GetExport<IMavlinkDevicesService>();
+            var svc1 = _container.GetExportedValue<IConfiguration>();
+            var svc2 = _container.GetExportedValue<IAppService>();
+            var svc3 = _container.GetExportedValue<IThemeService>();
+            var svc4 = _container.GetExportedValue<INavigationService>();
+            var svc5 = _container.GetExportedValue<ILocalizationService>();
+            var svc6 = _container.GetExportedValue<IMapService>();
+            var svc7 = _container.GetExportedValue<IMavlinkDevicesService>();
         }
 
         public void OnFrameworkInitializationCompleted()
