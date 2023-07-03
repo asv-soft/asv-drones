@@ -1,0 +1,41 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="450"
+             x:Class="Asv.Drones.Gui.Uav.SelectModeView"
+             x:CompileBindings="True"
+             x:DataType="uav:SelectModeViewModel">
+    <Design.DataContext>
+        <uav:SelectModeViewModel />
+    </Design.DataContext>
+    <StackPanel Spacing="10" Margin="10">
+        <TextBlock Text="{x:Static uav:RS.SelectModeAnchorActionView_DialogDescription}" />
+        <ListBox ItemsSource="{CompiledBinding AvailableModes}" SelectedItem="{Binding SelectedMode, Mode=TwoWay}" Grid.IsSharedSizeScope="True">
+            <ListBox.Styles>
+                <Style Selector="ListBoxItem">
+                    <Setter Property="MinHeight" Value="50" />
+                </Style>
+            </ListBox.Styles>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="Icon" Width="Auto"/>
+                            <ColumnDefinition SharedSizeGroup="Name" Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <avalonia:MaterialIcon Kind="{CompiledBinding Icon}" />
+                        <TextBlock Grid.Column="1" Margin="5 0 0 0" Text="{CompiledBinding Mode.Name}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </StackPanel>
+</UserControl>
