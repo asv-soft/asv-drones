@@ -4,6 +4,14 @@
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <AssemblyVersion>$(ProductStrongVersion)</AssemblyVersion>
+        <FileVersion>$(ProductExtendedVersion)</FileVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DefineConstants>TRACE;</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DefineConstants>TRACE;</DefineConstants>
     </PropertyGroup>
 
 
@@ -49,4 +57,14 @@
       <ProjectReference Include="..\Asv.Drones.Gui.Sdr\Asv.Drones.Gui.Sdr.csproj" />
       <ProjectReference Include="..\Asv.Drones.Gui.Uav\Asv.Drones.Gui.Uav.csproj" />
     </ItemGroup>
+
+    <Choose>
+        <When Condition="$([System.Text.RegularExpressions.Regex]::IsMatch( $(DefineConstants), '^(.*;)*PROPRIETARY(;.*)*$'))">
+            <!-- When PROPRIETARY is defined. -->
+            <ItemGroup>
+                <ProjectReference Include="..\..\..\asv-drones-gui-afis\src\Asv.Drones.Gui.Afis\Asv.Drones.Gui.Afis.csproj" />
+            </ItemGroup>
+        </When>
+        <!-- other conditions -->
+    </Choose>
 </Project>

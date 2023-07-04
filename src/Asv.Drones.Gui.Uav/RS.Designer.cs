@@ -348,6 +348,60 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string RebootAutopilotAnchorActionViewModel_DialogPrimaryButton {
+            get {
+                return ResourceManager.GetString("RebootAutopilotAnchorActionViewModel_DialogPrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string RebootAutopilotAnchorActionViewModel_DialogSecondaryButton {
+            get {
+                return ResourceManager.GetString("RebootAutopilotAnchorActionViewModel_DialogSecondaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User sent Reboot Autopilot command with {0} and {1}.
+        /// </summary>
+        public static string RebootAutopilotAnchorActionViewModel_LogMessage {
+            get {
+                return ResourceManager.GetString("RebootAutopilotAnchorActionViewModel_LogMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reboot/Shutdown Autopilot.
+        /// </summary>
+        public static string RebootAutopilotAnchorActionViewModel_Title {
+            get {
+                return ResourceManager.GetString("RebootAutopilotAnchorActionViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose Autopilot reboot/shutdown mode.
+        /// </summary>
+        public static string RebootAutopilotView_AutopilotReboot_Description {
+            get {
+                return ResourceManager.GetString("RebootAutopilotView_AutopilotReboot_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose companion reboot/shutdown mode.
+        /// </summary>
+        public static string RebootAutopilotView_CompanionReboot_Description {
+            get {
+                return ResourceManager.GetString("RebootAutopilotView_CompanionReboot_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ROI of.
         /// </summary>
         public static string RoiAnchor_Vehicle_Name {
@@ -371,6 +425,51 @@ namespace Asv.Drones.Gui.Uav {
         public static string RoiAnchor_Vehicle_Yaw_Sample_Unit {
             get {
                 return ResourceManager.GetString("RoiAnchor_Vehicle_Yaw_Sample_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change UAV mode from list.
+        /// </summary>
+        public static string SelectModeAnchorActionView_DialogDescription {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionView_DialogDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string SelectModeAnchorActionViewModel_DialogPrimaryButton {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionViewModel_DialogPrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string SelectModeAnchorActionViewModel_DialogSecondaryButton {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionViewModel_DialogSecondaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User sent SetVehicleMode from {0} to {1}.
+        /// </summary>
+        public static string SelectModeAnchorActionViewModel_LogMessage {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionViewModel_LogMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select UAV mode.
+        /// </summary>
+        public static string SelectModeAnchorActionViewModel_Title {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionViewModel_Title", resourceCulture);
             }
         }
         

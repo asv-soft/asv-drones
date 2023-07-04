@@ -4,6 +4,8 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <AssemblyVersion>$(ProductStrongVersion)</AssemblyVersion>
+        <FileVersion>$(ProductExtendedVersion)</FileVersion>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Asv.Cfg" Version="$(AsvCommonVersion)" />
