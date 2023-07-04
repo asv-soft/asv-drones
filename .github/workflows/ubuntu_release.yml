@@ -31,15 +31,15 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: windows-release
+          name: ubuntu-release
           path: ${{ github.workspace }}/src/Asv.Drones.Gui.Desktop/bin/Release/net7.0/
           if-no-files-found: error
 
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
-          name: windows-release
-          path: windows
+          name: ubuntu-release
+          path: ubuntu
 
             
 #  ftps:
