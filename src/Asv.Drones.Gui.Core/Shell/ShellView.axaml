@@ -46,12 +46,12 @@
                     </Style>
                 </Menu.Styles>
             </Menu>
-            <Border Padding="10,5" Margin="5" CornerRadius="{DynamicResource ControlCornerRadius}" VerticalAlignment="Center"  Grid.Column="2" HorizontalAlignment="Center" Background="#366ace">
-                <StackPanel Orientation="Horizontal" Spacing="5">
-                    <avalonia:MaterialIcon Width="20" Height="20" Kind="DatabaseOutline" Foreground="#40b5e0"/>
-                    <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>    
-                </StackPanel>
-            </Border>
+            <!-- <Border Padding="10,5" Margin="5" CornerRadius="{DynamicResource ControlCornerRadius}" VerticalAlignment="Center"  Grid.Column="2" HorizontalAlignment="Center" Background="#366ace"> -->
+            <!--     <StackPanel Orientation="Horizontal" Spacing="5"> -->
+            <!--         <avalonia:MaterialIcon Width="20" Height="20" Kind="DatabaseOutline" Foreground="#40b5e0"/> -->
+            <!--         <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>     -->
+            <!--     </StackPanel> -->
+            <!-- </Border> -->
             
         </Grid>
         <ItemsControl ItemsSource="{Binding StatusItems}" Height="25" DockPanel.Dock="Bottom" Background="{DynamicResource InfoBarErrorSeverityBackgroundBrush}">

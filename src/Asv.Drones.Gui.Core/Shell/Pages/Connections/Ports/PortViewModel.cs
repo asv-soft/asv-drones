@@ -185,7 +185,6 @@ namespace Asv.Drones.Gui.Core
                     
             var dialog = new ContentDialog()
             {
-                Title = RS.ConnectionsViewModel_EditUdpPortDialog_Title,
                 PrimaryButtonText = RS.ConnectionsViewModel_EditDialogPort_Accept,
                 IsSecondaryButtonEnabled = true,
                 CloseButtonText = RS.ConnectionsViewModel_EditDialogPort_Cancel
@@ -195,6 +194,8 @@ namespace Asv.Drones.Gui.Core
             {
                 case PortType.Serial:
                 {
+                    dialog.Title = RS.ConnectionsViewModel_EditSerialPortDialog_Title;
+                    
                     var viewModel = new SerialPortViewModel(_svc, _logService);
                     
                     viewModel.Title = info.Name;
@@ -214,6 +215,8 @@ namespace Asv.Drones.Gui.Core
                 break;
                 case PortType.Tcp:
                 {
+                    dialog.Title = RS.ConnectionsViewModel_EditTcpPortDialog_Title;
+                    
                     var viewModel = new TcpPortViewModel(_svc, _logService);
                     
                     viewModel.Title = info.Name;
@@ -238,6 +241,8 @@ namespace Asv.Drones.Gui.Core
                 break;
                 case PortType.Udp:
                 {
+                    dialog.Title = RS.ConnectionsViewModel_EditUdpPortDialog_Title;
+                    
                     var viewModel = new UdpPortViewModel(_svc);
                     
                     viewModel.Title = info.Name;

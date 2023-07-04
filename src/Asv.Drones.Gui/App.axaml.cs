@@ -151,6 +151,24 @@ public partial class App : Application
         }
 
         base.OnFrameworkInitializationCompleted();
+        
+        foreach (var plugin in _plugins)
+        {
+            try
+            {
+                plugin.Value.OnFrameworkInitializationCompleted();
+                Logger.Trace($"Call OnFrameworkInitializationCompleted for plugin entry point '{plugin.Key.Name}'");
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, $"Error to call OnFrameworkInitializationCompleted for plugin entry point: {plugin.Key.Name}:{e.Message}");
+                if (Debugger.IsAttached)
+                {
+                    Debugger.Break();
+                }
+            }
+        }
+        
     }
 
     private void OnShutdownRequested(object? sender, ShutdownRequestedEventArgs shutdownRequestedEventArgs)
