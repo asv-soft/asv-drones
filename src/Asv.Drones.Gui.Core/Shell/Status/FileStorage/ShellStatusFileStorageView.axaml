@@ -12,9 +12,8 @@
     <Design.DataContext>
         <core:ShellStatusFileStorageViewModel />
     </Design.DataContext>
-    <StackPanel Orientation="Horizontal">
-        <avalonia:MaterialIcon Width="20" Height="20" Kind="DatabaseOutline" Foreground="White" />
-        <TextBlock Text="{Binding Title}" VerticalAlignment="Center" Foreground="White" />
-        <TextBlock Margin="5 0 0 0" Text="{Binding StorageSize}" VerticalAlignment="Center" Foreground="White" />
+    <StackPanel Orientation="Horizontal" ToolTip.Tip="{Binding Description}">
+        <avalonia:MaterialIcon Width="20" Height="20" Kind="DatabaseOutline" Foreground="#40b5e0"/>
+        <TextBlock Margin="5 0 0 0" Text="{Binding StorageSize}" VerticalAlignment="Center"  />
 	</StackPanel>
 </UserControl>

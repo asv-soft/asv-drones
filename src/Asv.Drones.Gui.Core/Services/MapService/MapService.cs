@@ -19,7 +19,7 @@ namespace Asv.Drones.Gui.Core
             if (cfgService == null) throw new ArgumentNullException(nameof(cfgService));
 
             // this is for store map tiles
-            Cache.CacheFolder = Path.Combine(paths.ApplicationDataFolder, "map");
+            Cache.CacheFolder = Path.Combine(paths.DataFolder, "map");
             if (Directory.Exists(Cache.CacheFolder) == false)
             {
                 Directory.CreateDirectory(Cache.CacheFolder);

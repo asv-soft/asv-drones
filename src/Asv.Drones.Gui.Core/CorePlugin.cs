@@ -22,7 +22,7 @@ public class CorePlugin: IPluginEntryPoint
         _applicationDataTemplateHost = applicationDataTemplateHost;
         var batch = new CompositionBatch();
         var path = GetAppPathInfo();
-        var config = new JsonOneFileConfiguration(path.ApplicationConfigFilePath, true, null);
+        var config = new JsonOneFileConfiguration(path.ConfigFilePath, true, null);
         batch.AddExportedValue(path);
         batch.AddExportedValue<IConfiguration>(config);
         batch.AddExportedValue(_defaultViewLocator = new ViewLocator(container));
@@ -50,12 +50,12 @@ public class CorePlugin: IPluginEntryPoint
 #if DEBUG
         var baseDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location); // Path.GetDirectoryName(Environment.ProcessPath) ?? Environment.CurrentDirectory;
 #else
-            var baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        var baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 #endif
-        var appData = Path.Combine(baseDirectory, "AsvDronesGui");
+        var appData = Path.Combine(baseDirectory, "asv-data-folder");
         var configPath = Path.Combine(appData, "config.json");
-        var appStoreFolder = Path.Combine(appData, "store");
-        return new AppPathInfo(appData,configPath,appStoreFolder);
+        var storeFilePath = Path.Combine(appData, "data.asv");
+        return new AppPathInfo(appData,configPath,storeFilePath);
     }
 
  
