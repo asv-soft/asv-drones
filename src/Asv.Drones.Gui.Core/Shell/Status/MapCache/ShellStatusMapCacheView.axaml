@@ -12,8 +12,8 @@
     <Design.DataContext>
 		<core:ShellStatusMapCacheViewModel/>
     </Design.DataContext>
-    <StackPanel Orientation="Horizontal">
-        <avalonia:MaterialIcon Margin="3,0" Kind="Map" Width="15" Height="15"/>
+    <StackPanel Orientation="Horizontal" ToolTip.Tip="{Binding Description}">
+        <avalonia:MaterialIcon Margin="3,0" Kind="Map" Width="15" Height="15" Foreground="#40b5e0"/>
         <TextBlock Margin="3,0" VerticalAlignment="Center" Theme="{DynamicResource CaptionTextBlockStyle}" Text="{Binding CacheSizeString}" />
 	</StackPanel>
 </UserControl>

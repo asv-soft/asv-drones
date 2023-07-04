@@ -8,37 +8,18 @@ namespace Asv.Drones.Gui.Core
 
     public interface IAppService
     {
+        /// <summary>
+        /// Name, version and other info about application
+        /// </summary>
         IAppInfo Info { get; }
+        /// <summary>
+        /// Default application paths
+        /// </summary>
         IAppPathInfo Paths { get; }
-        
-        
-        #region Store
         /// <summary>
-        /// Application store
+        /// Application store database, where all modules and plugins can store data
         /// </summary>
-        IRxValue<IAppStore> Store { get; }
-
-        /// <summary>
-        /// File filter for store file
-        /// </summary>
-        FilePickerFileType StoreFileFilter { get; }
-        string GetSuggestedFileNameForStore();
-        string DefaultStoreFileExtension { get; }
-        
-       
-        /// <summary>
-        /// Create new store
-        /// </summary>
-        /// <param name="filePath"></param>
-        void CreateStore(string filePath, bool copyFromCurrent);
-        /// <summary>
-        /// Open store
-        /// </summary>
-        /// <param name="filePath">file path</param>
-        void OpenStore(string filePath);
-        
-        #endregion
-        
+        IAppStore Store { get; }
     }
 
     

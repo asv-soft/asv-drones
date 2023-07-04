@@ -12,8 +12,10 @@
 	<Design.DataContext>
         <uav:ShellStatusPortsViewModel/>
     </Design.DataContext>
-    <StackPanel Orientation="Horizontal">
-        <avalonia:MaterialIcon Margin="3,0" Kind="SwapVertical" Width="15" Height="15"/>
-        <TextBlock Margin="3,0" VerticalAlignment="Center" Theme="{DynamicResource CaptionTextBlockStyle}" Text="{Binding TotalRateString}" />
+    <StackPanel Orientation="Horizontal" Spacing="3">
+        <avalonia:MaterialIcon Kind="ArrowDownBold" Width="15" Height="15" Foreground="{DynamicResource SystemFillColorSuccessBrush}"/>
+        <TextBlock VerticalAlignment="Center" Theme="{DynamicResource CaptionTextBlockStyle}" Text="{Binding TotalRateInString}" />
+        <avalonia:MaterialIcon Kind="ArrowUpBold" Width="15" Height="15" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+        <TextBlock VerticalAlignment="Center" Theme="{DynamicResource CaptionTextBlockStyle}" Text="{Binding TotalRateOutString}" />
     </StackPanel>
 </UserControl>
