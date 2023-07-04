@@ -65,8 +65,8 @@ public class CorePlugin: IPluginEntryPoint
         var assm = _applicationDataTemplateHost.GetType().Assembly.GetName(); // hack - to get application assembly
         var version = assm.Version?.ToString() ?? "0.0.0";
         var name = assm.Name ?? "Asv.Drones";
-        const string author = "https://github.com/asvol";
-        const string appUrl = "https://github.com/asvol/asv-drones";
+        const string author = "https://asv.me/";
+        const string appUrl = "https://docs.asv.me/";
         const string licence = "MIT License";
         var avaloniaVersion = typeof(AppBuilder).Assembly.GetName().Version?.ToString() ?? "0.0.0"; // hack to get Avalonia version
         return new AppInfo(name, version,author, appUrl, licence, avaloniaVersion);
