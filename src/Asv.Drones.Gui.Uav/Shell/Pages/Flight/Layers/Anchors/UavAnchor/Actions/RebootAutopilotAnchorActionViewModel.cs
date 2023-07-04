@@ -28,7 +28,7 @@ public class RebootAutopilotAnchorActionViewModel : UavActionActionBase
 
         var dialog = new ContentDialog()
         {
-            Title = "",
+            Title = RS.RebootAutopilotAnchorActionViewModel_Title,
             PrimaryButtonText = RS.RebootAutopilotAnchorActionViewModel_DialogPrimaryButton,
             IsSecondaryButtonEnabled = true,
             SecondaryButtonText = RS.RebootAutopilotAnchorActionViewModel_DialogSecondaryButton
