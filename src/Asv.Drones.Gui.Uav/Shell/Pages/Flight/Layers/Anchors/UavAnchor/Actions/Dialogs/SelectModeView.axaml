@@ -26,7 +26,7 @@
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid ToolTip.Tip="{CompiledBinding Mode.Description}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition SharedSizeGroup="Icon" Width="Auto"/>
                             <ColumnDefinition SharedSizeGroup="Name" Width="Auto"/>
