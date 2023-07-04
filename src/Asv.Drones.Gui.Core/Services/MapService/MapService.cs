@@ -43,11 +43,13 @@ namespace Asv.Drones.Gui.Core
                 .Skip(1)
                 .Subscribe(_ => InternalSaveConfig(cfg => cfg.MapProviderName = _.Name))
                 .DisposeItWith(Disposable);
+
+            _mapCacheDirectory = Cache.CacheFolder;
         }
 
         public long CalculateMapCacheSize()
         {
-            return DirSize(new DirectoryInfo(Cache.CacheFolder));
+            return DirSize(new DirectoryInfo(_mapCacheDirectory));
         }
 
         private static long DirSize(DirectoryInfo d)

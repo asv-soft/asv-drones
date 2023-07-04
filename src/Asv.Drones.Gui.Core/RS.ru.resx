@@ -1,4 +1,4 @@
-<root>
+﻿<root>
     <resheader name="resmimetype">
         <value>text/microsoft-resx</value>
     </resheader>
@@ -59,8 +59,8 @@
     <data name="MapSettingsView_MapProvider_Header" xml:space="preserve">
     <value>Провайдер карт</value>
   </data>
-    <data name="MapSettingsView_MapsInfo_ButtonName" xml:space="preserve">
-    <value>Изменить</value>
+  <data name="MapSettingsView_MapsInfo_ButtonTitle" xml:space="preserve">
+    <value>Очистить хранилище</value>
   </data>
     <data name="MapSettingsView_MapsInfo_Description" xml:space="preserve">
     <value>Текущее хранилище карт находится {0} и занимает {1}</value>
@@ -446,5 +446,11 @@
   </data>
     <data name="MapPageViewModel_RulerStopPoint_Description" xml:space="preserve">
 	  <value>Укажите конечную точку линейки</value>
+  </data>
+  <data name="MapSettingsView_MapSettings_Header" xml:space="preserve">
+    <value>Настройки карты</value>
+  </data>
+  <data name="MapSettingsView_MapSettings_Description" xml:space="preserve">
+    <value>Изменить текущие настройки карты</value>
   </data>
 </root>

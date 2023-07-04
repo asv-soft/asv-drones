@@ -15,7 +15,6 @@ namespace Asv.Drones.Gui.Core
         private static readonly Uri Uri = new(SettingsPartBase.Uri, "map");
 
         private readonly IMapService _mapService;
-        private readonly INavigationService _navigationService;
         private readonly ILocalizationService _localizationService;
 
         public MapSettingsViewModel() : base(Uri)
@@ -26,30 +25,40 @@ namespace Asv.Drones.Gui.Core
         public MapSettingsViewModel(IMapService mapService, INavigationService navigationService, ILocalizationService localization) : this()
         {
             _mapService = mapService;
-            _navigationService = navigationService;
             _localizationService = localization;
 
             _mapService.CurrentMapProvider.Subscribe(_ => CurrentMapProvider = _).DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.CurrentMapProvider).Subscribe(_mapService.CurrentMapProvider).DisposeItWith(Disposable);
 
-            OpenFolderCommand = ReactiveCommand.CreateFromTask(OpenFolder).DisposeItWith(Disposable);
+            ClearMapStorageCommand = ReactiveCommand.Create(ClearMapStorage).DisposeItWith(Disposable);
             UpdateDescription();
         }
-
-        private async Task OpenFolder()
-        {
-            var path = await _navigationService.ShowOpenFolderDialogAsync(RS.MapSettingsViewModel_MapDialogTitle, _mapService.MapCacheDirectory);
-
-            if (!string.IsNullOrEmpty(path))
-            {
-                _mapService.SetMapCacheDirectory(path);
-                UpdateDescription();
-            }
-        }
-
+        
         private void UpdateDescription()
         {
-            MapStorageDescription = string.Format(RS.MapSettingsView_MapsInfo_Description, _mapService.MapCacheDirectory, _localizationService.ByteSize.ConvertToStringWithUnits(_mapService.CalculateMapCacheSize()));
+            MapStorageDescription = string.Format(RS.MapSettingsView_MapsInfo_Description, _mapService.MapCacheDirectory, 
+                _localizationService.ByteSize.ConvertToStringWithUnits(_mapService.CalculateMapCacheSize()));
+        }
+        
+        private void ClearMapStorage()
+        {
+            if (string.IsNullOrWhiteSpace(_mapService.MapCacheDirectory)) return;
+            
+            try
+            {
+                var dir = new DirectoryInfo(_mapService.MapCacheDirectory);
+                
+                foreach (var subDirectory in dir.GetDirectories())
+                {
+                    subDirectory.Delete(recursive: true);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
+            UpdateDescription();
         }
 
         public override int Order => 1;
@@ -60,8 +69,8 @@ namespace Asv.Drones.Gui.Core
 
         [Reactive]
         public string MapStorageDescription { get; set; }
-
-        public ICommand OpenFolderCommand { get; }
+        
+        public ICommand ClearMapStorageCommand { get; set; }
 
         public string MapIcon => MaterialIconDataProvider.GetData(MaterialIconKind.Map);
         public string FolderIcon => MaterialIconDataProvider.GetData(MaterialIconKind.FolderOpen);

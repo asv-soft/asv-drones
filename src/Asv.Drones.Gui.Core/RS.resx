@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <root>
     <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
@@ -200,8 +200,8 @@
     <data name="MapSettingsView_MapProvider_Header" xml:space="preserve">
     <value>Map Provider</value>
   </data>
-    <data name="MapSettingsView_MapsInfo_ButtonName" xml:space="preserve">
-    <value>Change</value>
+  <data name="MapSettingsView_MapsInfo_ButtonTitle" xml:space="preserve">
+    <value>Clear storage</value>
   </data>
     <data name="MapSettingsView_MapsInfo_Description" xml:space="preserve">
     <value>Current map storage is located at {0} and has a size of {1}</value>
@@ -581,5 +581,11 @@
   </data>
     <data name="MapPageViewModel_RulerStopPoint_Description" xml:space="preserve">
     <value>Select ruler end point</value>
+  </data>
+  <data name="MapSettingsView_MapSettings_Header" xml:space="preserve">
+    <value>Map settings</value>
+  </data>
+  <data name="MapSettingsView_MapSettings_Description" xml:space="preserve">
+    <value>Change current map settings</value>
   </data>
 </root>

@@ -843,11 +843,29 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change.
+        ///   Looks up a localized string similar to Change current map settings.
         /// </summary>
-        public static string MapSettingsView_MapsInfo_ButtonName {
+        public static string MapSettingsView_MapSettings_Description {
             get {
-                return ResourceManager.GetString("MapSettingsView_MapsInfo_ButtonName", resourceCulture);
+                return ResourceManager.GetString("MapSettingsView_MapSettings_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map settings.
+        /// </summary>
+        public static string MapSettingsView_MapSettings_Header {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapSettings_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear storage.
+        /// </summary>
+        public static string MapSettingsView_MapsInfo_ButtonTitle {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapsInfo_ButtonTitle", resourceCulture);
             }
         }
         
