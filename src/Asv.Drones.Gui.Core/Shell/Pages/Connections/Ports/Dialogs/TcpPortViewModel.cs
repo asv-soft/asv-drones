@@ -61,7 +61,7 @@ namespace Asv.Drones.Gui.Core
                 {
                     Name = Title,
                     ConnectionString = $"tcp://{IpAddress}:{Port}" + (IsTcpIpServer ? "?srv=true":string.Empty),
-                    IsEnabled = false,
+                    IsEnabled = true,
                 });
                 
             }
