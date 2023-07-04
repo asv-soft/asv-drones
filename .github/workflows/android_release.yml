@@ -12,10 +12,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         
-      - name: Setup .Net 6
+      - name: Setup .Net 7
         uses: actions/setup-dotnet@v3
         with:
-            dotnet-version: '6.x.x'
+            dotnet-version: '7.x.x'
       
       - name: Restore dependencies
         run: |
