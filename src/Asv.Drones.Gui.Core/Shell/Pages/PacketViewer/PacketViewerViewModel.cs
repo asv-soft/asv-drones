@@ -62,11 +62,10 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
     
     [ImportingConstructor]
     public PacketViewerViewModel(IMavlinkDevicesService mavlinkDevicesService, INavigationService nav, 
-        IConfiguration cfg, ILocalizationService localizationService, IGlobalCommandsService cmd,
-        [ImportMany]IEnumerable<IPacketConverter> converters) : this()
+        IConfiguration cfg, ILocalizationService localizationService, [ImportMany]IEnumerable<IPacketConverter> converters) : this()
     {
         _localization = localizationService;
-        _cmd = cmd;
+        
         _cfg = cfg;
         _nav = nav;
         

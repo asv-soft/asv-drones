@@ -75,12 +75,7 @@ namespace Asv.Drones.Gui.Core
             if (statusProviders == null) throw new ArgumentNullException(nameof(statusProviders));
 
             _navigation.Init(this);
-
-            
-            app.Store.Where(_=>_!=null)
-                .Select(_=>Path.GetFileNameWithoutExtension(Path.GetFileName(_.SourceName)))
-                .Subscribe(_=>Title = _)
-                .DisposeItWith(Disposable);
+            Title = app.Info.Name;
             
             #region Header menu
 
