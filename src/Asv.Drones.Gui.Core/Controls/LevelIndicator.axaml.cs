@@ -11,7 +11,7 @@ namespace Asv.Drones.Gui.Core;
 public class LevelIndicator : TemplatedControl
 {
     public static readonly StyledProperty<double> ValueFromProperty = AvaloniaProperty.Register<LevelIndicator, double>(
-        nameof(ValueFrom), 100, notifying: UpdateValueLimits);
+        nameof(ValueFrom), 100);
     
     public double ValueFrom
     {
@@ -20,7 +20,7 @@ public class LevelIndicator : TemplatedControl
     }
     
     public static readonly StyledProperty<double> ValueToProperty = AvaloniaProperty.Register<LevelIndicator, double>(
-        nameof(ValueTo), 100, notifying: UpdateValueLimits);
+        nameof(ValueTo), 100);
     
     public double ValueTo
     {
@@ -38,7 +38,7 @@ public class LevelIndicator : TemplatedControl
     }
 
     public static readonly StyledProperty<double?> ValueProperty = AvaloniaProperty.Register<LevelIndicator, double?>(
-        nameof(Value), default(double?), notifying: UpdateValue);
+        nameof(Value), default(double?));
 
     public double? Value
     {
@@ -46,7 +46,7 @@ public class LevelIndicator : TemplatedControl
         set => SetValue(ValueProperty, value);
     }
     
-    private static void UpdateValueLimits(IAvaloniaObject source, bool beforeChanged)
+    private static void UpdateValueLimits(AvaloniaObject source)
     {
         if (source is not LevelIndicator indicator) return;
 
@@ -56,11 +56,11 @@ public class LevelIndicator : TemplatedControl
         }
         else
         {
-            UpdateValue(source, beforeChanged);
+            UpdateValue(source);
         }
     }
 
-    private static void UpdateValue(IAvaloniaObject source, bool beforeChanged)
+    private static void UpdateValue(AvaloniaObject source)
     {
         if (source is not LevelIndicator indicator) return;
 
@@ -83,6 +83,20 @@ public class LevelIndicator : TemplatedControl
         }
 
         indicator.Level = (indicator.Value - indicator.ValueFrom) / (indicator.ValueTo - indicator.ValueFrom) * 350.0;
+    }
+
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+        if (change.Property == ValueFromProperty || change.Property == ValueToProperty)
+        {
+            UpdateValueLimits(change.Sender);
+
+        }
+        else if (change.Property == ValueProperty)
+        {
+            UpdateValue(change.Sender);
+        }
     }
 
     private Random _random = new Random();

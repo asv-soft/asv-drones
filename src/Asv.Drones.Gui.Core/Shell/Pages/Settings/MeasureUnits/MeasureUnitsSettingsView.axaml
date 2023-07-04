@@ -104,7 +104,7 @@
 
                         <core:OptionsDisplayItem.ActionButton>
                             <ComboBox MinWidth="150" SelectedItem="{Binding SelectedDdmLlzUnit}" 
-                                      Items="{Binding DdmLlzUnits}">
+                                      ItemsSource="{Binding DdmLlzUnits}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Title}"/>

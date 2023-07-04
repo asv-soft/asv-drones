@@ -30,7 +30,7 @@
                 
                 <sdr:LinkQualitySdrRttView DataContext="{CompiledBinding LinkQuality}" DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent"/>
             </DockPanel>
-            <ComboBox HorizontalAlignment="Stretch" Items="{Binding Modes}" SelectedItem="{Binding SelectedMode, Mode=TwoWay}">
+            <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding Modes}" SelectedItem="{Binding SelectedMode, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
                    <DataTemplate>
                        <StackPanel Orientation="Horizontal" Spacing="8">
