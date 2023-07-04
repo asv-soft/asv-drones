@@ -24,23 +24,23 @@
         <PackageReference Include="LiteDB" Version="5.0.16" />
     </ItemGroup>
     <ItemGroup>
-      <EmbeddedResource Update="RS.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-        <LastGenOutput>RS.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
+        <EmbeddedResource Update="RS.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>RS.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="RS.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>RS.resx</DependentUpon>
-      </Compile>
+        <Compile Update="RS.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>RS.resx</DependentUpon>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Asv.Drones.Gui.Core\Asv.Drones.Gui.Core.csproj" />
+        <ProjectReference Include="..\Asv.Drones.Gui.Core\Asv.Drones.Gui.Core.csproj" />
     </ItemGroup>
 
-    
+
 </Project>

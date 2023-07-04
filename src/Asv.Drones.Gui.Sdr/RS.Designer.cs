@@ -60,6 +60,96 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AM 150 Hz.
+        /// </summary>
+        public static string IlsSdrRttViewModel_AM_150_Hz_Title {
+            get {
+                return ResourceManager.GetString("IlsSdrRttViewModel_AM_150_Hz_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AM 90 Hz.
+        /// </summary>
+        public static string IlsSdrRttViewModel_AM_90_Hz_Title {
+            get {
+                return ResourceManager.GetString("IlsSdrRttViewModel_AM_90_Hz_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CLR.
+        /// </summary>
+        public static string IlsSdrRttViewModel_Clr_Header {
+            get {
+                return ResourceManager.GetString("IlsSdrRttViewModel_Clr_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CLR.
+        /// </summary>
+        public static string IlsSdrRttViewModel_CLRPower_Title {
+            get {
+                return ResourceManager.GetString("IlsSdrRttViewModel_CLRPower_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CRS.
+        /// </summary>
+        public static string IlsSdrRttViewModel_Crs_Header {
+            get {
+                return ResourceManager.GetString("IlsSdrRttViewModel_Crs_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CRS.
+        /// </summary>
+        public static string IlsSdrRttViewModel_CRSPower_Title {
+            get {
+                return ResourceManager.GetString("IlsSdrRttViewModel_CRSPower_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DDM.
+        /// </summary>
+        public static string IlsSdrRttViewModel_DDM_Title {
+            get {
+                return ResourceManager.GetString("IlsSdrRttViewModel_DDM_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freq 150 Hz.
+        /// </summary>
+        public static string IlsSdrRttViewModel_Freq_150_Hz_Title {
+            get {
+                return ResourceManager.GetString("IlsSdrRttViewModel_Freq_150_Hz_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freq 90 Hz.
+        /// </summary>
+        public static string IlsSdrRttViewModel_Freq_90_Hz_Title {
+            get {
+                return ResourceManager.GetString("IlsSdrRttViewModel_Freq_90_Hz_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SDM.
+        /// </summary>
+        public static string IlsSdrRttViewModel_SDM_Title {
+            get {
+                return ResourceManager.GetString("IlsSdrRttViewModel_SDM_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SDR link quality.
         /// </summary>
         public static string LinkQualitySdrRttView_ToolTip {
@@ -69,11 +159,47 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ID Code.
+        /// </summary>
+        public static string LlzSdrRttViewModel_ID_Code_Title {
+            get {
+                return ResourceManager.GetString("LlzSdrRttViewModel_ID_Code_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to N\A.
         /// </summary>
         public static string SdrRttItem_ValueNotAvailable {
             get {
                 return ResourceManager.GetString("SdrRttItem_ValueNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main.
+        /// </summary>
+        public static string SdrRttViewModel_Main_Header {
+            get {
+                return ResourceManager.GetString("SdrRttViewModel_Main_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RF.
+        /// </summary>
+        public static string SdrRttViewModel_Rf_Header {
+            get {
+                return ResourceManager.GetString("SdrRttViewModel_Rf_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sum.
+        /// </summary>
+        public static string SdrRttViewModel_SumPower_Title {
+            get {
+                return ResourceManager.GetString("SdrRttViewModel_SumPower_Title", resourceCulture);
             }
         }
     }

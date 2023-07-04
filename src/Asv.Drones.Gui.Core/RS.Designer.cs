@@ -18,7 +18,7 @@ namespace Asv.Drones.Gui.Core {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class RS {
@@ -155,6 +155,24 @@ namespace Asv.Drones.Gui.Core {
         public static string Altitude_Meter_Unit {
             get {
                 return ResourceManager.GetString("Altitude_Meter_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In parts.
+        /// </summary>
+        public static string AmplitudeModulation_InParts_Unit {
+            get {
+                return ResourceManager.GetString("AmplitudeModulation_InParts_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Percent.
+        /// </summary>
+        public static string AmplitudeModulation_Percent_Title {
+            get {
+                return ResourceManager.GetString("AmplitudeModulation_Percent_Title", resourceCulture);
             }
         }
         
@@ -474,6 +492,51 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to In parts.
+        /// </summary>
+        public static string Ddm_InParts_Title {
+            get {
+                return ResourceManager.GetString("Ddm_InParts_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microamp.
+        /// </summary>
+        public static string Ddm_Microamp_Title {
+            get {
+                return ResourceManager.GetString("Ddm_Microamp_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microamp (Rus).
+        /// </summary>
+        public static string Ddm_MicroampRus_Title {
+            get {
+                return ResourceManager.GetString("Ddm_MicroampRus_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Percent.
+        /// </summary>
+        public static string Ddm_Percent_Title {
+            get {
+                return ResourceManager.GetString("Ddm_Percent_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to µA.
+        /// </summary>
+        public static string Ddm_µA_Unit {
+            get {
+                return ResourceManager.GetString("Ddm_µA_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In this section you can see all found devices on the network.
         /// </summary>
         public static string DeviceBrowserView_Description {
@@ -533,6 +596,78 @@ namespace Asv.Drones.Gui.Core {
         public static string FlightShellMenuItem_Name {
             get {
                 return ResourceManager.GetString("FlightShellMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gigahertz.
+        /// </summary>
+        public static string Frequency_Gigahertz_Title {
+            get {
+                return ResourceManager.GetString("Frequency_Gigahertz_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GHz.
+        /// </summary>
+        public static string Frequency_Gigahertz_Unit {
+            get {
+                return ResourceManager.GetString("Frequency_Gigahertz_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hertz.
+        /// </summary>
+        public static string Frequency_Hertz_Title {
+            get {
+                return ResourceManager.GetString("Frequency_Hertz_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hz.
+        /// </summary>
+        public static string Frequency_Hertz_Unit {
+            get {
+                return ResourceManager.GetString("Frequency_Hertz_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kilohertz.
+        /// </summary>
+        public static string Frequency_Kilohertz_Title {
+            get {
+                return ResourceManager.GetString("Frequency_Kilohertz_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to kHz.
+        /// </summary>
+        public static string Frequency_Kilohertz_Unit {
+            get {
+                return ResourceManager.GetString("Frequency_Kilohertz_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Megahertz.
+        /// </summary>
+        public static string Frequency_Megahertz_Title {
+            get {
+                return ResourceManager.GetString("Frequency_Megahertz_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MHz.
+        /// </summary>
+        public static string Frequency_Megahertz_Unit {
+            get {
+                return ResourceManager.GetString("Frequency_Megahertz_Unit", resourceCulture);
             }
         }
         
@@ -924,6 +1059,24 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DDM Llz.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_DdmLlz {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_DdmLlz", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of DDL Llz..
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_DdmLlzDescription {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_DdmLlzDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Distance.
         /// </summary>
         public static string MeasureUnitsSettingsViewModel_Distance {
@@ -1140,6 +1293,33 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Degree.
+        /// </summary>
+        public static string Phase_Degree_Title {
+            get {
+                return ResourceManager.GetString("Phase_Degree_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Radian.
+        /// </summary>
+        public static string Phase_Radian_Title {
+            get {
+                return ResourceManager.GetString("Phase_Radian_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rad.
+        /// </summary>
+        public static string Phase_Radian_Unit {
+            get {
+                return ResourceManager.GetString("Phase_Radian_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mission planing.
         /// </summary>
         public static string PlaningShellMenuItem_Name {
@@ -1172,6 +1352,24 @@ namespace Asv.Drones.Gui.Core {
         public static string PortViewModel_SkippedUnitTest {
             get {
                 return ResourceManager.GetString("PortViewModel_SkippedUnitTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decibel to 1 milliwatt.
+        /// </summary>
+        public static string Power_Dbm_Title {
+            get {
+                return ResourceManager.GetString("Power_Dbm_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to dBm.
+        /// </summary>
+        public static string Power_Dbm_Unit {
+            get {
+                return ResourceManager.GetString("Power_Dbm_Unit", resourceCulture);
             }
         }
         

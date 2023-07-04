@@ -1,444 +1,765 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-    <resheader name="resmimetype">
-        <value>text/microsoft-resx</value>
-    </resheader>
-    <resheader name="version">
-        <value>1.3</value>
-    </resheader>
-    <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    <data name="SettingsShellMenuProvider_SettingsShellMenuProvider_Settings" xml:space="preserve">
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+	
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>1.3</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="SettingsShellMenuProvider_SettingsShellMenuProvider_Settings" xml:space="preserve">
+		<value>Настройки</value>
+	</data>
+	<data name="FlightShellMenuItem_Name" xml:space="preserve">
+		<value>Режим полета</value>
+	</data>
+	<data name="ThemeService_Themes_Contrast" xml:space="preserve">
+		<value>Контрастная</value>
+	</data>
+	<data name="ThemeService_Themes_Dark" xml:space="preserve">
+		<value>Темная</value>
+	</data>
+	<data name="ThemeService_Themes_Light" xml:space="preserve">
+		<value>Светлая</value>
+	</data>
+	<data name="ThemeService_FlowDirections_LeftToRight" xml:space="preserve">
+		<value>СлеваНаПраво</value>
+	</data>
+	<data name="ThemeService_FlowDirections_RightToLeft" xml:space="preserve">
+		<value>СправаНаЛево</value>
+	</data>
+	<data name="SettingsThemeViewModel_CurrentTheme" xml:space="preserve">
+		<value>Тема</value>
+	</data>
+	<data name="SettingsThemeViewModel_ChangeThemeDescription" xml:space="preserve">
+		<value>Измените текущую тему приложения.</value>
+	</data>
+	<data name="SettingsThemeViewModel_CurrentLanguage" xml:space="preserve">
+		<value>Язык приложения</value>
+	</data>
+	<data name="SettingsThemeViewModel_CurrentLanguageDescription" xml:space="preserve">
+		<value>Измените текущий язык приложения. Изменения будут применены после перезапуска приложения.</value>
+	</data>
+	<data name="SettingsThemeViewModel_FlowDirection" xml:space="preserve">
+		<value>Направление чтения</value>
+	</data>
+	<data name="SettingsThemeViewModel_FlowDirectionDescription" xml:space="preserve">
+		<value>Измените направление чтения.</value>
+	</data>
+	<data name="PlaningShellMenuItem_Name" xml:space="preserve">
+		<value>Планирование полета</value>
+	</data>
+	<data name="ByteSize_BytesUnit" xml:space="preserve">
+		<value>Б</value>
+	</data>
+	<data name="ByteSize_KilobytesUnit" xml:space="preserve">
+		<value>КБ</value>
+	</data>
+	<data name="ByteSize_MegabytesUnit" xml:space="preserve">
+		<value>МБ</value>
+	</data>
+	<data name="ByteSize_GigabytesUnit" xml:space="preserve">
+		<value>ГБ</value>
+	</data>
+	<data name="Common_NotAvailable" xml:space="preserve">
+		<value>Н/Д</value>
+	</data>
+	<data name="BytesRate_BytesPerSecondUnit" xml:space="preserve">
+		<value>Б/с</value>
+	</data>
+	<data name="BytesRate_GigaBytesPerSecondUnit" xml:space="preserve">
+		<value>ГБ/с</value>
+	</data>
+	<data name="BytesRate_KiloBytesPerSecondUnit" xml:space="preserve">
+		<value>КБ/с</value>
+	</data>
+	<data name="BytesRate_MegaBytesPerSecondUnit" xml:space="preserve">
+		<value>МБ/с</value>
+	</data>
+	<data name="ItemsRate_GigaHerzUnit" xml:space="preserve">
+		<value>ГГц</value>
+	</data>
+	<data name="ItemsRate_HerzUnit" xml:space="preserve">
+		<value>Гц</value>
+	</data>
+	<data name="ItemsRate_KiloHerzUnit" xml:space="preserve">
+		<value>КГц</value>
+	</data>
+	<data name="ItemsRate_MegaHerzUnit" xml:space="preserve">
+		<value>МГц</value>
+	</data>
+
+	<data name="SettingsView_RebootRequiredTitle" xml:space="preserve">
+		<value>Требуется перезагрузка</value>
+	</data>
+	<data name="SettingsView_RebootRequiredDescription" xml:space="preserve">
+		<value>Вы должны перезагрузить программу, чтобы применить изменения.</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_Distance" xml:space="preserve">
+		<value>Расстояние</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_DistanceDescription" xml:space="preserve">
+		<value>Измените текущие единицы измерения расстояния.</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_Altitude" xml:space="preserve">
+		<value>Высота</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_AltitudeDescription" xml:space="preserve">
+		<value>Измените текущие единицы измерения высоты.</value>
+	</data>
+  <data name="MeasureUnitsSettingsViewModel_Latitude" xml:space="preserve">
+	  <value>Широта</value>
+  </data>
+	<data name="MeasureUnitsSettingsViewModel_LatitudeLongitudeDescription" xml:space="preserve">
+		<value>Измените текущие единицы измерения широты и долготы.</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_DistanceMeters" xml:space="preserve">
+		<value>Метры</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_DistanceInternationalNauticalMiles" xml:space="preserve">
+		<value>Морские мили</value>
+	</data>
+	<data name="Altitude_Meter_Title" xml:space="preserve">
+		<value>Метры</value>
+	</data>
+	<data name="Altitude_Feet_Title" xml:space="preserve">
+		<value>Футы</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegrees" xml:space="preserve">
+		<value>Градусы</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds" xml:space="preserve">
+		<value>Градусы, минуты, секунды</value>
+	</data>
+	<data name="Altitude_Feet_Unit" xml:space="preserve">
+		<value>фут</value>
+	</data>
+	<data name="Altitude_Meter_Unit" xml:space="preserve">
+		<value>м</value>
+	</data>
+	<data name="Distance_Meters_Unit" xml:space="preserve">
+		<value>м</value>
+	</data>
+  <data name="Distance_NauticalMiles_Unit" xml:space="preserve">
+	  <value>NM</value>
+
+  </data>
+	<data name="Velocity_MetersPerSecondUnit" xml:space="preserve">
+		<value>м/с</value>
+	</data>
+	<data name="Velocity_KilometersPerHourUnit" xml:space="preserve">
+		<value>км/ч</value>
+	</data>
+	<data name="Velocity_MilesPerHourUnit" xml:space="preserve">
+		<value>миль/ч</value>
+	</data>
+	<data name="RelativeTime_MillisecondsUnit" xml:space="preserve">
+		<value>мс</value>
+	</data>
+	<data name="RelativeTime_SecondsUnit" xml:space="preserve">
+		<value>с</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Title" xml:space="preserve">
+		<value>Единицы измерения</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Description" xml:space="preserve">
+		<value>В этом разделе можно настроить единицы измерения для различных параметров.</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_Velocity" xml:space="preserve">
+		<value>Скорость</value>
+	</data>
+	<data name="MeasureUnitsSettingsViewModel_VelocityDescription" xml:space="preserve">
+		<value>Измените текущие единицы измерения скорости.</value>
+	</data>
+	<data name="HeaderFileMenu_Header" xml:space="preserve">
+		<value>Файл</value>
+	</data>
+	<data name="HeaderOpenMenu_Header" xml:space="preserve">
+		<value>Открыть</value>
+	</data>
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="SettingsShellMenuProvider_SettingsShellMenuProvider_Settings" xml:space="preserve">
     <value>Настройки</value>
   </data>
-    <data name="FlightShellMenuItem_Name" xml:space="preserve">
+  <data name="FlightShellMenuItem_Name" xml:space="preserve">
     <value>Режим полета</value>
   </data>
-    <data name="ThemeService_Themes_Contrast" xml:space="preserve">
+  <data name="ThemeService_Themes_Contrast" xml:space="preserve">
     <value>Контрастная</value>
   </data>
-    <data name="ThemeService_Themes_Dark" xml:space="preserve">
+  <data name="ThemeService_Themes_Dark" xml:space="preserve">
     <value>Темная</value>
   </data>
-    <data name="ThemeService_Themes_Light" xml:space="preserve">
+  <data name="ThemeService_Themes_Light" xml:space="preserve">
     <value>Светлая</value>
   </data>
-    <data name="ThemeService_FlowDirections_LeftToRight" xml:space="preserve">
+  <data name="ThemeService_FlowDirections_LeftToRight" xml:space="preserve">
     <value>СлеваНаПраво</value>
   </data>
-    <data name="ThemeService_FlowDirections_RightToLeft" xml:space="preserve">
+  <data name="ThemeService_FlowDirections_RightToLeft" xml:space="preserve">
     <value>СправаНаЛево</value>
   </data>
-    <data name="SettingsThemeViewModel_CurrentTheme" xml:space="preserve">
+  <data name="SettingsThemeViewModel_CurrentTheme" xml:space="preserve">
     <value>Тема</value>
   </data>
-    <data name="SettingsThemeViewModel_ChangeThemeDescription" xml:space="preserve">
+  <data name="SettingsThemeViewModel_ChangeThemeDescription" xml:space="preserve">
     <value>Измените текущую тему приложения.</value>
   </data>
-    <data name="SettingsThemeViewModel_CurrentLanguage" xml:space="preserve">
+  <data name="SettingsThemeViewModel_CurrentLanguage" xml:space="preserve">
     <value>Язык приложения</value>
   </data>
-    <data name="SettingsThemeViewModel_CurrentLanguageDescription" xml:space="preserve">
+  <data name="SettingsThemeViewModel_CurrentLanguageDescription" xml:space="preserve">
     <value>Измените текущий язык приложения. Изменения будут применены после перезапуска приложения.</value>
   </data>
-    <data name="SettingsThemeViewModel_FlowDirection" xml:space="preserve">
+  <data name="SettingsThemeViewModel_FlowDirection" xml:space="preserve">
     <value>Направление чтения</value>
   </data>
-    <data name="SettingsThemeViewModel_FlowDirectionDescription" xml:space="preserve">
+  <data name="SettingsThemeViewModel_FlowDirectionDescription" xml:space="preserve">
     <value>Измените направление чтения.</value>
   </data>
-    <data name="PlaningShellMenuItem_Name" xml:space="preserve">
+  <data name="PlaningShellMenuItem_Name" xml:space="preserve">
     <value>Планирование полета</value>
   </data>
-    <data name="MapSettingsView_MapProvider_Description" xml:space="preserve">
+  <data name="MapSettingsView_MapProvider_Description" xml:space="preserve">
     <value>Выбрать провайдер карт</value>
   </data>
-    <data name="MapSettingsView_MapProvider_Header" xml:space="preserve">
+  <data name="MapSettingsView_MapProvider_Header" xml:space="preserve">
     <value>Провайдер карт</value>
   </data>
-    <data name="MapSettingsView_MapsInfo_ButtonName" xml:space="preserve">
+  <data name="MapSettingsView_MapsInfo_ButtonName" xml:space="preserve">
     <value>Изменить</value>
   </data>
-    <data name="MapSettingsView_MapsInfo_Description" xml:space="preserve">
+  <data name="MapSettingsView_MapsInfo_Description" xml:space="preserve">
     <value>Текущее хранилище карт находится {0} и занимает {1}</value>
   </data>
-    <data name="MapSettingsView_MapsInfo_Header" xml:space="preserve">
+  <data name="MapSettingsView_MapsInfo_Header" xml:space="preserve">
     <value>Хранилище карт</value>
   </data>
-    <data name="MapSettingsViewModel_MapDialogTitle" xml:space="preserve">
+  <data name="MapSettingsViewModel_MapDialogTitle" xml:space="preserve">
     <value>Карты</value>
   </data>
-    <data name="Distance_Meters_Title" xml:space="preserve">
+  <data name="Distance_Meters_Title" xml:space="preserve">
 	  <value>Метры</value>
   </data>
-    <data name="GlobalCommands_OpenStoreDialogTitle" xml:space="preserve">
+  <data name="GlobalCommands_OpenStoreDialogTitle" xml:space="preserve">
 	  <value>Открыть файл</value>
   </data>
-    <data name="Distance_NauticalMiles_Title" xml:space="preserve">
+  <data name="Distance_NauticalMiles_Title" xml:space="preserve">
 	  <value>Морские мили</value>
   </data>
-    <data name="LogMessagesShellMenuItem_Name" xml:space="preserve">
+  <data name="LogMessagesShellMenuItem_Name" xml:space="preserve">
 	  <value>Сообщения лога</value>
   </data>
-    <data name="LogMessagesPageView_By" xml:space="preserve">
+  <data name="LogMessagesPageView_By" xml:space="preserve">
 	  <value>по </value>
   </data>
-    <data name="LogMessagesPageView_SearchWatermark" xml:space="preserve">
+  <data name="LogMessagesPageView_SearchWatermark" xml:space="preserve">
 	  <value>Найти</value>
   </data>
-    <data name="LogMessagesPageView_From" xml:space="preserve">
+  <data name="LogMessagesPageView_From" xml:space="preserve">
 	  <value>От {0}</value>
   </data>
-    <data name="LogMessagesPageView_To" xml:space="preserve">
+  <data name="LogMessagesPageView_To" xml:space="preserve">
 	  <value>до {0}</value>
   </data>
-    <data name="LogMessagesPageView_Filtered" xml:space="preserve">
+  <data name="LogMessagesPageView_Filtered" xml:space="preserve">
 	  <value>Фильтрованных: {0}</value>
   </data>
-    <data name="LogMessagesPageView_Total" xml:space="preserve">
+  <data name="LogMessagesPageView_Total" xml:space="preserve">
 	  <value>Всего: {0}</value>
   </data>
-    <data name="LogMessagesPageViewModel_LogName" xml:space="preserve">
+  <data name="LogMessagesPageViewModel_LogName" xml:space="preserve">
 	  <value>СообщенияЛога</value>
   </data>
-    <data name="LogMessagesPageViewModel_RefreshErrorMessage" xml:space="preserve">
+  <data name="LogMessagesPageViewModel_RefreshErrorMessage" xml:space="preserve">
 	  <value>Ошибка при обновлении элементов</value>
   </data>
-    <data name="LogMessagesPageViewModel_ClearAllMessage" xml:space="preserve">
+  <data name="LogMessagesPageViewModel_ClearAllMessage" xml:space="preserve">
 	  <value>Очистить все сообщения лога</value>
   </data>
-    <data name="SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name" xml:space="preserve">
+	<data name="SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name" xml:space="preserve">
     <value>Вы должны указать допустимое имя</value>
   </data>
-    <data name="SerialPortViewModel_SerialPortViewModel_ValidSerialPort" xml:space="preserve">
+	<data name="SerialPortViewModel_SerialPortViewModel_ValidSerialPort" xml:space="preserve">
     <value>Вы должны указать действительное имя последовательного порта</value>
   </data>
-    <data name="SerialPortViewModel_SerialPortViewModel_BaudRateValid" xml:space="preserve">
+	<data name="SerialPortViewModel_SerialPortViewModel_BaudRateValid" xml:space="preserve">
     <value>Скорость передачи данных должна быть значением от {0} до {1}</value>
   </data>
-    <data name="SerialPortViewModel_SerialPortViewModel_NewSerial" xml:space="preserve">
+	<data name="SerialPortViewModel_SerialPortViewModel_NewSerial" xml:space="preserve">
     <value>Новый последовательный порт {0}</value>
   </data>
-    <data name="SerialPortView_Title" xml:space="preserve">
+	<data name="SerialPortView_Title" xml:space="preserve">
     <value>Название</value>
   </data>
-    <data name="SerialPortView_PortName" xml:space="preserve">
+	<data name="SerialPortView_PortName" xml:space="preserve">
     <value>Порт</value>
   </data>
-    <data name="SerialPortView_BaudRate" xml:space="preserve">
+	<data name="SerialPortView_BaudRate" xml:space="preserve">
     <value>Скорость порта</value>
   </data>
-    <data name="ConnectionsShellMenuItem_Name" xml:space="preserve">
+	<data name="ConnectionsShellMenuItem_Name" xml:space="preserve">
     <value>Подключения</value>
   </data>
-    <data name="ConnectionsViewModel_AddDialogPort_Add" xml:space="preserve">
+	<data name="ConnectionsViewModel_AddDialogPort_Add" xml:space="preserve">
     <value>Добавить</value>
   </data>
-    <data name="ConnectionsViewModel_AddDialogPort_Cancel" xml:space="preserve">
+	<data name="ConnectionsViewModel_AddDialogPort_Cancel" xml:space="preserve">
     <value>Отмена</value>
   </data>
-    <data name="ConnectionsViewModel_AddSerialPortDialog_Title" xml:space="preserve">
+	<data name="ConnectionsViewModel_AddSerialPortDialog_Title" xml:space="preserve">
     <value>Новый последовательный порт</value>
   </data>
-    <data name="ConnectionsViewModel_AddTcpPortDialog_Title" xml:space="preserve">
+	<data name="ConnectionsViewModel_AddTcpPortDialog_Title" xml:space="preserve">
     <value>Новый TCP порт</value>
   </data>
-    <data name="ConnectionsViewModel_AddUdpPortDialog_Title" xml:space="preserve">
+	<data name="ConnectionsViewModel_AddUdpPortDialog_Title" xml:space="preserve">
     <value>Новый порт UDP</value>
   </data>
-    <data name="PortView_ToggleButton_Enabled" xml:space="preserve">
+	<data name="PortView_ToggleButton_Enabled" xml:space="preserve">
     <value>Включен</value>
   </data>
-    <data name="PortView_ToggleButton_Disabled" xml:space="preserve">
+	<data name="PortView_ToggleButton_Disabled" xml:space="preserve">
     <value>Выключен</value>
   </data>
-    <data name="ConnectionsPortsView_AddSerialCommand_Title" xml:space="preserve">
+	<data name="ConnectionsPortsView_AddSerialCommand_Title" xml:space="preserve">
     <value>Новый COM</value>
   </data>
-    <data name="ConnectionsPortsView_AddTcpCommand_Title" xml:space="preserve">
+	<data name="ConnectionsPortsView_AddTcpCommand_Title" xml:space="preserve">
     <value>Новый  TCP</value>
   </data>
-    <data name="ConnectionsPortsView_AddUdpCommand_Title" xml:space="preserve">
+	<data name="ConnectionsPortsView_AddUdpCommand_Title" xml:space="preserve">
     <value>Новый  UDP</value>
   </data>
-    <data name="ConnectionsPortsView_Header_Title" xml:space="preserve">
+	<data name="ConnectionsPortsView_Header_Title" xml:space="preserve">
     <value>Порты для подключения</value>
   </data>
-    <data name="ConnectionsView_Header_Description" xml:space="preserve">
+	<data name="ConnectionsView_Header_Description" xml:space="preserve">
     <value>Эта страница позволяет настроить основные параметры сети Mavlink</value>
   </data>
-    <data name="ConnectionsPortsView_Header_Description" xml:space="preserve">
+	<data name="ConnectionsPortsView_Header_Description" xml:space="preserve">
     <value>Точка входа, позволяющая ему общаться с другими устройствами в сети Mavlink.</value>
   </data>
-    <data name="ConnectionsView_Header_Title" xml:space="preserve">
+	<data name="ConnectionsView_Header_Title" xml:space="preserve">
     <value>Сеть Mavlink</value>
   </data>
-    <data name="DeviceBrowserView_Description" xml:space="preserve">
+	<data name="DeviceBrowserView_Description" xml:space="preserve">
     <value>В этом разделе можно посмотреть все найденные устройства в сети</value>
   </data>
-    <data name="DeviceBrowserView_Header" xml:space="preserve">
+	<data name="DeviceBrowserView_Header" xml:space="preserve">
     <value>Список найденных устройств</value>
   </data>
-    <data name="ConnectionsIdentificationView_HeartbeatRate_Description" xml:space="preserve">
+	<data name="ConnectionsIdentificationView_HeartbeatRate_Description" xml:space="preserve">
     <value>Частота, с которой сообщения HEARTBEAT должны передаваться, чтобы объявить о существовании системы в сети MAVLink</value>
   </data>
-    <data name="ConnectionsIdentificationView_HeartbeatRate_Header" xml:space="preserve">
+	<data name="ConnectionsIdentificationView_HeartbeatRate_Header" xml:space="preserve">
     <value>Частота Heartbeat</value>
   </data>
-    <data name="ConnectionsIdentificationView_HeartbeatTimeout_Description" xml:space="preserve">
+	<data name="ConnectionsIdentificationView_HeartbeatTimeout_Description" xml:space="preserve">
     <value>По истечении таймаута пакета Heartbeat устройство будет удалено из списка устройств</value>
   </data>
-    <data name="ConnectionsIdentificationView_HeartbeatTimeout_Header" xml:space="preserve">
+	<data name="ConnectionsIdentificationView_HeartbeatTimeout_Header" xml:space="preserve">
     <value>Таймаут Heartbeat</value>
   </data>
-    <data name="ConnectionsIdentificationView_SystemComponentId_Description" xml:space="preserve">
+	<data name="ConnectionsIdentificationView_SystemComponentId_Description" xml:space="preserve">
     <value>Каждая система имеет идентификатор, и каждый компонент имеет идентификатор компонента системы, который можно использовать для адресации/маршрутизации</value>
   </data>
-    <data name="ConnectionsIdentificationView_SystemComponentId_Header" xml:space="preserve">
+	<data name="ConnectionsIdentificationView_SystemComponentId_Header" xml:space="preserve">
     <value>ID Системы \ Компонента</value>
   </data>
-    <data name="MavlinkDeviceView_Mode_Name" xml:space="preserve">
+	<data name="MavlinkDeviceView_Mode_Name" xml:space="preserve">
     <value>Пользовательский режим</value>
   </data>
-    <data name="MavlinkDeviceView_Rate_Name" xml:space="preserve">
+	<data name="MavlinkDeviceView_Rate_Name" xml:space="preserve">
     <value>Частота Heartbeat</value>
   </data>
-    <data name="MavlinkDeviceView_Status_Name" xml:space="preserve">
+	<data name="MavlinkDeviceView_Status_Name" xml:space="preserve">
     <value>Статус системы</value>
   </data>
-    <data name="TcpPortView_TcpIpAddress" xml:space="preserve">
+	<data name="TcpPortView_TcpIpAddress" xml:space="preserve">
     <value>IP адрес </value>
   </data>
-    <data name="TcpPortView_PortTitle" xml:space="preserve">
+	<data name="TcpPortView_PortTitle" xml:space="preserve">
     <value>Название</value>
   </data>
-    <data name="TcpPortView_TcpIpPort" xml:space="preserve">
+	<data name="TcpPortView_TcpIpPort" xml:space="preserve">
     <value>Номер порта</value>
   </data>
-    <data name="UdpPortView_LocalIpAddress" xml:space="preserve">
+	<data name="UdpPortView_LocalIpAddress" xml:space="preserve">
     <value>IP адрес</value>
   </data>
-    <data name="UdpPortView_LocalPortName" xml:space="preserve">
+	<data name="UdpPortView_LocalPortName" xml:space="preserve">
     <value>Порт</value>
   </data>
-    <data name="UdpPortView_PortTitle" xml:space="preserve">
+	<data name="UdpPortView_PortTitle" xml:space="preserve">
     <value>Название</value>
   </data>
-    <data name="UdpPortView_RemoteIpAddress" xml:space="preserve">
+	<data name="UdpPortView_RemoteIpAddress" xml:space="preserve">
     <value>Удаленный IP адрес</value>
   </data>
-    <data name="UdpPortView_RemotePortName" xml:space="preserve">
+	<data name="UdpPortView_RemotePortName" xml:space="preserve">
     <value>Удаленный порт</value>
   </data>
-    <data name="UdpPortView_ToggleName" xml:space="preserve">
+	<data name="UdpPortView_ToggleName" xml:space="preserve">
     <value>Указать удаленный хост</value>
   </data>
-    <data name="ConnectionsIdentificationViewModel_DeviceTimeout" xml:space="preserve">
+	<data name="ConnectionsIdentificationViewModel_DeviceTimeout" xml:space="preserve">
     <value>Таймаут должен быть от {0} до {1}</value>
   </data>
-    <data name="ConnectionsIdentificationViewModel_ToString" xml:space="preserve">
+	<data name="ConnectionsIdentificationViewModel_ToString" xml:space="preserve">
     <value>Гц</value>
   </data>
-    <data name="PortViewModel_SkippedUnitTest" xml:space="preserve">
+	<data name="PortViewModel_SkippedUnitTest" xml:space="preserve">
     <value>ошибка</value>
   </data>
-
-    <data name="TcpPortViewModel_Title" xml:space="preserve">
+	
+	<data name="TcpPortViewModel_Title" xml:space="preserve">
     <value>Новый TCP</value>
   </data>
-    <data name="TcpPortViewModel_ValidTitle" xml:space="preserve">
+	<data name="TcpPortViewModel_ValidTitle" xml:space="preserve">
     <value>Вы должны указать действительное имя</value>
   </data>
-    <data name="TcpPortViewModel_ValidPort" xml:space="preserve">
+	<data name="TcpPortViewModel_ValidPort" xml:space="preserve">
     <value>Номер порта должен иметь значение от 1 до 65535</value>
   </data>
-    <data name="TcpPortViewModel_ValidIpAddress" xml:space="preserve">
+	<data name="TcpPortViewModel_ValidIpAddress" xml:space="preserve">
     <value>Вы должны ввести действительный IP-адрес</value>
   </data>
-    <data name="TcpPortViewModel_LogService_Error" xml:space="preserve">
+	<data name="TcpPortViewModel_LogService_Error" xml:space="preserve">
     <value>Ошибка при создании порта</value>
   </data>
-    <data name="UdpPortViewModel_ValidTitle" xml:space="preserve">
+	<data name="UdpPortViewModel_ValidTitle" xml:space="preserve">
     <value>Вы должны указать действительное имя</value>
   </data>
-    <data name="UdpPortViewModel_ValidLocalIpAddress" xml:space="preserve">
+	<data name="UdpPortViewModel_ValidLocalIpAddress" xml:space="preserve">
     <value>Вы должны ввести действительный IP-адрес</value>
   </data>
-    <data name="UdpPortViewModel_ValidLocalPort" xml:space="preserve">
+	<data name="UdpPortViewModel_ValidLocalPort" xml:space="preserve">
     <value>Номер порта должен иметь значение от 1 до 65535</value>
   </data>
-    <data name="UdpPortViewModel_ValidRemotePort" xml:space="preserve">
+	<data name="UdpPortViewModel_ValidRemotePort" xml:space="preserve">
     <value>Номер порта должен иметь значение от 1 до 65535</value>
   </data>
-    <data name="UdpPortViewModel_ValidRemoteIpAddress" xml:space="preserve">
+	<data name="UdpPortViewModel_ValidRemoteIpAddress" xml:space="preserve">
     <value>Вы должны ввести действительный IP-адрес</value>
   </data>
-    <data name="UdpPortViewModel_Title" xml:space="preserve">
+	<data name="UdpPortViewModel_Title" xml:space="preserve">
     <value>Новый UDP</value>
   </data>
-    <data name="PacketViewerShellMenuItem_Name" xml:space="preserve">
+  <data name="PacketViewerShellMenuItem_Name" xml:space="preserve">
 	  <value>Просмотр пакетов</value>
   </data>
-    <data name="LogMessageTypeHelper_GetDisplayName_Info" xml:space="preserve">
+  <data name="LogMessageTypeHelper_GetDisplayName_Info" xml:space="preserve">
 	  <value>Информация</value>
   </data>
-    <data name="LogMessageTypeHelper_GetDisplayName_Warning" xml:space="preserve">
+  <data name="LogMessageTypeHelper_GetDisplayName_Warning" xml:space="preserve">
 	  <value>Предупреждение</value>
   </data>
-    <data name="LogMessageTypeHelper_GetDisplayName_Error" xml:space="preserve">
+  <data name="LogMessageTypeHelper_GetDisplayName_Error" xml:space="preserve">
 	  <value>Ошибка</value>
   </data>
-    <data name="PacketViewerView_CheckAll" xml:space="preserve">
+  <data name="PacketViewerView_CheckAll" xml:space="preserve">
 	  <value>Показать/Скрыть все</value>
   </data>
-    <data name="PacketViewerView_PlayPause" xml:space="preserve">
+  <data name="PacketViewerView_PlayPause" xml:space="preserve">
 	  <value>Возобновить/Остановить</value>
   </data>
-    <data name="PacketViewerView_ClearAll" xml:space="preserve">
+  <data name="PacketViewerView_ClearAll" xml:space="preserve">
 	  <value>Очистить список пакетов</value>
   </data>
-    <data name="PacketViewerView_Save" xml:space="preserve">
+  <data name="PacketViewerView_Save" xml:space="preserve">
 	  <value>Сохранить как CSV</value>
   </data>
-    <data name="Voltage_Unit" xml:space="preserve">
+  <data name="Voltage_Unit" xml:space="preserve">
 	  <value>В</value>
   </data>
-    <data name="MeasureUnitsSettingsViewModel_Longitude" xml:space="preserve">
+  <data name="MeasureUnitsSettingsViewModel_Longitude" xml:space="preserve">
 	  <value>Долгота</value>
   </data>
-    <data name="ConnectionsViewModel_EditDialogPort_Accept" xml:space="preserve">
+  <data name="ConnectionsViewModel_EditDialogPort_Accept" xml:space="preserve">
 	  <value>Принять</value>
   </data>
-    <data name="ConnectionsViewModel_EditSerialPortDialog_Title" xml:space="preserve">
+  <data name="ConnectionsViewModel_EditSerialPortDialog_Title" xml:space="preserve">
 	  <value>Редактировать выбранный последовательный порт</value>
   </data>
-    <data name="ConnectionsViewModel_EditTcpPortDialog_Title" xml:space="preserve">
+  <data name="ConnectionsViewModel_EditTcpPortDialog_Title" xml:space="preserve">
 	  <value>Редактировать выбранный TCP порт</value>
   </data>
-    <data name="ConnectionsViewModel_EditUdpPortDialog_Title" xml:space="preserve">
+  <data name="ConnectionsViewModel_EditUdpPortDialog_Title" xml:space="preserve">
 	  <value>Редактировать выбранный порт UDP</value>
   </data>
-    <data name="ConnectionsViewModel_EditDialogPort_Cancel" xml:space="preserve">
+  <data name="ConnectionsViewModel_EditDialogPort_Cancel" xml:space="preserve">
 	  <value>Отмена</value>
   </data>
-    <data name="LoggerView_ErrorFilter_Name" xml:space="preserve">
+  <data name="LoggerView_ErrorFilter_Name" xml:space="preserve">
 	  <value>Ошибка</value>
   </data>
-    <data name="LoggerView_InfoFilter_Name" xml:space="preserve">
+  <data name="LoggerView_InfoFilter_Name" xml:space="preserve">
 	  <value>Инфо</value>
   </data>
-    <data name="LoggerView_TraceFilter_Name" xml:space="preserve">
+  <data name="LoggerView_TraceFilter_Name" xml:space="preserve">
 	  <value>Отладка</value>
   </data>
-    <data name="LoggerView_WarningFilter_Name" xml:space="preserve">
+  <data name="LoggerView_WarningFilter_Name" xml:space="preserve">
 	  <value>Предупреждение</value>
   </data>
-    <data name="LogMessagesPageView_By_ToolTip" xml:space="preserve">
+  <data name="LogMessagesPageView_By_ToolTip" xml:space="preserve">
 	  <value>Число элементов на одной странице</value>
   </data>
-    <data name="LogMessagesPageView_ClearAllButton_ToolTip" xml:space="preserve">
+  <data name="LogMessagesPageView_ClearAllButton_ToolTip" xml:space="preserve">
 	  <value>Очистить логи</value>
   </data>
-    <data name="LogMessagesPageView_PrevButton_ToolTip" xml:space="preserve">
+  <data name="LogMessagesPageView_PrevButton_ToolTip" xml:space="preserve">
 	  <value>Перейти к предыдущей странице</value>
   </data>
-    <data name="LogMessagesPageView_NextButton_ToolTip" xml:space="preserve">
+  <data name="LogMessagesPageView_NextButton_ToolTip" xml:space="preserve">
 	  <value>Перейти к следующей странице</value>
   </data>
-    <data name="LogMessagesPageView_RefreshButton_ToolTip" xml:space="preserve">
+  <data name="LogMessagesPageView_RefreshButton_ToolTip" xml:space="preserve">
 	  <value>Обновить все элементы</value>
   </data>
-    <data name="SavedCoordsView_Header" xml:space="preserve">
+  <data name="SavedCoordsView_Header" xml:space="preserve">
 	  <value>Сохраненные координаты</value>
   </data>
-    <data name="SavedCoordsView_Description" xml:space="preserve">
+  <data name="SavedCoordsView_Description" xml:space="preserve">
 	  <value>В этом разделе вы можете просматривать и добавлять новые точки координат для Fixed режима базовой станции</value>
   </data>
-    <data name="SavedCoordsView_AddNewButton_Name" xml:space="preserve">
+  <data name="SavedCoordsView_AddNewButton_Name" xml:space="preserve">
 	  <value>Добавить</value>
   </data>
-    <data name="SavedCoordsView_RemoveButton_Name" xml:space="preserve">
+  <data name="SavedCoordsView_RemoveButton_Name" xml:space="preserve">
 	  <value>Удалить</value>
   </data>
-    <data name="SavedCoordsViewModel_AddNewItem_CloseButtonText" xml:space="preserve">
+  <data name="SavedCoordsViewModel_AddNewItem_CloseButtonText" xml:space="preserve">
 	  <value>Отмена</value>
   </data>
-    <data name="SavedCoordsViewModel_AddNewItem_PrimaryButtonText" xml:space="preserve">
+  <data name="SavedCoordsViewModel_AddNewItem_PrimaryButtonText" xml:space="preserve">
 	  <value>Добавить</value>
   </data>
-    <data name="SavedCoordsViewModel_AddNewItem_Title" xml:space="preserve">
+  <data name="SavedCoordsViewModel_AddNewItem_Title" xml:space="preserve">
 	  <value>Добавить новую точку на карте</value>
   </data>
-    <data name="AddNewMapPointView_Accuracy_Name" xml:space="preserve">
+  <data name="AddNewMapPointView_Accuracy_Name" xml:space="preserve">
 	  <value>Точность</value>
   </data>
-    <data name="AddNewMapPointView_Altitude_Name" xml:space="preserve">
+  <data name="AddNewMapPointView_Altitude_Name" xml:space="preserve">
 	  <value>Высота</value>
   </data>
-    <data name="AddNewMapPointView_Latitude_Name" xml:space="preserve">
+  <data name="AddNewMapPointView_Latitude_Name" xml:space="preserve">
 	  <value>Широта</value>
   </data>
-    <data name="AddNewMapPointView_Longitude_Name" xml:space="preserve">
+  <data name="AddNewMapPointView_Longitude_Name" xml:space="preserve">
 	  <value>Долгота</value>
   </data>
-    <data name="SavedCoordsViewModel_RemoveItem_Title" xml:space="preserve">
+  <data name="SavedCoordsViewModel_RemoveItem_Title" xml:space="preserve">
 	  <value>Удалить точку</value>
   </data>
-    <data name="SavedCoordsViewModel_RemoveItem_CloseButtonText" xml:space="preserve">
+  <data name="SavedCoordsViewModel_RemoveItem_CloseButtonText" xml:space="preserve">
 	  <value>Отмена</value>
   </data>
-    <data name="SavedCoordsViewModel_RemoveItem_PrimaryButtonText" xml:space="preserve">
+  <data name="SavedCoordsViewModel_RemoveItem_PrimaryButtonText" xml:space="preserve">
 	  <value>Удалить</value>
   </data>
-    <data name="RemoveMapPointView_ConfirmationText" xml:space="preserve">
+  <data name="RemoveMapPointView_ConfirmationText" xml:space="preserve">
 	  <value>Уверены что хотите удалить эту точку?</value>
   </data>
-    <data name="RemoveMapPointView_Accuracy_Name" xml:space="preserve">
+  <data name="RemoveMapPointView_Accuracy_Name" xml:space="preserve">
 	  <value>Точность</value>
   </data>
-    <data name="RemoveMapPointView_Altitude_Name" xml:space="preserve">
+  <data name="RemoveMapPointView_Altitude_Name" xml:space="preserve">
 	  <value>Высота</value>
   </data>
-    <data name="RemoveMapPointView_Latitude_Name" xml:space="preserve">
+  <data name="RemoveMapPointView_Latitude_Name" xml:space="preserve">
 	  <value>Широта</value>
   </data>
-    <data name="RemoveMapPointView_Longitude_Name" xml:space="preserve">
+  <data name="RemoveMapPointView_Longitude_Name" xml:space="preserve">
 	  <value>Долгота</value>
   </data>
-    <data name="RemoveMapPointView_Point_Name" xml:space="preserve">
+  <data name="RemoveMapPointView_Point_Name" xml:space="preserve">
 	  <value>Имя</value>
   </data>
-    <data name="AddNewMapPointView_Point_Name" xml:space="preserve">
+  <data name="AddNewMapPointView_Point_Name" xml:space="preserve">
 	  <value>Имя</value>
   </data>
-    <data name="AddNewMapPointViewModel_Accuracy_ValidValue" xml:space="preserve">
+  <data name="AddNewMapPointViewModel_Accuracy_ValidValue" xml:space="preserve">
 	  <value>Точность должна быть больше или равна {0}.</value>
   </data>
-    <data name="AddNewMapPointViewModel_Name_ValidValue" xml:space="preserve">
+  <data name="AddNewMapPointViewModel_Name_ValidValue" xml:space="preserve">
 	  <value>Имя не может быть пустым</value>
   </data>
-    <data name="LoggerView_Clear_Name" xml:space="preserve">
+  <data name="LoggerView_Clear_Name" xml:space="preserve">
 	  <value>Очистить</value>
   </data>
-    <data name="PacketViewerViewModel_SeparatorDialog_Title" xml:space="preserve">
+  <data name="PacketViewerViewModel_SeparatorDialog_Title" xml:space="preserve">
 	  <value>Выберите разделитель</value>
   </data>
-    <data name="PacketViewerViewModel_SeparatorDialog_DialogPrimaryButton" xml:space="preserve">
+  <data name="PacketViewerViewModel_SeparatorDialog_DialogPrimaryButton" xml:space="preserve">
 	  <value>Выбрать</value>
   </data>
-    <data name="PacketViewerViewModel_SeparatorDialog_DialogSecondaryButton" xml:space="preserve">
+  <data name="PacketViewerViewModel_SeparatorDialog_DialogSecondaryButton" xml:space="preserve">
 	  <value>Отмена</value>
   </data>
-    <data name="PacketViewerViewModel_SeparatorDialog_Tab" xml:space="preserve">
+  <data name="PacketViewerViewModel_SeparatorDialog_Tab" xml:space="preserve">
 	  <value>Горизонтальная табуляция [ Tab ]</value>
   </data>
-    <data name="PacketViewerViewModel_SeparatorDialog_Semicolon" xml:space="preserve">
+  <data name="PacketViewerViewModel_SeparatorDialog_Semicolon" xml:space="preserve">
 	  <value>Точка с запятой [ ; ]</value>
   </data>
-    <data name="PacketViewerViewModel_SeparatorDialog_Coma" xml:space="preserve">
+  <data name="PacketViewerViewModel_SeparatorDialog_Coma" xml:space="preserve">
 	  <value>Запятая [ , ]</value>
   </data>
     <data name="MapPageViewModel_RulerStartPoint_Description" xml:space="preserve">
@@ -446,5 +767,71 @@
   </data>
     <data name="MapPageViewModel_RulerStopPoint_Description" xml:space="preserve">
 	  <value>Укажите конечную точку линейки</value>
+  </data>
+  <data name="Ddm_InParts_Title" xml:space="preserve">
+	  <value>В частях</value>
+  </data>
+  <data name="Ddm_Percent_Title" xml:space="preserve">
+	  <value>Процент</value>
+  </data>
+  <data name="Ddm_Microamp_Title" xml:space="preserve">
+	  <value>Микроампер</value>
+  </data>
+  <data name="Ddm_µA_Unit" xml:space="preserve">
+	  <value>мкА</value>
+  </data>
+  <data name="Ddm_MicroampRus_Title" xml:space="preserve">
+	  <value>Микроампер (Рус)</value>
+  </data>
+  <data name="MeasureUnitsSettingsViewModel_DdmLlz" xml:space="preserve">
+	  <value>РГМ (Курс)</value>
+  </data>
+  <data name="MeasureUnitsSettingsViewModel_DdmLlzDescription" xml:space="preserve">
+	  <value>Измените текущие единицы измерения РГМ (Курс).</value>
+  </data>
+  <data name="Power_Dbm_Title" xml:space="preserve">
+	  <value>Децибел по отношению к 1 милливатт</value>
+  </data>
+  <data name="Power_Dbm_Unit" xml:space="preserve">
+	  <value>дБм</value>
+  </data>
+  <data name="AmplitudeModulation_Percent_Title" xml:space="preserve">
+	  <value>Процент</value>
+  </data>
+  <data name="AmplitudeModulation_InParts_Unit" xml:space="preserve">
+	  <value>В частях</value>
+  </data>
+  <data name="Frequency_Hertz_Title" xml:space="preserve">
+	  <value>Герц</value>
+  </data>
+  <data name="Frequency_Kilohertz_Title" xml:space="preserve">
+	  <value>Килогерц</value>
+  </data>
+  <data name="Frequency_Megahertz_Title" xml:space="preserve">
+	  <value>Мегагерц</value>
+  </data>
+  <data name="Frequency_Gigahertz_Title" xml:space="preserve">
+	  <value>Гигагерц</value>
+  </data>
+  <data name="Frequency_Hertz_Unit" xml:space="preserve">
+	  <value>Гц</value>
+  </data>
+  <data name="Frequency_Kilohertz_Unit" xml:space="preserve">
+	  <value>кГц</value>
+  </data>
+  <data name="Frequency_Megahertz_Unit" xml:space="preserve">
+	  <value>МГц</value>
+  </data>
+  <data name="Frequency_Gigahertz_Unit" xml:space="preserve">
+	  <value>ГГц</value>
+  </data>
+  <data name="Phase_Degree_Title" xml:space="preserve">
+	  <value>Градус</value>
+  </data>
+  <data name="Phase_Radian_Title" xml:space="preserve">
+	  <value>Радиан</value>
+  </data>
+  <data name="Phase_Radian_Unit" xml:space="preserve">
+	  <value>Рад</value>
   </data>
 </root>
