@@ -19,20 +19,20 @@ jobs:
       
       - name: Restore dependencies
         run: |
-          cd src
-          dotnet workload restore 
+          cd src/Asv.Drones.Gui.Desktop
+          dotnet workload restore
           dotnet restore
 
       - name: Build application
         run: |
-          cd src
+          cd src/Asv.Drones.Gui.Desktop
           dotnet build -c Release --no-restore
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: windows-release
-          path: ${{ github.workspace }}/src/Asv.Drones.Gui/bin/Release/net6.0/
+          path: ${{ github.workspace }}/src/Asv.Drones.Gui.Desktop/bin/Release/net7.0/
           if-no-files-found: error
 
       - name: Download artifacts
