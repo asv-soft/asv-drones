@@ -22,6 +22,7 @@ jobs:
           dotnet tool install -g Redth.Net.Maui.Check
           cd src/Asv.Drones.Gui.Android
           maui-check --fix --non-interactive --ci
+          dotnet workload install android
           dotnet workload restore
           dotnet restore
 
