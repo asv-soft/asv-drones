@@ -45,7 +45,7 @@
             </core:OptionsDisplayItem.ActionButton>
 
         </core:OptionsDisplayItem >
-        <core:OptionsDisplayItem Margin="0,0,0,8" Header="{x:Static core:RS.SettingsThemeViewModel_FlowDirection}"
+        <core:OptionsDisplayItem Header="{x:Static core:RS.SettingsThemeViewModel_FlowDirection}"
                                  Icon="AlignRight"
                                  Description="{x:Static core:RS.SettingsThemeViewModel_FlowDirectionDescription}">
 
