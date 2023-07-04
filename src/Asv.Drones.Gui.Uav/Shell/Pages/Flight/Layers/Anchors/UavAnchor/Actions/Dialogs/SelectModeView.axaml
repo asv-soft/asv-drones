@@ -15,8 +15,9 @@
         <TextBlock Text="{x:Static uav:RS.SelectModeAnchorActionView_DialogDescription}" />
         <ListBox ItemsSource="{CompiledBinding AvailableModes}" SelectedItem="{Binding SelectedMode, Mode=TwoWay}" Grid.IsSharedSizeScope="True">
             <ListBox.Styles>
-                <Style Selector="ListBoxItem">
+                <Style Selector="ListBoxItem" x:DataType="uav:VehicleModeWithIcons">
                     <Setter Property="MinHeight" Value="50" />
+                    <Setter Property="ToolTip.Tip" Value="{Binding Mode.Description}" />
                 </Style>
             </ListBox.Styles>
             <ListBox.ItemsPanel>

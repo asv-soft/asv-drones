@@ -20,8 +20,6 @@ namespace Asv.Drones.Gui.Core
         private readonly Subject<LogMessage> _onMessage;
         private readonly string _hostName;
         private ILiteCollection<LogMessage> _coll;
-        private readonly object _collectionSync = new();
-        private readonly Subject<Unit> _onNeedReload;
         private const string StoreTextCollectionName = "log";
 
         [ImportingConstructor]
@@ -29,29 +27,18 @@ namespace Asv.Drones.Gui.Core
         {
             _onMessage = new Subject<LogMessage>().DisposeItWith(Disposable);
             _hostName = $"{Environment.MachineName}.{Environment.UserName}";
-            _onNeedReload = new Subject<Unit>().DisposeItWith(Disposable);
-            app.Store.Subscribe(_ =>
-            {
-                lock (_collectionSync)
-                {
-                    _coll = _.Db.GetCollection<LogMessage>(StoreTextCollectionName);
-                    _coll.EnsureIndex(x => x.Type);
-                    _coll.EnsureIndex(x => x.DateTime);
-                    _coll.EnsureIndex(x => x.Source);
-                    _coll.EnsureIndex(x => x.Message);
-                }
-                _onNeedReload.OnNext(Unit.Default);
-            }).DisposeItWith(Disposable);
             _onMessage.Subscribe(SaveToStore,DisposeCancel);
+            _coll = app.Store.Db.GetCollection<LogMessage>(StoreTextCollectionName);
+            _coll.EnsureIndex(x => x.Type);
+            _coll.EnsureIndex(x => x.DateTime);
+            _coll.EnsureIndex(x => x.Source);
+            _coll.EnsureIndex(x => x.Message);
         }
         
         private void SaveToStore(LogMessage logMessage)
         {
-            lock (_collectionSync)
-            {
-                logMessage.Source = GetSourceName(logMessage.Source);
-                _coll.Insert(logMessage);
-            }
+            logMessage.Source = GetSourceName(logMessage.Source);
+            _coll.Insert(logMessage);
         }
         
         private string GetSourceName(string rootSource)
@@ -62,39 +49,24 @@ namespace Asv.Drones.Gui.Core
         public IObservable<LogMessage> OnMessage => _onMessage;
         public void ClearAll()
         {
-            lock (_collectionSync)
-            {
-                _coll.DeleteAll();
-            }
+            _coll.DeleteAll();
             this.Info(nameof(LogService),"User clear all messages");
         }
 
         public int Count()
         {
-            lock (_collectionSync)
-            {
-                return _coll.Count();
-            }
+            return _coll.Count();
         }
 
-        public IReadOnlyList<LogMessage> Find(LogQuery query)
+        public IEnumerable<LogMessage> Find(LogQuery query)
         {
-            lock (_collectionSync)
-            {
-                return _coll.Find(Convert(query), query.Skip, query.Take).ToImmutableList();
-            }
+            return _coll.Find(Convert(query), query.Skip, query.Take).ToImmutableList();
         }
 
         public int Count(LogQuery query)
         {
-            lock (_collectionSync)
-            {
-                return _coll.Count(Convert(query));
-            }
+            return _coll.Count(Convert(query));
         }
-
-        public IObservable<Unit> OnNeedReload => _onNeedReload;
-
         public void SaveMessage(LogMessage message)
         {
             _onMessage.OnNext(message);

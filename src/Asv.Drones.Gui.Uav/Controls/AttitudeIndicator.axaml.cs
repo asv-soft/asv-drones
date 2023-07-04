@@ -209,6 +209,42 @@ namespace Asv.Drones.Gui.Uav
             get => GetValue(ArmedTimeProperty);
             set => SetValue(ArmedTimeProperty, value);
         }
+        
+        public static readonly StyledProperty<List<Point>> AltitudePolygonPointsProperty =
+            AvaloniaProperty.Register<AttitudeIndicator, List<Point>>(nameof(AltitudePolygonPoints), new List<Point>());
+
+        public List<Point> AltitudePolygonPoints
+        {
+            get => GetValue(AltitudePolygonPointsProperty);
+            set => SetValue(AltitudePolygonPointsProperty, value);
+        }
+        
+        public static readonly StyledProperty<List<Point>> VelocityPolygonPointsProperty =
+            AvaloniaProperty.Register<AttitudeIndicator, List<Point>>(nameof(VelocityPolygonPoints), new List<Point>());
+
+        public List<Point> VelocityPolygonPoints
+        {
+            get => GetValue(VelocityPolygonPointsProperty);
+            set => SetValue(VelocityPolygonPointsProperty, value);
+        }
+        
+        public static readonly StyledProperty<List<Point>> HomePolygonPointsProperty =
+            AvaloniaProperty.Register<AttitudeIndicator, List<Point>>(nameof(HomePolygonPoints), new List<Point>());
+
+        public List<Point> HomePolygonPoints
+        {
+            get => GetValue(HomePolygonPointsProperty);
+            set => SetValue(HomePolygonPointsProperty, value);
+        }
+        
+        public static readonly StyledProperty<List<Point>> RollPolygonPointsProperty =
+            AvaloniaProperty.Register<AttitudeIndicator, List<Point>>(nameof(RollPolygonPoints), new List<Point>());
+
+        public List<Point> RollPolygonPoints
+        {
+            get => GetValue(RollPolygonPointsProperty);
+            set => SetValue(RollPolygonPointsProperty, value);
+        }
 
         #region Internal direct property
 
@@ -375,6 +411,8 @@ namespace Asv.Drones.Gui.Uav
             var headingItemStep = (headingControlLength + headingItemLength) / (HeadingItemCount % 2 != 0 ? HeadingItemCount - 1 : HeadingItemCount);
             _headingPositionStep = -1 * headingItemStep / HeadingValueRange;
             _headingCenterPosition = headingControlLength / 2;
+            
+            SetUpPolygonPoints();
         }
 
         protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
@@ -544,6 +582,30 @@ namespace Asv.Drones.Gui.Uav
                 distance -= 360;
 
             return _headingCenterPosition + distance * _headingPositionStep;
+        }
+
+        //TODO: Remove this and polygon styled properties when Avalonia will fix Points nullable attributes
+        private void SetUpPolygonPoints()
+        {
+            AltitudePolygonPoints.Add(new Point(105,5));
+            AltitudePolygonPoints.Add(new Point(105,55));
+            AltitudePolygonPoints.Add(new Point(15,55));
+            AltitudePolygonPoints.Add(new Point(0,30));
+            AltitudePolygonPoints.Add(new Point(15,5));
+            
+            VelocityPolygonPoints.Add(new Point(2,5));
+            VelocityPolygonPoints.Add(new Point(2,55));
+            VelocityPolygonPoints.Add(new Point(90,55));
+            VelocityPolygonPoints.Add(new Point(105,30));
+            VelocityPolygonPoints.Add(new Point(90,5));
+            
+            HomePolygonPoints.Add(new Point(-15,0));
+            HomePolygonPoints.Add(new Point(0,15));
+            HomePolygonPoints.Add(new Point(15,0));
+            
+            RollPolygonPoints.Add(new Point(0,1));
+            RollPolygonPoints.Add(new Point(1,0));
+            RollPolygonPoints.Add(new Point(2,1));
         }
     }
 

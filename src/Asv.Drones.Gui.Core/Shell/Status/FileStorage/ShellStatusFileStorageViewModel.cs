@@ -2,6 +2,7 @@ using System.ComponentModel.Composition;
 using System.Reactive.Linq;
 using Asv.Common;
 using Avalonia.Controls;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Core;
@@ -10,12 +11,10 @@ namespace Asv.Drones.Gui.Core;
 [PartCreationPolicy(CreationPolicy.NonShared)]
 public class ShellStatusFileStorageViewModel : ShellStatusItem
 {
-    public static readonly Uri Uri = new(ShellStatusItem.Uri, "file-storage");
-    public ShellStatusFileStorageViewModel() : base(Uri)
+    public ShellStatusFileStorageViewModel() : base("asv:shell.status.file-storage")
     {
         if (Design.IsDesignMode)
         {
-            Title = "MissionFile.asv";
             StorageSize = "2 048 KB";
         }
     }
@@ -23,20 +22,17 @@ public class ShellStatusFileStorageViewModel : ShellStatusItem
     [ImportingConstructor]
     public ShellStatusFileStorageViewModel(IAppService app, ILocalizationService localizationService) :this()
     {
-       app.Store.Where(_ => _ != null)
-            .Select(_ => Path.GetFileNameWithoutExtension(Path.GetFileName(_.SourceName)))
-            .Subscribe(_ => Title = _)
+        Description = app.Store.SourceName;
+        Observable.Timer(TimeSpan.FromSeconds(1),TimeSpan.FromSeconds(60))
+            .Select(_ => app.Store.GetFileSizeInBytes())
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(_=>StorageSize = localizationService.ByteSize.ConvertToStringWithUnits(_))
             .DisposeItWith(Disposable);
-
-        var storageSize = app.Store.Value.GetFileSizeInBytes();
-
-        StorageSize = localizationService.ByteSize.ConvertToStringWithUnits(storageSize);
     }
 
     public override int Order => -3;
-
-    [Reactive]
-    public string Title { get; set; }
     [Reactive]
     public string StorageSize { get; set; }
+
+    public string Description { get; }
 }

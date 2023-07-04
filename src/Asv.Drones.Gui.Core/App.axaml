@@ -32,5 +32,5 @@
     <StyleInclude Source="avares://Asv.Drones.Gui.Core/Controls/GpsStatusIndicator.axaml"/>
     <StyleInclude Source="avares://Asv.Drones.Gui.Core/Controls/ConnectionQuality.axaml"/>
     <StyleInclude Source="avares://Asv.Drones.Gui.Core/Controls/DigitIndicator.axaml"/>
-
+    <StyleInclude Source="avares://Asv.Drones.Gui.Core/Controls/LevelIndicator.axaml"/>
 </Styles>

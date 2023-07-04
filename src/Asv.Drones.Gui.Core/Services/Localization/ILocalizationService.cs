@@ -79,9 +79,16 @@ namespace Asv.Drones.Gui.Core
         IMeasureUnit<double,LongitudeUnits> Longitude { get; }
 
         IMeasureUnit<double,VelocityUnits> Velocity { get; }
-
-       
         
+        IMeasureUnit<double,DdmUnits> DdmLlz { get; }
+
+        IMeasureUnit<double, SdmUnits> Sdm { get; }
+
+        IMeasureUnit<double, PowerUnits> Power { get; }
+        IMeasureUnit<double, AmplitudeModulationUnits> AmplitudeModulation { get; }
+        IMeasureUnit<double, FrequencyUnits> Frequency { get; }
+        IMeasureUnit<double, PhaseUnits> Phase { get; }
+
         #endregion
     }
 
