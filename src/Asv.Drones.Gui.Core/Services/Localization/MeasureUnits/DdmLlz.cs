@@ -29,7 +29,7 @@ public class DdmLlz : MeasureUnitBase<double,DdmUnits>
     {
     }
 
-    public override string Title => "DDM";
+    public override string Title => "DDM (Llz)";
 
     public override string Description => "Units of measure for difference in the depth of modulation";
 }

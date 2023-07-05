@@ -43,6 +43,7 @@ namespace Asv.Drones.Gui.Core
             Longitude = new Longitude(cfgSvc, nameof(Longitude)).DisposeItWith(Disposable);
 
             DdmLlz = new DdmLlz(cfgSvc, nameof(DdmLlz)).DisposeItWith(Disposable);
+            DdmGp = new DdmGp(cfgSvc, nameof(DdmLlz)).DisposeItWith(Disposable);
             Sdm = new Sdm(cfgSvc, nameof(Sdm)).DisposeItWith(Disposable);
             Power = new Power(cfgSvc, nameof(Power)).DisposeItWith(Disposable);
             AmplitudeModulation = new AmplitudeModulation(cfgSvc, nameof(AmplitudeModulation)).DisposeItWith(Disposable);
@@ -78,6 +79,7 @@ namespace Asv.Drones.Gui.Core
         public IMeasureUnit<double, LongitudeUnits> Longitude { get; }
         public IMeasureUnit<double, VelocityUnits> Velocity { get; }
         public IMeasureUnit<double, DdmUnits> DdmLlz { get; }
+        public IMeasureUnit<double, DdmUnits> DdmGp { get; }
         public IMeasureUnit<double, SdmUnits> Sdm { get; }
         public IMeasureUnit<double, PowerUnits> Power { get; }
         public IMeasureUnit<double, AmplitudeModulationUnits> AmplitudeModulation { get; }

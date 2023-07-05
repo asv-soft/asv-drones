@@ -777,4 +777,10 @@
   <data name="MapSettingsView_MapSettings_Description" xml:space="preserve">
     <value>Изменить текущие настройки карты</value>
   </data>
+  <data name="MeasureUnitsSettingsViewModelDdmGp" xml:space="preserve">
+	  <value>РГМ (Глиссада)</value>
+  </data>
+  <data name="MeasureUnitsSettingsViewModelDdmGpDescription" xml:space="preserve">
+	  <value>Измените текущие единицы измерения РГМ (Глиссада).</value>
+  </data>
 </root>
