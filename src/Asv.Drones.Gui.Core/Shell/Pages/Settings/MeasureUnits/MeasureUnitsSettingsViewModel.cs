@@ -60,6 +60,12 @@ namespace Asv.Drones.Gui.Core
             this.WhenAnyValue(_ => _.SelectedDdmLlzUnit)
                 .Subscribe(_localization.DdmLlz.CurrentUnit)
                 .DisposeItWith(Disposable);
+            
+            _localization.DdmGp.CurrentUnit.Subscribe(_ => SelectedDdmGpUnit = _)
+                .DisposeItWith(Disposable);
+            this.WhenAnyValue(_ => _.SelectedDdmGpUnit)
+                .Subscribe(_localization.DdmGp.CurrentUnit)
+                .DisposeItWith(Disposable);
         }
         
         [Reactive]
@@ -89,5 +95,10 @@ namespace Asv.Drones.Gui.Core
         public IMeasureUnitItem<double,DdmUnits> SelectedDdmLlzUnit { get; set; }
 
         public IEnumerable<IMeasureUnitItem<double,DdmUnits>> DdmLlzUnits => _localization.DdmLlz.AvailableUnits;
+        
+        [Reactive]
+        public IMeasureUnitItem<double,DdmUnits> SelectedDdmGpUnit { get; set; }
+
+        public IEnumerable<IMeasureUnitItem<double,DdmUnits>> DdmGpUnits => _localization.DdmGp.AvailableUnits;
     }
 }
