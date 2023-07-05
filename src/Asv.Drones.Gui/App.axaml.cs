@@ -63,6 +63,9 @@ public partial class App : Application
                 }
             }
         }
+        
+        // This is done so that plugins won't load in design time
+        if (Design.IsDesignMode) _plugins.Clear();
 
         #endregion
     }
