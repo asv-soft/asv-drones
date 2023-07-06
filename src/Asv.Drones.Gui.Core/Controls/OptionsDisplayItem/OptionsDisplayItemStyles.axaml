@@ -45,7 +45,8 @@
                                      Width="24" Height="24"
                                      Grid.RowSpan="2"
                                      Margin="8 4 12 4">
-                                <ContentPresenter Content="{TemplateBinding Icon}" />
+                                <ContentPresenter Content="{TemplateBinding Icon}"
+                                                  Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
                             </Viewbox>
 
                             <TextBlock Text="{TemplateBinding Header}"
@@ -57,7 +58,6 @@
 
                             <TextBlock Text="{TemplateBinding Description}"
                                        Classes="CaptionTextBlockStyle"
-                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                        VerticalAlignment="Top"
                                        TextWrapping="Wrap"
                                        Grid.Column="1"
@@ -74,7 +74,8 @@
                                            Margin="8 4"
                                            Grid.Column="3"
                                            Grid.RowSpan="2"
-                                           FontSize="20"/> 
+                                           FontSize="20"
+                                           Foreground="{DynamicResource TextFillColorPrimaryBrush}" /> 
                         </Grid>
                     </Border>
                    
