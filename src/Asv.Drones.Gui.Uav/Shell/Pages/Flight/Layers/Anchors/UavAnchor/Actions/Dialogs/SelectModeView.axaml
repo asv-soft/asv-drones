@@ -33,7 +33,7 @@
                             <ColumnDefinition SharedSizeGroup="Name" Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <avalonia:MaterialIcon Kind="{CompiledBinding Icon}" />
-                        <TextBlock Grid.Column="1" Margin="5 0 0 0" Text="{CompiledBinding Mode.Name}" />
+                        <TextBlock Grid.Column="1" Margin="5 3 0 0" Text="{CompiledBinding Mode.Name}" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
