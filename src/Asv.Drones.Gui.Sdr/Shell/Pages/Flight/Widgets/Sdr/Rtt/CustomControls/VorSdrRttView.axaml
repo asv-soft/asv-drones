@@ -1,0 +1,165 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sdr="clr-namespace:Asv.Drones.Gui.Sdr"
+             xmlns:core="using:Asv.Drones.Gui.Core"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="500"
+             x:CompileBindings="True"
+             x:DataType="sdr:VorSdrRttViewModel"
+             x:Class="Asv.Drones.Gui.Sdr.VorSdrRttView">
+    <Design.DataContext>
+        <sdr:VorSdrRttViewModel/>
+    </Design.DataContext>
+    <Viewbox>
+        <Canvas Background="Transparent" 
+                            VerticalAlignment="Stretch" 
+                            HorizontalAlignment="Stretch"
+                            Width="700" Height="420">
+                        <Grid Canvas.Top="2" Canvas.Left="2" 
+                              Width="382" Height="147"
+                              ColumnDefinitions="0.15*,0.3*,0.8*,0.3*"
+                              RowDefinitions="1*,1*,1*,1*,0.8*">
+                            <TextBlock Text="{x:Static sdr:RS.SdrRttViewModel_Rf_Header}"
+                                       Grid.Column="0" Grid.Row="0"
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Left" 
+                                       Margin="5,0" 
+                                       FontSize="22" 
+                                       Foreground="SteelBlue" 
+                                       FontWeight="Bold"/>
+                            <TextBlock Text="{CompiledBinding PowerTitle}"
+                                       Grid.Column="0" Grid.Row="2"
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Left" 
+                                       Margin="5,0" 
+                                       FontSize="16" 
+                                       Foreground="SteelBlue" 
+                                       FontWeight="Bold"/>
+                            
+                            <TextBlock Text="{CompiledBinding PowerUnits}"
+                                       Grid.Column="1" Grid.Row="0"
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Center" 
+                                       Margin="5,0" 
+                                       FontSize="16" 
+                                       FontWeight="Bold"/>
+                            <TextBlock Text="{CompiledBinding PowerStringValue}"
+                                       Grid.Column="1" Grid.Row="2"
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Right" 
+                                       Margin="5,0" 
+                                       FontSize="16" 
+                                       FontWeight="Bold"/>
+                            
+                            <core:LevelIndicator Margin="5,0" 
+                                Grid.Column="2" Grid.Row="2"
+                                Foreground="SteelBlue" 
+                                VerticalAlignment="Stretch" 
+                                HorizontalAlignment="Stretch"
+                                ValueFrom="-120"
+                                ValueTo="20"
+                                Value="{CompiledBinding PowerValue}"/>
+                            
+                            <TextBlock Text="{CompiledBinding FrequencyOffsetUnits}"
+                                       Grid.Column="3" Grid.Row="0"
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Center" 
+                                       Margin="5,0" 
+                                       FontSize="16" 
+                                       FontWeight="Bold"/>
+                            <TextBlock Text="{CompiledBinding FrequencyOffsetStringValue}"
+                                       Grid.Column="3" Grid.Row="2"
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Right" 
+                                       Margin="5,0" 
+                                       FontSize="16" 
+                                       FontWeight="Bold"/>
+                            
+                            <Grid Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="56,0,0,0" Width="220" ColumnDefinitions="1*,1*,1*,1*,1*,1*,1*,1*">
+                                <TextBlock Grid.Column="0" Text="-120" VerticalAlignment="Top" FontSize="13" HorizontalAlignment="Center" Foreground="SteelBlue"/>
+                                <TextBlock Grid.Column="1" Text="-100" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="SteelBlue"/>
+                                <TextBlock Grid.Column="2" Text="-80" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="SteelBlue"/>
+                                <TextBlock Grid.Column="3" Text="-60" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="SteelBlue"/>
+                                <TextBlock Grid.Column="4" Text="-40" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="SteelBlue"/>
+                                <TextBlock Grid.Column="5" Text="-20" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="SteelBlue"/>
+                                <TextBlock Grid.Column="6" Text="0" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="SteelBlue"/>
+                                <TextBlock Grid.Column="7" Text="20" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="SteelBlue"/>
+                            </Grid>
+                        </Grid>
+                        
+                        <Grid Width="676" Height="262" Margin="10,0" 
+                                      Canvas.Bottom="2" Canvas.Left="2" 
+                                      ColumnDefinitions="1*, 1*" RowDefinitions="Auto, *">
+                            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" FontSize="20" Text="{x:Static sdr:RS.VorSdrRttViewModel_Main_Header}" Foreground="SteelBlue" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <Grid Margin="10,5,15,5" Grid.Column="0" Grid.Row="1" ColumnDefinitions="0.40*,0.40*,0.20*" RowDefinitions="1*, 1*, 1*, 1*, 1*, 1*">
+                                        
+                                        <TextBlock Grid.Column="0" Grid.Row="0" FontSize="18" Text="{CompiledBinding BearingTitle}" Foreground="SteelBlue" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="0" FontSize="18" Text="{CompiledBinding BearingStringValue}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="0" FontSize="18" Text="{CompiledBinding BearingUnits}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        
+                                        <TextBlock Grid.Column="0" Grid.Row="1" FontSize="18" Text="{CompiledBinding Am30HzTitle}" Foreground="SteelBlue" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="1" FontSize="18" Text="{CompiledBinding Am30HzStringValue}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="1" FontSize="18" Text="{CompiledBinding Am30HzUnits}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        
+                                        <TextBlock Grid.Column="0" Grid.Row="2" FontSize="18" Text="{CompiledBinding Am9960HzTitle}" Foreground="SteelBlue" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="2" FontSize="18" Text="{CompiledBinding Am9960HzStringValue}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="2" FontSize="18" Text="{CompiledBinding Am9960HzUnits}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        
+                                        <TextBlock Grid.Column="0" Grid.Row="3" FontSize="18" Text="{CompiledBinding FmDeviationTitle}" Foreground="SteelBlue" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="3" FontSize="18" Text="{CompiledBinding FmDeviationStringValue}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="3" FontSize="18" Text="{CompiledBinding FmDeviationUnits}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        
+                                        <TextBlock Grid.Column="0" Grid.Row="4" FontSize="18" Text="{CompiledBinding IdCodeTitle}" Foreground="SteelBlue" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="4" FontSize="18" Text="{CompiledBinding IdCodeStringValue}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        
+                                        <TextBlock Grid.Column="0" Grid.Row="5" FontSize="18" Text="{CompiledBinding VoiceAmTitle}" Foreground="SteelBlue" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="5" FontSize="18" Text="{CompiledBinding VoiceAmStringValue}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="5" FontSize="18" Text="{CompiledBinding VoiceAmUnits}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        
+                                    </Grid>
+                                    <Grid Margin="15,5,10,5" Grid.Column="1" Grid.Row="1" ColumnDefinitions="0.40*,0.40*,0.20*" RowDefinitions="1*, 1*, 1*, 1*, 1*, 1*">
+                                        
+                                        <TextBlock Grid.Column="0" Grid.Row="1" FontSize="18" Text="{CompiledBinding Freq30HzTitle}" Foreground="DarkGreen" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="1" FontSize="18" Text="{CompiledBinding Freq30HzStringValue}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="1" FontSize="18" Text="{CompiledBinding Freq30HzUnits}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        
+                                        <TextBlock Grid.Column="0" Grid.Row="2" FontSize="18" Text="{CompiledBinding Freq9960HzTitle}" Foreground="DarkGreen" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="2" FontSize="18" Text="{CompiledBinding Freq9960HzStringValue}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="2" FontSize="18" Text="{CompiledBinding Freq9960HzUnits}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        
+                                        <TextBlock Grid.Column="0" Grid.Row="3" FontSize="18" Text="{CompiledBinding FreqFm30Title}" Foreground="DarkGreen" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="3" FontSize="18" Text="{CompiledBinding FreqFm30StringValue}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="3" FontSize="18" Text="{CompiledBinding FreqFm30Units}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        
+                                        <TextBlock Grid.Column="0" Grid.Row="4" FontSize="18" Text="{CompiledBinding FmIndexTitle}" Foreground="DarkGreen" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="4" FontSize="18" Text="{CompiledBinding FmIndexStringValue}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                    </Grid>
+                        </Grid>
+                        
+                        
+                        <Border  Background="Transparent"
+                                 Width="382" Height="147"
+                                 BorderBrush="SteelBlue"
+                                 BorderThickness="2"
+                                 Opacity="0.8"
+                                 CornerRadius="0"
+                                 Padding="0" Canvas.Top="2" Canvas.Left="2" />
+                        <Border  Background="Transparent"
+                                 Width="312" Height="147"
+                                 BorderBrush="SteelBlue"
+                                 BorderThickness="2"
+                                 Opacity="0.8"
+                                 CornerRadius="0"
+                                 Padding="0" Canvas.Top="2" Canvas.Right="2" />
+                        <Border  Background="Transparent"
+                                 Width="696" Height="267"
+                                 BorderBrush="SteelBlue"
+                                 BorderThickness="2"
+                                 Opacity="0.8"
+                                 CornerRadius="0"
+                                 Padding="0" Canvas.Bottom="2" Canvas.Left="2" />
+                    </Canvas>
+    </Viewbox>
+</UserControl>

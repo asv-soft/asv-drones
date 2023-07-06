@@ -38,7 +38,7 @@
     <data name="IlsSdrRttViewModel_AM_150_Hz_Title" xml:space="preserve">
         <value>АМ 150 Гц</value>
     </data>
-    <data name="LlzSdrRttViewModel_ID_Code_Title" xml:space="preserve">
+    <data name="SdrRttViewModel_ID_Code_Title" xml:space="preserve">
         <value>Код СО</value>
     </data>
     <data name="IlsSdrRttViewModel_Freq_90_Hz_Title" xml:space="preserve">
@@ -58,5 +58,38 @@
     </data>
     <data name="IlsSdrRttViewModel_SDM_Title" xml:space="preserve">
         <value>СГМ</value>
+    </data>
+    <data name="VorSdrRttViewModel_Main_Header" xml:space="preserve">
+        <value>Общие</value>
+    </data>
+    <data name="VorSdrRttViewModelPowerTitle" xml:space="preserve">
+        <value>Ур.</value>
+    </data>
+    <data name="VorSdrRttViewModelBearingTitle" xml:space="preserve">
+        <value>Азимут</value>
+    </data>
+    <data name="VorSdrRttViewModelAM30HzTitle" xml:space="preserve">
+        <value>АМ 30 Гц</value>
+    </data>
+    <data name="VorSdrRttViewModelAM9960HzTitle" xml:space="preserve">
+        <value>АМ 9960 Гц</value>
+    </data>
+    <data name="VorSdrRttViewModelFMDeviationTitle" xml:space="preserve">
+        <value>Отклонение ЧМ</value>
+    </data>
+    <data name="VorSdrRttViewModelVoiceAmTitle" xml:space="preserve">
+        <value>АМ голоса</value>
+    </data>
+    <data name="VorSdrRttViewModelFreq30HzTitle" xml:space="preserve">
+        <value>Частота 30 Гц</value>
+    </data>
+    <data name="VorSdrRttViewModelFreq9960HzTitle" xml:space="preserve">
+        <value>Частота 9960 Гц</value>
+    </data>
+    <data name="VorSdrRttViewModelFreqFM30Title" xml:space="preserve">
+        <value>ЧМ част. 30</value>
+    </data>
+    <data name="VorSdrRttViewModelFMIndexTitle" xml:space="preserve">
+        <value>Индекс ЧМ</value>
     </data>
 </root>
