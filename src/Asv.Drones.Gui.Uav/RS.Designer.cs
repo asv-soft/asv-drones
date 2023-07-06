@@ -474,7 +474,7 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Altitude during Landing at which vehicle slows to LAND_SPEED. Increment - 10. Range 100-10000. Units - centimeters. Note: This parameter is for advanced users..
+        ///   Looks up a localized string similar to Altitude during Landing at which vehicle slows to LAND_SPEED. Increment - 0.1. Range 1-100. [{0:F2} cm] [{1:F2} ft]. Note: This parameter is for advanced users..
         /// </summary>
         public static string SpeedsQuickParamView_LAND_ALT_LOW_Description {
             get {
@@ -492,7 +492,16 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The descent speed for the final stage of landing in cm/s. Increment - 10. Range 30-200. Units - centimeters per second..
+        ///   Looks up a localized string similar to m.
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_ALT_LOW_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_ALT_LOW_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The descent speed for the final stage of landing in cm/s. Increment - 0.1. Range 0.3-2. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
         /// </summary>
         public static string SpeedsQuickParamView_LAND_SPEED_Description {
             get {
@@ -510,7 +519,7 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The descent speed for the first stage of landing in cm/s. If this is zero then WPNAV_SPEED_DN is used. Increment - 10. Range 0-500. Units - centimeters per second..
+        ///   Looks up a localized string similar to The descent speed for the first stage of landing in cm/s. If this is zero then WPNAV_SPEED_DN is used. Increment - 0.1. Range 0-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
         /// </summary>
         public static string SpeedsQuickParamView_LAND_SPEED_HIGH_Description {
             get {
@@ -528,7 +537,25 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Defines the maximum speed in cm/s which the aircraft will travel horizontally while in loiter mode. Increment - 50. Range 20-3500. Units -  centimeters per second..
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_SPEED_HIGH_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_HIGH_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_SPEED_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Defines the maximum speed in cm/s which the aircraft will travel horizontally while in loiter mode. Increment - 0.5. Range 0.2-35. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
         /// </summary>
         public static string SpeedsQuickParamView_LOIT_SPEED_Description {
             get {
@@ -546,7 +573,16 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The maximum vertical descending velocity the pilot may request in cm/s. If 0 PILOT_SPEED_UP value is used. Increment - 10. Range 0-500. Units - centimeters per second..
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_LOIT_SPEED_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LOIT_SPEED_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum vertical descending velocity the pilot may request in cm/s. If 0 PILOT_SPEED_UP value is used. Increment - 0.1. Range 0-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
         /// </summary>
         public static string SpeedsQuickParamView_PILOT_SPEED_DN_Description {
             get {
@@ -564,7 +600,16 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The maximum vertical ascending velocity the pilot may request in cm/s. Increment - 10. Range 50-500. Units - centimeters per second..
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_PILOT_SPEED_DN_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_DN_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum vertical ascending velocity the pilot may request in cm/s. Increment - 0.1. Range 0.5-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
         /// </summary>
         public static string SpeedsQuickParamView_PILOT_SPEED_UP_Description {
             get {
@@ -582,7 +627,16 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain horizontally while flying home. If this is set to zero, WPNAV_SPEED will be used instead. Increment - 50. Range 0-2000. Units - centimeters per second..
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_PILOT_SPEED_UP_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_UP_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain horizontally while flying home. If this is set to zero, WPNAV_SPEED will be used instead. Increment - 50. Range 0-2000. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
         /// </summary>
         public static string SpeedsQuickParamView_RTL_SPEED_Description {
             get {
@@ -600,7 +654,16 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain horizontally during a WP mission. Range 20-2000. Increment - 50. Units - centimeters per second..
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_RTL_SPEED_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_RTL_SPEED_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain horizontally during a WP mission. Increment - 0.5. Range 0.2-20. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
         /// </summary>
         public static string SpeedsQuickParamView_WPNAV_SPEED_Description {
             get {
@@ -609,7 +672,7 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain while descending during a WP mission. Increment - 10. Range 10-500. Units - centimeters per second..
+        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain while descending during a WP mission. Increment - 0.1. Range 0.1-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
         /// </summary>
         public static string SpeedsQuickParamView_WPNAV_SPEED_DN_Description {
             get {
@@ -627,6 +690,15 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_DN_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_DN_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Waypoint Horizontal Speed Target (WPNAV_SPEED).
         /// </summary>
         public static string SpeedsQuickParamView_WPNAV_SPEED_Header {
@@ -636,7 +708,16 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain while climbing during a WP mission. Increment - 50. Range 10-1000. Units - centimeters per second..
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain while climbing during a WP mission. Increment - 0.5. Range 0.1-10. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
         /// </summary>
         public static string SpeedsQuickParamView_WPNAV_SPEED_UP_Description {
             get {
@@ -650,6 +731,15 @@ namespace Asv.Drones.Gui.Uav {
         public static string SpeedsQuickParamView_WPNAV_SPEED_UP_Header {
             get {
                 return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_UP_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_UP_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_UP_Units", resourceCulture);
             }
         }
         

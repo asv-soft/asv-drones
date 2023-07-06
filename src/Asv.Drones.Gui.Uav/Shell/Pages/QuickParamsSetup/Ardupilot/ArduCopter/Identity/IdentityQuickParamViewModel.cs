@@ -29,11 +29,11 @@ public class IdentityQuickParamViewModel : QuickParamsPartBase
     {
         _vehicle = vehicle;
         
-        // this.WhenValueChanged(_ => _.SystemId, false)
-        //     .Subscribe(_ =>
-        //     {
-        //         IsSynced = _ == vehicle.Identity.TargetSystemId;
-        //     }).DisposeItWith(Disposable);
+        this.WhenValueChanged(_ => _.SystemId)
+            .Subscribe(async _ =>
+            {
+                IsSynced = _ == (byte) await _vehicle.Params.ReadOnce("SYSID_THISMAV");
+            }).DisposeItWith(Disposable);
     }
     
     public byte[] Ids { get; } = Enumerable.Range(1, 254).Select(_ => (byte)_).ToArray();

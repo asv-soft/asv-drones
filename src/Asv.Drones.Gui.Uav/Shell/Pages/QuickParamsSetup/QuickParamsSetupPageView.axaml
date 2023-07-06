@@ -31,14 +31,15 @@
             </StackPanel>
         </Grid>
         <controls:InfoBar DockPanel.Dock="Top" Margin="8" Title="Reboot required" IsClosable="False" IsOpen="{Binding IsRebootRequired}" Severity="Warning" Message="You must reload the program to apply the changes." />
-        <ItemsControl Margin="8" ItemsSource="{Binding Items}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ScrollViewer>
+        <ScrollViewer>
+            <ItemsControl Margin="8" ItemsSource="{Binding Items}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
                         <StackPanel Spacing="8"/>
-                    </ScrollViewer>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+
     </DockPanel>
 </UserControl>

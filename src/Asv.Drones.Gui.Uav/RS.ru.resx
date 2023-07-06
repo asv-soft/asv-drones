@@ -192,60 +192,90 @@
     <value>Целевая горизонтальная скорость путевой точки (WPNAV_SPEED)</value>
   </data>
   <data name="SpeedsQuickParamView_WPNAV_SPEED_Description" xml:space="preserve">
-    <value>Определяет скорость в см/с, которую дрон будет пытаться поддерживать в горизонтальном положении во время миссии WP. Диапазон 20-2000. Шаг - 50. Единицы - сантиметры в секунду.</value>
+    <value>Определяет скорость в см/с, которую дрон будет пытаться поддерживать в горизонтальном положении во время миссии WP. Шаг - 0.5. Диапазон 0.2-20. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
   </data>
   <data name="SpeedsQuickParamView_WPNAV_SPEED_DN_Header" xml:space="preserve">
     <value>Целевая скорость снижения по путевой точке (WPNAV_SPEED_DN)</value>
   </data>
   <data name="SpeedsQuickParamView_WPNAV_SPEED_DN_Description" xml:space="preserve">
-    <value>Определяет скорость в см/с, которую дрон будет пытаться поддерживать при снижении во время миссии WP. Шаг - 10. Диапазон 10-500. Единицы - сантиметры в секунду.</value>
+    <value>Определяет скорость в см/с, которую дрон будет пытаться поддерживать при снижении во время миссии WP. Шаг - 0.1. Диапазон 0.1-5. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
   </data>
   <data name="SpeedsQuickParamView_WPNAV_SPEED_UP_Header" xml:space="preserve">
     <value>Целевая скорость набора высоты по путевой точке (WPNAV_SPEED_UP)</value>
   </data>
   <data name="SpeedsQuickParamView_WPNAV_SPEED_UP_Description" xml:space="preserve">
-    <value>Определяет скорость в см/с, которую дрон будет пытаться поддерживать при наборе высоты во время миссии WP. Шаг - 50. Диапазон 10-1000. Единицы - сантиметры в секунду.</value>
+    <value>Определяет скорость в см/с, которую дрон будет пытаться поддерживать при наборе высоты во время миссии WP. Шаг - 0.5. Диапазон 0.1-10. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
   </data>
   <data name="SpeedsQuickParamView_RTL_SPEED_Header" xml:space="preserve">
     <value>Скорость RTL (RTL_SPEED)</value>
   </data>
   <data name="SpeedsQuickParamView_RTL_SPEED_Description" xml:space="preserve">
-    <value>Определяет скорость в см/с, которую дрон будет поддерживать в горизонтальном положении при полете домой. Если установлено нулевое значение, вместо этого будет использоваться WPNAV_SPEED. Шаг - 50. Диапазон 0-2000. Единицы - сантиметры в секунду.</value>
+    <value>Определяет скорость в см/с, которую дрон будет поддерживать в горизонтальном положении при полете домой. Если установлено нулевое значение, вместо этого будет использоваться WPNAV_SPEED. Шаг - 50. Диапазон 0-2000. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
   </data>
   <data name="SpeedsQuickParamView_LOIT_SPEED_Header" xml:space="preserve">
     <value>Горизонтальная максимальная скорость в режиме Loiter (LOIT_SPEED)</value>
   </data>
   <data name="SpeedsQuickParamView_LOIT_SPEED_Description" xml:space="preserve">
-    <value>Определяет максимальную скорость в см/с, с которой дрон будет двигаться горизонтально в режиме Loiter. Шаг - 50. Диапазон 20-3500. Единицы - сантиметры в секунду.</value>
+    <value>Определяет максимальную скорость в см/с, с которой дрон будет двигаться горизонтально в режиме Loiter. Шаг - 0.5. Диапазон 0.2-35. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
   </data>
   <data name="SpeedsQuickParamView_LAND_SPEED_Header" xml:space="preserve">
     <value>Скорость посадки (LAND_SPEED)</value>
   </data>
   <data name="SpeedsQuickParamView_LAND_SPEED_Description" xml:space="preserve">
-    <value>Скорость снижения на конечном этапе приземления в см/с. Шаг - 10. Диапазон 30-200. Единицы - сантиметры в секунду.</value>
+    <value>Скорость снижения на конечном этапе приземления в см/с. Шаг - 0.1. Диапазон 0.3-2. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
   </data>
   <data name="SpeedsQuickParamView_LAND_SPEED_HIGH_Header" xml:space="preserve">
     <value>Высокая скорость посадки (LAND_SPEED_HIGH)</value>
   </data>
   <data name="SpeedsQuickParamView_LAND_SPEED_HIGH_Description" xml:space="preserve">
-    <value>Скорость снижения на первом этапе приземления в см/с. Если это значение равно нулю, используется WPNAV_SPEED_DN. Шаг - 10. Диапазон 0-500. Единицы - сантиметры в секунду.</value>
+    <value>Скорость снижения на первом этапе приземления в см/с. Если это значение равно нулю, используется WPNAV_SPEED_DN. Шаг - 0.1. Диапазон 0-5. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
   </data>
   <data name="SpeedsQuickParamView_LAND_ALT_LOW_Header" xml:space="preserve">
     <value>Низшая высота посадки (LAND_ALT_LOW)</value>
   </data>
   <data name="SpeedsQuickParamView_LAND_ALT_LOW_Description" xml:space="preserve">
-    <value>Высота при посадке, на которой транспортное средство замедляется до LAND_SPEED. Шаг - 10. Диапазон 100-10000. Единицы - сантиметры. Примечание. Этот параметр предназначен для опытных пользователей.</value>
+    <value>Высота при посадке, на которой транспортное средство замедляется до LAND_SPEED. Шаг - 0.1. Диапазон 1-100. [{0:F2} см] [{1:F2} фт]. Примечание. Этот параметр предназначен для опытных пользователей.</value>
   </data>
   <data name="SpeedsQuickParamView_PILOT_SPEED_UP_Header" xml:space="preserve">
     <value>Максимальная вертикальная скорость пилота при наборе высоты (PILOT_SPEED_UP)</value>
   </data>
   <data name="SpeedsQuickParamView_PILOT_SPEED_UP_Description" xml:space="preserve">
-    <value>Максимальная скорость вертикального набора высоты, которую может запросить пилот, в см/с. Шаг - 10. Диапазон 50-500. Единицы - сантиметры в секунду.</value>
+    <value>Максимальная скорость вертикального набора высоты, которую может запросить пилот, в см/с. Шаг - 0.1. Диапазон 0.5-5. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
   </data>
   <data name="SpeedsQuickParamView_PILOT_SPEED_DN_Header" xml:space="preserve">
     <value>Максимальная вертикальная скорость пилота при снижении (PILOT_SPEED_DN)</value>
   </data>
   <data name="SpeedsQuickParamView_PILOT_SPEED_DN_Description" xml:space="preserve">
-    <value>Максимальная скорость вертикального снижения, которую может запросить пилот, в см/с. Если используется значение 0, то берётся значение PILOT_SPEED_UP. Шаг - 10. Диапазон 0-500. Единицы - сантиметры в секунду.</value>
+    <value>Максимальная скорость вертикального снижения, которую может запросить пилот, в см/с. Если используется значение 0, то берётся значение PILOT_SPEED_UP. Шаг - 0.1. Диапазон 0-5. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
+  </data>
+  <data name="SpeedsQuickParamView_LAND_ALT_LOW_Units" xml:space="preserve">
+    <value>м</value>
+  </data>
+  <data name="SpeedsQuickParamView_WPNAV_SPEED_UP_Units" xml:space="preserve">
+    <value>м/с</value>
+  </data>
+  <data name="SpeedsQuickParamView_WPNAV_SPEED_Units" xml:space="preserve">
+    <value>м/с</value>
+  </data>
+  <data name="SpeedsQuickParamView_WPNAV_SPEED_DN_Units" xml:space="preserve">
+    <value>м/с</value>
+  </data>
+  <data name="SpeedsQuickParamView_RTL_SPEED_Units" xml:space="preserve">
+    <value>м/с</value>
+  </data>
+  <data name="SpeedsQuickParamView_PILOT_SPEED_UP_Units" xml:space="preserve">
+    <value>м/с</value>
+  </data>
+  <data name="SpeedsQuickParamView_PILOT_SPEED_DN_Units" xml:space="preserve">
+    <value>м/с</value>
+  </data>
+  <data name="SpeedsQuickParamView_LOIT_SPEED_Units" xml:space="preserve">
+    <value>м/с</value>
+  </data>
+  <data name="SpeedsQuickParamView_LAND_SPEED_Units" xml:space="preserve">
+    <value>м/с</value>
+  </data>
+  <data name="SpeedsQuickParamView_LAND_SPEED_HIGH_Units" xml:space="preserve">
+    <value>м/с</value>
   </data>
 </root>
