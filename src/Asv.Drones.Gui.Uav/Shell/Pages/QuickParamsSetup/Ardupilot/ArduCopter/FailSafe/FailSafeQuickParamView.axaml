@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
+             xmlns:core="clr-namespace:Asv.Drones.Gui.Core;assembly=Asv.Drones.Gui.Core"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Asv.Drones.Gui.Uav.FailSafeQuickParamView"
+             x:CompileBindings="True"
+             x:DataType="uav:FailSafeQuickParamViewModel"
+             IsVisible="{CompiledBinding IsVisible}">
+    <core:OptionsDisplayItem Margin="0,0,0,8" 
+                             Header="FailSafe parameters"
+                             Icon=""
+                             Description="Here you can change FailSafe parameters">
+        <core:OptionsDisplayItem.ActionButton>
+            
+        </core:OptionsDisplayItem.ActionButton>
+    </core:OptionsDisplayItem>
+</UserControl>

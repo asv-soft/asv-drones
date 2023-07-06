@@ -195,4 +195,64 @@
   <data name="SelectModeAnchorActionView_DialogDescription" xml:space="preserve">
     <value>Change UAV mode from list</value>
   </data>
+  <data name="SpeedsQuickParamView_WPNAV_SPEED_Header" xml:space="preserve">
+    <value>Waypoint Horizontal Speed Target (WPNAV_SPEED)</value>
+  </data>
+  <data name="SpeedsQuickParamView_WPNAV_SPEED_Description" xml:space="preserve">
+    <value>Defines the speed in cm/s which the aircraft will attempt to maintain horizontally during a WP mission. Range 20-2000. Increment - 50. Units - centimeters per second.</value>
+  </data>
+  <data name="SpeedsQuickParamView_WPNAV_SPEED_DN_Header" xml:space="preserve">
+    <value>Waypoint Descent Speed Target (WPNAV_SPEED_DN)</value>
+  </data>
+  <data name="SpeedsQuickParamView_WPNAV_SPEED_DN_Description" xml:space="preserve">
+    <value>Defines the speed in cm/s which the aircraft will attempt to maintain while descending during a WP mission. Increment - 10. Range 10-500. Units - centimeters per second.</value>
+  </data>
+  <data name="SpeedsQuickParamView_WPNAV_SPEED_UP_Header" xml:space="preserve">
+    <value>Waypoint Climb Speed Target (WPNAV_SPEED_UP)</value>
+  </data>
+  <data name="SpeedsQuickParamView_WPNAV_SPEED_UP_Description" xml:space="preserve">
+    <value>Defines the speed in cm/s which the aircraft will attempt to maintain while climbing during a WP mission. Increment - 50. Range 10-1000. Units - centimeters per second.</value>
+  </data>
+  <data name="SpeedsQuickParamView_RTL_SPEED_Header" xml:space="preserve">
+    <value>RTL speed (RTL_SPEED)</value>
+  </data>
+  <data name="SpeedsQuickParamView_RTL_SPEED_Description" xml:space="preserve">
+    <value>Defines the speed in cm/s which the aircraft will attempt to maintain horizontally while flying home. If this is set to zero, WPNAV_SPEED will be used instead. Increment - 50. Range 0-2000. Units - centimeters per second.</value>
+  </data>
+  <data name="SpeedsQuickParamView_LOIT_SPEED_Header" xml:space="preserve">
+    <value>Loiter Horizontal Maximum Speed (LOIT_SPEED)</value>
+  </data>
+  <data name="SpeedsQuickParamView_LOIT_SPEED_Description" xml:space="preserve">
+    <value>Defines the maximum speed in cm/s which the aircraft will travel horizontally while in loiter mode. Increment - 50. Range 20-3500. Units -  centimeters per second.</value>
+  </data>
+  <data name="SpeedsQuickParamView_LAND_SPEED_Header" xml:space="preserve">
+    <value>Land speed (LAND_SPEED)</value>
+  </data>
+  <data name="SpeedsQuickParamView_LAND_SPEED_Description" xml:space="preserve">
+    <value>The descent speed for the final stage of landing in cm/s. Increment - 10. Range 30-200. Units - centimeters per second.</value>
+  </data>
+  <data name="SpeedsQuickParamView_LAND_SPEED_HIGH_Header" xml:space="preserve">
+    <value>Land speed high (LAND_SPEED_HIGH)</value>
+  </data>
+  <data name="SpeedsQuickParamView_LAND_SPEED_HIGH_Description" xml:space="preserve">
+    <value>The descent speed for the first stage of landing in cm/s. If this is zero then WPNAV_SPEED_DN is used. Increment - 10. Range 0-500. Units - centimeters per second.</value>
+  </data>
+  <data name="SpeedsQuickParamView_LAND_ALT_LOW_Header" xml:space="preserve">
+    <value>Land altitude low (LAND_ALT_LOW)</value>
+  </data>
+  <data name="SpeedsQuickParamView_LAND_ALT_LOW_Description" xml:space="preserve">
+    <value>Altitude during Landing at which vehicle slows to LAND_SPEED. Increment - 10. Range 100-10000. Units - centimeters. Note: This parameter is for advanced users.</value>
+  </data>
+  <data name="SpeedsQuickParamView_PILOT_SPEED_UP_Header" xml:space="preserve">
+    <value>Pilot maximum vertical speed ascending (PILOT_SPEED_UP)</value>
+  </data>
+  <data name="SpeedsQuickParamView_PILOT_SPEED_UP_Description" xml:space="preserve">
+    <value>The maximum vertical ascending velocity the pilot may request in cm/s. Increment - 10. Range 50-500. Units - centimeters per second.</value>
+  </data>
+  <data name="SpeedsQuickParamView_PILOT_SPEED_DN_Header" xml:space="preserve">
+    <value>Pilot maximum vertical speed descending (PILOT_SPEED_DN)</value>
+  </data>
+  <data name="SpeedsQuickParamView_PILOT_SPEED_DN_Description" xml:space="preserve">
+    <value>The maximum vertical descending velocity the pilot may request in cm/s. If 0 PILOT_SPEED_UP value is used. Increment - 10. Range 0-500. Units - centimeters per second.</value>
+  </data>
 </root>
