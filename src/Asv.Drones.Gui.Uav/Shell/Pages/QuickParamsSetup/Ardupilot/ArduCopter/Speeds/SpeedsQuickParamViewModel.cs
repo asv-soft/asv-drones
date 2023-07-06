@@ -28,138 +28,6 @@ public class SpeedsQuickParamViewModel : QuickParamsPartBase
     {
         _vehicle = vehicle;
         _loc = loc;
-
-        this.WhenAnyPropertyChanged(nameof(WpNavSpeed), 
-            nameof(WpNavSpeedDn), 
-            nameof(WpNavSpeedUp), 
-            nameof(RtlSpeed), 
-            nameof(LoitSpeed), 
-            nameof(LandSpeed), 
-            nameof(LandSpeedHigh), 
-            nameof(LandAltLow), 
-            nameof(PilotSpeedDn), 
-            nameof(PilotSpeedUp)).Subscribe(async _ =>
-        {
-            IsSynced = _.WpNavSpeed == await _vehicle.Params.ReadOnce("WPNAV_SPEED") / 100f &
-                       _.WpNavSpeedDn == await _vehicle.Params.ReadOnce("WPNAV_SPEED_DN") / 100f &
-                       _.WpNavSpeedUp == await _vehicle.Params.ReadOnce("WPNAV_SPEED_UP") / 100f &
-                       _.RtlSpeed == Convert.ToSingle((int) await _vehicle.Params.ReadOnce("RTL_SPEED")) / 100 &
-                       _.LoitSpeed == await _vehicle.Params.ReadOnce("LOIT_SPEED") / 100f &
-                       _.LandSpeed == Convert.ToSingle((int)await _vehicle.Params.ReadOnce("LAND_SPEED")) / 100 &
-                       _.LandSpeedHigh == Convert.ToSingle((int) await _vehicle.Params.ReadOnce("LAND_SPEED_HIGH")) / 100 &
-                       _.LandAltLow == Convert.ToSingle((int) await _vehicle.Params.ReadOnce("LAND_ALT_LOW")) / 100 &
-                       _.PilotSpeedDn == Convert.ToSingle((int) await _vehicle.Params.ReadOnce("PILOT_SPEED_DN")) / 100 &
-                       _.PilotSpeedUp == Convert.ToSingle((int) await _vehicle.Params.ReadOnce("PILOT_SPEED_UP")) / 100;
-        }).DisposeItWith(Disposable);
-        
-        this.WhenValueChanged(_ => _.WpNavSpeed)
-            .Subscribe(_ =>
-            {
-                WpNavSpeedDescription = string.Format(RS.SpeedsQuickParamView_WPNAV_SPEED_Description,
-                    _ * 100f,
-                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.KilometersPerHour).ConvertFromSi(_),
-                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.MilesPerHour).ConvertFromSi(_)
-                );
-            })
-            .DisposeItWith(Disposable);
-        
-        this.WhenValueChanged(_ => _.WpNavSpeedDn)
-            .Subscribe(_ =>
-            {
-                WpNavSpeedDnDescription = string.Format(RS.SpeedsQuickParamView_WPNAV_SPEED_DN_Description,
-                    _ * 100f,
-                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.KilometersPerHour).ConvertFromSi(_),
-                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.MilesPerHour).ConvertFromSi(_)
-                );
-            })
-            .DisposeItWith(Disposable);
-        
-        this.WhenValueChanged(_ => _.WpNavSpeedUp)
-            .Subscribe(_ =>
-            {
-                WpNavSpeedUpDescription = string.Format(RS.SpeedsQuickParamView_WPNAV_SPEED_UP_Description,
-                    _ * 100f,
-                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.KilometersPerHour).ConvertFromSi(_),
-                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.MilesPerHour).ConvertFromSi(_)
-                );
-            })
-            .DisposeItWith(Disposable);
-        
-        this.WhenValueChanged(_ => _.RtlSpeed)
-            .Subscribe(_ =>
-            {
-                RtlSpeedDescription = string.Format(RS.SpeedsQuickParamView_RTL_SPEED_Description,
-                    _ * 100f,
-                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.KilometersPerHour).ConvertFromSi(_),
-                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.MilesPerHour).ConvertFromSi(_)
-                );
-            })
-            .DisposeItWith(Disposable);
-        
-        this.WhenValueChanged(_ => _.LoitSpeed)
-            .Subscribe(_ =>
-            {
-                LoitSpeedDescription = string.Format(RS.SpeedsQuickParamView_LOIT_SPEED_Description,
-                    _ * 100f,
-                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.KilometersPerHour).ConvertFromSi(_),
-                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.MilesPerHour).ConvertFromSi(_)
-                );
-            })
-            .DisposeItWith(Disposable);
-        
-        this.WhenValueChanged(_ => _.LandSpeed)
-            .Subscribe(_ =>
-            {
-                LandSpeedDescription = string.Format(RS.SpeedsQuickParamView_LAND_SPEED_Description,
-                    _ * 100f,
-                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.KilometersPerHour).ConvertFromSi(_),
-                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.MilesPerHour).ConvertFromSi(_)
-                );
-            })
-            .DisposeItWith(Disposable);
-        
-        this.WhenValueChanged(_ => _.LandSpeedHigh)
-            .Subscribe(_ =>
-            {
-                LandSpeedHighDescription = string.Format(RS.SpeedsQuickParamView_LAND_SPEED_HIGH_Description,
-                    _ * 100f,
-                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.KilometersPerHour).ConvertFromSi(_),
-                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.MilesPerHour).ConvertFromSi(_)
-                );
-            })
-            .DisposeItWith(Disposable);
-        
-        this.WhenValueChanged(_ => _.LandAltLow)
-            .Subscribe(_ =>
-            {
-                LandAltLowDescription = string.Format(RS.SpeedsQuickParamView_LAND_ALT_LOW_Description,
-                    _ * 100f,
-                    _loc.Altitude.AvailableUnits.First(__ => __.Id == AltitudeUnits.Feets).ConvertFromSi(_)
-                );
-            })
-            .DisposeItWith(Disposable);
-        
-        this.WhenValueChanged(_ => _.PilotSpeedDn)
-            .Subscribe(_ =>
-            {
-                PilotSpeedDnDescription = string.Format(RS.SpeedsQuickParamView_PILOT_SPEED_DN_Description,
-                    _ * 100f,
-                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.KilometersPerHour).ConvertFromSi(_),
-                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.MilesPerHour).ConvertFromSi(_)
-                );
-            })
-            .DisposeItWith(Disposable);
-        
-        this.WhenValueChanged(_ => _.PilotSpeedUp)
-            .Subscribe(_ =>
-            {
-                PilotSpeedUpDescription = string.Format(RS.SpeedsQuickParamView_PILOT_SPEED_UP_Description,
-                    _ * 100f,
-                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.KilometersPerHour).ConvertFromSi(_),
-                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.MilesPerHour).ConvertFromSi(_)
-                );
-            })
-            .DisposeItWith(Disposable);
     }
     
     [Reactive]
@@ -236,6 +104,20 @@ public class SpeedsQuickParamViewModel : QuickParamsPartBase
         PilotSpeedUp = await _vehicle.Params.WriteOnce("PILOT_SPEED_UP", (int)(PilotSpeedUp * 100)) / 100;
     }
 
+    public async Task SyncCheck()
+    {
+        IsSynced = WpNavSpeed == await _vehicle.Params.ReadOnce("WPNAV_SPEED") / 100f &
+                   WpNavSpeedDn == await _vehicle.Params.ReadOnce("WPNAV_SPEED_DN") / 100f &
+                   WpNavSpeedUp == await _vehicle.Params.ReadOnce("WPNAV_SPEED_UP") / 100f &
+                   RtlSpeed == Convert.ToSingle((int) await _vehicle.Params.ReadOnce("RTL_SPEED")) / 100 &
+                   LoitSpeed == await _vehicle.Params.ReadOnce("LOIT_SPEED") / 100f &
+                   LandSpeed == Convert.ToSingle((int)await _vehicle.Params.ReadOnce("LAND_SPEED")) / 100 &
+                   LandSpeedHigh == Convert.ToSingle((int) await _vehicle.Params.ReadOnce("LAND_SPEED_HIGH")) / 100 &
+                   LandAltLow == Convert.ToSingle((int) await _vehicle.Params.ReadOnce("LAND_ALT_LOW")) / 100 &
+                   PilotSpeedDn == Convert.ToSingle((int) await _vehicle.Params.ReadOnce("PILOT_SPEED_DN")) / 100 &
+                   PilotSpeedUp == Convert.ToSingle((int) await _vehicle.Params.ReadOnce("PILOT_SPEED_UP")) / 100;
+    }
+
     public override async Task Read()
     {
         WpNavSpeed = await _vehicle.Params.ReadOnce("WPNAV_SPEED") / 100f;
@@ -248,5 +130,134 @@ public class SpeedsQuickParamViewModel : QuickParamsPartBase
         LandAltLow = Convert.ToSingle((int) await _vehicle.Params.ReadOnce("LAND_ALT_LOW")) / 100;
         PilotSpeedDn = Convert.ToSingle((int) await _vehicle.Params.ReadOnce("PILOT_SPEED_DN")) / 100;
         PilotSpeedUp = Convert.ToSingle((int) await _vehicle.Params.ReadOnce("PILOT_SPEED_UP")) / 100;
+        
+       this.WhenValueChanged(_ => _.WpNavSpeed)
+            .Subscribe(async _ =>
+            {
+                WpNavSpeedDescription = string.Format(RS.SpeedsQuickParamView_WPNAV_SPEED_Description,
+                    _ * 100f,
+                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.KilometersPerHour).ConvertFromSi(_),
+                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.MilesPerHour).ConvertFromSi(_)
+                );
+                
+                await SyncCheck();
+            })
+            .DisposeItWith(Disposable);
+        
+        this.WhenValueChanged(_ => _.WpNavSpeedDn)
+            .Subscribe(async _ =>
+            {
+                WpNavSpeedDnDescription = string.Format(RS.SpeedsQuickParamView_WPNAV_SPEED_DN_Description,
+                    _ * 100f,
+                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.KilometersPerHour).ConvertFromSi(_),
+                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.MilesPerHour).ConvertFromSi(_)
+                );
+                
+                await SyncCheck();
+            })
+            .DisposeItWith(Disposable);
+        
+        this.WhenValueChanged(_ => _.WpNavSpeedUp)
+            .Subscribe(async _ =>
+            {
+                WpNavSpeedUpDescription = string.Format(RS.SpeedsQuickParamView_WPNAV_SPEED_UP_Description,
+                    _ * 100f,
+                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.KilometersPerHour).ConvertFromSi(_),
+                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.MilesPerHour).ConvertFromSi(_)
+                );
+                
+                await SyncCheck();
+            })
+            .DisposeItWith(Disposable);
+        
+        this.WhenValueChanged(_ => _.RtlSpeed)
+            .Subscribe(async _ =>
+            {
+                RtlSpeedDescription = string.Format(RS.SpeedsQuickParamView_RTL_SPEED_Description,
+                    _ * 100f,
+                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.KilometersPerHour).ConvertFromSi(_),
+                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.MilesPerHour).ConvertFromSi(_)
+                );
+                
+                await SyncCheck();
+            })
+            .DisposeItWith(Disposable);
+        
+        this.WhenValueChanged(_ => _.LoitSpeed)
+            .Subscribe(async _ =>
+            {
+                LoitSpeedDescription = string.Format(RS.SpeedsQuickParamView_LOIT_SPEED_Description,
+                    _ * 100f,
+                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.KilometersPerHour).ConvertFromSi(_),
+                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.MilesPerHour).ConvertFromSi(_)
+                );
+                
+                await SyncCheck();
+            })
+            .DisposeItWith(Disposable);
+        
+        this.WhenValueChanged(_ => _.LandSpeed)
+            .Subscribe(async _ =>
+            {
+                LandSpeedDescription = string.Format(RS.SpeedsQuickParamView_LAND_SPEED_Description,
+                    _ * 100f,
+                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.KilometersPerHour).ConvertFromSi(_),
+                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.MilesPerHour).ConvertFromSi(_)
+                );
+                
+                await SyncCheck();
+            })
+            .DisposeItWith(Disposable);
+        
+        this.WhenValueChanged(_ => _.LandSpeedHigh)
+            .Subscribe(async _ =>
+            {
+                LandSpeedHighDescription = string.Format(RS.SpeedsQuickParamView_LAND_SPEED_HIGH_Description,
+                    _ * 100f,
+                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.KilometersPerHour).ConvertFromSi(_),
+                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.MilesPerHour).ConvertFromSi(_)
+                );
+                
+                await SyncCheck();
+            })
+            .DisposeItWith(Disposable);
+        
+        this.WhenValueChanged(_ => _.LandAltLow)
+            .Subscribe(async _ =>
+            {
+                LandAltLowDescription = string.Format(RS.SpeedsQuickParamView_LAND_ALT_LOW_Description,
+                    _ * 100f,
+                    _loc.Altitude.AvailableUnits.First(__ => __.Id == AltitudeUnits.Feets).ConvertFromSi(_)
+                );
+                
+                await SyncCheck();
+            })
+            .DisposeItWith(Disposable);
+        
+        this.WhenValueChanged(_ => _.PilotSpeedDn)
+            .Subscribe(async _ =>
+            {
+                PilotSpeedDnDescription = string.Format(RS.SpeedsQuickParamView_PILOT_SPEED_DN_Description,
+                    _ * 100f,
+                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.KilometersPerHour).ConvertFromSi(_),
+                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.MilesPerHour).ConvertFromSi(_)
+                );
+                
+                await SyncCheck();
+            })
+            .DisposeItWith(Disposable);
+        
+        this.WhenValueChanged(_ => _.PilotSpeedUp)
+            .Subscribe(async _ =>
+            {
+                PilotSpeedUpDescription = string.Format(RS.SpeedsQuickParamView_PILOT_SPEED_UP_Description,
+                    _ * 100f,
+                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.KilometersPerHour).ConvertFromSi(_),
+                    _loc.Velocity.AvailableUnits.First(__ => __.Id == VelocityUnits.MilesPerHour).ConvertFromSi(_)
+                );
+                
+                await SyncCheck();
+            })
+            .DisposeItWith(Disposable);
     }
 }

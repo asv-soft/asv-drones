@@ -28,12 +28,6 @@ public class IdentityQuickParamViewModel : QuickParamsPartBase
     public IdentityQuickParamViewModel(IVehicleClient vehicle) : base(Uri)
     {
         _vehicle = vehicle;
-        
-        this.WhenValueChanged(_ => _.SystemId)
-            .Subscribe(async _ =>
-            {
-                IsSynced = _ == (byte) await _vehicle.Params.ReadOnce("SYSID_THISMAV");
-            }).DisposeItWith(Disposable);
     }
     
     public byte[] Ids { get; } = Enumerable.Range(1, 254).Select(_ => (byte)_).ToArray();
@@ -49,5 +43,11 @@ public class IdentityQuickParamViewModel : QuickParamsPartBase
     public override async Task Read()
     {
         SystemId = await _vehicle.Params.ReadOnce("SYSID_THISMAV");
+        
+        this.WhenValueChanged(_ => _.SystemId)
+            .Subscribe(async _ =>
+            {
+                IsSynced = _ == (byte) await _vehicle.Params.ReadOnce("SYSID_THISMAV");
+            }).DisposeItWith(Disposable);
     }
 }

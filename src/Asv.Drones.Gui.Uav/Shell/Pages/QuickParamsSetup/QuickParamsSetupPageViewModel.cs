@@ -77,9 +77,23 @@ public class QuickParamsSetupPageViewModel : ViewModelBase, IShellPage
             .ToProperty(this, _ => _.IsNotAllSynced, out _isNotAllSynced)
             .DisposeItWith(Disposable);
 
-        WriteAll = ReactiveCommand.Create(() => { }, 
+        WriteAll = ReactiveCommand.Create(async () =>
+            {
+                foreach (var item in _itemsList.Items)
+                {
+                    await item.Write();
+                    await item.Read();
+                    item.RaisePropertyChanged();
+                }
+            }, 
             this.WhenValueChanged(_ => _.IsNotAllSynced, false));
-        ReadAll = ReactiveCommand.Create(() => { });
+        ReadAll = ReactiveCommand.CreateFromTask(async () =>
+        {
+            foreach (var item in _itemsList.Items)
+            {
+                await item.Read();
+            }
+        });
     }
     
     
