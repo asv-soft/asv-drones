@@ -1086,7 +1086,7 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change the current measure units of DDL Llz..
+        ///   Looks up a localized string similar to Change the current measure units of DDM Llz..
         /// </summary>
         public static string MeasureUnitsSettingsViewModel_DdmLlzDescription {
             get {
@@ -1208,6 +1208,24 @@ namespace Asv.Drones.Gui.Core {
         public static string MeasureUnitsSettingsViewModel_VelocityDescription {
             get {
                 return ResourceManager.GetString("MeasureUnitsSettingsViewModel_VelocityDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DDM GP.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModelDdmGp {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModelDdmGp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of DDM GP.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModelDdmGpDescription {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModelDdmGpDescription", resourceCulture);
             }
         }
         

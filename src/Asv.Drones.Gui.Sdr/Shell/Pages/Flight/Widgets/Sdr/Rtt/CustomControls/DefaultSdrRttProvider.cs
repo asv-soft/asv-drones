@@ -31,7 +31,7 @@ public class DefaultSdrRttProvider : ISdrRttProvider
             case AsvSdrCustomMode.AsvSdrCustomModeLlz:
                 return new LlzSdrRttViewModel(device, _log, _loc, _configuration);
             case AsvSdrCustomMode.AsvSdrCustomModeGp:
-                return null;
+                return new GpSdrRttViewModel(device, _log, _loc, _configuration);
             case AsvSdrCustomMode.AsvSdrCustomModeVor:
                 return null;
             default:

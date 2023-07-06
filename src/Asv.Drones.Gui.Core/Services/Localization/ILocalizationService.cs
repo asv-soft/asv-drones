@@ -81,6 +81,7 @@ namespace Asv.Drones.Gui.Core
         IMeasureUnit<double,VelocityUnits> Velocity { get; }
         
         IMeasureUnit<double,DdmUnits> DdmLlz { get; }
+        IMeasureUnit<double,DdmUnits> DdmGp { get; }
 
         IMeasureUnit<double, SdmUnits> Sdm { get; }
 
