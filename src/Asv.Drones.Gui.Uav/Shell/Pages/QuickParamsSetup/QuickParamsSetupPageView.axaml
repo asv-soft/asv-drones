@@ -19,18 +19,17 @@
                 <TextBlock Margin="8 0" VerticalAlignment="Center" 
                            Text="{Binding DeviceName}" FontSize="30"/>
                 <ToggleButton Margin="8 0"
-                              IsChecked="{CompiledBinding IsAdvancedMode}">
-                    Advanced setup
-                </ToggleButton>
+                              IsChecked="{CompiledBinding IsAdvancedMode}"
+                              Content="{x:Static uav:RS.QuickParamsSetupPageView_AdvancedSetupButton_Text}"/>
             </StackPanel>        
             <StackPanel Spacing="8" HorizontalAlignment="Right" Margin="8" Orientation="Horizontal">
-                <Button Command="{CompiledBinding ReadAll}">ReadAll</Button>
-                <Button Command="{CompiledBinding WriteAll}">WriteAll</Button>
-                <avalonia:MaterialIcon IsVisible="{CompiledBinding IsNotAllSynced}" 
-                                       Width="25" Height="25" Kind="Edit"/>
+                <Button Command="{CompiledBinding ReadAll}"
+                        Content="{x:Static uav:RS.QuickParamsSetupPageView_ReadAllButton_Text}"/>
+                <Button Command="{CompiledBinding WriteAll}"
+                        Content="{x:Static uav:RS.QuickParamsSetupPageView_WriteAllButton_Text}"/>
             </StackPanel>
         </Grid>
-        <controls:InfoBar DockPanel.Dock="Top" Margin="8" Title="Reboot required" IsClosable="False" IsOpen="{Binding IsRebootRequired}" Severity="Warning" Message="You must reload the program to apply the changes." />
+        <controls:InfoBar DockPanel.Dock="Top" Margin="8" Title="{x:Static uav:RS.QuickParamsSetupPageView_WriteRequired_Title}" IsClosable="False" IsOpen="{Binding IsNotAllSynced}" Severity="Warning" Message="{x:Static uav:RS.QuickParamsSetupPageView_WriteRequired_Message}" />
         <ScrollViewer>
             <ItemsControl Margin="8" ItemsSource="{Binding Items}">
                 <ItemsControl.ItemsPanel>

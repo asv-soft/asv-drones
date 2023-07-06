@@ -281,4 +281,43 @@
   <data name="ControllerReloadQuickParamView_ReloadButton_Content" xml:space="preserve">
     <value>Перезагрузить</value>
   </data>
+  <data name="ControllerReloadQuickParamView_Header" xml:space="preserve">
+    <value>Перезагрузка контроллера</value>
+  </data>
+  <data name="ControllerReloadQuickParamView_Description" xml:space="preserve">
+    <value>Здесь вы можете перезагрузить контроллер</value>
+  </data>
+  <data name="SpeedsQuickParamView_Header" xml:space="preserve">
+    <value>Скорость</value>
+  </data>
+  <data name="SpeedsQuickParamView_Description" xml:space="preserve">
+    <value>Здесь вы можете изменить скорости</value>
+  </data>
+  <data name="IdentityQuickParamView_Header" xml:space="preserve">
+    <value>ID системы</value>
+  </data>
+  <data name="IdentityQuickParamView_Description" xml:space="preserve">
+    <value>Каждая система имеет уникальный для сети идентификатор системы, и каждый компонент имеет уникальный для системы идентификатор компонента, который можно использовать для адресации/маршрутизации.</value>
+  </data>
+  <data name="FailSafeQuickParamView_Header" xml:space="preserve">
+    <value>Параметры FailSafe</value>
+  </data>
+  <data name="FailSafeQuickParamView_Description" xml:space="preserve">
+    <value>Здесь вы можете изменить параметры FailSafe</value>
+  </data>
+  <data name="QuickParamsSetupPageView_WriteRequired_Title" xml:space="preserve">
+    <value>Требуется запись</value>
+  </data>
+  <data name="QuickParamsSetupPageView_WriteRequired_Message" xml:space="preserve">
+    <value>Вы должны нажать кнопку записи, если хотите сохранить и применить изменения.</value>
+  </data>
+  <data name="QuickParamsSetupPageView_AdvancedSetupButton_Text" xml:space="preserve">
+    <value>Расширенная настройка</value>
+  </data>
+  <data name="QuickParamsSetupPageView_ReadAllButton_Text" xml:space="preserve">
+    <value>Прочитать все</value>
+  </data>
+  <data name="QuickParamsSetupPageView_WriteAllButton_Text" xml:space="preserve">
+    <value>Записать все</value>
+  </data>
 </root>

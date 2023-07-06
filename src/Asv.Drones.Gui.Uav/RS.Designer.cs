@@ -105,6 +105,24 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Here you can reload controller.
+        /// </summary>
+        public static string ControllerReloadQuickParamView_Description {
+            get {
+                return ResourceManager.GetString("ControllerReloadQuickParamView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Controller reload.
+        /// </summary>
+        public static string ControllerReloadQuickParamView_Header {
+            get {
+                return ResourceManager.GetString("ControllerReloadQuickParamView_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reload.
         /// </summary>
         public static string ControllerReloadQuickParamView_ReloadButton_Content {
@@ -128,6 +146,24 @@ namespace Asv.Drones.Gui.Uav {
         public static string CurrentUavRttView_ToolTip {
             get {
                 return ResourceManager.GetString("CurrentUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Here you can change FailSafe parameters.
+        /// </summary>
+        public static string FailSafeQuickParamView_Description {
+            get {
+                return ResourceManager.GetString("FailSafeQuickParamView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FailSafe parameters.
+        /// </summary>
+        public static string FailSafeQuickParamView_Header {
+            get {
+                return ResourceManager.GetString("FailSafeQuickParamView_Header", resourceCulture);
             }
         }
         
@@ -173,6 +209,24 @@ namespace Asv.Drones.Gui.Uav {
         public static string HomeDistanceUavRttView_ToolTip {
             get {
                 return ResourceManager.GetString("HomeDistanceUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Each system has a network-unique system id, and each component has a system-unique component id that can be used for addressing/routing.
+        /// </summary>
+        public static string IdentityQuickParamView_Description {
+            get {
+                return ResourceManager.GetString("IdentityQuickParamView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System ID.
+        /// </summary>
+        public static string IdentityQuickParamView_Header {
+            get {
+                return ResourceManager.GetString("IdentityQuickParamView_Header", resourceCulture);
             }
         }
         
@@ -357,6 +411,51 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Advanced setup.
+        /// </summary>
+        public static string QuickParamsSetupPageView_AdvancedSetupButton_Text {
+            get {
+                return ResourceManager.GetString("QuickParamsSetupPageView_AdvancedSetupButton_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read all.
+        /// </summary>
+        public static string QuickParamsSetupPageView_ReadAllButton_Text {
+            get {
+                return ResourceManager.GetString("QuickParamsSetupPageView_ReadAllButton_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write all.
+        /// </summary>
+        public static string QuickParamsSetupPageView_WriteAllButton_Text {
+            get {
+                return ResourceManager.GetString("QuickParamsSetupPageView_WriteAllButton_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must click the write button if you want to save and apply the changes..
+        /// </summary>
+        public static string QuickParamsSetupPageView_WriteRequired_Message {
+            get {
+                return ResourceManager.GetString("QuickParamsSetupPageView_WriteRequired_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write required.
+        /// </summary>
+        public static string QuickParamsSetupPageView_WriteRequired_Title {
+            get {
+                return ResourceManager.GetString("QuickParamsSetupPageView_WriteRequired_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         public static string RebootAutopilotAnchorActionViewModel_DialogPrimaryButton {
@@ -479,6 +578,24 @@ namespace Asv.Drones.Gui.Uav {
         public static string SelectModeAnchorActionViewModel_Title {
             get {
                 return ResourceManager.GetString("SelectModeAnchorActionViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Here you can change the speeds.
+        /// </summary>
+        public static string SpeedsQuickParamView_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speeds.
+        /// </summary>
+        public static string SpeedsQuickParamView_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_Header", resourceCulture);
             }
         }
         

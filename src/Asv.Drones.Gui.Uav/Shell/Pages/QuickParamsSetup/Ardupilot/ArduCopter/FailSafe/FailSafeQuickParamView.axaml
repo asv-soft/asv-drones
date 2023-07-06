@@ -10,9 +10,9 @@
              x:DataType="uav:FailSafeQuickParamViewModel"
              IsVisible="{CompiledBinding IsVisible}">
     <core:OptionsDisplayItem Margin="0,0,0,8" 
-                             Header="FailSafe parameters"
+                             Header="{x:Static uav:RS.FailSafeQuickParamView_Header}"
                              Icon=""
-                             Description="Here you can change FailSafe parameters">
+                             Description="{x:Static uav:RS.FailSafeQuickParamView_Description}">
         <core:OptionsDisplayItem.ActionButton>
             
         </core:OptionsDisplayItem.ActionButton>

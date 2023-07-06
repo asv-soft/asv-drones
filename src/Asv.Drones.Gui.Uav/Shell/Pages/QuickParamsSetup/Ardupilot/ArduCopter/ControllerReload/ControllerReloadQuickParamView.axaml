@@ -10,11 +10,11 @@
              x:DataType="uav:ControllerReloadQuickParamViewModel"
              IsVisible="{CompiledBinding IsVisible}">
     <core:OptionsDisplayItem Margin="0,0,0,8" 
-                             Header="Controller reload"
+                             Header="{x:Static uav:RS.ControllerReloadQuickParamView_Header}"
                              Expands="True"
                              IsExpanded="True"
                              Icon="Sync"
-                             Description="Here you can reload controller">
+                             Description="{x:Static uav:RS.ControllerReloadQuickParamView_Description}">
         <core:OptionsDisplayItem.Content>
             <StackPanel Spacing="5">
                 <Grid RowDefinitions="Auto, 5, Auto">

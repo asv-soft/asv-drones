@@ -10,9 +10,9 @@
              x:DataType="uav:IdentityQuickParamViewModel"
              IsVisible="{CompiledBinding IsVisible}">
     <core:OptionsDisplayItem Margin="0,0,0,8" 
-                             Header="System ID"
+                             Header="{x:Static uav:RS.IdentityQuickParamView_Header}"
                              Icon="M10 7V9H9V15H10V17H6V15H7V9H6V7H10M16 7C17.11 7 18 7.9 18 9V15C18 16.11 17.11 17 16 17H12V7M16 9H14V15H16V9Z"
-                             Description="Each system has a network-unique system id, and each component has a system-unique component id that can be used for addressing/routing">
+                             Description="{x:Static uav:RS.IdentityQuickParamView_Description}">
         <core:OptionsDisplayItem.ActionButton>
             <StackPanel Orientation="Horizontal" Spacing="8">
                 <ComboBox ItemsSource="{Binding Ids, Mode=OneTime}"

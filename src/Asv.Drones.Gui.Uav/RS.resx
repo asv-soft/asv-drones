@@ -288,4 +288,43 @@
   <data name="ControllerReloadQuickParamView_ReloadButton_Content" xml:space="preserve">
     <value>Reload</value>
   </data>
+  <data name="ControllerReloadQuickParamView_Header" xml:space="preserve">
+    <value>Controller reload</value>
+  </data>
+  <data name="ControllerReloadQuickParamView_Description" xml:space="preserve">
+    <value>Here you can reload controller</value>
+  </data>
+  <data name="SpeedsQuickParamView_Header" xml:space="preserve">
+    <value>Speeds</value>
+  </data>
+  <data name="SpeedsQuickParamView_Description" xml:space="preserve">
+    <value>Here you can change the speeds</value>
+  </data>
+  <data name="IdentityQuickParamView_Header" xml:space="preserve">
+    <value>System ID</value>
+  </data>
+  <data name="IdentityQuickParamView_Description" xml:space="preserve">
+    <value>Each system has a network-unique system id, and each component has a system-unique component id that can be used for addressing/routing</value>
+  </data>
+  <data name="FailSafeQuickParamView_Header" xml:space="preserve">
+    <value>FailSafe parameters</value>
+  </data>
+  <data name="FailSafeQuickParamView_Description" xml:space="preserve">
+    <value>Here you can change FailSafe parameters</value>
+  </data>
+  <data name="QuickParamsSetupPageView_WriteRequired_Title" xml:space="preserve">
+    <value>Write required</value>
+  </data>
+  <data name="QuickParamsSetupPageView_WriteRequired_Message" xml:space="preserve">
+    <value>You must click the write button if you want to save and apply the changes.</value>
+  </data>
+  <data name="QuickParamsSetupPageView_AdvancedSetupButton_Text" xml:space="preserve">
+    <value>Advanced setup</value>
+  </data>
+  <data name="QuickParamsSetupPageView_WriteAllButton_Text" xml:space="preserve">
+    <value>Write all</value>
+  </data>
+  <data name="QuickParamsSetupPageView_ReadAllButton_Text" xml:space="preserve">
+    <value>Read all</value>
+  </data>
 </root>
