@@ -5,7 +5,7 @@
              xmlns:sdr="clr-namespace:Asv.Drones.Gui.Sdr"
              xmlns:core="using:Asv.Drones.Gui.Core"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="500"
+             mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="410"
              x:CompileBindings="True"
              x:DataType="sdr:VorSdrRttViewModel"
              x:Class="Asv.Drones.Gui.Sdr.VorSdrRttView">
@@ -16,9 +16,9 @@
         <Canvas Background="Transparent" 
                             VerticalAlignment="Stretch" 
                             HorizontalAlignment="Stretch"
-                            Width="700" Height="420">
-                        <Grid Canvas.Top="2" Canvas.Left="2" 
-                              Width="382" Height="147"
+                            Width="700" Height="410">
+                        <Grid Canvas.Top="7" Canvas.Left="7" 
+                              Width="372" Height="137"
                               ColumnDefinitions="0.15*,0.3*,0.8*,0.3*"
                               RowDefinitions="1*,1*,1*,1*,0.8*">
                             <TextBlock Text="{x:Static sdr:RS.SdrRttViewModel_Rf_Header}"
@@ -77,7 +77,7 @@
                                        FontSize="16" 
                                        FontWeight="Bold"/>
                             
-                            <Grid Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="56,0,0,0" Width="220" ColumnDefinitions="1*,1*,1*,1*,1*,1*,1*,1*">
+                            <Grid Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="60,0,0,0" Width="212" ColumnDefinitions="1*,1*,1*,1*,1*,1*,1*,1*">
                                 <TextBlock Grid.Column="0" Text="-120" VerticalAlignment="Top" FontSize="13" HorizontalAlignment="Center" Foreground="SteelBlue"/>
                                 <TextBlock Grid.Column="1" Text="-100" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="SteelBlue"/>
                                 <TextBlock Grid.Column="2" Text="-80" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="SteelBlue"/>
@@ -89,15 +89,15 @@
                             </Grid>
                         </Grid>
                         
-                        <Grid Width="676" Height="262" Margin="10,0" 
+                        <Grid Width="676" Height="252" Margin="10,0" 
                                       Canvas.Bottom="2" Canvas.Left="2" 
                                       ColumnDefinitions="1*, 1*" RowDefinitions="Auto, *">
                             <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" FontSize="20" Text="{x:Static sdr:RS.VorSdrRttViewModel_Main_Header}" Foreground="SteelBlue" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             <Grid Margin="10,5,15,5" Grid.Column="0" Grid.Row="1" ColumnDefinitions="0.40*,0.40*,0.20*" RowDefinitions="1*, 1*, 1*, 1*, 1*, 1*">
                                         
                                         <TextBlock Grid.Column="0" Grid.Row="0" FontSize="18" Text="{CompiledBinding BearingTitle}" Foreground="SteelBlue" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                                        <TextBlock Grid.Column="1" Grid.Row="0" FontSize="18" Text="{CompiledBinding BearingStringValue}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
-                                        <TextBlock Grid.Column="2" Grid.Row="0" FontSize="18" Text="{CompiledBinding BearingUnits}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="0" FontSize="18" Text="{CompiledBinding BearingStringValue}" Foreground="Chartreuse" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="0" FontSize="18" Text="{CompiledBinding BearingUnits}" Foreground="Chartreuse" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
                                         
                                         <TextBlock Grid.Column="0" Grid.Row="1" FontSize="18" Text="{CompiledBinding Am30HzTitle}" Foreground="SteelBlue" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                                         <TextBlock Grid.Column="1" Grid.Row="1" FontSize="18" Text="{CompiledBinding Am30HzStringValue}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
@@ -121,19 +121,19 @@
                                     </Grid>
                                     <Grid Margin="15,5,10,5" Grid.Column="1" Grid.Row="1" ColumnDefinitions="0.40*,0.40*,0.20*" RowDefinitions="1*, 1*, 1*, 1*, 1*, 1*">
                                         
-                                        <TextBlock Grid.Column="0" Grid.Row="1" FontSize="18" Text="{CompiledBinding Freq30HzTitle}" Foreground="DarkGreen" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="1" FontSize="18" Text="{CompiledBinding Freq30HzTitle}" Foreground="SteelBlue" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                                         <TextBlock Grid.Column="1" Grid.Row="1" FontSize="18" Text="{CompiledBinding Freq30HzStringValue}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
                                         <TextBlock Grid.Column="2" Grid.Row="1" FontSize="18" Text="{CompiledBinding Freq30HzUnits}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
                                         
-                                        <TextBlock Grid.Column="0" Grid.Row="2" FontSize="18" Text="{CompiledBinding Freq9960HzTitle}" Foreground="DarkGreen" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="2" FontSize="18" Text="{CompiledBinding Freq9960HzTitle}" Foreground="SteelBlue" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                                         <TextBlock Grid.Column="1" Grid.Row="2" FontSize="18" Text="{CompiledBinding Freq9960HzStringValue}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
                                         <TextBlock Grid.Column="2" Grid.Row="2" FontSize="18" Text="{CompiledBinding Freq9960HzUnits}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
                                         
-                                        <TextBlock Grid.Column="0" Grid.Row="3" FontSize="18" Text="{CompiledBinding FreqFm30Title}" Foreground="DarkGreen" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="3" FontSize="18" Text="{CompiledBinding FreqFm30Title}" Foreground="SteelBlue" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                                         <TextBlock Grid.Column="1" Grid.Row="3" FontSize="18" Text="{CompiledBinding FreqFm30StringValue}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
                                         <TextBlock Grid.Column="2" Grid.Row="3" FontSize="18" Text="{CompiledBinding FreqFm30Units}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
                                         
-                                        <TextBlock Grid.Column="0" Grid.Row="4" FontSize="18" Text="{CompiledBinding FmIndexTitle}" Foreground="DarkGreen" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="4" FontSize="18" Text="{CompiledBinding FmIndexTitle}" Foreground="SteelBlue" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                                         <TextBlock Grid.Column="1" Grid.Row="4" FontSize="18" Text="{CompiledBinding FmIndexStringValue}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"/>
                                     </Grid>
                         </Grid>
@@ -154,7 +154,7 @@
                                  CornerRadius="0"
                                  Padding="0" Canvas.Top="2" Canvas.Right="2" />
                         <Border  Background="Transparent"
-                                 Width="696" Height="267"
+                                 Width="696" Height="257"
                                  BorderBrush="SteelBlue"
                                  BorderThickness="2"
                                  Opacity="0.8"
