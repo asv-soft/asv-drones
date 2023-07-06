@@ -11,10 +11,39 @@
              IsVisible="{CompiledBinding IsVisible}">
     <core:OptionsDisplayItem Margin="0,0,0,8" 
                              Header="Controller reload"
+                             Expands="True"
+                             IsExpanded="True"
                              Icon="Sync"
                              Description="Here you can reload controller">
-        <core:OptionsDisplayItem.ActionButton>
-            <Button Content="Reset"/>
-        </core:OptionsDisplayItem.ActionButton>
+        <core:OptionsDisplayItem.Content>
+            <StackPanel Spacing="5">
+                <Grid RowDefinitions="Auto, 5, Auto">
+                    <TextBlock Text="{x:Static uav:RS.RebootAutopilotView_AutopilotReboot_Description}"
+                               TextWrapping="Wrap" />
+                    <ComboBox Grid.Row="2" ItemsSource="{CompiledBinding AutopilotValues}"
+                              SelectedItem="{CompiledBinding SelectedAutopilotRebootShutdown}" HorizontalAlignment="Stretch">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Description}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </Grid>
+                <Grid RowDefinitions="Auto, 5, Auto">
+                    <TextBlock Grid.Row="0"
+                               Text="{x:Static uav:RS.RebootAutopilotView_CompanionReboot_Description}"
+                               TextWrapping="Wrap" />
+                    <ComboBox Grid.Row="2" ItemsSource="{CompiledBinding CompanionValues}"
+                              SelectedItem="{CompiledBinding SelectedCompanionRebootShutdown}" HorizontalAlignment="Stretch">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Description}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </Grid>
+                <Button Command="{CompiledBinding Reload}" HorizontalAlignment="Right" Content="{x:Static uav:RS.ControllerReloadQuickParamView_ReloadButton_Content}"/>
+            </StackPanel>
+        </core:OptionsDisplayItem.Content>
     </core:OptionsDisplayItem>
 </UserControl>

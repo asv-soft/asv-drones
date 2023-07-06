@@ -105,6 +105,15 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reload.
+        /// </summary>
+        public static string ControllerReloadQuickParamView_ReloadButton_Content {
+            get {
+                return ResourceManager.GetString("ControllerReloadQuickParamView_ReloadButton_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CPU load of UAV.
         /// </summary>
         public static string CpuLoadUavRttView_ToolTip {

@@ -285,4 +285,7 @@
   <data name="SpeedsQuickParamView_WPNAV_SPEED_UP_Units" xml:space="preserve">
     <value>m/s</value>
   </data>
+  <data name="ControllerReloadQuickParamView_ReloadButton_Content" xml:space="preserve">
+    <value>Reload</value>
+  </data>
 </root>

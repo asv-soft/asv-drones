@@ -278,4 +278,7 @@
   <data name="SpeedsQuickParamView_LAND_SPEED_HIGH_Units" xml:space="preserve">
     <value>м/с</value>
   </data>
+  <data name="ControllerReloadQuickParamView_ReloadButton_Content" xml:space="preserve">
+    <value>Перезагрузить</value>
+  </data>
 </root>
