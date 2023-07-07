@@ -34,7 +34,7 @@ public class RebootAutopilotAnchorActionViewModel : UavActionActionBase
             SecondaryButtonText = RS.RebootAutopilotAnchorActionViewModel_DialogSecondaryButton
         };
 
-        var viewModel = new RebootAutopilotViewModel();
+        using var viewModel = new RebootAutopilotViewModel();
         dialog.Content = viewModel;
 
         var result = await dialog.ShowAsync();

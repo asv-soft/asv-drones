@@ -68,11 +68,10 @@ namespace Asv.Drones.Gui.Core
                 IsSecondaryButtonEnabled = true,
                 CloseButtonText = RS.ConnectionsViewModel_AddDialogPort_Cancel
             };
-            var viewModel = new SerialPortViewModel(_deviceSvc, _logService);
+            using var viewModel = new SerialPortViewModel(_deviceSvc, _logService);
             viewModel.ApplyDialog(dialog);
             dialog.Content = viewModel;
             var result = await dialog.ShowAsync();
-
         }
 
         private async Task AddTcpPort(CancellationToken cancel)
@@ -84,11 +83,10 @@ namespace Asv.Drones.Gui.Core
                 IsSecondaryButtonEnabled = true,
                 CloseButtonText = RS.ConnectionsViewModel_AddDialogPort_Cancel
             };
-            var viewModel = new TcpPortViewModel(_deviceSvc,_logService);
+            using var viewModel = new TcpPortViewModel(_deviceSvc,_logService);
             viewModel.ApplyDialog(dialog);
             dialog.Content = viewModel;
             var result = await dialog.ShowAsync();
-
         }
 
         private async Task AddUdpPort(CancellationToken cancel)
@@ -100,11 +98,10 @@ namespace Asv.Drones.Gui.Core
                 IsSecondaryButtonEnabled = true,
                 CloseButtonText = RS.ConnectionsViewModel_AddDialogPort_Cancel
             };
-            var viewModel = new UdpPortViewModel(_deviceSvc);
+            using var viewModel = new UdpPortViewModel(_deviceSvc);
             viewModel.ApplyDialog(dialog);
             dialog.Content = viewModel;
             var result = await dialog.ShowAsync();
-
         }
 
         public ReadOnlyObservableCollection<PortViewModel> Items => _items;
