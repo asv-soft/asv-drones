@@ -10,7 +10,7 @@ namespace Asv.Drones.Gui.Core
 {
     public class AppServiceConfig
     {
-        public string LastAppStorePath { get; set; }
+        
     }
 
     [Export(typeof(IAppService))]

@@ -46,6 +46,19 @@
                     </Style>
                 </Menu.Styles>
             </Menu>
+            
+            <Border Grid.Column="2" Padding="6">
+                <AutoCompleteBox Name="SearchBox"
+                                 MaxWidth="300"
+                                 Classes="Shell"
+                                 Watermark="Search">
+                    <AutoCompleteBox.Styles>
+                        <Style>
+                            
+                        </Style>
+                    </AutoCompleteBox.Styles>
+                </AutoCompleteBox>
+            </Border>
             <!-- <Border Padding="10,5" Margin="5" CornerRadius="{DynamicResource ControlCornerRadius}" VerticalAlignment="Center"  Grid.Column="2" HorizontalAlignment="Center" Background="#366ace"> -->
             <!--     <StackPanel Orientation="Horizontal" Spacing="5"> -->
             <!--         <avalonia:MaterialIcon Width="20" Height="20" Kind="DatabaseOutline" Foreground="#40b5e0"/> -->
