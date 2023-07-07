@@ -64,63 +64,7 @@ namespace Asv.Drones.Gui.Core
             _shell.CurrentPage = viewModel;
         }
 
-        public async Task<string?> ShowOpenFileDialogAsync(string title, string? suggestedStartLocation, params FilePickerFileType[] fileTypes)
-        {
-            if (_windowStorageProvider == null)
-            {
-                throw new Exception(
-                    $"The order of loading services was broken. At this point the variable {nameof(_windowStorageProvider)} must be initialized.");
-            }
-            var file = await _windowStorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
-            {
-                Title = title,
-                //SuggestedStartLocation = suggestedStartLocation != null ? new BclStorageFolder(suggestedStartLocation) : null,
-                AllowMultiple = false,
-                FileTypeFilter = fileTypes.Length == 0 ? null : fileTypes,
-            });
-            var selectedItem = file.FirstOrDefault();
-            if (selectedItem == null) return null;
-            return selectedItem.Path.AbsolutePath;
-        }
         
-        public async Task<string?> ShowOpenFolderDialogAsync(string title, string? suggestedStartLocation)
-        {
-            if (_windowStorageProvider == null)
-            {
-                throw new Exception(
-                    $"The order of loading services was broken. At this point the variable {nameof(_windowStorageProvider)} must be initialized.");
-            }
-            if (title == null) throw new ArgumentNullException(nameof(title));
-            var file = await _windowStorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
-            {
-                //SuggestedStartLocation = suggestedStartLocation != null ? new BclStorageFolder(suggestedStartLocation):null,
-                AllowMultiple = false,
-                Title = title
-            });
-            var selectedItem = file.FirstOrDefault();
-            if (selectedItem == null) return null;
-            return selectedItem.Path.AbsolutePath;
-        }
-
-        public async Task<string?> ShowSaveFileDialogAsync(string title, string? suggestedStartLocation, string? suggestedFileName, string? defaultExtension, params FilePickerFileType[] fileTypes)
-        {
-            if (_windowStorageProvider == null)
-            {
-                throw new Exception(
-                    $"The order of loading services was broken. At this point the variable {nameof(_windowStorageProvider)} must be initialized.");
-            }
-            var file = await _windowStorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
-            {
-                Title = title,
-                //SuggestedStartLocation = suggestedStartLocation != null ? new BclStorageFolder(suggestedStartLocation) : null,
-                SuggestedFileName = suggestedFileName,
-                DefaultExtension = defaultExtension,
-                FileTypeChoices = fileTypes.Length == 0 ? null : fileTypes,
-                ShowOverwritePrompt = true,
-            });
-            if (file == null) return null;
-            return file.Path.AbsolutePath;
-        }
     }
     
 }

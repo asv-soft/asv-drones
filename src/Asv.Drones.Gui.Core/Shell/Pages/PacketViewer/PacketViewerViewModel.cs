@@ -21,9 +21,10 @@ namespace Asv.Drones.Gui.Core;
 [PartCreationPolicy(CreationPolicy.NonShared)]
 public class PacketViewerViewModel : ViewModelBase, IShellPage
 {
-    private readonly INavigationService _nav;
+    private readonly IAppService _app;
     private readonly IConfiguration _cfg;
     private readonly ILocalizationService _localization;
+    private readonly ILogService _log;
     private readonly IGlobalCommandsService _cmd;
     public const string UriString = "asv:shell.page.packetViewer";
     public static readonly Uri Uri = new Uri(UriString);
@@ -61,13 +62,14 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
     }
     
     [ImportingConstructor]
-    public PacketViewerViewModel(IMavlinkDevicesService mavlinkDevicesService, INavigationService nav, 
-        IConfiguration cfg, ILocalizationService localizationService, [ImportMany]IEnumerable<IPacketConverter> converters) : this()
+    public PacketViewerViewModel(IMavlinkDevicesService mavlinkDevicesService, IAppService app, 
+        IConfiguration cfg, ILocalizationService localizationService, ILogService log, [ImportMany]IEnumerable<IPacketConverter> converters) : this()
     {
         _localization = localizationService;
-        
+        _log = log;
+
         _cfg = cfg;
-        _nav = nav;
+        _app = app;
         
         _converters = converters.OrderBy(_ => _.Order);
         
@@ -251,27 +253,22 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
                 separator = "\t";
             }
 
-            var startLocation = System.IO.Path.GetDirectoryName(_cfg.Get<AppServiceConfig>().LastAppStorePath);
-            
-            var fileName = await _nav.ShowSaveFileDialogAsync("Save to CSV...", startLocation, "Packets","csv", new FilePickerFileType []
-            {
-                new ("*.csv") { Patterns = new [] {"csv"} }
-            });
 
-            if (fileName != null)
+            var fileName = Path.Join(_app.Paths.DataFolder, $"Packet trace export {DateTime.Now:yyyy-M-d h-mm-ss}.csv");
+            
+            try
             {
-                try
-                {
-                    CsvHelper.SaveToCsv(_packets, fileName, separator, shieldSymbol,
-                        new CsvColumn<PacketMessageViewModel>("Date", _ => _.DateTime.ToString("G")),
-                        new CsvColumn<PacketMessageViewModel>("Type", _ => _.Type),
-                        new CsvColumn<PacketMessageViewModel>("Source", _ => _.Source),
-                        new CsvColumn<PacketMessageViewModel>("Message", _ => _.Message));
-                }
-                catch(Exception ex)
-                {
-                    throw ex;
-                }
+                CsvHelper.SaveToCsv(_packets, fileName, separator, shieldSymbol,
+                    new CsvColumn<PacketMessageViewModel>("Date", _ => _.DateTime.ToString("G")),
+                    new CsvColumn<PacketMessageViewModel>("Type", _ => _.Type),
+                    new CsvColumn<PacketMessageViewModel>("Source", _ => _.Source),
+                    new CsvColumn<PacketMessageViewModel>("Message", _ => _.Message));
+                
+                _log.Info("Export file saved to {0}", fileName);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
         }
         
