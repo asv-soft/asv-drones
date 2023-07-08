@@ -9,6 +9,11 @@ namespace Asv.Drones.Gui.Core
         {
             
         }
+        protected MapWidgetBase(string id) : base(id)
+        {
+            
+        }
+        
         [Reactive]
         public WidgetLocation Location { get;set; }
         [Reactive]

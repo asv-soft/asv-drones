@@ -39,6 +39,12 @@ namespace Asv.Drones.Gui.Core
             IEnumerable<IViewModelProvider<IMapWidget>> widgets):base(id)
         {
 
+            Disposable.AddAction(() =>
+            {
+                markers.ForEach(provider=>provider.Dispose());
+                widgets.ForEach(provider=>provider.Dispose());
+            });
+            
             #region Map provider
 
             map.CurrentMapProvider.Subscribe(_ => MapProvider = _).DisposeItWith(Disposable);
@@ -47,7 +53,7 @@ namespace Asv.Drones.Gui.Core
             #endregion
             
             #region Map anchors
-
+            
             markers.Select(_ => _.Items)
                 .IgnoreNulls()
                 .Merge()
