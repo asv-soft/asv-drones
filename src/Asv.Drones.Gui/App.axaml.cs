@@ -80,6 +80,7 @@ public partial class App : Application
         // This section is for private plugins
 #if PROPRIETARY
             yield return typeof(Afis.AfisPlugin).Assembly;        // [Asv.Drones.Gui.Afis]
+            yield return typeof(Weather.WeatherPlugin).Assembly;  // [Asv.Drones.Gui.Weather]
 #endif
     }
 

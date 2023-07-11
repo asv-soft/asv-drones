@@ -34,7 +34,7 @@ namespace Asv.Drones.Gui.Core
             
         }
 
-        public MapPageViewModel(Uri id, IMapService map, 
+        public MapPageViewModel(Uri id, IMapService map,
             IEnumerable<IViewModelProvider<IMapAnchor>> markers,
             IEnumerable<IViewModelProvider<IMapWidget>> widgets):base(id)
         {

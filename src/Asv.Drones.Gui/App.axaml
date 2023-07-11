@@ -12,7 +12,6 @@
         <StyleInclude Source="avares://Asv.Drones.Gui.Map/App.axaml"/>
         <StyleInclude Source="avares://Asv.Drones.Gui.Core/App.axaml"/>
         <StyleInclude Source="avares://Asv.Drones.Gui.Uav/App.axaml"/>
-        
         <Style Selector="TextBlock">
             <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
         </Style>

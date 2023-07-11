@@ -101,7 +101,6 @@
 		        </TabControl.ItemTemplate>
 	        </TabControl>
         </Border>
-	    
 	    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Spacing="5">
 		    <Button Classes="MapBottomButton" Command="{CompiledBinding ZoomIn}" Content="{avalonia:MaterialIconExt ZoomIn}" />
 		    <Border CornerRadius="5" Background="White" Padding="5" VerticalAlignment="Center" Width="30">

@@ -63,6 +63,7 @@
             <!-- When PROPRIETARY is defined. -->
             <ItemGroup>
                 <ProjectReference Include="..\..\..\asv-drones-gui-afis\src\Asv.Drones.Gui.Afis\Asv.Drones.Gui.Afis.csproj" />
+                <ProjectReference Include="..\..\..\asv-drones-gui-weather\src\Asv.Drones.Gui.Weather\Asv.Drones.Gui.Weather.csproj" />
             </ItemGroup>
         </When>
         <!-- other conditions -->
