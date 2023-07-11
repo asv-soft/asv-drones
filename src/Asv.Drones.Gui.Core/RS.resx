@@ -710,7 +710,7 @@
     <value>dBm</value>
   </data>
   <data name="AmplitudeModulation_Percent_Title" xml:space="preserve">
-    <value>Percent</value>
+    <value>Percents</value>
   </data>
   <data name="AmplitudeModulation_InParts_Unit" xml:space="preserve">
     <value>In parts</value>
@@ -740,7 +740,7 @@
     <value>GHz</value>
   </data>
   <data name="Phase_Degree_Title" xml:space="preserve">
-    <value>Degree</value>
+    <value>Degrees</value>
   </data>
   <data name="Phase_Radian_Title" xml:space="preserve">
     <value>Radian</value>
@@ -759,5 +759,8 @@
   </data>
   <data name="MeasureUnitsSettingsViewModelDdmGpDescription" xml:space="preserve">
     <value>Change the current measure units of DDM GP</value>
+  </data>
+  <data name="BearingDegreeTitle" xml:space="preserve">
+    <value>Degrees</value>
   </data>
 </root>

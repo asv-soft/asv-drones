@@ -159,20 +159,20 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ID Code.
-        /// </summary>
-        public static string LlzSdrRttViewModel_ID_Code_Title {
-            get {
-                return ResourceManager.GetString("LlzSdrRttViewModel_ID_Code_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to N\A.
         /// </summary>
         public static string SdrRttItem_ValueNotAvailable {
             get {
                 return ResourceManager.GetString("SdrRttItem_ValueNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID Code.
+        /// </summary>
+        public static string SdrRttViewModel_ID_Code_Title {
+            get {
+                return ResourceManager.GetString("SdrRttViewModel_ID_Code_Title", resourceCulture);
             }
         }
         
@@ -200,6 +200,105 @@ namespace Asv.Drones.Gui.Sdr {
         public static string SdrRttViewModel_SumPower_Title {
             get {
                 return ResourceManager.GetString("SdrRttViewModel_SumPower_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main.
+        /// </summary>
+        public static string VorSdrRttViewModel_Main_Header {
+            get {
+                return ResourceManager.GetString("VorSdrRttViewModel_Main_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AM 30 Hz.
+        /// </summary>
+        public static string VorSdrRttViewModelAM30HzTitle {
+            get {
+                return ResourceManager.GetString("VorSdrRttViewModelAM30HzTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AM 9960 Hz.
+        /// </summary>
+        public static string VorSdrRttViewModelAM9960HzTitle {
+            get {
+                return ResourceManager.GetString("VorSdrRttViewModelAM9960HzTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bearing.
+        /// </summary>
+        public static string VorSdrRttViewModelBearingTitle {
+            get {
+                return ResourceManager.GetString("VorSdrRttViewModelBearingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FM-Deviation.
+        /// </summary>
+        public static string VorSdrRttViewModelFMDeviationTitle {
+            get {
+                return ResourceManager.GetString("VorSdrRttViewModelFMDeviationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FM Index.
+        /// </summary>
+        public static string VorSdrRttViewModelFMIndexTitle {
+            get {
+                return ResourceManager.GetString("VorSdrRttViewModelFMIndexTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freq 30 Hz.
+        /// </summary>
+        public static string VorSdrRttViewModelFreq30HzTitle {
+            get {
+                return ResourceManager.GetString("VorSdrRttViewModelFreq30HzTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freq 9960 Hz.
+        /// </summary>
+        public static string VorSdrRttViewModelFreq9960HzTitle {
+            get {
+                return ResourceManager.GetString("VorSdrRttViewModelFreq9960HzTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freq FM 30.
+        /// </summary>
+        public static string VorSdrRttViewModelFreqFM30Title {
+            get {
+                return ResourceManager.GetString("VorSdrRttViewModelFreqFM30Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lev.
+        /// </summary>
+        public static string VorSdrRttViewModelPowerTitle {
+            get {
+                return ResourceManager.GetString("VorSdrRttViewModelPowerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voice AM.
+        /// </summary>
+        public static string VorSdrRttViewModelVoiceAmTitle {
+            get {
+                return ResourceManager.GetString("VorSdrRttViewModelVoiceAmTitle", resourceCulture);
             }
         }
     }

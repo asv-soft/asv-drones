@@ -17,8 +17,8 @@
                             VerticalAlignment="Stretch" 
                             HorizontalAlignment="Stretch"
                             Width="700" Height="500">
-                        <Grid Canvas.Top="2" Canvas.Left="2" 
-                              Width="382" Height="147"
+                        <Grid Canvas.Top="7" Canvas.Left="7" 
+                              Width="372" Height="137"
                               ColumnDefinitions="0.15*,0.3*,0.8*,0.3*"
                               RowDefinitions="1*,1*,1*,1*,0.8*">
                             <TextBlock Text="{x:Static sdr:RS.SdrRttViewModel_Rf_Header}"
@@ -130,7 +130,7 @@
                                        Margin="5,0" 
                                        FontSize="16"
                                        FontWeight="Bold"/>
-                            <Grid Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="56,0,0,0" Width="220" ColumnDefinitions="1*,1*,1*,1*,1*,1*,1*,1*">
+                            <Grid Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="56,0,0,0" Width="212" ColumnDefinitions="1*,1*,1*,1*,1*,1*,1*,1*">
                                 <TextBlock Grid.Column="0" Text="-120" VerticalAlignment="Top" FontSize="13" HorizontalAlignment="Center" Foreground="SteelBlue"/>
                                 <TextBlock Grid.Column="1" Text="-100" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="SteelBlue"/>
                                 <TextBlock Grid.Column="2" Text="-80" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="SteelBlue"/>

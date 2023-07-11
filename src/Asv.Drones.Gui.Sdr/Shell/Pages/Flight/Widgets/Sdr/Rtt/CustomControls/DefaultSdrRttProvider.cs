@@ -33,7 +33,7 @@ public class DefaultSdrRttProvider : ISdrRttProvider
             case AsvSdrCustomMode.AsvSdrCustomModeGp:
                 return new GpSdrRttViewModel(device, _log, _loc, _configuration);
             case AsvSdrCustomMode.AsvSdrCustomModeVor:
-                return null;
+                return new VorSdrRttViewModel(device, _log, _loc, _configuration);
             default:
                 throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
         }

@@ -45,7 +45,7 @@
     <data name="IlsSdrRttViewModel_AM_150_Hz_Title" xml:space="preserve">
         <value>AM 150 Hz</value>
     </data>
-    <data name="LlzSdrRttViewModel_ID_Code_Title" xml:space="preserve">
+    <data name="SdrRttViewModel_ID_Code_Title" xml:space="preserve">
         <value>ID Code</value>
     </data>
     <data name="IlsSdrRttViewModel_Freq_90_Hz_Title" xml:space="preserve">
@@ -65,5 +65,38 @@
     </data>
     <data name="IlsSdrRttViewModel_SDM_Title" xml:space="preserve">
         <value>SDM</value>
+    </data>
+    <data name="VorSdrRttViewModel_Main_Header" xml:space="preserve">
+        <value>Main</value>
+    </data>
+    <data name="VorSdrRttViewModelPowerTitle" xml:space="preserve">
+        <value>Lev</value>
+    </data>
+    <data name="VorSdrRttViewModelBearingTitle" xml:space="preserve">
+        <value>Bearing</value>
+    </data>
+    <data name="VorSdrRttViewModelAM30HzTitle" xml:space="preserve">
+        <value>AM 30 Hz</value>
+    </data>
+    <data name="VorSdrRttViewModelAM9960HzTitle" xml:space="preserve">
+        <value>AM 9960 Hz</value>
+    </data>
+    <data name="VorSdrRttViewModelFMDeviationTitle" xml:space="preserve">
+        <value>FM-Deviation</value>
+    </data>
+    <data name="VorSdrRttViewModelVoiceAmTitle" xml:space="preserve">
+        <value>Voice AM</value>
+    </data>
+    <data name="VorSdrRttViewModelFreq30HzTitle" xml:space="preserve">
+        <value>Freq 30 Hz</value>
+    </data>
+    <data name="VorSdrRttViewModelFreq9960HzTitle" xml:space="preserve">
+        <value>Freq 9960 Hz</value>
+    </data>
+    <data name="VorSdrRttViewModelFreqFM30Title" xml:space="preserve">
+        <value>Freq FM 30</value>
+    </data>
+    <data name="VorSdrRttViewModelFMIndexTitle" xml:space="preserve">
+        <value>FM Index</value>
     </data>
 </root>

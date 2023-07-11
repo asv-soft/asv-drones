@@ -62,7 +62,7 @@ public class LlzSdrRttViewModel : SdrRttViewModelBase
             Phi150Units = "°";
             Phi150StringValue = "0.02";
 
-            IdCodeTitle = RS.LlzSdrRttViewModel_ID_Code_Title;
+            IdCodeTitle = RS.SdrRttViewModel_ID_Code_Title;
             IdCodeStringValue = "CEK";
 
             TotalFreq90Title = RS.IlsSdrRttViewModel_Freq_90_Hz_Title;
@@ -158,7 +158,7 @@ public class LlzSdrRttViewModel : SdrRttViewModelBase
         Phi150Title = "PHI 150";
         Phi150Units = _loc.Phase.CurrentUnit.Value.Unit;
         
-        IdCodeTitle = RS.LlzSdrRttViewModel_ID_Code_Title;
+        IdCodeTitle = RS.SdrRttViewModel_ID_Code_Title;
 
         TotalFreq90Title = RS.IlsSdrRttViewModel_Freq_90_Hz_Title;
         TotalFreq90Units = _freqInHzMeasureUnit?.Unit;
@@ -247,7 +247,7 @@ public class LlzSdrRttViewModel : SdrRttViewModelBase
             .Subscribe(_=>
             {
                 TotalPowerValue = _.Payload.TotalPower;
-                TotalPowerStringValue = loc.Power.FromSiToString(_.Payload.TotalPower);
+                TotalPowerStringValue = _loc.Power.FromSiToString(_.Payload.TotalPower);
                 TotalDdmStringValue = _loc.DdmLlz.FromSiToString(_.Payload.TotalAm150 - _.Payload.TotalAm90);
                 TotalSdmStringValue = _loc.Sdm.FromSiToString((_.Payload.TotalAm90 + _.Payload.TotalAm150) * 100.0);
                 TotalAm90StringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.TotalAm90 * 100.0);
