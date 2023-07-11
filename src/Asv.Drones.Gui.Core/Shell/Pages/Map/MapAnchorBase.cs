@@ -17,6 +17,11 @@ namespace Asv.Drones.Gui.Core
             _id = id;
         }
 
+        public MapAnchorBase(string id)
+        {
+            _id = new Uri(id);
+        }
+
         public IMapAnchor Init(IMap map)
         {
             Map = map;
