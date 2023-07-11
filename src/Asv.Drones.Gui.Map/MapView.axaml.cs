@@ -3,6 +3,7 @@ using System.Collections;
 using System.Diagnostics;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using Asv.Common;
 using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Controls;
@@ -85,6 +86,10 @@ namespace Asv.Avalonia.Map
         public MapView()
         {
             Disposable.Add(_core);
+            Disposable.AddAction(() =>
+            {
+
+            });
             _core.SystemType = "WindowsPresentation";
             _core.RenderMode = RenderMode.WPF;
             
