@@ -535,6 +535,7 @@ namespace Asv.Avalonia.Map
                 if (_core.IsStarted)
                 {
                     ForceUpdateOverlays();
+                    InvalidateVisual();
                 }
             }
             finally
