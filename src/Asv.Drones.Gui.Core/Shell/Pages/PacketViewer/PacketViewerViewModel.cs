@@ -232,7 +232,7 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
             SecondaryButtonText = RS.PacketViewerViewModel_SeparatorDialog_DialogSecondaryButton
         };
             
-        var viewModel = new SeparatorViewModel();
+        using var viewModel = new SeparatorViewModel();
         viewModel.ApplyDialog(dialog);
         dialog.Content = viewModel;
             
