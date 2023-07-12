@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:an="clr-namespace:Avalonia.Animation;assembly=Avalonia.Animation"
              xmlns:uav1="clr-namespace:Asv.Drones.Gui.Uav.Uav"
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
              x:CompileBindings="True"
@@ -16,16 +17,46 @@
     <Border Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8" CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True">
         <StackPanel Margin="10" Spacing="8">
             <Grid ColumnDefinitions="Auto,*,Auto">
-                <Button ToolTip.Tip="{x:Static uav:RS.FlightUavView_MoveToButton_ToolTip}" DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Command="{Binding LocateVehicleCommand}">
-                    <StackPanel Orientation="Horizontal">
-                        <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="{Binding Icon}" Foreground="Red"  Width="25" Height="25" Margin="0,0,5,0"/>
-                        <TextBlock VerticalAlignment="Center" DockPanel.Dock="Top" Text="{Binding Title}" />      
-                    </StackPanel>
-                </Button>
-                
-                <ToggleButton Grid.Column="1" ToolTip.Tip="{x:Static uav:RS.FlightUavView_FollowButton_ToolTip}" Command="{Binding FollowUavCommand}" IsChecked="{CompiledBinding IsFollowed}" Padding="5" HorizontalAlignment="Center" BorderBrush="Transparent" BorderThickness="0" Background="Transparent">
-                    <avalonia:MaterialIcon Kind="ArrowAll" />
-                </ToggleButton>
+                <StackPanel Orientation="Horizontal" Spacing="3">
+                    <DropDownButton>
+                        <DropDownButton.Content>
+                            <StackPanel Spacing="3" Orientation="Horizontal">
+                                <avalonia:MaterialIcon Kind="{Binding Icon}" Foreground="Red" />
+                                <TextBlock Text="{Binding Title}" />
+                            </StackPanel>
+                        </DropDownButton.Content>
+                        <DropDownButton.Flyout>
+                            <MenuFlyout Placement="Bottom" ItemsSource="{Binding UavActions}">
+                                <MenuFlyout.ItemContainerTheme>
+                                    <ControlTheme TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}"
+                                                  x:DataType="uav:UavAction">
+                                        <Setter Property="Header" Value="{Binding Title}" />
+                                        <Setter Property="Command" Value="{Binding Command}" />
+                                    </ControlTheme>
+                                </MenuFlyout.ItemContainerTheme>
+                            </MenuFlyout>
+                        </DropDownButton.Flyout>
+                    </DropDownButton>
+                    <avalonia:MaterialIcon Kind="ArrowAll" IsVisible="{CompiledBinding IsFollowed}">
+                        <avalonia:MaterialIcon.Styles>
+                            <Style Selector="avalonia|MaterialIcon">
+                                <Style.Animations>
+                                    <Animation Duration="0:0:1" IterationCount="INFINITE">
+                                        <KeyFrame Cue="0%">
+                                            <Setter Property="Opacity" Value="1"/>
+                                        </KeyFrame>
+                                        <KeyFrame Cue="50%">
+                                            <Setter Property="Opacity" Value="0"/>
+                                        </KeyFrame>
+                                        <KeyFrame Cue="100%">
+                                            <Setter Property="Opacity" Value="1"/>
+                                        </KeyFrame>
+                                    </Animation>
+                                </Style.Animations>
+                            </Style>
+                        </avalonia:MaterialIcon.Styles>
+                    </avalonia:MaterialIcon>
+                </StackPanel>
                 
                 <Button Grid.Column="2" ToolTip.Tip="{x:Static uav:RS.FlightUavView_Minimize_ToolTip}" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Command="{Binding ChangeStateCommand}">
                     <Grid>

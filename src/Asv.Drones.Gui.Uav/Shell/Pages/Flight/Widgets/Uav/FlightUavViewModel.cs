@@ -15,6 +15,12 @@ using MavlinkHelper = Asv.Drones.Gui.Core.MavlinkHelper;
 
 namespace Asv.Drones.Gui.Uav
 {
+    public class UavAction
+    {
+        public string Title { get; set; }
+        public ICommand Command { get; set; }
+    }
+    
     public class FlightUavViewModel:FlightVehicleWidgetBase
     {
         private readonly ReadOnlyObservableCollection<IUavRttItem> _rttItems;
@@ -33,6 +39,17 @@ namespace Asv.Drones.Gui.Uav
                 {
                     new BatteryUavRttViewModel()
                 }));
+                UavActions = new List<UavAction>
+                {
+                    new UavAction()
+                    {
+                        Title = RS.FlightUavView_FindButton_ToolTip
+                    },
+                    new UavAction()
+                    {
+                       Title = RS.FlightUavView_FollowButton_ToolTip
+                    }
+                };
             }
         }
         
@@ -105,14 +122,32 @@ namespace Asv.Drones.Gui.Uav
 
             FollowUavCommand = ReactiveCommand.Create(() =>
             {
+                Map.ItemToFollow = null;
+                
                 var findUavVehicle = Map.Markers.Where(_ => _ is UavAnchor).Cast<UavAnchor>()
                     .FirstOrDefault(_ => _.Vehicle.FullId == Vehicle.FullId);
+                
                 if (findUavVehicle != null)
                 {
-                    Map.ItemToFollow = IsFollowed ? findUavVehicle : null;
+                    IsFollowed = !IsFollowed;
+                    if (IsFollowed) Map.ItemToFollow = findUavVehicle;
                 }
             }).DisposeItWith(Disposable);
-            
+
+            UavActions = new List<UavAction>
+            {
+                new UavAction()
+                {
+                    Title = RS.FlightUavView_FindButton_ToolTip,
+                    Command = LocateVehicleCommand
+                },
+                new UavAction()
+                {
+                    Title = RS.FlightUavView_FollowButton_ToolTip,
+                    Command = FollowUavCommand
+                }
+            };
+
             this.WhenValueChanged(_ => _.MissionStatus.EnableAnchors, false)
                 .Subscribe(ChangeAnchorsVisibility)
                 .DisposeItWith(Disposable);
@@ -152,6 +187,7 @@ namespace Asv.Drones.Gui.Uav
         public ICommand ChangeStateCommand { get; set; }
         public ICommand FollowUavCommand { get; set; }
         public ICommand SelectModeCommand { get; set; }
+        public List<UavAction> UavActions { get; set; }
         public AttitudeViewModel Attitude { get; }
         public MissionStatusViewModel MissionStatus { get; }
         public ReadOnlyObservableCollection<IUavRttItem> RttItems => _rttItems;

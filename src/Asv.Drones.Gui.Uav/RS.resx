@@ -327,4 +327,10 @@
   <data name="QuickParamsSetupPageView_ReadAllButton_Text" xml:space="preserve">
     <value>Read all</value>
   </data>
+  <data name="FlightUavView_UavDropDownControls_Title" xml:space="preserve">
+    <value>Uav actions</value>
+  </data>
+  <data name="FlightUavView_FindButton_ToolTip" xml:space="preserve">
+    <value>Find UAV</value>
+  </data>
 </root>
