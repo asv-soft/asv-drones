@@ -106,7 +106,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             SecondaryButtonText = "Cancel"
         };
             
-        var viewModel = new RecordStartViewModel();
+        using var viewModel = new RecordStartViewModel();
             
         viewModel.ApplyDialog(dialog);
             

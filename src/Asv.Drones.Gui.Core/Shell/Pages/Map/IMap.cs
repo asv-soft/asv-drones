@@ -38,8 +38,9 @@ namespace Asv.Drones.Gui.Core
     public interface IMapWidget:IViewModel
     {
         WidgetLocation Location { get; }
-        public string Title { get; }
-        public MaterialIconKind Icon { get; }
+        string Title { get; }
+        int Order { get; }
+        MaterialIconKind Icon { get; }
         IMapWidget Init(IMap context);
     }
 }

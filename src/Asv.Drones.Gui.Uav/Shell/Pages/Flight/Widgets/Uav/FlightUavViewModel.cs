@@ -73,7 +73,7 @@ namespace Asv.Drones.Gui.Uav
                     SecondaryButtonText = RS.SelectModeAnchorActionViewModel_DialogSecondaryButton
                 };
         
-                var viewModel = new SelectModeViewModel(Vehicle);
+                using var viewModel = new SelectModeViewModel(Vehicle);
                 dialog.Content = viewModel;
 
                 var result = await dialog.ShowAsync();

@@ -10,11 +10,7 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Core
 {
-    public enum MapZoomValue
-    {
-        Increase,
-        Decrease
-    }
+   
     
     public class MapPageViewModel:ViewModelBase,IShellPage,IMap
     {
@@ -23,9 +19,11 @@ namespace Asv.Drones.Gui.Core
         private readonly ReadOnlyObservableCollection<IMapWidget> _leftWidgets;
         private readonly ReadOnlyObservableCollection<IMapWidget> _rightWidgets;
         private readonly ReadOnlyObservableCollection<IMapWidget> _bottomWidgets;
+        private ReadOnlyObservableCollection<IMapAction> _mapActions;
         
         private IDisposable _disposableMapUpdate;
         
+
         /// <summary>
         /// This constructor is used for design time
         /// </summary>
@@ -36,9 +34,16 @@ namespace Asv.Drones.Gui.Core
 
         public MapPageViewModel(Uri id, IMapService map,
             IEnumerable<IViewModelProvider<IMapAnchor>> markers,
-            IEnumerable<IViewModelProvider<IMapWidget>> widgets):base(id)
+            IEnumerable<IViewModelProvider<IMapWidget>> widgets,
+                IEnumerable<IViewModelProvider<IMapAction>> actions):base(id)
         {
 
+            Disposable.AddAction(() =>
+            {
+                markers.ForEach(provider=>provider.Dispose());
+                widgets.ForEach(provider=>provider.Dispose());
+            });
+            
             #region Map provider
 
             map.CurrentMapProvider.Subscribe(_ => MapProvider = _).DisposeItWith(Disposable);
@@ -47,12 +52,11 @@ namespace Asv.Drones.Gui.Core
             #endregion
             
             #region Map anchors
-
+            
             markers.Select(_ => _.Items)
                 .IgnoreNulls()
                 .Merge()
                 .Transform(_ => _.Init(this))
-                .ObserveOn(RxApp.MainThreadScheduler)
                 .DisposeMany()
                 .Bind(out _markers)
                 .Subscribe()
@@ -66,7 +70,7 @@ namespace Asv.Drones.Gui.Core
                 .IgnoreNulls()
                 .Merge()
                 .Transform(_ => _.Init(this))
-                .ObserveOn(RxApp.MainThreadScheduler)
+                .SortBy(_=>_.Order)
                 .DisposeMany()
                 .Bind(out _widgets)
                 .Subscribe()
@@ -96,18 +100,21 @@ namespace Asv.Drones.Gui.Core
             
             #endregion
 
-            #region Commands
+            #region MapActions
 
-            ZoomIn = ReactiveCommand.Create(() => ChangeZoomValue(MapZoomValue.Increase)).DisposeItWith(Disposable);
-            ZoomOut = ReactiveCommand.Create(() => ChangeZoomValue(MapZoomValue.Decrease)).DisposeItWith(Disposable);
-
-            #endregion
-
-            this.WhenValueChanged(_ => _.IsRulerEnabled)
-                .Subscribe(SetUpRuler)
+            actions.Select(_ => _.Items)
+                .IgnoreNulls()
+                .Merge()
+                .Transform(_ => _.Init(this))
+                .SortBy(_=>_.Order)
+                .Bind(out _mapActions)
+                .DisposeMany()
+                .Subscribe()
                 .DisposeItWith(Disposable);
 
-            this.WhenValueChanged(_ => _.ItemToFollow, false)
+            #endregion
+            
+           this.WhenValueChanged(_ => _.ItemToFollow, false)
                 .Subscribe(SetUpFollow)
                 .DisposeItWith(Disposable);
 
@@ -122,49 +129,12 @@ namespace Asv.Drones.Gui.Core
                 .Subscribe(_ => Center = _);
         }
 
-        private void ChangeZoomValue(MapZoomValue value)
-        {
-            if (value == MapZoomValue.Increase & Zoom < MaxZoom)
-            {
-                Zoom++;
-            }
-
-            if (value == MapZoomValue.Decrease & Zoom > MinZoom)
-            {
-                Zoom--;
-            }
-        }
-
-        private async void SetUpRuler(bool isVisible)
-        {
-            var rulerPolygon = _markers.Where(x => x.GetType() == typeof(RulerPolygon)).ToArray();
-
-            if (rulerPolygon.Length == 0)
-            {
-                IsRulerVisible = false;
-                return;
-            }
-
-            IsRulerVisible = true;
-            
-            var polygon = (RulerPolygon)rulerPolygon[0];
-            
-            if (isVisible)
-            {
-                var start = await ShowTargetDialog(RS.MapPageViewModel_RulerStartPoint_Description, CancellationToken.None);
-                var stop = await ShowTargetDialog(RS.MapPageViewModel_RulerStopPoint_Description, CancellationToken.None);
-
-                polygon.Ruler.Value.Start.OnNext(start);
-                polygon.Ruler.Value.Stop.OnNext(stop);
-            }
-            
-            polygon.Ruler.Value.IsVisible.OnNext(isVisible);
-        }
-
         public ReadOnlyObservableCollection<IMapAnchor> Markers => _markers;
         public ReadOnlyObservableCollection<IMapWidget> LeftWidgets => _leftWidgets;
         public ReadOnlyObservableCollection<IMapWidget> RightWidgets => _rightWidgets;
         public ReadOnlyObservableCollection<IMapWidget> BottomWidgets => _bottomWidgets;
+
+        public ReadOnlyObservableCollection<IMapAction> MapActions => _mapActions;
         
         #region Map properties
 
@@ -183,12 +153,8 @@ namespace Asv.Drones.Gui.Core
         public IMapAnchor SelectedItem { get; set; }
         [Reactive]
         public IMapAnchor ItemToFollow { get; set; }
-        [Reactive]
-        public bool IsRulerEnabled { get; set; }
-        [Reactive]
-        public bool IsRulerVisible { get; set; }
-        public ICommand ZoomIn { get; }
-        public ICommand ZoomOut { get; }
+      
+       
 
         #endregion
 
@@ -200,6 +166,8 @@ namespace Asv.Drones.Gui.Core
         public bool IsInDialogMode { get; set; }
         [Reactive]
         public string DialogText { get; set; }
+
+        
 
         public async Task<GeoPoint> ShowTargetDialog(string text, CancellationToken cancel)
         {

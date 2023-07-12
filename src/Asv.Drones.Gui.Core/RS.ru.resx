@@ -733,7 +733,7 @@
 	  <value>дБм</value>
   </data>
   <data name="AmplitudeModulation_Percent_Title" xml:space="preserve">
-	  <value>Процент</value>
+	  <value>Проценты</value>
   </data>
   <data name="AmplitudeModulation_InParts_Unit" xml:space="preserve">
 	  <value>В частях</value>
@@ -763,10 +763,10 @@
 	  <value>ГГц</value>
   </data>
   <data name="Phase_Degree_Title" xml:space="preserve">
-	  <value>Градус</value>
+	  <value>Градусы</value>
   </data>
   <data name="Phase_Radian_Title" xml:space="preserve">
-	  <value>Радиан</value>
+	  <value>Радианы</value>
   </data>
   <data name="Phase_Radian_Unit" xml:space="preserve">
 	  <value>Рад</value>
@@ -782,6 +782,9 @@
   </data>
   <data name="MeasureUnitsSettingsViewModelDdmGpDescription" xml:space="preserve">
 	  <value>Измените текущие единицы измерения РГМ (Глиссада).</value>
+  </data>
+  <data name="BearingDegreeTitle" xml:space="preserve">
+	  <value>Градусы</value>
   </data>
   <data name="Temperature_Celsius_Title" xml:space="preserve">
 	  <value>Цельсий</value>

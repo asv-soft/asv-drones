@@ -3,12 +3,13 @@ using DynamicData;
 
 namespace Asv.Drones.Gui.Core;
 
+[Export(FlightPageViewModel.UriString, typeof(IViewModelProvider<IMapAnchor>))]
 [Export(PlaningPageViewModel.UriString, typeof(IViewModelProvider<IMapAnchor>))]
 [PartCreationPolicy(CreationPolicy.NonShared)]
-public class RulerPlanningMapLayerProvider : ViewModelProviderBase<IMapAnchor>
+public class RulerMapLayerProvider : ViewModelProviderBase<IMapAnchor>
 {
     [ImportingConstructor]
-    public RulerPlanningMapLayerProvider(ILocalizationService loc)
+    public RulerMapLayerProvider(ILocalizationService loc)
     {
         var ruler = new Ruler();
         

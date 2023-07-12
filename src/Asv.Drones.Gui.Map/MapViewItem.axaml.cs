@@ -64,7 +64,7 @@ namespace Asv.Avalonia.Map
 
         private void DragPointerMoved(PointerEventArgs args)
         {
-            if ((args.KeyModifiers & KeyModifiers.Control) != 0 && IsSelected)
+            if ((args.KeyModifiers & KeyModifiers.Control) != 0 && IsSelected && IsEditable)
             {
                 if (_map == null) return;
 
@@ -285,6 +285,9 @@ namespace Asv.Avalonia.Map
                 newHash = HashCode.Combine(newHash, IsVisible);
                 newHash = HashCode.Combine(newHash, MapView.GetStroke(child));
                 newHash = HashCode.Combine(newHash, MapView.GetStrokeThickness(child));
+                newHash = HashCode.Combine(newHash, MapView.GetStrokeDashArray(child));
+                newHash = HashCode.Combine(newHash, MapView.GetPathOpacity(child));
+                
                 if (localPath.Count < 2) return;
                 
                 // this is for optimization (if values not changed - no need to update)

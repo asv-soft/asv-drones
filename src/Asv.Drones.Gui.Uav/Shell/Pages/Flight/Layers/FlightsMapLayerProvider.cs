@@ -45,5 +45,10 @@ namespace Asv.Drones.Gui.Uav
         }
 
         public IObservable<IChangeSet<IMapAnchor, Uri>> Items { get; }
+
+        public void Dispose()
+        {
+            
+        }
     }
 }

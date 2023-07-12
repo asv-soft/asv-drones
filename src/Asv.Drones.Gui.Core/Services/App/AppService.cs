@@ -35,6 +35,5 @@ namespace Asv.Drones.Gui.Core
         public IAppInfo Info { get; }
         public IAppPathInfo Paths { get; }
         public IAppStore Store => _store;
-
     }
 }

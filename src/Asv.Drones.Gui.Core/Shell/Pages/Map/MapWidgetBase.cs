@@ -9,10 +9,16 @@ namespace Asv.Drones.Gui.Core
         {
             
         }
+        protected MapWidgetBase(string id) : base(id)
+        {
+            
+        }
+        
         [Reactive]
         public WidgetLocation Location { get;set; }
         [Reactive]
         public string Title { get;set; }
+        public int Order { get; }
         [Reactive]
         public MaterialIconKind Icon { get; set; }
         public IMapWidget Init(IMap context)

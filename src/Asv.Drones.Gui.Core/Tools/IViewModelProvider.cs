@@ -5,7 +5,7 @@ using ReactiveUI;
 namespace Asv.Drones.Gui.Core
 {
     
-    public interface IViewModelProvider<TView>
+    public interface IViewModelProvider<TView>:IDisposable
     {
         IObservable<IChangeSet<TView, Uri>> Items { get; }
     }
@@ -13,12 +13,15 @@ namespace Asv.Drones.Gui.Core
     public abstract class ViewModelProviderBase<TView> : DisposableOnceWithCancel, IViewModelProvider<TView>
         where TView : IViewModel
     {
-       
-        private readonly SourceCache<TView, Uri> _sourceCache = new(_ => _.Id);
-        
-        protected ISourceCache<TView, Uri> Source => _sourceCache;
+        private readonly SourceCache<TView, Uri> _sourceCache;
 
-        public IObservable<IChangeSet<TView, Uri>> Items => _sourceCache.Connect();
+        protected ViewModelProviderBase()
+        {
+            _sourceCache = new SourceCache<TView, Uri>(model => model.Id)
+                .DisposeItWith(Disposable);
+        }
+        protected ISourceCache<TView, Uri> Source => _sourceCache;
+        public virtual IObservable<IChangeSet<TView, Uri>> Items => Source.Connect().DisposeMany();
     }
 
 

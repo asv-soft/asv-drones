@@ -8,19 +8,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="core:MapPageViewModel"
              x:Class="Asv.Drones.Gui.Core.MapPageView">
-	<UserControl.Styles>
-		<Style Selector="Button.MapBottomButton">
-			<Setter Property="Background" Value="Transparent" />
-			<Setter Property="BorderBrush" Value="{x:Null}" />
-			<Setter Property="BorderThickness" Value="0" />
-			<Setter Property="Width" Value="30" />
-			<Setter Property="Height" Value="30" />
-		</Style>
-		<Style Selector="Button:pointerover.MapBottomButton /template/ ContentPresenter">
-			<Setter Property="BorderBrush" Value="{x:Null}" />
-			<Setter Property="Background" Value="Transparent" />
-		</Style>
-	</UserControl.Styles>
+	
 	<Design.DataContext>
         <core:MapPageViewModel/>
     </Design.DataContext>
@@ -101,14 +89,27 @@
 		        </TabControl.ItemTemplate>
 	        </TabControl>
         </Border>
-	    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Spacing="5">
-		    <Button Classes="MapBottomButton" Command="{CompiledBinding ZoomIn}" Content="{avalonia:MaterialIconExt ZoomIn}" />
-		    <Border CornerRadius="5" Background="White" Padding="5" VerticalAlignment="Center" Width="30">
-			    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Text="{Binding Zoom}" />
-		    </Border>
-		    <Button Classes="MapBottomButton" Command="{CompiledBinding ZoomOut}" Content="{avalonia:MaterialIconExt ZoomOut}" />
-		    <ToggleButton Classes="MapBottomButton" IsVisible="{CompiledBinding IsRulerVisible}" IsChecked="{Binding IsRulerEnabled}" Content="{avalonia:MaterialIconExt TapeMeasure}" />
-	    </StackPanel>
+	    <ItemsControl Grid.Row="1" Grid.Column="2" ItemsSource="{Binding MapActions}" VerticalAlignment="Bottom" >
+		    <ItemsControl.ItemContainerTheme>
+			    <ControlTheme TargetType="ContentPresenter">
+				    <ControlTheme.Setters>
+					    <Setter Property="DockPanel.Dock" Value="Right"/>
+				    </ControlTheme.Setters>
+			    </ControlTheme>
+		    </ItemsControl.ItemContainerTheme>
+		    <ItemsControl.ItemsPanel>
+			    <ItemsPanelTemplate>
+				    <DockPanel LastChildFill="False"/>
+			    </ItemsPanelTemplate>
+		    </ItemsControl.ItemsPanel>
+		    <ItemsControl.ItemTemplate>
+			    <DataTemplate>
+				    <ContentPresenter Content="{Binding}" Margin="8,0,8,0" />
+			    </DataTemplate>
+		    </ItemsControl.ItemTemplate>
+	    </ItemsControl>
+
+	  
         <GridSplitter Width="5" Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" Background="Transparent" IsHitTestVisible="True" ResizeBehavior="PreviousAndNext"/>
         <GridSplitter Width="5" Grid.Row="0" Grid.RowSpan="4" Grid.Column="3" Background="Transparent" IsHitTestVisible="True" Opacity="1" ResizeBehavior="PreviousAndNext"/>
         <GridSplitter HorizontalAlignment="Stretch" Height="5" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="1" Background="Transparent" IsHitTestVisible="True" ResizeBehavior="PreviousAndNext"/>

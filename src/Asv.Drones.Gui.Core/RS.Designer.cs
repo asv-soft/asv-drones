@@ -168,11 +168,20 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Percent.
+        ///   Looks up a localized string similar to Percents.
         /// </summary>
         public static string AmplitudeModulation_Percent_Title {
             get {
                 return ResourceManager.GetString("AmplitudeModulation_Percent_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Degrees.
+        /// </summary>
+        public static string BearingDegreeTitle {
+            get {
+                return ResourceManager.GetString("BearingDegreeTitle", resourceCulture);
             }
         }
         
@@ -1347,7 +1356,7 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Degree.
+        ///   Looks up a localized string similar to Degrees.
         /// </summary>
         public static string Phase_Degree_Title {
             get {

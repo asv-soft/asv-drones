@@ -105,6 +105,33 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Here you can reload controller.
+        /// </summary>
+        public static string ControllerReloadQuickParamView_Description {
+            get {
+                return ResourceManager.GetString("ControllerReloadQuickParamView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Controller reload.
+        /// </summary>
+        public static string ControllerReloadQuickParamView_Header {
+            get {
+                return ResourceManager.GetString("ControllerReloadQuickParamView_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reload.
+        /// </summary>
+        public static string ControllerReloadQuickParamView_ReloadButton_Content {
+            get {
+                return ResourceManager.GetString("ControllerReloadQuickParamView_ReloadButton_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CPU load of UAV.
         /// </summary>
         public static string CpuLoadUavRttView_ToolTip {
@@ -119,6 +146,24 @@ namespace Asv.Drones.Gui.Uav {
         public static string CurrentUavRttView_ToolTip {
             get {
                 return ResourceManager.GetString("CurrentUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Here you can change FailSafe parameters.
+        /// </summary>
+        public static string FailSafeQuickParamView_Description {
+            get {
+                return ResourceManager.GetString("FailSafeQuickParamView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FailSafe parameters.
+        /// </summary>
+        public static string FailSafeQuickParamView_Header {
+            get {
+                return ResourceManager.GetString("FailSafeQuickParamView_Header", resourceCulture);
             }
         }
         
@@ -164,6 +209,24 @@ namespace Asv.Drones.Gui.Uav {
         public static string HomeDistanceUavRttView_ToolTip {
             get {
                 return ResourceManager.GetString("HomeDistanceUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Each system has a network-unique system id, and each component has a system-unique component id that can be used for addressing/routing.
+        /// </summary>
+        public static string IdentityQuickParamView_Description {
+            get {
+                return ResourceManager.GetString("IdentityQuickParamView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System ID.
+        /// </summary>
+        public static string IdentityQuickParamView_Header {
+            get {
+                return ResourceManager.GetString("IdentityQuickParamView_Header", resourceCulture);
             }
         }
         
@@ -348,6 +411,51 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Advanced setup.
+        /// </summary>
+        public static string QuickParamsSetupPageView_AdvancedSetupButton_Text {
+            get {
+                return ResourceManager.GetString("QuickParamsSetupPageView_AdvancedSetupButton_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read all.
+        /// </summary>
+        public static string QuickParamsSetupPageView_ReadAllButton_Text {
+            get {
+                return ResourceManager.GetString("QuickParamsSetupPageView_ReadAllButton_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write all.
+        /// </summary>
+        public static string QuickParamsSetupPageView_WriteAllButton_Text {
+            get {
+                return ResourceManager.GetString("QuickParamsSetupPageView_WriteAllButton_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must click the write button if you want to save and apply the changes..
+        /// </summary>
+        public static string QuickParamsSetupPageView_WriteRequired_Message {
+            get {
+                return ResourceManager.GetString("QuickParamsSetupPageView_WriteRequired_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write required.
+        /// </summary>
+        public static string QuickParamsSetupPageView_WriteRequired_Title {
+            get {
+                return ResourceManager.GetString("QuickParamsSetupPageView_WriteRequired_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         public static string RebootAutopilotAnchorActionViewModel_DialogPrimaryButton {
@@ -470,6 +578,294 @@ namespace Asv.Drones.Gui.Uav {
         public static string SelectModeAnchorActionViewModel_Title {
             get {
                 return ResourceManager.GetString("SelectModeAnchorActionViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Here you can change the speeds.
+        /// </summary>
+        public static string SpeedsQuickParamView_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speeds.
+        /// </summary>
+        public static string SpeedsQuickParamView_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude during Landing at which vehicle slows to LAND_SPEED. Increment - 0.1. Range 1-100. [{0:F2} cm] [{1:F2} ft]. Note: This parameter is for advanced users..
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_ALT_LOW_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_ALT_LOW_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Land altitude low (LAND_ALT_LOW).
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_ALT_LOW_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_ALT_LOW_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m.
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_ALT_LOW_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_ALT_LOW_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The descent speed for the final stage of landing in cm/s. Increment - 0.1. Range 0.3-2. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_SPEED_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Land speed (LAND_SPEED).
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_SPEED_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The descent speed for the first stage of landing in cm/s. If this is zero then WPNAV_SPEED_DN is used. Increment - 0.1. Range 0-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_SPEED_HIGH_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_HIGH_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Land speed high (LAND_SPEED_HIGH).
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_SPEED_HIGH_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_HIGH_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_SPEED_HIGH_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_HIGH_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_SPEED_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Defines the maximum speed in cm/s which the aircraft will travel horizontally while in loiter mode. Increment - 0.5. Range 0.2-35. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
+        /// </summary>
+        public static string SpeedsQuickParamView_LOIT_SPEED_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LOIT_SPEED_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loiter Horizontal Maximum Speed (LOIT_SPEED).
+        /// </summary>
+        public static string SpeedsQuickParamView_LOIT_SPEED_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LOIT_SPEED_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_LOIT_SPEED_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LOIT_SPEED_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum vertical descending velocity the pilot may request in cm/s. If 0 PILOT_SPEED_UP value is used. Increment - 0.1. Range 0-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
+        /// </summary>
+        public static string SpeedsQuickParamView_PILOT_SPEED_DN_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_DN_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pilot maximum vertical speed descending (PILOT_SPEED_DN).
+        /// </summary>
+        public static string SpeedsQuickParamView_PILOT_SPEED_DN_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_DN_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_PILOT_SPEED_DN_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_DN_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum vertical ascending velocity the pilot may request in cm/s. Increment - 0.1. Range 0.5-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
+        /// </summary>
+        public static string SpeedsQuickParamView_PILOT_SPEED_UP_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_UP_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pilot maximum vertical speed ascending (PILOT_SPEED_UP).
+        /// </summary>
+        public static string SpeedsQuickParamView_PILOT_SPEED_UP_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_UP_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_PILOT_SPEED_UP_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_UP_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain horizontally while flying home. If this is set to zero, WPNAV_SPEED will be used instead. Increment - 50. Range 0-2000. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
+        /// </summary>
+        public static string SpeedsQuickParamView_RTL_SPEED_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_RTL_SPEED_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RTL speed (RTL_SPEED).
+        /// </summary>
+        public static string SpeedsQuickParamView_RTL_SPEED_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_RTL_SPEED_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_RTL_SPEED_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_RTL_SPEED_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain horizontally during a WP mission. Increment - 0.5. Range 0.2-20. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain while descending during a WP mission. Increment - 0.1. Range 0.1-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_DN_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_DN_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waypoint Descent Speed Target (WPNAV_SPEED_DN).
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_DN_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_DN_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_DN_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_DN_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waypoint Horizontal Speed Target (WPNAV_SPEED).
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain while climbing during a WP mission. Increment - 0.5. Range 0.1-10. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_UP_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_UP_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waypoint Climb Speed Target (WPNAV_SPEED_UP).
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_UP_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_UP_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_UP_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_UP_Units", resourceCulture);
             }
         }
         
