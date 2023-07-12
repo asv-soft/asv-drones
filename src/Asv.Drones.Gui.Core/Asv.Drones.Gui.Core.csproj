@@ -39,6 +39,10 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>RS.resx</DependentUpon>
       </Compile>
+      <Compile Update="Shell\Pages\Map\Actions\Zoom\MapZoomActionView.axaml.cs">
+        <DependentUpon>MapZoomActionView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -64,8 +68,5 @@
       <AvaloniaResource Include="Assets\program-logo.png" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Shell\Pages\Map\Planing\Widgets\" />
-    </ItemGroup>
 
 </Project>

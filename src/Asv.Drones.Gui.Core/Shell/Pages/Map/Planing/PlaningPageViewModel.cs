@@ -22,7 +22,8 @@ namespace Asv.Drones.Gui.Core
         [ImportingConstructor]
         public PlaningPageViewModel( IMapService map, IConfiguration cfg, 
             [ImportMany(UriString)] IEnumerable<IViewModelProvider<IMapAnchor>> markers,
-            [ImportMany(UriString)] IEnumerable<IViewModelProvider<IMapWidget>> widgets):base(Uri,map,markers,widgets)
+            [ImportMany(UriString)] IEnumerable<IViewModelProvider<IMapWidget>> widgets,
+            [ImportMany(UriString)] IEnumerable<IViewModelProvider<IMapAction>> actions):base(Uri,map,markers,widgets,actions)
         {
             PlanningConfig = cfg.Get<PlanningPageViewModelConfig>();
 
