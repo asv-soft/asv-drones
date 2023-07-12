@@ -12,15 +12,7 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Sdr;
 
-
-public class SdrRttViewModelBase : ViewModelBase
-{
-    protected SdrRttViewModelBase(Uri id) : base(id)
-    {
-    }
-}
-
-public class LlzSdrRttViewModel : SdrRttViewModelBase
+public class LlzSdrRttViewModel : ViewModelBase, ISdrRttWidget
 {
     private readonly ILogService _logService;
     private readonly ILocalizationService _loc;
@@ -576,4 +568,7 @@ public class LlzSdrRttViewModel : SdrRttViewModelBase
     public string ClrFrequencyUnits { get; set; }
     
     #endregion
+
+    public int Order  => 0;
+    public bool IsVisible { get; set; } = true;
 }

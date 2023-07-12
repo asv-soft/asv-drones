@@ -9,7 +9,7 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Sdr;
 
-public class GpSdrRttViewModel : SdrRttViewModelBase
+public class GpSdrRttViewModel : ViewModelBase, ISdrRttWidget
 {
     private readonly ILogService _logService;
     private readonly ILocalizationService _loc;
@@ -549,4 +549,7 @@ public class GpSdrRttViewModel : SdrRttViewModelBase
     public string ClrFrequencyUnits { get; set; }
     
     #endregion
+
+    public int Order  => 0;
+    public bool IsVisible { get; set; } = true;
 }

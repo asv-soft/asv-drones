@@ -36,6 +36,10 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>RS.resx</DependentUpon>
         </Compile>
+        <Compile Update="Shell\Pages\Flight\Widgets\Sdr\FlightSdrView.axaml.cs">
+          <DependentUpon>FlightSdrView.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>
