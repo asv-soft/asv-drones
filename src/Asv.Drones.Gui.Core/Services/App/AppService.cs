@@ -26,6 +26,22 @@ namespace Asv.Drones.Gui.Core
             Paths = path;
             Info = info;
 
+            BsonMapper.Global.RegisterType<Uri>
+            (
+                serialize: (uri) => uri.AbsoluteUri,
+                deserialize: (bson) => new Uri(bson.AsString)
+            );
+            BsonMapper.Global.RegisterType<GeoPoint>
+            (
+                serialize: (point) => new BsonDocument
+                {
+                    ["lat"] = point.Latitude,
+                    ["lon"] = point.Longitude,
+                    ["alt"] = point.Altitude,
+                },
+                deserialize: (bson) => new GeoPoint(bson["lat"].AsDouble, bson["lon"].AsDouble, bson["alt"].AsDouble)
+            );
+            
             _store = new LiteDbAppStore(new LiteDatabase(new ConnectionString(path.StoreFilePath)
             {
                 Connection = ConnectionType.Direct,
