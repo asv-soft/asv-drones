@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.Composition;
 using Asv.Common;
+using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -66,6 +67,12 @@ namespace Asv.Drones.Gui.Core
             this.WhenAnyValue(_ => _.SelectedDdmGpUnit)
                 .Subscribe(_localization.DdmGp.CurrentUnit)
                 .DisposeItWith(Disposable);
+            
+            _localization.Temperature.CurrentUnit.Subscribe(_ => SelectedTemperatureUnit = _)
+                .DisposeItWith(Disposable);
+            this.WhenAnyValue(_ => _.SelectedTemperatureUnit)
+                .Subscribe(_localization.Temperature.CurrentUnit)
+                .DisposeItWith(Disposable);
         }
         
         [Reactive]
@@ -100,5 +107,13 @@ namespace Asv.Drones.Gui.Core
         public IMeasureUnitItem<double,DdmUnits> SelectedDdmGpUnit { get; set; }
 
         public IEnumerable<IMeasureUnitItem<double,DdmUnits>> DdmGpUnits => _localization.DdmGp.AvailableUnits;
+        
+        [Reactive]
+        public IMeasureUnitItem<double, TemperatureUnits> SelectedTemperatureUnit { get; set; }
+
+        public IEnumerable<IMeasureUnitItem<double,TemperatureUnits>> TemperatureUnits => 
+            _localization.Temperature.AvailableUnits;
+        
+        public string TemperatureIcon => MaterialIconDataProvider.GetData(MaterialIconKind.Temperature);
     }
 }

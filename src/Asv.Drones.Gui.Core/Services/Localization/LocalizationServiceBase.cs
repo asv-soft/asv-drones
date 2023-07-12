@@ -49,6 +49,8 @@ namespace Asv.Drones.Gui.Core
             AmplitudeModulation = new AmplitudeModulation(cfgSvc, nameof(AmplitudeModulation)).DisposeItWith(Disposable);
             Frequency = new Frequency(cfgSvc, nameof(Frequency)).DisposeItWith(Disposable);
             Phase = new Phase(cfgSvc, nameof(Phase)).DisposeItWith(Disposable);
+            
+            Temperature = new Temperature(cfgSvc, nameof(Temperature)).DisposeItWith(Disposable);
         }
 
         public IRxEditableValue<LanguageInfo> CurrentLanguage { get; }
@@ -85,7 +87,7 @@ namespace Asv.Drones.Gui.Core
         public IMeasureUnit<double, AmplitudeModulationUnits> AmplitudeModulation { get; }
         public IMeasureUnit<double, FrequencyUnits> Frequency { get; }
         public IMeasureUnit<double, PhaseUnits> Phase { get; }
-
+        public IMeasureUnit<double, TemperatureUnits> Temperature { get; }
         #endregion
 
     }

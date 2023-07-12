@@ -760,4 +760,19 @@
   <data name="MeasureUnitsSettingsViewModelDdmGpDescription" xml:space="preserve">
     <value>Change the current measure units of DDM GP</value>
   </data>
+  <data name="Temperature_Celsius_Title" xml:space="preserve">
+    <value>Celsius</value>
+  </data>
+  <data name="Temperature_Farenheit_Title" xml:space="preserve">
+    <value>Farenheit</value>
+  </data>
+  <data name="Temperature_Kelvin_Title" xml:space="preserve">
+    <value>Kelvin</value>
+  </data>
+  <data name="MeasureUnitsSettingsViewModelTemperature" xml:space="preserve">
+    <value>Temperature</value>
+  </data>
+  <data name="MeasureUnitsSettingsViewModelTemperatureDescription" xml:space="preserve">
+    <value>Change the current measure units of temperature.</value>
+  </data>
 </root>
