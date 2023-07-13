@@ -1,6 +1,7 @@
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Drones.Uav;
 using Asv.Mavlink;
@@ -14,11 +15,11 @@ namespace Asv.Drones.Gui.Uav;
 public class SelectModeAnchorActionViewModel : UavActionActionBase
 {
     private readonly ILogService _log;
-    private readonly string _initialModeName;
+    private string _initialModeName;
     public SelectModeAnchorActionViewModel(IVehicleClient vehicle, IMap map, ILogService log) : base(vehicle, map, log)
     {
         _log = log;
-        _initialModeName = vehicle.CurrentMode.Value.Name;
+        vehicle.CurrentMode.Subscribe(_ => _initialModeName = _.Name).DisposeItWith(Disposable);
         Title = RS.SelectModeAnchorActionViewModel_Title;
         Icon = MaterialIconKind.ModeEdit;
         Vehicle.Position.IsArmed.Select(_ => _).Subscribe(CanExecute).DisposeWith(Disposable);

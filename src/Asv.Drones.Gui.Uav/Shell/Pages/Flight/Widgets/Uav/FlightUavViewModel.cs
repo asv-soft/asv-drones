@@ -43,8 +43,8 @@ namespace Asv.Drones.Gui.Uav
             Icon = MavlinkHelper.GetIcon(vehicle.Class);
             Attitude = new AttitudeViewModel(vehicle, new Uri(Id, "/id"),loc);
             MissionStatus = new MissionStatusViewModel(vehicle, log, new Uri(Id, "/id"),loc);
-            CurrentMode = new VehicleModeWithIcons(Vehicle.CurrentMode.Value);
-            
+            Vehicle.CurrentMode.Subscribe(_ => CurrentMode = new VehicleModeWithIcons(_)).DisposeItWith(Disposable);
+
             rttItems
                 .SelectMany(_ => _.Create(Vehicle))
                 .OrderBy(_=>_.Order)
