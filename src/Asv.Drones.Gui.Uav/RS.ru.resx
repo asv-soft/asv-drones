@@ -320,4 +320,10 @@
   <data name="QuickParamsSetupPageView_WriteAllButton_Text" xml:space="preserve">
     <value>Записать все</value>
   </data>
+  <data name="FlightUavView_UavDropDownControls_Title" xml:space="preserve">
+    <value>Действия с БПЛА</value>
+  </data>
+  <data name="FlightUavView_FindButton_ToolTip" xml:space="preserve">
+    <value>Найти БПЛА</value>
+  </data>
 </root>

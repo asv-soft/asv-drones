@@ -177,6 +177,15 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Find UAV.
+        /// </summary>
+        public static string FlightUavView_FindButton_ToolTip {
+            get {
+                return ResourceManager.GetString("FlightUavView_FindButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Follow/Unfollow UAV.
         /// </summary>
         public static string FlightUavView_FollowButton_ToolTip {
@@ -200,6 +209,15 @@ namespace Asv.Drones.Gui.Uav {
         public static string FlightUavView_MoveToButton_ToolTip {
             get {
                 return ResourceManager.GetString("FlightUavView_MoveToButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uav actions.
+        /// </summary>
+        public static string FlightUavView_UavDropDownControls_Title {
+            get {
+                return ResourceManager.GetString("FlightUavView_UavDropDownControls_Title", resourceCulture);
             }
         }
         
