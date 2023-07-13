@@ -100,7 +100,8 @@ namespace Asv.Avalonia.Map
             Position = new GeoPoint(55.1644, 61.4368,0);
             if (Design.IsDesignMode)
             {
-                
+                IsInDialogMode = true;
+                DialogText = "Text inside dialog";
             }
             _core.OnMapZoomChanged += ForceUpdateOverlays;
             _core.OnCurrentPositionChanged += point => Position = point;
@@ -111,6 +112,20 @@ namespace Asv.Avalonia.Map
             }).DisposeWith(Disposable);
         }
 
+        public List<Point> LeftCornerPoints => new()
+        {
+            new Point(0, 0),
+            new Point(10, 0),
+            new Point(10,10)
+        };
+        
+        public List<Point> RightCornerPoints => new()
+        {
+            new Point(0, 0),
+            new Point(0, 10),
+            new Point(10,0)
+        };
+        
         protected CompositeDisposable Disposable { get; } = new();
 
         #region AttachedProperty
