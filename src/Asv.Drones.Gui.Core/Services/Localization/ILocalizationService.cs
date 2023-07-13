@@ -90,6 +90,7 @@ namespace Asv.Drones.Gui.Core
         IMeasureUnit<double, FrequencyUnits> Frequency { get; }
         IMeasureUnit<double, PhaseUnits> Phase { get; }
         IMeasureUnit<double, BearingUnits> Bearing { get; }
+        IMeasureUnit<double, TemperatureUnits> Temperature { get; }
 
         #endregion
     }

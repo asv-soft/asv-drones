@@ -33,7 +33,7 @@
     <StyleInclude Source="avares://Asv.Drones.Gui.Core/Controls/ConnectionQuality.axaml"/>
     <StyleInclude Source="avares://Asv.Drones.Gui.Core/Controls/DigitIndicator.axaml"/>
     <StyleInclude Source="avares://Asv.Drones.Gui.Core/Controls/LevelIndicator.axaml"/>
-    
+
     <!-- AutoCompleteBox Search box in ShellView -->
     <Style Selector="AutoCompleteBox.Shell /template/ TextBox#PART_TextBox">
         <Setter Property="InnerRightContent">

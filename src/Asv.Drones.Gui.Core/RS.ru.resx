@@ -786,4 +786,19 @@
   <data name="BearingDegreeTitle" xml:space="preserve">
 	  <value>Градусы</value>
   </data>
+  <data name="Temperature_Celsius_Title" xml:space="preserve">
+	  <value>Цельсий</value>
+  </data>
+  <data name="Temperature_Farenheit_Title" xml:space="preserve">
+	  <value>Фаренгейт</value>
+  </data>
+  <data name="Temperature_Kelvin_Title" xml:space="preserve">
+	  <value>Кельвин</value>
+  </data>
+  <data name="MeasureUnitsSettingsViewModelTemperature" xml:space="preserve">
+	  <value>Температура</value>
+  </data>
+  <data name="MeasureUnitsSettingsViewModelTemperatureDescription" xml:space="preserve">
+	  <value>Измените текущие единицы измерения температуры.</value>
+  </data>
 </root>

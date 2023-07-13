@@ -12,9 +12,4 @@ public partial class LoggerView : ReactiveUserControl<LoggerViewModel>
     {
         InitializeComponent();
     }
-
-    private void InitializeComponent()
-    {
-        AvaloniaXamlLoader.Load(this);
-    }
 }

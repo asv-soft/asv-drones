@@ -1239,6 +1239,24 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Temperature.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModelTemperature {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModelTemperature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of temperature..
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModelTemperatureDescription {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModelTemperatureDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Packet Viewer.
         /// </summary>
         public static string PacketViewerShellMenuItem_Name {
@@ -1793,6 +1811,33 @@ namespace Asv.Drones.Gui.Core {
         public static string TcpPortViewModel_ValidTitle {
             get {
                 return ResourceManager.GetString("TcpPortViewModel_ValidTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Celsius.
+        /// </summary>
+        public static string Temperature_Celsius_Title {
+            get {
+                return ResourceManager.GetString("Temperature_Celsius_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Farenheit.
+        /// </summary>
+        public static string Temperature_Farenheit_Title {
+            get {
+                return ResourceManager.GetString("Temperature_Farenheit_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kelvin.
+        /// </summary>
+        public static string Temperature_Kelvin_Title {
+            get {
+                return ResourceManager.GetString("Temperature_Kelvin_Title", resourceCulture);
             }
         }
         
