@@ -16,8 +16,14 @@
         <Style Selector="TextBlock">
             <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
         </Style>
+        <Style Selector="TextBlock:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+        </Style>
         <Style Selector="avalonia|MaterialIcon">
             <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        </Style>
+        <Style Selector="avalonia|MaterialIcon:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
         </Style>
     </Application.Styles>
 </Application>
