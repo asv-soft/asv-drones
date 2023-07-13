@@ -9,7 +9,7 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Sdr;
 
-public class VorSdrRttViewModel : SdrRttViewModelBase
+public class VorSdrRttViewModel : ViewModelBase, ISdrRttWidget
 {
     private readonly ILogService _logService;
     private readonly ILocalizationService _loc;
@@ -303,4 +303,6 @@ public class VorSdrRttViewModel : SdrRttViewModelBase
     
     #endregion
 
+    public int Order  => 0;
+    public bool IsVisible { get; set; } = true;
 }

@@ -6,23 +6,23 @@ using Asv.Mavlink.V2.AsvSdr;
 
 namespace Asv.Drones.Gui.Sdr;
 
-[Export(typeof(ISdrRttProvider))]
+[Export(typeof(ISdrRttWidgetProvider))]
 [PartCreationPolicy(CreationPolicy.NonShared)]
-public class DefaultSdrRttProvider : ISdrRttProvider
+public class DefaultSdrRttWidgetProvider : ISdrRttWidgetProvider
 {
     private readonly ILocalizationService _loc;
     private readonly ILogService _log;
     private readonly IConfiguration _configuration;
 
     [ImportingConstructor]
-    public DefaultSdrRttProvider(ILocalizationService loc, ILogService log, IConfiguration configuration)
+    public DefaultSdrRttWidgetProvider(ILocalizationService loc, ILogService log, IConfiguration configuration)
     {
         _loc = loc;
         _log = log;
         _configuration = configuration;
     }
     
-    public SdrRttViewModelBase Create(ISdrClientDevice device, AsvSdrCustomMode mode)
+    public ISdrRttWidget Create(ISdrClientDevice device, AsvSdrCustomMode mode)
     {
         switch (mode)
         {
