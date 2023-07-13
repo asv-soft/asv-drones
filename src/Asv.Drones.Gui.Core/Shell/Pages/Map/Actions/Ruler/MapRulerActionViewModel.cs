@@ -22,7 +22,7 @@ public class MapRulerActionViewModel:MapActionBase
     protected override void InternalWhenMapLoaded(IMap context)
     {
         base.InternalWhenMapLoaded(context);
-        SetUpRuler(true);
+        SetUpRuler(false);
     }
 
     private async void SetUpRuler(bool isVisible)
