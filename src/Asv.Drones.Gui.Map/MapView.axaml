@@ -15,11 +15,11 @@
             <ControlTemplate>
                 <Grid>
                     <StackPanel IsVisible="{TemplateBinding IsInDialogMode}" VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal">
-                        <Polygon Height="40" Width="40" Stretch="Fill" Points="0,0 10,0, 10,10" Fill="#870000" />
+                        <Polygon Height="40" Width="40" Stretch="Fill" Points="{Binding LeftCornerPoints, RelativeSource={RelativeSource TemplatedParent}}" Fill="#870000"/>
                         <Border Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#870000">
                             <TextBlock VerticalAlignment="Center" FontSize="18" Text="{TemplateBinding DialogText}"/>
                         </Border>
-                        <Polygon Height="40" Width="40" Stretch="Fill" Points="0,0 10,0, 0,10" Fill="#870000" />
+                        <Polygon Height="40" Width="40" Stretch="Fill" Points="{Binding RightCornerPoints, RelativeSource={RelativeSource TemplatedParent}}" Fill="#870000"/>
                     </StackPanel>
                     <Border IsVisible="{TemplateBinding IsInDialogMode}" BorderBrush="#870000" BorderThickness="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
