@@ -99,4 +99,10 @@
     <data name="VorSdrRttViewModelFMIndexTitle" xml:space="preserve">
         <value>FM Index</value>
     </data>
+    <data name="FlightSdrView_SystemControlAction_Reboot_Title" xml:space="preserve">
+        <value>Reboot OS</value>
+    </data>
+    <data name="FlightSdrView_SystemControlAction_Shutdown_Title" xml:space="preserve">
+        <value>Shutdown OS</value>
+    </data>
 </root>
