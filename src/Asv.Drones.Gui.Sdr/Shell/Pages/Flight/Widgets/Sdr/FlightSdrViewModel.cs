@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Windows.Input;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
@@ -92,6 +93,11 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         });
         
         LinkQuality = new LinkQualitySdrRttViewModel(payload);
+        
+        SafeRebootOSCommand = ReactiveCommand.CreateFromTask(cancel =>
+            payload.Sdr.SystemControlAction(AsvSdrSystemControlAction.AsvSdrSystemControlActionReboot, cancel));
+        SafeShutdownOSCommand = ReactiveCommand.CreateFromTask(cancel =>
+            payload.Sdr.SystemControlAction(AsvSdrSystemControlAction.AsvSdrSystemControlActionShutdown, cancel));
     }
     
     private async Task RecordStartImpl(CancellationToken cancel)
@@ -187,6 +193,8 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     public ReactiveCommand<Unit,Unit> UpdateMode { get; }
     public ReactiveCommand<Unit,Unit> StartRecord { get; }
     public ReactiveCommand<Unit,Unit> StopRecord { get; }
+    public ICommand SafeRebootOSCommand { get; set; }
+    public ICommand SafeShutdownOSCommand { get; set; }
 }
 public class SdrModeViewModel:ReactiveObject
 {

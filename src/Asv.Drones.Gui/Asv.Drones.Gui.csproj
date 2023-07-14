@@ -8,7 +8,7 @@
         <FileVersion>$(ProductExtendedVersion)</FileVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-        <DefineConstants>TRACE</DefineConstants>
+        <DefineConstants>TRACE;PROPRIETARY</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
         <DefineConstants>TRACE;PROPRIETARY</DefineConstants>

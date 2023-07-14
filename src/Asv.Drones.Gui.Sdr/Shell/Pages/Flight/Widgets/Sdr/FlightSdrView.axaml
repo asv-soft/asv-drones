@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:sdr="clr-namespace:Asv.Drones.Gui.Sdr"
+             xmlns:core="clr-namespace:Asv.Drones.Gui.Core;assembly=Asv.Drones.Gui.Core"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="450"
              x:CompileBindings="True"
              x:DataType="sdr:FlightSdrViewModel"
@@ -21,12 +22,32 @@
                     <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="RecordRec" Foreground="Gray"  Width="25" Height="25" />
                 </Button>
                 
-                <Button  DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
+                <DropDownButton DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
                     <StackPanel Orientation="Horizontal">
                         <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="{Binding Icon}" Foreground="BlueViolet"  Width="25" Height="25" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center" DockPanel.Dock="Top" Text="{Binding Title}" />      
                     </StackPanel>
-                </Button>
+                    <DropDownButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuItem  Command="{CompiledBinding SafeRebootOSCommand}">
+                                <MenuItem.Header>
+                                    <StackPanel Orientation="Horizontal" Spacing="3">
+                                        <avalonia:MaterialIcon Kind="Refresh" />
+                                        <TextBlock Text="{x:Static sdr:RS.FlightSdrView_SystemControlAction_Reboot_Title}" />
+                                    </StackPanel>
+                                </MenuItem.Header>
+                            </MenuItem>
+                            <MenuItem Command="{CompiledBinding SafeShutdownOSCommand}">
+                                <MenuItem.Header>
+                                    <StackPanel Orientation="Horizontal" Spacing="3">
+                                        <avalonia:MaterialIcon Kind="Power" Foreground="Red" />
+                                        <TextBlock Text="{x:Static sdr:RS.FlightSdrView_SystemControlAction_Shutdown_Title}" />
+                                    </StackPanel>
+                                </MenuItem.Header>
+                            </MenuItem>
+                        </MenuFlyout>
+                    </DropDownButton.Flyout>
+                </DropDownButton>
                 
                 <sdr:LinkQualitySdrRttView DataContext="{CompiledBinding LinkQuality}" DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent"/>
             </DockPanel>

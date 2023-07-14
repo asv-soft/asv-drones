@@ -60,6 +60,24 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reboot OS.
+        /// </summary>
+        public static string FlightSdrView_SystemControlAction_Reboot_Title {
+            get {
+                return ResourceManager.GetString("FlightSdrView_SystemControlAction_Reboot_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shutdown OS.
+        /// </summary>
+        public static string FlightSdrView_SystemControlAction_Shutdown_Title {
+            get {
+                return ResourceManager.GetString("FlightSdrView_SystemControlAction_Shutdown_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AM 150 Hz.
         /// </summary>
         public static string IlsSdrRttViewModel_AM_150_Hz_Title {
