@@ -124,6 +124,15 @@ namespace Asv.Drones.Gui.Uav
             {
                 Map.ItemToFollow = null;
                 
+                if (Map is MapPageViewModel vm)
+                {
+                    var uavWidgets = vm.LeftWidgets.OfType<FlightUavViewModel>();
+                    foreach (var uavWidget in uavWidgets)
+                    {
+                        uavWidget.IsFollowed = false;
+                    }
+                }
+                
                 var findUavVehicle = Map.Markers.Where(_ => _ is UavAnchor).Cast<UavAnchor>()
                     .FirstOrDefault(_ => _.Vehicle.FullId == Vehicle.FullId);
                 
