@@ -27,10 +27,10 @@
     <data name="SdrRttViewModel_Rf_Header" xml:space="preserve">
         <value>RF</value>
     </data>
-    <data name="IlsSdrRttViewModel_Crs_Header" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_Crs_Header" xml:space="preserve">
         <value>CRS</value>
     </data>
-    <data name="IlsSdrRttViewModel_Clr_Header" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_Clr_Header" xml:space="preserve">
         <value>CLR</value>
     </data>
     <data name="SdrRttViewModel_Main_Header" xml:space="preserve">
@@ -39,31 +39,31 @@
     <data name="SdrRttViewModel_SumPower_Title" xml:space="preserve">
         <value>Sum</value>
     </data>
-    <data name="IlsSdrRttViewModel_AM_90_Hz_Title" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_AM_90_Hz_Title" xml:space="preserve">
         <value>AM 90 Hz</value>
     </data>
-    <data name="IlsSdrRttViewModel_AM_150_Hz_Title" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_AM_150_Hz_Title" xml:space="preserve">
         <value>AM 150 Hz</value>
     </data>
     <data name="SdrRttViewModel_ID_Code_Title" xml:space="preserve">
         <value>ID Code</value>
     </data>
-    <data name="IlsSdrRttViewModel_Freq_90_Hz_Title" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_Freq_90_Hz_Title" xml:space="preserve">
         <value>Freq 90 Hz</value>
     </data>
-    <data name="IlsSdrRttViewModel_Freq_150_Hz_Title" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_Freq_150_Hz_Title" xml:space="preserve">
         <value>Freq 150 Hz</value>
     </data>
-    <data name="IlsSdrRttViewModel_CRSPower_Title" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_CRSPower_Title" xml:space="preserve">
         <value>CRS</value>
     </data>
-    <data name="IlsSdrRttViewModel_CLRPower_Title" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_CLRPower_Title" xml:space="preserve">
         <value>CLR</value>
     </data>
-    <data name="IlsSdrRttViewModel_DDM_Title" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_DDM_Title" xml:space="preserve">
         <value>DDM</value>
     </data>
-    <data name="IlsSdrRttViewModel_SDM_Title" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_SDM_Title" xml:space="preserve">
         <value>SDM</value>
     </data>
     <data name="VorSdrRttViewModel_Main_Header" xml:space="preserve">
@@ -104,5 +104,29 @@
     </data>
     <data name="FlightSdrView_SystemControlAction_Shutdown_Title" xml:space="preserve">
         <value>Shutdown OS</value>
+    </data>
+    <data name="LlzSdrRttViewModelChannelTitle" xml:space="preserve">
+        <value>Ch.</value>
+    </data>
+    <data name="LlzSdrRttViewModelMainFrequencyTitle" xml:space="preserve">
+        <value>Freq.</value>
+    </data>
+    <data name="LlzSdrRttViewModelMeasureTimeTitle" xml:space="preserve">
+        <value>MTime</value>
+    </data>
+    <data name="LlzSdrRttViewModelFieldStrengthTitle" xml:space="preserve">
+        <value>Field strength</value>
+    </data>
+    <data name="VorSdrRttViewModelChannelTitle" xml:space="preserve">
+        <value>Ch.</value>
+    </data>
+    <data name="VorSdrRttViewModelMainFrequencyTitle" xml:space="preserve">
+        <value>Freq.</value>
+    </data>
+    <data name="VorSdrRttViewModelMeasureTimeTitle" xml:space="preserve">
+        <value>MTime</value>
+    </data>
+    <data name="VorSdrRttViewModelFieldStrengthTitle" xml:space="preserve">
+        <value>Field strength</value>
     </data>
 </root>

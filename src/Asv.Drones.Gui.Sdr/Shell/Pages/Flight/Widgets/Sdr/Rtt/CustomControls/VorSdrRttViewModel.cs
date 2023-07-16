@@ -16,12 +16,27 @@ public class VorSdrRttViewModel : ViewModelBase, ISdrRttWidget
     private readonly IConfiguration _configuration;
     private readonly IMeasureUnitItem<double, FrequencyUnits> _freqInHzMeasureUnit;
     private readonly IMeasureUnitItem<double,FrequencyUnits>? _freqInKHzMeasureUnit;
-
+    private readonly IMeasureUnitItem<double, FrequencyUnits> _freqInMHzMeasureUnit;
 
     public VorSdrRttViewModel() : base(new Uri($"fordesigntime://{Guid.NewGuid()}"))
     {
         if (Design.IsDesignMode)
         {
+            ChannelTitle = RS.VorSdrRttViewModelChannelTitle;
+            ChannelStringValue = $"{18}X";
+            
+            MainFrequencyTitle = RS.VorSdrRttViewModelMainFrequencyTitle;
+            MainFrequencyStringValue = $"{108.1:F4}";
+            MainFrequencyUnits = "MHz";
+            
+            MeasureTimeTitle = RS.VorSdrRttViewModelMeasureTimeTitle;
+            MeasureTimeStringValue = $"{500}";
+            MeasureTimeUnits = "ms";
+            
+            FieldStrengthTitle = RS.VorSdrRttViewModelFieldStrengthTitle;
+            FieldStrengthStringValue = $"{100000}";
+            FieldStrengthUnits = "μV/m";
+            
             PowerTitle = RS.VorSdrRttViewModelPowerTitle;
             PowerValue = -30.53;
             PowerStringValue = "-30.53";
@@ -80,7 +95,19 @@ public class VorSdrRttViewModel : ViewModelBase, ISdrRttWidget
         
         _freqInHzMeasureUnit = _loc.Frequency.AvailableUnits.FirstOrDefault(_ => _.Id == FrequencyUnits.Hz);
         _freqInKHzMeasureUnit = _loc.Frequency.AvailableUnits.FirstOrDefault(_ => _.Id == FrequencyUnits.KHz);
-
+        _freqInMHzMeasureUnit = new DoubleMeasureUnitItem<FrequencyUnits>(FrequencyUnits.MHz, "", Core.RS.Frequency_Megahertz_Unit, false, "F4", 1);
+        
+        ChannelTitle = RS.VorSdrRttViewModelChannelTitle;
+        
+        MainFrequencyTitle = RS.VorSdrRttViewModelMainFrequencyTitle;
+        MainFrequencyUnits = "MHz";
+        
+        MeasureTimeTitle = RS.VorSdrRttViewModelMeasureTimeTitle;
+        MeasureTimeUnits = "ms";
+        
+        FieldStrengthTitle = RS.VorSdrRttViewModelFieldStrengthTitle;
+        FieldStrengthUnits = "μV/m";
+        
         PowerTitle = RS.VorSdrRttViewModelPowerTitle;
         PowerUnits = _loc.Power.CurrentUnit.Value.Unit;
 
@@ -124,13 +151,17 @@ public class VorSdrRttViewModel : ViewModelBase, ISdrRttWidget
             Am30HzUnits = _.Unit;
             Am9960HzUnits = _.Unit;
             VoiceAmUnits = _.Unit;
-
         }).DisposeItWith(Disposable);
 
         payload.Sdr.Base.OnRecordData.Where(_ => _.MessageId == AsvSdrRecordDataVorPacket.PacketMessageId)
             .Cast<AsvSdrRecordDataVorPacket>()
             .Subscribe(_ =>
             {
+                ChannelStringValue = $"{18}X";
+                MainFrequencyStringValue = _freqInMHzMeasureUnit?.FromSiToString(_.Payload.TotalFreq);
+                MeasureTimeStringValue = $"{_.Payload.MeasureTime}";
+                FieldStrengthStringValue = $"{_.Payload.FieldStrength}";
+                
                 PowerValue = _.Payload.Power;
                 PowerStringValue = _loc.Power.FromSiToString(_.Payload.Power);
                 FrequencyOffsetStringValue = _freqInKHzMeasureUnit?.FromSiToString(_.Payload.CarrierOffset);
@@ -147,6 +178,55 @@ public class VorSdrRttViewModel : ViewModelBase, ISdrRttWidget
 
             }).DisposeItWith(Disposable);
     }
+
+    #region Main Frequency
+    
+    [Reactive]
+    public string MainFrequencyTitle { get; set; }
+    
+    [Reactive]
+    public string MainFrequencyStringValue { get; set; }
+
+    [Reactive]
+    public string MainFrequencyUnits { get; set; }
+    
+    #endregion
+    
+    #region Channel
+
+    [Reactive]
+    public string ChannelTitle { get; set; }
+    
+    [Reactive]
+    public string ChannelStringValue { get; set; }
+
+    #endregion
+    
+    #region Measure Time
+
+    [Reactive]
+    public string MeasureTimeTitle { get; set; }
+    
+    [Reactive]
+    public string MeasureTimeStringValue { get; set; }
+
+    [Reactive]
+    public string MeasureTimeUnits { get; set; }
+
+    #endregion
+    
+    #region Field Strength
+
+    [Reactive]
+    public string FieldStrengthTitle { get; set; }
+    
+    [Reactive]
+    public string FieldStrengthStringValue { get; set; }
+
+    [Reactive]
+    public string FieldStrengthUnits { get; set; }
+
+    #endregion
     
     #region Power
 

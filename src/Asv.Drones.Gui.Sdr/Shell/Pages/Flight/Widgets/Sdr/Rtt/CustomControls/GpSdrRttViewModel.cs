@@ -34,11 +34,11 @@ public class GpSdrRttViewModel : ViewModelBase, ISdrRttWidget
             TotalSdmUnits = "%";
             TotalSdmStringValue = "40.00";
 
-            TotalAm90Title = RS.IlsSdrRttViewModel_AM_90_Hz_Title;
+            TotalAm90Title = RS.LlzSdrRttViewModel_AM_90_Hz_Title;
             TotalAm90Units = "%";
             TotalAm90StringValue = "20.00";
 
-            TotalAm150Title = RS.IlsSdrRttViewModel_AM_150_Hz_Title;
+            TotalAm150Title = RS.LlzSdrRttViewModel_AM_150_Hz_Title;
             TotalAm150Units = "%";
             TotalAm150StringValue = "20.00";
 
@@ -50,16 +50,16 @@ public class GpSdrRttViewModel : ViewModelBase, ISdrRttWidget
             Phi150Units = "°";
             Phi150StringValue = "0.02";
 
-            TotalFreq90Title = RS.IlsSdrRttViewModel_Freq_90_Hz_Title;
+            TotalFreq90Title = RS.LlzSdrRttViewModel_Freq_90_Hz_Title;
             TotalFreq90Units = "Hz";
             TotalFreq90StringValue = "90.00";
         
-            TotalFreq150Title = RS.IlsSdrRttViewModel_Freq_150_Hz_Title;
+            TotalFreq150Title = RS.LlzSdrRttViewModel_Freq_150_Hz_Title;
             TotalFreq150Units = "Hz";
             TotalFreq150StringValue = "150.00";
             
             // CRS
-            CrsPowerTitle = RS.IlsSdrRttViewModel_CRSPower_Title;
+            CrsPowerTitle = RS.LlzSdrRttViewModel_CRSPower_Title;
             CrsPowerUnits = "dBm";
             CrsPowerValue = -40.54;
             CrsPowerStringValue = "-40.54";
@@ -72,11 +72,11 @@ public class GpSdrRttViewModel : ViewModelBase, ISdrRttWidget
             CrsSdmUnits = "%";
             CrsSdmStringValue = "40.00";
 
-            CrsAm90Title = RS.IlsSdrRttViewModel_AM_90_Hz_Title;
+            CrsAm90Title = RS.LlzSdrRttViewModel_AM_90_Hz_Title;
             CrsAm90Units = "%";
             CrsAm90StringValue = "20.00";
 
-            CrsAm150Title = RS.IlsSdrRttViewModel_AM_150_Hz_Title;
+            CrsAm150Title = RS.LlzSdrRttViewModel_AM_150_Hz_Title;
             CrsAm150Units = "%";
             CrsAm150StringValue = "20.00";
 
@@ -85,7 +85,7 @@ public class GpSdrRttViewModel : ViewModelBase, ISdrRttWidget
             CrsFrequencyStringValue = "8.000";
             
             // CLR
-            ClrPowerTitle = RS.IlsSdrRttViewModel_CLRPower_Title;
+            ClrPowerTitle = RS.LlzSdrRttViewModel_CLRPower_Title;
             ClrPowerUnits = "dBm";
             ClrPowerValue = -40.35;
             ClrPowerStringValue = "-40.35";
@@ -98,11 +98,11 @@ public class GpSdrRttViewModel : ViewModelBase, ISdrRttWidget
             ClrSdmUnits = "%";
             ClrSdmStringValue = "40.00";
 
-            ClrAm90Title = RS.IlsSdrRttViewModel_AM_90_Hz_Title;
+            ClrAm90Title = RS.LlzSdrRttViewModel_AM_90_Hz_Title;
             ClrAm90Units = "%";
             ClrAm90StringValue = "20.00";
 
-            ClrAm150Title = RS.IlsSdrRttViewModel_AM_150_Hz_Title;
+            ClrAm150Title = RS.LlzSdrRttViewModel_AM_150_Hz_Title;
             ClrAm150Units = "%";
             ClrAm150StringValue = "20.00";
 
@@ -125,16 +125,16 @@ public class GpSdrRttViewModel : ViewModelBase, ISdrRttWidget
         TotalPowerTitle = RS.SdrRttViewModel_SumPower_Title;
         TotalPowerUnits = _loc.Power.CurrentUnit.Value.Unit;
         
-        TotalDdmTitle = RS.IlsSdrRttViewModel_DDM_Title;
+        TotalDdmTitle = RS.LlzSdrRttViewModel_DDM_Title;
         TotalDdmUnits = _loc.DdmGp.CurrentUnit.Value.Unit;
         
-        TotalSdmTitle = RS.IlsSdrRttViewModel_SDM_Title;
+        TotalSdmTitle = RS.LlzSdrRttViewModel_SDM_Title;
         TotalSdmUnits = _loc.Sdm.CurrentUnit.Value.Unit;
         
-        TotalAm90Title = RS.IlsSdrRttViewModel_AM_90_Hz_Title;
+        TotalAm90Title = RS.LlzSdrRttViewModel_AM_90_Hz_Title;
         TotalAm90Units = _loc.AmplitudeModulation.CurrentUnit.Value.Unit;
 
-        TotalAm150Title = RS.IlsSdrRttViewModel_AM_150_Hz_Title;
+        TotalAm150Title = RS.LlzSdrRttViewModel_AM_150_Hz_Title;
         TotalAm150Units = _loc.AmplitudeModulation.CurrentUnit.Value.Unit;
 
         Phi90Title = "PHI 90";
@@ -144,46 +144,46 @@ public class GpSdrRttViewModel : ViewModelBase, ISdrRttWidget
         Phi150Units = _loc.Phase.CurrentUnit.Value.Unit;
         
         
-        TotalFreq90Title = RS.IlsSdrRttViewModel_Freq_90_Hz_Title;
+        TotalFreq90Title = RS.LlzSdrRttViewModel_Freq_90_Hz_Title;
         TotalFreq90Units = _freqInHzMeasureUnit?.Unit;
         
-        TotalFreq150Title = RS.IlsSdrRttViewModel_Freq_150_Hz_Title;
+        TotalFreq150Title = RS.LlzSdrRttViewModel_Freq_150_Hz_Title;
         TotalFreq150Units = _freqInHzMeasureUnit?.Unit;
         
         // CRS
-        CrsPowerTitle = RS.IlsSdrRttViewModel_CRSPower_Title;
+        CrsPowerTitle = RS.LlzSdrRttViewModel_CRSPower_Title;
         CrsPowerUnits = _loc.Power.CurrentUnit.Value.Unit;
         
-        CrsDdmTitle = RS.IlsSdrRttViewModel_DDM_Title;
+        CrsDdmTitle = RS.LlzSdrRttViewModel_DDM_Title;
         CrsDdmUnits = _loc.DdmGp.CurrentUnit.Value.Unit;
 
-        CrsSdmTitle = RS.IlsSdrRttViewModel_SDM_Title;
+        CrsSdmTitle = RS.LlzSdrRttViewModel_SDM_Title;
         CrsSdmUnits = _loc.Sdm.CurrentUnit.Value.Unit;
         
-        CrsAm90Title = RS.IlsSdrRttViewModel_AM_90_Hz_Title;
+        CrsAm90Title = RS.LlzSdrRttViewModel_AM_90_Hz_Title;
         CrsAm90Units = _loc.AmplitudeModulation.CurrentUnit.Value.Unit;
 
-        CrsAm150Title = RS.IlsSdrRttViewModel_AM_150_Hz_Title;
+        CrsAm150Title = RS.LlzSdrRttViewModel_AM_150_Hz_Title;
         CrsAm150Units = _loc.AmplitudeModulation.CurrentUnit.Value.Unit;
 
         CrsFrequencyTitle = "";
         CrsFrequencyUnits = _freqInKHzMeasureUnit?.Unit;
         
         // CLR
-        ClrPowerTitle = RS.IlsSdrRttViewModel_CLRPower_Title;
+        ClrPowerTitle = RS.LlzSdrRttViewModel_CLRPower_Title;
         ClrPowerUnits = _loc.Power.CurrentUnit.Value.Unit;
 
-        ClrDdmTitle = RS.IlsSdrRttViewModel_DDM_Title;
+        ClrDdmTitle = RS.LlzSdrRttViewModel_DDM_Title;
         ClrDdmUnits = _loc.DdmGp.CurrentUnit.Value.Unit;
 
 
-        ClrSdmTitle = RS.IlsSdrRttViewModel_SDM_Title;
+        ClrSdmTitle = RS.LlzSdrRttViewModel_SDM_Title;
         ClrSdmUnits = _loc.Sdm.CurrentUnit.Value.Unit;
         
-        ClrAm90Title = RS.IlsSdrRttViewModel_AM_90_Hz_Title;
+        ClrAm90Title = RS.LlzSdrRttViewModel_AM_90_Hz_Title;
         ClrAm90Units = _loc.AmplitudeModulation.CurrentUnit.Value.Unit;
 
-        ClrAm150Title = RS.IlsSdrRttViewModel_AM_150_Hz_Title;
+        ClrAm150Title = RS.LlzSdrRttViewModel_AM_150_Hz_Title;
         ClrAm150Units = _loc.AmplitudeModulation.CurrentUnit.Value.Unit;
 
         ClrFrequencyTitle = "";
