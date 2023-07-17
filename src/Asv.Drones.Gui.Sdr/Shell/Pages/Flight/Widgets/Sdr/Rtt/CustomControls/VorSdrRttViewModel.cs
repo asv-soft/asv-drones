@@ -14,9 +14,9 @@ public class VorSdrRttViewModel : ViewModelBase, ISdrRttWidget
     private readonly ILogService _logService;
     private readonly ILocalizationService _loc;
     private readonly IConfiguration _configuration;
-    private readonly IMeasureUnitItem<double, FrequencyUnits> _freqInHzMeasureUnit;
+    private readonly IMeasureUnitItem<double, FrequencyUnits>? _freqInHzMeasureUnit;
     private readonly IMeasureUnitItem<double,FrequencyUnits>? _freqInKHzMeasureUnit;
-    private readonly IMeasureUnitItem<double, FrequencyUnits> _freqInMHzMeasureUnit;
+    private readonly IMeasureUnitItem<double, FrequencyUnits>? _freqInMHzMeasureUnit;
 
     public VorSdrRttViewModel() : base(new Uri($"fordesigntime://{Guid.NewGuid()}"))
     {
@@ -25,15 +25,15 @@ public class VorSdrRttViewModel : ViewModelBase, ISdrRttWidget
             ChannelTitle = RS.VorSdrRttViewModelChannelTitle;
             ChannelStringValue = $"{18}X";
             
-            MainFrequencyTitle = RS.VorSdrRttViewModelMainFrequencyTitle;
+            MainFrequencyTitle = RS.VorSdrRttViewModel_MainFrequency_Title;
             MainFrequencyStringValue = $"{108.1:F4}";
             MainFrequencyUnits = "MHz";
             
-            MeasureTimeTitle = RS.VorSdrRttViewModelMeasureTimeTitle;
+            MeasureTimeTitle = RS.VorSdrRttViewModel_MeasureTime_Title;
             MeasureTimeStringValue = $"{500}";
             MeasureTimeUnits = "ms";
             
-            FieldStrengthTitle = RS.VorSdrRttViewModelFieldStrengthTitle;
+            FieldStrengthTitle = RS.VorSdrRttViewModel_FieldStrength_Title;
             FieldStrengthStringValue = $"{100000}";
             FieldStrengthUnits = "μV/m";
             
@@ -95,18 +95,18 @@ public class VorSdrRttViewModel : ViewModelBase, ISdrRttWidget
         
         _freqInHzMeasureUnit = _loc.Frequency.AvailableUnits.FirstOrDefault(_ => _.Id == FrequencyUnits.Hz);
         _freqInKHzMeasureUnit = _loc.Frequency.AvailableUnits.FirstOrDefault(_ => _.Id == FrequencyUnits.KHz);
-        _freqInMHzMeasureUnit = new DoubleMeasureUnitItem<FrequencyUnits>(FrequencyUnits.MHz, "", Core.RS.Frequency_Megahertz_Unit, false, "F4", 1);
+        _freqInMHzMeasureUnit = _loc.Frequency.AvailableUnits.FirstOrDefault(_ => _.Id == FrequencyUnits.MHz);
         
         ChannelTitle = RS.VorSdrRttViewModelChannelTitle;
         
-        MainFrequencyTitle = RS.VorSdrRttViewModelMainFrequencyTitle;
-        MainFrequencyUnits = "MHz";
+        MainFrequencyTitle = RS.VorSdrRttViewModel_MainFrequency_Title;
+        MainFrequencyUnits = _freqInMHzMeasureUnit.Unit;
         
-        MeasureTimeTitle = RS.VorSdrRttViewModelMeasureTimeTitle;
-        MeasureTimeUnits = "ms";
+        MeasureTimeTitle = RS.VorSdrRttViewModel_MeasureTime_Title;
+        MeasureTimeUnits = RS.VorSdrRttViewModel_MeasureTime_Units;
         
-        FieldStrengthTitle = RS.VorSdrRttViewModelFieldStrengthTitle;
-        FieldStrengthUnits = "μV/m";
+        FieldStrengthTitle = RS.VorSdrRttViewModel_FieldStrength_Title;
+        FieldStrengthUnits = RS.VorSdrRttViewModel_FieldStrength_Units;
         
         PowerTitle = RS.VorSdrRttViewModelPowerTitle;
         PowerUnits = _loc.Power.CurrentUnit.Value.Unit;
@@ -157,7 +157,7 @@ public class VorSdrRttViewModel : ViewModelBase, ISdrRttWidget
             .Cast<AsvSdrRecordDataVorPacket>()
             .Subscribe(_ =>
             {
-                ChannelStringValue = $"{18}X";
+                ChannelStringValue = SdrRttHelper.GetVorChannelFromVorFrequency(_.Payload.TotalFreq);
                 MainFrequencyStringValue = _freqInMHzMeasureUnit?.FromSiToString(_.Payload.TotalFreq);
                 MeasureTimeStringValue = $"{_.Payload.MeasureTime}";
                 FieldStrengthStringValue = $"{_.Payload.FieldStrength}";
@@ -179,6 +179,7 @@ public class VorSdrRttViewModel : ViewModelBase, ISdrRttWidget
             }).DisposeItWith(Disposable);
     }
 
+    
     #region Main Frequency
     
     [Reactive]

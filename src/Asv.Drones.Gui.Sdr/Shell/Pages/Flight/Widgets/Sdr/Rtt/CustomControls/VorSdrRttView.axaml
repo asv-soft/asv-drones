@@ -144,7 +144,7 @@
                               ColumnDefinitions="120, *, 60, 75, *, 65"
                               RowDefinitions="30, 0, 20" Margin="10, 0">
                             
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="VOR LOC" 
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="VOR" 
                                        FontSize="25" Foreground="SteelBlue" 
                                        FontWeight="Bold" VerticalAlignment="Center" 
                                        HorizontalAlignment="Left"/>
@@ -165,7 +165,7 @@
                                        Text="{CompiledBinding MainFrequencyTitle}" 
                                        FontSize="25" Foreground="SteelBlue" 
                                        FontWeight="Bold" VerticalAlignment="Center" 
-                                       HorizontalAlignment="Center"/>
+                                       HorizontalAlignment="Left"/>
                             
                             <TextBlock Grid.Row="0" Grid.Column="4" 
                                        Text="{CompiledBinding MainFrequencyStringValue}" 
@@ -201,7 +201,7 @@
                                        Text="{CompiledBinding MeasureTimeTitle}" 
                                        FontSize="18" Foreground="SteelBlue" 
                                        FontWeight="Bold" VerticalAlignment="Center" 
-                                       HorizontalAlignment="Center"/>
+                                       HorizontalAlignment="Left"/>
                             
                             <TextBlock Grid.Row="2" Grid.Column="4" 
                                        Text="{CompiledBinding MeasureTimeStringValue}" 
@@ -213,7 +213,7 @@
                                        Text="{CompiledBinding MeasureTimeUnits}"
                                        FontSize="18"
                                        FontWeight="Bold" VerticalAlignment="Center"
-                                       HorizontalAlignment="Center"/>
+                                       HorizontalAlignment="Right"/>
                         </Grid>
             
                         <Border  Background="Transparent"

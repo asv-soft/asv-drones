@@ -28,15 +28,15 @@ public class LlzSdrRttViewModel : ViewModelBase, ISdrRttWidget
             ChannelTitle = RS.LlzSdrRttViewModelChannelTitle;
             ChannelStringValue = $"{18}X";
             
-            MainFrequencyTitle = RS.LlzSdrRttViewModelMainFrequencyTitle;
+            MainFrequencyTitle = RS.LlzSdrRttViewModel_MainFrequency_Title;
             MainFrequencyStringValue = $"{108.1:F4}";
             MainFrequencyUnits = "MHz";
             
-            MeasureTimeTitle = RS.LlzSdrRttViewModelMeasureTimeTitle;
+            MeasureTimeTitle = RS.LlzSdrRttViewModel_MeasureTime_Title;
             MeasureTimeStringValue = $"{500}";
             MeasureTimeUnits = "ms";
             
-            FieldStrengthTitle = RS.LlzSdrRttViewModelFieldStrengthTitle;
+            FieldStrengthTitle = RS.LlzSdrRttViewModel_FieldStrength_Title;
             FieldStrengthStringValue = $"{100000}";
             FieldStrengthUnits = "μV/m";
             
@@ -143,18 +143,18 @@ public class LlzSdrRttViewModel : ViewModelBase, ISdrRttWidget
 
         _freqInHzMeasureUnit = _loc.Frequency.AvailableUnits.FirstOrDefault(__ => __.Id == FrequencyUnits.Hz);
         _freqInKHzMeasureUnit = _loc.Frequency.AvailableUnits.FirstOrDefault(__ => __.Id == FrequencyUnits.KHz);
-        _freqInMHzMeasureUnit = new DoubleMeasureUnitItem<FrequencyUnits>(FrequencyUnits.MHz, "", Core.RS.Frequency_Megahertz_Unit, false, "F4", 1);
+        _freqInMHzMeasureUnit = _loc.Frequency.AvailableUnits.FirstOrDefault(__ => __.Id == FrequencyUnits.MHz);
 
         ChannelTitle = RS.LlzSdrRttViewModelChannelTitle;
         
-        MainFrequencyTitle = RS.LlzSdrRttViewModelMainFrequencyTitle;
-        MainFrequencyUnits = "MHz";
+        MainFrequencyTitle = RS.LlzSdrRttViewModel_MainFrequency_Title;
+        MainFrequencyUnits = _freqInMHzMeasureUnit?.Unit;
         
-        MeasureTimeTitle = RS.LlzSdrRttViewModelMeasureTimeTitle;
-        MeasureTimeUnits = "ms";
+        MeasureTimeTitle = RS.LlzSdrRttViewModel_MeasureTime_Title;
+        MeasureTimeUnits = RS.LLzSdrRttViewModel_MeasureTime_Units;
         
-        FieldStrengthTitle = RS.LlzSdrRttViewModelFieldStrengthTitle;
-        FieldStrengthUnits = "μV/m";
+        FieldStrengthTitle = RS.LlzSdrRttViewModel_FieldStrength_Title;
+        FieldStrengthUnits = RS.LLzSdrRttViewModel_FieldStrength_Units;
         
         TotalPowerTitle = RS.SdrRttViewModel_SumPower_Title;
         TotalPowerUnits = _loc.Power.CurrentUnit.Value.Unit;
@@ -265,7 +265,7 @@ public class LlzSdrRttViewModel : ViewModelBase, ISdrRttWidget
             .Cast<AsvSdrRecordDataLlzPacket>()
             .Subscribe(_=>
             {
-                ChannelStringValue = $"{18}X";
+                ChannelStringValue = SdrRttHelper.GetIlsChannelFromLocalizerModeFrequency(_.Payload.TotalFreq);
                 MainFrequencyStringValue = _freqInMHzMeasureUnit?.FromSiToString(_.Payload.TotalFreq);
                 MeasureTimeStringValue = $"{_.Payload.MeasureTime}";
                 FieldStrengthStringValue = $"{_.Payload.TotalFieldStrength}";
@@ -301,6 +301,7 @@ public class LlzSdrRttViewModel : ViewModelBase, ISdrRttWidget
             .DisposeItWith(Disposable);
     }
 
+    
     #region Main Frequency
     
     [Reactive]

@@ -150,6 +150,24 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Field strength.
+        /// </summary>
+        public static string LlzSdrRttViewModel_FieldStrength_Title {
+            get {
+                return ResourceManager.GetString("LlzSdrRttViewModel_FieldStrength_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to μV/m.
+        /// </summary>
+        public static string LLzSdrRttViewModel_FieldStrength_Units {
+            get {
+                return ResourceManager.GetString("LLzSdrRttViewModel_FieldStrength_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Freq 150 Hz.
         /// </summary>
         public static string LlzSdrRttViewModel_Freq_150_Hz_Title {
@@ -168,6 +186,33 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Freq..
+        /// </summary>
+        public static string LlzSdrRttViewModel_MainFrequency_Title {
+            get {
+                return ResourceManager.GetString("LlzSdrRttViewModel_MainFrequency_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MTime.
+        /// </summary>
+        public static string LlzSdrRttViewModel_MeasureTime_Title {
+            get {
+                return ResourceManager.GetString("LlzSdrRttViewModel_MeasureTime_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ms.
+        /// </summary>
+        public static string LLzSdrRttViewModel_MeasureTime_Units {
+            get {
+                return ResourceManager.GetString("LLzSdrRttViewModel_MeasureTime_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SDM.
         /// </summary>
         public static string LlzSdrRttViewModel_SDM_Title {
@@ -177,38 +222,20 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to N\A.
+        /// </summary>
+        public static string LLzSdrRttViewModel_ValueNotAvailable {
+            get {
+                return ResourceManager.GetString("LLzSdrRttViewModel_ValueNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ch..
         /// </summary>
         public static string LlzSdrRttViewModelChannelTitle {
             get {
                 return ResourceManager.GetString("LlzSdrRttViewModelChannelTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Field strength.
-        /// </summary>
-        public static string LlzSdrRttViewModelFieldStrengthTitle {
-            get {
-                return ResourceManager.GetString("LlzSdrRttViewModelFieldStrengthTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Freq..
-        /// </summary>
-        public static string LlzSdrRttViewModelMainFrequencyTitle {
-            get {
-                return ResourceManager.GetString("LlzSdrRttViewModelMainFrequencyTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to MTime.
-        /// </summary>
-        public static string LlzSdrRttViewModelMeasureTimeTitle {
-            get {
-                return ResourceManager.GetString("LlzSdrRttViewModelMeasureTimeTitle", resourceCulture);
             }
         }
         
@@ -258,11 +285,56 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Field strength.
+        /// </summary>
+        public static string VorSdrRttViewModel_FieldStrength_Title {
+            get {
+                return ResourceManager.GetString("VorSdrRttViewModel_FieldStrength_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to μV/m.
+        /// </summary>
+        public static string VorSdrRttViewModel_FieldStrength_Units {
+            get {
+                return ResourceManager.GetString("VorSdrRttViewModel_FieldStrength_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Main.
         /// </summary>
         public static string VorSdrRttViewModel_Main_Header {
             get {
                 return ResourceManager.GetString("VorSdrRttViewModel_Main_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freq..
+        /// </summary>
+        public static string VorSdrRttViewModel_MainFrequency_Title {
+            get {
+                return ResourceManager.GetString("VorSdrRttViewModel_MainFrequency_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MTime.
+        /// </summary>
+        public static string VorSdrRttViewModel_MeasureTime_Title {
+            get {
+                return ResourceManager.GetString("VorSdrRttViewModel_MeasureTime_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ms.
+        /// </summary>
+        public static string VorSdrRttViewModel_MeasureTime_Units {
+            get {
+                return ResourceManager.GetString("VorSdrRttViewModel_MeasureTime_Units", resourceCulture);
             }
         }
         
@@ -299,15 +371,6 @@ namespace Asv.Drones.Gui.Sdr {
         public static string VorSdrRttViewModelChannelTitle {
             get {
                 return ResourceManager.GetString("VorSdrRttViewModelChannelTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Field strength.
-        /// </summary>
-        public static string VorSdrRttViewModelFieldStrengthTitle {
-            get {
-                return ResourceManager.GetString("VorSdrRttViewModelFieldStrengthTitle", resourceCulture);
             }
         }
         
@@ -353,24 +416,6 @@ namespace Asv.Drones.Gui.Sdr {
         public static string VorSdrRttViewModelFreqFM30Title {
             get {
                 return ResourceManager.GetString("VorSdrRttViewModelFreqFM30Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Freq..
-        /// </summary>
-        public static string VorSdrRttViewModelMainFrequencyTitle {
-            get {
-                return ResourceManager.GetString("VorSdrRttViewModelMainFrequencyTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to MTime.
-        /// </summary>
-        public static string VorSdrRttViewModelMeasureTimeTitle {
-            get {
-                return ResourceManager.GetString("VorSdrRttViewModelMeasureTimeTitle", resourceCulture);
             }
         }
         

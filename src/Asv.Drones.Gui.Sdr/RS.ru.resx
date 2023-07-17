@@ -101,25 +101,40 @@
     <data name="LlzSdrRttViewModelChannelTitle" xml:space="preserve">
         <value>Кан.</value>
     </data>
-    <data name="LlzSdrRttViewModelFieldStrengthTitle" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_FieldStrength_Title" xml:space="preserve">
         <value>Напр. поля</value>
     </data>
-    <data name="LlzSdrRttViewModelMainFrequencyTitle" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_MainFrequency_Title" xml:space="preserve">
         <value>Част.</value>
     </data>
-    <data name="LlzSdrRttViewModelMeasureTimeTitle" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_MeasureTime_Title" xml:space="preserve">
         <value>Вр. изм.</value>
     </data>
-    <data name="VorSdrRttViewModelMeasureTimeTitle" xml:space="preserve">
+    <data name="VorSdrRttViewModel_MeasureTime_Title" xml:space="preserve">
         <value>Вр. изм.</value>
     </data>
-    <data name="VorSdrRttViewModelMainFrequencyTitle" xml:space="preserve">
+    <data name="VorSdrRttViewModel_MainFrequency_Title" xml:space="preserve">
         <value>Част.</value>
     </data>
-    <data name="VorSdrRttViewModelFieldStrengthTitle" xml:space="preserve">
+    <data name="VorSdrRttViewModel_FieldStrength_Title" xml:space="preserve">
         <value>Напр. поля</value>
     </data>
     <data name="VorSdrRttViewModelChannelTitle" xml:space="preserve">
         <value>Кан.</value>
+    </data>
+    <data name="LLzSdrRttViewModel_ValueNotAvailable" xml:space="preserve">
+        <value>Н\Д</value>
+    </data>
+    <data name="LLzSdrRttViewModel_MeasureTime_Units" xml:space="preserve">
+        <value>мс</value>
+    </data>
+    <data name="LLzSdrRttViewModel_FieldStrength_Units" xml:space="preserve">
+        <value>μВ/м</value>
+    </data>
+    <data name="VorSdrRttViewModel_MeasureTime_Units" xml:space="preserve">
+        <value>мс</value>
+    </data>
+    <data name="VorSdrRttViewModel_FieldStrength_Units" xml:space="preserve">
+        <value>μВ/м</value>
     </data>
 </root>
