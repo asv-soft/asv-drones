@@ -15,21 +15,16 @@ public enum MapZoomValue
 [Export(FlightPageViewModel.UriString,typeof(IMapAction))]
 [Export(PlaningPageViewModel.UriString,typeof(IMapAction))]
 [PartCreationPolicy(CreationPolicy.NonShared)]
-public class MapZoomActionViewModel:ViewModelBase, IMapAction
+public class MapZoomActionViewModel: MapActionBase
 {
-  
-
     public MapZoomActionViewModel() : base("asv:shell.page.map.action.zoom")
     {
-        
+        Dock = Dock.Left;
     }
     
-    public IMap Map { get; private set;}
-    public int Order { get; }
-    public Dock Dock { get; }
-    public IMapAction Init(IMap context)
+    public override IMapAction Init(IMap context)
     {
-        Map = context;
+        base.Init(context);
         ZoomIn = ReactiveCommand.Create(() => ChangeZoomValue(MapZoomValue.Increase)).DisposeItWith(Disposable);
         ZoomOut = ReactiveCommand.Create(() => ChangeZoomValue(MapZoomValue.Decrease)).DisposeItWith(Disposable);
         return this;

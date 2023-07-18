@@ -1,3 +1,6 @@
+using Avalonia.Controls;
+using ReactiveUI.Fody.Helpers;
+
 namespace Asv.Drones.Gui.Core;
 
 public class MapActionBase : ViewModelBase, IMapAction
@@ -9,9 +12,10 @@ public class MapActionBase : ViewModelBase, IMapAction
     protected MapActionBase(string id) : base(id)
     {
     }
-
-    public int Order { get; }
-    protected IMap? Map { get; private set; }
+    [Reactive]
+    public Dock Dock { get; set; } = Dock.Right;
+    public int Order { get; set; }
+    public IMap? Map { get; private set; }
     public virtual IMapAction Init(IMap context)
     {
         Map = context;

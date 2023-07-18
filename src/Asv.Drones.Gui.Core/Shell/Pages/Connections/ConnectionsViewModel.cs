@@ -12,7 +12,7 @@ namespace Asv.Drones.Gui.Core
 {
     [ExportShellPage(BaseUriString)]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class ConnectionsViewModel:ViewModelBase,IShellPage
+    public class ConnectionsViewModel: ShellPage
     {
         public const string BaseUriString = "asv:shell.connections";
         public static readonly Uri BaseUri = new(BaseUriString);
@@ -22,6 +22,7 @@ namespace Asv.Drones.Gui.Core
 
         public ConnectionsViewModel() : base(BaseUri)
         {
+            Title = RS.ConnectionsShellMenuItem_Name;
             if (Design.IsDesignMode)
             {
                 _isReloadRequired = Observable.Return(true).ToProperty(this, _ => _.IsReloadRequired);

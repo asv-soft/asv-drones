@@ -18,7 +18,7 @@ namespace Asv.Drones.Gui.Uav;
 
 [ExportShellPage(UriString)]
 [PartCreationPolicy(CreationPolicy.NonShared)]
-public class QuickParamsSetupPageViewModel : ViewModelBase, IShellPage
+public class QuickParamsSetupPageViewModel : ShellPage
 {
     private readonly IMavlinkDevicesService _svc;
     private readonly ILogService _log;
@@ -118,7 +118,7 @@ public class QuickParamsSetupPageViewModel : ViewModelBase, IShellPage
 
     public bool IsRebootRequired { get; set; }
 
-    public void SetArgs(Uri link)
+    public override void SetArgs(Uri link)
     {
         if (!ParseUri(link, out var id, out var deviceClass)) return;
         switch (deviceClass)
@@ -152,6 +152,7 @@ public class QuickParamsSetupPageViewModel : ViewModelBase, IShellPage
             default:
                 throw new ArgumentOutOfRangeException();
         }
+        Title = $"Quick params {DeviceName}";
     }
     
     private async void Init(IVehicleClient vehicleIfc)
