@@ -9,7 +9,7 @@ using Avalonia.ReactiveUI;
 namespace Asv.Drones.Gui.Android;
 
 [Activity(Theme = "@style/MyTheme.Splash", MainLauncher = true, NoHistory = true)]
-public class SplashActivity : AvaloniaSplashActivity<App>
+public class SplashActivity : AvaloniaMainActivity<App>
 {
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {

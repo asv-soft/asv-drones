@@ -1,6 +1,7 @@
 using System.ComponentModel.Composition;
 using Asv.Cfg;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 
 namespace Asv.Drones.Gui.Core
 {
@@ -19,9 +20,9 @@ namespace Asv.Drones.Gui.Core
             _configuration = configuration;
         }
 
-        protected override void OnLoaded()
+        protected override void OnLoaded(RoutedEventArgs e)
         {
-            base.OnLoaded();
+            base.OnLoaded(e);
 
             if (_configuration.Exist<MapPageViewConfig>(nameof(FlightPageView)))
             {
@@ -31,9 +32,9 @@ namespace Asv.Drones.Gui.Core
             }
         }
 
-        protected override void OnUnloaded()
+        protected override void OnUnloaded(RoutedEventArgs e)
         {
-            base.OnUnloaded();
+            base.OnUnloaded(e);
 
             var mapPageViewConfig = new MapPageViewConfig
             {
