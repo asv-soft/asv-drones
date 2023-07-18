@@ -19,12 +19,27 @@ public class LlzSdrRttViewModel : ViewModelBase, ISdrRttWidget
     private readonly IConfiguration _configuration;
     private readonly IMeasureUnitItem<double,FrequencyUnits> _freqInHzMeasureUnit;
     private readonly IMeasureUnitItem<double,FrequencyUnits> _freqInKHzMeasureUnit;
-
+    private readonly IMeasureUnitItem<double, FrequencyUnits> _freqInMHzMeasureUnit;
 
     public LlzSdrRttViewModel() : base(new Uri($"fordesigntime://{Guid.NewGuid()}"))
     {
         if (Design.IsDesignMode)
         {
+            ChannelTitle = RS.LlzSdrRttViewModelChannelTitle;
+            ChannelStringValue = $"{18}X";
+            
+            MainFrequencyTitle = RS.LlzSdrRttViewModel_MainFrequency_Title;
+            MainFrequencyStringValue = $"{108.1:F4}";
+            MainFrequencyUnits = "MHz";
+            
+            MeasureTimeTitle = RS.LlzSdrRttViewModel_MeasureTime_Title;
+            MeasureTimeStringValue = $"{500}";
+            MeasureTimeUnits = "ms";
+            
+            FieldStrengthTitle = RS.LlzSdrRttViewModel_FieldStrength_Title;
+            FieldStrengthStringValue = $"{100000}";
+            FieldStrengthUnits = "μV/m";
+            
             TotalPowerTitle = RS.SdrRttViewModel_SumPower_Title;
             TotalPowerUnits = "dBm";
             TotalPowerValue = -37.45;
@@ -38,11 +53,11 @@ public class LlzSdrRttViewModel : ViewModelBase, ISdrRttWidget
             TotalSdmUnits = "%";
             TotalSdmStringValue = "40.00";
 
-            TotalAm90Title = RS.IlsSdrRttViewModel_AM_90_Hz_Title;
+            TotalAm90Title = RS.LlzSdrRttViewModel_AM_90_Hz_Title;
             TotalAm90Units = "%";
             TotalAm90StringValue = "20.00";
 
-            TotalAm150Title = RS.IlsSdrRttViewModel_AM_150_Hz_Title;
+            TotalAm150Title = RS.LlzSdrRttViewModel_AM_150_Hz_Title;
             TotalAm150Units = "%";
             TotalAm150StringValue = "20.00";
 
@@ -57,16 +72,16 @@ public class LlzSdrRttViewModel : ViewModelBase, ISdrRttWidget
             IdCodeTitle = RS.SdrRttViewModel_ID_Code_Title;
             IdCodeStringValue = "CEK";
 
-            TotalFreq90Title = RS.IlsSdrRttViewModel_Freq_90_Hz_Title;
+            TotalFreq90Title = RS.LlzSdrRttViewModel_Freq_90_Hz_Title;
             TotalFreq90Units = "Hz";
             TotalFreq90StringValue = "90.00";
         
-            TotalFreq150Title = RS.IlsSdrRttViewModel_Freq_150_Hz_Title;
+            TotalFreq150Title = RS.LlzSdrRttViewModel_Freq_150_Hz_Title;
             TotalFreq150Units = "Hz";
             TotalFreq150StringValue = "150.00";
             
             // CRS
-            CrsPowerTitle = RS.IlsSdrRttViewModel_CRSPower_Title;
+            CrsPowerTitle = RS.LlzSdrRttViewModel_CRSPower_Title;
             CrsPowerUnits = "dBm";
             CrsPowerValue = -40.54;
             CrsPowerStringValue = "-40.54";
@@ -79,11 +94,11 @@ public class LlzSdrRttViewModel : ViewModelBase, ISdrRttWidget
             CrsSdmUnits = "%";
             CrsSdmStringValue = "40.00";
 
-            CrsAm90Title = RS.IlsSdrRttViewModel_AM_90_Hz_Title;
+            CrsAm90Title = RS.LlzSdrRttViewModel_AM_90_Hz_Title;
             CrsAm90Units = "%";
             CrsAm90StringValue = "20.00";
 
-            CrsAm150Title = RS.IlsSdrRttViewModel_AM_150_Hz_Title;
+            CrsAm150Title = RS.LlzSdrRttViewModel_AM_150_Hz_Title;
             CrsAm150Units = "%";
             CrsAm150StringValue = "20.00";
 
@@ -92,7 +107,7 @@ public class LlzSdrRttViewModel : ViewModelBase, ISdrRttWidget
             CrsFrequencyStringValue = "8.000";
             
             // CLR
-            ClrPowerTitle = RS.IlsSdrRttViewModel_CLRPower_Title;
+            ClrPowerTitle = RS.LlzSdrRttViewModel_CLRPower_Title;
             ClrPowerUnits = "dBm";
             ClrPowerValue = -40.35;
             ClrPowerStringValue = "-40.35";
@@ -105,11 +120,11 @@ public class LlzSdrRttViewModel : ViewModelBase, ISdrRttWidget
             ClrSdmUnits = "%";
             ClrSdmStringValue = "40.00";
 
-            ClrAm90Title = RS.IlsSdrRttViewModel_AM_90_Hz_Title;
+            ClrAm90Title = RS.LlzSdrRttViewModel_AM_90_Hz_Title;
             ClrAm90Units = "%";
             ClrAm90StringValue = "20.00";
 
-            ClrAm150Title = RS.IlsSdrRttViewModel_AM_150_Hz_Title;
+            ClrAm150Title = RS.LlzSdrRttViewModel_AM_150_Hz_Title;
             ClrAm150Units = "%";
             ClrAm150StringValue = "20.00";
 
@@ -128,20 +143,32 @@ public class LlzSdrRttViewModel : ViewModelBase, ISdrRttWidget
 
         _freqInHzMeasureUnit = _loc.Frequency.AvailableUnits.FirstOrDefault(__ => __.Id == FrequencyUnits.Hz);
         _freqInKHzMeasureUnit = _loc.Frequency.AvailableUnits.FirstOrDefault(__ => __.Id == FrequencyUnits.KHz);
+        _freqInMHzMeasureUnit = _loc.Frequency.AvailableUnits.FirstOrDefault(__ => __.Id == FrequencyUnits.MHz);
+
+        ChannelTitle = RS.LlzSdrRttViewModelChannelTitle;
+        
+        MainFrequencyTitle = RS.LlzSdrRttViewModel_MainFrequency_Title;
+        MainFrequencyUnits = _freqInMHzMeasureUnit?.Unit;
+        
+        MeasureTimeTitle = RS.LlzSdrRttViewModel_MeasureTime_Title;
+        MeasureTimeUnits = RS.LLzSdrRttViewModel_MeasureTime_Units;
+        
+        FieldStrengthTitle = RS.LlzSdrRttViewModel_FieldStrength_Title;
+        FieldStrengthUnits = RS.LLzSdrRttViewModel_FieldStrength_Units;
         
         TotalPowerTitle = RS.SdrRttViewModel_SumPower_Title;
         TotalPowerUnits = _loc.Power.CurrentUnit.Value.Unit;
         
-        TotalDdmTitle = RS.IlsSdrRttViewModel_DDM_Title;
+        TotalDdmTitle = RS.LlzSdrRttViewModel_DDM_Title;
         TotalDdmUnits = _loc.DdmLlz.CurrentUnit.Value.Unit;
         
-        TotalSdmTitle = RS.IlsSdrRttViewModel_SDM_Title;
+        TotalSdmTitle = RS.LlzSdrRttViewModel_SDM_Title;
         TotalSdmUnits = _loc.Sdm.CurrentUnit.Value.Unit;
         
-        TotalAm90Title = RS.IlsSdrRttViewModel_AM_90_Hz_Title;
+        TotalAm90Title = RS.LlzSdrRttViewModel_AM_90_Hz_Title;
         TotalAm90Units = _loc.AmplitudeModulation.CurrentUnit.Value.Unit;
 
-        TotalAm150Title = RS.IlsSdrRttViewModel_AM_150_Hz_Title;
+        TotalAm150Title = RS.LlzSdrRttViewModel_AM_150_Hz_Title;
         TotalAm150Units = _loc.AmplitudeModulation.CurrentUnit.Value.Unit;
 
         Phi90Title = "PHI 90";
@@ -152,46 +179,46 @@ public class LlzSdrRttViewModel : ViewModelBase, ISdrRttWidget
         
         IdCodeTitle = RS.SdrRttViewModel_ID_Code_Title;
 
-        TotalFreq90Title = RS.IlsSdrRttViewModel_Freq_90_Hz_Title;
+        TotalFreq90Title = RS.LlzSdrRttViewModel_Freq_90_Hz_Title;
         TotalFreq90Units = _freqInHzMeasureUnit?.Unit;
         
-        TotalFreq150Title = RS.IlsSdrRttViewModel_Freq_150_Hz_Title;
+        TotalFreq150Title = RS.LlzSdrRttViewModel_Freq_150_Hz_Title;
         TotalFreq150Units = _freqInHzMeasureUnit?.Unit;
         
         // CRS
-        CrsPowerTitle = RS.IlsSdrRttViewModel_CRSPower_Title;
+        CrsPowerTitle = RS.LlzSdrRttViewModel_CRSPower_Title;
         CrsPowerUnits = _loc.Power.CurrentUnit.Value.Unit;
         
-        CrsDdmTitle = RS.IlsSdrRttViewModel_DDM_Title;
+        CrsDdmTitle = RS.LlzSdrRttViewModel_DDM_Title;
         CrsDdmUnits = _loc.DdmLlz.CurrentUnit.Value.Unit;
 
-        CrsSdmTitle = RS.IlsSdrRttViewModel_SDM_Title;
+        CrsSdmTitle = RS.LlzSdrRttViewModel_SDM_Title;
         CrsSdmUnits = _loc.Sdm.CurrentUnit.Value.Unit;
         
-        CrsAm90Title = RS.IlsSdrRttViewModel_AM_90_Hz_Title;
+        CrsAm90Title = RS.LlzSdrRttViewModel_AM_90_Hz_Title;
         CrsAm90Units = _loc.AmplitudeModulation.CurrentUnit.Value.Unit;
 
-        CrsAm150Title = RS.IlsSdrRttViewModel_AM_150_Hz_Title;
+        CrsAm150Title = RS.LlzSdrRttViewModel_AM_150_Hz_Title;
         CrsAm150Units = _loc.AmplitudeModulation.CurrentUnit.Value.Unit;
 
         CrsFrequencyTitle = "";
         CrsFrequencyUnits = _freqInKHzMeasureUnit?.Unit;
         
         // CLR
-        ClrPowerTitle = RS.IlsSdrRttViewModel_CLRPower_Title;
+        ClrPowerTitle = RS.LlzSdrRttViewModel_CLRPower_Title;
         ClrPowerUnits = _loc.Power.CurrentUnit.Value.Unit;
 
-        ClrDdmTitle = RS.IlsSdrRttViewModel_DDM_Title;
+        ClrDdmTitle = RS.LlzSdrRttViewModel_DDM_Title;
         ClrDdmUnits = _loc.DdmLlz.CurrentUnit.Value.Unit;
 
 
-        ClrSdmTitle = RS.IlsSdrRttViewModel_SDM_Title;
+        ClrSdmTitle = RS.LlzSdrRttViewModel_SDM_Title;
         ClrSdmUnits = _loc.Sdm.CurrentUnit.Value.Unit;
         
-        ClrAm90Title = RS.IlsSdrRttViewModel_AM_90_Hz_Title;
+        ClrAm90Title = RS.LlzSdrRttViewModel_AM_90_Hz_Title;
         ClrAm90Units = _loc.AmplitudeModulation.CurrentUnit.Value.Unit;
 
-        ClrAm150Title = RS.IlsSdrRttViewModel_AM_150_Hz_Title;
+        ClrAm150Title = RS.LlzSdrRttViewModel_AM_150_Hz_Title;
         ClrAm150Units = _loc.AmplitudeModulation.CurrentUnit.Value.Unit;
 
         ClrFrequencyTitle = "";
@@ -238,6 +265,11 @@ public class LlzSdrRttViewModel : ViewModelBase, ISdrRttWidget
             .Cast<AsvSdrRecordDataLlzPacket>()
             .Subscribe(_=>
             {
+                ChannelStringValue = SdrRttHelper.GetIlsChannelFromLocalizerModeFrequency(_.Payload.TotalFreq);
+                MainFrequencyStringValue = _freqInMHzMeasureUnit?.FromSiToString(_.Payload.TotalFreq);
+                MeasureTimeStringValue = $"{_.Payload.MeasureTime}";
+                FieldStrengthStringValue = $"{_.Payload.TotalFieldStrength}";
+                
                 TotalPowerValue = _.Payload.TotalPower;
                 TotalPowerStringValue = _loc.Power.FromSiToString(_.Payload.TotalPower);
                 TotalDdmStringValue = _loc.DdmLlz.FromSiToString(_.Payload.TotalAm150 - _.Payload.TotalAm90);
@@ -269,6 +301,58 @@ public class LlzSdrRttViewModel : ViewModelBase, ISdrRttWidget
             .DisposeItWith(Disposable);
     }
 
+    
+    #region Main Frequency
+    
+    [Reactive]
+    public string MainFrequencyTitle { get; set; }
+    
+    [Reactive]
+    public string MainFrequencyStringValue { get; set; }
+
+    [Reactive]
+    public string MainFrequencyUnits { get; set; }
+    
+    #endregion
+    
+    #region Channel
+
+    [Reactive]
+    public string ChannelTitle { get; set; }
+    
+    [Reactive]
+    public string ChannelStringValue { get; set; }
+
+    [Reactive]
+    public string ChannelUnits { get; set; }
+
+    #endregion
+    
+    #region Measure Time
+
+    [Reactive]
+    public string MeasureTimeTitle { get; set; }
+    
+    [Reactive]
+    public string MeasureTimeStringValue { get; set; }
+
+    [Reactive]
+    public string MeasureTimeUnits { get; set; }
+
+    #endregion
+    
+    #region Field Strength
+
+    [Reactive]
+    public string FieldStrengthTitle { get; set; }
+    
+    [Reactive]
+    public string FieldStrengthStringValue { get; set; }
+
+    [Reactive]
+    public string FieldStrengthUnits { get; set; }
+
+    #endregion
 
     #region Total Power
 

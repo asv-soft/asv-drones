@@ -20,10 +20,10 @@
     <data name="SdrRttViewModel_Rf_Header" xml:space="preserve">
         <value>ВЧ</value>
     </data>
-    <data name="IlsSdrRttViewModel_Crs_Header" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_Crs_Header" xml:space="preserve">
         <value>Узкий</value>
     </data>
-    <data name="IlsSdrRttViewModel_Clr_Header" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_Clr_Header" xml:space="preserve">
         <value>Широкий</value>
     </data>
     <data name="SdrRttViewModel_Main_Header" xml:space="preserve">
@@ -32,31 +32,31 @@
     <data name="SdrRttViewModel_SumPower_Title" xml:space="preserve">
         <value>Сум.</value>
     </data>
-    <data name="IlsSdrRttViewModel_AM_90_Hz_Title" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_AM_90_Hz_Title" xml:space="preserve">
         <value>АМ 90 Гц</value>
     </data>
-    <data name="IlsSdrRttViewModel_AM_150_Hz_Title" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_AM_150_Hz_Title" xml:space="preserve">
         <value>АМ 150 Гц</value>
     </data>
     <data name="SdrRttViewModel_ID_Code_Title" xml:space="preserve">
         <value>Код СО</value>
     </data>
-    <data name="IlsSdrRttViewModel_Freq_90_Hz_Title" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_Freq_90_Hz_Title" xml:space="preserve">
         <value>Частота 90 Гц</value>
     </data>
-    <data name="IlsSdrRttViewModel_Freq_150_Hz_Title" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_Freq_150_Hz_Title" xml:space="preserve">
         <value>Частота 150 Гц</value>
     </data>
-    <data name="IlsSdrRttViewModel_CRSPower_Title" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_CRSPower_Title" xml:space="preserve">
         <value>Узк.</value>
     </data>
-    <data name="IlsSdrRttViewModel_CLRPower_Title" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_CLRPower_Title" xml:space="preserve">
         <value>Шир.</value>
     </data>
-    <data name="IlsSdrRttViewModel_DDM_Title" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_DDM_Title" xml:space="preserve">
         <value>РГМ</value>
     </data>
-    <data name="IlsSdrRttViewModel_SDM_Title" xml:space="preserve">
+    <data name="LlzSdrRttViewModel_SDM_Title" xml:space="preserve">
         <value>СГМ</value>
     </data>
     <data name="VorSdrRttViewModel_Main_Header" xml:space="preserve">
@@ -97,5 +97,44 @@
     </data>
     <data name="FlightSdrView_SystemControlAction_Shutdown_Title" xml:space="preserve">
         <value>Выключить ОС</value>
+    </data>
+    <data name="LlzSdrRttViewModelChannelTitle" xml:space="preserve">
+        <value>Кан.</value>
+    </data>
+    <data name="LlzSdrRttViewModel_FieldStrength_Title" xml:space="preserve">
+        <value>Напр. поля</value>
+    </data>
+    <data name="LlzSdrRttViewModel_MainFrequency_Title" xml:space="preserve">
+        <value>Част.</value>
+    </data>
+    <data name="LlzSdrRttViewModel_MeasureTime_Title" xml:space="preserve">
+        <value>Вр. изм.</value>
+    </data>
+    <data name="VorSdrRttViewModel_MeasureTime_Title" xml:space="preserve">
+        <value>Вр. изм.</value>
+    </data>
+    <data name="VorSdrRttViewModel_MainFrequency_Title" xml:space="preserve">
+        <value>Част.</value>
+    </data>
+    <data name="VorSdrRttViewModel_FieldStrength_Title" xml:space="preserve">
+        <value>Напр. поля</value>
+    </data>
+    <data name="VorSdrRttViewModelChannelTitle" xml:space="preserve">
+        <value>Кан.</value>
+    </data>
+    <data name="LLzSdrRttViewModel_ValueNotAvailable" xml:space="preserve">
+        <value>Н\Д</value>
+    </data>
+    <data name="LLzSdrRttViewModel_MeasureTime_Units" xml:space="preserve">
+        <value>мс</value>
+    </data>
+    <data name="LLzSdrRttViewModel_FieldStrength_Units" xml:space="preserve">
+        <value>μВ/м</value>
+    </data>
+    <data name="VorSdrRttViewModel_MeasureTime_Units" xml:space="preserve">
+        <value>мс</value>
+    </data>
+    <data name="VorSdrRttViewModel_FieldStrength_Units" xml:space="preserve">
+        <value>μВ/м</value>
     </data>
 </root>
