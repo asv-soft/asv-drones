@@ -1,21 +1,22 @@
 ﻿using Asv.Cfg;
+using Asv.Common;
 
 namespace Asv.Drones.Gui.Core;
 
-public enum AngleUnits
+public enum DegreeUnits
 {
     Degrees,
     DegreesMinutesSeconds
 }
 
-public class Angle : MeasureUnitBase<double, AngleUnits>
+public class Degrees : MeasureUnitBase<double, DegreeUnits>
 {
-    private static readonly IMeasureUnitItem<double, AngleUnits>[] _units = {
-        new DoubleMeasureUnitItem<AngleUnits>(AngleUnits.Degrees,RS.Altitude_Meter_Title,RS.Altitude_Meter_Unit,true, "F0",1),
-        new DmsAngleMeasureUnit(),
+    private static readonly IMeasureUnitItem<double, DegreeUnits>[] _units = {
+        new DoubleMeasureUnitItem<DegreeUnits>(DegreeUnits.Degrees,RS.Degrees_Degree_Title,"°",true, "F0",1),
+        new DmsMeasureUnit()
     };
     
-    public Angle(IConfiguration cfgSvc, string cfgKey) : base(cfgSvc, cfgKey, _units)
+    public Degrees(IConfiguration cfgSvc, string cfgKey) : base(cfgSvc, cfgKey, _units)
     {
     }
 
@@ -23,17 +24,18 @@ public class Angle : MeasureUnitBase<double, AngleUnits>
     public override string Description => "Units of measure for the angle";
 }
 
-public class DmsAngleMeasureUnit : IMeasureUnitItem<double, AngleUnits>
+public class DmsMeasureUnit : IMeasureUnitItem<double, DegreeUnits>
 {
-    public AngleUnits Id => AngleUnits.DegreesMinutesSeconds;
-    public string Title => "[Deg]°[Min]′[Sec]′′";
+    public DegreeUnits Id => DegreeUnits.DegreesMinutesSeconds;
+    public string Title => RS.Degrees_DMS_Title;
     public string Unit => "[Deg]°[Min]′[Sec]′′";
     public bool IsSiUnit => false;
+    //Not usable
     public double ConvertFromSi(double siValue)
     {
         return siValue;
     }
-
+    //Not usable
     public double ConvertToSi(double value)
     {
         return value;
@@ -56,11 +58,11 @@ public class DmsAngleMeasureUnit : IMeasureUnitItem<double, AngleUnits>
 
     public string FromSiToString(double value)
     {
-        return value.ToString("F7");
+        return Angle.PrintDms(value);
     }
 
     public string FromSiToStringWithUnits(double value)
     {
-        return $"{value:F7}°";
+        return Angle.PrintDms(value);
     }
 }

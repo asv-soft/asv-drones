@@ -71,7 +71,6 @@
     </ItemGroup>
     
     <ItemGroup>
-      <Folder Include="Services\Weather\" />
       <Folder Include="Shell\Pages\Map\Planing\Widgets\" />
     </ItemGroup>
 

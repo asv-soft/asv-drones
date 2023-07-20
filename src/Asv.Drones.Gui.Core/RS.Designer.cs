@@ -546,6 +546,24 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [Deg]°.
+        /// </summary>
+        public static string Degrees_Degree_Title {
+            get {
+                return ResourceManager.GetString("Degrees_Degree_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Deg]°[Min]′[Sec]′′.
+        /// </summary>
+        public static string Degrees_DMS_Title {
+            get {
+                return ResourceManager.GetString("Degrees_DMS_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In this section you can see all found devices on the network.
         /// </summary>
         public static string DeviceBrowserView_Description {
@@ -1217,6 +1235,24 @@ namespace Asv.Drones.Gui.Core {
         public static string MeasureUnitsSettingsViewModel_VelocityDescription {
             get {
                 return ResourceManager.GetString("MeasureUnitsSettingsViewModel_VelocityDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Angle.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModelAngle {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModelAngle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of angle.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModelAngleDescription {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModelAngleDescription", resourceCulture);
             }
         }
         
