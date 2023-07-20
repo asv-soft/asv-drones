@@ -1383,5 +1383,11 @@ namespace Asv.Drones.Gui.Core {
                 return ResourceManager.GetString("MeasureUnitsSettingsViewModelTemperatureDescription", resourceCulture);
             }
         }
+        
+        public static string AnchorMoverActionView_Title {
+            get {
+                return ResourceManager.GetString("AnchorMoverActionView_Title", resourceCulture);
+            }
+        }
     }
 }

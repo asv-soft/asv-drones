@@ -18,6 +18,7 @@ namespace Asv.Drones.Gui.Core
         ReadOnlyObservableCollection<IMapAnchor> Markers { get; }
         IMapAnchor SelectedItem { get; set; }
         IMapAnchor? ItemToFollow { get; set; }
+        bool IsInAnchorEditMode { get; set; }
         Task<GeoPoint> ShowTargetDialog(string text, CancellationToken cancel);
     }
     

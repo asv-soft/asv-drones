@@ -22,6 +22,11 @@ namespace Asv.Avalonia.Map
             
         }
 
+        static MapAnchorView()
+        {
+            IsInEditModeProperty.Changed.Subscribe(_ => ((MapAnchorView)_.Sender).PseudoClasses.Set(":edit", _.NewValue.Value));
+        }
+
         private void UpdateOffset(Rect rect)
         {
             OffsetX = OffsetXType switch
@@ -170,6 +175,14 @@ namespace Asv.Avalonia.Map
         {
             get => GetValue(OffsetYTypeProperty);
             set => SetValue(OffsetYTypeProperty, value);
+        }
+
+        public static readonly StyledProperty<bool> IsInEditModeProperty = AvaloniaProperty.Register<MapAnchorView, bool>(nameof(IsInEditMode), false);
+
+        public bool IsInEditMode
+        {
+            get => GetValue(IsInEditModeProperty);
+            set => SetValue(IsInEditModeProperty, value);
         }
     }
 }

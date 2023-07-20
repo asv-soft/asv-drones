@@ -804,6 +804,21 @@ namespace Asv.Avalonia.Map
 
         #endregion
 
+        #region Anchor edit mode
+
+        public static readonly DirectProperty<MapView, bool> IsInAnchorEditModeProperty =
+            AvaloniaProperty.RegisterDirect<MapView, bool>(nameof(IsInDialogMode), o => o.IsInAnchorEditMode, (o, v) => o.IsInAnchorEditMode = v);
+
+        private bool _isInAnchorEditMode;
+
+        public bool IsInAnchorEditMode
+        {
+            get => _isInAnchorEditMode;
+            set => SetAndRaise(IsInAnchorEditModeProperty, ref _isInAnchorEditMode, value);
+        }
+
+        #endregion
+
         protected override Control CreateContainerForItemOverride(object? item, int index, object? recycleKey)
         {
             return new MapViewItem();

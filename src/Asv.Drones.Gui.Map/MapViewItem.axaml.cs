@@ -64,7 +64,7 @@ namespace Asv.Avalonia.Map
 
         private void DragPointerMoved(PointerEventArgs args)
         {
-            if ((args.KeyModifiers & KeyModifiers.Control) != 0 && IsSelected && IsEditable)
+            if (_map.IsInAnchorEditMode && IsSelected && IsEditable)
             {
                 if (_map == null) return;
 
@@ -83,7 +83,7 @@ namespace Asv.Avalonia.Map
         private void DragPointerPressed(PointerPressedEventArgs args)
         {
             
-            if ((args.KeyModifiers & KeyModifiers.Control) != 0)
+            if (_map.IsInAnchorEditMode)
             {
                 IsSelected = true;
                 args.Handled = true;
