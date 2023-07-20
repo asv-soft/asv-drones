@@ -2,6 +2,7 @@ using System.ComponentModel.Composition;
 using Asv.Cfg;
 using Asv.Common;
 using DynamicData.Binding;
+using Material.Icons;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Core
@@ -25,6 +26,8 @@ namespace Asv.Drones.Gui.Core
             [ImportMany(UriString)] IEnumerable<IViewModelProvider<IMapWidget>> widgets,
             [ImportMany(UriString)] IEnumerable<IViewModelProvider<IMapAction>> actions):base(Uri,map,markers,widgets,actions)
         {
+            Title = RS.PlaningShellMenuItem_Name;
+            Icon = MaterialIconKind.MapMarkerCheck;
             PlanningConfig = cfg.Get<PlanningPageViewModelConfig>();
 
             Zoom = PlanningConfig.Zoom is 0 ? 1 : PlanningConfig.Zoom;

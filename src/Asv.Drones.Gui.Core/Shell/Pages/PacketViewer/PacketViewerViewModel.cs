@@ -14,12 +14,13 @@ using ReactiveUI.Fody.Helpers;
 using DynamicData;
 using DynamicData.Binding;
 using FluentAvalonia.UI.Controls;
+using Material.Icons;
 
 namespace Asv.Drones.Gui.Core;
 
 [ExportShellPage(UriString)]
 [PartCreationPolicy(CreationPolicy.NonShared)]
-public class PacketViewerViewModel : ViewModelBase, IShellPage
+public class PacketViewerViewModel : ShellPage
 {
     private readonly IAppService _app;
     private readonly IConfiguration _cfg;
@@ -45,7 +46,8 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
     
     public PacketViewerViewModel() : base(Uri)
     {
-        
+        Title = RS.PacketViewerShellMenuItem_Name;
+        Icon = MaterialIconKind.Package;
         ExportToCsv = ReactiveCommand.CreateFromTask(Export, this.WhenValueChanged(_ => _.IsPause));
         ClearAll = ReactiveCommand.Create(() => _packetsSource.Clear());
         
@@ -274,7 +276,4 @@ public class PacketViewerViewModel : ViewModelBase, IShellPage
         
     }
 
-    public void SetArgs(Uri link)
-    {
-    }
 }

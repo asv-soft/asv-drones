@@ -12,7 +12,7 @@ namespace Asv.Drones.Gui.Core
 {
     [ExportShellPage(UriString)]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class LogMessagesPageViewModel : ViewModelBase, IShellPage
+    public class LogMessagesPageViewModel : ShellPage
     {
         public const string UriString = "asv:shell.page.logs";
         public static readonly Uri Uri = new Uri(UriString);
@@ -25,6 +25,7 @@ namespace Asv.Drones.Gui.Core
         
         public LogMessagesPageViewModel() : base(Uri)
         {
+            Title = RS.FlightShellMenuItem_Name;
             Refresh = ReactiveCommand.CreateFromObservable(() => Observable.Start(RefreshItemsImpl).SubscribeOn(RxApp.TaskpoolScheduler).TakeUntil(CancelRefresh));
             Refresh.IsExecuting.ToProperty(this, _ => _.IsRefreshing, out _isRefreshing);
             Refresh.ThrownExceptions.Subscribe(OnRefreshError);
@@ -134,53 +135,8 @@ namespace Asv.Drones.Gui.Core
         [Reactive]
         public int To { get; set; }
         
-        public void SetArgs(Uri link)
-        {
-            
-        }
     }
-
-    public class RemoteLogMessageProxy
-    {
-        public RemoteLogMessageProxy(LogMessage textMessage)
-        {
-            switch (textMessage.Type)
-            {
-                case LogMessageType.Info:
-                    IsInfo = true;
-                    Icon = MaterialIconKind.InformationCircle;
-                    break;
-                
-                case LogMessageType.Warning:
-                    IsWarning = true;
-                    Icon = MaterialIconKind.Warning;
-                    break;
-                
-                case LogMessageType.Error:
-                    IsError = true;
-                    Icon = MaterialIconKind.Warning;
-                    break;
-                
-                case LogMessageType.Trace:
-                    IsTrace = true;
-                    Icon = MaterialIconKind.Exclamation;
-                    break;
-            }
-
-            DateTime = textMessage.DateTime;
-            Sender = textMessage.Source;
-            Message = textMessage.Message;
-        }
-        
-        public bool IsError { get; }
-        public bool IsWarning { get; }
-        public bool IsTrace { get; }
-        public bool IsInfo { get; }
-
-        public DateTime DateTime { get; }
-        public MaterialIconKind Icon { get; }
-        public string Sender { get; }
-        public string Message { get; }
-    }
+    
+    
 }
 

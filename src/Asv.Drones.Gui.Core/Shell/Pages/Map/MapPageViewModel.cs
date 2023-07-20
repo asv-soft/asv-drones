@@ -12,7 +12,7 @@ namespace Asv.Drones.Gui.Core
 {
    
     
-    public class MapPageViewModel:ViewModelBase,IShellPage,IMap
+    public class MapPageViewModel:ShellPage,IMap
     {
         private readonly ReadOnlyObservableCollection<IMapAnchor> _markers;
         private readonly ReadOnlyObservableCollection<IMapWidget> _widgets;
@@ -37,7 +37,6 @@ namespace Asv.Drones.Gui.Core
             IEnumerable<IViewModelProvider<IMapWidget>> widgets,
                 IEnumerable<IViewModelProvider<IMapAction>> actions):base(id)
         {
-
             Disposable.AddAction(() =>
             {
                 markers.ForEach(provider=>provider.Dispose());
@@ -182,9 +181,5 @@ namespace Asv.Drones.Gui.Core
 
         #endregion
 
-        public virtual void SetArgs(Uri link)
-        {
-            
-        }
     }
 }

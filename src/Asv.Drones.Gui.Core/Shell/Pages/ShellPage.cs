@@ -1,3 +1,6 @@
+using Material.Icons;
+using ReactiveUI.Fody.Helpers;
+
 namespace Asv.Drones.Gui.Core;
 
 public class ShellPage : ViewModelBase,IShellPage
@@ -10,6 +13,11 @@ public class ShellPage : ViewModelBase,IShellPage
     {
             
     }
+    
+    [Reactive]
+    public MaterialIconKind Icon { get; set; }
+    [Reactive]
+    public string Title { get; set; }
 
     public virtual void SetArgs(Uri link)
     {

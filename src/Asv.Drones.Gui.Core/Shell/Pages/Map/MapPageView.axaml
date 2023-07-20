@@ -90,13 +90,11 @@
 	        </TabControl>
         </Border>
 	    <ItemsControl Grid.Row="1" Grid.Column="2" ItemsSource="{Binding MapActions}" VerticalAlignment="Bottom" >
-		    <ItemsControl.ItemContainerTheme>
-			    <ControlTheme TargetType="ContentPresenter">
-				    <ControlTheme.Setters>
-					    <Setter Property="DockPanel.Dock" Value="Right"/>
-				    </ControlTheme.Setters>
-			    </ControlTheme>
-		    </ItemsControl.ItemContainerTheme>
+		    <ItemsControl.Styles>
+			    <Style Selector="ContentPresenter" x:DataType="core:IMapAction">
+				    <Setter Property="DockPanel.Dock" Value="{Binding Dock}"/>
+			    </Style>
+		    </ItemsControl.Styles>
 		    <ItemsControl.ItemsPanel>
 			    <ItemsPanelTemplate>
 				    <DockPanel LastChildFill="False"/>

@@ -18,7 +18,7 @@ namespace Asv.Drones.Gui.Uav;
 
 [ExportShellPage(UriString)]
 [PartCreationPolicy(CreationPolicy.NonShared)]
-public class ParamPageViewModel:ViewModelBase, IShellPage
+public class ParamPageViewModel: ShellPage
 {
     private readonly IMavlinkDevicesService _svc;
     private readonly ILogService _log;
@@ -58,8 +58,9 @@ public class ParamPageViewModel:ViewModelBase, IShellPage
              .DisposeItWith(Disposable);
     }
 
-    public void SetArgs(Uri link)
+    public override void SetArgs(Uri link)
     {
+        
         var query =  HttpUtility.ParseQueryString(link.Query);
         if (ushort.TryParse(query["id"], out var id) == false) return;
         if (Enum.TryParse<DeviceClass>(query["class"], true, out var deviceClass) == false) return;
@@ -95,6 +96,7 @@ public class ParamPageViewModel:ViewModelBase, IShellPage
             default:
                 throw new ArgumentOutOfRangeException();
         }
+        Title = $"Params: {DeviceName}";
     }
 
     private void Init(IParamsClientEx paramsIfc)
