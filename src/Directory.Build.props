@@ -3,7 +3,7 @@
     <Nullable>enable</Nullable>
     <ProductVersion>0.1.0</ProductVersion>
     <AvaloniaVersion>11.0.0</AvaloniaVersion>
-    <AsvCommonVersion>1.8.1</AsvCommonVersion>
+    <AsvCommonVersion>1.9.0</AsvCommonVersion>
     <AsvMavlinkVersion>3.2.5-alpha-18</AsvMavlinkVersion>
   </PropertyGroup>
 </Project>
