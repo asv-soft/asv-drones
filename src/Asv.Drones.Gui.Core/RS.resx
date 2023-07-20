@@ -778,4 +778,7 @@
   <data name="MeasureUnitsSettingsViewModelTemperatureDescription" xml:space="preserve">
     <value>Change the current measure units of temperature.</value>
   </data>
+  <data name="AnchorMoverActionView_Title" xml:space="preserve">
+    <value>Move anchors</value>
+  </data>
 </root>
