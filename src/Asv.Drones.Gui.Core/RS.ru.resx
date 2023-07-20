@@ -801,7 +801,20 @@
   <data name="MeasureUnitsSettingsViewModelTemperatureDescription" xml:space="preserve">
 	  <value>Измените текущие единицы измерения температуры.</value>
   </data>
+
   <data name="AnchorMoverActionView_Title" xml:space="preserve">
 	  <value>Переместить якоря</value>
+</data>
+  <data name="MeasureUnitsSettingsViewModelAngle" xml:space="preserve">
+	  <value>Угол</value>
+  </data>
+  <data name="MeasureUnitsSettingsViewModelAngleDescription" xml:space="preserve">
+	  <value>Измените текущие единицы измерения угла.</value>
+  </data>
+  <data name="Degrees_Degree_Title" xml:space="preserve">
+	  <value>[Град]°</value>
+  </data>
+  <data name="Degrees_DMS_Title" xml:space="preserve">
+	  <value>[Град]°[Мин]′[Сек]′′</value>
   </data>
 </root>

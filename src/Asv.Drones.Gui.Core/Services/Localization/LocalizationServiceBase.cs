@@ -51,6 +51,7 @@ namespace Asv.Drones.Gui.Core
             Phase = new Phase(cfgSvc, nameof(Phase)).DisposeItWith(Disposable);
             Bearing = new Bearing(cfgSvc, nameof(Bearing)).DisposeItWith(Disposable);
             Temperature = new Temperature(cfgSvc, nameof(Temperature)).DisposeItWith(Disposable);
+            Degree = new Degrees(cfgSvc, nameof(Degree)).DisposeItWith(Disposable);
         }
 
         public IRxEditableValue<LanguageInfo> CurrentLanguage { get; }
@@ -89,6 +90,7 @@ namespace Asv.Drones.Gui.Core
         public IMeasureUnit<double, PhaseUnits> Phase { get; }
         public IMeasureUnit<double, BearingUnits> Bearing { get; }
         public IMeasureUnit<double, TemperatureUnits> Temperature { get; }
+        public IMeasureUnit<double, DegreeUnits> Degree { get; }
         #endregion
 
     }

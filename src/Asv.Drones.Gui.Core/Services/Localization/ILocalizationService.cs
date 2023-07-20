@@ -91,7 +91,7 @@ namespace Asv.Drones.Gui.Core
         IMeasureUnit<double, PhaseUnits> Phase { get; }
         IMeasureUnit<double, BearingUnits> Bearing { get; }
         IMeasureUnit<double, TemperatureUnits> Temperature { get; }
-
+        IMeasureUnit<double, DegreeUnits> Degree { get; }
         #endregion
     }
 

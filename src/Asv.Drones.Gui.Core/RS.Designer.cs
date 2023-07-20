@@ -291,6 +291,28 @@ namespace Asv.Drones.Gui.Core {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to [Deg]°.
+        /// </summary>
+        public static string Degrees_Degree_Title {
+            get {
+                return ResourceManager.GetString("Degrees_Degree_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Deg]°[Min]′[Sec]′′.
+        /// </summary>
+        public static string Degrees_DMS_Title {
+            get {
+                return ResourceManager.GetString("Degrees_DMS_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In this section you can see all found devices on the network.
+        /// </summary>
+        public static string DeviceBrowserView_Description {
         public static string MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds {
             get {
                 return ResourceManager.GetString("MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds", resourceCulture);
@@ -813,7 +835,10 @@ namespace Asv.Drones.Gui.Core {
             }
         }
         
-        public static string UdpPortViewModel_ValidLocalPort {
+        /// <summary>
+        ///   Looks up a localized string similar to DDM GP.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModelDdmGp {
             get {
                 return ResourceManager.GetString("UdpPortViewModel_ValidLocalPort", resourceCulture);
             }

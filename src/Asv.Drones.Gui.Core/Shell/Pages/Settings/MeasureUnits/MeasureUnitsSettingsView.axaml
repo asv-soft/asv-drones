@@ -147,6 +147,22 @@
                         </core:OptionsDisplayItem.ActionButton>
 
                     </core:OptionsDisplayItem>
+                    <core:OptionsDisplayItem Margin="0,0,0,8" Header="{x:Static core:RS.MeasureUnitsSettingsViewModelAngle}"
+                                             Icon="{Binding AngleIcon}"
+                                             Description="{x:Static core:RS.MeasureUnitsSettingsViewModelAngleDescription}">
+
+                        <core:OptionsDisplayItem.ActionButton>
+                            <ComboBox MinWidth="150" SelectedItem="{Binding SelectedAngleUnit}" 
+                                      ItemsSource="{Binding AngleUnits}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Title}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </core:OptionsDisplayItem.ActionButton>
+
+                    </core:OptionsDisplayItem>
                 </StackPanel>
             </core:OptionsDisplayItem.Content>
         </core:OptionsDisplayItem>
