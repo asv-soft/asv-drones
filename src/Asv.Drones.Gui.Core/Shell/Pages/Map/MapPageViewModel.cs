@@ -1,6 +1,5 @@
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
-using System.Windows.Input;
 using Asv.Avalonia.Map;
 using Asv.Common;
 using DynamicData;
@@ -59,6 +58,16 @@ namespace Asv.Drones.Gui.Core
                 .DisposeMany()
                 .Bind(out _markers)
                 .Subscribe()
+                .DisposeItWith(Disposable);
+
+            this.WhenValueChanged(_ => _.IsInAnchorEditMode)
+                .Subscribe(_ =>
+                {
+                    foreach (var marker in _markers)
+                    {
+                        if (marker.IsEditable) marker.IsInEditMode = _;
+                    }
+                })
                 .DisposeItWith(Disposable);
 
             #endregion
@@ -152,7 +161,8 @@ namespace Asv.Drones.Gui.Core
         public IMapAnchor SelectedItem { get; set; }
         [Reactive]
         public IMapAnchor ItemToFollow { get; set; }
-      
+        [Reactive]
+        public bool IsInAnchorEditMode { get; set; }
        
 
         #endregion

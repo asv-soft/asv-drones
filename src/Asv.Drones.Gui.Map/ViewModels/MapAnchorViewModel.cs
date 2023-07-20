@@ -28,6 +28,7 @@ namespace Asv.Avalonia.Map
     public interface IMapAnchorViewModel
     {
         bool IsEditable { get; set; }
+        bool IsInEditMode { get; set; }
         int ZOrder { get; set; }
         OffsetXEnum OffsetX { get; set; }
         OffsetYEnum OffsetY { get; set; }
@@ -77,6 +78,8 @@ namespace Asv.Avalonia.Map
         public bool IsSelected { get; set; }
         [Reactive]
         public bool IsVisible { get; set; }
+        [Reactive] 
+        public bool IsInEditMode { get; set; }
         [Reactive]
         public GeoPoint Location { get; set; }
         [Reactive]
