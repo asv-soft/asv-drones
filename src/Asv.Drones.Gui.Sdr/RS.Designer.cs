@@ -60,6 +60,15 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MHz.
+        /// </summary>
+        public static string FlightSdrView_Frequency_MHz_Units {
+            get {
+                return ResourceManager.GetString("FlightSdrView_Frequency_MHz_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reboot OS.
         /// </summary>
         public static string FlightSdrView_SystemControlAction_Reboot_Title {
