@@ -28,7 +28,7 @@ public class DmsMeasureUnit : IMeasureUnitItem<double, DegreeUnits>
 {
     public DegreeUnits Id => DegreeUnits.DegreesMinutesSeconds;
     public string Title => RS.Degrees_DMS_Title;
-    public string Unit => "[Deg]°[Min]′[Sec]′′";
+    public string Unit => RS.Degrees_DMS_Title;
     public bool IsSiUnit => false;
     //Not usable
     public double ConvertFromSi(double siValue)
