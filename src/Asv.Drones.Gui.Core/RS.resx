@@ -794,4 +794,16 @@
   <data name="Degrees_DMS_Title" xml:space="preserve">
     <value>[Deg]°[Min]′[Sec]′′</value>
   </data>
+  <data name="Latitude_Degree_Title" xml:space="preserve">
+    <value>[Deg]°</value>
+  </data>
+  <data name="Latitude_DMS_Title" xml:space="preserve">
+    <value>[Deg]°[Min]′[Sec]′′</value>
+  </data>
+  <data name="Longitude_Degree_Title" xml:space="preserve">
+    <value>[Deg]°</value>
+  </data>
+  <data name="Longitude_DMS_Title" xml:space="preserve">
+    <value>[Deg]°[Min]′[Sec]′′</value>
+  </data>
 </root>

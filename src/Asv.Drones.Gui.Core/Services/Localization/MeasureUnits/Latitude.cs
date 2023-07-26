@@ -27,7 +27,7 @@ public class Latitude : MeasureUnitBase<double,LatitudeUnits>
 public class LatitudeUnitDeg : IMeasureUnitItem<double, LatitudeUnits>
 {
     public LatitudeUnits Id => LatitudeUnits.Deg;
-    public string Title => "[Deg]°";
+    public string Title => RS.Latitude_Degree_Title;
     public string Unit => "°";
     public bool IsSiUnit => true;
     public double ConvertFromSi(double siValue)
@@ -69,7 +69,7 @@ public class LatitudeUnitDeg : IMeasureUnitItem<double, LatitudeUnits>
 public class LatitudeUnitDms : IMeasureUnitItem<double, LatitudeUnits>
 {
     public LatitudeUnits Id => LatitudeUnits.Dms;
-    public string Title => "[Deg]°[Min]′[Sec]′′";
+    public string Title => RS.Latitude_DMS_Title;
     public string Unit => "°";
     public bool IsSiUnit => false;
     public double ConvertFromSi(double siValue)

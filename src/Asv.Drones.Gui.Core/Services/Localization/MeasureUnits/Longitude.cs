@@ -26,7 +26,7 @@ public class Longitude : MeasureUnitBase<double,LongitudeUnits>
 public class LongitudeUnitDeg :  IMeasureUnitItem<double, LongitudeUnits>
 {
     public LongitudeUnits Id => LongitudeUnits.Deg;
-    public string Title => "[Deg]°";
+    public string Title => RS.Longitude_Degree_Title;
     public string Unit => "°";
     public bool IsSiUnit => true;
     public double ConvertFromSi(double siValue)
@@ -68,7 +68,7 @@ public class LongitudeUnitDeg :  IMeasureUnitItem<double, LongitudeUnits>
 public class LongitudeUnitDms : IMeasureUnitItem<double, LongitudeUnits>
 {
     public LongitudeUnits Id => LongitudeUnits.Dms; 
-    public string Title => "[Deg]°[Min]′[Sec]′′";
+    public string Title => RS.Longitude_DMS_Title;
     public string Unit => "°";
     public bool IsSiUnit => false;
     public double ConvertFromSi(double siValue)
