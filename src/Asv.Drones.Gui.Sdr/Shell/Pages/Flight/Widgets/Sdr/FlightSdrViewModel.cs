@@ -23,6 +23,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     private readonly IConfiguration _configuration;
     private readonly ISdrRttWidgetProvider[] _providers;
     private readonly ObservableCollection<ISdrRttWidget> _rttWidgets = new();
+    private readonly IMeasureUnitItem<double,FrequencyUnits> _freqInMHzMeasureUnit;
 
     public static Uri GenerateUri(ISdrClientDevice sdr) => FlightSdrWidgetBase.GenerateUri(sdr,"sdr");
 
@@ -45,7 +46,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         _logService = log ?? throw new ArgumentNullException(nameof(log));
         _loc = loc ?? throw new ArgumentNullException(nameof(loc));
         _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-       
+       _freqInMHzMeasureUnit = _loc.Frequency.AvailableUnits.First(_ => _.Id == Core.FrequencyUnits.MHz);
         
         Icon = MaterialIconKind.Memory;
         Title = "Payload";
@@ -63,7 +64,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         
        
         
-        UpdateMode = ReactiveCommand.CreateFromTask(cancel=>Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode, (ulong)Math.Round(_loc.Frequency.ConvertToSi(FrequencyInMhz)),1,1,cancel));
+        UpdateMode = ReactiveCommand.CreateFromTask(cancel=>Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode, (ulong)Math.Round(_freqInMHzMeasureUnit.ConvertToSi(FrequencyInMhz)),1,1,cancel));
         UpdateMode.ThrownExceptions.Subscribe(ex =>
         {
             _logService.Error("Set mode",$"Error to set payload mode",ex); // TODO: Localize
@@ -180,7 +181,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     }
 
     public ObservableCollection<ISdrRttWidget> RttWidgets => _rttWidgets;
-    public string FrequencyUnits => _loc.Frequency.AvailableUnits.Where(_ => _.Id == Core.FrequencyUnits.MHz).First().Unit;
+    public string FrequencyUnits => _freqInMHzMeasureUnit.Unit;
     public ObservableCollection<SdrModeViewModel> Modes { get; } = new();
     [Reactive]
     public SdrModeViewModel? SelectedMode { get; set; }
