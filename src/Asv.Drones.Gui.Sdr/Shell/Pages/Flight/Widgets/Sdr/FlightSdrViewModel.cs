@@ -63,7 +63,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         
        
         
-        UpdateMode = ReactiveCommand.CreateFromTask(cancel=>Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode,FrequencyInMhz * 1_000_000,1,1,cancel));
+        UpdateMode = ReactiveCommand.CreateFromTask(cancel=>Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode, (ulong)Math.Round(_loc.Frequency.ConvertToSi(FrequencyInMhz)),1,1,cancel));
         UpdateMode.ThrownExceptions.Subscribe(ex =>
         {
             _logService.Error("Set mode",$"Error to set payload mode",ex); // TODO: Localize
@@ -180,11 +180,12 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     }
 
     public ObservableCollection<ISdrRttWidget> RttWidgets => _rttWidgets;
+    public string FrequencyUnits => _loc.Frequency.AvailableUnits.Where(_ => _.Id == Core.FrequencyUnits.MHz).First().Unit;
     public ObservableCollection<SdrModeViewModel> Modes { get; } = new();
     [Reactive]
     public SdrModeViewModel? SelectedMode { get; set; }
     [Reactive]
-    public ulong FrequencyInMhz { get; set; }
+    public string FrequencyInMhz { get; set; }
     [Reactive]
     public bool IsRecordStarted { get; set; }
     

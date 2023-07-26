@@ -144,7 +144,4 @@
     <data name="VorSdrRttViewModel_FieldStrength_Units" xml:space="preserve">
         <value>μV/m</value>
     </data>
-    <data name="FlightSdrView_Frequency_MHz_Units" xml:space="preserve">
-        <value>MHz</value>
-    </data>
 </root>

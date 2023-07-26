@@ -63,7 +63,7 @@
             </ComboBox>
             <TextBox Text="{Binding FrequencyInMhz}">
                 <TextBox.InnerRightContent>
-                    <TextBlock Margin="8 0" Text="{x:Static sdr:RS.FlightSdrView_Frequency_MHz_Units}" VerticalAlignment="Center" />
+                    <TextBlock Margin="8 0" Text="{Binding FrequencyUnits}" VerticalAlignment="Center" />
                 </TextBox.InnerRightContent>
             </TextBox>
             <Button Command="{Binding UpdateMode}" HorizontalAlignment="Stretch">Set</Button>
