@@ -3,7 +3,7 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Core
 {
-    public abstract class MapWidgetBase : ViewModelBase, IMapWidget
+    public abstract class MapWidgetBase : ViewModelBaseWithValidation, IMapWidget
     {
         protected MapWidgetBase(Uri id) : base(id)
         {

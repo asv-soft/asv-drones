@@ -13,6 +13,7 @@ using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ReactiveUI.Validation.Extensions;
 
 namespace Asv.Drones.Gui.Sdr;
 
@@ -64,7 +65,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         
        
         
-        UpdateMode = ReactiveCommand.CreateFromTask(cancel=>Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode, (ulong)Math.Round(_freqInMHzMeasureUnit.ConvertToSi(FrequencyInMhz)),1,1,cancel));
+        UpdateMode = ReactiveCommand.CreateFromTask(cancel => Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode, (ulong)Math.Round(_freqInMHzMeasureUnit.ConvertToSi(FrequencyInMhz)), 1, 1, cancel));
         UpdateMode.ThrownExceptions.Subscribe(ex =>
         {
             _logService.Error("Set mode",$"Error to set payload mode",ex); // TODO: Localize
@@ -99,6 +100,11 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             payload.Sdr.SystemControlAction(AsvSdrSystemControlAction.AsvSdrSystemControlActionReboot, cancel));
         SafeShutdownOSCommand = ReactiveCommand.CreateFromTask(cancel =>
             payload.Sdr.SystemControlAction(AsvSdrSystemControlAction.AsvSdrSystemControlActionShutdown, cancel));
+        
+        this.ValidationRule(x => x.FrequencyInMhz,
+                _ => _freqInMHzMeasureUnit.IsValid(_),
+                _ => _freqInMHzMeasureUnit.GetErrorMessage(_))
+            .DisposeItWith(Disposable);
     }
     
     private async Task RecordStartImpl(CancellationToken cancel)
