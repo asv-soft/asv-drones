@@ -61,7 +61,11 @@
                    </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <TextBox Text="{Binding Frequency}"/>
+            <TextBox Text="{Binding FrequencyInMhz}">
+                <TextBox.InnerRightContent>
+                    <TextBlock Margin="8 0" Text="{Binding FrequencyUnits}" VerticalAlignment="Center" />
+                </TextBox.InnerRightContent>
+            </TextBox>
             <Button Command="{Binding UpdateMode}" HorizontalAlignment="Stretch">Set</Button>
             <ItemsControl ItemsSource="{Binding RttWidgets}">
                 <ItemsControl.ItemsPanel>
