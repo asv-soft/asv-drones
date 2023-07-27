@@ -38,14 +38,6 @@ namespace Asv.Drones.Gui.Core
                 .Subscribe(_themeService.CurrentTheme)
                 .DisposeItWith(Disposable);
 
-            _themeService.FlowDirection.Subscribe(_ => FlowDirection = _)
-                .DisposeItWith(Disposable);
-            
-            this.WhenAnyValue(_ => _.FlowDirection)
-                .Skip(1) // skip first because it is set in constructor
-                .Subscribe(_themeService.FlowDirection)
-                .DisposeItWith(Disposable);
-
             this.WhenAnyValue(_ => _.SelectedLanguage)
                 .Skip(1) // skip first because it is set in constructor
                 .Subscribe(_ => IsRebootRequired = _ != _localization.CurrentLanguage.Value).DisposeItWith(Disposable);
@@ -61,11 +53,6 @@ namespace Asv.Drones.Gui.Core
 
         [Reactive]
         public ThemeItem SelectedTheme { get; set; }
-
-        [Reactive]
-        public FlowDirectionItem FlowDirection { get; set; }
-
-        public IEnumerable<FlowDirectionItem> AppFlowDirections => _themeService.FlowDirections;
 
         public string LanguageIcon => MaterialIconDataProvider.GetData(MaterialIconKind.Translate);
 
