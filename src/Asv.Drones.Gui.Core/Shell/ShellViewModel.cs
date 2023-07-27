@@ -4,6 +4,7 @@ using ReactiveUI.Fody.Helpers;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Reactive.Linq;
+using Asv.Cfg;
 using Asv.Common;
 using Material.Icons;
 
@@ -24,7 +25,8 @@ namespace Asv.Drones.Gui.Core
         private readonly ReadOnlyObservableCollection<IShellStatusItem> _statusItems = null!;
         private readonly SourceList<LogMessage> _messageSourceList = new();
         private readonly ReadOnlyObservableCollection<IHeaderMenuItem> _headerMenu = null!;
-
+        private readonly IThemeService _themeService;
+        private readonly IConfiguration _config;
 
         public ShellViewModel():base(Uri)
         {
@@ -65,11 +67,14 @@ namespace Asv.Drones.Gui.Core
             IAppService app,
             INavigationService navigation, 
             ILogService logService, 
+            IThemeService themeService,
+            IConfiguration config,
             [ImportMany(HeaderMenuItem.UriString)] IEnumerable<IViewModelProvider<IHeaderMenuItem>> headerMenuProviders,
             [ImportMany] IEnumerable<IViewModelProvider<IShellMenuItem>> menuProviders,
-            [ImportMany] IEnumerable<IViewModelProvider<IShellStatusItem>> statusProviders) : this()    
+            [ImportMany] IEnumerable<IViewModelProvider<IShellStatusItem>> statusProviders) : this()
         {
             _navigation = navigation ?? throw new ArgumentNullException(nameof(navigation));
+            _config = config;
             if (logService == null) throw new ArgumentNullException(nameof(logService));
             if (menuProviders == null) throw new ArgumentNullException(nameof(menuProviders));
             if (statusProviders == null) throw new ArgumentNullException(nameof(statusProviders));
@@ -143,6 +148,8 @@ namespace Asv.Drones.Gui.Core
                 .DisposeItWith(Disposable);
 
             #endregion
+            
+            _themeService = themeService;
         }
 
         
@@ -171,8 +178,13 @@ namespace Asv.Drones.Gui.Core
         public ReadOnlyObservableCollection<IShellMenuItem> FooterMenuItems => _footerMenuItems;
         public ReadOnlyObservableCollection<LogMessageViewModel> Messages => _messages;
         public ReadOnlyObservableCollection<IShellStatusItem> StatusItems => _statusItems;
-        
-        
+
+        public void OnLoaded()
+        {
+            var themeConfig = _config.Get<ThemeServiceConfig>();
+            var themeFromConfig = _themeService.Themes.FirstOrDefault(_ => _.Id.Equals(themeConfig.Theme));
+            if (themeFromConfig != null) _themeService.CurrentTheme.OnNext(themeFromConfig);
+        }
 
     }
 }

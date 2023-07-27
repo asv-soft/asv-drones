@@ -8,7 +8,8 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:CompileBindings="True"
              x:Class="Asv.Drones.Gui.Core.ShellView"
-             x:DataType="core:ShellViewModel">
+             x:DataType="core:ShellViewModel"
+             AttachedToVisualTree="OnAttachedToVisualTree">
     <Design.DataContext>
         <core:ShellViewModel/>
     </Design.DataContext>
