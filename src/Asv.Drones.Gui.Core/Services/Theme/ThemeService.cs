@@ -13,7 +13,6 @@ namespace Asv.Drones.Gui.Core
     public class ThemeServiceConfig
     {
         public string? Theme { get; set; }
-        public FlowDirection? FlowDirection { get; set; }
     }
 
     [Export(typeof(IThemeService))]
@@ -24,15 +23,6 @@ namespace Asv.Drones.Gui.Core
             new(FluentAvaloniaTheme.DarkModeString, RS.ThemeService_Themes_Dark, ThemeVariant.Dark),
             new(FluentAvaloniaTheme.LightModeString, RS.ThemeService_Themes_Light, ThemeVariant.Light),
         };
-
-        private readonly FlowDirectionItem[] _flowDirections = {
-            new(global::Avalonia.Media.FlowDirection.LeftToRight,RS.ThemeService_FlowDirections_LeftToRight),
-            new(global::Avalonia.Media.FlowDirection.RightToLeft,RS.ThemeService_FlowDirections_RightToLeft),
-        };
-
-
-        
-        private readonly object _sync = new();
 
         [ImportingConstructor]
         public ThemeService(IConfiguration cfgSvc):base(cfgSvc)
@@ -49,24 +39,10 @@ namespace Asv.Drones.Gui.Core
             selectedTheme ??= _themes.First();
             CurrentTheme = new RxValue<ThemeItem>(selectedTheme).DisposeItWith(Disposable);
             CurrentTheme.Subscribe(SetTheme).DisposeItWith(Disposable);
-
-            var flowFromConfig = InternalGetConfig(_ => _.FlowDirection);
-            var flowDirection = default(FlowDirectionItem);
-
-            if (flowFromConfig == null)
-            {
-                flowDirection = _flowDirections.FirstOrDefault(_ => _.Id == flowFromConfig);
-            }
-
-            flowDirection ??= _flowDirections.First();
-            FlowDirection = new RxValue<FlowDirectionItem>(flowDirection).DisposeItWith(Disposable);
-            FlowDirection.Subscribe(SetFlowDirection).DisposeItWith(Disposable);
         }
 
         public IEnumerable<ThemeItem> Themes =>_themes;
         public IRxEditableValue<ThemeItem> CurrentTheme { get; }
-        public IRxEditableValue<FlowDirectionItem> FlowDirection { get; }
-        public IEnumerable<FlowDirectionItem> FlowDirections => _flowDirections;
 
         private void SetTheme(ThemeItem theme)
         {
@@ -75,34 +51,5 @@ namespace Asv.Drones.Gui.Core
             
             InternalSaveConfig(_ => _.Theme = theme.Id);
         }
-
-        private void SetFlowDirection(FlowDirectionItem value)
-        {
-            if (value == null) throw new ArgumentNullException(nameof(value));
-            if (Application.Current == null)
-                throw new InvalidOperationException("Application.Current is null. May be you try to set FlowDirection before Avalonia startup");
-            var lifetime = Application.Current.ApplicationLifetime;
-            if (lifetime is IClassicDesktopStyleApplicationLifetime cdl)
-            {
-                if (cdl.MainWindow == null)
-                    throw new InvalidOperationException("Can't find main window. May be you try to set FlowDirection before Avalonia startup");
-                if (cdl.MainWindow.FlowDirection == value.Id)
-                    return;
-                cdl.MainWindow.FlowDirection = value.Id;
-            }
-            else if (lifetime is ISingleViewApplicationLifetime single)
-            {
-                var mainWindow = TopLevel.GetTopLevel(single.MainView) ?? single.MainView;
-                if (mainWindow == null)
-                    throw new InvalidOperationException("Can't find main window");
-                if (mainWindow.FlowDirection == value.Id)
-                    return;
-                mainWindow.FlowDirection = value.Id;
-            }
-            
-            
-            InternalSaveConfig(_=>_.FlowDirection = value.Id);
-        }
-        
     }
 }

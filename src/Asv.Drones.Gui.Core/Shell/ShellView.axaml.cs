@@ -22,4 +22,10 @@ public partial class ShellView : UserControl
     {
         
     }
+
+    private void OnAttachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)
+    {
+        var vm = this.DataContext as ShellViewModel;
+        vm?.OnLoaded();
+    }
 }

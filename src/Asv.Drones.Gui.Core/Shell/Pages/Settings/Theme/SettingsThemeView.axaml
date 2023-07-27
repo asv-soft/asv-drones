@@ -14,7 +14,6 @@
         <core:OptionsDisplayItem Margin="0,0,0,8" Header="{x:Static core:RS.SettingsThemeViewModel_CurrentTheme}"
                                  Icon="DarkTheme"
                                  Description="{x:Static core:RS.SettingsThemeViewModel_ChangeThemeDescription}">
-
             <core:OptionsDisplayItem.ActionButton>
                 <ComboBox SelectedItem="{Binding SelectedTheme}"
                           ItemsSource="{Binding AppThemes}"
@@ -26,12 +25,10 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </core:OptionsDisplayItem.ActionButton>
-
-        </core:OptionsDisplayItem >
+        </core:OptionsDisplayItem>
         <core:OptionsDisplayItem Margin="0,0,0,8" Header="{x:Static core:RS.SettingsThemeViewModel_CurrentLanguage}"
                                  Icon="{Binding LanguageIcon}"
                                  Description="{x:Static core:RS.SettingsThemeViewModel_CurrentLanguageDescription}">
-
             <core:OptionsDisplayItem.ActionButton>
                 <ComboBox SelectedItem="{Binding SelectedLanguage}"
                           ItemsSource="{Binding AppLanguages}"
@@ -43,26 +40,6 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </core:OptionsDisplayItem.ActionButton>
-
         </core:OptionsDisplayItem >
-        <core:OptionsDisplayItem Header="{x:Static core:RS.SettingsThemeViewModel_FlowDirection}"
-                                 Icon="AlignRight"
-                                 Description="{x:Static core:RS.SettingsThemeViewModel_FlowDirectionDescription}">
-
-            <core:OptionsDisplayItem.ActionButton>
-                <ComboBox SelectedItem="{Binding FlowDirection}"
-                          ItemsSource="{Binding AppFlowDirections}"
-                          MinWidth="150">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}"/>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-				</ComboBox>
-            </core:OptionsDisplayItem.ActionButton>
-
-        </core:OptionsDisplayItem>
-        
-        
 	</StackPanel>
 </UserControl>
