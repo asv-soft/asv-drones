@@ -137,4 +137,7 @@
     <data name="VorSdrRttViewModel_FieldStrength_Units" xml:space="preserve">
         <value>μВ/м</value>
     </data>
+    <data name="FlightSdrViewModel_Frequency_Validation_ErrorMessage" xml:space="preserve">
+        <value>Значение должно быть больше 0</value>
+    </data>
 </root>

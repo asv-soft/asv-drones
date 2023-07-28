@@ -78,6 +78,15 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Value must be greater than 0.
+        /// </summary>
+        public static string FlightSdrViewModel_Frequency_Validation_ErrorMessage {
+            get {
+                return ResourceManager.GetString("FlightSdrViewModel_Frequency_Validation_ErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SDR link quality.
         /// </summary>
         public static string LinkQualitySdrRttView_ToolTip {

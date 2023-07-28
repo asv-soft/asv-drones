@@ -102,8 +102,16 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             payload.Sdr.SystemControlAction(AsvSdrSystemControlAction.AsvSdrSystemControlActionShutdown, cancel));
         
         this.ValidationRule(x => x.FrequencyInMhz,
-                _ => _freqInMHzMeasureUnit.IsValid(_),
-                _ => _freqInMHzMeasureUnit.GetErrorMessage(_))
+                _ =>
+                {
+                    if (double.TryParse(_, out var number))
+                    {
+                        return number > 0;
+                    }
+
+                    return false;
+                },
+                RS.FlightSdrViewModel_Frequency_Validation_ErrorMessage)
             .DisposeItWith(Disposable);
     }
     
