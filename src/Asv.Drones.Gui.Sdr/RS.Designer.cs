@@ -87,6 +87,96 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string FlightSdrViewModel_RecordStartDialog_PrimarryButton_Name {
+            get {
+                return ResourceManager.GetString("FlightSdrViewModel_RecordStartDialog_PrimarryButton_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string FlightSdrViewModel_RecordStartDialog_SecondaryButton_Name {
+            get {
+                return ResourceManager.GetString("FlightSdrViewModel_RecordStartDialog_SecondaryButton_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string FlightSdrViewModel_RecordStartDialog_Title {
+            get {
+                return ResourceManager.GetString("FlightSdrViewModel_RecordStartDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error to set payload mode.
+        /// </summary>
+        public static string FlightSdrViewModel_StartRecord_Error_Message {
+            get {
+                return ResourceManager.GetString("FlightSdrViewModel_StartRecord_Error_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rec start.
+        /// </summary>
+        public static string FlightSdrViewModel_StartRecord_Error_Sender {
+            get {
+                return ResourceManager.GetString("FlightSdrViewModel_StartRecord_Error_Sender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error to set payload mode.
+        /// </summary>
+        public static string FlightSdrViewModel_StopRecord_Error_Message {
+            get {
+                return ResourceManager.GetString("FlightSdrViewModel_StopRecord_Error_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rec stop.
+        /// </summary>
+        public static string FlightSdrViewModel_StopRecord_Error_Sender {
+            get {
+                return ResourceManager.GetString("FlightSdrViewModel_StopRecord_Error_Sender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payload.
+        /// </summary>
+        public static string FlightSdrViewModel_Title {
+            get {
+                return ResourceManager.GetString("FlightSdrViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error to set payload mode.
+        /// </summary>
+        public static string FlightSdrViewModel_UpdateMode_Error_Message {
+            get {
+                return ResourceManager.GetString("FlightSdrViewModel_UpdateMode_Error_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set mode.
+        /// </summary>
+        public static string FlightSdrViewModel_UpdateMode_Error_Sender {
+            get {
+                return ResourceManager.GetString("FlightSdrViewModel_UpdateMode_Error_Sender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SDR link quality.
         /// </summary>
         public static string LinkQualitySdrRttView_ToolTip {
@@ -245,6 +335,105 @@ namespace Asv.Drones.Gui.Sdr {
         public static string LlzSdrRttViewModelChannelTitle {
             get {
                 return ResourceManager.GetString("LlzSdrRttViewModelChannelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string RecordStartView_AddButton_Title {
+            get {
+                return ResourceManager.GetString("RecordStartView_AddButton_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record name.
+        /// </summary>
+        public static string RecordStartView_RecordName_Title {
+            get {
+                return ResourceManager.GetString("RecordStartView_RecordName_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter new record name.
+        /// </summary>
+        public static string RecordStartView_RecordName_Watermark {
+            get {
+                return ResourceManager.GetString("RecordStartView_RecordName_Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter new tag name.
+        /// </summary>
+        public static string RecordStartView_TagName_Watermark {
+            get {
+                return ResourceManager.GetString("RecordStartView_TagName_Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter new tag value.
+        /// </summary>
+        public static string RecordStartView_TagValue_Watermark {
+            get {
+                return ResourceManager.GetString("RecordStartView_TagValue_Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not valid record name.
+        /// </summary>
+        public static string RecordStartViewModel_RecordName_Validation_ErrorMessage {
+            get {
+                return ResourceManager.GetString("RecordStartViewModel_RecordName_Validation_ErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not valid tag name.
+        /// </summary>
+        public static string RecordStartViewModel_TagName_Validation_ErrorMessage {
+            get {
+                return ResourceManager.GetString("RecordStartViewModel_TagName_Validation_ErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is not valid Float64 value!.
+        /// </summary>
+        public static string RecordStartViewModel_TagValue_Float64_ErrorMessage {
+            get {
+                return ResourceManager.GetString("RecordStartViewModel_TagValue_Float64_ErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is not valid Int64 value!.
+        /// </summary>
+        public static string RecordStartViewModel_TagValue_Int64_ErrorMessage {
+            get {
+                return ResourceManager.GetString("RecordStartViewModel_TagValue_Int64_ErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to String length must be &lt; 9, and contain only ascii-chars!.
+        /// </summary>
+        public static string RecordStartViewModel_TagValue_String8_ErrorMessage {
+            get {
+                return ResourceManager.GetString("RecordStartViewModel_TagValue_String8_ErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is not valid UInt64 value!.
+        /// </summary>
+        public static string RecordStartViewModel_TagValue_UInt64_ErrorMessage {
+            get {
+                return ResourceManager.GetString("RecordStartViewModel_TagValue_UInt64_ErrorMessage", resourceCulture);
             }
         }
         

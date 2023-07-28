@@ -147,4 +147,67 @@
     <data name="FlightSdrViewModel_Frequency_Validation_ErrorMessage" xml:space="preserve">
         <value>Value must be greater than 0</value>
     </data>
+    <data name="FlightSdrViewModel_Title" xml:space="preserve">
+        <value>Payload</value>
+    </data>
+    <data name="FlightSdrViewModel_UpdateMode_Error_Sender" xml:space="preserve">
+        <value>Set mode</value>
+    </data>
+    <data name="FlightSdrViewModel_UpdateMode_Error_Message" xml:space="preserve">
+        <value>Error to set payload mode</value>
+    </data>
+    <data name="FlightSdrViewModel_StartRecord_Error_Sender" xml:space="preserve">
+        <value>Rec start</value>
+    </data>
+    <data name="FlightSdrViewModel_StartRecord_Error_Message" xml:space="preserve">
+        <value>Error to set payload mode</value>
+    </data>
+    <data name="FlightSdrViewModel_StopRecord_Error_Sender" xml:space="preserve">
+        <value>Rec stop</value>
+    </data>
+    <data name="FlightSdrViewModel_StopRecord_Error_Message" xml:space="preserve">
+        <value>Error to set payload mode</value>
+    </data>
+    <data name="FlightSdrViewModel_RecordStartDialog_Title" xml:space="preserve">
+        <value>New</value>
+    </data>
+    <data name="FlightSdrViewModel_RecordStartDialog_PrimarryButton_Name" xml:space="preserve">
+        <value>Start</value>
+    </data>
+    <data name="FlightSdrViewModel_RecordStartDialog_SecondaryButton_Name" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="RecordStartViewModel_TagName_Validation_ErrorMessage" xml:space="preserve">
+        <value>Not valid tag name</value>
+    </data>
+    <data name="RecordStartViewModel_TagValue_String8_ErrorMessage" xml:space="preserve">
+        <value>String length must be &lt; 9, and contain only ascii-chars!</value>
+    </data>
+    <data name="RecordStartViewModel_TagValue_Int64_ErrorMessage" xml:space="preserve">
+        <value>This is not valid Int64 value!</value>
+    </data>
+    <data name="RecordStartViewModel_TagValue_UInt64_ErrorMessage" xml:space="preserve">
+        <value>This is not valid UInt64 value!</value>
+    </data>
+    <data name="RecordStartViewModel_TagValue_Float64_ErrorMessage" xml:space="preserve">
+        <value>This is not valid Float64 value!</value>
+    </data>
+    <data name="RecordStartViewModel_RecordName_Validation_ErrorMessage" xml:space="preserve">
+        <value>Not valid record name</value>
+    </data>
+    <data name="RecordStartView_RecordName_Title" xml:space="preserve">
+        <value>Record name</value>
+    </data>
+    <data name="RecordStartView_RecordName_Watermark" xml:space="preserve">
+        <value>Enter new record name</value>
+    </data>
+    <data name="RecordStartView_TagName_Watermark" xml:space="preserve">
+        <value>Enter new tag name</value>
+    </data>
+    <data name="RecordStartView_TagValue_Watermark" xml:space="preserve">
+        <value>Enter new tag value</value>
+    </data>
+    <data name="RecordStartView_AddButton_Title" xml:space="preserve">
+        <value>Add</value>
+    </data>
 </root>

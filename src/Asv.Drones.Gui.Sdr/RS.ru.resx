@@ -140,4 +140,67 @@
     <data name="FlightSdrViewModel_Frequency_Validation_ErrorMessage" xml:space="preserve">
         <value>Значение должно быть больше 0</value>
     </data>
+    <data name="FlightSdrViewModel_Title" xml:space="preserve">
+        <value>Нагрузка</value>
+    </data>
+    <data name="FlightSdrViewModel_UpdateMode_Error_Sender" xml:space="preserve">
+        <value>Установить режим</value>
+    </data>
+    <data name="FlightSdrViewModel_UpdateMode_Error_Message" xml:space="preserve">
+        <value>Ошибка при установке режима полезной нагрузки</value>
+    </data>
+    <data name="FlightSdrViewModel_RecordStartDialog_PrimarryButton_Name" xml:space="preserve">
+        <value>Начать</value>
+    </data>
+    <data name="FlightSdrViewModel_RecordStartDialog_SecondaryButton_Name" xml:space="preserve">
+        <value>Отмена</value>
+    </data>
+    <data name="FlightSdrViewModel_RecordStartDialog_Title" xml:space="preserve">
+        <value>Новая запись</value>
+    </data>
+    <data name="FlightSdrViewModel_StartRecord_Error_Message" xml:space="preserve">
+        <value>Ошибка при установке режима полезной нагрузки</value>
+    </data>
+    <data name="FlightSdrViewModel_StopRecord_Error_Message" xml:space="preserve">
+        <value>Ошибка при установке режима полезной нагрузки</value>
+    </data>
+    <data name="FlightSdrViewModel_StartRecord_Error_Sender" xml:space="preserve">
+        <value>Начать запись</value>
+    </data>
+    <data name="FlightSdrViewModel_StopRecord_Error_Sender" xml:space="preserve">
+        <value>Остановить запись</value>
+    </data>
+    <data name="RecordStartViewModel_TagName_Validation_ErrorMessage" xml:space="preserve">
+        <value>Некорректное имя тэга</value>
+    </data>
+    <data name="RecordStartViewModel_TagValue_Float64_ErrorMessage" xml:space="preserve">
+        <value>Это недопустимое значение Float64!</value>
+    </data>
+    <data name="RecordStartViewModel_TagValue_Int64_ErrorMessage" xml:space="preserve">
+        <value>Это недопустимое значение Int64!</value>
+    </data>
+    <data name="RecordStartViewModel_TagValue_UInt64_ErrorMessage" xml:space="preserve">
+        <value>Это недопустимое значение UInt64!</value>
+    </data>
+    <data name="RecordStartViewModel_TagValue_String8_ErrorMessage" xml:space="preserve">
+        <value>Длина строки должна быть &lt; 9 и содержать только символы ascii!</value>
+    </data>
+    <data name="RecordStartViewModel_RecordName_Validation_ErrorMessage" xml:space="preserve">
+        <value>Недопустимое имя записи</value>
+    </data>
+    <data name="RecordStartView_RecordName_Title" xml:space="preserve">
+        <value>Имя записи</value>
+    </data>
+    <data name="RecordStartView_RecordName_Watermark" xml:space="preserve">
+        <value>Введите имя для новой записи</value>
+    </data>
+    <data name="RecordStartView_AddButton_Title" xml:space="preserve">
+        <value>Добавить</value>
+    </data>
+    <data name="RecordStartView_TagName_Watermark" xml:space="preserve">
+        <value>Введите имя  для нового тэга</value>
+    </data>
+    <data name="RecordStartView_TagValue_Watermark" xml:space="preserve">
+        <value>Введите значение для нового тэга</value>
+    </data>
 </root>

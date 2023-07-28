@@ -50,7 +50,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
        _freqInMHzMeasureUnit = _loc.Frequency.AvailableUnits.First(_ => _.Id == Core.FrequencyUnits.MHz);
         
         Icon = MaterialIconKind.Memory;
-        Title = "Payload";
+        Title = RS.FlightSdrViewModel_Title;
         Location = WidgetLocation.Right;
 
         payload.Sdr.SupportedModes.DistinctUntilChanged()
@@ -68,21 +68,21 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         UpdateMode = ReactiveCommand.CreateFromTask(cancel => Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode, (ulong)Math.Round(_freqInMHzMeasureUnit.ConvertToSi(FrequencyInMhz)), 1, 1, cancel));
         UpdateMode.ThrownExceptions.Subscribe(ex =>
         {
-            _logService.Error("Set mode",$"Error to set payload mode",ex); // TODO: Localize
+            _logService.Error(RS.FlightSdrViewModel_UpdateMode_Error_Sender,RS.FlightSdrViewModel_UpdateMode_Error_Message,ex);
         }).DisposeItWith(Disposable);
         
         StartRecord = ReactiveCommand.CreateFromTask(RecordStartImpl,
             this.WhenAnyValue(_=>_.IsRecordStarted).Select(_=>!_));
         StartRecord.ThrownExceptions.Subscribe(ex =>
         {
-            _logService.Error("Rec start",$"Error to set payload mode",ex);
+            _logService.Error(RS.FlightSdrViewModel_StartRecord_Error_Sender,RS.FlightSdrViewModel_StartRecord_Error_Message,ex);
         }).DisposeItWith(Disposable);
         
         StopRecord = ReactiveCommand.CreateFromTask(cancel=>Payload.Sdr.StopRecordAndCheckResult(cancel),
             this.WhenAnyValue(_=>_.IsRecordStarted));
         StopRecord.ThrownExceptions.Subscribe(ex =>
         {
-            _logService.Error("Rec stop",$"Error to set payload mode",ex);
+            _logService.Error(RS.FlightSdrViewModel_StopRecord_Error_Sender,RS.FlightSdrViewModel_StopRecord_Error_Message,ex);
         }).DisposeItWith(Disposable);
 
         Disposable.AddAction(() =>
@@ -119,10 +119,10 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     {
         var dialog = new ContentDialog()
         {
-            Title = "New",
-            PrimaryButtonText = "Start",
+            Title = RS.FlightSdrViewModel_RecordStartDialog_Title,
+            PrimaryButtonText = RS.FlightSdrViewModel_RecordStartDialog_PrimarryButton_Name,
             IsSecondaryButtonEnabled = true,
-            SecondaryButtonText = "Cancel"
+            SecondaryButtonText = RS.FlightSdrViewModel_RecordStartDialog_SecondaryButton_Name
         };
             
         var viewModel = new RecordStartViewModel();
