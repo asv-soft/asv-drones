@@ -123,6 +123,15 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Altitude measure units.
+        /// </summary>
+        public static string Altitude_Description {
+            get {
+                return ResourceManager.GetString("Altitude_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Feets.
         /// </summary>
         public static string Altitude_Feet_Title {
@@ -159,6 +168,24 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Altitude.
+        /// </summary>
+        public static string Altitude_Title {
+            get {
+                return ResourceManager.GetString("Altitude_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amplitude modulation measure units.
+        /// </summary>
+        public static string AmplitudeModulation_Description {
+            get {
+                return ResourceManager.GetString("AmplitudeModulation_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In parts.
         /// </summary>
         public static string AmplitudeModulation_InParts_Unit {
@@ -177,11 +204,38 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AM.
+        /// </summary>
+        public static string AmplitudeModulation_Title {
+            get {
+                return ResourceManager.GetString("AmplitudeModulation_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Move anchors.
         /// </summary>
         public static string AnchorMoverActionView_Title {
             get {
                 return ResourceManager.GetString("AnchorMoverActionView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bearing measure units.
+        /// </summary>
+        public static string Bearing_Description {
+            get {
+                return ResourceManager.GetString("Bearing_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bearing.
+        /// </summary>
+        public static string Bearing_Title {
+            get {
+                return ResourceManager.GetString("Bearing_Title", resourceCulture);
             }
         }
         
@@ -555,6 +609,42 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Difference depth of modulation measure units.
+        /// </summary>
+        public static string DdmGp_Description {
+            get {
+                return ResourceManager.GetString("DdmGp_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DDM (Gp).
+        /// </summary>
+        public static string DdmGp_Title {
+            get {
+                return ResourceManager.GetString("DdmGp_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Difference depth of modulation measure units.
+        /// </summary>
+        public static string DdmLlz_Description {
+            get {
+                return ResourceManager.GetString("DdmLlz_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DDM (Llz).
+        /// </summary>
+        public static string DdmLlz_Title {
+            get {
+                return ResourceManager.GetString("DdmLlz_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [Deg]°.
         /// </summary>
         public static string Degrees_Degree_Title {
@@ -564,11 +654,29 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Angle measure units.
+        /// </summary>
+        public static string Degrees_Description {
+            get {
+                return ResourceManager.GetString("Degrees_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [Deg]°[Min]′[Sec]′′.
         /// </summary>
         public static string Degrees_DMS_Title {
             get {
                 return ResourceManager.GetString("Degrees_DMS_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Angle.
+        /// </summary>
+        public static string Degrees_Title {
+            get {
+                return ResourceManager.GetString("Degrees_Title", resourceCulture);
             }
         }
         
@@ -587,6 +695,15 @@ namespace Asv.Drones.Gui.Core {
         public static string DeviceBrowserView_Header {
             get {
                 return ResourceManager.GetString("DeviceBrowserView_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distance measure units.
+        /// </summary>
+        public static string Distance_Description {
+            get {
+                return ResourceManager.GetString("Distance_Description", resourceCulture);
             }
         }
         
@@ -627,11 +744,29 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Distance.
+        /// </summary>
+        public static string Distance_Title {
+            get {
+                return ResourceManager.GetString("Distance_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Flight mode.
         /// </summary>
         public static string FlightShellMenuItem_Name {
             get {
                 return ResourceManager.GetString("FlightShellMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency measure units.
+        /// </summary>
+        public static string Frequency_Description {
+            get {
+                return ResourceManager.GetString("Frequency_Description", resourceCulture);
             }
         }
         
@@ -708,6 +843,15 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Frequency.
+        /// </summary>
+        public static string Frequency_Title {
+            get {
+                return ResourceManager.GetString("Frequency_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open store file.
         /// </summary>
         public static string GlobalCommands_OpenStoreDialogTitle {
@@ -780,11 +924,29 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Latitude measure units.
+        /// </summary>
+        public static string Latitude_Description {
+            get {
+                return ResourceManager.GetString("Latitude_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [Deg]°[Min]′[Sec]′′.
         /// </summary>
         public static string Latitude_DMS_Title {
             get {
                 return ResourceManager.GetString("Latitude_DMS_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude.
+        /// </summary>
+        public static string Latitude_Title {
+            get {
+                return ResourceManager.GetString("Latitude_Title", resourceCulture);
             }
         }
         
@@ -1005,11 +1167,29 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Longitude measure units.
+        /// </summary>
+        public static string Longitude_Description {
+            get {
+                return ResourceManager.GetString("Longitude_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [Deg]°[Min]′[Sec]′′.
         /// </summary>
         public static string Longitude_DMS_Title {
             get {
                 return ResourceManager.GetString("Longitude_DMS_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude.
+        /// </summary>
+        public static string Longitude_Title {
+            get {
+                return ResourceManager.GetString("Longitude_Title", resourceCulture);
             }
         }
         
@@ -1127,6 +1307,42 @@ namespace Asv.Drones.Gui.Core {
         public static string MavlinkDeviceView_Status_Name {
             get {
                 return ResourceManager.GetString("MavlinkDeviceView_Status_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must be a number.
+        /// </summary>
+        public static string MeasureUnitBase_ErrorMessage_NotANumber {
+            get {
+                return ResourceManager.GetString("MeasureUnitBase_ErrorMessage_NotANumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value can&apos;t be null or white space.
+        /// </summary>
+        public static string MeasureUnitBase_ErrorMessage_NullOrWhiteSpace {
+            get {
+                return ResourceManager.GetString("MeasureUnitBase_ErrorMessage_NullOrWhiteSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must be greater than {0} ({1}).
+        /// </summary>
+        public static string MeasureUnitExtensions_ErrorMessage_GreaterValue {
+            get {
+                return ResourceManager.GetString("MeasureUnitExtensions_ErrorMessage_GreaterValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must be less than {0} ({1}).
+        /// </summary>
+        public static string MeasureUnitExtensions_ErrorMessage_LesserValue {
+            get {
+                return ResourceManager.GetString("MeasureUnitExtensions_ErrorMessage_LesserValue", resourceCulture);
             }
         }
         
@@ -1446,6 +1662,15 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Phase measure units.
+        /// </summary>
+        public static string Phase_Description {
+            get {
+                return ResourceManager.GetString("Phase_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Radian.
         /// </summary>
         public static string Phase_Radian_Title {
@@ -1460,6 +1685,15 @@ namespace Asv.Drones.Gui.Core {
         public static string Phase_Radian_Unit {
             get {
                 return ResourceManager.GetString("Phase_Radian_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phase.
+        /// </summary>
+        public static string Phase_Title {
+            get {
+                return ResourceManager.GetString("Phase_Title", resourceCulture);
             }
         }
         
@@ -1514,6 +1748,24 @@ namespace Asv.Drones.Gui.Core {
         public static string Power_Dbm_Unit {
             get {
                 return ResourceManager.GetString("Power_Dbm_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power measure units.
+        /// </summary>
+        public static string Power_Description {
+            get {
+                return ResourceManager.GetString("Power_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power.
+        /// </summary>
+        public static string Power_Title {
+            get {
+                return ResourceManager.GetString("Power_Title", resourceCulture);
             }
         }
         
@@ -1676,6 +1928,24 @@ namespace Asv.Drones.Gui.Core {
         public static string SavedCoordsViewModel_RemoveItem_Title {
             get {
                 return ResourceManager.GetString("SavedCoordsViewModel_RemoveItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SDM.
+        /// </summary>
+        public static string Sdm_Description {
+            get {
+                return ResourceManager.GetString("Sdm_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sum depth of modulation measure units.
+        /// </summary>
+        public static string Sdm_Title {
+            get {
+                return ResourceManager.GetString("Sdm_Title", resourceCulture);
             }
         }
         
@@ -1923,6 +2193,42 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Value must be a number.
+        /// </summary>
+        public static string TemperatureCelsius_ErrorMessage_NaN {
+            get {
+                return ResourceManager.GetString("TemperatureCelsius_ErrorMessage_NaN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value can&apos;t be null or white space.
+        /// </summary>
+        public static string TemperatureCelsius_ErrorMessage_NullOrWhiteSpace {
+            get {
+                return ResourceManager.GetString("TemperatureCelsius_ErrorMessage_NullOrWhiteSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must be a number.
+        /// </summary>
+        public static string TemperatureFarenheit_ErrorMessage_NaN {
+            get {
+                return ResourceManager.GetString("TemperatureFarenheit_ErrorMessage_NaN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value can&apos;t be null or white space.
+        /// </summary>
+        public static string TemperatureFarenheit_ErrorMessage_NullOrWhiteSpace {
+            get {
+                return ResourceManager.GetString("TemperatureFarenheit_ErrorMessage_NullOrWhiteSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LeftToRight.
         /// </summary>
         public static string ThemeService_FlowDirections_LeftToRight {
@@ -2076,6 +2382,15 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Velocity measure units.
+        /// </summary>
+        public static string Velocity_Description {
+            get {
+                return ResourceManager.GetString("Velocity_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to km/h.
         /// </summary>
         public static string Velocity_KilometersPerHourUnit {
@@ -2099,6 +2414,15 @@ namespace Asv.Drones.Gui.Core {
         public static string Velocity_MilesPerHourUnit {
             get {
                 return ResourceManager.GetString("Velocity_MilesPerHourUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velocity.
+        /// </summary>
+        public static string Velocity_Title {
+            get {
+                return ResourceManager.GetString("Velocity_Title", resourceCulture);
             }
         }
         

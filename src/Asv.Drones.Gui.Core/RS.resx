@@ -806,4 +806,112 @@
   <data name="Longitude_DMS_Title" xml:space="preserve">
     <value>[Deg]°[Min]′[Sec]′′</value>
   </data>
+  <data name="MeasureUnitExtensions_ErrorMessage_GreaterValue" xml:space="preserve">
+    <value>Value must be greater than {0} ({1})</value>
+  </data>
+  <data name="MeasureUnitExtensions_ErrorMessage_LesserValue" xml:space="preserve">
+    <value>Value must be less than {0} ({1})</value>
+  </data>
+  <data name="Altitude_Title" xml:space="preserve">
+    <value>Altitude</value>
+  </data>
+  <data name="Altitude_Description" xml:space="preserve">
+    <value>Altitude measure units</value>
+  </data>
+  <data name="AmplitudeModulation_Title" xml:space="preserve">
+    <value>AM</value>
+  </data>
+  <data name="AmplitudeModulation_Description" xml:space="preserve">
+    <value>Amplitude modulation measure units</value>
+  </data>
+  <data name="Bearing_Title" xml:space="preserve">
+    <value>Bearing</value>
+  </data>
+  <data name="Bearing_Description" xml:space="preserve">
+    <value>Bearing measure units</value>
+  </data>
+  <data name="Degrees_Title" xml:space="preserve">
+    <value>Angle</value>
+  </data>
+  <data name="Degrees_Description" xml:space="preserve">
+    <value>Angle measure units</value>
+  </data>
+  <data name="Distance_Title" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="Distance_Description" xml:space="preserve">
+    <value>Distance measure units</value>
+  </data>
+  <data name="Frequency_Title" xml:space="preserve">
+    <value>Frequency</value>
+  </data>
+  <data name="Frequency_Description" xml:space="preserve">
+    <value>Frequency measure units</value>
+  </data>
+  <data name="Latitude_Title" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Latitude_Description" xml:space="preserve">
+    <value>Latitude measure units</value>
+  </data>
+  <data name="Longitude_Title" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="Longitude_Description" xml:space="preserve">
+    <value>Longitude measure units</value>
+  </data>
+  <data name="MeasureUnitBase_ErrorMessage_NullOrWhiteSpace" xml:space="preserve">
+    <value>Value can't be null or white space</value>
+  </data>
+  <data name="MeasureUnitBase_ErrorMessage_NotANumber" xml:space="preserve">
+    <value>Value must be a number</value>
+  </data>
+  <data name="Phase_Title" xml:space="preserve">
+    <value>Phase</value>
+  </data>
+  <data name="Phase_Description" xml:space="preserve">
+    <value>Phase measure units</value>
+  </data>
+  <data name="Power_Title" xml:space="preserve">
+    <value>Power</value>
+  </data>
+  <data name="Power_Description" xml:space="preserve">
+    <value>Power measure units</value>
+  </data>
+  <data name="TemperatureCelsius_ErrorMessage_NullOrWhiteSpace" xml:space="preserve">
+    <value>Value can't be null or white space</value>
+  </data>
+  <data name="TemperatureCelsius_ErrorMessage_NaN" xml:space="preserve">
+    <value>Value must be a number</value>
+  </data>
+  <data name="TemperatureFarenheit_ErrorMessage_NullOrWhiteSpace" xml:space="preserve">
+    <value>Value can't be null or white space</value>
+  </data>
+  <data name="TemperatureFarenheit_ErrorMessage_NaN" xml:space="preserve">
+    <value>Value must be a number</value>
+  </data>
+  <data name="Velocity_Title" xml:space="preserve">
+    <value>Velocity</value>
+  </data>
+  <data name="Velocity_Description" xml:space="preserve">
+    <value>Velocity measure units</value>
+  </data>
+  <data name="DdmGp_Title" xml:space="preserve">
+    <value>DDM (Gp)</value>
+  </data>
+  <data name="DdmGp_Description" xml:space="preserve">
+    <value>Difference depth of modulation measure units</value>
+  </data>
+  <data name="DdmLlz_Title" xml:space="preserve">
+    <value>DDM (Llz)</value>
+  </data>
+  <data name="DdmLlz_Description" xml:space="preserve">
+    <value>Difference depth of modulation measure units</value>
+  </data>
+  <data name="Sdm_Title" xml:space="preserve">
+    <value>Sum depth of modulation measure units</value>
+  </data>
+  <data name="Sdm_Description" xml:space="preserve">
+    <value>SDM</value>
+  </data>
 </root>

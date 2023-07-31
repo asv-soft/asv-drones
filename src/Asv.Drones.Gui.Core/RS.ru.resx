@@ -829,4 +829,112 @@
   <data name="Longitude_Degree_Title" xml:space="preserve">
 	  <value>[Град]°</value>
   </data>
+  <data name="MeasureUnitExtensions_ErrorMessage_GreaterValue" xml:space="preserve">
+	  <value>Значение должно быть больше чем {0} ({1})</value>
+  </data>
+  <data name="MeasureUnitExtensions_ErrorMessage_LesserValue" xml:space="preserve">
+	  <value>Значение должно быть меньше чем {0} ({1})</value>
+  </data>
+  <data name="Altitude_Description" xml:space="preserve">
+	  <value>Единицы измерения высоты</value>
+  </data>
+  <data name="Altitude_Title" xml:space="preserve">
+	  <value>Высота</value>
+  </data>
+  <data name="AmplitudeModulation_Description" xml:space="preserve">
+	  <value>Единицы измерения амплитудной модуляции</value>
+  </data>
+  <data name="AmplitudeModulation_Title" xml:space="preserve">
+	  <value>АМ</value>
+  </data>
+  <data name="Bearing_Description" xml:space="preserve">
+	  <value>Единицы измерения несущей</value>
+  </data>
+  <data name="Bearing_Title" xml:space="preserve">
+	  <value>Несущая</value>
+  </data>
+  <data name="Degrees_Description" xml:space="preserve">
+	  <value>Единицы  измерения угла</value>
+  </data>
+  <data name="Degrees_Title" xml:space="preserve">
+	  <value>Угол</value>
+  </data>
+  <data name="Distance_Description" xml:space="preserve">
+	  <value>Единицы измерения расстояния</value>
+  </data>
+  <data name="Distance_Title" xml:space="preserve">
+	  <value>Расстояние</value>
+  </data>
+  <data name="Frequency_Title" xml:space="preserve">
+	  <value>Частота</value>
+  </data>
+  <data name="Frequency_Description" xml:space="preserve">
+	  <value>Единицы измерения частоты</value>
+  </data>
+  <data name="Latitude_Description" xml:space="preserve">
+	  <value>Единицы измерения широты</value>
+  </data>
+  <data name="Latitude_Title" xml:space="preserve">
+	  <value>Широта</value>
+  </data>
+  <data name="Longitude_Description" xml:space="preserve">
+	  <value>Единицы измерения долготы</value>
+  </data>
+  <data name="Longitude_Title" xml:space="preserve">
+	  <value>Долгота</value>
+  </data>
+  <data name="MeasureUnitBase_ErrorMessage_NullOrWhiteSpace" xml:space="preserve">
+	  <value>Значение не должно быть пустым или пробелом</value>
+  </data>
+  <data name="MeasureUnitBase_ErrorMessage_NotANumber" xml:space="preserve">
+	  <value>Значение должно быть числом</value>
+  </data>
+  <data name="Phase_Description" xml:space="preserve">
+	  <value>Единицы измерения фазы</value>
+  </data>
+  <data name="Phase_Title" xml:space="preserve">
+	  <value>Фаза</value>
+  </data>
+  <data name="Power_Description" xml:space="preserve">
+	  <value>Единицы измерения мощности</value>
+  </data>
+  <data name="Power_Title" xml:space="preserve">
+	  <value>Мощность</value>
+  </data>
+  <data name="TemperatureCelsius_ErrorMessage_NaN" xml:space="preserve">
+	  <value>Значение должно быть числом</value>
+  </data>
+  <data name="TemperatureFarenheit_ErrorMessage_NaN" xml:space="preserve">
+	  <value>Значение должно быть числом</value>
+  </data>
+  <data name="TemperatureCelsius_ErrorMessage_NullOrWhiteSpace" xml:space="preserve">
+	  <value>Значение не должно быть пустым или пробелом</value>
+  </data>
+  <data name="TemperatureFarenheit_ErrorMessage_NullOrWhiteSpace" xml:space="preserve">
+	  <value>Значение не должно быть пустым или пробелом</value>
+  </data>
+  <data name="Velocity_Description" xml:space="preserve">
+	  <value>Единицы измерения скорости</value>
+  </data>
+  <data name="Velocity_Title" xml:space="preserve">
+	  <value>Скорость</value>
+  </data>
+  <data name="DdmGp_Title" xml:space="preserve">
+	  <value>РГМ (Gp)</value>
+  </data>
+  <data name="DdmGp_Description" xml:space="preserve">
+	  <value>Единицы измереня разницы в глубине модуляции</value>
+  </data>
+  <data name="DdmLlz_Title" xml:space="preserve">
+	  <value>РГМ (Llz)</value>
+  </data>
+  <data name="DdmLlz_Description" xml:space="preserve">
+	  <value>Единицы измереня разницы в глубине модуляции</value>
+  </data>
+  <data name="Sdm_Description" xml:space="preserve">
+	  <value>СГМ</value>
+  </data>
+  <data name="Sdm_Title" xml:space="preserve">
+	  <value>Единицы измерения суммы глубины модуляции</value>
+  </data>
 </root>

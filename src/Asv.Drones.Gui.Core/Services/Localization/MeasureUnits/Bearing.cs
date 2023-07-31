@@ -16,7 +16,7 @@ public class Bearing : MeasureUnitBase<double,BearingUnits>
     {
     }
 
-    public override string Title => "Bearing";
+    public override string Title => RS.Bearing_Title;
 
-    public override string Description => "Units of measure for bearing";
+    public override string Description => RS.Bearing_Description;
 }

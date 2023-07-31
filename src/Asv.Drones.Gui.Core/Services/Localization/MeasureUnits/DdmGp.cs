@@ -19,7 +19,7 @@ public class DdmGp : MeasureUnitBase<double,DdmUnits>
     {
     }
 
-    public override string Title => "DDM (Gp)";
+    public override string Title => RS.DdmGp_Title;
 
-    public override string Description => "Units of measure for difference in the depth of modulation";
+    public override string Description => RS.DdmGp_Description;
 }

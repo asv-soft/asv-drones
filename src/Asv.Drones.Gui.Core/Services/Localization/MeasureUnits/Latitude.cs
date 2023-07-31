@@ -20,8 +20,8 @@ public class Latitude : MeasureUnitBase<double,LatitudeUnits>
         
     }
 
-    public override string Title => "Latitude";
-    public override string Description => "Units of latitude";
+    public override string Title => RS.Latitude_Title;
+    public override string Description => RS.Latitude_Description;
 }
 
 public class LatitudeUnitDeg : IMeasureUnitItem<double, LatitudeUnits>
