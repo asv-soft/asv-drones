@@ -45,6 +45,10 @@
         <DependentUpon>MapZoomActionView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Shell\Header\TopMenu\Tools\Items\CoordinatesCalculator\Dialog\CoordinatesCalculatorView.axaml.cs">
+        <DependentUpon>HeaderCoordinatesCalculatorDialog.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
