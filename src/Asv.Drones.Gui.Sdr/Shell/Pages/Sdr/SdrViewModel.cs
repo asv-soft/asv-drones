@@ -83,9 +83,6 @@ public class SdrViewModel: ShellPage
     }
 
     [Reactive]
-    public string Title { get; set; }
-
-    [Reactive]
     public double Progress { get; set; }
     
     public bool IsExecuting => _isExecuting.Value;

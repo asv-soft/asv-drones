@@ -40,6 +40,10 @@
           <DependentUpon>FlightSdrView.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
+        <Compile Update="Control\SdrStoreBrowserView.axaml.cs">
+          <DependentUpon>SdrStoreBrowserView.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>

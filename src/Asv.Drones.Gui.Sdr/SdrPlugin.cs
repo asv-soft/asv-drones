@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.Composition;
 using Asv.Drones.Gui.Core;
 
-namespace Asv.Drones.Gui.Gbs;
+namespace Asv.Drones.Gui.Sdr;
 
 [PluginEntryPoint(Name, CorePlugin.Name)]
 [PartCreationPolicy(CreationPolicy.Shared)]
