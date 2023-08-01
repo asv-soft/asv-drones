@@ -12,8 +12,8 @@
     </Design.DataContext>
     
     <StackPanel Margin="8" Spacing="8">
-        <TextBlock Text="Record name" FontSize="20"/>
-        <TextBox Watermark="Enter new record name" Text="{Binding RecordName}"/>
+        <TextBlock Text="{x:Static sdr:RS.RecordStartView_RecordName_Title}" FontSize="20"/>
+        <TextBox Watermark="{x:Static sdr:RS.RecordStartView_RecordName_Watermark}" Text="{Binding RecordName}"/>
         <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Tags}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -84,10 +84,10 @@
             </ItemsControl.DataTemplates>
         </ItemsControl>
         <Grid ColumnDefinitions="*, 4, 100, 4, Auto">
-            <TextBox Grid.Column="0" Watermark="Enter new tag name" Text="{Binding TagName}"/>
+            <TextBox Grid.Column="0" Watermark="{x:Static sdr:RS.RecordStartView_TagName_Watermark}" Text="{Binding TagName}"/>
             <ComboBox Grid.Column="2" Width="100" ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}"/>
-            <Button Grid.Column="4" Content="Add" Command="{Binding AddTag}" VerticalAlignment="Top"/>
+            <Button Grid.Column="4" Content="{x:Static sdr:RS.RecordStartView_AddButton_Title}" Command="{Binding AddTag}" VerticalAlignment="Top"/>
         </Grid>
-        <TextBox Watermark="Enter new tag value" Text="{Binding TagValue}"/>
+        <TextBox Watermark="{x:Static sdr:RS.RecordStartView_TagValue_Watermark}" Text="{Binding TagValue}"/>
     </StackPanel>
 </UserControl>
