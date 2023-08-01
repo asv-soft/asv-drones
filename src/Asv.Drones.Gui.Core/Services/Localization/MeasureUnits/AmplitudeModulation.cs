@@ -20,7 +20,7 @@ public class AmplitudeModulation : MeasureUnitBase<double,AmplitudeModulationUni
     {
     }
 
-    public override string Title => "AM";
+    public override string Title => RS.AmplitudeModulation_Title;
 
-    public override string Description => "Units of measure for amplitude modulation";
+    public override string Description => RS.AmplitudeModulation_Description;
 }

@@ -19,8 +19,8 @@ public class Longitude : MeasureUnitBase<double,LongitudeUnits>
         
     }
 
-    public override string Title => "Longitude";
-    public override string Description => "Units of longitude";
+    public override string Title => RS.Longitude_Title;
+    public override string Description => RS.Longitude_Description;
 }
 
 public class LongitudeUnitDeg :  IMeasureUnitItem<double, LongitudeUnits>

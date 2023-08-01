@@ -16,7 +16,7 @@ public class Power : MeasureUnitBase<double,PowerUnits>
     {
     }
 
-    public override string Title => "Power";
+    public override string Title => RS.Power_Title;
 
-    public override string Description => "Units of measure for power";
+    public override string Description => RS.Power_Description;
 }

@@ -26,7 +26,7 @@ public class Frequency : MeasureUnitBase<double,FrequencyUnits>
     {
     }
 
-    public override string Title => "Frequency";
+    public override string Title => RS.Frequency_Title;
 
-    public override string Description => "Units of measure for Frequency";
+    public override string Description => RS.Frequency_Description;
 }

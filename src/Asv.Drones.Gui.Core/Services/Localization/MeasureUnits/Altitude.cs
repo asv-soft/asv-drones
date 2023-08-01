@@ -22,6 +22,6 @@ public class Altitude : MeasureUnitBase<double,AltitudeUnits>
         
     }
 
-    public override string Title => "Altitude";
-    public override string Description => "Units of measure for the altitude";
+    public override string Title => RS.Altitude_Title;
+    public override string Description => RS.Altitude_Description;
 }

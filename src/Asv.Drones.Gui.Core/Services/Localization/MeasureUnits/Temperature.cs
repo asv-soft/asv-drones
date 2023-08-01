@@ -54,10 +54,10 @@ public class TemperatureCelsius : IMeasureUnitItem<double, TemperatureUnits>
 
     public string GetErrorMessage(string value)
     {
-        if (string.IsNullOrWhiteSpace(value)) return "Value can't be null or white space"; // TODO: Localize
+        if (string.IsNullOrWhiteSpace(value)) return RS.TemperatureCelsius_ErrorMessage_NullOrWhiteSpace;
         value = value.Replace(',', '.');
         if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var v) == false)
-            return "Value must be a number";
+            return RS.TemperatureCelsius_ErrorMessage_NaN;
         return null;
     }
 
@@ -110,10 +110,10 @@ public class TemperatureFarenheit : IMeasureUnitItem<double, TemperatureUnits>
 
     public string GetErrorMessage(string value)
     {
-        if (string.IsNullOrWhiteSpace(value)) return "Value can't be null or white space"; // TODO: Localize
+        if (string.IsNullOrWhiteSpace(value)) return RS.TemperatureFarenheit_ErrorMessage_NullOrWhiteSpace;
         value = value.Replace(',', '.');
         if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var v) == false)
-            return "Value must be a number";
+            return RS.TemperatureFarenheit_ErrorMessage_NaN;
         return null;
     }
 

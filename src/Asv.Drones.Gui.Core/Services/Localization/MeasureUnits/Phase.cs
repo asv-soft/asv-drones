@@ -20,7 +20,7 @@ public class Phase : MeasureUnitBase<double,PhaseUnits>
     {
     }
 
-    public override string Title => "Phase";
+    public override string Title => RS.Phase_Title;
 
-    public override string Description => "Units of measure for phase";
+    public override string Description => RS.Phase_Description;
 }

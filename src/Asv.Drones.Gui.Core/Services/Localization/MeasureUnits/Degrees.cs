@@ -20,8 +20,8 @@ public class Degrees : MeasureUnitBase<double, DegreeUnits>
     {
     }
 
-    public override string Title => "Angle";
-    public override string Description => "Units of measure for the angle";
+    public override string Title => RS.Degrees_Title;
+    public override string Description => RS.Degrees_Description;
 }
 
 public class DmsMeasureUnit : IMeasureUnitItem<double, DegreeUnits>
