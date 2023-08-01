@@ -12,7 +12,7 @@ public enum DegreeUnits
 public class Degrees : MeasureUnitBase<double, DegreeUnits>
 {
     private static readonly IMeasureUnitItem<double, DegreeUnits>[] _units = {
-        new DoubleMeasureUnitItem<DegreeUnits>(DegreeUnits.Degrees,RS.Degrees_Degree_Title,"°",true, "F0",1),
+        new DoubleMeasureUnitItem<DegreeUnits>(DegreeUnits.Degrees, RS.Degrees_Degree_Title,RS.Degrees_Degree_Title,true, "F0",1),
         new DmsMeasureUnit()
     };
     

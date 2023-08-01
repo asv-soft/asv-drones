@@ -1,4 +1,4 @@
-<root>
+﻿<root>
   <!-- 
     Microsoft ResX Schema 
     
@@ -262,12 +262,12 @@
 	<data name="MeasureUnitsSettingsViewModel_VelocityDescription" xml:space="preserve">
 		<value>Измените текущие единицы измерения скорости.</value>
 	</data>
-	<data name="HeaderFileMenu_Header" xml:space="preserve">
-		<value>Файл</value>
-	</data>
-	<data name="HeaderOpenMenu_Header" xml:space="preserve">
-		<value>Открыть</value>
-	</data>
+  <data name="HeaderToolsMenu_Header" xml:space="preserve">
+	  <value>Инструменты</value>
+  </data>
+  <data name="HeaderCoordinatesCalculatorMenu_Header" xml:space="preserve">
+	  <value>Калькулятор координат</value>
+  </data>
     
   <data name="SettingsShellMenuProvider_SettingsShellMenuProvider_Settings" xml:space="preserve">
     <value>Настройки</value>
@@ -812,21 +812,63 @@
 	  <value>Измените текущие единицы измерения угла.</value>
   </data>
   <data name="Degrees_Degree_Title" xml:space="preserve">
-	  <value>[Град]°</value>
+	  <value>[Г]°</value>
   </data>
   <data name="Degrees_DMS_Title" xml:space="preserve">
-	  <value>[Град]°[Мин]′[Сек]′′</value>
+	  <value>[Г]°[М]′[С]′′</value>
   </data>
   <data name="Latitude_Degree_Title" xml:space="preserve">
-	  <value>[Град]°</value>
+	  <value>[Г]°</value>
   </data>
   <data name="Latitude_DMS_Title" xml:space="preserve">
-	  <value>[Град]°[Мин]′[Сек]′′</value>
+	  <value>[Г]°[М]′[С]′′</value>
   </data>
   <data name="Longitude_DMS_Title" xml:space="preserve">
-	  <value>[Град]°[Мин]′[Сек]′′</value>
+	  <value>[Г]°[М]′[С]′′</value>
   </data>
   <data name="Longitude_Degree_Title" xml:space="preserve">
-	  <value>[Град]°</value>
+	  <value>[Г]°</value>
+  </data>
+  <data name="CoordinatesCalculatorDialog_Title" xml:space="preserve">
+	  <value>Калькулятор координат</value>
+  </data>
+  <data name="CoordinatesCalculatorDialog_CloseButton" xml:space="preserve">
+	  <value>Закрыть</value>
+  </data>
+  <data name="CoordinatesCalculatorView_ToStandard" xml:space="preserve">
+    <value>В стандарт</value>
+  </data>
+  <data name="CoordinatesCalculatorView_ToLongitude" xml:space="preserve">
+    <value>В долготу</value>
+  </data>
+  <data name="CoordinatesCalculatorView_ToLatLonUnit" xml:space="preserve">
+    <value>В единицы шир/долг</value>
+  </data>
+  <data name="CoordinatesCalculatorView_ToLatitude" xml:space="preserve">
+    <value>В широту</value>
+  </data>
+  <data name="CoordinatesCalculatorView_ToAltUnit" xml:space="preserve">
+    <value>В единицы высоты</value>
+  </data>
+  <data name="CoordinatesCalculatorView_ToAltitude" xml:space="preserve">
+    <value>В высоту</value>
+  </data>
+  <data name="CoordinatesCalculatorView_FromStandard" xml:space="preserve">
+    <value>Из стандарта</value>
+  </data>
+  <data name="CoordinatesCalculatorView_FromLongitude" xml:space="preserve">
+    <value>Из долготы</value>
+  </data>
+  <data name="CoordinatesCalculatorView_FromLatLonUnit" xml:space="preserve">
+    <value>Из единиц шир/долг</value>
+  </data>
+  <data name="CoordinatesCalculatorView_FromLatitude" xml:space="preserve">
+    <value>Из широты</value>
+  </data>
+  <data name="CoordinatesCalculatorView_FromAltUnit" xml:space="preserve">
+    <value>Из единиц высоты</value>
+  </data>
+  <data name="CoordinatesCalculatorView_FromAltitude" xml:space="preserve">
+    <value>Из высоты</value>
   </data>
 </root>
