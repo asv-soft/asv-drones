@@ -564,6 +564,132 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string CoordinatesCalculatorDialog_CloseButton {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorDialog_CloseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coordinates calculator.
+        /// </summary>
+        public static string CoordinatesCalculatorDialog_Title {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From altitude.
+        /// </summary>
+        public static string CoordinatesCalculatorView_FromAltitude {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_FromAltitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From altitude units.
+        /// </summary>
+        public static string CoordinatesCalculatorView_FromAltUnit {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_FromAltUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From latitude.
+        /// </summary>
+        public static string CoordinatesCalculatorView_FromLatitude {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_FromLatitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From lat/long units.
+        /// </summary>
+        public static string CoordinatesCalculatorView_FromLatLonUnit {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_FromLatLonUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From longitude.
+        /// </summary>
+        public static string CoordinatesCalculatorView_FromLongitude {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_FromLongitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From standard.
+        /// </summary>
+        public static string CoordinatesCalculatorView_FromStandard {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_FromStandard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To altitude.
+        /// </summary>
+        public static string CoordinatesCalculatorView_ToAltitude {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_ToAltitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To altitude units.
+        /// </summary>
+        public static string CoordinatesCalculatorView_ToAltUnit {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_ToAltUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To latitude.
+        /// </summary>
+        public static string CoordinatesCalculatorView_ToLatitude {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_ToLatitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To lat/long units.
+        /// </summary>
+        public static string CoordinatesCalculatorView_ToLatLonUnit {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_ToLatLonUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To longitude.
+        /// </summary>
+        public static string CoordinatesCalculatorView_ToLongitude {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_ToLongitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To standard.
+        /// </summary>
+        public static string CoordinatesCalculatorView_ToStandard {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_ToStandard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In parts.
         /// </summary>
         public static string Ddm_InParts_Title {
@@ -609,6 +735,7 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+
         ///   Looks up a localized string similar to Difference depth of modulation measure units.
         /// </summary>
         public static string DdmGp_Description {
@@ -861,20 +988,20 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File.
+        ///   Looks up a localized string similar to Coordinates calculator.
         /// </summary>
-        public static string HeaderFileMenu_Header {
+        public static string HeaderCoordinatesCalculatorMenu_Header {
             get {
-                return ResourceManager.GetString("HeaderFileMenu_Header", resourceCulture);
+                return ResourceManager.GetString("HeaderCoordinatesCalculatorMenu_Header", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open.
+        ///   Looks up a localized string similar to Tools.
         /// </summary>
-        public static string HeaderOpenMenu_Header {
+        public static string HeaderToolsMenu_Header {
             get {
-                return ResourceManager.GetString("HeaderOpenMenu_Header", resourceCulture);
+                return ResourceManager.GetString("HeaderToolsMenu_Header", resourceCulture);
             }
         }
         
@@ -915,7 +1042,7 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [Deg]°.
+        ///   Looks up a localized string similar to [D]°.
         /// </summary>
         public static string Latitude_Degree_Title {
             get {
@@ -924,6 +1051,7 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+
         ///   Looks up a localized string similar to Latitude measure units.
         /// </summary>
         public static string Latitude_Description {
@@ -934,6 +1062,7 @@ namespace Asv.Drones.Gui.Core {
         
         /// <summary>
         ///   Looks up a localized string similar to [Deg]°[Min]′[Sec]′′.
+
         /// </summary>
         public static string Latitude_DMS_Title {
             get {
@@ -1158,7 +1287,7 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [Deg]°.
+        ///   Looks up a localized string similar to [D]°.
         /// </summary>
         public static string Longitude_Degree_Title {
             get {
@@ -1176,7 +1305,8 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [Deg]°[Min]′[Sec]′′.
+        ///   Looks up a localized string similar to [D]°[M]′[S]′′.
+
         /// </summary>
         public static string Longitude_DMS_Title {
             get {
