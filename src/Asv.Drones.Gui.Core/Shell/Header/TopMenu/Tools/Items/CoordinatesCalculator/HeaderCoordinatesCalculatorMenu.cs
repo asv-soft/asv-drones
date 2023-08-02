@@ -26,7 +26,7 @@ public class HeaderCoordinatesCalculatorMenu : HeaderMenuItem
         _cfg = cfg ?? throw new ArgumentNullException(nameof(cfg));
         Header = RS.HeaderCoordinatesCalculatorMenu_Header;
         Icon = MaterialIconKind.DatabaseOutline;
-        Order = short.MinValue + 1;
+        Order = 0;
         //Command = cmd.OpenStore;
         HotKey = KeyGesture.Parse("Alt+C");
         Command = ReactiveCommand.CreateFromTask(ExecuteImpl);
@@ -40,7 +40,9 @@ public class HeaderCoordinatesCalculatorMenu : HeaderMenuItem
             CloseButtonText = RS.CoordinatesCalculatorDialog_CloseButton,
             IsPrimaryButtonEnabled = false,
             IsSecondaryButtonEnabled = false,
+            FullSizeDesired = true
         };
+        
         using var viewModel = new CoordinatesCalculatorViewModel(_cfg, _loc);
         viewModel.ApplyDialog(dialog);
         dialog.Content = viewModel;

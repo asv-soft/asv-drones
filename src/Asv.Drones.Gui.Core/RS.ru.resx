@@ -979,4 +979,31 @@
   <data name="Sdm_Title" xml:space="preserve">
 	  <value>Единицы измерения суммы глубины модуляции</value>
   </data>
+  <data name="HeaderTemplaterMenu_Header" xml:space="preserve">
+	  <value>Шаблонизатор</value>
+  </data>
+  <data name="TemplaterDialog_CloseButton" xml:space="preserve">
+	  <value>Закрыть</value>
+  </data>
+  <data name="TemplaterDialog_SaveButton" xml:space="preserve">
+	  <value>Сохранить</value>
+  </data>
+  <data name="TemplaterView_TemplatePath" xml:space="preserve">
+	  <value>Путь к шаблону:</value>
+  </data>
+  <data name="TemplaterView_ResultPath" xml:space="preserve">
+	  <value>Путь к файлу:</value>
+  </data>
+  <data name="TemplaterView_AddNewTag" xml:space="preserve">
+	  <value>Добавить новый тег</value>
+  </data>
+  <data name="TemplaterView_AddImageTag" xml:space="preserve">
+	  <value>Добавить тег картинки</value>
+  </data>
+  <data name="TemplaterView_AddStringTag" xml:space="preserve">
+	  <value>Добавить строковый тег</value>
+  </data>
+  <data name="TemplaterView_ClearTagsList" xml:space="preserve">
+	  <value>Очистить список тегов</value>
+  </data>
 </root>

@@ -735,7 +735,6 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-
         ///   Looks up a localized string similar to Difference depth of modulation measure units.
         /// </summary>
         public static string DdmGp_Description {
@@ -772,7 +771,7 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [Deg]°.
+        ///   Looks up a localized string similar to [D]°.
         /// </summary>
         public static string Degrees_Degree_Title {
             get {
@@ -790,7 +789,7 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [Deg]°[Min]′[Sec]′′.
+        ///   Looks up a localized string similar to [D]°[M]′[S]′′.
         /// </summary>
         public static string Degrees_DMS_Title {
             get {
@@ -997,6 +996,15 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Templater.
+        /// </summary>
+        public static string HeaderTemplaterMenu_Header {
+            get {
+                return ResourceManager.GetString("HeaderTemplaterMenu_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tools.
         /// </summary>
         public static string HeaderToolsMenu_Header {
@@ -1051,7 +1059,6 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-
         ///   Looks up a localized string similar to Latitude measure units.
         /// </summary>
         public static string Latitude_Description {
@@ -1061,8 +1068,7 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [Deg]°[Min]′[Sec]′′.
-
+        ///   Looks up a localized string similar to [D]°[M]′[S]′′.
         /// </summary>
         public static string Latitude_DMS_Title {
             get {
@@ -1306,7 +1312,6 @@ namespace Asv.Drones.Gui.Core {
         
         /// <summary>
         ///   Looks up a localized string similar to [D]°[M]′[S]′′.
-
         /// </summary>
         public static string Longitude_DMS_Title {
             get {
@@ -2355,6 +2360,78 @@ namespace Asv.Drones.Gui.Core {
         public static string TemperatureFarenheit_ErrorMessage_NullOrWhiteSpace {
             get {
                 return ResourceManager.GetString("TemperatureFarenheit_ErrorMessage_NullOrWhiteSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string TemplaterDialog_CloseButton {
+            get {
+                return ResourceManager.GetString("TemplaterDialog_CloseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string TemplaterDialog_SaveButton {
+            get {
+                return ResourceManager.GetString("TemplaterDialog_SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add image tag.
+        /// </summary>
+        public static string TemplaterView_AddImageTag {
+            get {
+                return ResourceManager.GetString("TemplaterView_AddImageTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new tag.
+        /// </summary>
+        public static string TemplaterView_AddNewTag {
+            get {
+                return ResourceManager.GetString("TemplaterView_AddNewTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add string tag.
+        /// </summary>
+        public static string TemplaterView_AddStringTag {
+            get {
+                return ResourceManager.GetString("TemplaterView_AddStringTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear tags list.
+        /// </summary>
+        public static string TemplaterView_ClearTagsList {
+            get {
+                return ResourceManager.GetString("TemplaterView_ClearTagsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File path:.
+        /// </summary>
+        public static string TemplaterView_ResultPath {
+            get {
+                return ResourceManager.GetString("TemplaterView_ResultPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template path:.
+        /// </summary>
+        public static string TemplaterView_TemplatePath {
+            get {
+                return ResourceManager.GetString("TemplaterView_TemplatePath", resourceCulture);
             }
         }
         
