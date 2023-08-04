@@ -58,18 +58,44 @@ public class SdrStorePageViewModel:ShellPage
         var recType = rec.DataType.Value;
         var recTypeAsUInt = (uint)recType;
         var take = 10U;
+       
+        using var writer = _store.Open(recId);
         
-        // TODO: check that record already exist in storage by GUID
-        using var writer = _store.OpenWrite(recId);
+        // TODO: add progress bar
         
-        using var subscribe = ifc.OnRecordData.Where(_=>_.MessageId == recTypeAsUInt).Subscribe(_ => SaveRecord(_));
-        for (var i = 0U; i < count; i+=take)
+        var tags = new List<AsvSdrClientRecordTag>();
+        rec.Tags.Clone(tags);
+        if (rec.TagsCount.Value != tags.Count)
         {
-            var result = await ifc.GetRecordDataList(recId, i*take, take, cancel);    
+            // update tags
+            await rec.DownloadTagList(new Progress<double>(x => { }),cancel);
+            writer.EditMetadata(rec.CopyTo);
+        }
+        foreach (var chunk in writer.GetEmptyChunks(10))
+        {
+            var downloadRecords = chunk.Take;
+            var tcs = new TaskCompletionSource();
+            using var linkedCancel = CancellationTokenSource.CreateLinkedTokenSource(cancel, DisposeCancel);
+            using var c1 = linkedCancel.Token.Register(() => { tcs.TrySetCanceled(); });
+            linkedCancel.CancelAfter(TimeSpan.FromMilliseconds(5000));
+            ifc.OnRecordData.Where(x=>x.MessageId == recTypeAsUInt).Subscribe(x =>
+            {   
+                writer.Write(x);
+                --downloadRecords;
+                if (downloadRecords == 0)
+                {
+                    tcs.TrySetResult();
+                }
+            },linkedCancel.Token);
+            var result = await ifc.GetRecordDataList(recId, chunk.Skip, chunk.Take, cancel);
+            if (result.Result != AsvSdrRequestAck.AsvSdrRequestAckOk)
+            {
+                throw new Exception($"Error download record data: {result.Result}");
+            }
+            await tcs.Task;
         }
         
         return Unit.Default;
-        
 
     }
 
