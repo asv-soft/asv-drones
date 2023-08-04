@@ -12,7 +12,7 @@ namespace Asv.Drones.Gui.Core;
 public class AnchorsEditorViewModel : MapWidgetBase
 {
     private readonly ILocalizationService _loc;
-    
+    private bool _internalChange;
     public const string UriString = "asv:shell.page.map.anchors-editor";
     
     public AnchorsEditorViewModel() : base(new Uri(UriString))
@@ -53,8 +53,14 @@ public class AnchorsEditorViewModel : MapWidgetBase
     [Reactive]
     public string AltitudeUnits { get; set; }
 
+    
+    
     protected override void InternalAfterMapInit(IMap context)
     {
+        LatitudeUnits = _loc.Latitude.CurrentUnit.Value.Unit;
+        LongitudeUnits = _loc.Longitude.CurrentUnit.Value.Unit;
+        AltitudeUnits = _loc.Altitude.CurrentUnit.Value.Unit;
+        
         context.WhenAnyValue(_ => _.SelectedItem)
             .Subscribe(_ =>
             {
@@ -65,13 +71,13 @@ public class AnchorsEditorViewModel : MapWidgetBase
                     _.WhenAnyValue(_ => _.Location)
                         .Subscribe(_ =>
                         {
+                            _internalChange = true;
+                            
                             Latitude = _loc.Latitude.FromSiToString(_.Latitude);
                             Longitude = _loc.Longitude.FromSiToString(_.Longitude);
                             Altitude = _loc.Altitude.FromSiToString(_.Altitude);
                             
-                            LatitudeUnits = _loc.Latitude.CurrentUnit.Value.Unit;
-                            LongitudeUnits = _loc.Longitude.CurrentUnit.Value.Unit;
-                            AltitudeUnits = _loc.Altitude.CurrentUnit.Value.Unit;
+                            _internalChange = false;
                         })
                         .DisposeItWith(Disposable);
         
@@ -113,6 +119,8 @@ public class AnchorsEditorViewModel : MapWidgetBase
         this.WhenPropertyChanged(_ => _.Latitude, false)
             .Subscribe(_ =>
             {
+                if (_internalChange) return;
+
                 if (context.SelectedItem != null && !string.IsNullOrWhiteSpace(_.Value) && 
                     _loc.Latitude.IsValid(_.Value) && IsInEditMode)
                 {
@@ -126,6 +134,8 @@ public class AnchorsEditorViewModel : MapWidgetBase
         this.WhenPropertyChanged(_ => _.Longitude, false)
             .Subscribe(_ =>
             {
+                if (_internalChange) return;
+                
                 if (context.SelectedItem != null && !string.IsNullOrWhiteSpace(_.Value)&& 
                     _loc.Longitude.IsValid(_.Value) && IsInEditMode)
                 {
@@ -139,6 +149,8 @@ public class AnchorsEditorViewModel : MapWidgetBase
         this.WhenPropertyChanged(_ => _.Altitude, false)
             .Subscribe(_ =>
             {
+                if (_internalChange) return;
+                
                 if (context.SelectedItem != null && !string.IsNullOrWhiteSpace(_.Value) && 
                     _loc.Altitude.IsValid(_.Value) && IsInEditMode)
                 {

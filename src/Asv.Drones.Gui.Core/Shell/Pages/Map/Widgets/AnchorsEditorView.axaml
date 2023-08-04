@@ -21,7 +21,7 @@
             <Grid ColumnDefinitions="*, 15, 3*">
                 <TextBlock Text="Latitude" TextWrapping="NoWrap" Grid.Column="0"/>
                 <TextBox Text="{CompiledBinding Latitude}" Grid.Column="2" 
-                         IsReadOnly="{CompiledBinding IsInEditMode}" 
+                         IsReadOnly="{CompiledBinding !IsInEditMode}" 
                          IsEnabled="{CompiledBinding IsEditable}">
                     <TextBox.InnerRightContent>
                         <TextBlock Text="{CompiledBinding LatitudeUnits}" VerticalAlignment="Center" Margin="8 4"/>
@@ -31,7 +31,7 @@
             <Grid ColumnDefinitions="*, 15, 3*">
                 <TextBlock Text="Longitude" Grid.Column="0"/>
                 <TextBox Text="{CompiledBinding Longitude}" Grid.Column="2" 
-                         IsReadOnly="{CompiledBinding IsInEditMode}" 
+                         IsReadOnly="{CompiledBinding !IsInEditMode}" 
                          IsEnabled="{CompiledBinding IsEditable}">
                     <TextBox.InnerRightContent>
                         <TextBlock Text="{CompiledBinding LongitudeUnits}" VerticalAlignment="Center" Margin="8 4"/>
@@ -41,7 +41,7 @@
             <Grid ColumnDefinitions="*, 15, 3*">
                 <TextBlock Text="Altitude" Grid.Column="0"/>
                 <TextBox Text="{CompiledBinding Altitude}" Grid.Column="2" 
-                         IsReadOnly="{CompiledBinding IsInEditMode}" 
+                         IsReadOnly="{CompiledBinding !IsInEditMode}" 
                          IsEnabled="{CompiledBinding IsEditable}">
                     <TextBox.InnerRightContent>
                         <TextBlock Text="{CompiledBinding AltitudeUnits}" VerticalAlignment="Center" Margin="8 4"/>
