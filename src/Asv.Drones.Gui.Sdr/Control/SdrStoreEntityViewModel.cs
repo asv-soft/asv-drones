@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
+using Asv.Mavlink;
 using DynamicData;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -12,7 +13,7 @@ public class SdrStoreEntityViewModel:ViewModelBase
 {
     private readonly ReadOnlyObservableCollection<SdrStoreEntityViewModel> _items;
 
-    public SdrStoreEntityViewModel(Node<ISdrStoreEntry,Guid> node, SdrStoreBrowserViewModel context):base("asv:sdr-browser.entryr?id="+node.Item.Id)
+    public SdrStoreEntityViewModel(Node<IListDataStoreEntry<Guid>,Guid> node, SdrStoreBrowserViewModel context):base("asv:sdr-browser.entryr?id="+node.Item.Id)
     {
         ParentId = node.Parent.HasValue ? node.Parent.Value.Item.Id : Guid.Empty;
         Name = node.Item.Name;
@@ -25,7 +26,7 @@ public class SdrStoreEntityViewModel:ViewModelBase
             .Subscribe()
             .DisposeItWith(Disposable);
         IsFolder = Type == StoreEntryType.Folder;
-        IsRecord = Type == StoreEntryType.Record;
+        IsRecord = Type == StoreEntryType.File;
         Delete = ReactiveCommand.Create(() =>
         {
             context.DeleteEntity(EntryId);
