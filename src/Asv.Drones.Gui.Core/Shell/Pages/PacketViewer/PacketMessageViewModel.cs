@@ -34,7 +34,7 @@ public class PacketMessageViewModel : AvaloniaObject
         Description = converter.Convert(packet, PacketFormatting.Indented);
         Type = packet.Name;
         Id = Guid.NewGuid();
-        Size = packet.GetCurrentByteSize();
+        Size = packet.GetByteSize();
     }
 
     public Guid Id { get; }

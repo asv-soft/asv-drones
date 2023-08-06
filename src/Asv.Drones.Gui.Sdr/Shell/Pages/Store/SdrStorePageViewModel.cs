@@ -60,7 +60,7 @@ public class SdrStorePageViewModel:ShellPage
         var take = 10U;
         
         // TODO: check that record already exist in storage by GUID
-        using var writer = _store.OpenWrite(recId);
+        using var writer = _store.Store.OpenOrCreateFile(recId, rec.Name.Value,Guid.Empty);
         
         using var subscribe = ifc.OnRecordData.Where(_=>_.MessageId == recTypeAsUInt).Subscribe(_ => SaveRecord(_));
         for (var i = 0U; i < count; i+=take)
