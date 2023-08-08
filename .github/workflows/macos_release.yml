@@ -12,26 +12,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         
-      - name: Setup .Net 6
+      - name: Setup .Net 7
         uses: actions/setup-dotnet@v3
         with:
-            dotnet-version: '6.x.x'
+            dotnet-version: '7.x.x'
       
       - name: Restore dependencies
         run: |
-          cd src
+          cd src/Asv.Drones.Gui.Desktop
+          dotnet workload restore
           dotnet restore
 
       - name: Build application
-        run:  |
-          cd src
+        run: |
+          cd src/Asv.Drones.Gui.Desktop
           dotnet build -c Release --no-restore
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: macos-release
-          path: ${{ github.workspace }}/src/Asv.Drones.Gui/bin/Release/net6.0/
+          path: ${{ github.workspace }}/src/Asv.Drones.Gui.Desktop/bin/Release/net7.0/
           if-no-files-found: error
 
       - name: Download artifacts
@@ -39,15 +40,16 @@ jobs:
         with:
           name: macos-release
           path: macos
-          
+
+            
 #  ftps:
 #    needs: artifacts
-#    runs-on: macos-latest
+#    runs-on: windows-latest
 #    steps:  
 #      - uses: actions/download-artifact@v3
 #        with:
-#          name: macos-release
-#          path: macos
+#          name: windows-release
+#          path: windows
 #          
 #      - name: Sync files with server
 #        uses: SamKirkland/FTP-Deploy-Action@4.3.3
@@ -56,6 +58,6 @@ jobs:
 #            username: myFtpUserName
 #            password: ${{ secrets.FTP_PASSWORD }}
 #            protocol: ftps
-#            local-dir: ./macos/
-#            server-dir: public_html/macos/
+#            local-dir: ./windows/
+#            server-dir: public_html/windows/
 #            port: 1234 # todo replace with your web hosts ftps port
