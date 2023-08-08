@@ -4,23 +4,24 @@ using Asv.Drones.Gui.Core;
 using Asv.Drones.Gui.Uav;
 using DynamicData;
 
-namespace Asv.Drones.Gui.Sdr
+namespace Asv.Drones.Gui.Sdr;
+
+
+
+[Export(FlightPageViewModel.UriString, typeof(IViewModelProvider<IMapWidget>))]
+[PartCreationPolicy(CreationPolicy.NonShared)]
+public class FlightMissionWidgetProvider:ViewModelProviderBase<IMapWidget>
 {
-    [Export(FlightPageViewModel.UriString, typeof(IViewModelProvider<IMapWidget>))]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class FlightMissionWidgetProvider:ViewModelProviderBase<IMapWidget>
+    [ImportingConstructor]
+    public FlightMissionWidgetProvider(
+        IMavlinkDevicesService devices,ILogService log,
+        ILocalizationService localization,
+        IConfiguration configuration,
+        [ImportMany]IEnumerable<ISdrRttWidgetProvider> rtt)
     {
-        [ImportingConstructor]
-        public FlightMissionWidgetProvider(
-            IMavlinkDevicesService devices,ILogService log,
-            ILocalizationService localization,
-            IConfiguration configuration,
-            [ImportMany]IEnumerable<ISdrRttItemProvider> rttItems)
-        {
-            devices.Payloads
-                .Transform(_ => (IMapWidget)new FlightSdrViewModel(_,log, localization,configuration,rttItems))
-                .ChangeKey( ((_, v) => v.Id) )
-                .PopulateInto(Source);
-        }
+        devices.Payloads
+            .Transform(_ => (IMapWidget)new FlightSdrViewModel(_,log, localization,configuration,rtt))
+            .ChangeKey( ((_, v) => v.Id) )
+            .PopulateInto(Source);
     }
 }

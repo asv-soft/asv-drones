@@ -18,7 +18,7 @@ public class Distance : MeasureUnitBase<double,DistanceUnits>
     {
         
     }
-    public override string Title => "Distance";
-    public override string Description => "Units of measure for distance";
+    public override string Title => RS.Distance_Title;
+    public override string Description => RS.Distance_Description;
 
 }

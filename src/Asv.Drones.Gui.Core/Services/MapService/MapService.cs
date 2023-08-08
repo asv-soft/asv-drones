@@ -19,7 +19,7 @@ namespace Asv.Drones.Gui.Core
             if (cfgService == null) throw new ArgumentNullException(nameof(cfgService));
 
             // this is for store map tiles
-            Cache.CacheFolder = Path.Combine(paths.ApplicationDataFolder, "map");
+            Cache.CacheFolder = Path.Combine(paths.DataFolder, "map");
             if (Directory.Exists(Cache.CacheFolder) == false)
             {
                 Directory.CreateDirectory(Cache.CacheFolder);
@@ -43,11 +43,13 @@ namespace Asv.Drones.Gui.Core
                 .Skip(1)
                 .Subscribe(_ => InternalSaveConfig(cfg => cfg.MapProviderName = _.Name))
                 .DisposeItWith(Disposable);
+
+            _mapCacheDirectory = Cache.CacheFolder;
         }
 
         public long CalculateMapCacheSize()
         {
-            return DirSize(new DirectoryInfo(Cache.CacheFolder));
+            return DirSize(new DirectoryInfo(_mapCacheDirectory));
         }
 
         private static long DirSize(DirectoryInfo d)

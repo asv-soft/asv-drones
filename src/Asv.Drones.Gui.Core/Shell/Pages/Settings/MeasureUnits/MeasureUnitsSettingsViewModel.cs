@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.Composition;
 using Asv.Common;
+using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -54,6 +55,30 @@ namespace Asv.Drones.Gui.Core
             this.WhenAnyValue(_ => _.SelectedVelocityUnit)
                 .Subscribe(_localization.Velocity.CurrentUnit)
                 .DisposeItWith(Disposable);
+            
+            _localization.DdmLlz.CurrentUnit.Subscribe(_ => SelectedDdmLlzUnit = _)
+                .DisposeItWith(Disposable);
+            this.WhenAnyValue(_ => _.SelectedDdmLlzUnit)
+                .Subscribe(_localization.DdmLlz.CurrentUnit)
+                .DisposeItWith(Disposable);
+            
+            _localization.DdmGp.CurrentUnit.Subscribe(_ => SelectedDdmGpUnit = _)
+                .DisposeItWith(Disposable);
+            this.WhenAnyValue(_ => _.SelectedDdmGpUnit)
+                .Subscribe(_localization.DdmGp.CurrentUnit)
+                .DisposeItWith(Disposable);
+            
+            _localization.Temperature.CurrentUnit.Subscribe(_ => SelectedTemperatureUnit = _)
+                .DisposeItWith(Disposable);
+            this.WhenAnyValue(_ => _.SelectedTemperatureUnit)
+                .Subscribe(_localization.Temperature.CurrentUnit)
+                .DisposeItWith(Disposable);
+            
+            _localization.Degree.CurrentUnit.Subscribe(_ => SelectedAngleUnit = _)
+                .DisposeItWith(Disposable);
+            this.WhenAnyValue(_ => _.SelectedAngleUnit)
+                .Subscribe(_localization.Degree.CurrentUnit)
+                .DisposeItWith(Disposable);
         }
         
         [Reactive]
@@ -78,5 +103,31 @@ namespace Asv.Drones.Gui.Core
         public IMeasureUnitItem<double,VelocityUnits> SelectedVelocityUnit { get; set; }
 
         public IEnumerable<IMeasureUnitItem<double,VelocityUnits>> VelocityUnits => _localization.Velocity.AvailableUnits;
+        
+        [Reactive]
+        public IMeasureUnitItem<double,DdmUnits> SelectedDdmLlzUnit { get; set; }
+
+        public IEnumerable<IMeasureUnitItem<double,DdmUnits>> DdmLlzUnits => _localization.DdmLlz.AvailableUnits;
+        
+        [Reactive]
+        public IMeasureUnitItem<double,DdmUnits> SelectedDdmGpUnit { get; set; }
+
+        public IEnumerable<IMeasureUnitItem<double,DdmUnits>> DdmGpUnits => _localization.DdmGp.AvailableUnits;
+        
+        [Reactive]
+        public IMeasureUnitItem<double, TemperatureUnits> SelectedTemperatureUnit { get; set; }
+
+        public IEnumerable<IMeasureUnitItem<double,TemperatureUnits>> TemperatureUnits => 
+            _localization.Temperature.AvailableUnits;
+        
+        public string TemperatureIcon => MaterialIconDataProvider.GetData(MaterialIconKind.Temperature);
+        
+        [Reactive]
+        public IMeasureUnitItem<double, DegreeUnits> SelectedAngleUnit { get; set; }
+
+        public IEnumerable<IMeasureUnitItem<double,DegreeUnits>> AngleUnits => 
+            _localization.Degree.AvailableUnits;
+        
+        public string AngleIcon => MaterialIconDataProvider.GetData(MaterialIconKind.AngleAcute);
     }
 }

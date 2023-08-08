@@ -12,7 +12,12 @@ public class FlightGbsMapLayerProvider : IViewModelProvider<IMapAnchor>
     [ImportingConstructor]
     public FlightGbsMapLayerProvider(IMavlinkDevicesService devices, ILocalizationService loc)
     {
-        Items = devices.BaseStations.Transform(_ => new GbsAnchor(_, loc)).ChangeKey((k, _) => _.Id).Transform(_ => (IMapAnchor)_);
+        Items = devices.BaseStations.Transform(_ => new GbsAnchor(_, loc)).ChangeKey((k, _) => _.Id).Transform(_ => (IMapAnchor)_).DisposeMany();
     }
     public IObservable<IChangeSet<IMapAnchor, Uri>> Items { get; }
+
+    public void Dispose()
+    {
+        
+    }
 }

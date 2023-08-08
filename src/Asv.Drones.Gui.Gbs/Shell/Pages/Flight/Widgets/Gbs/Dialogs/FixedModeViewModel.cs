@@ -140,7 +140,7 @@ public class FixedModeViewModel : ViewModelBaseWithValidation
             CloseButtonText = RS.FixedModeViewModel_SetCoordsName_SecondaryButtonText
         };
 
-        var vm = new SetCoordsNameViewModel();
+        using var vm = new SetCoordsNameViewModel();
         dialog.Content = vm;
         var result = await dialog.ShowAsync();
 

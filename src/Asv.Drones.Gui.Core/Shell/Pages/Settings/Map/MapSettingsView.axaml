@@ -10,34 +10,37 @@
   <Design.DataContext>
       <core:MapSettingsViewModel />
   </Design.DataContext>
-    <StackPanel>
-		<core:OptionsDisplayItem Header="{x:Static core:RS.MapSettingsView_MapProvider_Header}"
-                                 Icon="{Binding MapIcon}"
-                                 Description="{x:Static core:RS.MapSettingsView_MapProvider_Description}"
-                                 Margin="0,0,0,8">
-
-            <core:OptionsDisplayItem.ActionButton>
-                <ComboBox SelectedItem="{Binding CurrentMapProvider}"
-                          ItemsSource="{Binding AvailableProviders}"
-                          MinWidth="150">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </core:OptionsDisplayItem.ActionButton>
-
-        </core:OptionsDisplayItem>
-        <core:OptionsDisplayItem Header="{x:Static core:RS.MapSettingsView_MapsInfo_Header}"
-                                 Icon="{Binding FolderIcon}"
-                                 Description="{Binding MapStorageDescription}">
-
-            <core:OptionsDisplayItem.ActionButton>
-                <Button Content="{x:Static core:RS.MapSettingsView_MapsInfo_ButtonName}" 
-                        MinWidth="150"
-                        Command="{Binding OpenFolderCommand}" />
-            </core:OptionsDisplayItem.ActionButton>
-        </core:OptionsDisplayItem>
-    </StackPanel>
+    <core:OptionsDisplayItem Header="{x:Static core:RS.MapSettingsView_MapSettings_Header}"
+                             Icon="{Binding MapIcon}"
+                             Description="{x:Static core:RS.MapSettingsView_MapSettings_Description}"
+                             Expands="True"
+                             IsExpanded="False">
+        <core:OptionsDisplayItem.Content>
+            <StackPanel Spacing="8">
+                <core:OptionsDisplayItem Header="{x:Static core:RS.MapSettingsView_MapProvider_Header}"
+                                         Icon="{Binding MapIcon}"
+                                         Description="{x:Static core:RS.MapSettingsView_MapProvider_Description}">
+                    <core:OptionsDisplayItem.ActionButton>
+                        <ComboBox SelectedItem="{Binding CurrentMapProvider}"
+                                  ItemsSource="{Binding AvailableProviders}"
+                                  MinWidth="150">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </core:OptionsDisplayItem.ActionButton>
+                </core:OptionsDisplayItem>
+                <core:OptionsDisplayItem Header="{x:Static core:RS.MapSettingsView_MapsInfo_Header}"
+                                         Icon="{Binding FolderIcon}"
+                                         Description="{CompiledBinding MapStorageDescription}">
+                    <core:OptionsDisplayItem.ActionButton>
+                        <Button Content="{x:Static core:RS.MapSettingsView_MapsInfo_ButtonTitle}"
+                                Command="{CompiledBinding ClearMapStorageCommand}" />
+                    </core:OptionsDisplayItem.ActionButton>
+                </core:OptionsDisplayItem>
+            </StackPanel>
+        </core:OptionsDisplayItem.Content>
+    </core:OptionsDisplayItem>
 </UserControl>

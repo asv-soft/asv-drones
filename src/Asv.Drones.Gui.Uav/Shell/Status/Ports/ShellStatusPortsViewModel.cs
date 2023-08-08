@@ -15,19 +15,18 @@ namespace Asv.Drones.Gui.Uav
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class ShellStatusPortsViewModel : ShellStatusItem
     {
-        public static readonly Uri Uri = new(ShellStatusItem.Uri,"ports");
-        
         private readonly IncrementalRateCounter _rxRate = new();
         private readonly IncrementalRateCounter _txRate = new();
         
         /// <summary>
         /// This constructor is used by design time tools
         /// </summary>
-        public ShellStatusPortsViewModel() : base(Uri)
+        public ShellStatusPortsViewModel() : base("asv:shell.status.ports")
         {
             if (Design.IsDesignMode)
             {
-                TotalRateString = "1 024 kB";
+                TotalRateOutString = "1 024 kB";
+                TotalRateInString = "1 024 kB";
             }
         }
 
@@ -36,10 +35,10 @@ namespace Asv.Drones.Gui.Uav
         {
             Observable.Timer(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1),RxApp.MainThreadScheduler).Subscribe(_ =>
             {
-
                 var totalRx = deviceSvc.Router.RxBytes;
                 var totalTx = deviceSvc.Router.TxBytes;
-                TotalRateString = $"{localization.ByteRate.ConvertToStringWithUnits(_txRate.Calculate(totalTx))} | {localization.ByteRate.ConvertToStringWithUnits(_rxRate.Calculate(totalRx))}";
+                TotalRateOutString = localization.ByteRate.ConvertToStringWithUnits(_txRate.Calculate(totalTx));
+                TotalRateInString = localization.ByteRate.ConvertToStringWithUnits(_rxRate.Calculate(totalRx));
 
             }).DisposeItWith(Disposable);
 
@@ -49,7 +48,9 @@ namespace Asv.Drones.Gui.Uav
         public override int Order => -2;
 
         [Reactive]
-        public string TotalRateString { get; set; }
+        public string TotalRateInString { get; set; }
+        [Reactive]
+        public string TotalRateOutString { get; set; }
     }
     
 }

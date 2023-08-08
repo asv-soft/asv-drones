@@ -72,8 +72,8 @@ namespace Asv.Drones.Gui.Core
            var msg = src.CurrentUnit.Value.GetErrorMessage(value);
            if (msg.IsNullOrWhiteSpace() == false) return msg;
            var siValue = src.CurrentUnit.Value.ConvertToSi(value);
-           if ( siValue< minSiValue) return $"Value must be greater than {src.CurrentUnit.Value.FromSiToStringWithUnits(minSiValue)} ({src.SiUnit.FromSiToStringWithUnits(siValue)})"; // TODO: Localize
-           if ( siValue> maxSiValue) return $"Value must be less than {src.CurrentUnit.Value.FromSiToStringWithUnits(minSiValue)} {src.SiUnit.FromSiToStringWithUnits(siValue)}"; // TODO: Localize
+           if ( siValue< minSiValue) return string.Format(RS.MeasureUnitExtensions_ErrorMessage_GreaterValue, src.CurrentUnit.Value.FromSiToStringWithUnits(minSiValue), src.SiUnit.FromSiToStringWithUnits(siValue));
+           if (siValue > maxSiValue) return string.Format(RS.MeasureUnitExtensions_ErrorMessage_LesserValue, src.CurrentUnit.Value.FromSiToStringWithUnits(minSiValue), src.SiUnit.FromSiToStringWithUnits(siValue));
            return null;
        }
 

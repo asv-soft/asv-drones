@@ -2,21 +2,21 @@ namespace Asv.Drones.Gui.Core;
 
 public interface IAppPathInfo
 {
-    string ApplicationDataFolder { get; }
-    string ApplicationConfigFilePath { get; }
-    string AppStoreFolder { get; }
+    string DataFolder { get; }
+    string ConfigFilePath { get; }
+    string StoreFilePath { get; }
 }
 
 public class AppPathInfo : IAppPathInfo
 {
-    public AppPathInfo(string applicationDataFolder, string applicationConfigFilePath, string appStoreFolder)
+    public AppPathInfo(string dataFolder, string configFilePath, string storeFilePath)
     {
-        ApplicationDataFolder = applicationDataFolder;
-        ApplicationConfigFilePath = applicationConfigFilePath;
-        AppStoreFolder = appStoreFolder;
+        DataFolder = dataFolder;
+        ConfigFilePath = configFilePath;
+        StoreFilePath = storeFilePath;
     }
 
-    public string ApplicationDataFolder { get; }
-    public string ApplicationConfigFilePath { get; }
-    public string AppStoreFolder { get; }
+    public string DataFolder { get; }
+    public string ConfigFilePath { get; }
+    public string StoreFilePath { get; }
 }

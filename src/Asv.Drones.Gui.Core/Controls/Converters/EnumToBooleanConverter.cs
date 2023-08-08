@@ -16,3 +16,4 @@ public class EnumToBooleanConverter : IValueConverter
         return value?.Equals(true) == true ? parameter : BindingOperations.DoNothing;
     }
 }
+

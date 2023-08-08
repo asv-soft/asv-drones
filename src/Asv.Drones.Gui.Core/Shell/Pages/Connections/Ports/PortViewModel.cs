@@ -196,7 +196,7 @@ namespace Asv.Drones.Gui.Core
                 {
                     dialog.Title = RS.ConnectionsViewModel_EditSerialPortDialog_Title;
                     
-                    var viewModel = new SerialPortViewModel(_svc, _logService);
+                    using var viewModel = new SerialPortViewModel(_svc, _logService);
                     
                     viewModel.Title = info.Name;
 
@@ -217,7 +217,7 @@ namespace Asv.Drones.Gui.Core
                 {
                     dialog.Title = RS.ConnectionsViewModel_EditTcpPortDialog_Title;
                     
-                    var viewModel = new TcpPortViewModel(_svc, _logService);
+                    using var viewModel = new TcpPortViewModel(_svc, _logService);
                     
                     viewModel.Title = info.Name;
                     
@@ -243,7 +243,7 @@ namespace Asv.Drones.Gui.Core
                 {
                     dialog.Title = RS.ConnectionsViewModel_EditUdpPortDialog_Title;
                     
-                    var viewModel = new UdpPortViewModel(_svc);
+                    using var viewModel = new UdpPortViewModel(_svc);
                     
                     viewModel.Title = info.Name;
                     
@@ -270,6 +270,7 @@ namespace Asv.Drones.Gui.Core
             if (await dialog.ShowAsync() == ContentDialogResult.Primary)
             {
                 _svc.Router.RemovePort(_id);
+                
             }
         }
         

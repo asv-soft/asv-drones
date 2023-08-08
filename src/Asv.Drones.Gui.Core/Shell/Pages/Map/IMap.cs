@@ -17,7 +17,8 @@ namespace Asv.Drones.Gui.Core
         GeoPoint Center { get; set; }
         ReadOnlyObservableCollection<IMapAnchor> Markers { get; }
         IMapAnchor SelectedItem { get; set; }
-        IMapAnchor ItemToFollow { get; set; }
+        IMapAnchor? ItemToFollow { get; set; }
+        bool IsInAnchorEditMode { get; set; }
         Task<GeoPoint> ShowTargetDialog(string text, CancellationToken cancel);
     }
     
@@ -38,8 +39,9 @@ namespace Asv.Drones.Gui.Core
     public interface IMapWidget:IViewModel
     {
         WidgetLocation Location { get; }
-        public string Title { get; }
-        public MaterialIconKind Icon { get; }
+        string Title { get; }
+        int Order { get; }
+        MaterialIconKind Icon { get; }
         IMapWidget Init(IMap context);
     }
 }

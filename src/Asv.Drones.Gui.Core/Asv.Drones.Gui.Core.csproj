@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+ <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
@@ -15,7 +15,8 @@
       <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
       <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
       <PackageReference Include="Avalonia.Xaml.Interactions" Version="$(AvaloniaVersion)" />
-      <PackageReference Include="FluentAvaloniaUI" Version="2.0.0-rc1" />
+      <PackageReference Include="DocumentFormat.OpenXml" Version="2.20.0" />
+      <PackageReference Include="FluentAvaloniaUI" Version="2.0.0" />
       <PackageReference Include="Material.Icons.Avalonia" Version="2.0.1" />
       <PackageReference Include="ReactiveUI" Version="19.2.1" />
       <PackageReference Include="ReactiveUI.Fody" Version="19.2.1" />
@@ -23,9 +24,7 @@
       <PackageReference Include="System.ComponentModel.Composition" Version="7.0.0" />  
       <PackageReference Include="LiteDB" Version="5.0.16" />
     </ItemGroup>
-
-
-
+    
     <ItemGroup>
       <EmbeddedResource Update="RS.resx">
         <Generator>PublicResXFileCodeGenerator</Generator>
@@ -38,6 +37,18 @@
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>RS.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Shell\Pages\Map\Actions\Zoom\MapZoomActionView.axaml.cs">
+        <DependentUpon>MapZoomActionView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Pages\Map\Actions\Zoom\MapZoomActionView.axaml.cs">
+        <DependentUpon>MapZoomActionView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Header\TopMenu\Tools\Items\CoordinatesCalculator\Dialog\CoordinatesCalculatorView.axaml.cs">
+        <DependentUpon>HeaderCoordinatesCalculatorDialog.axaml</DependentUpon>
+        <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
 
@@ -63,7 +74,7 @@
       <None Remove="Assets\program-logo.png" />
       <AvaloniaResource Include="Assets\program-logo.png" />
     </ItemGroup>
-
+    
     <ItemGroup>
       <Folder Include="Shell\Pages\Map\Planing\Widgets\" />
     </ItemGroup>

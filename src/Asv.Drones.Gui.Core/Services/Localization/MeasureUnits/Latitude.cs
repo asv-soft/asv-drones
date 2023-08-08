@@ -20,15 +20,15 @@ public class Latitude : MeasureUnitBase<double,LatitudeUnits>
         
     }
 
-    public override string Title => "Latitude";
-    public override string Description => "Units of latitude";
+    public override string Title => RS.Latitude_Title;
+    public override string Description => RS.Latitude_Description;
 }
 
 public class LatitudeUnitDeg : IMeasureUnitItem<double, LatitudeUnits>
 {
     public LatitudeUnits Id => LatitudeUnits.Deg;
-    public string Title => "[Deg]°";
-    public string Unit => "°";
+    public string Title => RS.Latitude_Degree_Title;
+    public string Unit => RS.Latitude_Degree_Title;
     public bool IsSiUnit => true;
     public double ConvertFromSi(double siValue)
     {
@@ -69,8 +69,8 @@ public class LatitudeUnitDeg : IMeasureUnitItem<double, LatitudeUnits>
 public class LatitudeUnitDms : IMeasureUnitItem<double, LatitudeUnits>
 {
     public LatitudeUnits Id => LatitudeUnits.Dms;
-    public string Title => "[Deg]°[Min]′[Sec]′′";
-    public string Unit => "°";
+    public string Title => RS.Latitude_DMS_Title;
+    public string Unit => RS.Latitude_DMS_Title;
     public bool IsSiUnit => false;
     public double ConvertFromSi(double siValue)
     {

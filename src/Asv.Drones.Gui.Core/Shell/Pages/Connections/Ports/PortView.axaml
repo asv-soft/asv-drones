@@ -53,8 +53,8 @@
             
             </Ellipse>
             <StackPanel Margin="5,0,0,0" Grid.Column="1" ToolTip.Tip="{Binding Description}">
-                <TextBlock Text="{Binding Name}" Theme="{DynamicResource SubtitleTextBlockStyle}"/>
-                <TextBlock Text="{Binding ConnectionString}" Theme="{DynamicResource CaptionTextBlockStyle}" />
+                <TextBlock TextWrapping="NoWrap" Text="{Binding Name}" Theme="{DynamicResource SubtitleTextBlockStyle}"/>
+                <TextBlock TextWrapping="NoWrap" Text="{Binding ConnectionString}" Theme="{DynamicResource CaptionTextBlockStyle}" />
                 <ToggleSwitch Margin="0,-8,0,0" Command="{Binding EnableDisableCommand}" OffContent="{x:Static core:RS.PortView_ToggleButton_Disabled}" OnContent="{x:Static core:RS.PortView_ToggleButton_Enabled}" IsChecked="{Binding IsPortEnabled}"/>
 			</StackPanel>
 			<StackPanel Grid.Column="3" Margin="10,5" >

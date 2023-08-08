@@ -50,7 +50,7 @@ namespace Asv.Drones.Gui.Uav
                 SecondaryButtonText = RS.TakeOffAnchorActionViewModel_DialogSecondaryButton
             };
             
-            var viewModel = new TakeOffViewModel(_cfg, _loc);
+            using var viewModel = new TakeOffViewModel(_cfg, _loc);
             viewModel.ApplyDialog(dialog);
             dialog.Content = viewModel;
             

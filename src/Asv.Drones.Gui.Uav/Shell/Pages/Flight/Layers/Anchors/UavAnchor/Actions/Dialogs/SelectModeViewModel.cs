@@ -39,9 +39,9 @@ public class VehicleModeWithIcons
             "Acro" => MaterialIconKind.WifiArrowUpDown,
             "AltHold" => MaterialIconKind.ArrowUpDown,
             "Auto" => MaterialIconKind.Automatic,
-            "Guided" => MaterialIconKind.HandWave,
+            "Guided" => MaterialIconKind.GpsFixed,
             "Loiter" => MaterialIconKind.CrosshairsGps,
-            "RTL" => MaterialIconKind.Launch,
+            "RTL" => MaterialIconKind.HomeCircleOutline,
             "Circle" => MaterialIconKind.Circle,
             "Land" => MaterialIconKind.FlightLand,
             "Drift" => MaterialIconKind.VideoStabilization,
@@ -52,6 +52,7 @@ public class VehicleModeWithIcons
             "Brake" => MaterialIconKind.CarBrakeHold,
             "Throw" => MaterialIconKind.ArrowUpBold,
             "SmartRtl" => MaterialIconKind.RocketLaunch,
+            "GuidedNoGps" => MaterialIconKind.GpsUnknown,
             #endregion
             _ => MaterialIconKind.About
         };
@@ -92,6 +93,8 @@ public class SelectModeViewModel : ViewModelBase
     {
         foreach (var availableMode in vehicle.AvailableModes)
         {
+            if (availableMode.InternalMode) continue;
+            
             AvailableModes.Add(new VehicleModeWithIcons(availableMode));
 
             if (availableMode == vehicle.CurrentMode.Value)

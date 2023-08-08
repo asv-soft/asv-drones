@@ -1,6 +1,7 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Windows.Input;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
@@ -12,16 +13,19 @@ using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ReactiveUI.Validation.Extensions;
 
 namespace Asv.Drones.Gui.Sdr;
 
 public class FlightSdrViewModel:FlightSdrWidgetBase
 {
-    private readonly ObservableCollection<ISdrRttItem> _rttItems = new();
     private readonly ILogService _logService;
     private readonly ILocalizationService _loc;
     private readonly IConfiguration _configuration;
-    private readonly ISdrRttItemProvider[] _providers;
+    private readonly ISdrRttWidgetProvider[] _providers;
+    private readonly ObservableCollection<ISdrRttWidget> _rttWidgets = new();
+    private readonly IMeasureUnitItem<double,FrequencyUnits> _freqInMHzMeasureUnit;
+
     public static Uri GenerateUri(ISdrClientDevice sdr) => FlightSdrWidgetBase.GenerateUri(sdr,"sdr");
 
     public FlightSdrViewModel()
@@ -29,27 +33,24 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         if (Design.IsDesignMode)
         {
             Icon = MaterialIconKind.Memory;
-            _rttItems = new ObservableCollection<ISdrRttItem>(new List<ISdrRttItem>
+            _rttWidgets = new ObservableCollection<ISdrRttWidget>(new List<ISdrRttWidget>
             {
-                new SdrRttItemLlzViewModelDesignMock(),
-                new SdrRttItemLlzViewModelDesignMock(),
-                new SdrRttItemLlzViewModelDesignMock(),
+                new LlzSdrRttViewModel(),
             });
         }
     }
-    
-    public FlightSdrViewModel(ISdrClientDevice payload, ILogService log, ILocalizationService loc, IConfiguration configuration, IEnumerable<ISdrRttItemProvider> rttItems)
-        :base(payload, GenerateUri(payload))
+
+    public FlightSdrViewModel(ISdrClientDevice payload, ILogService log, ILocalizationService loc,
+        IConfiguration configuration, IEnumerable<ISdrRttWidgetProvider> rtt) : base(payload, GenerateUri(payload))
     {
-        if (rttItems == null) throw new ArgumentNullException(nameof(rttItems));
-        _providers = rttItems.ToArray();
+        _providers = rtt.ToArray();
         _logService = log ?? throw new ArgumentNullException(nameof(log));
         _loc = loc ?? throw new ArgumentNullException(nameof(loc));
         _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-       
+       _freqInMHzMeasureUnit = _loc.Frequency.AvailableUnits.First(_ => _.Id == Core.FrequencyUnits.MHz);
         
         Icon = MaterialIconKind.Memory;
-        Title = "Payload";
+        Title = RS.FlightSdrViewModel_Title;
         Location = WidgetLocation.Right;
 
         payload.Sdr.SupportedModes.DistinctUntilChanged()
@@ -64,46 +65,64 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         
        
         
-        UpdateMode = ReactiveCommand.CreateFromTask(cancel=>Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode,Frequency,1,1,cancel));
+        UpdateMode = ReactiveCommand.CreateFromTask(cancel => Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode, (ulong)Math.Round(_freqInMHzMeasureUnit.ConvertToSi(FrequencyInMhz)), 1, 1, cancel));
         UpdateMode.ThrownExceptions.Subscribe(ex =>
         {
-            _logService.Error("Set mode",$"Error to set payload mode",ex); // TODO: Localize
+            _logService.Error(RS.FlightSdrViewModel_UpdateMode_Error_Sender,RS.FlightSdrViewModel_UpdateMode_Error_Message,ex);
         }).DisposeItWith(Disposable);
         
         StartRecord = ReactiveCommand.CreateFromTask(RecordStartImpl,
             this.WhenAnyValue(_=>_.IsRecordStarted).Select(_=>!_));
         StartRecord.ThrownExceptions.Subscribe(ex =>
         {
-            _logService.Error("Rec start",$"Error to set payload mode",ex);
+            _logService.Error(RS.FlightSdrViewModel_StartRecord_Error_Sender,RS.FlightSdrViewModel_StartRecord_Error_Message,ex);
         }).DisposeItWith(Disposable);
         
         StopRecord = ReactiveCommand.CreateFromTask(cancel=>Payload.Sdr.StopRecordAndCheckResult(cancel),
             this.WhenAnyValue(_=>_.IsRecordStarted));
         StopRecord.ThrownExceptions.Subscribe(ex =>
         {
-            _logService.Error("Rec stop",$"Error to set payload mode",ex);
+            _logService.Error(RS.FlightSdrViewModel_StopRecord_Error_Sender,RS.FlightSdrViewModel_StopRecord_Error_Message,ex);
         }).DisposeItWith(Disposable);
 
         Disposable.AddAction(() =>
         {
-            foreach (var item in _rttItems)
+            foreach (var item in _rttWidgets)
             {
                 item.Dispose();
             }
-            _rttItems.Clear();
+            _rttWidgets.Clear();
         });
         
         LinkQuality = new LinkQualitySdrRttViewModel(payload);
-    }
+        
+        SafeRebootOSCommand = ReactiveCommand.CreateFromTask(cancel =>
+            payload.Sdr.SystemControlAction(AsvSdrSystemControlAction.AsvSdrSystemControlActionReboot, cancel));
+        SafeShutdownOSCommand = ReactiveCommand.CreateFromTask(cancel =>
+            payload.Sdr.SystemControlAction(AsvSdrSystemControlAction.AsvSdrSystemControlActionShutdown, cancel));
+        
+        this.ValidationRule(x => x.FrequencyInMhz,
+                _ =>
+                {
+                    if (double.TryParse(_, out var number))
+                    {
+                        return number > 0;
+                    }
 
+                    return false;
+                },
+                RS.FlightSdrViewModel_Frequency_Validation_ErrorMessage)
+            .DisposeItWith(Disposable);
+    }
+    
     private async Task RecordStartImpl(CancellationToken cancel)
     {
         var dialog = new ContentDialog()
         {
-            Title = "New",
-            PrimaryButtonText = "Start",
+            Title = RS.FlightSdrViewModel_RecordStartDialog_Title,
+            PrimaryButtonText = RS.FlightSdrViewModel_RecordStartDialog_PrimarryButton_Name,
             IsSecondaryButtonEnabled = true,
-            SecondaryButtonText = "Cancel"
+            SecondaryButtonText = RS.FlightSdrViewModel_RecordStartDialog_SecondaryButton_Name
         };
             
         var viewModel = new RecordStartViewModel();
@@ -142,17 +161,17 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     private void UpdateSelectedMode(AsvSdrCustomMode mode)
     {
         SelectedMode = Modes.FirstOrDefault(__ => __.Mode == mode);
-        foreach (var item in _rttItems)
+        foreach (var item in _rttWidgets)
         {
             item.Dispose();
         }
-        _rttItems.Clear();
+        _rttWidgets.Clear();
 
         var items = _providers
-            .SelectMany(_ => _.Create(Payload, Payload.Sdr.CustomMode.Value))
+            .Select(_ => _.Create(Payload, Payload.Sdr.CustomMode.Value))
+            .IgnoreNulls()
             .OrderBy(_ => _.Order);
-        _rttItems.AddRange(items);
-
+        _rttWidgets.AddRange(items);
 
     }
     private void UpdateModes(AsvSdrCustomModeFlag flag)
@@ -175,12 +194,13 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         UpdateSelectedMode(Payload.Sdr.CustomMode.Value);
     }
 
-    public ObservableCollection<ISdrRttItem> RttItems => _rttItems;
+    public ObservableCollection<ISdrRttWidget> RttWidgets => _rttWidgets;
+    public string FrequencyUnits => _freqInMHzMeasureUnit.Unit;
     public ObservableCollection<SdrModeViewModel> Modes { get; } = new();
     [Reactive]
     public SdrModeViewModel? SelectedMode { get; set; }
     [Reactive]
-    public ulong Frequency { get; set; }
+    public string FrequencyInMhz { get; set; }
     [Reactive]
     public bool IsRecordStarted { get; set; }
     
@@ -189,9 +209,9 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     public ReactiveCommand<Unit,Unit> UpdateMode { get; }
     public ReactiveCommand<Unit,Unit> StartRecord { get; }
     public ReactiveCommand<Unit,Unit> StopRecord { get; }
-    
+    public ICommand SafeRebootOSCommand { get; set; }
+    public ICommand SafeShutdownOSCommand { get; set; }
 }
-
 public class SdrModeViewModel:ReactiveObject
 {
     public MaterialIconKind Icon { get; }

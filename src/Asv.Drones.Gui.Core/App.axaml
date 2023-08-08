@@ -32,5 +32,25 @@
     <StyleInclude Source="avares://Asv.Drones.Gui.Core/Controls/GpsStatusIndicator.axaml"/>
     <StyleInclude Source="avares://Asv.Drones.Gui.Core/Controls/ConnectionQuality.axaml"/>
     <StyleInclude Source="avares://Asv.Drones.Gui.Core/Controls/DigitIndicator.axaml"/>
+    <StyleInclude Source="avares://Asv.Drones.Gui.Core/Controls/LevelIndicator.axaml"/>
 
+    <!-- AutoCompleteBox Search box in ShellView -->
+    <Style Selector="AutoCompleteBox.Shell /template/ TextBox#PART_TextBox">
+        <Setter Property="InnerRightContent">
+            <Template>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="&#xE8BB;"
+                            FontFamily="{StaticResource SymbolThemeFontFamily}"
+                            Theme="{StaticResource TransparentButton}"
+                            Command="{Binding $parent[TextBox].Clear}"
+                            IsVisible="{Binding Text, RelativeSource={RelativeSource FindAncestor, AncestorType=TextBox}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+                    <Button Content="&#xE721;"
+                            FontFamily="{StaticResource SymbolThemeFontFamily}"
+                            Theme="{StaticResource TransparentButton}"
+                            Command="{Binding $parent[TextBox].Clear}"
+                            IsHitTestVisible="False"/>
+                </StackPanel>
+            </Template>
+        </Setter>
+    </Style>
 </Styles>

@@ -56,6 +56,12 @@
         <!--<Setter Property="BorderDashArray" Value="{x:Null}"/> TODO: AVALONIA11 -->
         <Setter Property="Background" Value="#4a148c"/>
     </Style>
+    
+    <!-- Is in edit mode -->
+    <Style Selector="controls|MapAnchorView:edit /template/ avalonia|MaterialIcon#PART_Icon Path">
+        <Setter Property="Stroke" Value="#03DAC6" />
+        <Setter Property="StrokeThickness" Value="2" />
+    </Style>
 
 
 	<Style Selector="controls|MapAnchorView">

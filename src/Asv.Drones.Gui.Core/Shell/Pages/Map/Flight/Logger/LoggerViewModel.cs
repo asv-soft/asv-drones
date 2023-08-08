@@ -114,5 +114,6 @@ public class LoggerViewModel : FlightWidgetBase
 
     protected override void InternalAfterMapInit(IMap context)
     {
+        
     }
 }

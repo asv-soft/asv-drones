@@ -7,6 +7,7 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Sdr;
 
+
 public class SdrRttItemLlzViewModelDesignMock : SdrRttItemLlzViewModel
 {
     public SdrRttItemLlzViewModelDesignMock()

@@ -3,16 +3,22 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Core
 {
-    public abstract class MapWidgetBase : ViewModelBase, IMapWidget
+    public abstract class MapWidgetBase : ViewModelBaseWithValidation, IMapWidget
     {
         protected MapWidgetBase(Uri id) : base(id)
         {
             
         }
+        protected MapWidgetBase(string id) : base(id)
+        {
+            
+        }
+        
         [Reactive]
         public WidgetLocation Location { get;set; }
         [Reactive]
         public string Title { get;set; }
+        public int Order { get; }
         [Reactive]
         public MaterialIconKind Icon { get; set; }
         public IMapWidget Init(IMap context)

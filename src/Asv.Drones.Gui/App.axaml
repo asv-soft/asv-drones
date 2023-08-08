@@ -12,5 +12,17 @@
         <StyleInclude Source="avares://Asv.Drones.Gui.Map/App.axaml"/>
         <StyleInclude Source="avares://Asv.Drones.Gui.Core/App.axaml"/>
         <StyleInclude Source="avares://Asv.Drones.Gui.Uav/App.axaml"/>
+        <Style Selector="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        </Style>
+        <Style Selector="TextBlock:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+        </Style>
+        <Style Selector="avalonia|MaterialIcon">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        </Style>
+        <Style Selector="avalonia|MaterialIcon:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+        </Style>
     </Application.Styles>
 </Application>

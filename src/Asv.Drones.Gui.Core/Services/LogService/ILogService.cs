@@ -4,12 +4,11 @@ namespace Asv.Drones.Gui.Core
 {
     public interface ILogService
     {
-        IObservable<Unit> OnNeedReload { get; }
         void SaveMessage(LogMessage message);
         IObservable<LogMessage> OnMessage { get; }
         void ClearAll();
         int Count();
-        IReadOnlyList<LogMessage> Find(LogQuery query);
+        IEnumerable<LogMessage> Find(LogQuery query);
         int Count(LogQuery query);
     }
 

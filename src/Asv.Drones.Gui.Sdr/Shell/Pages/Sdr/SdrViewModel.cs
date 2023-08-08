@@ -8,6 +8,7 @@ using Asv.Drones.Gui.Uav;
 using Asv.Mavlink;
 using Avalonia.Controls;
 using DynamicData;
+using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -15,7 +16,7 @@ namespace Asv.Drones.Gui.Sdr;
 
 [ExportShellPage(UriString)]
 [PartCreationPolicy(CreationPolicy.NonShared)]
-public class SdrViewModel:ViewModelBase,IShellPage
+public class SdrViewModel: ShellPage
 {
     public const string UriString = "asv:shell.page.sdr";
     public static Uri GenerateUri(ushort id) => new($"{UriString}?id={id}");
@@ -52,13 +53,15 @@ public class SdrViewModel:ViewModelBase,IShellPage
         _loc = loc;
     }
 
-    public void SetArgs(Uri link)
+    public override void SetArgs(Uri link)
     {
         var query =  HttpUtility.ParseQueryString(link.Query);
         if (ushort.TryParse(query["id"], out var id) == false) return;
         
         _payload = _mavlink.GetPayloadsByFullId(id);
         if (_payload == null) return;
+        Title = $"SDR {id}";
+        Icon = MaterialIconKind.DatabaseEye;
         
         _payload.Sdr.Records
             .Transform(_=>new SdrRecordViewModel(_payload.Heartbeat.FullId,_,_log,_loc))
@@ -78,9 +81,6 @@ public class SdrViewModel:ViewModelBase,IShellPage
 
         
     }
-
-    [Reactive]
-    public string Title { get; set; }
 
     [Reactive]
     public double Progress { get; set; }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Diagnostics;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using Asv.Common;
 using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Controls;
@@ -85,6 +86,10 @@ namespace Asv.Avalonia.Map
         public MapView()
         {
             Disposable.Add(_core);
+            Disposable.AddAction(() =>
+            {
+
+            });
             _core.SystemType = "WindowsPresentation";
             _core.RenderMode = RenderMode.WPF;
             
@@ -95,7 +100,8 @@ namespace Asv.Avalonia.Map
             Position = new GeoPoint(55.1644, 61.4368,0);
             if (Design.IsDesignMode)
             {
-                
+                IsInDialogMode = true;
+                DialogText = "Text inside dialog";
             }
             _core.OnMapZoomChanged += ForceUpdateOverlays;
             _core.OnCurrentPositionChanged += point => Position = point;
@@ -106,6 +112,20 @@ namespace Asv.Avalonia.Map
             }).DisposeWith(Disposable);
         }
 
+        public List<Point> LeftCornerPoints => new()
+        {
+            new Point(0, 0),
+            new Point(10, 0),
+            new Point(10,10)
+        };
+        
+        public List<Point> RightCornerPoints => new()
+        {
+            new Point(0, 0),
+            new Point(0, 10),
+            new Point(10,0)
+        };
+        
         protected CompositeDisposable Disposable { get; } = new();
 
         #region AttachedProperty
@@ -535,6 +555,7 @@ namespace Asv.Avalonia.Map
                 if (_core.IsStarted)
                 {
                     ForceUpdateOverlays();
+                    InvalidateVisual();
                 }
             }
             finally
@@ -780,6 +801,21 @@ namespace Asv.Avalonia.Map
 
         public void SelectAll() => Selection.SelectAll();
         public void UnselectAll() => Selection.Clear();
+
+        #endregion
+
+        #region Anchor edit mode
+
+        public static readonly DirectProperty<MapView, bool> IsInAnchorEditModeProperty =
+            AvaloniaProperty.RegisterDirect<MapView, bool>(nameof(IsInDialogMode), o => o.IsInAnchorEditMode, (o, v) => o.IsInAnchorEditMode = v);
+
+        private bool _isInAnchorEditMode;
+
+        public bool IsInAnchorEditMode
+        {
+            get => _isInAnchorEditMode;
+            set => SetAndRaise(IsInAnchorEditModeProperty, ref _isInAnchorEditMode, value);
+        }
 
         #endregion
 

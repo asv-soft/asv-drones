@@ -10,9 +10,7 @@ namespace Asv.Drones.Gui.Core
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class ShellStatusMapCacheViewModel:ShellStatusItem
     {
-        public static readonly Uri Uri = new(ShellStatusItem.Uri,"map-cache");
-        
-        public ShellStatusMapCacheViewModel() : base(Uri)
+        public ShellStatusMapCacheViewModel() : base("asv:shell.status.map-cache")
         {
             if (Design.IsDesignMode)
             {
@@ -23,11 +21,12 @@ namespace Asv.Drones.Gui.Core
         [ImportingConstructor]
         public ShellStatusMapCacheViewModel(IMapService app,ILocalizationService localization):this()
         {
-            Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10)).Subscribe(_ =>
+            Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(60)).Subscribe(_ =>
             {
                 CacheSizeString = localization.ByteSize.ConvertToStringWithUnits(app.CalculateMapCacheSize());
             }).DisposeItWith(Disposable);
-            
+            Description = app.MapCacheDirectory;
+
         }
 
         
@@ -36,5 +35,7 @@ namespace Asv.Drones.Gui.Core
 
         [Reactive]
         public string CacheSizeString { get; set; }
+
+        public string Description { get; }
     }
 }

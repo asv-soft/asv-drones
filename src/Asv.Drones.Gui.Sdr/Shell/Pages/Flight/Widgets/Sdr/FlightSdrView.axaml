@@ -2,9 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:sdr="clr-namespace:Asv.Drones.Gui.Sdr"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
+             xmlns:sdr="clr-namespace:Asv.Drones.Gui.Sdr"
+             xmlns:core="clr-namespace:Asv.Drones.Gui.Core;assembly=Asv.Drones.Gui.Core"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="450"
              x:CompileBindings="True"
              x:DataType="sdr:FlightSdrViewModel"
              x:Class="Asv.Drones.Gui.Sdr.FlightSdrView">
@@ -21,12 +22,32 @@
                     <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="RecordRec" Foreground="Gray"  Width="25" Height="25" />
                 </Button>
                 
-                <Button  DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
+                <DropDownButton DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
                     <StackPanel Orientation="Horizontal">
                         <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="{Binding Icon}" Foreground="BlueViolet"  Width="25" Height="25" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center" DockPanel.Dock="Top" Text="{Binding Title}" />      
                     </StackPanel>
-                </Button>
+                    <DropDownButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuItem  Command="{CompiledBinding SafeRebootOSCommand}">
+                                <MenuItem.Header>
+                                    <StackPanel Orientation="Horizontal" Spacing="3">
+                                        <avalonia:MaterialIcon Kind="Refresh" />
+                                        <TextBlock Text="{x:Static sdr:RS.FlightSdrView_SystemControlAction_Reboot_Title}" />
+                                    </StackPanel>
+                                </MenuItem.Header>
+                            </MenuItem>
+                            <MenuItem Command="{CompiledBinding SafeShutdownOSCommand}">
+                                <MenuItem.Header>
+                                    <StackPanel Orientation="Horizontal" Spacing="3">
+                                        <avalonia:MaterialIcon Kind="Power" Foreground="Red" />
+                                        <TextBlock Text="{x:Static sdr:RS.FlightSdrView_SystemControlAction_Shutdown_Title}" />
+                                    </StackPanel>
+                                </MenuItem.Header>
+                            </MenuItem>
+                        </MenuFlyout>
+                    </DropDownButton.Flyout>
+                </DropDownButton>
                 
                 <sdr:LinkQualitySdrRttView DataContext="{CompiledBinding LinkQuality}" DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent"/>
             </DockPanel>
@@ -40,16 +61,19 @@
                    </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <TextBox Text="{Binding Frequency}"/>
+            <TextBox Text="{Binding FrequencyInMhz}">
+                <TextBox.InnerRightContent>
+                    <TextBlock Margin="8 0" Text="{Binding FrequencyUnits}" VerticalAlignment="Center" />
+                </TextBox.InnerRightContent>
+            </TextBox>
             <Button Command="{Binding UpdateMode}" HorizontalAlignment="Stretch">Set</Button>
-            <ItemsControl ItemsSource="{Binding RttItems}">
+            <ItemsControl ItemsSource="{Binding RttWidgets}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel ItemWidth="60" />
+                        <StackPanel HorizontalAlignment="Stretch" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
-            
         </StackPanel>    
     </Border>
 </UserControl>

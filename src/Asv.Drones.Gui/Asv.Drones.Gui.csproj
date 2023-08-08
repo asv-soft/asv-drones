@@ -8,54 +8,56 @@
         <FileVersion>$(ProductExtendedVersion)</FileVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DefineConstants>TRACE;</DefineConstants>
+
+        <DefineConstants>TRACE;PROPRIETARY</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DefineConstants>TRACE;</DefineConstants>
+        <DefineConstants>TRACE;PROPRIETARY</DefineConstants>
+
     </PropertyGroup>
 
 
     <ItemGroup>
-        <AvaloniaResource Include="Assets\**"/>
+        <AvaloniaResource Include="Assets\**" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)"/>
-        <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)"/>
-        <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)"/>
-        <PackageReference Include="FluentAvaloniaUI" Version="2.0.0-rc1" />
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
+        <PackageReference Include="FluentAvaloniaUI" Version="2.0.0" />
         <PackageReference Include="Material.Icons.Avalonia" Version="2.0.1" />
         <PackageReference Include="NLog" Version="5.2.0" />
         <PackageReference Include="System.ComponentModel.Composition" Version="7.0.0" />
-        <PackageReference Include="Asv.Cfg" Version="$(AsvCommonVersion)" />
+        <PackageReference Include="Asv.Cfg" Version="1.10.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Update="RS.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-        <LastGenOutput>RS.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
-      <EmbeddedResource Update="RS.ru.resx">
-        <DependentUpon>RS.resx</DependentUpon>
-      </EmbeddedResource>
+        <EmbeddedResource Update="RS.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>RS.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="RS.ru.resx">
+            <DependentUpon>RS.resx</DependentUpon>
+        </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="RS.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>RS.resx</DependentUpon>
-      </Compile>
+        <Compile Update="RS.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>RS.resx</DependentUpon>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Asv.Drones.Gui.Core\Asv.Drones.Gui.Core.csproj" />
-      <ProjectReference Include="..\Asv.Drones.Gui.Gbs\Asv.Drones.Gui.Gbs.csproj" />
-      <ProjectReference Include="..\Asv.Drones.Gui.Map\Asv.Drones.Gui.Map.csproj" />
-      <ProjectReference Include="..\Asv.Drones.Gui.Sdr\Asv.Drones.Gui.Sdr.csproj" />
-      <ProjectReference Include="..\Asv.Drones.Gui.Uav\Asv.Drones.Gui.Uav.csproj" />
+        <ProjectReference Include="..\Asv.Drones.Gui.Core\Asv.Drones.Gui.Core.csproj" />
+        <ProjectReference Include="..\Asv.Drones.Gui.Gbs\Asv.Drones.Gui.Gbs.csproj" />
+        <ProjectReference Include="..\Asv.Drones.Gui.Map\Asv.Drones.Gui.Map.csproj" />
+        <ProjectReference Include="..\Asv.Drones.Gui.Sdr\Asv.Drones.Gui.Sdr.csproj" />
+        <ProjectReference Include="..\Asv.Drones.Gui.Uav\Asv.Drones.Gui.Uav.csproj" />
     </ItemGroup>
 
     <Choose>
@@ -63,6 +65,7 @@
             <!-- When PROPRIETARY is defined. -->
             <ItemGroup>
                 <ProjectReference Include="..\..\..\asv-drones-gui-afis\src\Asv.Drones.Gui.Afis\Asv.Drones.Gui.Afis.csproj" />
+                <ProjectReference Include="..\..\..\asv-drones-gui-weather\src\Asv.Drones.Gui.Weather\Asv.Drones.Gui.Weather.csproj" />
             </ItemGroup>
         </When>
         <!-- other conditions -->

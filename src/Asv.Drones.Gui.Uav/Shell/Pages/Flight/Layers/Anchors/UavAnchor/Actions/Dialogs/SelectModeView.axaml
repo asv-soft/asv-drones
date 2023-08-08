@@ -15,8 +15,9 @@
         <TextBlock Text="{x:Static uav:RS.SelectModeAnchorActionView_DialogDescription}" />
         <ListBox ItemsSource="{CompiledBinding AvailableModes}" SelectedItem="{Binding SelectedMode, Mode=TwoWay}" Grid.IsSharedSizeScope="True">
             <ListBox.Styles>
-                <Style Selector="ListBoxItem">
+                <Style Selector="ListBoxItem" x:DataType="uav:VehicleModeWithIcons">
                     <Setter Property="MinHeight" Value="50" />
+                    <Setter Property="ToolTip.Tip" Value="{Binding Mode.Description}" />
                 </Style>
             </ListBox.Styles>
             <ListBox.ItemsPanel>
@@ -32,7 +33,7 @@
                             <ColumnDefinition SharedSizeGroup="Name" Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <avalonia:MaterialIcon Kind="{CompiledBinding Icon}" />
-                        <TextBlock Grid.Column="1" Margin="5 0 0 0" Text="{CompiledBinding Mode.Name}" />
+                        <TextBlock Grid.Column="1" Margin="5 3 0 0" Text="{CompiledBinding Mode.Name}" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

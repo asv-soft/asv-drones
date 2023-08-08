@@ -142,7 +142,7 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <Polygon Canvas.Left="480" Canvas.Top="200" Width="40" Height="20" Stretch="Fill" Points="0,1 1,0 2,1" Fill="#e53935" StrokeThickness="0.5" />
+                        <Polygon Canvas.Left="480" Canvas.Top="200" Width="40" Height="20" Stretch="Fill" Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RollPolygonPoints}" Fill="#e53935" StrokeThickness="0.5" />
                         <Line StartPoint="150,500" EndPoint="250,500" Stroke="#e53935" StrokeThickness="10"/>
                         <Line StartPoint="750,500" EndPoint="850,500" Stroke="#e53935" StrokeThickness="10"/>
                         <Line StartPoint="400,500" EndPoint="600,500" Stroke="#e0e0e0" StrokeThickness="5"/>
@@ -174,7 +174,7 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <Polygon ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Velocity_ToolTip}" Opacity="0.7" Canvas.Top="470" Canvas.Left="-1" Points="2,5 2,55 90,55 105,30 90,5" Fill="#000a12" StrokeThickness="3" Stroke="#eceff1"/>
+                        <Polygon ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Velocity_ToolTip}" Opacity="0.7" Canvas.Top="470" Canvas.Left="-1" Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VelocityPolygonPoints}" Fill="#000a12" StrokeThickness="3" Stroke="#eceff1"/>
                         <TextBlock ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Velocity_ToolTip}" Canvas.Left="-1" Canvas.Top="470" Margin="0,0,0,0" Foreground="White" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Velocity}"
                                    TextAlignment="Right" FontSize="40" Width="87" FontWeight="DemiBold"/>
                         <Border ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Velocity_ToolTip}" BorderBrush="#e0e0e0" Canvas.Top="300"  Canvas.Left="-3" BorderThickness="5" CornerRadius="3" Width="113" Height="400"/>
@@ -204,7 +204,7 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <Polygon ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Altitude_ToolTip}" Opacity="0.7" Canvas.Right="-1" Canvas.Top="470" Points="105,5 105,55 15,55 0,30 15,5" Fill="#000a12" StrokeThickness="3" Stroke="#eceff1"/>
+                        <Polygon ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Altitude_ToolTip}" Opacity="0.7" Canvas.Right="-1" Canvas.Top="470" Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=AltitudePolygonPoints}" Fill="#000a12" StrokeThickness="3" Stroke="#eceff1"/>
                         <TextBlock ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Altitude_ToolTip}" Canvas.Right="-1" Canvas.Top="470" Margin="0,0,0,0" Foreground="White" FontWeight="DemiBold" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Altitude}"
                                    VerticalAlignment="Center" TextAlignment="Left" FontSize="40" Width="87"/>
                         <Border ToolTip.Tip="{x:Static controls:RS.AttitudeIndicator_Altitude_ToolTip}" BorderBrush="#e0e0e0" Canvas.Right="-3" Canvas.Top="300" BorderThickness="5" CornerRadius="3" Width="113" Height="400"/>
@@ -240,7 +240,7 @@
                                    VerticalAlignment="Center" TextAlignment="Center" FontWeight="DemiBold" FontSize="45" Width="80"/>
 
                             <!-- Home -->
-                            <Polygon Canvas.Top="2" Canvas.Left="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HomeAzimuthPosition}" Points="-15,0 0,15 15,0" Fill="#e53935" StrokeThickness="3" Stroke="Red"/>
+                            <Polygon Canvas.Top="2" Canvas.Left="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HomeAzimuthPosition}" Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HomePolygonPoints}" Fill="#e53935" StrokeThickness="3" Stroke="Red"/>
 
                             
                             <!-- Vibration -->

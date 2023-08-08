@@ -8,7 +8,8 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:CompileBindings="True"
              x:Class="Asv.Drones.Gui.Core.ShellView"
-             x:DataType="core:ShellViewModel">
+             x:DataType="core:ShellViewModel"
+             AttachedToVisualTree="OnAttachedToVisualTree">
     <Design.DataContext>
         <core:ShellViewModel/>
     </Design.DataContext>
@@ -26,11 +27,6 @@
                    DockPanel.Dock="Left"
                    Name="WindowIcon"/>
             <Menu Grid.Column="1" ItemsSource="{Binding HeaderMenuItems}" >
-                <Menu.ItemTemplate>
-                    <DataTemplate>
-                                
-                    </DataTemplate>
-                </Menu.ItemTemplate>
                 <Menu.Styles>
                     <Style Selector="MenuItem" x:DataType="core:IHeaderMenuItem">
                         <Setter Property="Header" Value="{Binding Header}"/>
@@ -46,12 +42,25 @@
                     </Style>
                 </Menu.Styles>
             </Menu>
-            <!-- <Border Padding="10,5" Margin="5" CornerRadius="{DynamicResource ControlCornerRadius}" VerticalAlignment="Center"  Grid.Column="2" HorizontalAlignment="Center" Background="#366ace"> -->
-            <!--     <StackPanel Orientation="Horizontal" Spacing="5"> -->
-            <!--         <avalonia:MaterialIcon Width="20" Height="20" Kind="DatabaseOutline" Foreground="#40b5e0"/> -->
-            <!--         <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>     -->
-            <!--     </StackPanel> -->
-            <!-- </Border> -->
+            
+            <!--<Border Grid.Column="2" Padding="6">
+                <AutoCompleteBox Name="SearchBox"
+                                 MaxWidth="300"
+                                 Classes="Shell"
+                                 Watermark="Search">
+                    <AutoCompleteBox.Styles>
+                        <Style>
+                            
+                        </Style>
+                    </AutoCompleteBox.Styles>
+                </AutoCompleteBox>
+            </Border>-->
+            <Border IsVisible="{Binding CurrentPage, Converter={x:Static ObjectConverters.IsNotNull}}" Padding="10,5" Margin="5" CornerRadius="{DynamicResource ControlCornerRadius}" VerticalAlignment="Center"  Grid.Column="2" HorizontalAlignment="Center" Background="#366ace">
+                 <StackPanel Orientation="Horizontal" Spacing="5"> 
+                     <avalonia:MaterialIcon Width="20" Height="20" Kind="{Binding CurrentPage.Icon}" Foreground="#40b5e0"/>
+                     <TextBlock Text="{Binding CurrentPage.Title}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>     
+                 </StackPanel> 
+            </Border> 
             
         </Grid>
         <ItemsControl ItemsSource="{Binding StatusItems}" Height="25" DockPanel.Dock="Bottom" Background="{DynamicResource InfoBarErrorSeverityBackgroundBrush}">
@@ -69,7 +78,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <ContentPresenter Content="{Binding}" Margin="0,5,0,0" />
+                    <ContentPresenter Content="{Binding}" Margin="8,0,8,0" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

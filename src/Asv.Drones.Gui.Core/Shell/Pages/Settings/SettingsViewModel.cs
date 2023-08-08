@@ -5,6 +5,7 @@ using Asv.Common;
 using Avalonia.Controls;
 using DynamicData;
 using DynamicData.Binding;
+using Material.Icons;
 using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core
@@ -13,7 +14,7 @@ namespace Asv.Drones.Gui.Core
 
     [ExportShellPage(UriString)]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class SettingsViewModel:ViewModelBase,IShellPage
+    public class SettingsViewModel: ShellPage
     {
         public const string UriString = "asv:shell.page.settings";
         public static readonly Uri Uri = new Uri(UriString);
@@ -25,6 +26,8 @@ namespace Asv.Drones.Gui.Core
         /// </summary>
         public SettingsViewModel():base(Uri)
         {
+            Title = RS.SettingsShellMenuProvider_SettingsShellMenuProvider_Settings;
+            Icon = MaterialIconKind.Settings;
             if (Design.IsDesignMode)
             {
                 CurrentVersion = "0.0.0";
@@ -78,10 +81,7 @@ namespace Asv.Drones.Gui.Core
         public ReadOnlyObservableCollection<ISettingsPart> Items => _items;
 
         public bool IsRebootRequired => _isRebootRequired.Value;
-        
-        public void SetArgs(Uri link)
-        {
-            
-        }
+
+       
     }
 }

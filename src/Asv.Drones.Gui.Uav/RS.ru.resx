@@ -1,4 +1,4 @@
-<root>
+﻿<root>
     <resheader name="resmimetype">
         <value>text/microsoft-resx</value>
     </resheader>
@@ -187,5 +187,143 @@
   </data>
   <data name="SelectModeAnchorActionView_DialogDescription" xml:space="preserve">
     <value>Измените режим БПЛА на режим из списка</value>
+  </data>
+  <data name="SpeedsQuickParamView_WPNAV_SPEED_Header" xml:space="preserve">
+    <value>Целевая горизонтальная скорость путевой точки (WPNAV_SPEED)</value>
+  </data>
+  <data name="SpeedsQuickParamView_WPNAV_SPEED_Description" xml:space="preserve">
+    <value>Определяет скорость в см/с, которую дрон будет пытаться поддерживать в горизонтальном положении во время миссии WP. Шаг - 0.5. Диапазон 0.2-20. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
+  </data>
+  <data name="SpeedsQuickParamView_WPNAV_SPEED_DN_Header" xml:space="preserve">
+    <value>Целевая скорость снижения по путевой точке (WPNAV_SPEED_DN)</value>
+  </data>
+  <data name="SpeedsQuickParamView_WPNAV_SPEED_DN_Description" xml:space="preserve">
+    <value>Определяет скорость в см/с, которую дрон будет пытаться поддерживать при снижении во время миссии WP. Шаг - 0.1. Диапазон 0.1-5. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
+  </data>
+  <data name="SpeedsQuickParamView_WPNAV_SPEED_UP_Header" xml:space="preserve">
+    <value>Целевая скорость набора высоты по путевой точке (WPNAV_SPEED_UP)</value>
+  </data>
+  <data name="SpeedsQuickParamView_WPNAV_SPEED_UP_Description" xml:space="preserve">
+    <value>Определяет скорость в см/с, которую дрон будет пытаться поддерживать при наборе высоты во время миссии WP. Шаг - 0.5. Диапазон 0.1-10. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
+  </data>
+  <data name="SpeedsQuickParamView_RTL_SPEED_Header" xml:space="preserve">
+    <value>Скорость RTL (RTL_SPEED)</value>
+  </data>
+  <data name="SpeedsQuickParamView_RTL_SPEED_Description" xml:space="preserve">
+    <value>Определяет скорость в см/с, которую дрон будет поддерживать в горизонтальном положении при полете домой. Если установлено нулевое значение, вместо этого будет использоваться WPNAV_SPEED. Шаг - 50. Диапазон 0-2000. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
+  </data>
+  <data name="SpeedsQuickParamView_LOIT_SPEED_Header" xml:space="preserve">
+    <value>Горизонтальная максимальная скорость в режиме Loiter (LOIT_SPEED)</value>
+  </data>
+  <data name="SpeedsQuickParamView_LOIT_SPEED_Description" xml:space="preserve">
+    <value>Определяет максимальную скорость в см/с, с которой дрон будет двигаться горизонтально в режиме Loiter. Шаг - 0.5. Диапазон 0.2-35. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
+  </data>
+  <data name="SpeedsQuickParamView_LAND_SPEED_Header" xml:space="preserve">
+    <value>Скорость посадки (LAND_SPEED)</value>
+  </data>
+  <data name="SpeedsQuickParamView_LAND_SPEED_Description" xml:space="preserve">
+    <value>Скорость снижения на конечном этапе приземления в см/с. Шаг - 0.1. Диапазон 0.3-2. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
+  </data>
+  <data name="SpeedsQuickParamView_LAND_SPEED_HIGH_Header" xml:space="preserve">
+    <value>Высокая скорость посадки (LAND_SPEED_HIGH)</value>
+  </data>
+  <data name="SpeedsQuickParamView_LAND_SPEED_HIGH_Description" xml:space="preserve">
+    <value>Скорость снижения на первом этапе приземления в см/с. Если это значение равно нулю, используется WPNAV_SPEED_DN. Шаг - 0.1. Диапазон 0-5. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
+  </data>
+  <data name="SpeedsQuickParamView_LAND_ALT_LOW_Header" xml:space="preserve">
+    <value>Низшая высота посадки (LAND_ALT_LOW)</value>
+  </data>
+  <data name="SpeedsQuickParamView_LAND_ALT_LOW_Description" xml:space="preserve">
+    <value>Высота при посадке, на которой транспортное средство замедляется до LAND_SPEED. Шаг - 0.1. Диапазон 1-100. [{0:F2} см] [{1:F2} фт]. Примечание. Этот параметр предназначен для опытных пользователей.</value>
+  </data>
+  <data name="SpeedsQuickParamView_PILOT_SPEED_UP_Header" xml:space="preserve">
+    <value>Максимальная вертикальная скорость пилота при наборе высоты (PILOT_SPEED_UP)</value>
+  </data>
+  <data name="SpeedsQuickParamView_PILOT_SPEED_UP_Description" xml:space="preserve">
+    <value>Максимальная скорость вертикального набора высоты, которую может запросить пилот, в см/с. Шаг - 0.1. Диапазон 0.5-5. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
+  </data>
+  <data name="SpeedsQuickParamView_PILOT_SPEED_DN_Header" xml:space="preserve">
+    <value>Максимальная вертикальная скорость пилота при снижении (PILOT_SPEED_DN)</value>
+  </data>
+  <data name="SpeedsQuickParamView_PILOT_SPEED_DN_Description" xml:space="preserve">
+    <value>Максимальная скорость вертикального снижения, которую может запросить пилот, в см/с. Если используется значение 0, то берётся значение PILOT_SPEED_UP. Шаг - 0.1. Диапазон 0-5. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
+  </data>
+  <data name="SpeedsQuickParamView_LAND_ALT_LOW_Units" xml:space="preserve">
+    <value>м</value>
+  </data>
+  <data name="SpeedsQuickParamView_WPNAV_SPEED_UP_Units" xml:space="preserve">
+    <value>м/с</value>
+  </data>
+  <data name="SpeedsQuickParamView_WPNAV_SPEED_Units" xml:space="preserve">
+    <value>м/с</value>
+  </data>
+  <data name="SpeedsQuickParamView_WPNAV_SPEED_DN_Units" xml:space="preserve">
+    <value>м/с</value>
+  </data>
+  <data name="SpeedsQuickParamView_RTL_SPEED_Units" xml:space="preserve">
+    <value>м/с</value>
+  </data>
+  <data name="SpeedsQuickParamView_PILOT_SPEED_UP_Units" xml:space="preserve">
+    <value>м/с</value>
+  </data>
+  <data name="SpeedsQuickParamView_PILOT_SPEED_DN_Units" xml:space="preserve">
+    <value>м/с</value>
+  </data>
+  <data name="SpeedsQuickParamView_LOIT_SPEED_Units" xml:space="preserve">
+    <value>м/с</value>
+  </data>
+  <data name="SpeedsQuickParamView_LAND_SPEED_Units" xml:space="preserve">
+    <value>м/с</value>
+  </data>
+  <data name="SpeedsQuickParamView_LAND_SPEED_HIGH_Units" xml:space="preserve">
+    <value>м/с</value>
+  </data>
+  <data name="ControllerReloadQuickParamView_ReloadButton_Content" xml:space="preserve">
+    <value>Перезагрузить</value>
+  </data>
+  <data name="ControllerReloadQuickParamView_Header" xml:space="preserve">
+    <value>Перезагрузка контроллера</value>
+  </data>
+  <data name="ControllerReloadQuickParamView_Description" xml:space="preserve">
+    <value>Здесь вы можете перезагрузить контроллер</value>
+  </data>
+  <data name="SpeedsQuickParamView_Header" xml:space="preserve">
+    <value>Скорость</value>
+  </data>
+  <data name="SpeedsQuickParamView_Description" xml:space="preserve">
+    <value>Здесь вы можете изменить скорости</value>
+  </data>
+  <data name="IdentityQuickParamView_Header" xml:space="preserve">
+    <value>ID системы</value>
+  </data>
+  <data name="IdentityQuickParamView_Description" xml:space="preserve">
+    <value>Каждая система имеет уникальный для сети идентификатор системы, и каждый компонент имеет уникальный для системы идентификатор компонента, который можно использовать для адресации/маршрутизации.</value>
+  </data>
+  <data name="FailSafeQuickParamView_Header" xml:space="preserve">
+    <value>Параметры FailSafe</value>
+  </data>
+  <data name="FailSafeQuickParamView_Description" xml:space="preserve">
+    <value>Здесь вы можете изменить параметры FailSafe</value>
+  </data>
+  <data name="QuickParamsSetupPageView_WriteRequired_Title" xml:space="preserve">
+    <value>Требуется запись</value>
+  </data>
+  <data name="QuickParamsSetupPageView_WriteRequired_Message" xml:space="preserve">
+    <value>Вы должны нажать кнопку записи, если хотите сохранить и применить изменения.</value>
+  </data>
+  <data name="QuickParamsSetupPageView_AdvancedSetupButton_Text" xml:space="preserve">
+    <value>Расширенная настройка</value>
+  </data>
+  <data name="QuickParamsSetupPageView_ReadAllButton_Text" xml:space="preserve">
+    <value>Прочитать все</value>
+  </data>
+  <data name="QuickParamsSetupPageView_WriteAllButton_Text" xml:space="preserve">
+    <value>Записать все</value>
+  </data>
+  <data name="FlightUavView_UavDropDownControls_Title" xml:space="preserve">
+    <value>Действия с БПЛА</value>
+  </data>
+  <data name="FlightUavView_FindButton_ToolTip" xml:space="preserve">
+    <value>Найти БПЛА</value>
   </data>
 </root>
