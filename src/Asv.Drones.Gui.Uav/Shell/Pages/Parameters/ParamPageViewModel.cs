@@ -22,6 +22,7 @@ public class ParamPageViewModel: ShellPage
 {
     private readonly IMavlinkDevicesService _svc;
     private readonly ILogService _log;
+    
     private readonly IConfiguration _cfg;
     private ReadOnlyObservableCollection<ParamItemViewModel> _viewedParams;
     private ObservableAsPropertyHelper<bool> _isRefreshing;

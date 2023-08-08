@@ -120,7 +120,7 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
                     isValid = false;
                 }
                 return isValid;
-            }, _=>  "Not valid tag name" )
+            }, _ => RS.RecordStartViewModel_TagName_Validation_ErrorMessage)
             .DisposeItWith(Disposable);
 
         this.ValidationRule(x => x.TagValue, _ => CheckTagValue(_), _ => GetTagValueValidationMessage())
@@ -159,19 +159,19 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
         
         if (SelectedType == "String8")
         {
-            message = "String length must be < 9, and contain only ascii-chars!";
+            message = RS.RecordStartViewModel_TagValue_String8_ErrorMessage;
         }
         else if (SelectedType == "Int64")
         {
-            message = "This is not valid Int64 value!";
+            message = RS.RecordStartViewModel_TagValue_Int64_ErrorMessage;
         }
         else if (SelectedType == "UInt64")
         {
-            message = "This is not valid UInt64 value!";
+            message = RS.RecordStartViewModel_TagValue_UInt64_ErrorMessage;
         }
         else if (SelectedType == "Float64")
         {
-            message = "This is not valid Float64 value!";
+            message = RS.RecordStartViewModel_TagValue_Float64_ErrorMessage;
         }
 
         return message;
@@ -197,7 +197,7 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
                 }
                 
                 return dialog.IsPrimaryButtonEnabled;
-            }, _ =>  "Not valid record name" )
+            }, _ => RS.RecordStartViewModel_RecordName_Validation_ErrorMessage)
             .DisposeItWith(Disposable);
     }
     

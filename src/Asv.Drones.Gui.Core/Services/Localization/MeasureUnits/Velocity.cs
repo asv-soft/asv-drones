@@ -26,8 +26,8 @@ public class Velocity : MeasureUnitBase<double,VelocityUnits>
         
     }
 
-    public override string Title => "Velocity";
-    public override string Description => "Units of measure for speed";
+    public override string Title => RS.Velocity_Title;
+    public override string Description => RS.Velocity_Description;
     
     
 }

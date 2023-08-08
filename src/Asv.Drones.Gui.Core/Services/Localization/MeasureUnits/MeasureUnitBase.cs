@@ -84,9 +84,9 @@ public class DoubleMeasureUnitItem<TEnum> : IMeasureUnitItem<double, TEnum>
 
     public virtual string? GetErrorMessage(string value)
     {
-        if (value.IsNullOrWhiteSpace()) return "Value can't be null or white space"; // TODO: Localize
+        if (value.IsNullOrWhiteSpace()) return RS.MeasureUnitBase_ErrorMessage_NullOrWhiteSpace;
         value = value.Replace(',', '.');
-        return double.TryParse(value,NumberStyles.Any,CultureInfo.InvariantCulture, out _) == false ? "Value must be a number" : null;
+        return double.TryParse(value,NumberStyles.Any,CultureInfo.InvariantCulture, out _) == false ? RS.MeasureUnitBase_ErrorMessage_NotANumber : null;
     }
 
     

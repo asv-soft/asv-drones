@@ -15,6 +15,7 @@
       <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
       <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
       <PackageReference Include="Avalonia.Xaml.Interactions" Version="$(AvaloniaVersion)" />
+      <PackageReference Include="DocumentFormat.OpenXml" Version="2.20.0" />
       <PackageReference Include="FluentAvaloniaUI" Version="2.0.0" />
       <PackageReference Include="Material.Icons.Avalonia" Version="2.0.1" />
       <PackageReference Include="ReactiveUI" Version="19.2.1" />
@@ -43,6 +44,10 @@
       </Compile>
       <Compile Update="Shell\Pages\Map\Actions\Zoom\MapZoomActionView.axaml.cs">
         <DependentUpon>MapZoomActionView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Header\TopMenu\Tools\Items\CoordinatesCalculator\Dialog\CoordinatesCalculatorView.axaml.cs">
+        <DependentUpon>HeaderCoordinatesCalculatorDialog.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>

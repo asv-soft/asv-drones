@@ -12,7 +12,7 @@ public enum DegreeUnits
 public class Degrees : MeasureUnitBase<double, DegreeUnits>
 {
     private static readonly IMeasureUnitItem<double, DegreeUnits>[] _units = {
-        new DoubleMeasureUnitItem<DegreeUnits>(DegreeUnits.Degrees,RS.Degrees_Degree_Title,"°",true, "F0",1),
+        new DoubleMeasureUnitItem<DegreeUnits>(DegreeUnits.Degrees, RS.Degrees_Degree_Title,RS.Degrees_Degree_Title,true, "F0",1),
         new DmsMeasureUnit()
     };
     
@@ -20,8 +20,8 @@ public class Degrees : MeasureUnitBase<double, DegreeUnits>
     {
     }
 
-    public override string Title => "Angle";
-    public override string Description => "Units of measure for the angle";
+    public override string Title => RS.Degrees_Title;
+    public override string Description => RS.Degrees_Description;
 }
 
 public class DmsMeasureUnit : IMeasureUnitItem<double, DegreeUnits>

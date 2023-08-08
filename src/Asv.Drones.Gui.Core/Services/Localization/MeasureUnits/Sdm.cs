@@ -20,7 +20,7 @@ public class Sdm : MeasureUnitBase<double,SdmUnits>
     {
     }
 
-    public override string Title => "SDM";
+    public override string Title => RS.Sdm_Title;
 
-    public override string Description => "Units of measure for sum depth of modulation";
+    public override string Description => RS.Sdm_Description;
 }

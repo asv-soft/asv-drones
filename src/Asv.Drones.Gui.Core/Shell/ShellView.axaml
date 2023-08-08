@@ -27,11 +27,6 @@
                    DockPanel.Dock="Left"
                    Name="WindowIcon"/>
             <Menu Grid.Column="1" ItemsSource="{Binding HeaderMenuItems}" >
-                <Menu.ItemTemplate>
-                    <DataTemplate>
-                                
-                    </DataTemplate>
-                </Menu.ItemTemplate>
                 <Menu.Styles>
                     <Style Selector="MenuItem" x:DataType="core:IHeaderMenuItem">
                         <Setter Property="Header" Value="{Binding Header}"/>

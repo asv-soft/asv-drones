@@ -19,15 +19,15 @@ public class Longitude : MeasureUnitBase<double,LongitudeUnits>
         
     }
 
-    public override string Title => "Longitude";
-    public override string Description => "Units of longitude";
+    public override string Title => RS.Longitude_Title;
+    public override string Description => RS.Longitude_Description;
 }
 
 public class LongitudeUnitDeg :  IMeasureUnitItem<double, LongitudeUnits>
 {
     public LongitudeUnits Id => LongitudeUnits.Deg;
     public string Title => RS.Longitude_Degree_Title;
-    public string Unit => "°";
+    public string Unit => RS.Longitude_Degree_Title;
     public bool IsSiUnit => true;
     public double ConvertFromSi(double siValue)
     {
@@ -69,7 +69,7 @@ public class LongitudeUnitDms : IMeasureUnitItem<double, LongitudeUnits>
 {
     public LongitudeUnits Id => LongitudeUnits.Dms; 
     public string Title => RS.Longitude_DMS_Title;
-    public string Unit => "°";
+    public string Unit => RS.Longitude_DMS_Title;
     public bool IsSiUnit => false;
     public double ConvertFromSi(double siValue)
     {
