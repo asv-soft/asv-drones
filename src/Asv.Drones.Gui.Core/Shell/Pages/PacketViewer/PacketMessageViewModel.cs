@@ -30,7 +30,7 @@ public class PacketMessageViewModel : AvaloniaObject
     {
         DateTime = DateTime.Now;
         Source = $"[{packet.SystemId},{packet.ComponentId}]";
-        Message = converter.Convert(packet);
+        Message = $"[{packet.Sequence:000}] {converter.Convert(packet)}";
         Description = converter.Convert(packet, PacketFormatting.Indented);
         Type = packet.Name;
         Id = Guid.NewGuid();
