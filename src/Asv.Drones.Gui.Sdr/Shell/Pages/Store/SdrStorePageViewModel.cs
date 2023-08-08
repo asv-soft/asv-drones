@@ -58,9 +58,14 @@ public class SdrStorePageViewModel:ShellPage
         var recType = rec.DataType.Value;
         var recTypeAsUInt = (uint)recType;
         var take = 10U;
-        
+        await rec.DownloadTagList(new CallbackProgress<double>(_ => { }),cancel);
         // TODO: check that record already exist in storage by GUID
-        using var writer = _store.Store.OpenOrCreateFile(recId, rec.Name.Value,Guid.Empty);
+        using var writer = _store.Store.Create(recId, _store.Store.RootFolderId, _ =>
+        {
+            rec.CopyTo(_);
+        });
+
+        rec.CopyMetadataTo(writer);
         
         using var subscribe = ifc.OnRecordData.Where(_=>_.MessageId == recTypeAsUInt).Subscribe(_ => SaveRecord(_));
         for (var i = 0U; i < count; i+=take)

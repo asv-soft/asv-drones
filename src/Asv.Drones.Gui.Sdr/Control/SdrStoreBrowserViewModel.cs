@@ -117,14 +117,26 @@ public class SdrStoreBrowserViewModel:ViewModelBase
     private void AddFolderImpl()
     {
         Guid newId;
+        Guid parentId;
         if (SelectedItem != null)
         {
-            var parentId = SelectedItem.Type == StoreEntryType.Folder ? SelectedItem.EntryId : SelectedItem.ParentId;
-            newId = _svc.Store.CreateFolder(parentId,"New folder");    
+            parentId = SelectedItem.Type == StoreEntryType.Folder ? SelectedItem.EntryId : SelectedItem.ParentId;
         }
         else
         {
-            newId =_svc.Store.CreateFolder(Guid.Empty,"New folder");
+            parentId = _svc.Store.RootFolderId;
+        }
+        
+        var attempt = 0;
+        start:
+        var name = $"New folder ({++attempt})";
+        try
+        {
+            newId = _svc.Store.CreateFolder(parentId,name);
+        }
+        catch (ListDataFolderAlreadyExistException)
+        {
+            goto start;
         }
         Refresh.Execute().Subscribe(_ =>
         {
