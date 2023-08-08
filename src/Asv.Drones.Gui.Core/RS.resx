@@ -956,4 +956,31 @@
   <data name="Sdm_Description" xml:space="preserve">
     <value>SDM</value>
   </data>
+  <data name="HeaderTemplaterMenu_Header" xml:space="preserve">
+    <value>Templater</value>
+  </data>
+  <data name="TemplaterDialog_CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="TemplaterDialog_SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="TemplaterView_TemplatePath" xml:space="preserve">
+    <value>Template path:</value>
+  </data>
+  <data name="TemplaterView_ResultPath" xml:space="preserve">
+    <value>File path:</value>
+  </data>
+  <data name="TemplaterView_AddNewTag" xml:space="preserve">
+    <value>Add new tag</value>
+  </data>
+  <data name="TemplaterView_AddStringTag" xml:space="preserve">
+    <value>Add string tag</value>
+  </data>
+  <data name="TemplaterView_AddImageTag" xml:space="preserve">
+    <value>Add image tag</value>
+  </data>
+  <data name="TemplaterView_ClearTagsList" xml:space="preserve">
+    <value>Clear tags list</value>
+  </data>
 </root>
