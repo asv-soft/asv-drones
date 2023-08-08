@@ -113,7 +113,7 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
                 bool isValid = true;
                 try
                 {
-                    SdrWellKnown.CheckTagName(_);
+                    AsvSdrHelper.CheckTagName(_);
                 }
                 catch
                 {
@@ -189,7 +189,7 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
                 
                 try
                 {
-                    SdrWellKnown.CheckRecordName(_);
+                    AsvSdrHelper.CheckRecordName(_);
                     dialog.IsPrimaryButtonEnabled = true;
                 }
                 catch
