@@ -102,7 +102,7 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
             
             TagName = "";
             TagValue = "";
-        });
+        }, this.IsValid());
         
         SelectedType = Types.First();
         
