@@ -97,22 +97,31 @@ public class SdrStoreBrowserViewModel:ViewModelBase
     public SdrStoreBrowserViewModel(ISdrStoreService svc, ILogService log) : this()
     {
         _svc = svc ?? throw new ArgumentNullException(nameof(svc));
+
+        Refresh = new CancellableCommandWithProgress<Unit, Unit>(RefreshImpl, "SDR Viewer", log).DisposeItWith(Disposable);
         
-        Refresh = ReactiveCommand.Create(RefreshImpl)
-            .DisposeItWith(Disposable);
-        Refresh.ThrownExceptions
-            .Subscribe(ex => log.Error("SDR Viewer",$"Refresh store entry",ex))
-            .DisposeItWith(Disposable);
         
         AddFolder = ReactiveCommand.Create(AddFolderImpl)
             .DisposeItWith(Disposable);
         AddFolder.ThrownExceptions
             .Subscribe(ex => log.Error("AFIS",$"Add new folder",ex))
             .DisposeItWith(Disposable);
-        
-        
-        using var a = Refresh.Execute().Subscribe();
+
+        Refresh.ExecuteSync();
     }
+
+    public CancellableCommandWithProgress<Unit,Unit> Refresh { get; set; }
+
+    private Task<Unit> RefreshImpl(Unit arg, IProgress<double> progress, CancellationToken cancel)
+    {
+        return Task.Run(() =>
+        {
+            _source.Clear();
+            _source.AddOrUpdate(_svc.Store.GetEntries());
+            return Unit.Default;
+        }, cancel);
+    }
+
 
     private void AddFolderImpl()
     {
@@ -138,7 +147,7 @@ public class SdrStoreBrowserViewModel:ViewModelBase
         {
             goto start;
         }
-        Refresh.Execute().Subscribe(_ =>
+        Refresh.Command.Execute().Subscribe(_ =>
         {
             foreach (var item in _tree)
             {
@@ -153,18 +162,12 @@ public class SdrStoreBrowserViewModel:ViewModelBase
     public ReadOnlyObservableCollection<SdrStoreEntityViewModel> Items => _tree;
 
 
-    public ReactiveCommand<Unit,Unit> Refresh { get; set; }
-
     [Reactive]
     public string SearchText { get; set; }
 
     public ReactiveCommand<Unit,Unit> AddFolder { get; }
 
-    private void RefreshImpl()
-    {
-        _source.Clear();
-        _source.AddOrUpdate(_svc.Store.GetEntries());
-    }
+    
     public void DeleteEntity(Guid id)
     {
         if (_svc.Store.TryGetEntry(id, out var ent) == false) return;
@@ -179,7 +182,7 @@ public class SdrStoreBrowserViewModel:ViewModelBase
             default:
                 throw new ArgumentOutOfRangeException();
         }
-        RefreshImpl();
+        Refresh.ExecuteSync();
     }
 
     public void RenameEntity(Guid id, string name)
@@ -196,5 +199,12 @@ public class SdrStoreBrowserViewModel:ViewModelBase
             default:
                 throw new ArgumentOutOfRangeException();
         }
+    }
+
+    public void TrySelect(Guid entityId)
+    {
+         var item = Items.FirstOrDefault(_ => _.EntryId == entityId);
+         if (item == null) return;
+         SelectedItem = item;
     }
 }

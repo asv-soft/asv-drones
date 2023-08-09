@@ -13,7 +13,7 @@
     </Design.DataContext>
     <Grid ColumnDefinitions="2*,30,1*">
         <sdr:SdrStoreBrowserView DataContext="{Binding Store}"/>
-        <Button Grid.Column="1" Height="100" Content="{avalonia:MaterialIconExt Kind=TransferLeft}" Theme="{DynamicResource TransparentButton}" Command="{Binding DownloadRecord}" />
+        <Button Grid.Column="1" Height="100" Content="{avalonia:MaterialIconExt Kind=TransferLeft}" Theme="{DynamicResource TransparentButton}" Command="{Binding DownloadRecord.Command}" />
         <sdr:SdrPayloadBrowserView Grid.Column="2" DataContext="{Binding Device}"/>
        
         

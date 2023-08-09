@@ -4,7 +4,7 @@ using Asv.Mavlink.Vehicle;
 
 namespace Asv.Drones.Gui.Core;
 
-public class Ruler : DisposableViewModelBase
+public class Ruler : DisposableReactiveObject
 {
     public IRxEditableValue<GeoPoint?> Start { get; }
     public IRxEditableValue<GeoPoint?> Stop { get; }

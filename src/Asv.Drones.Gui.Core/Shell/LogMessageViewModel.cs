@@ -7,7 +7,7 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Core
 {
-    public class LogMessageViewModel:DisposableViewModelBase
+    public class LogMessageViewModel:DisposableReactiveObject
     {
         private readonly ISourceList<LogMessage> _sourceList;
         private readonly LogMessage _message;

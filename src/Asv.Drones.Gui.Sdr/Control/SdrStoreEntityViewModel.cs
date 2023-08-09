@@ -12,12 +12,14 @@ namespace Asv.Drones.Gui.Sdr;
 public class SdrStoreEntityViewModel:ViewModelBase
 {
     private readonly ReadOnlyObservableCollection<SdrStoreEntityViewModel> _items;
+    private ReadOnlyObservableCollection<SdrPayloadRecordViewModel> _tags;
 
     public SdrStoreEntityViewModel(Node<IListDataStoreEntry<Guid>,Guid> node, SdrStoreBrowserViewModel context):base("asv:sdr-browser.entryr?id="+node.Item.Id)
     {
         ParentId = node.Parent.HasValue ? node.Parent.Value.Item.Id : Guid.Empty;
+        EntityId = node.Item.Id;
         Name = node.Item.Name;
-        Type= node.Item.Type;
+        Type = node.Item.Type;
         EntryId = node.Item.Id;
         node.Children.Connect()
             .Transform(_ => new SdrStoreEntityViewModel(_,context))
@@ -40,6 +42,14 @@ public class SdrStoreEntityViewModel:ViewModelBase
             IsInEditNameMode = false;
             context.RenameEntity(EntryId,Name);
         });
+        Update = ReactiveCommand.CreateFromTask(UpdateImpl).DisposeItWith(Disposable);
+        
+        
+    }
+
+    private Task UpdateImpl(CancellationToken arg)
+    {
+        throw new NotImplementedException();
     }
 
     [Reactive]
@@ -63,7 +73,10 @@ public class SdrStoreEntityViewModel:ViewModelBase
     public ReactiveCommand<Unit,Unit> Delete { get; }
     public ReactiveCommand<Unit,Unit> BeginEdit { get; }
     public ReactiveCommand<Unit,Unit> EndEdit { get; }
-    public object Tags { get; }
+    
+    public ReactiveCommand<Unit,Unit> Update { get; }
+    public ReadOnlyObservableCollection<SdrPayloadRecordViewModel> Tags => _tags;
+    public Guid EntityId { get; }
 
 
     public SdrStoreEntityViewModel? Find(Guid id)

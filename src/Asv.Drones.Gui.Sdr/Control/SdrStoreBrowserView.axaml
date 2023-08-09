@@ -27,7 +27,7 @@
                         <TextBox Watermark="Search" Text="{Binding SearchText}"/>    
                     </Border>
                 </DockPanel>
-                <TreeView Margin="0,8,0,0" ItemsSource="{Binding Items}" SelectionMode="Single" SelectedItem="{Binding SelectedItem}" >
+                <TreeView Margin="0,8,0,0" ItemsSource="{Binding Items}" SelectionMode="Single" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" >
                     <TreeView.Styles>
                         <Style Selector="TreeViewItem" x:DataType="sdr:SdrStoreEntityViewModel">
                             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -112,8 +112,60 @@
             CornerRadius="{StaticResource ControlCornerRadius}">
             
             <Border MinHeight="50" DockPanel.Dock="Bottom" DataContext="{Binding SelectedItem}">
-                <TextBlock Text="{Binding Name}"/>
-            
+                <StackPanel Spacing="8">
+                    <TextBlock Text="{Binding Name}"/>
+                    <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Tags}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.DataTemplates>
+                            <DataTemplate DataType="sdr:LongTagViewModel">
+                                <Border ToolTip.Tip="Int64" Background="CornflowerBlue" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
+                                    <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
+                                        <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
+                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                            <DataTemplate DataType="sdr:ULongTagViewModel">
+                                <Border ToolTip.Tip="UInt64" Background="#FE8256" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
+                                    <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
+                                        <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
+                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
+                                    </StackPanel>
+                                </Border>
+                               
+                            </DataTemplate>
+                            <DataTemplate DataType="sdr:DoubleTagViewModel">
+                                <Border ToolTip.Tip="Float64" Background="#ACC865" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
+                                    <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
+                                        <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
+                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
+                                    </StackPanel>
+                                </Border>
+                            
+                            </DataTemplate>
+                            <DataTemplate DataType="sdr:StringTagViewModel">
+                                <Border ToolTip.Tip="String8" Background="#CD91B6" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
+                                    <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
+                                        <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
+                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                            <DataTemplate DataType="sdr:TagViewModel">
+                                <Border ToolTip.Tip="NoType" Background="DarkOrange" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
+                                    <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
+                                        <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
+                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.DataTemplates>
+                    </ItemsControl>
+                </StackPanel>
             </Border>
         </Border>
     </Grid>

@@ -48,8 +48,7 @@ public class SdrPayloadRecordViewModel:ViewModelBase
         DownloadTags.ThrownExceptions.Subscribe(_ =>
             {
                 if (Name != null) log.Error(Name, "Error to download tags", _);
-            })
-            .DisposeItWith(Disposable);
+            }).DisposeItWith(Disposable);
     }
 
     public string Description { get; set; }

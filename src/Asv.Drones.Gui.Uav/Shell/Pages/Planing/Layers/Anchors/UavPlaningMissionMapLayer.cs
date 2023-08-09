@@ -6,7 +6,7 @@ using DynamicData;
 
 namespace Asv.Drones.Gui.Uav
 {
-    public class UavPlaningMissionMapLayer : DisposableViewModelBase
+    public class UavPlaningMissionMapLayer : DisposableReactiveObject
     {
         private readonly ReadOnlyObservableCollection<UavPlaningMissionAnchor> _items;
 

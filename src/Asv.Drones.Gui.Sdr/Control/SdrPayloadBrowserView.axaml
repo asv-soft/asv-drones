@@ -30,7 +30,7 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-                <ListBox DataContext="{Binding SelectedDevice}" Margin="0,8,0,0" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedRecord}">
+                <ListBox DataContext="{Binding SelectedDevice, Mode=TwoWay}" Margin="0,8,0,0" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedRecord, Mode=TwoWay}">
                 <ListBox.Styles>
                     <Style Selector="ListBoxItem" x:DataType="sdr:SdrPayloadRecordViewModel">
                         <Setter Property="HorizontalAlignment" Value="Stretch"/>

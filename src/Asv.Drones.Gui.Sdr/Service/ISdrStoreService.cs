@@ -29,7 +29,7 @@ public class SdrStoreService : DisposableOnceWithCancel, ISdrStoreService
         {
             Directory.CreateDirectory(dir);
         }
-        Store = new AsvSdrRecordStore(dir);
+        Store = new AsvSdrRecordStore(dir).DisposeItWith(Disposable);
     }
 
     public IAsvSdrStore Store { get; }

@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Linq;
 using Asv.Common;
@@ -24,6 +25,7 @@ public class SdrPayloadBrowserViewModel:ViewModelBase
 
 
     public const string UriString = "asv:sdr.device.browser";
+
     public SdrPayloadBrowserViewModel():base(UriString)
     {
         if (Design.IsDesignMode)
@@ -37,7 +39,6 @@ public class SdrPayloadBrowserViewModel:ViewModelBase
                 }));
         }
     }
-    
     
     public SdrPayloadBrowserViewModel(IMavlinkDevicesService mavlink, ILocalizationService loc, ILogService log):this()
     {
@@ -59,7 +60,12 @@ public class SdrPayloadBrowserViewModel:ViewModelBase
     public ReadOnlyObservableCollection<SdrDeviceViewModel> Devices => _devices;
     
     [Reactive]
-    public SdrDeviceViewModel SelectedDevice { get; set; }
+    public SdrDeviceViewModel? SelectedDevice { get; set; }
+
+    public void TrySelect(Guid recordId)
+    {
+        SelectedDevice?.TrySelect(recordId);
+    }
 }
 
 public class SdrDeviceViewModel:ViewModelBase
@@ -130,6 +136,13 @@ public class SdrDeviceViewModel:ViewModelBase
     public SdrPayloadRecordViewModel SelectedRecord { get; set; }
 
     public ISdrClientDevice Client { get; }
+
+    public void TrySelect(Guid recordId)
+    {
+        var item = Items.FirstOrDefault(x => x.Record.Id == recordId);
+        if (item == null) return;
+        SelectedRecord = item;
+    }
 }
 
 
