@@ -9,6 +9,9 @@
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
         <AndroidPackageFormat>apk</AndroidPackageFormat>
         <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
+        <PublishTrimmed>false</PublishTrimmed>
+        <AndroidLinkMode>None</AndroidLinkMode>
+        <RunAOTCompilation>false</RunAOTCompilation>
     </PropertyGroup>
 
     <ItemGroup>
