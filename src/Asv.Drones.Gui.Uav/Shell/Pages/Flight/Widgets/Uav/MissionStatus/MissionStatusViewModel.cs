@@ -71,7 +71,14 @@ public class MissionStatusViewModel : ViewModelBase
 
     private async Task DownloadImpl(CancellationToken cancel)
     {
-        await _vehicle.Missions.Download(cancel,_ => DownloadProgress = _ * 100);
+        try
+        {
+            await _vehicle.Missions.Download(cancel, _ => DownloadProgress = _ * 100);
+        }
+        catch (Exception e)
+        {
+            _log.Error("MissionStatus", e.Message);
+        }
     }
     #endregion
 
