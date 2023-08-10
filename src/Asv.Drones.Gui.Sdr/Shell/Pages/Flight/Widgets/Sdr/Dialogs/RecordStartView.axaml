@@ -5,6 +5,9 @@
              xmlns:sdr="clr-namespace:Asv.Drones.Gui.Sdr"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              mc:Ignorable="d"
+             Width="450"
+             MinWidth="450"
+             MaxWidth="450"
              x:Class="Asv.Drones.Gui.Sdr.RecordStartView"
              x:DataType="sdr:RecordStartViewModel">
     <Design.DataContext>
