@@ -7,7 +7,10 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <AssemblyVersion>$(ProductStrongVersion)</AssemblyVersion>
         <FileVersion>$(ProductExtendedVersion)</FileVersion>
+        <Configurations>Debug;Release;DebugLibs</Configurations>
+        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="Asv.Cfg" Version="$(AsvCommonVersion)" />
         <PackageReference Include="Asv.Common" Version="$(AsvCommonVersion)" />

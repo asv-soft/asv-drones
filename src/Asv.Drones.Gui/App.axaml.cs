@@ -72,13 +72,13 @@ public partial class App : Application
     
     private IEnumerable<Assembly> Assemblies()
     {
-        //yield return GetType().Assembly;                   // Asv.Drones.Gui
+        //yield return GetType().Assembly;                   // Asv.Drones.Gui 
         yield return typeof(CorePlugin).Assembly;            // Asv.Drones.Gui.Core
         yield return typeof(UavPlugin).Assembly;             // Asv.Drones.Gui.Uav
         yield return typeof(GbsPlugin).Assembly;             // Asv.Drones.Gui.Gbs
         yield return typeof(FlightSdrWidgetBase).Assembly;   // Asv.Drones.Gui.Sdr
         // This section is for private plugins
-#if PROPRIETARY
+#if INCLUDE_PLUGINS
             yield return typeof(Afis.AfisPlugin).Assembly;        // [Asv.Drones.Gui.Afis]
             yield return typeof(Weather.WeatherPlugin).Assembly;  // [Asv.Drones.Gui.Weather]
 #endif

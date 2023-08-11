@@ -6,12 +6,26 @@
         <Nullable>enable</Nullable>
         <AssemblyVersion>$(ProductStrongVersion)</AssemblyVersion>
         <FileVersion>$(ProductExtendedVersion)</FileVersion>
+        <Configurations>Debug;Release;DebugLibs</Configurations>
+        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
 
+    <Choose>
+        <When Condition="'$(Configuration)' == 'DebugLibs'">
+            <ItemGroup>
+                <ProjectReference Include="..\..\..\asv-mavlink\src\Asv.Mavlink\Asv.Mavlink.csproj" />
+            </ItemGroup>
+        </When>
+        <Otherwise>
+            <ItemGroup>
+                <PackageReference Include="Asv.Mavlink" Version="$(AsvMavlinkVersion)" />
+            </ItemGroup>
+        </Otherwise>
+    </Choose>
+    
     <ItemGroup>
         <PackageReference Include="Asv.Cfg" Version="$(AsvCommonVersion)" />
         <PackageReference Include="Asv.Common" Version="$(AsvCommonVersion)" />
-        <PackageReference Include="Asv.Mavlink" Version="$(AsvMavlinkVersion)" />
         <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.Xaml.Interactions" Version="$(AvaloniaVersion)" />
