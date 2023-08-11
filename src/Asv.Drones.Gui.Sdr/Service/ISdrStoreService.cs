@@ -1,4 +1,5 @@
 using System.ComponentModel.Composition;
+using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
@@ -10,29 +11,35 @@ namespace Asv.Drones.Gui.Sdr;
 
 public interface ISdrStoreService
 {
-    IAsvSdrStore Store { get; }
+    IListDataStore<AsvSdrRecordFileMetadata, Guid> Store { get; }
 }
 
-
+public class SdrStoreServiceConfig
+{
+    public string SdrRecordFolder { get; set; } = "sdr_data";
+    public int FileCacheTimeMs { get; set; } = 10_000;
+}
 
 [Export(typeof(ISdrStoreService))]
 [PartCreationPolicy(CreationPolicy.Shared)]
-public class SdrStoreService : DisposableOnceWithCancel, ISdrStoreService
+public class SdrStoreService : ServiceWithConfigBase<SdrStoreServiceConfig>, ISdrStoreService
 {
     private const string RecordFolderName = "sdr_data";
    
     [ImportingConstructor]
-    public SdrStoreService(IAppService svc)
+    public SdrStoreService(IAppService svc, IConfiguration cfg) : base(cfg)
     {
-        var dir = Path.Combine(svc.Paths.DataFolder, RecordFolderName);
+        var dataFolder = InternalGetConfig(x => x.SdrRecordFolder);
+        var fileCacheTimeMs = InternalGetConfig(x => x.FileCacheTimeMs);
+        var dir = Path.Combine(svc.Paths.DataFolder, dataFolder);
         if (Directory.Exists(dir) == false)
         {
             Directory.CreateDirectory(dir);
         }
-        Store = new AsvSdrRecordStore(dir).DisposeItWith(Disposable);
+        Store = new ListDataStore<AsvSdrRecordFileMetadata, Guid>(dir, AsvSdrHelper.StoreFormat, AsvSdrHelper.FileFormat, TimeSpan.FromMilliseconds(fileCacheTimeMs)).DisposeItWith(Disposable);
     }
 
-    public IAsvSdrStore Store { get; }
+    public IListDataStore<AsvSdrRecordFileMetadata, Guid> Store { get; }
 }
 
 

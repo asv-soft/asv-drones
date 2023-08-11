@@ -11,7 +11,7 @@
     <ItemGroup>
       <PackageReference Include="Asv.Cfg" Version="$(AsvCommonVersion)" />
       <PackageReference Include="Asv.Common" Version="$(AsvCommonVersion)" />
-      <!--<PackageReference Include="Asv.Mavlink" Version="$(AsvMavlinkVersion)" />-->
+      <PackageReference Include="Asv.Mavlink" Version="$(AsvMavlinkVersion)" />
       <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
       <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
       <PackageReference Include="Avalonia.Xaml.Interactions" Version="$(AvaloniaVersion)" />
@@ -63,7 +63,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\asv-mavlink\src\Asv.Mavlink\Asv.Mavlink.csproj" />
       <ProjectReference Include="..\Asv.Drones.Gui.Map\Asv.Drones.Gui.Map.csproj" />
     </ItemGroup>
 

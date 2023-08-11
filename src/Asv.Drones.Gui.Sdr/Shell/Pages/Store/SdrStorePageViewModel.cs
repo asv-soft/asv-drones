@@ -75,11 +75,15 @@ public class SdrStorePageViewModel:ShellPage
         var recTypeAsUInt = (uint)recType;
         var take = 10U;
         await rec.DownloadTagList(new CallbackProgress<double>(_ => { }),cancel);
-        using IListDataFile<AsvSdrRecordFileMetadata> writer = _store.Store.ExistFile(rec.Id) 
-            ? _store.Store.Open(rec.Id) 
-            : _store.Store.Create(recId, _store.Store.RootFolderId, rec.CopyTo);
+
+        var parent = Store.SelectedItem == null ? _store.Store.RootFolderId :
+            Store.SelectedItem.IsRecord ? Store.SelectedItem.ParentId : Store.SelectedItem.EntityId;
         
-        rec.CopyMetadataTo(writer);
+        using var writer = _store.Store.ExistFile(rec.Id) 
+            ? _store.Store.Open(rec.Id) 
+            : _store.Store.Create(recId, parent , rec.CopyTo);
+        
+        rec.CopyMetadataTo(writer.File);
         
         var remoteCount = rec.DataCount.Value;
         Debug.WriteLine($"Begin read {remoteCount} items from device");
@@ -95,7 +99,7 @@ public class SdrStorePageViewModel:ShellPage
             {
                 Interlocked.Increment(ref readCount);
                 Debug.WriteLine($"Save record {x.Name}");
-                SaveRecord(writer,x);
+                SaveRecord(writer.File,x);
             });
             Debug.WriteLine($"Request skip:{chunk.Skip} , take:{chunk.Take}");
             var result = await ifc.GetRecordDataList(recId, chunk.Skip, chunk.Take, cancel);
