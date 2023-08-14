@@ -46,12 +46,7 @@
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
         <DefineConstants>TRACE;</DefineConstants>
-
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'DebugLibs' ">
-      <DefineConstants>TRACE;INCLUDE_PLUGINS</DefineConstants>
-    </PropertyGroup>
-
 
     <ItemGroup>
         <AvaloniaResource Include="Assets\**" />
