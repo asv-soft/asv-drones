@@ -11,22 +11,12 @@
     </PropertyGroup>
 
 
-    <Choose>
-        <When Condition="'$(Configuration)' == 'DebugLibs'">
-            <ItemGroup>
-                <ProjectReference Include="..\..\..\asv-mavlink\src\Asv.Mavlink\Asv.Mavlink.csproj" />
-            </ItemGroup>
-        </When>
-        <Otherwise>
-            <ItemGroup>
-                <PackageReference Include="Asv.Mavlink" Version="$(AsvMavlinkVersion)" />
-            </ItemGroup>
-        </Otherwise>
-    </Choose>
+   
     
     <ItemGroup>
         <PackageReference Include="Asv.Cfg" Version="$(AsvCommonVersion)" />
         <PackageReference Include="Asv.Common" Version="$(AsvCommonVersion)" />
+        <PackageReference Condition="'$(Configuration)' == 'Debug' Or '$(Configuration)' == 'Release'"  Include="Asv.Mavlink" Version="$(AsvMavlinkVersion)" />
         <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.Xaml.Interactions" Version="$(AvaloniaVersion)" />
@@ -53,5 +43,6 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Asv.Drones.Gui.Core\Asv.Drones.Gui.Core.csproj" />
+        <ProjectReference Condition="'$(Configuration)' == 'DebugLibs'" Include="..\..\..\asv-mavlink\src\Asv.Mavlink\Asv.Mavlink.csproj" />
     </ItemGroup>
 </Project>

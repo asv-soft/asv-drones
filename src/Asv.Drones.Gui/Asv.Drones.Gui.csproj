@@ -9,37 +9,9 @@
         <Configurations>Debug;Release;DebugPlugins;DebugLibs</Configurations>
         <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)' == 'DebugPlugins'">
+    <PropertyGroup Condition="'$(Configuration)' == 'DebugPlugins' Or '$(Configuration)' == 'DebugLibs'">
         <DefineConstants>TRACE;INCLUDE_PLUGINS</DefineConstants>
     </PropertyGroup>
-   
-    <Choose>
-        <When Condition="'$(Configuration)' == 'DebugPlugins'">
-            <ItemGroup>
-                <ProjectReference Include="..\..\..\asv-drones-gui-afis\src\Asv.Drones.Gui.Afis\Asv.Drones.Gui.Afis.csproj" />
-                <ProjectReference Include="..\..\..\asv-drones-gui-weather\src\Asv.Drones.Gui.Weather\Asv.Drones.Gui.Weather.csproj" />
-            </ItemGroup>
-        </When>
-    </Choose>
-
-    <PropertyGroup Condition="'$(Configuration)' == 'DebugLibs'">
-        <DefineConstants>TRACE;INCLUDE_PLUGINS</DefineConstants>
-    </PropertyGroup>
-    <Choose>
-        <When Condition="'$(Configuration)' == 'DebugLibs'">
-            <ItemGroup>
-                <ProjectReference Include="..\..\..\asv-mavlink\src\Asv.Mavlink\Asv.Mavlink.csproj" />
-                <ProjectReference Include="..\..\..\asv-drones-gui-afis\src\Asv.Drones.Gui.Afis\Asv.Drones.Gui.Afis.csproj" />
-                <ProjectReference Include="..\..\..\asv-drones-gui-weather\src\Asv.Drones.Gui.Weather\Asv.Drones.Gui.Weather.csproj" />
-            </ItemGroup>
-        </When>
-        <Otherwise>
-            <ItemGroup>
-                <PackageReference Include="Asv.Mavlink" Version="$(AsvMavlinkVersion)" />
-            </ItemGroup>
-        </Otherwise>
-    </Choose>
-    
     
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <DefineConstants>TRACE;</DefineConstants>
@@ -90,6 +62,8 @@
         <ProjectReference Include="..\Asv.Drones.Gui.Map\Asv.Drones.Gui.Map.csproj" />
         <ProjectReference Include="..\Asv.Drones.Gui.Sdr\Asv.Drones.Gui.Sdr.csproj" />
         <ProjectReference Include="..\Asv.Drones.Gui.Uav\Asv.Drones.Gui.Uav.csproj" />
+        <ProjectReference Condition="'$(Configuration)' == 'DebugPlugins' Or '$(Configuration)' == 'DebugLibs'" Include="..\..\..\asv-drones-gui-afis\src\Asv.Drones.Gui.Afis\Asv.Drones.Gui.Afis.csproj" />
+        <ProjectReference Condition="'$(Configuration)' == 'DebugPlugins' Or '$(Configuration)' == 'DebugLibs'" Include="..\..\..\asv-drones-gui-weather\src\Asv.Drones.Gui.Weather\Asv.Drones.Gui.Weather.csproj" />
     </ItemGroup>
    
 </Project>
