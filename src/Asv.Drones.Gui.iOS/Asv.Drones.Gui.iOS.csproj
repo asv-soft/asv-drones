@@ -6,13 +6,14 @@
         <ProvisioningType>manual</ProvisioningType>
         <Nullable>enable</Nullable>
         <RuntimeIdentifier>iossimulator-x64</RuntimeIdentifier>
-        <Configurations>Debug;Release;</Configurations>
+        <Configurations>Debug;Release</Configurations>
         <Platforms>AnyCPU</Platforms>
 
         <!-- These properties need to be set in order to run on a real iDevice -->
         <!--<RuntimeIdentifier>ios-arm64</RuntimeIdentifier>-->
         <!--<CodesignKey></CodesignKey>-->
     </PropertyGroup>
+   
   
 
     <ItemGroup>

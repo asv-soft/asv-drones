@@ -6,7 +6,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-        <Configurations>Debug;Release;</Configurations>
+        <Configurations>Debug;Release</Configurations>
         <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
 
@@ -14,7 +14,6 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
 
-    
 
     <ItemGroup>
         <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)"/>

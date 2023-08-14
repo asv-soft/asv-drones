@@ -10,8 +10,12 @@
         <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
 
-
-   
+    <PropertyGroup Condition="'$(Configuration)' == 'DebugLibs'">
+        <DebugSymbols Condition=" '$(DebugSymbols)' == '' ">true</DebugSymbols>
+        <Optimize Condition=" '$(Optimize)' == '' ">false</Optimize>
+        <DebugSymbols>true</DebugSymbols>
+    </PropertyGroup>
+  
     
     <ItemGroup>
         <PackageReference Include="Asv.Cfg" Version="$(AsvCommonVersion)" />

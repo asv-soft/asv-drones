@@ -7,8 +7,12 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <AssemblyVersion>$(ProductStrongVersion)</AssemblyVersion>
         <FileVersion>$(ProductExtendedVersion)</FileVersion>
-        <Configurations>Debug;Release;DebugLibs</Configurations>
+        <Configurations>Debug;Release;DebugLibs;ReleasePlugins</Configurations>
         <Platforms>AnyCPU</Platforms>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'ReleasePlugins' ">
+      <Optimize Condition=" '$(Optimize)' == '' ">true</Optimize>
     </PropertyGroup>
 
     <ItemGroup>
