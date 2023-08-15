@@ -3,7 +3,6 @@ using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
-using DynamicData.Binding;
 using NLog;
 using ReactiveUI;
 

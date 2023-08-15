@@ -4,6 +4,6 @@
     <ProductVersion>0.1.0</ProductVersion>
     <AvaloniaVersion>11.0.0</AvaloniaVersion>
     <AsvCommonVersion>1.10.2</AsvCommonVersion>
-    <AsvMavlinkVersion>3.3.2</AsvMavlinkVersion>
+    <AsvMavlinkVersion>3.3.3</AsvMavlinkVersion>
   </PropertyGroup>
 </Project>
