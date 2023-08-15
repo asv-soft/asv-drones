@@ -203,4 +203,37 @@
     <data name="RecordStartView_TagValue_Watermark" xml:space="preserve">
         <value>Введите значение для нового тэга</value>
     </data>
+    <data name="SdrStoreEntityViewModel_DeleteDialog_Title" xml:space="preserve">
+        <value>Подтвердите удаление</value>
+    </data>
+    <data name="SdrStoreEntityViewModel_DeleteDialog_SecondaryButton" xml:space="preserve">
+        <value>Отмена</value>
+    </data>
+    <data name="SdrStoreEntityViewModel_DeleteDialog_PrimaryButton" xml:space="preserve">
+        <value>Удалить</value>
+    </data>
+    <data name="SdrStoreEntityViewModel_DeleteDialog_Content" xml:space="preserve">
+        <value>Вы уверены что хотите удалить "{0}"?</value>
+    </data>
+    <data name="SdrStoreEntityViewModel_MoveDialog_Title" xml:space="preserve">
+        <value>Изменить расположение</value>
+    </data>
+    <data name="SdrStoreEntityViewModel_MoveDialog_PrimaryButton" xml:space="preserve">
+        <value>Переместить</value>
+    </data>
+    <data name="SdrStoreEntityViewModel_MoveDialog_SecondaryButton" xml:space="preserve">
+        <value>Отмена</value>
+    </data>
+    <data name="SdrStoreBrowserViewModel_TotalFileSamples" xml:space="preserve">
+        <value>Всего записей: {0}</value>
+    </data>
+    <data name="SdrStoreBrowserViewModel_TotalFileSize" xml:space="preserve">
+        <value>Размер файла: {0}</value>
+    </data>
+    <data name="SdrStoreBrowserViewModel_SearchWatermark" xml:space="preserve">
+        <value>Искать</value>
+    </data>
+    <data name="SdrStoreEntityViewModel_Name_Validation_ErrorMessage" xml:space="preserve">
+        <value>Недопустимое имя записи</value>
+    </data>
 </root>
