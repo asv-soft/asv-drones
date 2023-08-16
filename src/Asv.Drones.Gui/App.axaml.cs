@@ -81,6 +81,7 @@ public partial class App : Application
 #if INCLUDE_PLUGINS
             yield return typeof(Afis.AfisPlugin).Assembly;        // [Asv.Drones.Gui.Afis]
             yield return typeof(Weather.WeatherPlugin).Assembly;  // [Asv.Drones.Gui.Weather]
+            yield return typeof(FlightDocs.FlightDocsPlugin).Assembly; // [Asv.Drones.Gui.FlightDocs]
 #endif
     }
 

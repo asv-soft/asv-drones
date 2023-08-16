@@ -70,6 +70,7 @@
         <ProjectReference Include="..\Asv.Drones.Gui.Uav\Asv.Drones.Gui.Uav.csproj" />
         <ProjectReference Condition="'$(Configuration)' == 'DebugPlugins' Or '$(Configuration)' == 'DebugLibs' Or '$(Configuration)' == 'ReleasePlugins'" Include="..\..\..\asv-drones-gui-afis\src\Asv.Drones.Gui.Afis\Asv.Drones.Gui.Afis.csproj" />
         <ProjectReference Condition="'$(Configuration)' == 'DebugPlugins' Or '$(Configuration)' == 'DebugLibs' Or '$(Configuration)' == 'ReleasePlugins'" Include="..\..\..\asv-drones-gui-weather\src\Asv.Drones.Gui.Weather\Asv.Drones.Gui.Weather.csproj" />
+        <ProjectReference Condition="'$(Configuration)' == 'DebugPlugins' Or '$(Configuration)' == 'DebugLibs' Or '$(Configuration)' == 'ReleasePlugins'" Include="..\..\..\asv-drones-gui-flight-docs\src\Asv.Drones.Gui.FlightDocs\Asv.Drones.Gui.FlightDocs.csproj" />
     </ItemGroup>
    
 </Project>

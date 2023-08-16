@@ -310,11 +310,16 @@ namespace Asv.Avalonia.Map
                 
                 using (var ctx = geometry.Open())
                 {
-                    ctx.BeginFigure(truePath[0], false);
+                    ctx.BeginFigure(truePath[0], MapView.GetIsFilled(child));
                     // Draw a line to the next specified point.
                     foreach (var path in truePath)
                     {
                         ctx.LineTo(path);
+                    }
+
+                    if (MapView.GetIsFilled(child))
+                    {
+                        ctx.LineTo(truePath.First());
                     }
                     //ctx.PolyLineTo(localPath, true, true);
                 }
