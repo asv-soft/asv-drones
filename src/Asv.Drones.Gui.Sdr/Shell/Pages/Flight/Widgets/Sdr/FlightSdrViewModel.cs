@@ -17,6 +17,11 @@ using ReactiveUI.Validation.Extensions;
 
 namespace Asv.Drones.Gui.Sdr;
 
+public class FlightSdrViewModelConfig
+{
+    public string FrequencyInMhz { get; set; }
+}
+
 public class FlightSdrViewModel:FlightSdrWidgetBase
 {
     private readonly ILogService _logService;
@@ -25,7 +30,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     private readonly ISdrRttWidgetProvider[] _providers;
     private readonly ObservableCollection<ISdrRttWidget> _rttWidgets = new();
     private readonly IMeasureUnitItem<double,FrequencyUnits> _freqInMHzMeasureUnit;
-
+    private FlightSdrViewModelConfig _config; 
     public static Uri GenerateUri(ISdrClientDevice sdr) => FlightSdrWidgetBase.GenerateUri(sdr,"sdr");
 
     public FlightSdrViewModel()
@@ -47,8 +52,9 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         _logService = log ?? throw new ArgumentNullException(nameof(log));
         _loc = loc ?? throw new ArgumentNullException(nameof(loc));
         _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-       _freqInMHzMeasureUnit = _loc.Frequency.AvailableUnits.First(_ => _.Id == Core.FrequencyUnits.MHz);
-        
+        _config = _configuration.Get<FlightSdrViewModelConfig>();
+        _freqInMHzMeasureUnit = _loc.Frequency.AvailableUnits.First(_ => _.Id == Core.FrequencyUnits.MHz);
+        FrequencyInMhz = _config.FrequencyInMhz;
         Icon = MaterialIconKind.Memory;
         Title = RS.FlightSdrViewModel_Title;
         Location = WidgetLocation.Right;
@@ -63,9 +69,13 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             .Subscribe(_=>IsRecordStarted = _)
             .DisposeItWith(Disposable);
         
-       
-        
-        UpdateMode = ReactiveCommand.CreateFromTask(cancel => Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode, (ulong)Math.Round(_freqInMHzMeasureUnit.ConvertToSi(FrequencyInMhz)), 1, 1, cancel));
+        UpdateMode = ReactiveCommand.CreateFromTask(cancel =>
+        {
+            _config.FrequencyInMhz = FrequencyInMhz;
+            _configuration.Set(_config);
+            return Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode,
+                (ulong)Math.Round(_freqInMHzMeasureUnit.ConvertToSi(FrequencyInMhz)), 1, 1, cancel);
+        });
         UpdateMode.ThrownExceptions.Subscribe(ex =>
         {
             _logService.Error(RS.FlightSdrViewModel_UpdateMode_Error_Sender,RS.FlightSdrViewModel_UpdateMode_Error_Message,ex);
@@ -102,15 +112,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             payload.Sdr.SystemControlAction(AsvSdrSystemControlAction.AsvSdrSystemControlActionShutdown, cancel));
         
         this.ValidationRule(x => x.FrequencyInMhz,
-                _ =>
-                {
-                    if (double.TryParse(_, out var number))
-                    {
-                        return number > 0;
-                    }
-
-                    return false;
-                },
+                _ => _loc.Frequency.IsValid(_) && _loc.Frequency.ConvertToSi(_) > 0,
                 RS.FlightSdrViewModel_Frequency_Validation_ErrorMessage)
             .DisposeItWith(Disposable);
     }
