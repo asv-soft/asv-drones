@@ -1,8 +1,6 @@
 ﻿using System.ComponentModel.Composition;
-using System.Reactive.Linq;
 using Asv.Common;
 using DynamicData.Binding;
-using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
@@ -13,11 +11,15 @@ public class AnchorsEditorViewModel : MapWidgetBase
 {
     private readonly ILocalizationService _loc;
     private bool _internalChange;
+    private IDisposable _locationSubscription;
+    private IDisposable _iconSubscription;
+    private IDisposable _titleSubscription;
+    private IDisposable _isEditableSubscription;
+    private IDisposable _isInEditModeSubscription;
     public const string UriString = "asv:shell.page.map.anchors-editor";
-    
+
     public AnchorsEditorViewModel() : base(new Uri(UriString))
     {
-        
     }
 
     [ImportingConstructor]
@@ -66,9 +68,15 @@ public class AnchorsEditorViewModel : MapWidgetBase
             {
                 if (_ != null)
                 {
+                    _locationSubscription?.Dispose();
+                    _iconSubscription?.Dispose();
+                    _titleSubscription?.Dispose();
+                    _isEditableSubscription?.Dispose();
+                    _isInEditModeSubscription?.Dispose();
+                    
                     IsVisible = true;
                     
-                    _.WhenAnyValue(_ => _.Location)
+                    _locationSubscription = _.WhenAnyValue(_ => _.Location)
                         .Subscribe(_ =>
                         {
                             _internalChange = true;
@@ -78,36 +86,31 @@ public class AnchorsEditorViewModel : MapWidgetBase
                             Altitude = _loc.Altitude.FromSiToString(_.Altitude);
                             
                             _internalChange = false;
-                        })
-                        .DisposeItWith(Disposable);
+                        });
         
-                    _.WhenAnyValue(_ => _.Icon)
+                    _iconSubscription = _.WhenAnyValue(_ => _.Icon)
                         .Subscribe(_ =>
                         {
                             Icon = _;
-                        })
-                        .DisposeItWith(Disposable);
+                        });
         
-                    _.WhenAnyValue(_ => _.Title)
+                    _titleSubscription = _.WhenAnyValue(_ => _.Title)
                         .Subscribe(_ =>
                         {
                             Title = _;
-                        })
-                        .DisposeItWith(Disposable);
+                        });
         
-                    _.WhenAnyValue(_ => _.IsEditable)
+                    _isEditableSubscription = _.WhenAnyValue(_ => _.IsEditable)
                         .Subscribe(_ =>
                         {
                             IsEditable = _;
-                        })
-                        .DisposeItWith(Disposable);
+                        });
         
-                    _.WhenAnyValue(_ => _.IsInEditMode)
+                    _isInEditModeSubscription = _.WhenAnyValue(_ => _.IsInEditMode)
                         .Subscribe(_ =>
                         {
                             IsInEditMode = _;
-                        })
-                        .DisposeItWith(Disposable);
+                        });
                 }
                 else
                 {
