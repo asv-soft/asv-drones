@@ -11,7 +11,12 @@
     <Design.DataContext>
         <sdr:SdrStoreBrowserViewModel/>
     </Design.DataContext>
-    <Grid RowDefinitions="*,5,100">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" MinHeight="300"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="200" MinHeight="200"/>
+        </Grid.RowDefinitions>
         <Border 
             Grid.Row="0"
             Background="{DynamicResource ControlFillColorDefaultBrush}"
@@ -22,9 +27,8 @@
             <DockPanel>
                 <DockPanel DockPanel.Dock="Top">
                     <Button DockPanel.Dock="Right" Margin="8,0,0,0" Foreground="#FBC02D" Content="{avalonia:MaterialIconExt Kind=FolderPlusOutline}" Command="{Binding AddFolder}"/>
-                    
-                    <Border DockPanel.Dock="Top" >
-                        <TextBox Watermark="Search" Text="{Binding SearchText}"/>    
+                    <Border DockPanel.Dock="Top">
+                        <TextBox Watermark="{x:Static sdr:RS.SdrStoreBrowserViewModel_SearchWatermark}" Text="{Binding SearchText}"/>    
                     </Border>
                 </DockPanel>
                 <TreeView Margin="0,8,0,0" ItemsSource="{Binding Items}" SelectionMode="Single" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" >
@@ -34,7 +38,6 @@
                             <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
                             <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
                         </Style>
-                       
                         <Style Selector="avalonia|MaterialIcon.folder">
                             <Setter Property="Kind" Value="FolderOutline"/>
                             <Setter Property="Foreground" Value="#FBC02D"/>
@@ -64,37 +67,7 @@
                                     Classes.expanded="{Binding IsExpanded}"
                                     Classes.selected="{Binding IsSelected}"
                                     Width="18" Height="18"/>
-                                
-                                <Button
-                                    IsVisible="{Binding !IsInEditNameMode}"
-                                    Classes.folder="{Binding IsFolder}"
-                                    Name="PART_Delete" 
-                                    IsHitTestVisible="True" Padding="3" 
-                                    DockPanel.Dock="Right" Theme="{DynamicResource TransparentButton}" Command="{Binding Delete}">
-                                    <avalonia:MaterialIcon Kind="Close" Width="18" Height="18" Foreground="#D84315"/>
-                                </Button>
-                                <Button
-                                    HotKey="F2"
-                                    IsVisible="{Binding !IsInEditNameMode}"
-                                    Classes.folder="{Binding IsFolder}"
-                                    Name="PART_Edit" 
-                                    IsHitTestVisible="True" Padding="3" 
-                                    DockPanel.Dock="Right" Theme="{DynamicResource TransparentButton}" Command="{Binding BeginEdit}">
-                                    <avalonia:MaterialIcon Kind="Pencil" Width="18" Height="18" Foreground="#40b5e0"/>
-                                </Button>
-                                
-                                <Panel>
-                                    <TextBlock IsVisible="{Binding !IsInEditNameMode}" Text="{Binding Name}"/>
-                                    <DockPanel IsVisible="{Binding IsInEditNameMode}" >
-                                        <Button DockPanel.Dock="Right" Command="{Binding EndEdit}"
-                                                IsHitTestVisible="True" Padding="3" 
-                                                Theme="{DynamicResource TransparentButton}">
-                                            <avalonia:MaterialIcon Kind="FloppyDisc" Width="18" Height="18" Foreground="#40b5e0"/>
-                                        </Button>
-                                        <TextBox Text="{Binding Name}"/>
-                                    </DockPanel>
-                                </Panel>
-                                
+                                <TextBlock Text="{Binding Name}"/>
                             </DockPanel>
                             
                         </TreeDataTemplate>
@@ -102,7 +75,7 @@
                 </TreeView>
             </DockPanel>
         </Border>
-        
+        <GridSplitter Grid.Row="1"/>
         <Border
             Grid.Row="2"
             Background="{DynamicResource ControlFillColorDefaultBrush}"
@@ -111,61 +84,132 @@
             BorderThickness="1"
             CornerRadius="{StaticResource ControlCornerRadius}">
             
-            <Border MinHeight="50" DockPanel.Dock="Bottom" DataContext="{Binding SelectedItem}">
-                <StackPanel Spacing="8">
-                    <TextBlock Text="{Binding Name}"/>
-                    <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Tags}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Horizontal"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.DataTemplates>
-                            <DataTemplate DataType="sdr:LongTagViewModel">
-                                <Border ToolTip.Tip="Int64" Background="CornflowerBlue" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
-                                    <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
-                                        <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
-                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                            <DataTemplate DataType="sdr:ULongTagViewModel">
-                                <Border ToolTip.Tip="UInt64" Background="#FE8256" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
-                                    <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
-                                        <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
-                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
-                                    </StackPanel>
-                                </Border>
-                               
-                            </DataTemplate>
-                            <DataTemplate DataType="sdr:DoubleTagViewModel">
-                                <Border ToolTip.Tip="Float64" Background="#ACC865" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
-                                    <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
-                                        <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
-                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
-                                    </StackPanel>
-                                </Border>
-                            
-                            </DataTemplate>
-                            <DataTemplate DataType="sdr:StringTagViewModel">
-                                <Border ToolTip.Tip="String8" Background="#CD91B6" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
-                                    <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
-                                        <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
-                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                            <DataTemplate DataType="sdr:TagViewModel">
-                                <Border ToolTip.Tip="NoType" Background="DarkOrange" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
-                                    <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
-                                        <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
-                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.DataTemplates>
-                    </ItemsControl>
-                </StackPanel>
+            <Border MinHeight="50" DockPanel.Dock="Bottom" IsVisible="{Binding IsAnySelected}">
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="8" DockPanel.Dock="Bottom">
+                        <TextBlock Text="{Binding TotalFileSize}"/>
+                        <TextBlock Text="{Binding TotalFileSamples}"/>
+                    </StackPanel>
+                    <StackPanel DataContext="{Binding SelectedItem}" Spacing="8">
+                        <DockPanel HorizontalAlignment="Stretch">
+                            <avalonia:MaterialIcon
+                                Margin="0,0,4,0"
+                                Classes.folder="{Binding IsFolder}"
+                                Classes.record="{Binding IsRecord}"
+                                Classes.expanded="{Binding IsExpanded}"
+                                Classes.selected="{Binding IsSelected}"
+                                Width="18" Height="18">
+                                <avalonia:MaterialIcon.Styles>
+                                    <Style Selector="avalonia|MaterialIcon.folder">
+                                        <Setter Property="Kind" Value="FolderOutline"/>
+                                        <Setter Property="Foreground" Value="#FBC02D"/>
+                                    </Style>
+                                    <Style Selector="avalonia|MaterialIcon.folder.expanded">
+                                        <Setter Property="Kind" Value="FolderOpenOutline"/>
+                                        <Setter Property="Foreground" Value="#FBC02D"/>
+                                    </Style>
+                                    <Style Selector="avalonia|MaterialIcon.record">
+                                        <Setter Property="Kind" Value="FileMarkerOutline"/>
+                                        <Setter Property="Foreground" Value="#40b5e0"/>
+                                    </Style>
+                                    <Style Selector="avalonia|MaterialIcon.record.selected">
+                                        <Setter Property="Kind" Value="FileMarker"/>
+                                    </Style>
+                                    <Style Selector="Button#PART_Delete.folder">
+                                        <Setter Property="IsVisible" Value="True"/>
+                                    </Style>
+                                </avalonia:MaterialIcon.Styles>
+                            </avalonia:MaterialIcon>
+                            <Button
+                                IsVisible="{Binding !IsInEditNameMode}"
+                                Classes.folder="{Binding IsFolder}"
+                                Name="PART_Delete" 
+                                IsHitTestVisible="True" Padding="3" 
+                                DockPanel.Dock="Right" Theme="{DynamicResource TransparentButton}" Command="{Binding Delete}">
+                                <avalonia:MaterialIcon Kind="Close" Width="18" Height="18" Foreground="#D84315"/>
+                            </Button>
+                            <Button
+                                IsVisible="{Binding !IsInEditNameMode}"
+                                Classes.folder="{Binding IsFolder}"
+                                Name="PART_Edit" 
+                                IsHitTestVisible="True" Padding="3" 
+                                DockPanel.Dock="Right" Theme="{DynamicResource TransparentButton}" Command="{Binding BeginEdit}">
+                                <avalonia:MaterialIcon Kind="Pencil" Width="18" Height="18" Foreground="#40b5e0"/>
+                            </Button>
+                            <Button
+                                IsVisible="{Binding !IsInEditNameMode}"
+                                Classes.folder="{Binding IsFolder}"
+                                Name="PART_Move"
+                                IsHitTestVisible="True" Padding="3" 
+                                DockPanel.Dock="Right" Theme="{DynamicResource TransparentButton}" Command="{Binding Move}">
+                                <avalonia:MaterialIcon Kind="ArrowAll" Width="18" Height="18"/>
+                            </Button>
+                            <Panel>
+                                <TextBlock VerticalAlignment="Center" IsVisible="{Binding !IsInEditNameMode}" Text="{Binding Name}"/>
+                                <DockPanel IsVisible="{Binding IsInEditNameMode}" >
+                                    <Button DockPanel.Dock="Right" Command="{Binding EndEdit}"
+                                            IsHitTestVisible="True" Padding="3" 
+                                            Theme="{DynamicResource TransparentButton}">
+                                        <avalonia:MaterialIcon Kind="FloppyDisc" Width="18" Height="18" Foreground="#40b5e0"/>
+                                    </Button>
+                                    <TextBox VerticalAlignment="Center" Text="{Binding Name}"/>
+                                </DockPanel>
+                            </Panel>
+                        </DockPanel>
+                        <SelectableTextBlock FontSize="9" Foreground="Gray" VerticalAlignment="Center" Text="{Binding EntityId}"/>
+                        <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Tags}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.DataTemplates>
+                                <DataTemplate DataType="sdr:LongTagViewModel">
+                                    <Border ToolTip.Tip="Int64" Background="CornflowerBlue" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
+                                        <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
+                                            <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
+                                            <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                                <DataTemplate DataType="sdr:ULongTagViewModel">
+                                    <Border ToolTip.Tip="UInt64" Background="#FE8256" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
+                                        <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
+                                            <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
+                                            <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
+                                        </StackPanel>
+                                    </Border>
+                                   
+                                </DataTemplate>
+                                <DataTemplate DataType="sdr:DoubleTagViewModel">
+                                    <Border ToolTip.Tip="Float64" Background="#ACC865" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
+                                        <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
+                                            <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
+                                            <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
+                                        </StackPanel>
+                                    </Border>
+                                
+                                </DataTemplate>
+                                <DataTemplate DataType="sdr:StringTagViewModel">
+                                    <Border ToolTip.Tip="String8" Background="#CD91B6" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
+                                        <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
+                                            <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
+                                            <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                                <DataTemplate DataType="sdr:TagViewModel">
+                                    <Border ToolTip.Tip="NoType" Background="DarkOrange" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
+                                        <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
+                                            <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
+                                            <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.DataTemplates>
+                        </ItemsControl>
+                    </StackPanel>    
+                </DockPanel>
             </Border>
         </Border>
     </Grid>

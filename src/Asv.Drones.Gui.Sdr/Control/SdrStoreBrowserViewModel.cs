@@ -6,8 +6,12 @@ using System.Reactive.Subjects;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
+using Avalonia;
 using Avalonia.Controls;
+using DocumentFormat.OpenXml;
 using DynamicData;
+using DynamicData.Binding;
+using FluentAvalonia.UI.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -15,7 +19,7 @@ namespace Asv.Drones.Gui.Sdr;
 
 [Export]
 [PartCreationPolicy(CreationPolicy.NonShared)]
-public class SdrStoreBrowserViewModel:ViewModelBase
+public class SdrStoreBrowserViewModel : ViewModelBase
 {
     private readonly ISdrStoreService _svc;
     public const string UriString = "asv:sdr.store.browser";
@@ -23,6 +27,8 @@ public class SdrStoreBrowserViewModel:ViewModelBase
     private readonly SourceCache<IListDataStoreEntry<Guid>,Guid> _source;
     private readonly ReadOnlyObservableCollection<SdrStoreEntityViewModel> _tree;
     private readonly Subject<Func<IListDataStoreEntry<Guid>,bool>> _filterPipe;
+    private readonly ILocalizationService _loc;
+
     public SdrStoreBrowserViewModel():base(UriString)
     {
         _source = new SourceCache<IListDataStoreEntry<Guid>,Guid>(_=>_.Id)
@@ -41,8 +47,8 @@ public class SdrStoreBrowserViewModel:ViewModelBase
         _source
             .Connect()
             .Filter(_filterPipe)
-            .TransformToTree(x=>x.ParentId)
-            .Transform(x=>new SdrStoreEntityViewModel(x,this))
+            .TransformToTree(x => x.ParentId)
+            .Transform(x => new SdrStoreEntityViewModel(x,this))
             .Bind(out _tree)
             .Subscribe()
             .DisposeItWith(Disposable);
@@ -87,19 +93,19 @@ public class SdrStoreBrowserViewModel:ViewModelBase
             _source.AddOrUpdate( new ListDataStoreEntry<Guid>
             {
                 Id = new("E85A9814-AD8C-4BA2-9DD4-2091231B065E"), 
-                Name = "Record 3", 
+                Name = "Record 4", 
                 ParentId = Guid.Empty, 
                 Type = StoreEntryType.File
             });
         }
     }
     [ImportingConstructor]
-    public SdrStoreBrowserViewModel(ISdrStoreService svc, ILogService log) : this()
+    public SdrStoreBrowserViewModel(ISdrStoreService svc, ILocalizationService loc, ILogService log) : this()
     {
         _svc = svc ?? throw new ArgumentNullException(nameof(svc));
-
-        Refresh = new CancellableCommandWithProgress<Unit, Unit>(RefreshImpl, "SDR Viewer", log).DisposeItWith(Disposable);
+        _loc = loc ?? throw new ArgumentNullException(nameof(loc));
         
+        Refresh = new CancellableCommandWithProgress<Unit, Unit>(RefreshImpl, "SDR Viewer", log).DisposeItWith(Disposable);
         
         AddFolder = ReactiveCommand.Create(AddFolderImpl)
             .DisposeItWith(Disposable);
@@ -108,6 +114,57 @@ public class SdrStoreBrowserViewModel:ViewModelBase
             .DisposeItWith(Disposable);
 
         Refresh.ExecuteSync();
+
+        Move = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var viewModel = new MoveDialogViewModel(this);
+            var selectedEntry = SelectedItem;
+            var dialog = new ContentDialog
+            {
+                Title = RS.SdrStoreEntityViewModel_MoveDialog_Title,
+                PrimaryButtonText = RS.SdrStoreEntityViewModel_MoveDialog_PrimaryButton,
+                SecondaryButtonText = RS.SdrStoreEntityViewModel_MoveDialog_SecondaryButton,
+                PrimaryButtonCommand = ReactiveCommand.Create(() =>
+                {
+                    Guid newParentId;
+                    if (SelectedItem != null)
+                    {
+                        newParentId = SelectedItem.Type == StoreEntryType.Folder ? SelectedItem.EntryId : SelectedItem.ParentId;
+                    }
+                    else
+                    {
+                        newParentId = _svc.Store.RootFolderId;
+                    }
+                    _svc.Store.MoveEntry(selectedEntry.EntityId, newParentId);
+                    _svc.Store.TryGetEntry(selectedEntry.EntityId, out var entity);
+                    
+                    Refresh.ExecuteSync();
+                })
+            };
+            dialog.Content = viewModel;
+            var result = await dialog.ShowAsync();
+        }).DisposeItWith(Disposable);
+        
+        this.WhenAnyValue(_ => _.SelectedItem)
+            .Subscribe(_ =>
+            {
+                if (_ != null)
+                {
+                    IsAnySelected = true;
+                    if (SelectedItem.IsFolder)
+                    {
+                        TotalFileSamples = "";
+                        TotalFileSize = "";
+                        return;
+                    }
+                    var res = _svc.Store.Open(_.EntryId);
+                    TotalFileSamples = string.Format(RS.SdrStoreBrowserViewModel_TotalFileSamples, res.File.Count);
+                    TotalFileSize = string.Format(RS.SdrStoreBrowserViewModel_TotalFileSize, _loc.ByteSize.ConvertToStringWithUnits(res.File.ByteSize));    
+                    return;
+                }
+                IsAnySelected = false;
+            })
+            .DisposeItWith(Disposable);
     }
 
     public CancellableCommandWithProgress<Unit,Unit> Refresh { get; set; }
@@ -118,6 +175,7 @@ public class SdrStoreBrowserViewModel:ViewModelBase
         {
             _source.Clear();
             _source.AddOrUpdate(_svc.Store.GetEntries());
+            
             return Unit.Default;
         }, cancel);
     }
@@ -159,14 +217,23 @@ public class SdrStoreBrowserViewModel:ViewModelBase
     [Reactive]
     public SdrStoreEntityViewModel? SelectedItem { get; set; }
     
+    [Reactive]
+    public bool IsAnySelected { get; set; }
+    
     public ReadOnlyObservableCollection<SdrStoreEntityViewModel> Items => _tree;
 
+    [Reactive]
+    public string TotalFileSamples { get; set; }
+    
+    [Reactive]
+    public string TotalFileSize { get; set; }
 
     [Reactive]
     public string SearchText { get; set; }
 
     public ReactiveCommand<Unit,Unit> AddFolder { get; }
 
+    public ReactiveCommand<Unit,Unit> Move { get; }
     
     public void DeleteEntity(Guid id)
     {

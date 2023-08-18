@@ -1,0 +1,56 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sdr="clr-namespace:Asv.Drones.Gui.Sdr"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Asv.Drones.Gui.Sdr.MoveDialogView"
+             x:CompileBindings="True"
+             x:DataType="sdr:MoveDialogViewModel">
+    <Design.DataContext>
+        <sdr:MoveDialogViewModel/>
+    </Design.DataContext>
+    <TreeView Margin="0,8,0,0" ItemsSource="{Binding Items}" SelectionMode="Single" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" >
+        <TreeView.Styles>
+            <Style Selector="TreeViewItem" x:DataType="sdr:SdrStoreEntityViewModel">
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+                <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+            </Style>
+           
+            <Style Selector="avalonia|MaterialIcon.folder">
+                <Setter Property="Kind" Value="FolderOutline"/>
+                <Setter Property="Foreground" Value="#FBC02D"/>
+            </Style>
+            <Style Selector="avalonia|MaterialIcon.folder.expanded">
+                <Setter Property="Kind" Value="FolderOpenOutline"/>
+                <Setter Property="Foreground" Value="#FBC02D"/>
+            </Style>
+            <Style Selector="avalonia|MaterialIcon.record">
+                <Setter Property="Kind" Value="FileMarkerOutline"/>
+                <Setter Property="Foreground" Value="#40b5e0"/>
+            </Style>
+            <Style Selector="avalonia|MaterialIcon.record.selected">
+                <Setter Property="Kind" Value="FileMarker"/>
+            </Style>
+            <Style Selector="Button#PART_Delete.folder">
+                <Setter Property="IsVisible" Value="True"/>
+            </Style>
+        </TreeView.Styles>
+        <TreeView.ItemTemplate>
+            <TreeDataTemplate ItemsSource="{Binding Items}">
+                <DockPanel HorizontalAlignment="Stretch">
+                    <avalonia:MaterialIcon
+                        Margin="0,0,4,0"
+                        Classes.folder="{Binding IsFolder}"
+                        Classes.record="{Binding IsRecord}"
+                        Classes.expanded="{Binding IsExpanded}"
+                        Classes.selected="{Binding IsSelected}"
+                        Width="18" Height="18"/>
+                    <TextBlock Text="{Binding Name}"/>
+                </DockPanel>
+            </TreeDataTemplate>
+        </TreeView.ItemTemplate>
+    </TreeView>
+</UserControl>
