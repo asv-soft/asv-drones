@@ -17,6 +17,16 @@ using ReactiveUI.Validation.Extensions;
 
 namespace Asv.Drones.Gui.Sdr;
 
+public class FlightSdrViewModelConfig
+{
+    public string GpFrequencyInMhz { get; set; }
+    public string LlzFrequencyInMhz { get; set; }
+    public string VorFrequencyInMhz { get; set; }
+    
+    public string LlzChannel { get; set; }
+    public string VorChannel { get; set; }
+}
+
 public class FlightSdrViewModel:FlightSdrWidgetBase
 {
     private readonly ILogService _logService;
@@ -25,7 +35,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     private readonly ISdrRttWidgetProvider[] _providers;
     private readonly ObservableCollection<ISdrRttWidget> _rttWidgets = new();
     private readonly IMeasureUnitItem<double,FrequencyUnits> _freqInMHzMeasureUnit;
-
+    private FlightSdrViewModelConfig _config; 
     public static Uri GenerateUri(ISdrClientDevice sdr) => FlightSdrWidgetBase.GenerateUri(sdr,"sdr");
 
     public FlightSdrViewModel()
@@ -47,7 +57,64 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         _logService = log ?? throw new ArgumentNullException(nameof(log));
         _loc = loc ?? throw new ArgumentNullException(nameof(loc));
         _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-       _freqInMHzMeasureUnit = _loc.Frequency.AvailableUnits.First(_ => _.Id == Core.FrequencyUnits.MHz);
+        _config = _configuration.Get<FlightSdrViewModelConfig>();
+        _freqInMHzMeasureUnit = _loc.Frequency.AvailableUnits.First(_ => _.Id == Core.FrequencyUnits.MHz);
+
+        this.WhenAnyValue(_ => _.SelectedMode)
+            .Subscribe(_ =>
+            {
+                if (_ != null)
+                {
+                    switch (_.Mode)
+                    {
+                        case AsvSdrCustomMode.AsvSdrCustomModeGp: 
+                            FrequencyInMhz = _config.GpFrequencyInMhz;
+                            IsIdleMode = false;
+                            IsGpMode = true;
+                            break;
+                        case AsvSdrCustomMode.AsvSdrCustomModeLlz: 
+                            Channels = SdrRttHelper.GetLlzChannels();
+                            FrequencyInMhz = _config.LlzFrequencyInMhz;
+                            Channel = _config.LlzChannel;
+                            IsIdleMode = false;
+                            IsGpMode = false;
+                            break;
+                        case AsvSdrCustomMode.AsvSdrCustomModeVor: 
+                            Channels = SdrRttHelper.GetVorChannels();
+                            FrequencyInMhz = _config.VorFrequencyInMhz;
+                            Channel = _config.VorChannel;
+                            IsIdleMode = false;
+                            IsGpMode = false;
+                            break;
+                        case AsvSdrCustomMode.AsvSdrCustomModeIdle: 
+                        default: 
+                            IsIdleMode = true;
+                            IsGpMode = false;
+                            break;
+                    }
+                }
+            }).DisposeItWith(Disposable);
+
+        this.WhenAnyValue(_ => _.Channel)
+            .Subscribe(_ =>
+            {
+                if (_ != null)
+                {
+                    switch (SelectedMode.Mode)
+                    {
+                        case AsvSdrCustomMode.AsvSdrCustomModeLlz:
+                            FrequencyInMhz = _freqInMHzMeasureUnit.FromSiToString(SdrRttHelper.GetLocalizerModeFrequencyFromIlsChannel(_));
+                            break;
+                        case AsvSdrCustomMode.AsvSdrCustomModeVor: 
+                            FrequencyInMhz = _freqInMHzMeasureUnit.FromSiToString(SdrRttHelper.GetVorFrequencyFromVorChannel(_));
+                            break;
+                        case AsvSdrCustomMode.AsvSdrCustomModeGp:
+                        case AsvSdrCustomMode.AsvSdrCustomModeIdle: 
+                        default:
+                            break;
+                    }
+                }
+            }).DisposeItWith(Disposable);
         
         Icon = MaterialIconKind.Memory;
         Title = RS.FlightSdrViewModel_Title;
@@ -63,9 +130,32 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             .Subscribe(_=>IsRecordStarted = _)
             .DisposeItWith(Disposable);
         
-       
-        
-        UpdateMode = ReactiveCommand.CreateFromTask(cancel => Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode, (ulong)Math.Round(_freqInMHzMeasureUnit.ConvertToSi(FrequencyInMhz)), 1, 1, cancel));
+        UpdateMode = ReactiveCommand.CreateFromTask(cancel =>
+        {
+            switch (SelectedMode.Mode)
+            {
+                case AsvSdrCustomMode.AsvSdrCustomModeGp: 
+                    _config.GpFrequencyInMhz = FrequencyInMhz;
+                    IsRecordVisible = true;
+                    break;
+                case AsvSdrCustomMode.AsvSdrCustomModeLlz:
+                    _config.LlzChannel = Channel;
+                    _config.LlzFrequencyInMhz = FrequencyInMhz;
+                    IsRecordVisible = true;
+                    break;
+                case AsvSdrCustomMode.AsvSdrCustomModeVor: 
+                    _config.VorChannel = Channel;
+                    _config.VorFrequencyInMhz = FrequencyInMhz;
+                    IsRecordVisible = true;
+                    break;
+                case AsvSdrCustomMode.AsvSdrCustomModeIdle: default:
+                    IsRecordVisible = false;
+                    break;
+            }
+            _configuration.Set(_config);
+            return Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode,
+                (ulong)Math.Round(_freqInMHzMeasureUnit.ConvertToSi(FrequencyInMhz)), 1, 1, cancel);
+        });
         UpdateMode.ThrownExceptions.Subscribe(ex =>
         {
             _logService.Error(RS.FlightSdrViewModel_UpdateMode_Error_Sender,RS.FlightSdrViewModel_UpdateMode_Error_Message,ex);
@@ -101,17 +191,15 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         SafeShutdownOSCommand = ReactiveCommand.CreateFromTask(cancel =>
             payload.Sdr.SystemControlAction(AsvSdrSystemControlAction.AsvSdrSystemControlActionShutdown, cancel));
         
-        this.ValidationRule(x => x.FrequencyInMhz,
-                _ =>
-                {
-                    if (double.TryParse(_, out var number))
-                    {
-                        return number > 0;
+        this.ValidationRule(x => x.FrequencyInMhz,  
+                _ =>  
+                {  
+                    if (double.TryParse(_, out var number))  
+                    {                
+                        return number > 0;  
                     }
-
-                    return false;
-                },
-                RS.FlightSdrViewModel_Frequency_Validation_ErrorMessage)
+                    return false;  
+                }, RS.FlightSdrViewModel_Frequency_Validation_ErrorMessage)  
             .DisposeItWith(Disposable);
     }
     
@@ -201,8 +289,27 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     public SdrModeViewModel? SelectedMode { get; set; }
     [Reactive]
     public string FrequencyInMhz { get; set; }
+    
+    [Reactive]
+    public string Channel { get; set; }
+    
     [Reactive]
     public bool IsRecordStarted { get; set; }
+    
+    [Reactive]
+    public bool IsIdleMode { get; set; }
+    
+    [Reactive]
+    public bool IsRecordVisible { get; set; }
+    
+    [Reactive]
+    public bool IsChannelInput { get; set; }
+    
+    [Reactive]
+    public IEnumerable<string> Channels { get; set; }
+    
+    [Reactive]
+    public bool IsGpMode { get; set; }
     
     [Reactive]
     public SdrRttItem LinkQuality { get; set; }
