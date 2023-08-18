@@ -1,6 +1,7 @@
 ﻿using Asv.Avalonia.Map;
 using Asv.Common;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using Material.Icons;
 
 namespace Asv.Drones.Gui.Core
@@ -8,7 +9,7 @@ namespace Asv.Drones.Gui.Core
     /// <summary>
     /// Map interface
     /// </summary>
-    public interface IMap
+    public interface IMap : INotifyPropertyChanged
     {
         bool IsInDialogMode { get; set; }
         int MaxZoom { get; set; }
