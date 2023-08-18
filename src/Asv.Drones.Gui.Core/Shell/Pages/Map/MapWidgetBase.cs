@@ -30,6 +30,6 @@ namespace Asv.Drones.Gui.Core
 
         protected abstract void InternalAfterMapInit(IMap context);
 
-        protected IMap Map { get; private set; }
+        public IMap Map { get; private set; }
     }
 }

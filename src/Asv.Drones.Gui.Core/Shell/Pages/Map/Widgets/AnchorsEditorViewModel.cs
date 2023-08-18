@@ -11,11 +11,8 @@ public class AnchorsEditorViewModel : MapWidgetBase
 {
     private readonly ILocalizationService _loc;
     private bool _internalChange;
-    private IDisposable _locationSubscription;
-    private IDisposable _iconSubscription;
-    private IDisposable _titleSubscription;
-    private IDisposable _isEditableSubscription;
-    private IDisposable _isInEditModeSubscription;
+    private IDisposable? _locationSubscription;
+    
     public const string UriString = "asv:shell.page.map.anchors-editor";
 
     public AnchorsEditorViewModel() : base(new Uri(UriString))
@@ -30,18 +27,8 @@ public class AnchorsEditorViewModel : MapWidgetBase
         Disposable.AddAction(() =>
         {
             _locationSubscription?.Dispose();
-            _iconSubscription?.Dispose();
-            _titleSubscription?.Dispose();
-            _isEditableSubscription?.Dispose();
-            _isInEditModeSubscription?.Dispose();
         });
     }
-    
-    [Reactive]
-    public bool IsEditable { get; set; }
-    
-    [Reactive]
-    public bool IsInEditMode { get; set; }
     
     [Reactive]
     public bool IsVisible { get; set; }
@@ -72,17 +59,14 @@ public class AnchorsEditorViewModel : MapWidgetBase
         LongitudeUnits = _loc.Longitude.CurrentUnit.Value.Unit;
         AltitudeUnits = _loc.Altitude.CurrentUnit.Value.Unit;
         
-        context.WhenAnyValue(_ => _.SelectedItem)
+        context.WhenValueChanged(_ => _.SelectedItem)
             .Subscribe(_ =>
             {
+                _locationSubscription?.Dispose();
+                _locationSubscription = null;
+                
                 if (_ != null)
                 {
-                    _locationSubscription?.Dispose();
-                    _iconSubscription?.Dispose();
-                    _titleSubscription?.Dispose();
-                    _isEditableSubscription?.Dispose();
-                    _isInEditModeSubscription?.Dispose();
-                    
                     IsVisible = true;
                     
                     _locationSubscription = _.WhenAnyValue(_ => _.Location)
@@ -95,30 +79,6 @@ public class AnchorsEditorViewModel : MapWidgetBase
                             Altitude = _loc.Altitude.FromSiToString(_.Altitude);
                             
                             _internalChange = false;
-                        });
-        
-                    _iconSubscription = _.WhenAnyValue(_ => _.Icon)
-                        .Subscribe(_ =>
-                        {
-                            Icon = _;
-                        });
-        
-                    _titleSubscription = _.WhenAnyValue(_ => _.Title)
-                        .Subscribe(_ =>
-                        {
-                            Title = _;
-                        });
-        
-                    _isEditableSubscription = _.WhenAnyValue(_ => _.IsEditable)
-                        .Subscribe(_ =>
-                        {
-                            IsEditable = _;
-                        });
-        
-                    _isInEditModeSubscription = _.WhenAnyValue(_ => _.IsInEditMode)
-                        .Subscribe(_ =>
-                        {
-                            IsInEditMode = _;
                         });
                 }
                 else
@@ -134,7 +94,7 @@ public class AnchorsEditorViewModel : MapWidgetBase
                 if (_internalChange) return;
 
                 if (context.SelectedItem != null && !string.IsNullOrWhiteSpace(_.Value) && 
-                    _loc.Latitude.IsValid(_.Value) && IsInEditMode)
+                    _loc.Latitude.IsValid(_.Value) && context.SelectedItem.IsInEditMode)
                 {
                     var prevLocation = context.SelectedItem.Location;
                     context.SelectedItem.Location = new GeoPoint(_loc.Latitude.CurrentUnit.Value.ConvertToSi(_.Value),
@@ -149,7 +109,7 @@ public class AnchorsEditorViewModel : MapWidgetBase
                 if (_internalChange) return;
                 
                 if (context.SelectedItem != null && !string.IsNullOrWhiteSpace(_.Value)&& 
-                    _loc.Longitude.IsValid(_.Value) && IsInEditMode)
+                    _loc.Longitude.IsValid(_.Value) && context.SelectedItem.IsInEditMode)
                 {
                     var prevLocation = context.SelectedItem.Location;
                     context.SelectedItem.Location = new GeoPoint(prevLocation.Latitude,
@@ -164,7 +124,7 @@ public class AnchorsEditorViewModel : MapWidgetBase
                 if (_internalChange) return;
                 
                 if (context.SelectedItem != null && !string.IsNullOrWhiteSpace(_.Value) && 
-                    _loc.Altitude.IsValid(_.Value) && IsInEditMode)
+                    _loc.Altitude.IsValid(_.Value) && context.SelectedItem.IsInEditMode)
                 {
                     var prevLocation = context.SelectedItem.Location;
                     context.SelectedItem.Location = new GeoPoint(prevLocation.Latitude,
