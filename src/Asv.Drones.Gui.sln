@@ -38,6 +38,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{37A71A26-D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asv.Mavlink", "..\..\asv-mavlink\src\Asv.Mavlink\Asv.Mavlink.csproj", "{59455F10-E1CB-47B7-86F7-199C04132F89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asv.Drones.Gui.FlightDocs", "..\..\asv-drones-gui-flight-docs\src\Asv.Drones.Gui.FlightDocs\Asv.Drones.Gui.FlightDocs.csproj", "{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -169,6 +171,16 @@ Global
 		{59455F10-E1CB-47B7-86F7-199C04132F89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59455F10-E1CB-47B7-86F7-199C04132F89}.DebugLibs|Any CPU.ActiveCfg = Debug|Any CPU
 		{59455F10-E1CB-47B7-86F7-199C04132F89}.DebugLibs|Any CPU.Build.0 = Debug|Any CPU
+		{59455F10-E1CB-47B7-86F7-199C04132F89}.DebugPlugins|Any CPU.ActiveCfg = Debug|Any CPU
+		{59455F10-E1CB-47B7-86F7-199C04132F89}.DebugPlugins|Any CPU.Build.0 = Debug|Any CPU
+		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}.DebugPlugins|Any CPU.ActiveCfg = Debug|Any CPU
+		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}.DebugPlugins|Any CPU.Build.0 = Debug|Any CPU
+		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}.DebugLibs|Any CPU.ActiveCfg = Debug|Any CPU
+		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}.DebugLibs|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -184,5 +196,6 @@ Global
 		{5AF3EDCB-350D-43D2-9982-3E9CD920D51A} = {4AD5057E-3DB2-47E3-BBD3-C5FBEA3E1A9A}
 		{9EBA8D8C-8A84-4ACF-8807-AE60F8BD59A8} = {4AD5057E-3DB2-47E3-BBD3-C5FBEA3E1A9A}
 		{59455F10-E1CB-47B7-86F7-199C04132F89} = {37A71A26-D3D5-4F26-9ACF-BD252CDD1837}
+		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5} = {4AD5057E-3DB2-47E3-BBD3-C5FBEA3E1A9A}
 	EndGlobalSection
 EndGlobal

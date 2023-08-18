@@ -130,7 +130,11 @@ namespace Asv.Avalonia.Map
 
         #region AttachedProperty
 
+        public static readonly AttachedProperty<bool> IsFilledProperty =
+            AvaloniaProperty.RegisterAttached<MapView, AvaloniaObject, bool>("IsFilled", false);
 
+        public static void SetIsFilled(AvaloniaObject element, bool value) => element.SetValue(IsFilledProperty, value);
+        public static bool GetIsFilled(AvaloniaObject element) => (bool)element.GetValue(IsFilledProperty);
 
 
         public static readonly AttachedProperty<IBrush?> StrokeProperty =
