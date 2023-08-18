@@ -26,6 +26,15 @@ public class AnchorsEditorViewModel : MapWidgetBase
     public AnchorsEditorViewModel(ILocalizationService loc) : this()
     {
         _loc = loc;
+
+        Disposable.AddAction(() =>
+        {
+            _locationSubscription?.Dispose();
+            _iconSubscription?.Dispose();
+            _titleSubscription?.Dispose();
+            _isEditableSubscription?.Dispose();
+            _isInEditModeSubscription?.Dispose();
+        });
     }
     
     [Reactive]
