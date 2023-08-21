@@ -237,8 +237,9 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
                         for (int i = 0; i < 5; i++)
                         {
                             var mavResult = await Payload.Sdr.CurrentRecordSetTag(longTag.Name, longTag.Value, new CancellationToken()).ConfigureAwait(false);
-                            if (mavResult == MavResult.MavResultAccepted) break;
+                            if (mavResult == MavResult.MavResultAccepted) return;
                         }
+                        _logService.Error(Title, $"Long tag {longTag.Name} setup failed. Result: {result}");
                     }
                     else if (_ is ULongTagViewModel ulongTag)
                     {
@@ -246,8 +247,9 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
                         for (int i = 0; i < 5; i++)
                         {
                             var mavResult = await Payload.Sdr.CurrentRecordSetTag(ulongTag.Name, ulongTag.Value, new CancellationToken()).ConfigureAwait(false);
-                            if (mavResult == MavResult.MavResultAccepted) break;
+                            if (mavResult == MavResult.MavResultAccepted) return;
                         }
+                        _logService.Error(Title, $"ULong tag {ulongTag.Name} setup failed. Result: {result}");
                     }
                     else if (_ is DoubleTagViewModel doubleTag)
                     {
@@ -255,8 +257,9 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
                         for (int i = 0; i < 5; i++)
                         {
                             var mavResult = await Payload.Sdr.CurrentRecordSetTag(doubleTag.Name, doubleTag.Value, new CancellationToken()).ConfigureAwait(false);
-                            if (mavResult == MavResult.MavResultAccepted) break;
+                            if (mavResult == MavResult.MavResultAccepted) return;
                         }
+                        _logService.Error(Title, $"Double tag {doubleTag.Name} setup failed. Result: {result}");
                     }
                     else if (_ is StringTagViewModel stringTag)
                     {
@@ -264,8 +267,9 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
                         for (int i = 0; i < 5; i++)
                         {
                             var mavResult = await Payload.Sdr.CurrentRecordSetTag(stringTag.Name, stringTag.Value, new CancellationToken()).ConfigureAwait(false);
-                            if (mavResult == MavResult.MavResultAccepted) break;
+                            if (mavResult == MavResult.MavResultAccepted) return;
                         }
+                        _logService.Error(Title, $"String tag {stringTag.Name} setup failed. Result: {result}");
                     }
                 });
             }
