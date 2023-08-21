@@ -83,12 +83,11 @@ public class SdrStorePageViewModel:ShellPage
         
         var parent = Store.SelectedItem == null ? _store.Store.RootFolderId :
             Store.SelectedItem.IsRecord ? Store.SelectedItem.ParentId : Store.SelectedItem.EntityId;
-        
-        using var writer = _store.Store.ExistFile(rec.Id) 
-            ? _store.Store.Open(rec.Id) 
-            : _store.Store.Create(recId, parent , rec.CopyTo);
-        
-        rec.CopyMetadataTo(writer.File);
+
+        using var writer = 
+            _store.Store.ExistFile(rec.Id) 
+                ? _store.Store.Open(rec.Id) 
+                : _store.Store.Create(recId, rec.Name.Value, parent);
         Progress = 0;
         
         var remoteCount = rec.DataCount.Value;

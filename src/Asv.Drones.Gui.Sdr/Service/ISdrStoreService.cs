@@ -11,7 +11,7 @@ namespace Asv.Drones.Gui.Sdr;
 
 public interface ISdrStoreService
 {
-    IListDataStore<AsvSdrRecordFileMetadata, Guid> Store { get; }
+    IHierarchicalStore<Guid,IListDataFile<AsvSdrRecordFileMetadata>> Store { get; }
 }
 
 public class SdrStoreServiceConfig
@@ -24,8 +24,6 @@ public class SdrStoreServiceConfig
 [PartCreationPolicy(CreationPolicy.Shared)]
 public class SdrStoreService : ServiceWithConfigBase<SdrStoreServiceConfig>, ISdrStoreService
 {
-    private const string RecordFolderName = "sdr_data";
-   
     [ImportingConstructor]
     public SdrStoreService(IAppService svc, IConfiguration cfg) : base(cfg)
     {
@@ -36,10 +34,10 @@ public class SdrStoreService : ServiceWithConfigBase<SdrStoreServiceConfig>, ISd
         {
             Directory.CreateDirectory(dir);
         }
-        Store = new ListDataStore<AsvSdrRecordFileMetadata, Guid>(dir, AsvSdrHelper.StoreFormat, AsvSdrHelper.FileFormat, TimeSpan.FromMilliseconds(fileCacheTimeMs)).DisposeItWith(Disposable);
+        Store = new AsvSdrStore(dir, TimeSpan.FromMilliseconds(fileCacheTimeMs)).DisposeItWith(Disposable);
     }
 
-    public IListDataStore<AsvSdrRecordFileMetadata, Guid> Store { get; }
+    public IHierarchicalStore<Guid,IListDataFile<AsvSdrRecordFileMetadata>> Store { get; }
 }
 
 

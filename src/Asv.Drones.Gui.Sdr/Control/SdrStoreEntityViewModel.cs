@@ -19,7 +19,7 @@ public class SdrStoreEntityViewModel : ViewModelBaseWithValidation
     private ReadOnlyObservableCollection<SdrStoreEntityViewModel> _items;
     private ReadOnlyObservableCollection<SdrPayloadRecordViewModel>? _tags;
 
-    public SdrStoreEntityViewModel(Node<IListDataStoreEntry<Guid>,Guid> node, SdrStoreBrowserViewModel context):base("asv:sdr-browser.entryr?id="+node.Item.Id)
+    public SdrStoreEntityViewModel(Node<IHierarchicalStoreEntry<Guid>,Guid> node, SdrStoreBrowserViewModel context):base("asv:sdr-browser.entryr?id="+node.Item.Id)
     {
         ParentId = node.Parent.HasValue ? node.Parent.Value.Item.Id : Guid.Empty;
         EntityId = node.Item.Id;
@@ -34,8 +34,8 @@ public class SdrStoreEntityViewModel : ViewModelBaseWithValidation
             .Subscribe()
             .DisposeItWith(Disposable);
         
-        IsFolder = Type == StoreEntryType.Folder;
-        IsRecord = Type == StoreEntryType.File;
+        IsFolder = Type == FolderStoreEntryType.Folder;
+        IsRecord = Type == FolderStoreEntryType.File;
         Delete = ReactiveCommand.CreateFromTask(async () =>
         {
             var dialog = new ContentDialog
@@ -100,7 +100,7 @@ public class SdrStoreEntityViewModel : ViewModelBaseWithValidation
 
     [Reactive]
     public string Name { get; set; }
-    public StoreEntryType Type { get; }
+    public FolderStoreEntryType Type { get; }
     public Guid ParentId { get; set; }
     [Reactive]
     public bool IsExpanded { get; set; }

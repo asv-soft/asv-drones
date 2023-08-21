@@ -9,7 +9,7 @@ namespace Asv.Drones.Gui.Core
     /// <summary>
     /// Map interface
     /// </summary>
-    public interface IMap : INotifyPropertyChanged
+    public interface IMap:INotifyPropertyChanged
     {
         bool IsInDialogMode { get; set; }
         int MaxZoom { get; set; }

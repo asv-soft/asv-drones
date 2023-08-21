@@ -6,11 +6,8 @@ using System.Reactive.Subjects;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
-using Avalonia;
 using Avalonia.Controls;
-using DocumentFormat.OpenXml;
 using DynamicData;
-using DynamicData.Binding;
 using FluentAvalonia.UI.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -19,21 +16,20 @@ namespace Asv.Drones.Gui.Sdr;
 
 [Export]
 [PartCreationPolicy(CreationPolicy.NonShared)]
-public class SdrStoreBrowserViewModel : ViewModelBase
+public class SdrStoreBrowserViewModel:ViewModelBase
 {
     private readonly ISdrStoreService _svc;
     public const string UriString = "asv:sdr.store.browser";
     
-    private readonly SourceCache<IListDataStoreEntry<Guid>,Guid> _source;
+    private readonly SourceCache<IHierarchicalStoreEntry<Guid>,Guid> _source;
     private readonly ReadOnlyObservableCollection<SdrStoreEntityViewModel> _tree;
-    private readonly Subject<Func<IListDataStoreEntry<Guid>,bool>> _filterPipe;
+    private readonly Subject<Func<IHierarchicalStoreEntry<Guid>,bool>> _filterPipe;
     private readonly ILocalizationService _loc;
-
     public SdrStoreBrowserViewModel():base(UriString)
     {
-        _source = new SourceCache<IListDataStoreEntry<Guid>,Guid>(_=>_.Id)
+        _source = new SourceCache<IHierarchicalStoreEntry<Guid>,Guid>(_=>_.Id)
             .DisposeItWith(Disposable);
-        _filterPipe = new Subject<Func<IListDataStoreEntry<Guid>, bool>>()
+        _filterPipe = new Subject<Func<IHierarchicalStoreEntry<Guid>, bool>>()
             .DisposeItWith(Disposable);
         this.WhenAnyValue(x => x.SearchText)
             .Throttle(TimeSpan.FromMilliseconds(500), RxApp.MainThreadScheduler)
@@ -47,56 +43,26 @@ public class SdrStoreBrowserViewModel : ViewModelBase
         _source
             .Connect()
             .Filter(_filterPipe)
-            .TransformToTree(x => x.ParentId)
-            .Transform(x => new SdrStoreEntityViewModel(x,this))
+            .TransformToTree(x=>x.ParentId)
+            .Transform(x=>new SdrStoreEntityViewModel(x,this))
             .Bind(out _tree)
             .Subscribe()
             .DisposeItWith(Disposable);
         
         if (Design.IsDesignMode)
         {
-            _source.AddOrUpdate( new ListDataStoreEntry<Guid>
-            {
-                Id = new("D09AFD63-4FAC-4C28-AA90-9F574ACE899B"), 
-                Name = "Record 1", 
-                ParentId = Guid.Empty, 
-                Type = StoreEntryType.File
-            });
-            _source.AddOrUpdate(new ListDataStoreEntry<Guid>
-            {
-                Id = new("34992EE3-FF6A-4643-A65C-BCEFD5D5A90B"), 
-                Name = "Folder 2", 
-                ParentId = Guid.Empty,
-                Type = StoreEntryType.Folder
-            });
-            _source.AddOrUpdate(new ListDataStoreEntry<Guid>
-            {
-                Id = new("011F9C71-3988-4A8B-9EF8-CA2B733E190D"), 
-                Name = "Folder 2.1",
-                ParentId = new("34992EE3-FF6A-4643-A65C-BCEFD5D5A90B"), 
-                Type = StoreEntryType.Folder
-            });
-            _source.AddOrUpdate( new ListDataStoreEntry<Guid>
-            {
-                Id = new("43A307ED-94CA-4146-80F2-4AC8B569EC0D"), 
-                Name = "Record 2.1.1", 
-                ParentId = new("011F9C71-3988-4A8B-9EF8-CA2B733E190D"), 
-                Type = StoreEntryType.File
-            });
-            _source.AddOrUpdate( new ListDataStoreEntry<Guid>
-            {
-                Id = new("A2DCABA7-68A8-4EC1-87E6-51A97DE176F8"), 
-                Name = "Record 3", 
-                ParentId = Guid.Empty, 
-                Type = StoreEntryType.File
-            });
-            _source.AddOrUpdate( new ListDataStoreEntry<Guid>
-            {
-                Id = new("E85A9814-AD8C-4BA2-9DD4-2091231B065E"), 
-                Name = "Record 4", 
-                ParentId = Guid.Empty, 
-                Type = StoreEntryType.File
-            });
+            _source.AddOrUpdate(new FileSystemHierarchicalStoreEntry<Guid>(
+                new Guid("D09AFD63-4FAC-4C28-AA90-9F574ACE899B"), "Record 1", FolderStoreEntryType.File, Guid.Empty, ""));
+            _source.AddOrUpdate(new FileSystemHierarchicalStoreEntry<Guid>(
+                new Guid("34992EE3-FF6A-4643-A65C-BCEFD5D5A90B"), "Folder 2", FolderStoreEntryType.Folder, Guid.Empty, ""));
+            _source.AddOrUpdate(new FileSystemHierarchicalStoreEntry<Guid>(
+                new Guid("011F9C71-3988-4A8B-9EF8-CA2B733E190D"), "Folder 2.1", FolderStoreEntryType.Folder, new("34992EE3-FF6A-4643-A65C-BCEFD5D5A90B"), ""));
+            _source.AddOrUpdate(new FileSystemHierarchicalStoreEntry<Guid>(
+                new Guid("43A307ED-94CA-4146-80F2-4AC8B569EC0D"), "Record 2.1.1", FolderStoreEntryType.File, new("011F9C71-3988-4A8B-9EF8-CA2B733E190D"), ""));
+            _source.AddOrUpdate(new FileSystemHierarchicalStoreEntry<Guid>(
+                new Guid("A2DCABA7-68A8-4EC1-87E6-51A97DE176F8"), "Record 3", FolderStoreEntryType.File, Guid.Empty, ""));
+            _source.AddOrUpdate(new FileSystemHierarchicalStoreEntry<Guid>(
+                new Guid("E85A9814-AD8C-4BA2-9DD4-2091231B065E"), "Record 3", FolderStoreEntryType.File, Guid.Empty, ""));
         }
     }
     [ImportingConstructor]
@@ -106,6 +72,7 @@ public class SdrStoreBrowserViewModel : ViewModelBase
         _loc = loc ?? throw new ArgumentNullException(nameof(loc));
         
         Refresh = new CancellableCommandWithProgress<Unit, Unit>(RefreshImpl, "SDR Viewer", log).DisposeItWith(Disposable);
+        
         
         AddFolder = ReactiveCommand.Create(AddFolderImpl)
             .DisposeItWith(Disposable);
@@ -129,7 +96,7 @@ public class SdrStoreBrowserViewModel : ViewModelBase
                     Guid newParentId;
                     if (SelectedItem != null)
                     {
-                        newParentId = SelectedItem.Type == StoreEntryType.Folder ? SelectedItem.EntryId : SelectedItem.ParentId;
+                        newParentId = SelectedItem.Type == FolderStoreEntryType.Folder ? SelectedItem.EntryId : SelectedItem.ParentId;
                     }
                     else
                     {
@@ -187,7 +154,7 @@ public class SdrStoreBrowserViewModel : ViewModelBase
         Guid parentId;
         if (SelectedItem != null)
         {
-            parentId = SelectedItem.Type == StoreEntryType.Folder ? SelectedItem.EntryId : SelectedItem.ParentId;
+            parentId = SelectedItem.Type == FolderStoreEntryType.Folder ? SelectedItem.EntryId : SelectedItem.ParentId;
         }
         else
         {
@@ -196,12 +163,12 @@ public class SdrStoreBrowserViewModel : ViewModelBase
         
         var attempt = 0;
         start:
-        var name = $"New folder ({++attempt})";
+        var name = $"New folder {++attempt}";
         try
         {
-            newId = _svc.Store.CreateFolder(parentId,name);
+            newId = _svc.Store.CreateFolder(Guid.NewGuid(), name,parentId);
         }
-        catch (ListDataFolderAlreadyExistException)
+        catch (HierarchicalStoreFolderAlreadyExistException)
         {
             goto start;
         }
@@ -240,10 +207,10 @@ public class SdrStoreBrowserViewModel : ViewModelBase
         if (_svc.Store.TryGetEntry(id, out var ent) == false) return;
         switch (ent.Type)
         {
-            case StoreEntryType.File:
+            case FolderStoreEntryType.File:
                 _svc.Store.DeleteFile(id);
                 break;
-            case StoreEntryType.Folder:
+            case FolderStoreEntryType.Folder:
                 _svc.Store.DeleteFolder(id);
                 break;
             default:
@@ -257,10 +224,10 @@ public class SdrStoreBrowserViewModel : ViewModelBase
         if (_svc.Store.TryGetEntry(id, out var ent) == false) return;
         switch (ent.Type)
         {
-            case StoreEntryType.File:
+            case FolderStoreEntryType.File:
                 _svc.Store.RenameFile(id,name);
                 break;
-            case StoreEntryType.Folder:
+            case FolderStoreEntryType.Folder:
                 _svc.Store.RenameFolder(id,name);
                 break;
             default:
