@@ -64,24 +64,22 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
             <Grid IsVisible="{Binding !IsIdleMode}">
-                <DockPanel IsVisible="{Binding !IsGpMode}">
-                    <ToggleButton IsChecked="{Binding IsChannelInput}" Margin="8 0 0 0" DockPanel.Dock="Right">
-                        <avalonia:MaterialIcon Kind="SwapHorizontal"/>
-                    </ToggleButton>
-                    <Grid>
-                        <TextBox IsVisible="{Binding !IsChannelInput}" Grid.Column="0" Text="{Binding FrequencyInMhz}">
-                            <TextBox.InnerRightContent>
-                                <TextBlock Margin="8 0" Text="{Binding FrequencyUnits}" VerticalAlignment="Center" />
-                            </TextBox.InnerRightContent>
-                        </TextBox>
-                        <AutoCompleteBox IsVisible="{Binding IsChannelInput}" Grid.Column="2" ItemsSource="{Binding Channels}" Text="{Binding Channel}"/>
-                    </Grid>
+                <DockPanel>
+                    <DropDownButton VerticalAlignment="Top" IsVisible="{CompiledBinding !IsGpMode}" Margin="8 0 0 0" DockPanel.Dock="Right">
+                        <avalonia:MaterialIcon Kind="Table"/>
+                        <DropDownButton.Flyout>
+                            <Flyout>
+                                <AutoCompleteBox Width="250" ItemsSource="{Binding Channels}" 
+                                                 Text="{Binding Channel}"/>
+                            </Flyout>
+                        </DropDownButton.Flyout>
+                    </DropDownButton>
+                    <TextBox Text="{Binding FrequencyInMhz}">
+                        <TextBox.InnerRightContent>
+                            <TextBlock Margin="8 0" Text="{Binding FrequencyUnits}" VerticalAlignment="Center" />
+                        </TextBox.InnerRightContent>
+                    </TextBox>
                 </DockPanel>
-                <TextBox IsVisible="{Binding IsGpMode}" Text="{Binding FrequencyInMhz}">
-                    <TextBox.InnerRightContent>
-                        <TextBlock Margin="8 0" Text="{Binding FrequencyUnits}" VerticalAlignment="Center" />
-                    </TextBox.InnerRightContent>
-                </TextBox>
             </Grid>
             <Button Command="{Binding UpdateMode}" HorizontalAlignment="Stretch">Set</Button>
             <ItemsControl ItemsSource="{Binding RttWidgets}">
