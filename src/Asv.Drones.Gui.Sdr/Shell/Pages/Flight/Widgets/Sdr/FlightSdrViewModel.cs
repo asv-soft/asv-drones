@@ -136,20 +136,16 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             {
                 case AsvSdrCustomMode.AsvSdrCustomModeGp: 
                     _config.GpFrequencyInMhz = FrequencyInMhz;
-                    IsRecordVisible = true;
                     break;
                 case AsvSdrCustomMode.AsvSdrCustomModeLlz:
                     _config.LlzChannel = Channel;
                     _config.LlzFrequencyInMhz = FrequencyInMhz;
-                    IsRecordVisible = true;
                     break;
                 case AsvSdrCustomMode.AsvSdrCustomModeVor: 
                     _config.VorChannel = Channel;
                     _config.VorFrequencyInMhz = FrequencyInMhz;
-                    IsRecordVisible = true;
                     break;
                 case AsvSdrCustomMode.AsvSdrCustomModeIdle: default:
-                    IsRecordVisible = false;
                     break;
             }
             _configuration.Set(_config);
@@ -260,6 +256,8 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             .IgnoreNulls()
             .OrderBy(_ => _.Order);
         _rttWidgets.AddRange(items);
+        
+        IsRecordVisible = SelectedMode?.Mode != AsvSdrCustomMode.AsvSdrCustomModeIdle;
 
     }
     private void UpdateModes(AsvSdrCustomModeFlag flag)

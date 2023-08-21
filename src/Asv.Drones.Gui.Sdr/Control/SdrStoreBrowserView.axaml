@@ -87,8 +87,8 @@
             <Border MinHeight="50" DockPanel.Dock="Bottom" IsVisible="{Binding IsAnySelected}">
                 <DockPanel>
                     <StackPanel Orientation="Horizontal" Spacing="8" DockPanel.Dock="Bottom">
-                        <TextBlock Text="{Binding TotalFileSize}"/>
-                        <TextBlock Text="{Binding TotalFileSamples}"/>
+                        <TextBlock Text="{Binding SelectedItem.TotalFileSize}"/>
+                        <TextBlock Text="{Binding SelectedItem.TotalFileSamples}"/>
                     </StackPanel>
                     <StackPanel DataContext="{Binding SelectedItem}" Spacing="8">
                         <DockPanel HorizontalAlignment="Stretch">
@@ -156,7 +156,7 @@
                                 </DockPanel>
                             </Panel>
                         </DockPanel>
-                        <SelectableTextBlock FontSize="9" Foreground="Gray" VerticalAlignment="Center" Text="{Binding EntityId}"/>
+                        <SelectableTextBlock FontSize="9" Foreground="Gray" VerticalAlignment="Center" Text="{Binding EntryId}"/>
                         <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Tags}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>

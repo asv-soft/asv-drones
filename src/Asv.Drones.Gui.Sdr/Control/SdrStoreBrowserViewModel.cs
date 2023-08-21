@@ -8,6 +8,7 @@ using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Controls;
 using DynamicData;
+using DynamicData.Binding;
 using FluentAvalonia.UI.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -102,8 +103,8 @@ public class SdrStoreBrowserViewModel:ViewModelBase
                     {
                         newParentId = _svc.Store.RootFolderId;
                     }
-                    _svc.Store.MoveEntry(selectedEntry.EntityId, newParentId);
-                    _svc.Store.TryGetEntry(selectedEntry.EntityId, out var entity);
+                    _svc.Store.MoveEntry(selectedEntry.EntryId, newParentId);
+                    _svc.Store.TryGetEntry(selectedEntry.EntryId, out var entity);
                     
                     Refresh.ExecuteSync();
                 })
@@ -112,24 +113,21 @@ public class SdrStoreBrowserViewModel:ViewModelBase
             var result = await dialog.ShowAsync();
         }).DisposeItWith(Disposable);
         
-        this.WhenAnyValue(_ => _.SelectedItem)
-            .Subscribe(_ =>
+        this.WhenValueChanged(x => x.SelectedItem)
+            .Subscribe(model =>
             {
-                if (_ != null)
+                if (model == null)
+                {
+                    IsAnySelected = false;
+                }
+                else
                 {
                     IsAnySelected = true;
-                    if (SelectedItem.IsFolder)
+                    if (model.IsFolder == false)
                     {
-                        TotalFileSamples = "";
-                        TotalFileSize = "";
-                        return;
+                        model.Update.Execute().Subscribe();
                     }
-                    var res = _svc.Store.Open(_.EntryId);
-                    TotalFileSamples = string.Format(RS.SdrStoreBrowserViewModel_TotalFileSamples, res.File.Count);
-                    TotalFileSize = string.Format(RS.SdrStoreBrowserViewModel_TotalFileSize, _loc.ByteSize.ConvertToStringWithUnits(res.File.ByteSize));    
-                    return;
                 }
-                IsAnySelected = false;
             })
             .DisposeItWith(Disposable);
     }
@@ -190,12 +188,6 @@ public class SdrStoreBrowserViewModel:ViewModelBase
     public ReadOnlyObservableCollection<SdrStoreEntityViewModel> Items => _tree;
 
     [Reactive]
-    public string TotalFileSamples { get; set; }
-    
-    [Reactive]
-    public string TotalFileSize { get; set; }
-
-    [Reactive]
     public string SearchText { get; set; }
 
     public ReactiveCommand<Unit,Unit> AddFolder { get; }
@@ -241,4 +233,6 @@ public class SdrStoreBrowserViewModel:ViewModelBase
          if (item == null) return;
          SelectedItem = item;
     }
+    public ISdrStoreService Service => _svc;
+    public ILocalizationService Localization => _loc;
 }

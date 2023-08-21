@@ -19,9 +19,9 @@ public class SdrPayloadRecordViewModel:ViewModelBase
     {
         _tags = new ReadOnlyObservableCollection<TagViewModel>(new ObservableCollection<TagViewModel>(new List<TagViewModel>
         {
-            new() {Name = "Tag1: 65.4654"},
-            new() {Name = "Tag2: 4554654"},
-            new() {Name = "Tag2: value1"},
+            new TagViewModel(new TagId(Guid.NewGuid(), Guid.NewGuid()), "Tag1: 65.4654"),
+            new TagViewModel(new TagId(Guid.NewGuid(), Guid.NewGuid()), "Tag2: 65.4654"),
+            new TagViewModel(new TagId(Guid.NewGuid(), Guid.NewGuid()), "Tag3: 65.4654"),
         }));
     }
     
@@ -67,21 +67,21 @@ public class SdrPayloadRecordViewModel:ViewModelBase
     {
         if (tag.Type == AsvSdrRecordTagType.AsvSdrRecordTagTypeInt64)
         {
-            return new LongTagViewModel(tag);
+            return new LongTagViewModel(tag.Id, tag.Name, tag.GetInt64());
         }
         else if (tag.Type == AsvSdrRecordTagType.AsvSdrRecordTagTypeUint64)
         {
-            return new ULongTagViewModel(tag);
+            return new ULongTagViewModel(tag.Id, tag.Name, tag.GetUint64());
         }
         else if (tag.Type == AsvSdrRecordTagType.AsvSdrRecordTagTypeReal64)
         {
-            return new DoubleTagViewModel(tag);  
+            return new DoubleTagViewModel(tag.Id, tag.Name, tag.GetReal64());
         }
         else if (tag.Type == AsvSdrRecordTagType.AsvSdrRecordTagTypeString8)
         {
-            return new StringTagViewModel(tag);
+            return new StringTagViewModel(tag.Id, tag.Name, tag.GetString());
         }
 
-        return new TagViewModel(tag);
+        return new TagViewModel(tag.Id, tag.Name);
     }
 }

@@ -56,7 +56,7 @@ public class SdrStorePageViewModel:ShellPage
     private void TrySelectDeviceItem(SdrStoreEntityViewModel? sdrStoreEntityViewModel)
     {
         if (sdrStoreEntityViewModel == null) return;
-        Store.TrySelect(sdrStoreEntityViewModel.EntityId);
+        Store.TrySelect(sdrStoreEntityViewModel.EntryId);
     }
 
     private void TrySelectStoreItem(SdrPayloadRecordViewModel? sdrPayloadRecordViewModel)
@@ -82,13 +82,14 @@ public class SdrStorePageViewModel:ShellPage
         }),cancel);
         
         var parent = Store.SelectedItem == null ? _store.Store.RootFolderId :
-            Store.SelectedItem.IsRecord ? Store.SelectedItem.ParentId : Store.SelectedItem.EntityId;
+            Store.SelectedItem.IsRecord ? Store.SelectedItem.ParentId : Store.SelectedItem.EntryId;
 
         using var writer = 
             _store.Store.ExistFile(rec.Id) 
                 ? _store.Store.Open(rec.Id) 
                 : _store.Store.Create(recId, rec.Name.Value, parent);
         Progress = 0;
+        rec.CopyMetadataTo(writer.File);        
         
         var remoteCount = rec.DataCount.Value;
         Debug.WriteLine($"Begin read {remoteCount} items from device");
