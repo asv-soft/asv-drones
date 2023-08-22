@@ -222,58 +222,69 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
 
         if (result == ContentDialogResult.Primary)
         {
-            var startRecord = MavResult.MavResultUnsupported;
+            var startMavResult = MavResult.MavResultUnsupported;
             for (int i = 0; i < 5; i++)
             {
-                startRecord = await Payload.Sdr.StartRecord(viewModel.RecordName, cancel);
-                if (startRecord == MavResult.MavResultAccepted) break;
+                startMavResult = await Payload.Sdr.StartRecord(viewModel.RecordName, cancel);
+                if (startMavResult == MavResult.MavResultAccepted) break;
             }
-            
-            if (startRecord == MavResult.MavResultAccepted)
+            if (startMavResult == MavResult.MavResultAccepted)
             {
                 foreach (var tag in viewModel.Tags)
                 {
                     if (tag is LongTagViewModel longTag)
                     {
+                        var tagMavResult = MavResult.MavResultUnsupported;
                         for (int i = 0; i < 5; i++)
                         {
-                            var mavResult = await Payload.Sdr.CurrentRecordSetTag(longTag.Name, longTag.Value, cts.Token).ConfigureAwait(false);
-                            if (mavResult == MavResult.MavResultAccepted) return;
+                            tagMavResult = await Payload.Sdr.CurrentRecordSetTag(longTag.Name, 
+                                longTag.Value, cts.Token).ConfigureAwait(false);
+                            if (tagMavResult == MavResult.MavResultAccepted) return;
                         }
-                        _logService.Error(Title, $"Long tag {longTag.Name} setup failed. Result: {result}");
+                        _logService.Error(Title, 
+                            $"Long tag {longTag.Name} setup failed. Result: {tagMavResult}");
                     }
                     else if (tag is ULongTagViewModel ulongTag)
                     {
+                        var tagMavResult = MavResult.MavResultUnsupported;
                         for (int i = 0; i < 5; i++)
                         {
-                            var mavResult = await Payload.Sdr.CurrentRecordSetTag(ulongTag.Name, ulongTag.Value, cts.Token).ConfigureAwait(false);
-                            if (mavResult == MavResult.MavResultAccepted) return;
+                            tagMavResult = await Payload.Sdr.CurrentRecordSetTag(ulongTag.Name, 
+                                ulongTag.Value, cts.Token).ConfigureAwait(false);
+                            if (tagMavResult == MavResult.MavResultAccepted) return;
                         }
-                        _logService.Error(Title, $"ULong tag {ulongTag.Name} setup failed. Result: {result}");
+                        _logService.Error(Title, 
+                            $"ULong tag {ulongTag.Name} setup failed. Result: {tagMavResult}");
                     }
                     else if (tag is DoubleTagViewModel doubleTag)
                     {
+                        var tagMavResult = MavResult.MavResultUnsupported;
                         for (int i = 0; i < 5; i++)
                         {
-                            var mavResult = await Payload.Sdr.CurrentRecordSetTag(doubleTag.Name, doubleTag.Value, cts.Token).ConfigureAwait(false);
-                            if (mavResult == MavResult.MavResultAccepted) return;
+                            tagMavResult = await Payload.Sdr.CurrentRecordSetTag(doubleTag.Name, 
+                                doubleTag.Value, cts.Token).ConfigureAwait(false);
+                            if (tagMavResult == MavResult.MavResultAccepted) return;
                         }
-                        _logService.Error(Title, $"Double tag {doubleTag.Name} setup failed. Result: {result}");
+                        _logService.Error(Title, 
+                            $"Double tag {doubleTag.Name} setup failed. Result: {tagMavResult}");
                     }
                     else if (tag is StringTagViewModel stringTag)
                     {
+                        var tagMavResult = MavResult.MavResultUnsupported;
                         for (int i = 0; i < 5; i++)
                         {
-                            var mavResult = await Payload.Sdr.CurrentRecordSetTag(stringTag.Name, stringTag.Value, cts.Token).ConfigureAwait(false);
-                            if (mavResult == MavResult.MavResultAccepted) return;
+                            tagMavResult = await Payload.Sdr.CurrentRecordSetTag(stringTag.Name, 
+                                stringTag.Value, cts.Token).ConfigureAwait(false);
+                            if (tagMavResult == MavResult.MavResultAccepted) return;
                         }
-                        _logService.Error(Title, $"String tag {stringTag.Name} setup failed. Result: {result}");
+                        _logService.Error(Title, 
+                            $"String tag {stringTag.Name} setup failed. Result: {tagMavResult}");
                     }
                 }
             }
             else
             {
-                _logService.Error(Title, $"Start record failed. Result: {result}");
+                _logService.Error(Title, $"Start record failed. Result: {startMavResult}");
             }
         }
     }
