@@ -347,9 +347,6 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     public bool IsRecordVisible { get; set; }
     
     [Reactive]
-    public bool IsChannelInput { get; set; }
-    
-    [Reactive]
     public IEnumerable<string> Channels { get; set; }
     
     [Reactive]

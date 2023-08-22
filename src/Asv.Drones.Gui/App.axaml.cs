@@ -32,6 +32,12 @@ public partial class App : Application
 
     public App()
     {
+        /*LogManager.Setup().LoadConfiguration(builder =>
+        {
+            builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToDebug();
+            builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToFile(fileName: "log.txt");
+        });*/
+        
         _container = new CompositionContainer(new AggregateCatalog(Catalogs().ToArray()), CompositionOptions.IsThreadSafe);
         // we need to export the container itself
         var batch = new CompositionBatch();
