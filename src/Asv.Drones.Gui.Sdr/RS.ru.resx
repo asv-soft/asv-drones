@@ -189,7 +189,7 @@
         <value>Недопустимое имя записи</value>
     </data>
     <data name="RecordStartView_RecordName_Title" xml:space="preserve">
-        <value>Имя записи</value>
+        <value>Имя записи (обязательно)</value>
     </data>
     <data name="RecordStartView_RecordName_Watermark" xml:space="preserve">
         <value>Введите имя для новой записи</value>
@@ -235,5 +235,8 @@
     </data>
     <data name="SdrStoreEntityViewModel_Name_Validation_ErrorMessage" xml:space="preserve">
         <value>Недопустимое имя записи</value>
+    </data>
+    <data name="RecordStartView_RecordTags_Title" xml:space="preserve">
+        <value>Теги записи (опционально)</value>
     </data>
 </root>

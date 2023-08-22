@@ -348,7 +348,7 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Record name.
+        ///   Looks up a localized string similar to Record name (required).
         /// </summary>
         public static string RecordStartView_RecordName_Title {
             get {
@@ -362,6 +362,15 @@ namespace Asv.Drones.Gui.Sdr {
         public static string RecordStartView_RecordName_Watermark {
             get {
                 return ResourceManager.GetString("RecordStartView_RecordName_Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record tags (optional).
+        /// </summary>
+        public static string RecordStartView_RecordTags_Title {
+            get {
+                return ResourceManager.GetString("RecordStartView_RecordTags_Title", resourceCulture);
             }
         }
         
