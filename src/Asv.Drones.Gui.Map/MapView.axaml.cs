@@ -854,15 +854,6 @@ namespace Asv.Avalonia.Map
             if (_disablePointerActions) return;
             base.OnPointerMoved(e);
 
-            // wpf generates to many events if mouse is over some visual
-            // and OnMouseUp is fired, wtf, anyway...
-            // http://greatmaps.codeplex.com/workitem/16013
-            if ((e.Timestamp & UInt32.MaxValue) - _onMouseUpTimestamp < 55)
-            {
-                Debug.WriteLine("OnMouseMove skipped: " + ((e.Timestamp & Int32.MaxValue) - _onMouseUpTimestamp) + "ms");
-                return;
-            }
-
             if (!_core.IsDragging && !_core.MouseDown.IsEmpty)
             {
                 var p = e.GetPosition(this);
@@ -876,7 +867,7 @@ namespace Asv.Avalonia.Map
                 }
 
                 // cursor has moved beyond drag tolerance
-                if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+                if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed && !_core.MouseDown.IsEmpty)
                 {
                     if (Math.Abs(p.X - _core.MouseDown.X) * 2 >= MinimumHorizontalDragDistance ||
                         Math.Abs(p.Y - _core.MouseDown.Y) * 2 >= MinimumVerticalDragDistance)
@@ -969,6 +960,7 @@ namespace Asv.Avalonia.Map
                 }
             }
 
+            _core.MouseDown = GPoint.Empty;
         }
 
         protected override void OnPointerPressed(PointerPressedEventArgs e)
