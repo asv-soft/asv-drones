@@ -202,6 +202,8 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     
     private async Task RecordStartImpl(CancellationToken cancel)
     {
+        var cts = CancellationTokenSource.CreateLinkedTokenSource(cancel);
+        
         var dialog = new ContentDialog()
         {
             Title = RS.FlightSdrViewModel_RecordStartDialog_Title,
@@ -229,49 +231,45 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             
             if (startRecord == MavResult.MavResultAccepted)
             {
-                viewModel.Tags.ForEach(async _ =>
+                foreach (var tag in viewModel.Tags)
                 {
-                    if (_ is LongTagViewModel longTag)
+                    if (tag is LongTagViewModel longTag)
                     {
-                        await Payload.Sdr.CurrentRecordSetTagAndCheckResult(longTag.Name, longTag.Value, new CancellationToken());
                         for (int i = 0; i < 5; i++)
                         {
-                            var mavResult = await Payload.Sdr.CurrentRecordSetTag(longTag.Name, longTag.Value, new CancellationToken()).ConfigureAwait(false);
+                            var mavResult = await Payload.Sdr.CurrentRecordSetTag(longTag.Name, longTag.Value, cts.Token).ConfigureAwait(false);
                             if (mavResult == MavResult.MavResultAccepted) return;
                         }
                         _logService.Error(Title, $"Long tag {longTag.Name} setup failed. Result: {result}");
                     }
-                    else if (_ is ULongTagViewModel ulongTag)
+                    else if (tag is ULongTagViewModel ulongTag)
                     {
-                        await Payload.Sdr.CurrentRecordSetTagAndCheckResult(ulongTag.Name, ulongTag.Value, new CancellationToken());
                         for (int i = 0; i < 5; i++)
                         {
-                            var mavResult = await Payload.Sdr.CurrentRecordSetTag(ulongTag.Name, ulongTag.Value, new CancellationToken()).ConfigureAwait(false);
+                            var mavResult = await Payload.Sdr.CurrentRecordSetTag(ulongTag.Name, ulongTag.Value, cts.Token).ConfigureAwait(false);
                             if (mavResult == MavResult.MavResultAccepted) return;
                         }
                         _logService.Error(Title, $"ULong tag {ulongTag.Name} setup failed. Result: {result}");
                     }
-                    else if (_ is DoubleTagViewModel doubleTag)
+                    else if (tag is DoubleTagViewModel doubleTag)
                     {
-                        await Payload.Sdr.CurrentRecordSetTagAndCheckResult(doubleTag.Name, doubleTag.Value, new CancellationToken());
                         for (int i = 0; i < 5; i++)
                         {
-                            var mavResult = await Payload.Sdr.CurrentRecordSetTag(doubleTag.Name, doubleTag.Value, new CancellationToken()).ConfigureAwait(false);
+                            var mavResult = await Payload.Sdr.CurrentRecordSetTag(doubleTag.Name, doubleTag.Value, cts.Token).ConfigureAwait(false);
                             if (mavResult == MavResult.MavResultAccepted) return;
                         }
                         _logService.Error(Title, $"Double tag {doubleTag.Name} setup failed. Result: {result}");
                     }
-                    else if (_ is StringTagViewModel stringTag)
+                    else if (tag is StringTagViewModel stringTag)
                     {
-                        await Payload.Sdr.CurrentRecordSetTagAndCheckResult(stringTag.Name, stringTag.Value, new CancellationToken());
                         for (int i = 0; i < 5; i++)
                         {
-                            var mavResult = await Payload.Sdr.CurrentRecordSetTag(stringTag.Name, stringTag.Value, new CancellationToken()).ConfigureAwait(false);
+                            var mavResult = await Payload.Sdr.CurrentRecordSetTag(stringTag.Name, stringTag.Value, cts.Token).ConfigureAwait(false);
                             if (mavResult == MavResult.MavResultAccepted) return;
                         }
                         _logService.Error(Title, $"String tag {stringTag.Name} setup failed. Result: {result}");
                     }
-                });
+                }
             }
             else
             {
