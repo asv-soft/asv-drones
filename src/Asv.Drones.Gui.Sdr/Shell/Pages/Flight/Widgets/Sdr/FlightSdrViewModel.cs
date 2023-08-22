@@ -239,8 +239,9 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
                         {
                             tagMavResult = await Payload.Sdr.CurrentRecordSetTag(longTag.Name, 
                                 longTag.Value, cts.Token).ConfigureAwait(false);
-                            if (tagMavResult == MavResult.MavResultAccepted) return;
+                            if (tagMavResult == MavResult.MavResultAccepted) break;
                         }
+                        if (tagMavResult == MavResult.MavResultAccepted) continue;
                         _logService.Error(Title, 
                             $"Long tag {longTag.Name} setup failed. Result: {tagMavResult}");
                     }
@@ -251,8 +252,9 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
                         {
                             tagMavResult = await Payload.Sdr.CurrentRecordSetTag(ulongTag.Name, 
                                 ulongTag.Value, cts.Token).ConfigureAwait(false);
-                            if (tagMavResult == MavResult.MavResultAccepted) return;
+                            if (tagMavResult == MavResult.MavResultAccepted) break;
                         }
+                        if (tagMavResult == MavResult.MavResultAccepted) continue;
                         _logService.Error(Title, 
                             $"ULong tag {ulongTag.Name} setup failed. Result: {tagMavResult}");
                     }
@@ -263,8 +265,9 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
                         {
                             tagMavResult = await Payload.Sdr.CurrentRecordSetTag(doubleTag.Name, 
                                 doubleTag.Value, cts.Token).ConfigureAwait(false);
-                            if (tagMavResult == MavResult.MavResultAccepted) return;
+                            if (tagMavResult == MavResult.MavResultAccepted) break;
                         }
+                        if (tagMavResult == MavResult.MavResultAccepted) continue;
                         _logService.Error(Title, 
                             $"Double tag {doubleTag.Name} setup failed. Result: {tagMavResult}");
                     }
@@ -275,8 +278,9 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
                         {
                             tagMavResult = await Payload.Sdr.CurrentRecordSetTag(stringTag.Name, 
                                 stringTag.Value, cts.Token).ConfigureAwait(false);
-                            if (tagMavResult == MavResult.MavResultAccepted) return;
+                            if (tagMavResult == MavResult.MavResultAccepted) break;
                         }
+                        if (tagMavResult == MavResult.MavResultAccepted) continue;
                         _logService.Error(Title, 
                             $"String tag {stringTag.Name} setup failed. Result: {tagMavResult}");
                     }
