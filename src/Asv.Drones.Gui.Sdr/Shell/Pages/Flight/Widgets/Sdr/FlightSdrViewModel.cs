@@ -7,6 +7,7 @@ using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.AsvSdr;
+using Asv.Mavlink.V2.Common;
 using Avalonia.Controls;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
@@ -209,7 +210,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             IsSecondaryButtonEnabled = true,
             SecondaryButtonText = RS.FlightSdrViewModel_RecordStartDialog_SecondaryButton_Name
         };
-            
+        
         var viewModel = new RecordStartViewModel();
             
         viewModel.ApplyDialog(dialog);
@@ -220,27 +221,76 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
 
         if (result == ContentDialogResult.Primary)
         {
-            await Payload.Sdr.StartRecordAndCheckResult(viewModel.RecordName, cancel);
-            
-            viewModel.Tags.ForEach(async _ =>
+            var startMavResult = MavResult.MavResultUnsupported;
+            for (int i = 0; i < 5; i++)
             {
-                if (_ is LongTagViewModel longTag)
+                startMavResult = await Payload.Sdr.StartRecord(viewModel.RecordName, cancel);
+                if (cancel.IsCancellationRequested || startMavResult == MavResult.MavResultAccepted) break;
+            }
+
+            if (cancel.IsCancellationRequested) return;
+            
+            if (startMavResult == MavResult.MavResultAccepted)
+            {
+                foreach (var tag in viewModel.Tags)
                 {
-                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(longTag.Name, longTag.Value, new CancellationToken());
+                    var tagMavResult = MavResult.MavResultUnsupported;
+                    
+                    if (tag is LongTagViewModel longTag)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            tagMavResult = await Payload.Sdr.CurrentRecordSetTag(longTag.Name, 
+                                longTag.Value, cancel).ConfigureAwait(false);
+                            if (cancel.IsCancellationRequested || tagMavResult == MavResult.MavResultAccepted) break;
+                        }
+                        if (!cancel.IsCancellationRequested && tagMavResult != MavResult.MavResultAccepted)
+                            _logService.Error(Title, 
+                                $"Long tag {longTag.Name} setup failed. Result: {tagMavResult}");
+                    }
+                    else if (tag is ULongTagViewModel ulongTag)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            tagMavResult = await Payload.Sdr.CurrentRecordSetTag(ulongTag.Name, 
+                                ulongTag.Value, cancel).ConfigureAwait(false);
+                            if (cancel.IsCancellationRequested || tagMavResult == MavResult.MavResultAccepted) break;
+                        }
+                        if (!cancel.IsCancellationRequested && tagMavResult != MavResult.MavResultAccepted)
+                            _logService.Error(Title, 
+                                $"ULong tag {ulongTag.Name} setup failed. Result: {tagMavResult}");
+                    }
+                    else if (tag is DoubleTagViewModel doubleTag)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            tagMavResult = await Payload.Sdr.CurrentRecordSetTag(doubleTag.Name, 
+                                doubleTag.Value, cancel).ConfigureAwait(false);
+                            if (cancel.IsCancellationRequested || tagMavResult == MavResult.MavResultAccepted) break;
+                        }
+                        if (!cancel.IsCancellationRequested && tagMavResult != MavResult.MavResultAccepted)
+                            _logService.Error(Title, 
+                                $"Double tag {doubleTag.Name} setup failed. Result: {tagMavResult}");
+                    }
+                    else if (tag is StringTagViewModel stringTag)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            tagMavResult = await Payload.Sdr.CurrentRecordSetTag(stringTag.Name, 
+                                stringTag.Value, cancel).ConfigureAwait(false);
+                            if (cancel.IsCancellationRequested || tagMavResult == MavResult.MavResultAccepted) break;
+                        }
+                        if (!cancel.IsCancellationRequested && tagMavResult != MavResult.MavResultAccepted)
+                            _logService.Error(Title, 
+                                $"String tag {stringTag.Name} setup failed. Result: {tagMavResult}");
+                    }
+                    if (cancel.IsCancellationRequested) break;
                 }
-                else if (_ is ULongTagViewModel ulongTag)
-                {
-                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(ulongTag.Name, ulongTag.Value, new CancellationToken());
-                }
-                else if (_ is DoubleTagViewModel doubleTag)
-                {
-                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(doubleTag.Name, doubleTag.Value, new CancellationToken());
-                }
-                else if (_ is StringTagViewModel stringTag)
-                {
-                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(stringTag.Name, stringTag.Value, new CancellationToken());
-                }
-            });
+            }
+            else
+            {
+                _logService.Error(Title, $"Start record failed. Result: {startMavResult}");
+            }
         }
     }
     private void UpdateSelectedMode(AsvSdrCustomMode mode)
