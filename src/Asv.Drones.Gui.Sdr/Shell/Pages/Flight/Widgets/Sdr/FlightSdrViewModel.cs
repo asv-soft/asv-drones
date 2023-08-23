@@ -202,8 +202,6 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     
     private async Task RecordStartImpl(CancellationToken cancel)
     {
-        var cts = CancellationTokenSource.CreateLinkedTokenSource(cancel);
-        
         var dialog = new ContentDialog()
         {
             Title = RS.FlightSdrViewModel_RecordStartDialog_Title,
@@ -226,64 +224,66 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             for (int i = 0; i < 5; i++)
             {
                 startMavResult = await Payload.Sdr.StartRecord(viewModel.RecordName, cancel);
-                if (startMavResult == MavResult.MavResultAccepted) break;
+                if (cancel.IsCancellationRequested || startMavResult == MavResult.MavResultAccepted) break;
             }
+
+            if (cancel.IsCancellationRequested) return;
+            
             if (startMavResult == MavResult.MavResultAccepted)
             {
                 foreach (var tag in viewModel.Tags)
                 {
+                    var tagMavResult = MavResult.MavResultUnsupported;
+                    
                     if (tag is LongTagViewModel longTag)
                     {
-                        var tagMavResult = MavResult.MavResultUnsupported;
                         for (int i = 0; i < 5; i++)
                         {
                             tagMavResult = await Payload.Sdr.CurrentRecordSetTag(longTag.Name, 
-                                longTag.Value, cts.Token).ConfigureAwait(false);
-                            if (tagMavResult == MavResult.MavResultAccepted) break;
+                                longTag.Value, cancel).ConfigureAwait(false);
+                            if (cancel.IsCancellationRequested || tagMavResult == MavResult.MavResultAccepted) break;
                         }
-                        if (tagMavResult == MavResult.MavResultAccepted) continue;
-                        _logService.Error(Title, 
-                            $"Long tag {longTag.Name} setup failed. Result: {tagMavResult}");
+                        if (!cancel.IsCancellationRequested && tagMavResult != MavResult.MavResultAccepted)
+                            _logService.Error(Title, 
+                                $"Long tag {longTag.Name} setup failed. Result: {tagMavResult}");
                     }
                     else if (tag is ULongTagViewModel ulongTag)
                     {
-                        var tagMavResult = MavResult.MavResultUnsupported;
                         for (int i = 0; i < 5; i++)
                         {
                             tagMavResult = await Payload.Sdr.CurrentRecordSetTag(ulongTag.Name, 
-                                ulongTag.Value, cts.Token).ConfigureAwait(false);
-                            if (tagMavResult == MavResult.MavResultAccepted) break;
+                                ulongTag.Value, cancel).ConfigureAwait(false);
+                            if (cancel.IsCancellationRequested || tagMavResult == MavResult.MavResultAccepted) break;
                         }
-                        if (tagMavResult == MavResult.MavResultAccepted) continue;
-                        _logService.Error(Title, 
-                            $"ULong tag {ulongTag.Name} setup failed. Result: {tagMavResult}");
+                        if (!cancel.IsCancellationRequested && tagMavResult != MavResult.MavResultAccepted)
+                            _logService.Error(Title, 
+                                $"ULong tag {ulongTag.Name} setup failed. Result: {tagMavResult}");
                     }
                     else if (tag is DoubleTagViewModel doubleTag)
                     {
-                        var tagMavResult = MavResult.MavResultUnsupported;
                         for (int i = 0; i < 5; i++)
                         {
                             tagMavResult = await Payload.Sdr.CurrentRecordSetTag(doubleTag.Name, 
-                                doubleTag.Value, cts.Token).ConfigureAwait(false);
-                            if (tagMavResult == MavResult.MavResultAccepted) break;
+                                doubleTag.Value, cancel).ConfigureAwait(false);
+                            if (cancel.IsCancellationRequested || tagMavResult == MavResult.MavResultAccepted) break;
                         }
-                        if (tagMavResult == MavResult.MavResultAccepted) continue;
-                        _logService.Error(Title, 
-                            $"Double tag {doubleTag.Name} setup failed. Result: {tagMavResult}");
+                        if (!cancel.IsCancellationRequested && tagMavResult != MavResult.MavResultAccepted)
+                            _logService.Error(Title, 
+                                $"Double tag {doubleTag.Name} setup failed. Result: {tagMavResult}");
                     }
                     else if (tag is StringTagViewModel stringTag)
                     {
-                        var tagMavResult = MavResult.MavResultUnsupported;
                         for (int i = 0; i < 5; i++)
                         {
                             tagMavResult = await Payload.Sdr.CurrentRecordSetTag(stringTag.Name, 
-                                stringTag.Value, cts.Token).ConfigureAwait(false);
-                            if (tagMavResult == MavResult.MavResultAccepted) break;
+                                stringTag.Value, cancel).ConfigureAwait(false);
+                            if (cancel.IsCancellationRequested || tagMavResult == MavResult.MavResultAccepted) break;
                         }
-                        if (tagMavResult == MavResult.MavResultAccepted) continue;
-                        _logService.Error(Title, 
-                            $"String tag {stringTag.Name} setup failed. Result: {tagMavResult}");
+                        if (!cancel.IsCancellationRequested && tagMavResult != MavResult.MavResultAccepted)
+                            _logService.Error(Title, 
+                                $"String tag {stringTag.Name} setup failed. Result: {tagMavResult}");
                     }
+                    if (cancel.IsCancellationRequested) break;
                 }
             }
             else
