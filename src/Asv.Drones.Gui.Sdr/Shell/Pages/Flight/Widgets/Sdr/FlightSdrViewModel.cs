@@ -59,7 +59,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         _config = _configuration.Get<FlightSdrViewModelConfig>();
         _freqInMHzMeasureUnit = _loc.Frequency.AvailableUnits.First(_ => _.Id == Core.FrequencyUnits.MHz);
-
+        
         this.WhenAnyValue(_ => _.SelectedMode)
             .Subscribe(_ =>
             {
@@ -87,7 +87,8 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
                             IsGpMode = false;
                             break;
                         case AsvSdrCustomMode.AsvSdrCustomModeIdle: 
-                        default: 
+                        default:
+                            FrequencyInMhz = "0";
                             IsIdleMode = true;
                             IsGpMode = false;
                             break;
