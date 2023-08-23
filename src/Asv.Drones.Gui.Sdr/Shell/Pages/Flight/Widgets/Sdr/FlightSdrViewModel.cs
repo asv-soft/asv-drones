@@ -302,6 +302,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             .IgnoreNulls()
             .OrderBy(_ => _.Order);
         _rttWidgets.AddRange(items);
+        IsRecordVisible = mode != AsvSdrCustomMode.AsvSdrCustomModeIdle;
 
     }
     private void UpdateModes(AsvSdrCustomModeFlag flag)
