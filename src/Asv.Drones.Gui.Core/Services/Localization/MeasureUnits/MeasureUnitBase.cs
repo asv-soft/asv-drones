@@ -62,7 +62,7 @@ public class DoubleMeasureUnitItem<TEnum> : IMeasureUnitItem<double, TEnum>
     public virtual double ConvertToSi(string value)
     {
         value = value.Replace(',', '.');
-        return ConvertToSi(double.Parse(value,CultureInfo.InvariantCulture));
+        return ConvertToSi(double.Parse(value, NumberStyles.Any, CultureInfo.InvariantCulture));
     }
 
     public virtual string FromSiToString(double value)
@@ -79,14 +79,14 @@ public class DoubleMeasureUnitItem<TEnum> : IMeasureUnitItem<double, TEnum>
     {
         if (value.IsNullOrWhiteSpace()) return false;
         value = value.Replace(',', '.');
-        return double.TryParse(value, NumberStyles.Any,CultureInfo.InvariantCulture, out var _);
+        return double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var _);
     }
 
     public virtual string? GetErrorMessage(string value)
     {
         if (value.IsNullOrWhiteSpace()) return RS.MeasureUnitBase_ErrorMessage_NullOrWhiteSpace;
         value = value.Replace(',', '.');
-        return double.TryParse(value,NumberStyles.Any,CultureInfo.InvariantCulture, out _) == false ? RS.MeasureUnitBase_ErrorMessage_NotANumber : null;
+        return double.TryParse(value,NumberStyles.Any, CultureInfo.InvariantCulture, out _) == false ? RS.MeasureUnitBase_ErrorMessage_NotANumber : null;
     }
 
     

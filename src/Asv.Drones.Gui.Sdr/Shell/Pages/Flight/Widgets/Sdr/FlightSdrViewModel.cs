@@ -189,15 +189,10 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         SafeShutdownOSCommand = ReactiveCommand.CreateFromTask(cancel =>
             payload.Sdr.SystemControlAction(AsvSdrSystemControlAction.AsvSdrSystemControlActionShutdown, cancel));
         
-        this.ValidationRule(x => x.FrequencyInMhz,  
-                _ =>  
-                {  
-                    if (double.TryParse(_, out var number))  
-                    {                
-                        return number > 0;  
-                    }
-                    return false;  
-                }, RS.FlightSdrViewModel_Frequency_Validation_ErrorMessage)  
+       
+        this.ValidationRule(x => x.FrequencyInMhz,
+                _ => _loc.Frequency.IsValid(_) && _loc.Frequency.ConvertToSi(_) > 0,
+                RS.FlightSdrViewModel_Frequency_Validation_ErrorMessage)
             .DisposeItWith(Disposable);
     }
     
@@ -210,7 +205,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             IsSecondaryButtonEnabled = true,
             SecondaryButtonText = RS.FlightSdrViewModel_RecordStartDialog_SecondaryButton_Name
         };
-        
+            
         var viewModel = new RecordStartViewModel();
             
         viewModel.ApplyDialog(dialog);
@@ -307,8 +302,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             .IgnoreNulls()
             .OrderBy(_ => _.Order);
         _rttWidgets.AddRange(items);
-        
-        IsRecordVisible = SelectedMode?.Mode != AsvSdrCustomMode.AsvSdrCustomModeIdle;
+        IsRecordVisible = mode != AsvSdrCustomMode.AsvSdrCustomModeIdle;
 
     }
     private void UpdateModes(AsvSdrCustomModeFlag flag)
