@@ -15,12 +15,14 @@
     <Border Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8" CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True">
         <StackPanel Margin="10" Spacing="8">
             <DockPanel DockPanel.Dock="Top">
-                <Button IsVisible="{Binding IsRecordStarted}" Command="{Binding StopRecord}" DockPanel.Dock="Right" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
-                    <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="RecordRec" Foreground="DarkRed"  Width="25" Height="25" />
-                </Button>
-                <Button IsVisible="{Binding !IsRecordStarted}" Command="{Binding StartRecord}" DockPanel.Dock="Right" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
-                    <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="RecordRec" Foreground="Gray"  Width="25" Height="25" />
-                </Button>
+                <Grid DockPanel.Dock="Right" IsVisible="{Binding IsRecordVisible}">
+                    <Button IsVisible="{Binding IsRecordStarted}" Command="{Binding StopRecord}" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
+                        <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="RecordRec" Foreground="DarkRed"  Width="25" Height="25" />
+                    </Button>
+                    <Button IsVisible="{Binding !IsRecordStarted}" Command="{Binding StartRecord}" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
+                        <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="RecordRec" Foreground="Gray"  Width="25" Height="25" />
+                    </Button>
+                </Grid>
                 
                 <DropDownButton DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
                     <StackPanel Orientation="Horizontal">
@@ -61,11 +63,24 @@
                    </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <TextBox Text="{Binding FrequencyInMhz}">
-                <TextBox.InnerRightContent>
-                    <TextBlock Margin="8 0" Text="{Binding FrequencyUnits}" VerticalAlignment="Center" />
-                </TextBox.InnerRightContent>
-            </TextBox>
+            <Grid IsVisible="{Binding !IsIdleMode}">
+                <DockPanel>
+                    <DropDownButton VerticalAlignment="Top" IsVisible="{CompiledBinding !IsGpMode}" Margin="8 0 0 0" DockPanel.Dock="Right">
+                        <avalonia:MaterialIcon Kind="Table"/>
+                        <DropDownButton.Flyout>
+                            <Flyout>
+                                <AutoCompleteBox Width="250" ItemsSource="{Binding Channels}" 
+                                                 Text="{Binding Channel}"/>
+                            </Flyout>
+                        </DropDownButton.Flyout>
+                    </DropDownButton>
+                    <TextBox Text="{Binding FrequencyInMhz}">
+                        <TextBox.InnerRightContent>
+                            <TextBlock Margin="8 0" Text="{Binding FrequencyUnits}" VerticalAlignment="Center" />
+                        </TextBox.InnerRightContent>
+                    </TextBox>
+                </DockPanel>
+            </Grid>
             <Button Command="{Binding UpdateMode}" HorizontalAlignment="Stretch">Set</Button>
             <ItemsControl ItemsSource="{Binding RttWidgets}">
                 <ItemsControl.ItemsPanel>

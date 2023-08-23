@@ -196,7 +196,7 @@
         <value>Not valid record name</value>
     </data>
     <data name="RecordStartView_RecordName_Title" xml:space="preserve">
-        <value>Record name</value>
+        <value>Record name (required)</value>
     </data>
     <data name="RecordStartView_RecordName_Watermark" xml:space="preserve">
         <value>Enter new record name</value>
@@ -209,5 +209,41 @@
     </data>
     <data name="RecordStartView_AddButton_Title" xml:space="preserve">
         <value>Add</value>
+    </data>
+    <data name="SdrStoreEntityViewModel_DeleteDialog_Title" xml:space="preserve">
+        <value>Confirm delete</value>
+    </data>
+    <data name="SdrStoreEntityViewModel_DeleteDialog_Content" xml:space="preserve">
+        <value>Are you sure you want to delete "{0}"?</value>
+    </data>
+    <data name="SdrStoreEntityViewModel_DeleteDialog_PrimaryButton" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="SdrStoreEntityViewModel_DeleteDialog_SecondaryButton" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="SdrStoreEntityViewModel_MoveDialog_Title" xml:space="preserve">
+        <value>Change location</value>
+    </data>
+    <data name="SdrStoreEntityViewModel_MoveDialog_PrimaryButton" xml:space="preserve">
+        <value>Move</value>
+    </data>
+    <data name="SdrStoreEntityViewModel_MoveDialog_SecondaryButton" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="SdrStoreBrowserViewModel_TotalFileSamples" xml:space="preserve">
+        <value>Total samples: {0}</value>
+    </data>
+    <data name="SdrStoreBrowserViewModel_TotalFileSize" xml:space="preserve">
+        <value>File size: {0}</value>
+    </data>
+    <data name="SdrStoreBrowserViewModel_SearchWatermark" xml:space="preserve">
+        <value>Search</value>
+    </data>
+    <data name="SdrStoreEntityViewModel_Name_Validation_ErrorMessage" xml:space="preserve">
+        <value>Not valid record name</value>
+    </data>
+    <data name="RecordStartView_RecordTags_Title" xml:space="preserve">
+        <value>Record tags (optional)</value>
     </data>
 </root>

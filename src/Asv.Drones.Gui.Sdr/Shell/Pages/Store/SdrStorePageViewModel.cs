@@ -34,7 +34,8 @@ public class SdrStorePageViewModel:ShellPage
         {
             Store = new SdrStoreBrowserViewModel();
             Device = new SdrPayloadBrowserViewModel();
-           
+
+            Progress = 12.8;
         }
     }
 
@@ -44,8 +45,9 @@ public class SdrStorePageViewModel:ShellPage
         _log = log;
         _loc = loc;
         _store = store;
-        Store = new SdrStoreBrowserViewModel(store, log);
+        Store = new SdrStoreBrowserViewModel(store, loc, log);
         Device = new SdrPayloadBrowserViewModel(mavlink, loc, log);
+        
         DownloadRecord = new CancellableCommandWithProgress<Unit, Unit>(DownloadRecordImpl,"Download record",log).DisposeItWith(Disposable);
         Store.WhenValueChanged(_ => _.SelectedItem).Subscribe(TrySelectDeviceItem).DisposeItWith(Disposable);
         Device.WhenValueChanged(_ => _.SelectedDevice!.SelectedRecord).Subscribe(TrySelectStoreItem).DisposeItWith(Disposable);
@@ -54,7 +56,7 @@ public class SdrStorePageViewModel:ShellPage
     private void TrySelectDeviceItem(SdrStoreEntityViewModel? sdrStoreEntityViewModel)
     {
         if (sdrStoreEntityViewModel == null) return;
-        Store.TrySelect(sdrStoreEntityViewModel.EntityId);
+        Store.TrySelect(sdrStoreEntityViewModel.EntryId);
     }
 
     private void TrySelectStoreItem(SdrPayloadRecordViewModel? sdrPayloadRecordViewModel)
@@ -74,16 +76,20 @@ public class SdrStorePageViewModel:ShellPage
         var recType = rec.DataType.Value;
         var recTypeAsUInt = (uint)recType;
         var take = 10U;
-        await rec.DownloadTagList(new CallbackProgress<double>(_ => { }),cancel);
-
+        await rec.DownloadTagList(new CallbackProgress<double>(_ =>
+        {
+            Progress = _ * 26;
+        }),cancel);
+        
         var parent = Store.SelectedItem == null ? _store.Store.RootFolderId :
-            Store.SelectedItem.IsRecord ? Store.SelectedItem.ParentId : Store.SelectedItem.EntityId;
-        
-        using var writer = _store.Store.ExistFile(rec.Id) 
-            ? _store.Store.Open(rec.Id) 
-            : _store.Store.Create(recId, parent , rec.CopyTo);
-        
-        rec.CopyMetadataTo(writer.File);
+            Store.SelectedItem.IsRecord ? Store.SelectedItem.ParentId : Store.SelectedItem.EntryId;
+
+        using var writer = 
+            _store.Store.ExistFile(rec.Id) 
+                ? _store.Store.Open(rec.Id) 
+                : _store.Store.Create(recId, rec.Name.Value, parent);
+        Progress = 0;
+        rec.CopyMetadataTo(writer.File);        
         
         var remoteCount = rec.DataCount.Value;
         Debug.WriteLine($"Begin read {remoteCount} items from device");
@@ -99,7 +105,7 @@ public class SdrStorePageViewModel:ShellPage
             {
                 Interlocked.Increment(ref readCount);
                 Debug.WriteLine($"Save record {x.Name}");
-                SaveRecord(writer.File,x);
+                SaveRecord(writer.File, x);
             });
             Debug.WriteLine($"Request skip:{chunk.Skip} , take:{chunk.Take}");
             var result = await ifc.GetRecordDataList(recId, chunk.Skip, chunk.Take, cancel);
@@ -115,8 +121,10 @@ public class SdrStorePageViewModel:ShellPage
                     }
                 },linkedCancel.Token);
             await tcs.Task;
-            
+            Progress = (i / (double)remoteCount) * 26d;
         }
+
+        Progress = 0;
         await Store.Refresh.Command.Execute();
         return Unit.Default;
     }
@@ -126,10 +134,14 @@ public class SdrStorePageViewModel:ShellPage
     {
         writer.Write(payload);
     }
+    
     public SdrStoreBrowserViewModel Store { get; }
     
+    [Reactive]
     public SdrPayloadBrowserViewModel Device { get; set; }
-    
+
+    [Reactive]
+    public double Progress { get; set; }
 }
 
 

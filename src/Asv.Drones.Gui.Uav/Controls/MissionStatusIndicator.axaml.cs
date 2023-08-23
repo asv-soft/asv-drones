@@ -151,6 +151,7 @@ public class MissionStatusIndicator : TemplatedControl
             nameof(WayPoints));
 
         private IObservable<IChangeSet<RoundWayPointItem>> _changeSet;
+        private IDisposable _changeSetSubscription;
 
         public ReadOnlyObservableCollection<RoundWayPointItem> WayPoints
         {
@@ -169,10 +170,12 @@ public class MissionStatusIndicator : TemplatedControl
     private void OnAttachedNewCollection(ReadOnlyObservableCollection<RoundWayPointItem>? collection)
     {
         if(collection is null) return;
+        
+        _changeSetSubscription.Dispose();
 
         _changeSet = collection.ToObservableChangeSet();
 
-        _changeSet.Subscribe(_ => UpdateEverything());
+        _changeSetSubscription = _changeSet.Subscribe(_ => UpdateEverything());
         
         //_changeSet.WhenPropertyChanged(_ => _.Location, false)
         //    .Subscribe(_ => UpdateEverything());

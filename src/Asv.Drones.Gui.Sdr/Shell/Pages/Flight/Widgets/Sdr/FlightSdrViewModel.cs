@@ -7,6 +7,7 @@ using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.AsvSdr;
+using Asv.Mavlink.V2.Common;
 using Avalonia.Controls;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
@@ -17,6 +18,16 @@ using ReactiveUI.Validation.Extensions;
 
 namespace Asv.Drones.Gui.Sdr;
 
+public class FlightSdrViewModelConfig
+{
+    public string GpFrequencyInMhz { get; set; }
+    public string LlzFrequencyInMhz { get; set; }
+    public string VorFrequencyInMhz { get; set; }
+    
+    public string LlzChannel { get; set; }
+    public string VorChannel { get; set; }
+}
+
 public class FlightSdrViewModel:FlightSdrWidgetBase
 {
     private readonly ILogService _logService;
@@ -25,7 +36,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     private readonly ISdrRttWidgetProvider[] _providers;
     private readonly ObservableCollection<ISdrRttWidget> _rttWidgets = new();
     private readonly IMeasureUnitItem<double,FrequencyUnits> _freqInMHzMeasureUnit;
-
+    private FlightSdrViewModelConfig _config; 
     public static Uri GenerateUri(ISdrClientDevice sdr) => FlightSdrWidgetBase.GenerateUri(sdr,"sdr");
 
     public FlightSdrViewModel()
@@ -47,7 +58,66 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         _logService = log ?? throw new ArgumentNullException(nameof(log));
         _loc = loc ?? throw new ArgumentNullException(nameof(loc));
         _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+        _config = _configuration.Get<FlightSdrViewModelConfig>();
         _freqInMHzMeasureUnit = _loc.Frequency.AvailableUnits.First(_ => _.Id == Core.FrequencyUnits.MHz);
+        
+        this.WhenAnyValue(_ => _.SelectedMode)
+            .Subscribe(_ =>
+            {
+                if (_ != null)
+                {
+                    switch (_.Mode)
+                    {
+                        case AsvSdrCustomMode.AsvSdrCustomModeGp: 
+                            FrequencyInMhz = _config.GpFrequencyInMhz;
+                            IsIdleMode = false;
+                            IsGpMode = true;
+                            break;
+                        case AsvSdrCustomMode.AsvSdrCustomModeLlz: 
+                            Channels = SdrRttHelper.GetLlzChannels();
+                            FrequencyInMhz = _config.LlzFrequencyInMhz;
+                            Channel = _config.LlzChannel;
+                            IsIdleMode = false;
+                            IsGpMode = false;
+                            break;
+                        case AsvSdrCustomMode.AsvSdrCustomModeVor: 
+                            Channels = SdrRttHelper.GetVorChannels();
+                            FrequencyInMhz = _config.VorFrequencyInMhz;
+                            Channel = _config.VorChannel;
+                            IsIdleMode = false;
+                            IsGpMode = false;
+                            break;
+                        case AsvSdrCustomMode.AsvSdrCustomModeIdle: 
+                        default:
+                            FrequencyInMhz = "0";
+                            IsIdleMode = true;
+                            IsGpMode = false;
+                            break;
+                    }
+                }
+            }).DisposeItWith(Disposable);
+
+        this.WhenAnyValue(_ => _.Channel)
+            .Subscribe(_ =>
+            {
+                if (_ != null)
+                {
+                    switch (SelectedMode.Mode)
+                    {
+                        case AsvSdrCustomMode.AsvSdrCustomModeLlz:
+                            FrequencyInMhz = _freqInMHzMeasureUnit.FromSiToString(SdrRttHelper.GetLocalizerModeFrequencyFromIlsChannel(_));
+                            break;
+                        case AsvSdrCustomMode.AsvSdrCustomModeVor: 
+                            FrequencyInMhz = _freqInMHzMeasureUnit.FromSiToString(SdrRttHelper.GetVorFrequencyFromVorChannel(_));
+                            break;
+                        case AsvSdrCustomMode.AsvSdrCustomModeGp:
+                        case AsvSdrCustomMode.AsvSdrCustomModeIdle: 
+                        default:
+                            break;
+                    }
+                }
+            }).DisposeItWith(Disposable);
+        
         Icon = MaterialIconKind.Memory;
         Title = RS.FlightSdrViewModel_Title;
         Location = WidgetLocation.Right;
@@ -64,6 +134,23 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         
         UpdateMode = ReactiveCommand.CreateFromTask(cancel =>
         {
+            switch (SelectedMode.Mode)
+            {
+                case AsvSdrCustomMode.AsvSdrCustomModeGp: 
+                    _config.GpFrequencyInMhz = FrequencyInMhz;
+                    break;
+                case AsvSdrCustomMode.AsvSdrCustomModeLlz:
+                    _config.LlzChannel = Channel;
+                    _config.LlzFrequencyInMhz = FrequencyInMhz;
+                    break;
+                case AsvSdrCustomMode.AsvSdrCustomModeVor: 
+                    _config.VorChannel = Channel;
+                    _config.VorFrequencyInMhz = FrequencyInMhz;
+                    break;
+                case AsvSdrCustomMode.AsvSdrCustomModeIdle: default:
+                    break;
+            }
+            _configuration.Set(_config);
             return Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode,
                 (ulong)Math.Round(_freqInMHzMeasureUnit.ConvertToSi(FrequencyInMhz)), 1, 1, cancel);
         });
@@ -102,6 +189,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         SafeShutdownOSCommand = ReactiveCommand.CreateFromTask(cancel =>
             payload.Sdr.SystemControlAction(AsvSdrSystemControlAction.AsvSdrSystemControlActionShutdown, cancel));
         
+       
         this.ValidationRule(x => x.FrequencyInMhz,
                 _ => _loc.Frequency.IsValid(_) && _loc.Frequency.ConvertToSi(_) > 0,
                 RS.FlightSdrViewModel_Frequency_Validation_ErrorMessage)
@@ -128,27 +216,76 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
 
         if (result == ContentDialogResult.Primary)
         {
-            await Payload.Sdr.StartRecordAndCheckResult(viewModel.RecordName, cancel);
-            
-            viewModel.Tags.ForEach(async _ =>
+            var startMavResult = MavResult.MavResultUnsupported;
+            for (int i = 0; i < 5; i++)
             {
-                if (_ is LongTagViewModel longTag)
+                startMavResult = await Payload.Sdr.StartRecord(viewModel.RecordName, cancel);
+                if (cancel.IsCancellationRequested || startMavResult == MavResult.MavResultAccepted) break;
+            }
+
+            if (cancel.IsCancellationRequested) return;
+            
+            if (startMavResult == MavResult.MavResultAccepted)
+            {
+                foreach (var tag in viewModel.Tags)
                 {
-                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(longTag.Name, longTag.Value, new CancellationToken());
+                    var tagMavResult = MavResult.MavResultUnsupported;
+                    
+                    if (tag is LongTagViewModel longTag)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            tagMavResult = await Payload.Sdr.CurrentRecordSetTag(longTag.Name, 
+                                longTag.Value, cancel).ConfigureAwait(false);
+                            if (cancel.IsCancellationRequested || tagMavResult == MavResult.MavResultAccepted) break;
+                        }
+                        if (!cancel.IsCancellationRequested && tagMavResult != MavResult.MavResultAccepted)
+                            _logService.Error(Title, 
+                                $"Long tag {longTag.Name} setup failed. Result: {tagMavResult}");
+                    }
+                    else if (tag is ULongTagViewModel ulongTag)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            tagMavResult = await Payload.Sdr.CurrentRecordSetTag(ulongTag.Name, 
+                                ulongTag.Value, cancel).ConfigureAwait(false);
+                            if (cancel.IsCancellationRequested || tagMavResult == MavResult.MavResultAccepted) break;
+                        }
+                        if (!cancel.IsCancellationRequested && tagMavResult != MavResult.MavResultAccepted)
+                            _logService.Error(Title, 
+                                $"ULong tag {ulongTag.Name} setup failed. Result: {tagMavResult}");
+                    }
+                    else if (tag is DoubleTagViewModel doubleTag)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            tagMavResult = await Payload.Sdr.CurrentRecordSetTag(doubleTag.Name, 
+                                doubleTag.Value, cancel).ConfigureAwait(false);
+                            if (cancel.IsCancellationRequested || tagMavResult == MavResult.MavResultAccepted) break;
+                        }
+                        if (!cancel.IsCancellationRequested && tagMavResult != MavResult.MavResultAccepted)
+                            _logService.Error(Title, 
+                                $"Double tag {doubleTag.Name} setup failed. Result: {tagMavResult}");
+                    }
+                    else if (tag is StringTagViewModel stringTag)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            tagMavResult = await Payload.Sdr.CurrentRecordSetTag(stringTag.Name, 
+                                stringTag.Value, cancel).ConfigureAwait(false);
+                            if (cancel.IsCancellationRequested || tagMavResult == MavResult.MavResultAccepted) break;
+                        }
+                        if (!cancel.IsCancellationRequested && tagMavResult != MavResult.MavResultAccepted)
+                            _logService.Error(Title, 
+                                $"String tag {stringTag.Name} setup failed. Result: {tagMavResult}");
+                    }
+                    if (cancel.IsCancellationRequested) break;
                 }
-                else if (_ is ULongTagViewModel ulongTag)
-                {
-                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(ulongTag.Name, ulongTag.Value, new CancellationToken());
-                }
-                else if (_ is DoubleTagViewModel doubleTag)
-                {
-                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(doubleTag.Name, doubleTag.Value, new CancellationToken());
-                }
-                else if (_ is StringTagViewModel stringTag)
-                {
-                    await Payload.Sdr.CurrentRecordSetTagAndCheckResult(stringTag.Name, stringTag.Value, new CancellationToken());
-                }
-            });
+            }
+            else
+            {
+                _logService.Error(Title, $"Start record failed. Result: {startMavResult}");
+            }
         }
     }
     private void UpdateSelectedMode(AsvSdrCustomMode mode)
@@ -194,8 +331,24 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     public SdrModeViewModel? SelectedMode { get; set; }
     [Reactive]
     public string FrequencyInMhz { get; set; }
+    
+    [Reactive]
+    public string Channel { get; set; }
+    
     [Reactive]
     public bool IsRecordStarted { get; set; }
+    
+    [Reactive]
+    public bool IsIdleMode { get; set; }
+    
+    [Reactive]
+    public bool IsRecordVisible { get; set; }
+    
+    [Reactive]
+    public IEnumerable<string> Channels { get; set; }
+    
+    [Reactive]
+    public bool IsGpMode { get; set; }
     
     [Reactive]
     public SdrRttItem LinkQuality { get; set; }

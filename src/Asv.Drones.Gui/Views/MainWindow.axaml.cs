@@ -19,7 +19,7 @@ public partial class MainWindow : AppWindow
     public MainWindow()
     {
         InitializeComponent();
-#if DEBUG
+#if DEBUG || DEBUGPLUGINS || DEBUGLIBS
         this.AttachDevTools();
 #endif
         MinWidth = 450;

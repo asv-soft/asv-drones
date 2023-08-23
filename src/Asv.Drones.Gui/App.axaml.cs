@@ -32,6 +32,12 @@ public partial class App : Application
 
     public App()
     {
+        /*LogManager.Setup().LoadConfiguration(builder =>
+        {
+            builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToDebug();
+            builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToFile(fileName: "log.txt");
+        });*/
+        
         _container = new CompositionContainer(new AggregateCatalog(Catalogs().ToArray()), CompositionOptions.IsThreadSafe);
         // we need to export the container itself
         var batch = new CompositionBatch();
@@ -81,6 +87,7 @@ public partial class App : Application
 #if INCLUDE_PLUGINS
             yield return typeof(Afis.AfisPlugin).Assembly;        // [Asv.Drones.Gui.Afis]
             yield return typeof(Weather.WeatherPlugin).Assembly;  // [Asv.Drones.Gui.Weather]
+            yield return typeof(FlightDocs.FlightDocsPlugin).Assembly; // [Asv.Drones.Gui.FlightDocs]
 #endif
     }
 

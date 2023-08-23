@@ -4,6 +4,7 @@ using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Avalonia.Controls;
+using DocumentFormat.OpenXml.Presentation;
 using FluentAvalonia.UI.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -20,82 +21,37 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
     {
         if (Design.IsDesignMode)
         {
-            var doubleTag = new DoubleTagViewModel()
-            {
-                Name = "DoubleTag",
-                Value = 2.812
-            };
+            var doubleTag = new DoubleTagViewModel(new TagId(Guid.NewGuid(), Guid.NewGuid()), "DoubleTag", 2.812);
             doubleTag.Remove = ReactiveCommand.Create(() => { Tags.Remove(doubleTag); });
             Tags.Add(doubleTag);
-            
-            var longTag = new LongTagViewModel()
-            {
-                Name = "LongTag",
-                Value = 13
-            };
-            longTag.Remove = ReactiveCommand.Create(() => { Tags.Remove(longTag); });
-            Tags.Add(longTag);
-
-            var ulongTag = new ULongTagViewModel()
-            {
-                Name = "ULongTag",
-                Value = 13
-            };
-            ulongTag.Remove = ReactiveCommand.Create(() => { Tags.Remove(ulongTag); });
-            Tags.Add(ulongTag);
-
-            var stringTag = new StringTagViewModel()
-            {
-                Name = "StringTag",
-                Value = "TagInfo"
-            };
-            stringTag.Remove = ReactiveCommand.Create(() => { Tags.Remove(stringTag); });
-            Tags.Add(stringTag);
-
         }
 
         AddTag = ReactiveCommand.Create(() =>
         {
             if (TagName.IsNullOrWhiteSpace() | TagValue.IsNullOrWhiteSpace() | RecordName.IsNullOrWhiteSpace() | 
-                Tags.Where(__ => __.Name == TagName).Count() > 0) return;
+                Tags.Any(model => model.Name == TagName)) return;
             
             if (SelectedType == "String8")
             {
-                var tag = new StringTagViewModel()
-                {
-                    Name = TagName,
-                    Value = TagValue
-                };
+                var tag = new StringTagViewModel(new TagId(Guid.NewGuid(), Guid.NewGuid()), TagName, TagValue);
                 tag.Remove = ReactiveCommand.Create(() => { Tags.Remove(tag); });
                 Tags.Add(tag);
             }
             else if (SelectedType == "Int64")
             {
-                var tag = new LongTagViewModel()
-                {
-                    Name = TagName,
-                    Value = long.Parse(TagValue) 
-                };
+                var tag = new LongTagViewModel(new TagId(Guid.NewGuid(), Guid.NewGuid()), TagName, long.Parse(TagValue));
                 tag.Remove = ReactiveCommand.Create(() => { Tags.Remove(tag); });
                 Tags.Add(tag);
             }
             else if (SelectedType == "UInt64")
             {
-                var tag = new ULongTagViewModel()
-                {
-                    Name = TagName,
-                    Value = ulong.Parse(TagValue) 
-                };
+                var tag = new ULongTagViewModel(new TagId(Guid.NewGuid(), Guid.NewGuid()), TagName, uint.Parse(TagValue));
                 tag.Remove = ReactiveCommand.Create(() => { Tags.Remove(tag); });
                 Tags.Add(tag);
             }
             else if (SelectedType == "Float64")
             {
-                var tag = new DoubleTagViewModel()
-                {
-                    Name = TagName,
-                    Value = double.Parse(TagValue) 
-                };
+                var tag = new DoubleTagViewModel(new TagId(Guid.NewGuid(), Guid.NewGuid()), TagName, double.Parse(TagValue));
                 tag.Remove = ReactiveCommand.Create(() => { Tags.Remove(tag); });
                 Tags.Add(tag);
             }
@@ -109,7 +65,7 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
         this.ValidationRule(x => x.TagName, _ =>
             {
                 if (_.IsNullOrWhiteSpace()) return false;
-                if (Tags.Where(__ => __.Name == _).Count() > 0) return false;
+                if (Tags.Any(__ => __.Name == _)) return false;
                 bool isValid = true;
                 try
                 {

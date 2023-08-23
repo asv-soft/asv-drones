@@ -18,7 +18,7 @@ namespace Asv.Drones.Gui.Core
         public WidgetLocation Location { get;set; }
         [Reactive]
         public string Title { get;set; }
-        public int Order { get; }
+        public int Order { get; set; }
         [Reactive]
         public MaterialIconKind Icon { get; set; }
         public IMapWidget Init(IMap context)
@@ -30,6 +30,6 @@ namespace Asv.Drones.Gui.Core
 
         protected abstract void InternalAfterMapInit(IMap context);
 
-        protected IMap Map { get; private set; }
+        public IMap Map { get; private set; }
     }
 }
