@@ -1,10 +1,14 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Asv.Mavlink;
 using Asv.Common;
 using Avalonia.Controls;
+using Avalonia.Data.Converters;
+using Avalonia.Media;
 using DynamicData;
 using DynamicData.Binding;
 using Material.Icons;
@@ -19,66 +23,191 @@ public class HierarchicalStoreViewModel : ViewModelBase
 
     protected HierarchicalStoreViewModel(Uri id) : base(id)
     {
+        CreateNewFile = ReactiveCommand.Create(CreateNewFileImpl)
+            .DisposeItWith(Disposable);
+        CreateNewFile.ThrownExceptions
+            .Subscribe(ex => OnError( HierarchicalStoreAction.CreateFile,ex))
+            .DisposeItWith(Disposable);
         
+        CreateNewFolder = ReactiveCommand.Create(CreateNewFolderImpl)
+            .DisposeItWith(Disposable);
+        CreateNewFolder.ThrownExceptions
+            .Subscribe(ex => OnError( HierarchicalStoreAction.CreateFolder,ex))
+            .DisposeItWith(Disposable);      
+        
+        Refresh = ReactiveCommand.Create(()=>
+            {
+                var selectedId = SelectedItem?.Id;
+                var selectedParentId = SelectedItem?.ParentId;
+                RefreshImpl();
+                if (TrySelect(selectedId) == false)
+                {
+                    TrySelect(selectedParentId);
+                }
+            })
+            .DisposeItWith(Disposable);
+        Refresh.ThrownExceptions
+            .Subscribe(ex => OnError( HierarchicalStoreAction.Refresh,ex))
+            .DisposeItWith(Disposable);
     }
-    public HierarchicalStoreViewModel():base($"asv:{Guid.NewGuid()}")
+   
+    
+    
+    public HierarchicalStoreViewModel():this(new($"asv:{Guid.NewGuid()}"))
     {
+        if (Design.IsDesignMode == false)
+        {
+            Debug.Assert(false,"Only for debug mode");
+            Debugger.Break();
+        }
         if (Design.IsDesignMode)
         {
             Items = new ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel>(
                 new ObservableCollection<HierarchicalStoreEntryViewModel>(new List<HierarchicalStoreEntryViewModel>
                 {
-                    new HierarchicalStoreEntryViewModel
+                    new()
                     {
-                        Name = "Record1"
+                        Id = Guid.NewGuid(),
+                        Name = "Record1",
+                        Tags = new ReadOnlyObservableCollection<HierarchicalStoreEntryTagViewModel>(new ObservableCollection<HierarchicalStoreEntryTagViewModel>(new List<HierarchicalStoreEntryTagViewModel>
+                        {
+                            new()
+                            {
+                                Color = Brushes.CornflowerBlue,
+                                Name = "Latitude: 55.1234567",
+                            },
+                            new()
+                            {
+                                Color = Brushes.DarkOrange,
+                                Name = "Short",
+                            },
+                            new()
+                            {
+                                Color = new SolidColorBrush(Color.Parse("#FBC02D")),
+                                Name = "Longitude: 66.1234567",
+                            },
+                            new()
+                            {
+                                Color = new SolidColorBrush(Color.Parse("#FE8256")),
+                                Name = "Longitude: 66.1234567",
+                            },
+                            new()
+                            {
+                                Color = new SolidColorBrush(Color.Parse("#ACC865")),
+                                Name = "ACC865:66.1234567",
+                            },
+                            new()
+                            {
+                                Color = new SolidColorBrush(Color.Parse("#CD91B6")),
+                                Name = "ShortShort",
+                            },
+                            
+                            
+                        })),
+                        IsFile = true,
+                    },
+                    new()
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Folder",
+                        IsFolder = true,
+                        Items = new ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel>(new ObservableCollection<HierarchicalStoreEntryViewModel>(new List<HierarchicalStoreEntryViewModel>
+                        {
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Name = "Record 2",
+                                IsFile = true,
+                            },
+                        }))
                     },
                     
+                }));
+            FolderItems = new ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel>(
+                new ObservableCollection<HierarchicalStoreEntryViewModel>(new List<HierarchicalStoreEntryViewModel>
+                {
+                    new()
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Folder",
+                        IsFolder = true,
+                        Items = new ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel>(new ObservableCollection<HierarchicalStoreEntryViewModel>(new List<HierarchicalStoreEntryViewModel>
+                        {
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Name = "Folder 2",
+                                IsFolder = true,
+                            },
+                        }))
+                    },
                 }));
         }
     }
     
     [Reactive]
     public string SearchText { get; set; }
-    
+    [Reactive]
+    public string DisplayName { get; set; }
     public virtual ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel> Items { get; }
+    public virtual ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel> FolderItems { get; }
     [Reactive]
     public HierarchicalStoreEntryViewModel? SelectedItem { get; set; }
     public ReactiveCommand<Unit,Unit> CreateNewFolder { get; set; }
     public ReactiveCommand<Unit,Unit> CreateNewFile { get; set; }
     public ReactiveCommand<Unit,Unit> Refresh { get; set; }
-    public MaterialIconKind FileIcon { get; } = MaterialIconKind.FileMarkerOutline;
-    public MaterialIconKind SelectedFileIcon { get; } = MaterialIconKind.FileMarker;
-}
-
-public class HierarchicalStoreEntryViewModel:DisposableReactiveObject
-{
-    public object Id { get; set; }
-    public object ParentId { get; set; }
-    public bool IsFolder { get; set; }
-    public bool IsFile { get; set; }
-    public FolderStoreEntryType Type { get; set; }
-
-    [Reactive]
-    public string Name { get; set; }
-    [Reactive]
-    public bool IsExpanded { get; set; }
-    [Reactive]
-    public bool IsSelected { get; set; }
+    public bool IsHeaderVisible { get; set; } = true;
     
-    public virtual ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel> Items { get; }
-    [Reactive] public bool IsInEditNameMode { get; set; } = false;
+    private bool TrySelect(object? selectedId)
+    {
+        if (selectedId == null) return false;
+        foreach (var item in Items)
+        {
+            var find = item.FindAndSelect(selectedId);
+            if (find == null) continue;
+            find.IsSelected = true;
+            return true;
+        }
+        return false;
+    }
+    protected virtual void RefreshImpl()
+    {
+        
+    }
+    protected virtual void CreateNewFileImpl()
+    {
+        
+    }
+    protected virtual void CreateNewFolderImpl()
+    {
+        
+    }    
+    protected virtual void OnError(HierarchicalStoreAction action, Exception ex)
+    {
+        
+    }
+   
+    [Reactive] 
+    public bool IsCreateFolderAvailable { get; set; } = true;
+    [Reactive] 
+    public bool IsCreateFileAvailable { get; set; } = true;
 
-    public ReactiveCommand<Unit,Unit> DeleteEntry { get; set; }
-    public ReactiveCommand<Unit,Unit> BeginEditName { get; set; }
-    public ReactiveCommand<Unit,Unit> EndEditName { get; set; }
+    [Reactive]
+    public HierarchicalStoreEntryViewModel? SelectedItemMoveTo { get; set; }
+
+    
 }
+
+
 
 public abstract class HierarchicalStoreViewModel<TKey,TFile>:HierarchicalStoreViewModel 
     where TFile : IDisposable where TKey : notnull
 {
     private readonly IHierarchicalStore<TKey, TFile> _store;
+    private readonly ILogService _log;
     private readonly SourceCache<IHierarchicalStoreEntry<TKey>,TKey> _source;
     private readonly ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel> _tree;
+    private readonly ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel> _treeFolder;
 
 
     public HierarchicalStoreViewModel():base(new Uri($"asv:{Guid.NewGuid()}"))
@@ -88,6 +217,7 @@ public abstract class HierarchicalStoreViewModel<TKey,TFile>:HierarchicalStoreVi
     public HierarchicalStoreViewModel(Uri id,IHierarchicalStore<TKey,TFile> store, ILogService log):base(id)
     {
         _store = store;
+        _log = log;
         _source = new SourceCache<IHierarchicalStoreEntry<TKey>, TKey>(x => x.Id)
             .DisposeItWith(Disposable);
         var filterPipe = new Subject<Func<IHierarchicalStoreEntry<TKey>, bool>>()
@@ -106,26 +236,25 @@ public abstract class HierarchicalStoreViewModel<TKey,TFile>:HierarchicalStoreVi
             .Subscribe()
             .DisposeItWith(Disposable);
         
-        Refresh = ReactiveCommand.Create(RefreshImpl)
+        _source
+            .Connect()
+            .Filter(x=>x.Type == FolderStoreEntryType.Folder)
+            .TransformToTree(x=>x.ParentId)
+            .Transform(x=>(HierarchicalStoreEntryViewModel)new HierarchicalStoreEntryViewModel<TKey,TFile>(x,this,log))
+            .Bind(out _treeFolder)
+            .Subscribe()
             .DisposeItWith(Disposable);
-        Refresh.ThrownExceptions
-            .Subscribe(ex => log.Error("Store",$"Refresh store",ex))
-            .DisposeItWith(Disposable);
-        
-        CreateNewFile = ReactiveCommand.Create(CreateNewFileImpl)
-            .DisposeItWith(Disposable);
-        CreateNewFile.ThrownExceptions
-            .Subscribe(ex => log.Error("Store",$"Add new file",ex))
-            .DisposeItWith(Disposable);
-        
-        CreateNewFolder = ReactiveCommand.Create(CreateNewFolderImpl)
-            .DisposeItWith(Disposable);
-        CreateNewFolder.ThrownExceptions
-            .Subscribe(ex => log.Error("Store",$"Add new folder",ex))
-            .DisposeItWith(Disposable);
+
+        this.WhenValueChanged(x => x.SelectedItem)
+            .Subscribe(x=>x?.Refresh()).DisposeItWith(Disposable);
     }
 
-    private void CreateNewFolderImpl()
+    protected override void OnError(HierarchicalStoreAction action, Exception ex)
+    {
+        _log.Error( DisplayName,$"Error to '{action:G}'",ex);
+    }
+
+    protected override void CreateNewFolderImpl()
     {
         TKey parentId;
         if (SelectedItem != null)
@@ -151,10 +280,8 @@ public abstract class HierarchicalStoreViewModel<TKey,TFile>:HierarchicalStoreVi
         
         Refresh.Execute().Subscribe(_ => { });
     }
-
     protected abstract TKey GenerateNewId();
-
-    private void CreateNewFileImpl()
+    protected override void CreateNewFileImpl()
     {
         TKey parentId;
         if (SelectedItem != null)
@@ -177,69 +304,40 @@ public abstract class HierarchicalStoreViewModel<TKey,TFile>:HierarchicalStoreVi
         {
             goto start;
         }
-        
         Refresh.Execute().Subscribe(_ => { });
     }
 
-    private void RefreshImpl()
+    protected override void RefreshImpl()
     {
-        _source.Clear();
+        _source.Clear();    
         _source.AddOrUpdate(_store.GetEntries());
     }
 
-    public override ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel> Items => _tree;
+    
 
+    public override ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel> Items => _tree;
+    public override ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel> FolderItems => _treeFolder;
     public void DeleteEntryImpl(TKey itemId)
     {
         _store.DeleteEntry(itemId);
         Refresh.Execute().Subscribe();
     }
-
     public void RenameEntryImpl(TKey itemId, string name) 
     {
         _store.RenameEntry(itemId, name);
         Refresh.Execute().Subscribe();
     }
+
+    public void MoveEntryImpl(TKey id, TKey parentId)
+    {
+        _store.MoveEntry(id,parentId);
+        Refresh.Execute().Subscribe();
+    }
 }
 
-public class HierarchicalStoreEntryViewModel<TKey,TFile>:HierarchicalStoreEntryViewModel 
-    where TKey : notnull 
-    where TFile : IDisposable
+public enum HierarchicalStoreAction
 {
-    private readonly ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel> _items;
-    public HierarchicalStoreEntryViewModel(Node<IHierarchicalStoreEntry<TKey>, TKey> node, HierarchicalStoreViewModel<TKey,TFile> context, ILogService log)
-    {
-        node.Children.Connect()
-            .Transform(x => (HierarchicalStoreEntryViewModel)new HierarchicalStoreEntryViewModel<TKey,TFile>(x,context,log))
-            .Bind(out _items)
-            .DisposeMany()
-            .Subscribe()
-            .DisposeItWith(Disposable);
-        IsFolder = node.Item.Type == FolderStoreEntryType.Folder;
-        IsFile = node.Item.Type == FolderStoreEntryType.File;
-        Name = node.Item.Name ?? "";
-        Type = node.Item.Type;
-        Id = node.Item.Id;
-        ParentId = node.Item.ParentId;
-        DeleteEntry = ReactiveCommand.Create(()=>context.DeleteEntryImpl(node.Item.Id))
-            .DisposeItWith(Disposable);
-        DeleteEntry.ThrownExceptions
-            .Subscribe(ex => log.Error("Store",$"Delete",ex))
-            .DisposeItWith(Disposable);
-        
-        BeginEditName = ReactiveCommand.Create(() =>
-        {
-            IsInEditNameMode = true;
-        }).DisposeItWith(Disposable);;
-        EndEditName = ReactiveCommand.Create(() =>
-        {
-            IsInEditNameMode = false;
-            context.RenameEntryImpl(node.Item.Id,Name);
-        }).DisposeItWith(Disposable);;
-        EndEditName.ThrownExceptions
-            .Subscribe(ex => log.Error("Store",$"Rename",ex))
-            .DisposeItWith(Disposable);
-        
-    }
-    public override ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel> Items => _items;
+    Refresh,
+    CreateFile,
+    CreateFolder
 }
