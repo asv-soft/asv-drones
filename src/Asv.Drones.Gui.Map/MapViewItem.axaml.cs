@@ -51,10 +51,7 @@ namespace Asv.Avalonia.Map
                     handler => PointerMoved += handler,
                     handler => PointerMoved -= handler).Subscribe(_ => DragPointerMoved(_.EventArgs)).DisposeItWith(disp);
                 // DisposableMixins.DisposeWith(this.Events().PointerReleased.Where(_ => IsEditable).Subscribe(DragPointerReleased), disp);
-               
             });
-            
-
         }
 
         public bool IsEditable
@@ -65,7 +62,7 @@ namespace Asv.Avalonia.Map
 
         private void DragPointerMoved(PointerEventArgs args)
         {
-            if ((_map.IsInAnchorEditMode || (args.KeyModifiers & KeyModifiers.Control) != 0) && IsSelected && IsEditable)
+            if (_map.IsInAnchorEditMode && IsSelected && IsEditable)
             {
                 if (_map == null) return;
 
@@ -83,7 +80,7 @@ namespace Asv.Avalonia.Map
         }
         private void DragPointerPressed(PointerPressedEventArgs args)
         {
-            if (_map.IsInAnchorEditMode || (args.KeyModifiers & KeyModifiers.Control) != 0)
+            if (_map.IsInAnchorEditMode)
             {
                 IsSelected = true;
                 args.Handled = true;
