@@ -4,6 +4,7 @@ using Asv.Common;
 using Asv.Mavlink;
 using DynamicData;
 using DynamicData.Binding;
+using DynamicData.PLinq;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -149,6 +150,10 @@ public class HierarchicalStoreEntryViewModel<TKey,TFile>:HierarchicalStoreEntryV
     private readonly HierarchicalStoreViewModel<TKey, TFile> _context;
     private readonly ILogService _log;
     private readonly ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel> _items;
+    private ReadOnlyObservableCollection<HierarchicalStoreEntryTagViewModel> _tags;
+    private readonly SourceCache<HierarchicalStoreEntryTagViewModel,string> _tagsSource;
+    private bool _isAlreadyFillTags;
+
     public HierarchicalStoreEntryViewModel(Node<IHierarchicalStoreEntry<TKey>, TKey> node, HierarchicalStoreViewModel<TKey,TFile> context, ILogService log)
     {
         _node = node;
@@ -160,11 +165,18 @@ public class HierarchicalStoreEntryViewModel<TKey,TFile>:HierarchicalStoreEntryV
             .DisposeMany()
             .Subscribe()
             .DisposeItWith(Disposable);
+        _tagsSource = new SourceCache<HierarchicalStoreEntryTagViewModel, string>(x => x.Name)
+            .DisposeItWith(Disposable);
+        _tagsSource.Connect()
+            .Bind(out _tags)
+            .Subscribe()
+            .DisposeItWith(Disposable);
         IsFolder = node.Item.Type == FolderStoreEntryType.Folder;
         IsFile = node.Item.Type == FolderStoreEntryType.File;
         Name = node.Item.Name ?? "";
         Type = node.Item.Type;
         Id = node.Item.Id;
+        Description = context.GetEntryDescription(node.Item);
         ParentId = node.Item.ParentId;
     }
 
@@ -197,5 +209,18 @@ public class HierarchicalStoreEntryViewModel<TKey,TFile>:HierarchicalStoreEntryV
         _context.MoveEntryImpl((TKey)_context.SelectedItem.Id, (TKey)_context.SelectedItemMoveTo.Id);
     }
 
+    public override void Refresh()
+    {
+        base.Refresh();
+        if (_isAlreadyFillTags == false)
+        {
+            _tagsSource.Clear();
+            _tagsSource.AddOrUpdate(_context.GetEntryTags((TKey)Id));
+            _isAlreadyFillTags = true;
+        }
+    }
+
     public override ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel> Items => _items;
+
+    public override ReadOnlyObservableCollection<HierarchicalStoreEntryTagViewModel> Tags => _tags;
 }

@@ -232,6 +232,7 @@ public abstract class HierarchicalStoreViewModel<TKey,TFile>:HierarchicalStoreVi
             .Filter(filterPipe)
             .TransformToTree(x=>x.ParentId)
             .Transform(x=>(HierarchicalStoreEntryViewModel)new HierarchicalStoreEntryViewModel<TKey,TFile>(x,this,log))
+            .DisposeMany()
             .Bind(out _tree)
             .Subscribe()
             .DisposeItWith(Disposable);
@@ -241,6 +242,7 @@ public abstract class HierarchicalStoreViewModel<TKey,TFile>:HierarchicalStoreVi
             .Filter(x=>x.Type == FolderStoreEntryType.Folder)
             .TransformToTree(x=>x.ParentId)
             .Transform(x=>(HierarchicalStoreEntryViewModel)new HierarchicalStoreEntryViewModel<TKey,TFile>(x,this,log))
+            .DisposeMany()
             .Bind(out _treeFolder)
             .Subscribe()
             .DisposeItWith(Disposable);
@@ -332,6 +334,23 @@ public abstract class HierarchicalStoreViewModel<TKey,TFile>:HierarchicalStoreVi
     {
         _store.MoveEntry(id,parentId);
         Refresh.Execute().Subscribe();
+    }
+
+    public IReadOnlyCollection<HierarchicalStoreEntryTagViewModel> GetEntryTags(TKey id)
+    {
+        var item = _source.Lookup(id);
+        return !item.HasValue ? ArraySegment<HierarchicalStoreEntryTagViewModel>.Empty : InternalGetEntryTags(item.Value);
+    }
+
+    protected virtual IReadOnlyCollection<HierarchicalStoreEntryTagViewModel> InternalGetEntryTags(IHierarchicalStoreEntry<TKey> itemValue)
+    {
+        return ArraySegment<HierarchicalStoreEntryTagViewModel>.Empty;
+    }
+
+   
+    public virtual string GetEntryDescription(IHierarchicalStoreEntry<TKey> nodeItem)
+    {
+        return string.Empty;
     }
 }
 
