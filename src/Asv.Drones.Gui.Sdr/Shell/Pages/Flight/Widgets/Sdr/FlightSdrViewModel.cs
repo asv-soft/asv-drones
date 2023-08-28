@@ -10,6 +10,7 @@ using Asv.Mavlink.V2.AsvSdr;
 using Asv.Mavlink.V2.Common;
 using Avalonia.Controls;
 using DynamicData;
+using DynamicData.Binding;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using ReactiveUI;
@@ -61,7 +62,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         _config = _configuration.Get<FlightSdrViewModelConfig>();
         _freqInMHzMeasureUnit = _loc.Frequency.AvailableUnits.First(_ => _.Id == Core.FrequencyUnits.MHz);
         
-        this.WhenAnyValue(_ => _.SelectedMode)
+        this.WhenValueChanged(_ => _.SelectedMode)
             .Subscribe(_ =>
             {
                 if (_ != null)
@@ -75,15 +76,15 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
                             break;
                         case AsvSdrCustomMode.AsvSdrCustomModeLlz: 
                             Channels = SdrRttHelper.GetLlzChannels();
-                            FrequencyInMhz = _config.LlzFrequencyInMhz;
                             Channel = _config.LlzChannel;
+                            FrequencyInMhz = _config.LlzFrequencyInMhz;
                             IsIdleMode = false;
                             IsGpMode = false;
                             break;
                         case AsvSdrCustomMode.AsvSdrCustomModeVor: 
                             Channels = SdrRttHelper.GetVorChannels();
-                            FrequencyInMhz = _config.VorFrequencyInMhz;
                             Channel = _config.VorChannel;
+                            FrequencyInMhz = _config.VorFrequencyInMhz;
                             IsIdleMode = false;
                             IsGpMode = false;
                             break;
@@ -97,7 +98,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
                 }
             }).DisposeItWith(Disposable);
 
-        this.WhenAnyValue(_ => _.Channel)
+        this.WhenValueChanged(_ => _.Channel)
             .Subscribe(_ =>
             {
                 if (_ != null)
