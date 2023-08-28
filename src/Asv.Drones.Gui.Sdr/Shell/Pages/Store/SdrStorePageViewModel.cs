@@ -53,10 +53,10 @@ public class SdrStorePageViewModel:ShellPage
         Device.WhenValueChanged(_ => _.SelectedDevice!.SelectedRecord).Subscribe(TrySelectStoreItem).DisposeItWith(Disposable);
     }
 
-    private void TrySelectDeviceItem(SdrStoreEntityViewModel? sdrStoreEntityViewModel)
+    private void TrySelectDeviceItem(HierarchicalStoreEntryViewModel? sdrStoreEntityViewModel)
     {
         if (sdrStoreEntityViewModel == null) return;
-        Store.TrySelect(sdrStoreEntityViewModel.EntryId);
+        Store.TrySelect(sdrStoreEntityViewModel.Id);
     }
 
     private void TrySelectStoreItem(SdrPayloadRecordViewModel? sdrPayloadRecordViewModel)
@@ -82,12 +82,12 @@ public class SdrStorePageViewModel:ShellPage
         }),cancel);
         
         var parent = Store.SelectedItem == null ? _store.Store.RootFolderId :
-            Store.SelectedItem.IsRecord ? Store.SelectedItem.ParentId : Store.SelectedItem.EntryId;
+            Store.SelectedItem.IsFile ? Store.SelectedItem.ParentId : Store.SelectedItem.Id;
 
         using var writer = 
             _store.Store.ExistFile(rec.Id) 
                 ? _store.Store.Open(rec.Id) 
-                : _store.Store.Create(recId, rec.Name.Value, parent);
+                : _store.Store.Create(recId, rec.Name.Value, (Guid)parent);
         Progress = 0;
         rec.CopyMetadataTo(writer.File);        
         
@@ -125,7 +125,7 @@ public class SdrStorePageViewModel:ShellPage
         }
 
         Progress = 0;
-        await Store.Refresh.Command.Execute();
+        await Store.Refresh.Execute();
         return Unit.Default;
     }
 

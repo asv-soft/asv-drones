@@ -1,8 +1,5 @@
 ﻿using System.ComponentModel.Composition;
-using System.Windows.Input;
-using Asv.Common;
 using Avalonia.Controls;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core;
 
@@ -20,13 +17,10 @@ public class AnchorMoverActionViewModel : ViewModelBase, IMapAction
     public IMapAction Init(IMap context)
     {
         _map = context;
-        MoveAnchorsToggleCommand = ReactiveCommand.Create(() => _map.IsInAnchorEditMode = IsEnabled)
-            .DisposeItWith(Disposable);
         return this;
     }
 
+    public IMap Map => _map;
     public Dock Dock { get; }
     public int Order => 0;
-    public ICommand MoveAnchorsToggleCommand { get; set; }
-    public bool IsEnabled { get; set; }
 }

@@ -130,7 +130,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             .Subscribe(UpdateSelectedMode)
             .DisposeItWith(Disposable);
         payload.Sdr.IsRecordStarted.DistinctUntilChanged()
-            .Subscribe(_=>IsRecordStarted = _)
+            .Subscribe(x=>IsRecordStarted = x)
             .DisposeItWith(Disposable);
         
         UpdateMode = ReactiveCommand.CreateFromTask(cancel =>
