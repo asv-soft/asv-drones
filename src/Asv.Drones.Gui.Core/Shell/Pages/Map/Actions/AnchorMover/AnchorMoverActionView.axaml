@@ -24,7 +24,7 @@
             <Setter Property="Background" Value="Transparent" />
         </Style>
     </UserControl.Styles>
-    <ToggleButton IsChecked="{CompiledBinding IsEnabled}" Classes="MapBottomButton" Command="{Binding MoveAnchorsToggleCommand}">
+    <ToggleButton x:Name="editAnchorsToggleButton" IsChecked="{CompiledBinding Map.IsInAnchorEditMode}" Classes="MapBottomButton">
         <StackPanel Orientation="Horizontal" Spacing="3">
             <avalonia:MaterialIcon Kind="CursorMove" />
             <TextBlock Text="{x:Static core:RS.AnchorMoverActionView_Title}" VerticalAlignment="Center" />

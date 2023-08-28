@@ -877,7 +877,7 @@ namespace Asv.Avalonia.Map
                 }
             }
 
-            if (_core.IsDragging && (e.KeyModifiers & KeyModifiers.Control)!=0)
+            if (_core.IsDragging && (e.KeyModifiers & KeyModifiers.Control) != 0)
             {
                 _core.IsDragging = false;
             }
