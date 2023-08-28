@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -7,11 +6,9 @@ using System.Reactive.Subjects;
 using Asv.Mavlink;
 using Asv.Common;
 using Avalonia.Controls;
-using Avalonia.Data.Converters;
 using Avalonia.Media;
 using DynamicData;
 using DynamicData.Binding;
-using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -157,8 +154,8 @@ public class HierarchicalStoreViewModel : ViewModelBase
     public ReactiveCommand<Unit,Unit> CreateNewFile { get; set; }
     public ReactiveCommand<Unit,Unit> Refresh { get; set; }
     public bool IsHeaderVisible { get; set; } = true;
-    
-    private bool TrySelect(object? selectedId)
+
+    public bool TrySelect(object? selectedId)
     {
         if (selectedId == null) return false;
         foreach (var item in Items)

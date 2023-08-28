@@ -1,3 +1,4 @@
+using System.Windows.Input;
 using Avalonia.Media;
 using Material.Icons;
 using ReactiveUI;
@@ -20,5 +21,7 @@ public class HierarchicalStoreEntryTagViewModel:ReactiveObject
             Width = (int)((_name.Length * 7 + 18) / CellWidth + 1) * CellWidth;
         }
     }
-    public double Width { get; set; }
+    public double Width { get; private set; }
+    
+    public ICommand? Remove { get; set; }
 }

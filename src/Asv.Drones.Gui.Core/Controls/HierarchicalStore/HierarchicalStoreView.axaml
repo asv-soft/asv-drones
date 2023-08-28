@@ -171,11 +171,15 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Border Padding="2" Width="{Binding Width}">
-                                            <Border Background="{Binding Color}" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
-                                                <StackPanel Orientation="Horizontal" Spacing="2" Margin="3" >
-                                                    <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="15" Height="15" />
-                                                    <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>
-                                                </StackPanel>
+                                            <Border HorizontalAlignment="Stretch" Background="{Binding Color}" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
+                                                <Grid ColumnDefinitions="18,*,18" Margin="3" HorizontalAlignment="Stretch" >
+                                                    <avalonia:MaterialIcon  VerticalAlignment="Center" Foreground="White" Kind="TagOutline" Width="15" Height="15" />
+                                                    <TextBlock Grid.Column="1" FontSize="12" Foreground="White"  Text="{Binding Name}"/>
+                                                    <Button IsVisible="{Binding Remove,Converter={x:Static ObjectConverters.IsNotNull}}" Grid.Column="2" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" Width="18" Height="18" Command="{Binding Remove}">
+                                                        <avalonia:MaterialIcon Kind="Close" Width="14" Height="14"/>
+                                                    </Button>
+                                                </Grid>
+                                                
                                             </Border>    
                                         </Border>
                                     </DataTemplate>
