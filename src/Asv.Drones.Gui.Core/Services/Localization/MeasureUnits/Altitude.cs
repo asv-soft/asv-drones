@@ -14,8 +14,8 @@ public class Altitude : MeasureUnitBase<double,AltitudeUnits>
     private const double MetersInFeet = 0.3048;
 
     private static readonly IMeasureUnitItem<double, AltitudeUnits>[] _units = {
-        new DoubleMeasureUnitItem<AltitudeUnits>(AltitudeUnits.Meters,RS.Altitude_Meter_Title,RS.Altitude_Meter_Unit,true, "F0",1),
-        new DoubleMeasureUnitItem<AltitudeUnits>(AltitudeUnits.Feets,RS.Altitude_Feet_Title,RS.Altitude_Feet_Unit,false,"F0",MetersInFeet),
+        new DoubleMeasureUnitItem<AltitudeUnits>(AltitudeUnits.Meters,RS.Altitude_Meter_Title,RS.Altitude_Meter_Unit,true, "F2",1),
+        new DoubleMeasureUnitItem<AltitudeUnits>(AltitudeUnits.Feets,RS.Altitude_Feet_Title,RS.Altitude_Feet_Unit,false,"F2",MetersInFeet),
     };
     public Altitude(IConfiguration cfgSvc, string cfgKey) : base(cfgSvc, cfgKey,_units)
     {
