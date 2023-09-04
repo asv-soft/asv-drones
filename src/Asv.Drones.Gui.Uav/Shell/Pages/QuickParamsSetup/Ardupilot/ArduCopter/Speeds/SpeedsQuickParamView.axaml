@@ -20,7 +20,7 @@
                 <core:OptionsDisplayItem Header="{x:Static uav:RS.SpeedsQuickParamView_WPNAV_SPEED_Header}"
                                          Description="{CompiledBinding WpNavSpeedDescription}">
                     <core:OptionsDisplayItem.ActionButton>
-                        <TextBox Width="100" Height="30" Text="{CompiledBinding WpNavSpeed}">
+                        <TextBox Width="100" Height="30" VerticalAlignment="Top" Text="{CompiledBinding WpNavSpeed, Converter={x:Static uav:FloatToStringSafeConverter.Instance}}">
                             <TextBox.InnerRightContent>
                                 <TextBlock Margin="8,0" HorizontalAlignment="Center" VerticalAlignment="Center" 
                                            Text="{x:Static uav:RS.SpeedsQuickParamView_WPNAV_SPEED_Units}"/>
@@ -31,7 +31,7 @@
                 <core:OptionsDisplayItem Header="{x:Static uav:RS.SpeedsQuickParamView_WPNAV_SPEED_DN_Header}"
                                          Description="{CompiledBinding WpNavSpeedDnDescription}">
                     <core:OptionsDisplayItem.ActionButton>
-                        <TextBox Width="100" Height="30" Text="{CompiledBinding WpNavSpeedDn}">
+                        <TextBox Width="100" Height="30" VerticalAlignment="Top" Text="{CompiledBinding WpNavSpeedDn, Converter={x:Static uav:FloatToStringSafeConverter.Instance}}">
                             <TextBox.InnerRightContent>
                                 <TextBlock Margin="8,0" HorizontalAlignment="Center" VerticalAlignment="Center" 
                                            Text="{x:Static uav:RS.SpeedsQuickParamView_WPNAV_SPEED_DN_Units}"/>
@@ -42,7 +42,7 @@
                 <core:OptionsDisplayItem Header="{x:Static uav:RS.SpeedsQuickParamView_WPNAV_SPEED_UP_Header}"
                                          Description="{CompiledBinding WpNavSpeedUpDescription}">
                     <core:OptionsDisplayItem.ActionButton>
-                        <TextBox Width="100" Height="30" Text="{CompiledBinding WpNavSpeedUp}">
+                        <TextBox Width="100" Height="30" VerticalAlignment="Top" Text="{CompiledBinding WpNavSpeedUp, Converter={x:Static uav:FloatToStringSafeConverter.Instance}}">
                             <TextBox.InnerRightContent>
                                 <TextBlock Margin="8,0" HorizontalAlignment="Center" VerticalAlignment="Center" 
                                            Text="{x:Static uav:RS.SpeedsQuickParamView_WPNAV_SPEED_UP_Units}"/>
@@ -53,7 +53,7 @@
                 <core:OptionsDisplayItem Header="{x:Static uav:RS.SpeedsQuickParamView_RTL_SPEED_Header}"
                                          Description="{CompiledBinding RtlSpeedDescription}">
                     <core:OptionsDisplayItem.ActionButton>
-                        <TextBox Width="100" Height="30" Text="{CompiledBinding RtlSpeed}">
+                        <TextBox Width="100" Height="30" VerticalAlignment="Top" Text="{CompiledBinding RtlSpeed, Converter={x:Static uav:FloatToStringSafeConverter.Instance}}">
                             <TextBox.InnerRightContent>
                                 <TextBlock Margin="8,0" HorizontalAlignment="Center" VerticalAlignment="Center" 
                                            Text="{x:Static uav:RS.SpeedsQuickParamView_RTL_SPEED_Units}"/>
@@ -64,7 +64,7 @@
                 <core:OptionsDisplayItem Header="{x:Static uav:RS.SpeedsQuickParamView_LOIT_SPEED_Header}"
                                          Description="{CompiledBinding LoitSpeedDescription}">
                     <core:OptionsDisplayItem.ActionButton>
-                        <TextBox Width="100" Height="30" Text="{CompiledBinding LoitSpeed}">
+                        <TextBox Width="100" Height="30" VerticalAlignment="Top" Text="{CompiledBinding LoitSpeed, Converter={x:Static uav:FloatToStringSafeConverter.Instance}}">
                             <TextBox.InnerRightContent>
                                 <TextBlock Margin="8,0" HorizontalAlignment="Center" VerticalAlignment="Center" 
                                            Text="{x:Static uav:RS.SpeedsQuickParamView_LOIT_SPEED_Units}"/>
@@ -75,7 +75,7 @@
                 <core:OptionsDisplayItem Header="{x:Static uav:RS.SpeedsQuickParamView_LAND_SPEED_Header}"
                                          Description="{CompiledBinding LandSpeedDescription}">
                     <core:OptionsDisplayItem.ActionButton>
-                        <TextBox Width="100" Height="30" Text="{CompiledBinding LandSpeed}">
+                        <TextBox Width="100" Height="30" VerticalAlignment="Top" Text="{CompiledBinding LandSpeed, Converter={x:Static uav:FloatToStringSafeConverter.Instance}}">
                             <TextBox.InnerRightContent>
                                 <TextBlock Margin="8,0" HorizontalAlignment="Center" VerticalAlignment="Center" 
                                            Text="{x:Static uav:RS.SpeedsQuickParamView_LAND_SPEED_Units}"/>
@@ -86,7 +86,7 @@
                 <core:OptionsDisplayItem Header="{x:Static uav:RS.SpeedsQuickParamView_LAND_SPEED_HIGH_Header}"
                                          Description="{CompiledBinding LandSpeedHighDescription}">
                     <core:OptionsDisplayItem.ActionButton>
-                        <TextBox Width="100" Height="30" Text="{CompiledBinding LandSpeedHigh}">
+                        <TextBox Width="100" Height="30" VerticalAlignment="Top" Text="{CompiledBinding LandSpeedHigh, Converter={x:Static uav:FloatToStringSafeConverter.Instance}}">
                             <TextBox.InnerRightContent>
                                 <TextBlock Margin="8,0" HorizontalAlignment="Center" VerticalAlignment="Center" 
                                            Text="{x:Static uav:RS.SpeedsQuickParamView_LAND_SPEED_HIGH_Units}"/>
@@ -97,7 +97,7 @@
                 <core:OptionsDisplayItem Header="{x:Static uav:RS.SpeedsQuickParamView_LAND_ALT_LOW_Header}"
                                          Description="{CompiledBinding LandAltLowDescription}">
                     <core:OptionsDisplayItem.ActionButton>
-                        <TextBox Width="100" Height="30" Text="{CompiledBinding LandAltLow}">
+                        <TextBox Width="100" Height="30" VerticalAlignment="Top" Text="{CompiledBinding LandAltLow, Converter={x:Static uav:FloatToStringSafeConverter.Instance}}">
                             <TextBox.InnerRightContent>
                                 <TextBlock Margin="8,0" HorizontalAlignment="Center" VerticalAlignment="Center" 
                                            Text="{x:Static uav:RS.SpeedsQuickParamView_LAND_ALT_LOW_Units}"/>
@@ -108,7 +108,7 @@
                 <core:OptionsDisplayItem Header="{x:Static uav:RS.SpeedsQuickParamView_PILOT_SPEED_DN_Header}"
                                          Description="{CompiledBinding PilotSpeedDnDescription}">
                     <core:OptionsDisplayItem.ActionButton>
-                        <TextBox Width="100" Height="30" Text="{CompiledBinding PilotSpeedDn}">
+                        <TextBox Width="100" Height="30" VerticalAlignment="Top" Text="{CompiledBinding PilotSpeedDn, Converter={x:Static uav:FloatToStringSafeConverter.Instance}}">
                             <TextBox.InnerRightContent>
                                 <TextBlock Margin="8,0" HorizontalAlignment="Center" VerticalAlignment="Center" 
                                            Text="{x:Static uav:RS.SpeedsQuickParamView_PILOT_SPEED_DN_Units}"/>
@@ -119,7 +119,7 @@
                 <core:OptionsDisplayItem Header="{x:Static uav:RS.SpeedsQuickParamView_PILOT_SPEED_UP_Header}"
                                          Description="{CompiledBinding PilotSpeedUpDescription}">
                     <core:OptionsDisplayItem.ActionButton>
-                        <TextBox Width="100" Height="30" Text="{CompiledBinding PilotSpeedUp}">
+                        <TextBox Width="100" Height="30" VerticalAlignment="Top" Text="{CompiledBinding PilotSpeedUp, Converter={x:Static uav:FloatToStringSafeConverter.Instance}}">
                             <TextBox.InnerRightContent>
                                 <TextBlock Margin="8,0" HorizontalAlignment="Center" VerticalAlignment="Center" 
                                            Text="{x:Static uav:RS.SpeedsQuickParamView_PILOT_SPEED_UP_Units}"/>
