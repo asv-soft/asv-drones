@@ -10,6 +10,7 @@ namespace Asv.Drones.Gui.Sdr;
 
 public static class SdrTagViewModelHelper
 {
+   
     public static HierarchicalStoreEntryTagViewModel ConvertToTag(AsvSdrRecordTagPayload arg)
     {
         return new HierarchicalStoreEntryTagViewModel
@@ -42,6 +43,54 @@ public static class SdrTagViewModelHelper
             AsvSdrRecordTagType.AsvSdrRecordTagTypeString8 => Brushes.Pink,
             _ => throw new ArgumentOutOfRangeException(nameof(argTagType), argTagType, null)
         };
+    }
+
+    public static IEnumerable<HierarchicalStoreEntryTagViewModel> ConvertToTag(AsvSdrRecordFileMetadata metadata)
+    {
+        foreach (var tag in ConvertToTag(metadata.Info))
+        {
+            yield return tag;
+        }
+        foreach (var tag in metadata.Tags.Select(ConvertToTag))
+        {
+            yield return tag;
+        }
+        
+    }
+
+    private static IEnumerable<HierarchicalStoreEntryTagViewModel> ConvertToTag(AsvSdrRecordPayload metadataInfo)
+    {
+        yield return new HierarchicalStoreEntryTagViewModel
+        {
+            Icon = MaterialIconKind.SineWave,
+            Color = Brushes.DimGray,
+            Name = $"{metadataInfo.Frequency / 1_000_000:F3} MHz",
+            Remove = null,
+        };
+        yield return new HierarchicalStoreEntryTagViewModel
+        {
+            Icon = MaterialIconKind.Application,
+            Color = Brushes.BlueViolet,
+            Name = ConvertDataType(metadataInfo.DataType),
+            Remove = null,
+        };
+    }
+
+    private static string ConvertDataType(AsvSdrCustomMode type)
+    {
+        switch (type)
+        {
+            case AsvSdrCustomMode.AsvSdrCustomModeIdle:
+                return "IDLE";
+            case AsvSdrCustomMode.AsvSdrCustomModeLlz:
+                return "LLZ";
+            case AsvSdrCustomMode.AsvSdrCustomModeGp:
+                return "GP";
+            case AsvSdrCustomMode.AsvSdrCustomModeVor:
+                return "VOR";
+            default:
+                throw new ArgumentOutOfRangeException(nameof(type), type, null);
+        }
     }
 }
 

@@ -32,11 +32,11 @@ public partial class App : Application
 
     public App()
     {
-        /*LogManager.Setup().LoadConfiguration(builder =>
+        LogManager.Setup().LoadConfiguration(builder =>
         {
             builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToDebug();
-            builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToFile(fileName: "log.txt");
-        });*/
+            //builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToFile(fileName: "log.txt");
+        });
         
         _container = new CompositionContainer(new AggregateCatalog(Catalogs().ToArray()), CompositionOptions.IsThreadSafe);
         // we need to export the container itself
@@ -83,11 +83,12 @@ public partial class App : Application
         yield return typeof(UavPlugin).Assembly;             // Asv.Drones.Gui.Uav
         yield return typeof(GbsPlugin).Assembly;             // Asv.Drones.Gui.Gbs
         yield return typeof(FlightSdrWidgetBase).Assembly;   // Asv.Drones.Gui.Sdr
-        // This section is for private plugins
+        // This section is for debug plugins
 #if INCLUDE_PLUGINS
             yield return typeof(Afis.AfisPlugin).Assembly;        // [Asv.Drones.Gui.Afis]
             yield return typeof(Weather.WeatherPlugin).Assembly;  // [Asv.Drones.Gui.Weather]
             yield return typeof(FlightDocs.FlightDocsPlugin).Assembly; // [Asv.Drones.Gui.FlightDocs]
+            yield return typeof(Modem.ModemPlugin).Assembly; // [Asv.Drones.Gui.FlightDocs]
 #endif
     }
 

@@ -85,9 +85,9 @@ public class SdrStorePageViewModel:ShellPage
             Store.SelectedItem.IsFile ? Store.SelectedItem.ParentId : Store.SelectedItem.Id;
 
         using var writer = 
-            _store.Store.ExistFile(rec.Id) 
-                ? _store.Store.Open(rec.Id) 
-                : _store.Store.Create(recId, rec.Name.Value, (Guid)parent);
+            _store.Store.FileExists(rec.Id) 
+                ? _store.Store.OpenFile(rec.Id) 
+                : _store.Store.CreateFile(recId, rec.Name.Value, (Guid)parent);
         Progress = 0;
         rec.CopyMetadataTo(writer.File);        
         
@@ -111,7 +111,7 @@ public class SdrStorePageViewModel:ShellPage
             var result = await ifc.GetRecordDataList(recId, chunk.Skip, chunk.Take, cancel);
             if (result.ItemsCount == 0) break;
 
-            Observable.Timer(TimeSpan.FromMilliseconds(100), TimeSpan.FromMilliseconds(100))
+            using var subscribe2 = Observable.Timer(TimeSpan.FromMilliseconds(100), TimeSpan.FromMilliseconds(100))
                 .Subscribe(_ =>
                 {
                     if (readCount >= (int)result.ItemsCount)
@@ -119,7 +119,7 @@ public class SdrStorePageViewModel:ShellPage
                         Debug.WriteLine($"Complete");
                         tcs.TrySetResult();
                     }
-                },linkedCancel.Token);
+                });
             await tcs.Task;
             Progress = (i / (double)remoteCount) * 26d;
         }

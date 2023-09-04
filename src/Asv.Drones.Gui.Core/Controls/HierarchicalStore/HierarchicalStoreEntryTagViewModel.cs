@@ -18,7 +18,7 @@ public class HierarchicalStoreEntryTagViewModel:ReactiveObject
         set
         {
             _name = value;
-            Width = (int)((_name.Length * 7 + 18) / CellWidth + 1) * CellWidth;
+            Width = (int)((_name.Length * 7 + 36) / CellWidth + 1) * CellWidth;
         }
     }
     public double Width { get; private set; }

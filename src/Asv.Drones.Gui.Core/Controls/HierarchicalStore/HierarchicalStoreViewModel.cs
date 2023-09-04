@@ -297,7 +297,7 @@ public abstract class HierarchicalStoreViewModel<TKey,TFile>:HierarchicalStoreVi
         var name = $"New file {++attempt}";
         try
         {
-            using var file = _store.Create(GenerateNewId(), name, parentId);
+            using var file = _store.CreateFile(GenerateNewId(), name, parentId);
         }
         catch (HierarchicalStoreFolderAlreadyExistException)
         {

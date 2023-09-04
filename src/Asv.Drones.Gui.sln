@@ -40,6 +40,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asv.Mavlink", "..\..\asv-ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asv.Drones.Gui.FlightDocs", "..\..\asv-drones-gui-flight-docs\src\Asv.Drones.Gui.FlightDocs\Asv.Drones.Gui.FlightDocs.csproj", "{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asv.Drones.Gui.Modem", "..\..\asv-drones-gui-modem\src\Asv.Drones.Gui.Modem\Asv.Drones.Gui.Modem.csproj", "{26C20CA1-7AC3-4CDB-9D4E-0625FFBF0F73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,7 +153,6 @@ Global
 		{3DB1A4E7-066C-4D7D-9961-7C0971B6F261}.ReleasePlugins|Any CPU.Build.0 = Release|Any CPU
 		{5AF3EDCB-350D-43D2-9982-3E9CD920D51A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5AF3EDCB-350D-43D2-9982-3E9CD920D51A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5AF3EDCB-350D-43D2-9982-3E9CD920D51A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5AF3EDCB-350D-43D2-9982-3E9CD920D51A}.DebugLibs|Any CPU.ActiveCfg = DebugLibs|Any CPU
 		{5AF3EDCB-350D-43D2-9982-3E9CD920D51A}.DebugLibs|Any CPU.Build.0 = DebugLibs|Any CPU
 		{5AF3EDCB-350D-43D2-9982-3E9CD920D51A}.DebugPlugins|Any CPU.ActiveCfg = Debug|Any CPU
@@ -160,7 +161,6 @@ Global
 		{5AF3EDCB-350D-43D2-9982-3E9CD920D51A}.ReleasePlugins|Any CPU.Build.0 = Release|Any CPU
 		{9EBA8D8C-8A84-4ACF-8807-AE60F8BD59A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9EBA8D8C-8A84-4ACF-8807-AE60F8BD59A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9EBA8D8C-8A84-4ACF-8807-AE60F8BD59A8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9EBA8D8C-8A84-4ACF-8807-AE60F8BD59A8}.DebugPlugins|Any CPU.ActiveCfg = Debug|Any CPU
 		{9EBA8D8C-8A84-4ACF-8807-AE60F8BD59A8}.DebugPlugins|Any CPU.Build.0 = Debug|Any CPU
 		{9EBA8D8C-8A84-4ACF-8807-AE60F8BD59A8}.ReleasePlugins|Any CPU.ActiveCfg = Release|Any CPU
@@ -171,16 +171,22 @@ Global
 		{59455F10-E1CB-47B7-86F7-199C04132F89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59455F10-E1CB-47B7-86F7-199C04132F89}.DebugLibs|Any CPU.ActiveCfg = Debug|Any CPU
 		{59455F10-E1CB-47B7-86F7-199C04132F89}.DebugLibs|Any CPU.Build.0 = Debug|Any CPU
-		{59455F10-E1CB-47B7-86F7-199C04132F89}.DebugPlugins|Any CPU.ActiveCfg = Debug|Any CPU
-		{59455F10-E1CB-47B7-86F7-199C04132F89}.DebugPlugins|Any CPU.Build.0 = Debug|Any CPU
 		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}.DebugPlugins|Any CPU.ActiveCfg = Debug|Any CPU
 		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}.DebugPlugins|Any CPU.Build.0 = Debug|Any CPU
 		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}.DebugLibs|Any CPU.ActiveCfg = Debug|Any CPU
 		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}.DebugLibs|Any CPU.Build.0 = Debug|Any CPU
+		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}.ReleasePlugins|Any CPU.ActiveCfg = Release|Any CPU
+		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5}.ReleasePlugins|Any CPU.Build.0 = Release|Any CPU
+		{26C20CA1-7AC3-4CDB-9D4E-0625FFBF0F73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26C20CA1-7AC3-4CDB-9D4E-0625FFBF0F73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26C20CA1-7AC3-4CDB-9D4E-0625FFBF0F73}.DebugPlugins|Any CPU.ActiveCfg = Debug|Any CPU
+		{26C20CA1-7AC3-4CDB-9D4E-0625FFBF0F73}.DebugPlugins|Any CPU.Build.0 = Debug|Any CPU
+		{26C20CA1-7AC3-4CDB-9D4E-0625FFBF0F73}.DebugLibs|Any CPU.ActiveCfg = Debug|Any CPU
+		{26C20CA1-7AC3-4CDB-9D4E-0625FFBF0F73}.DebugLibs|Any CPU.Build.0 = Debug|Any CPU
+		{26C20CA1-7AC3-4CDB-9D4E-0625FFBF0F73}.ReleasePlugins|Any CPU.ActiveCfg = Debug|Any CPU
+		{26C20CA1-7AC3-4CDB-9D4E-0625FFBF0F73}.ReleasePlugins|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -197,5 +203,6 @@ Global
 		{9EBA8D8C-8A84-4ACF-8807-AE60F8BD59A8} = {4AD5057E-3DB2-47E3-BBD3-C5FBEA3E1A9A}
 		{59455F10-E1CB-47B7-86F7-199C04132F89} = {37A71A26-D3D5-4F26-9ACF-BD252CDD1837}
 		{C425C83B-C36E-4589-BDE4-DE90DAF1B9F5} = {4AD5057E-3DB2-47E3-BBD3-C5FBEA3E1A9A}
+		{26C20CA1-7AC3-4CDB-9D4E-0625FFBF0F73} = {4AD5057E-3DB2-47E3-BBD3-C5FBEA3E1A9A}
 	EndGlobalSection
 EndGlobal

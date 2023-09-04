@@ -1,20 +1,7 @@
 using System.Collections.Immutable;
-using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
-using System.Reactive;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
-using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
-using Asv.Mavlink.V2.AsvSdr;
-using Avalonia.Controls;
-using DynamicData;
-using DynamicData.Binding;
-using FluentAvalonia.UI.Controls;
-using Material.Icons;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Sdr;
 
@@ -47,8 +34,9 @@ public class SdrStoreBrowserViewModel:HierarchicalStoreViewModel<Guid,IListDataF
     protected override IReadOnlyCollection<HierarchicalStoreEntryTagViewModel> InternalGetEntryTags(IHierarchicalStoreEntry<Guid> itemValue)
     {
         if (itemValue.Type == FolderStoreEntryType.Folder) return ArraySegment<HierarchicalStoreEntryTagViewModel>.Empty;
-        using var file = _svc.Store.Open(itemValue.Id);
-        return file.File.ReadMetadata().Tags.Select(SdrTagViewModelHelper.ConvertToTag).ToImmutableArray();
+        using var file = _svc.Store.OpenFile(itemValue.Id);
+        var metadata = file.File.ReadMetadata();
+        return SdrTagViewModelHelper.ConvertToTag(metadata).ToImmutableArray();
     }
 
 
