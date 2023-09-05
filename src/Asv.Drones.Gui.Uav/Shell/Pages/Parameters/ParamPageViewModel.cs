@@ -4,17 +4,21 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Web;
-using System.Windows.Input;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using DynamicData;
-using JetBrains.Annotations;
+using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Uav;
+
+public class ParamsConfig
+{
+    public List<ParamItemViewModelConfig> Params { get; set; } = new();
+}
 
 [ExportShellPage(UriString)]
 [PartCreationPolicy(CreationPolicy.NonShared)]
@@ -28,6 +32,8 @@ public class ParamPageViewModel: ShellPage
     private ObservableAsPropertyHelper<bool> _isRefreshing;
     private readonly SourceList<ParamItemViewModel> _viewedParamsList;
     private ParamItemViewModel _selectedItem;
+    private Subject<bool> _canClearSearchText = new ();
+    private ParamsConfig _config;
 
     #region Uri
 
@@ -47,21 +53,41 @@ public class ParamPageViewModel: ShellPage
         _svc = svc ?? throw new ArgumentNullException(nameof(svc));
         _log = log ?? throw new ArgumentNullException(nameof(log));
         _cfg = cfg ?? throw new ArgumentNullException(nameof(cfg));
+
+        _config = _cfg.Get<ParamsConfig>();
+
         FilterPipe.DisposeItWith(Disposable);
-        this.WhenAnyValue(_=>_.SearchText)
+        this.WhenAnyValue(_ => _.SearchText, _ => _.ShowStaredOnly)
             .Throttle(TimeSpan.FromMilliseconds(100), RxApp.MainThreadScheduler)
-            .Subscribe(_ =>FilterPipe.OnNext(item=>item.Filter(SearchText,ShowStaredOnly)))
+            .Subscribe(_ => FilterPipe.OnNext(item => item.Filter(SearchText, ShowStaredOnly)))
             .DisposeItWith(Disposable);
          _viewedParamsList = new SourceList<ParamItemViewModel>().DisposeItWith(Disposable);
          _viewedParamsList.Connect()
              .Bind(out _viewedParams)
              .Subscribe()
              .DisposeItWith(Disposable);
+
+         this.WhenValueChanged(_ => _.SearchText)
+             .Subscribe(_ =>
+             {
+                 _canClearSearchText.OnNext(!string.IsNullOrWhiteSpace(_));
+             })
+             .DisposeItWith(Disposable);
+         
+         Clear = ReactiveCommand.Create(() =>
+         {
+             SearchText = string.Empty;
+         }, _canClearSearchText).DisposeItWith(Disposable);
+         
+         Disposable.AddAction(() =>
+         {
+             _config.Params = _config.Params.Where(_ => _.IsStarred).ToList();
+             _cfg.Set(_config);
+         });
     }
 
     public override void SetArgs(Uri link)
     {
-        
         var query =  HttpUtility.ParseQueryString(link.Query);
         if (ushort.TryParse(query["id"], out var id) == false) return;
         if (Enum.TryParse<DeviceClass>(query["class"], true, out var deviceClass) == false) return;
@@ -102,7 +128,7 @@ public class ParamPageViewModel: ShellPage
 
     private void Init(IParamsClientEx paramsIfc)
     {
-        @paramsIfc.RemoteCount.Where(_=>_.HasValue).Subscribe(_=>Total = _.Value).DisposeItWith(Disposable);
+        @paramsIfc.RemoteCount.Where(_ => _.HasValue).Subscribe(_ => Total = _.Value).DisposeItWith(Disposable);
         
         var inputPipe = @paramsIfc.Items
             .Transform(_ => new ParamItemViewModel(_,_log))
@@ -110,7 +136,15 @@ public class ParamPageViewModel: ShellPage
             .RefCount();
         inputPipe
             .Bind(out var allItems)
-            .Subscribe()
+            .Subscribe(_ =>
+            {
+                foreach (var item in _config.Params)
+                {
+                    var existItem = _.FirstOrDefault(_ => _.Current.Name == item.Name);
+                    if (existItem == null) continue;
+                    existItem.Current?.SetConfig(item);
+                }
+            })
             .DisposeItWith(Disposable);
         inputPipe
             .Filter(FilterPipe)
@@ -118,10 +152,32 @@ public class ParamPageViewModel: ShellPage
             .Bind(out var leftItems)
             .Subscribe()
             .DisposeItWith(Disposable);
+        
+        inputPipe
+            .AutoRefresh(_ => _.IsStarred)
+            .Filter(_ => _.IsStarred)
+            .Subscribe(_ =>
+            {
+                foreach (var item in _)
+                {
+                    var existItem = _config.Params.FirstOrDefault(__ => __.Name == item.Current.Name);
+                    
+                    if(existItem != null)
+                        _config.Params.Remove(existItem);
+                    
+                    _config.Params.Add(new ParamItemViewModelConfig
+                    {
+                        IsStarred = item.Current.IsStarred,
+                        Name = item.Current.Name
+                    });
+                }
+            })
+            .DisposeItWith(Disposable);
+        
         FilterPipe.OnNext(_=>true);
         Params = leftItems;
 
-        UpdateParams = ReactiveCommand.CreateFromTask(async (cancel) =>
+        UpdateParams = ReactiveCommand.CreateFromTask(async cancel =>
         {
             var viewed = _viewedParamsList.Items.Select(_ => _.GetConfig()).ToArray();
             _viewedParamsList.Clear();
@@ -136,6 +192,17 @@ public class ParamPageViewModel: ShellPage
         }).DisposeItWith(Disposable);
         UpdateParams.IsExecuting.ToProperty(this, _ => _.IsRefreshing, out _isRefreshing).DisposeItWith(Disposable);
         UpdateParams.ThrownExceptions.Subscribe(OnRefreshError).DisposeItWith(Disposable);
+        
+        RemoveAllPins = ReactiveCommand.Create(() =>
+        {
+            _viewedParamsList.Edit(_ =>
+            {
+                foreach (var item in _)
+                {
+                    item.IsPinned = false;
+                }
+            });
+        }).DisposeItWith(Disposable);
     }
 
     private void OnRefreshError(Exception ex)
@@ -145,14 +212,16 @@ public class ParamPageViewModel: ShellPage
     
     public bool IsRefreshing => _isRefreshing.Value;
     [Reactive]
+    public bool ShowStaredOnly { get; set; }
+    [Reactive]
     public double Progress { get; set; }
     
     [Reactive]
-    public ICommand Clear { get; set; }
+    public ReactiveCommand<Unit,Unit> Clear { get; set; }
     [Reactive]
     public ReactiveCommand<Unit,Unit> UpdateParams { get; set; }
     [Reactive]
-    public ICommand RemoveAllPins { get; set; }
+    public ReactiveCommand<Unit,Unit> RemoveAllPins { get; set; }
     public Subject<Func<ParamItemViewModel, bool>> FilterPipe { get; } = new();
 
     [Reactive]
@@ -180,14 +249,7 @@ public class ParamPageViewModel: ShellPage
                 {
                     _viewedParamsList.Add(value);    
                 }
-                    
             }
-            
         }
     }
-
-    
-    [Reactive]
-    public bool ShowStaredOnly { get; set; }
-    
 }
