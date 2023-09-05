@@ -21,13 +21,14 @@ public class ParamItemViewModelConfig
 }
 
 [PartCreationPolicy(CreationPolicy.NonShared)]
-public class ParamItemViewModel:ViewModelBase
+public class ParamItemViewModel : ViewModelBase
 {
     private readonly ILogService _log;
     private readonly ObservableAsPropertyHelper<bool> _isWriting;
     private readonly ObservableAsPropertyHelper<bool> _isUpdate;
-
-    public ParamItemViewModel():base(new Uri("asv:designMode"))
+    private bool _internalUpdate;
+    
+    public ParamItemViewModel() : base(new Uri("asv:designMode"))
     {
         if (Design.IsDesignMode)
         {
@@ -36,7 +37,7 @@ public class ParamItemViewModel:ViewModelBase
         }
     }
     
-    public ParamItemViewModel(IParamItem paramItem, ILogService log):base(new Uri(ParamPageViewModel.UriString+$".item{paramItem.Name}"))
+    public ParamItemViewModel(IParamItem paramItem, ILogService log) : base(new Uri(ParamPageViewModel.UriString+$".item{paramItem.Name}"))
     {
         _log = log;
         PinItem = ReactiveCommand.Create(() =>
@@ -49,117 +50,130 @@ public class ParamItemViewModel:ViewModelBase
         Units = paramItem.Info.Units;
         ValueDescription = paramItem.Info.UnitsDisplayName;
         IsRebootRequired = paramItem.Info.IsRebootRequired;
-
         
         paramItem.Value.Subscribe(_ =>
+        {
+            if (_internalUpdate) return;
+            switch (_.Type)
             {
-                switch (_.Type)
-                {
-                    case MavParamType.MavParamTypeUint8:
-                        Value = ((byte)_).ToString();
-                        break;
-                    case MavParamType.MavParamTypeInt8:
-                        Value = ((sbyte)_).ToString();
-                        break;
-                    case MavParamType.MavParamTypeUint16:
-                        Value = ((ushort)_).ToString();
-                        break;
-                    case MavParamType.MavParamTypeInt16:
-                        Value = ((short)_).ToString();
-                        break;
-                    case MavParamType.MavParamTypeUint32:
-                        Value = ((uint)_).ToString();
-                        break;
-                    case MavParamType.MavParamTypeInt32:
-                    case MavParamType.MavParamTypeInt64:
-                        Value = ((int)_).ToString();
-                        break;
-                    case MavParamType.MavParamTypeUint64:
-                        Value = ((ulong)_).ToString();
-                        break;
-                    case MavParamType.MavParamTypeReal32:
-                        Value = ((float)_).ToString();
-                        break;
-                    case MavParamType.MavParamTypeReal64:
-                        Value = ((double)_).ToString();
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            })
-            .DisposeItWith(Disposable);
+                case MavParamType.MavParamTypeUint8:
+                    Value = ((byte)_).ToString();
+                    break;
+                case MavParamType.MavParamTypeInt8:
+                    Value = ((sbyte)_).ToString();
+                    break;
+                case MavParamType.MavParamTypeUint16:
+                    Value = ((ushort)_).ToString();
+                    break;
+                case MavParamType.MavParamTypeInt16:
+                    Value = ((short)_).ToString();
+                    break;
+                case MavParamType.MavParamTypeUint32:
+                    Value = ((uint)_).ToString();
+                    break;
+                case MavParamType.MavParamTypeInt32:
+                case MavParamType.MavParamTypeInt64:
+                    Value = ((int)_).ToString();
+                    break;
+                case MavParamType.MavParamTypeUint64:
+                    Value = ((ulong)_).ToString();
+                    break;
+                case MavParamType.MavParamTypeReal32:
+                    Value = ((float)_).ToString();
+                    break;
+                case MavParamType.MavParamTypeReal64:
+                    Value = ((double)_).ToString();
+                    break;
+            }
+        })
+        .DisposeItWith(Disposable);
         
-        this.WhenAnyValue(_ => _.Value)
-            .Subscribe(_ =>
+        this.WhenAnyValue(_ => _.Value).Subscribe(_ =>
+        {
+            _internalUpdate = true;
+            switch (paramItem.Type)
             {
-                switch (paramItem.Type)
+                case MavParamType.MavParamTypeUint8:
                 {
-                    case MavParamType.MavParamTypeUint8:
+                    if(byte.TryParse(_, out var result))
                     {
-                        byte.TryParse(_, out var result);
                         paramItem.Value.OnNext(result);
-                        break;
                     }
-                    case MavParamType.MavParamTypeInt8:
-                    {
-                        sbyte.TryParse(_, out var result);
-                        paramItem.Value.OnNext(result);
-                        break;
-                    }
-                    case MavParamType.MavParamTypeUint16:
-                    {
-                        ushort.TryParse(_, out var result);
-                        paramItem.Value.OnNext(result);
-                        break;
-                    }
-                    case MavParamType.MavParamTypeInt16:
-                    {
-                        short.TryParse(_, out var result);
-                        paramItem.Value.OnNext(result);
-                        break;
-                    }
-                    case MavParamType.MavParamTypeUint32:
-                    {
-                        uint.TryParse(_, out var result);
-                        paramItem.Value.OnNext(result);
-                        break;
-                    }
-                    case MavParamType.MavParamTypeInt32:
-                    {
-                        int.TryParse(_, out var result);
-                        paramItem.Value.OnNext(result);
-                        break;
-                    }
-                    case MavParamType.MavParamTypeUint64:
-                    {
-                        ulong.TryParse(_, out var result);
-                        paramItem.Value.OnNext(result);
-                        break;
-                    }
-                    case MavParamType.MavParamTypeInt64:
-                    {
-                        long.TryParse(_, out var result);
-                        paramItem.Value.OnNext(result);
-                        break;
-                    }
-                    case MavParamType.MavParamTypeReal32:
-                    case MavParamType.MavParamTypeReal64:
-                    { 
-                        float.TryParse(_.Replace(",", "."), 
-                            CultureInfo.InvariantCulture, 
-                            out var result);
-                        paramItem.Value.OnNext(result);
-                        break;
-                    }
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    break;
                 }
-                
-            })
-            .DisposeItWith(Disposable);
+                case MavParamType.MavParamTypeInt8:
+                {
+                    if(sbyte.TryParse(_, out var result))
+                    {
+                        paramItem.Value.OnNext(result);
+                    }
+                    break;
+                }
+                case MavParamType.MavParamTypeUint16:
+                {
+                    if(ushort.TryParse(_, out var result))
+                    {
+                        paramItem.Value.OnNext(result);
+                    }
+                    break;
+                }
+                case MavParamType.MavParamTypeInt16:
+                {
+                    if(short.TryParse(_, out var result))
+                    {
+                        paramItem.Value.OnNext(result);
+                    }
+                    break;
+                }
+                case MavParamType.MavParamTypeUint32:
+                {
+                    if(uint.TryParse(_, out var result))
+                    {
+                        paramItem.Value.OnNext(result);
+                    }
+                    break;
+                }
+                case MavParamType.MavParamTypeInt32:
+                {
+                    if(int.TryParse(_, out var result))
+                    {
+                        paramItem.Value.OnNext(result);
+                    }
+                    break;
+                }
+                case MavParamType.MavParamTypeUint64:
+                {
+                    if(ulong.TryParse(_, out var result))
+                    {
+                        paramItem.Value.OnNext(result);
+                    }
+                    break;
+                }
+                case MavParamType.MavParamTypeInt64:
+                {
+                    if(long.TryParse(_, out var result))
+                    {
+                        paramItem.Value.OnNext(result);
+                    }
+                    break;
+                }
+                case MavParamType.MavParamTypeReal32:
+                case MavParamType.MavParamTypeReal64:
+                { 
+                    if(float.TryParse(_.Replace(",", "."), 
+                        CultureInfo.InvariantCulture, 
+                        out var result))
+                    {
+                        paramItem.Value.OnNext(result);
+                    }
+                    break;
+                }
+            }
+            _internalUpdate = false;
+        })
+        .DisposeItWith(Disposable);
         
-        paramItem.IsSynced.Subscribe(_=>IsSynced =_)
-            .DisposeItWith(Disposable);
+        paramItem.IsSynced.Subscribe(_ => IsSynced = _).DisposeItWith(Disposable);
         Write = ReactiveCommand.CreateFromTask(async cancel =>    
         {
             await paramItem.Write(cancel);
@@ -206,7 +220,6 @@ public class ParamItemViewModel:ViewModelBase
     public bool IsSynced { get; set; }
     [Reactive]
     public string Value { get; set; }
-    // public MavParamValue Value { get; set; }
     [Reactive]
     public bool IsStarred { get; set; }
     [Reactive]
