@@ -94,10 +94,8 @@ public partial class App : Application
         
         // Enable this feature to load plugins from folder
         var dir = Path.GetFullPath("./"); //Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        File.WriteAllText("out11.txt",dir);
         var cat = new DirectoryCatalog(dir, "Asv.Drones.Gui.Plugin.*.dll");
         cat.Refresh();
-        File.WriteAllText(Path.Combine(dir,"out.txt"),"AAAA");
         yield return cat;
 
     }
