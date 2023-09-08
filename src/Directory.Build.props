@@ -1,9 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <Nullable>enable</Nullable>
-    <ProductVersion>0.1.0</ProductVersion>
-    <AvaloniaVersion>11.0.0</AvaloniaVersion>
-    <AsvCommonVersion>1.11.0</AsvCommonVersion>
-    <AsvMavlinkVersion>3.3.5-alpha-07</AsvMavlinkVersion>
-  </PropertyGroup>
-</Project>

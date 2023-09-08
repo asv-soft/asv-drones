@@ -78,18 +78,11 @@ public partial class App : Application
     
     private IEnumerable<Assembly> Assemblies()
     {
-        //yield return GetType().Assembly;                   // Asv.Drones.Gui 
+        yield return GetType().Assembly;                   // Asv.Drones.Gui 
         yield return typeof(CorePlugin).Assembly;            // Asv.Drones.Gui.Core
         yield return typeof(UavPlugin).Assembly;             // Asv.Drones.Gui.Uav
         yield return typeof(GbsPlugin).Assembly;             // Asv.Drones.Gui.Gbs
         yield return typeof(FlightSdrWidgetBase).Assembly;   // Asv.Drones.Gui.Sdr
-        // This section is for debug plugins
-#if INCLUDE_PLUGINS
-            yield return typeof(Afis.AfisPlugin).Assembly;        // [Asv.Drones.Gui.Afis]
-            yield return typeof(Weather.WeatherPlugin).Assembly;  // [Asv.Drones.Gui.Weather]
-            yield return typeof(FlightDocs.FlightDocsPlugin).Assembly; // [Asv.Drones.Gui.FlightDocs]
-            yield return typeof(Modem.ModemPlugin).Assembly; // [Asv.Drones.Gui.FlightDocs]
-#endif
     }
 
     private IEnumerable<ComposablePartCatalog> Catalogs()
@@ -98,15 +91,14 @@ public partial class App : Application
         {
             yield return asm;
         }
-
+        
         // Enable this feature to load plugins from folder
-        var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        if (dir != null)
-        {
-            var cat = new DirectoryCatalog(dir, "Asv.Drones.Gui.Plugins.*.dll");
-            cat.Refresh();
-            yield return cat;
-        }
+        var dir = Path.GetFullPath("./"); //Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        File.WriteAllText("out11.txt",dir);
+        var cat = new DirectoryCatalog(dir, "Asv.Drones.Gui.Plugin.*.dll");
+        cat.Refresh();
+        File.WriteAllText(Path.Combine(dir,"out.txt"),"AAAA");
+        yield return cat;
 
     }
 
