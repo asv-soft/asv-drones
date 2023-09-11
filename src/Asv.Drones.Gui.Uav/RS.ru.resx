@@ -101,10 +101,7 @@
     <data name="MissionStatusView_ToggleWaypointsButton_ToolTip" xml:space="preserve">
     <value>Включает/выключает видимость точек миссии</value>
   </data>
-    <data name="MissionStatusView_Total" xml:space="preserve">
-    <value>Всего: {0}</value>
-  </data>
-    <data name="MissionStatusView_MissionProgress_ToolTip" xml:space="preserve">
+  <data name="MissionStatusView_MissionProgress_ToolTip" xml:space="preserve">
     <value>Текущий прогресс миссии</value>
   </data>
     <data name="ParametersEditorPageView_StarsToggleButton_ToolTip" xml:space="preserve">
@@ -325,5 +322,11 @@
   </data>
   <data name="FlightUavView_FindButton_ToolTip" xml:space="preserve">
     <value>Найти БПЛА</value>
+  </data>
+  <data name="MissionStatusView_TotalDistance" xml:space="preserve">
+    <value>Всего: {0}</value>
+  </data>
+  <data name="MissionStatusView_MissionDistance" xml:space="preserve">
+    <value>Миссия: {0}</value>
   </data>
 </root>

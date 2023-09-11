@@ -1,11 +1,17 @@
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Reactive;
+using System.Reactive.Linq;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
+using Asv.Mavlink.Vehicle;
 using DynamicData;
 using DynamicData.Aggregation;
+using DynamicData.Alias;
 using DynamicData.Binding;
+using DynamicData.Kernel;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -14,7 +20,9 @@ namespace Asv.Drones.Gui.Uav.MissionStatus;
 public class MissionStatusViewModel : ViewModelBase
 {
     private readonly IVehicleClient _vehicle;
-    private readonly ILogService _log; 
+    private readonly ILogService _log;
+    private ReadOnlyObservableCollection<MissionItem> _items;
+
     //private ReadOnlyObservableCollection<RoundWayPointItem> _wayPoints;
 
     public MissionStatusViewModel() : base(new Uri("designTime://missionstatus"))
@@ -37,7 +45,24 @@ public class MissionStatusViewModel : ViewModelBase
             EnableAnchors = false;
         }).DisposeItWith(Disposable);
         
-        _vehicle.Missions.AllMissionsDistance.Subscribe(_ => Total = localization.Distance.FromSiToStringWithUnits(_ * 1000))
+        _vehicle.Missions.MissionItems
+            .Bind(out _items)
+            .Subscribe()
+            .DisposeItWith(Disposable);
+        
+        _vehicle.Missions.AllMissionsDistance.Subscribe(_ =>
+            {
+                var totalDistance = _ * 1000;
+                MissionDistance = localization.Distance.FromSiToStringWithUnits(totalDistance);
+                var start = _items.FirstOrDefault();
+                var stop = _items.LastOrDefault(_ => _.Command.Value != MavCmd.MavCmdNavReturnToLaunch);
+                if (start != null && stop != null)
+                {
+                    totalDistance += GeoMath.Distance(start.Location.Value, _vehicle.Position.Home.Value);
+                    totalDistance += GeoMath.Distance(stop.Location.Value, _vehicle.Position.Home.Value);
+                }
+                TotalDistance = localization.Distance.FromSiToStringWithUnits(totalDistance);
+            })
             .DisposeItWith(Disposable);
 
         _vehicle.Missions.Current.Subscribe(_ => CurrentIndex = _)
@@ -85,7 +110,8 @@ public class MissionStatusViewModel : ViewModelBase
     [Reactive]
     public double DownloadProgress { get; set; }
     
-    [Reactive] public bool EnablePolygon { get; set; } = true;
+    [Reactive] 
+    public bool EnablePolygon { get; set; } = true;
     
     [Reactive]
     public bool EnableAnchors { get; set; } = true;
@@ -94,8 +120,12 @@ public class MissionStatusViewModel : ViewModelBase
     public double Current { get; set; }
 
     [Reactive] 
-    public string Total { get; set; } = RS.UavRttItem_ValueNotAvailable;
+    public string MissionDistance { get; set; } = RS.UavRttItem_ValueNotAvailable;
 
+    [Reactive] 
+    public string TotalDistance { get; set; } = RS.UavRttItem_ValueNotAvailable;
+
+    
     [Reactive] 
     public double PathProgress { get; set; }
     

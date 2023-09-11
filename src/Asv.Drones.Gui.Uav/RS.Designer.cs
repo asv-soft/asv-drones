@@ -276,6 +276,15 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mission: {0}.
+        /// </summary>
+        public static string MissionStatusView_MissionDistance {
+            get {
+                return ResourceManager.GetString("MissionStatusView_MissionDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current mission progress.
         /// </summary>
         public static string MissionStatusView_MissionProgress_ToolTip {
@@ -305,9 +314,9 @@ namespace Asv.Drones.Gui.Uav {
         /// <summary>
         ///   Looks up a localized string similar to Total: {0}.
         /// </summary>
-        public static string MissionStatusView_Total {
+        public static string MissionStatusView_TotalDistance {
             get {
-                return ResourceManager.GetString("MissionStatusView_Total", resourceCulture);
+                return ResourceManager.GetString("MissionStatusView_TotalDistance", resourceCulture);
             }
         }
         
