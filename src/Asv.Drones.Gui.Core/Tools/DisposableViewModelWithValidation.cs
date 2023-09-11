@@ -3,7 +3,7 @@ using ReactiveUI.Validation.Helpers;
 
 namespace Asv.Drones.Gui.Core
 {
-    public class DisposableViewModelWithValidation : ReactiveValidationObject
+    public class DisposableViewModelWithValidation : ReactiveValidationObject,IDisposable
     {
         private const int Disposed = 1;
         private const int NotDisposed = 0;

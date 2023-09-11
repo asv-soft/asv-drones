@@ -40,6 +40,5 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Asv.Drones.Gui.Core\Asv.Drones.Gui.Core.csproj" />
-        <ProjectReference Condition="'$(Configuration)' == 'DebugLibs'" Include="..\..\..\asv-mavlink\src\Asv.Mavlink\Asv.Mavlink.csproj" />
     </ItemGroup>
 </Project>

@@ -9,13 +9,6 @@
         <Configurations>Debug;Release</Configurations>
         <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
-     <PropertyGroup Condition=" '$(Configuration)' == 'ReleasePlugins' ">
-         <DefineConstants>TRACE;INCLUDE_PLUGINS</DefineConstants>
-         <Optimize Condition=" '$(Optimize)' == '' ">true</Optimize>
-     </PropertyGroup>
-
-
-
 
     <ItemGroup>
       <PackageReference Include="Asv.Cfg" Version="$(AsvCommonVersion)" />
@@ -73,7 +66,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Asv.Drones.Gui.Map\Asv.Drones.Gui.Map.csproj" />
-      <ProjectReference Condition="'$(Configuration)' == 'DebugLibs'" Include="..\..\..\asv-mavlink\src\Asv.Mavlink\Asv.Mavlink.csproj" />
     </ItemGroup>
 
     <ItemGroup>
