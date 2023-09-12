@@ -3,7 +3,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:uav="clr-namespace:Asv.Drones.Gui.Uav"
-             xmlns:uav1="clr-namespace:Asv.Drones.Gui.Uav.Uav"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:missionStatus="clr-namespace:Asv.Drones.Gui.Uav.MissionStatus"
              mc:Ignorable="d" d:DesignWidth="380" d:DesignHeight="105"
@@ -28,7 +27,7 @@
                 <ToggleButton ToolTip.Tip="{x:Static uav:RS.MissionStatusView_ToggleWaypointsButton_ToolTip}" IsChecked="{CompiledBinding EnableAnchors}">
                     <avalonia:MaterialIcon Kind="Anchor"/>
                 </ToggleButton>
-                <StackPanel Margin="5 0" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+                <WrapPanel Margin="5 0" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
                     <Grid VerticalAlignment="Center" Margin="5 0">
                         <Ellipse Fill="Black" Width="15" Height="15" Stroke="White" StrokeThickness="2"/>
                         <Ellipse Fill="White" Width="7" Height="7"/>
@@ -39,10 +38,10 @@
                         <Ellipse Fill="Black" Width="15" Height="15" Stroke="White" StrokeThickness="2"/>
                     </Grid>
                     <TextBlock Text="{Binding CurrentIndex, StringFormat='WP {0}'}"/>
-                    <TextBlock Margin="5 0" Text="{Binding Total, StringFormat={x:Static uav:RS.MissionStatusView_Total}}"/>
-                </StackPanel>
+                    <TextBlock Margin="5 0" Text="{Binding TotalDistance, StringFormat={x:Static uav:RS.MissionStatusView_TotalDistance}}"/>
+                    <TextBlock Margin="5 0" Text="{Binding MissionDistance, StringFormat={x:Static uav:RS.MissionStatusView_MissionDistance}}"/>
+                </WrapPanel>
             </WrapPanel>
-            
         </Grid>
         <Grid ToolTip.Tip="{x:Static uav:RS.MissionStatusView_MissionProgress_ToolTip}" Height="20" Margin="10">
             <Rectangle>
