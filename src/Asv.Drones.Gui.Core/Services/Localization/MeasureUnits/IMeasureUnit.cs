@@ -13,9 +13,9 @@ namespace Asv.Drones.Gui.Core
         public bool IsSiUnit { get; }
         public TValue ConvertFromSi(TValue siValue);
         public TValue ConvertToSi(TValue value);
-        bool IsValid(string value);
-        string? GetErrorMessage(string value);
-        TValue ConvertToSi(string value);
+        bool IsValid(string? value);
+        string? GetErrorMessage(string? value);
+        TValue ConvertToSi(string? value);
         string FromSiToString(TValue value);
         string FromSiToStringWithUnits(TValue value);
     }
@@ -50,7 +50,7 @@ namespace Asv.Drones.Gui.Core
            return src.CurrentUnit.Value.ConvertToSi(value);
        }
 
-       public static bool IsValid<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, string value)
+       public static bool IsValid<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, string? value)
        {
            return src.CurrentUnit.Value.IsValid(value);
        }
@@ -63,11 +63,11 @@ namespace Asv.Drones.Gui.Core
            return true;
        }
 
-       public static string? GetErrorMessage<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, string value)
+       public static string? GetErrorMessage<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, string? value)
        {
            return src.CurrentUnit.Value.GetErrorMessage(value);
        }
-       public static string? GetErrorMessage<TEnum>(this IMeasureUnit<double, TEnum> src,double minSiValue, double maxSiValue, string value)
+       public static string? GetErrorMessage<TEnum>(this IMeasureUnit<double, TEnum> src,double minSiValue, double maxSiValue, string? value)
        {
            var msg = src.CurrentUnit.Value.GetErrorMessage(value);
            if (msg.IsNullOrWhiteSpace() == false) return msg;
@@ -77,7 +77,7 @@ namespace Asv.Drones.Gui.Core
            return null;
        }
 
-       public static TValue ConvertToSi<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, string value)
+       public static TValue ConvertToSi<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, string? value)
        {
            return src.CurrentUnit.Value.ConvertToSi(value);
        }

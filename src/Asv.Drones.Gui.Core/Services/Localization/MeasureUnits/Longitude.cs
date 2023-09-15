@@ -81,7 +81,7 @@ public class LongitudeUnitDms : IMeasureUnitItem<double, LongitudeUnits>
         return value;
     }
 
-    public bool IsValid(string value)
+    public bool IsValid(string? value)
     {
         return GeoPointLongitude.IsValid(value);
     }
