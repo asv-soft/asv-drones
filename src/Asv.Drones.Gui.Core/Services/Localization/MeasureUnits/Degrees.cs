@@ -41,30 +41,31 @@ public class DegreesMeasureUnit : IMeasureUnitItem<double, DegreeUnits>
         return value;
     }
 
-    public bool IsValid(string value)
+    public double Parse(string? value)
     {
-        return Angle.IsValid(value);
+        return value != null && Angle.TryParse(value, out var result) ? result : double.NaN;
     }
 
-    public string? GetErrorMessage(string value)
+    public bool IsValid(string? value)
+    {
+        return value != null && Angle.IsValid(value);
+    }
+
+    public string? GetErrorMessage(string? value)
     {
         return Angle.GetErrorMessage(value);
     }
 
-    public double ConvertToSi(string value)
-    {
-        return Angle.TryParse(value, out var result) ? result : double.NaN;
-    }
-
-    public string FromSiToString(double value)
+    public string Print(double value)
     {
         return $"{value}";
     }
 
-    public string FromSiToStringWithUnits(double value)
+    public string PrintWithUnits(double value)
     {
         return $"{value} {Unit}";
     }
+
 }
 
 public class DmsMeasureUnit : IMeasureUnitItem<double, DegreeUnits>
@@ -84,28 +85,29 @@ public class DmsMeasureUnit : IMeasureUnitItem<double, DegreeUnits>
         return value;
     }
 
-    public bool IsValid(string value)
+    public double Parse(string? value)
     {
-        return Angle.IsValid(value);
+        return value != null && Angle.TryParse(value, out var result) ? result : double.NaN;
     }
 
-    public string? GetErrorMessage(string value)
+    public bool IsValid(string? value)
+    {
+        return value != null && Angle.IsValid(value);
+    }
+
+    public string? GetErrorMessage(string? value)
     {
         return Angle.GetErrorMessage(value);
     }
 
-    public double ConvertToSi(string value)
-    {
-        return Angle.TryParse(value, out var result) ? result : double.NaN;
-    }
-
-    public string FromSiToString(double value)
+    public string Print(double value)
     {
         return Angle.PrintDms(value);
     }
 
-    public string FromSiToStringWithUnits(double value)
+    public string PrintWithUnits(double value)
     {
         return Angle.PrintDms(value);
     }
+
 }

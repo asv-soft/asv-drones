@@ -39,30 +39,31 @@ public class LongitudeUnitDeg :  IMeasureUnitItem<double, LongitudeUnits>
         return value;
     }
 
-    public bool IsValid(string value)
+    public double Parse(string? value)
     {
-        return GeoPointLongitude.IsValid(value);
+        return value != null && GeoPointLongitude.TryParse(value, out var result) ? result : double.NaN;
     }
 
-    public string? GetErrorMessage(string value)
+    public bool IsValid(string? value)
+    {
+        return value != null && GeoPointLongitude.IsValid(value);
+    }
+
+    public string? GetErrorMessage(string? value)
     {
         return GeoPointLongitude.GetErrorMessage(value);
     }
 
-    public double ConvertToSi(string value)
-    {
-        return GeoPointLongitude.TryParse(value, out var result) ? result : double.NaN;
-    }
-
-    public string FromSiToString(double value)
+    public string Print(double value)
     {
         return value.ToString("F7");
     }
 
-    public string FromSiToStringWithUnits(double value)
+    public string PrintWithUnits(double value)
     {
         return $"{value:F7}°";
     }
+
 }
 
 public class LongitudeUnitDms : IMeasureUnitItem<double, LongitudeUnits>
@@ -81,28 +82,29 @@ public class LongitudeUnitDms : IMeasureUnitItem<double, LongitudeUnits>
         return value;
     }
 
-    public bool IsValid(string? value)
+    public double Parse(string? value)
     {
-        return GeoPointLongitude.IsValid(value);
+        return value != null && GeoPointLongitude.TryParse(value, out var result) ? result : double.NaN;
     }
 
-    public string? GetErrorMessage(string value)
+    public bool IsValid(string? value)
+    {
+        return value != null && GeoPointLongitude.IsValid(value);
+    }
+
+    public string? GetErrorMessage(string? value)
     {
         return GeoPointLongitude.GetErrorMessage(value);
     }
 
-    public double ConvertToSi(string value)
-    {
-        return GeoPointLongitude.TryParse(value, out var result) ? result : double.NaN;
-    }
-
-    public string FromSiToString(double value)
+    public string Print(double value)
     {
         return GeoPointLongitude.PrintDms(value);
     }
 
-    public string FromSiToStringWithUnits(double value)
+    public string PrintWithUnits(double value)
     {
-        return FromSiToString(value);
+        return GeoPointLongitude.PrintDms(value);
     }
+
 }

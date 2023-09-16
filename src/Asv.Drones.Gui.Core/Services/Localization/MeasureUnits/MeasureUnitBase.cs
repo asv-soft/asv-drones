@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Globalization;
 using System.Reactive.Linq;
 using Asv.Cfg;
@@ -14,7 +15,11 @@ public abstract class MeasureUnitBase<TValue, TEnum> : DisposableOnceWithCancel,
         AvailableUnits = items ?? throw new ArgumentNullException(nameof(items));
         var id = cfgSvc.Get(cfgKey, default(TEnum));
         SiUnit = AvailableUnits.First(_ => _.IsSiUnit);
-        var item = AvailableUnits.FirstOrDefault(_ => _.Id.Equals(id)) ?? SiUnit;
+        var item = AvailableUnits.FirstOrDefault(x =>
+        {
+            Debug.Assert(x.Id != null, "x.Id != null");
+            return x.Id.Equals(id);
+        }) ?? SiUnit;
         CurrentUnit = new RxValue<IMeasureUnitItem<TValue, TEnum>>(item).DisposeItWith(Disposable);
         CurrentUnit.DistinctUntilChanged(_ => _.Id)
             .Subscribe(_ =>
@@ -58,31 +63,31 @@ public class DoubleMeasureUnitItem<TEnum> : IMeasureUnitItem<double, TEnum>
     {
         return value * _multiplierCoef;
     }
-    
-    public virtual double ConvertToSi(string value)
+
+    public double Parse(string? value)
     {
+        if (string.IsNullOrWhiteSpace(value)) return double.NaN;
         value = value.Replace(',', '.');
-        return ConvertToSi(double.Parse(value, NumberStyles.Any, CultureInfo.InvariantCulture));
+        return double.Parse(value, NumberStyles.Any, CultureInfo.InvariantCulture);
+    }
+    public string Print(double value)
+    {
+        return value.ToString(_formatString);
     }
 
-    public virtual string FromSiToString(double value)
+    public string PrintWithUnits(double value)
     {
-        return ConvertFromSi(value).ToString(_formatString);
+        return $"{value.ToString(_formatString)} {Unit}";
     }
 
-    public virtual string FromSiToStringWithUnits(double value)
+    public virtual bool IsValid(string? value)
     {
-        return $"{FromSiToString(value)} {Unit}";
-    }
-
-    public virtual bool IsValid(string value)
-    {
-        if (value.IsNullOrWhiteSpace()) return false;
+        if (string.IsNullOrWhiteSpace(value)) return false;
         value = value.Replace(',', '.');
         return double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var _);
     }
 
-    public virtual string? GetErrorMessage(string value)
+    public virtual string? GetErrorMessage(string? value)
     {
         if (value.IsNullOrWhiteSpace()) return RS.MeasureUnitBase_ErrorMessage_NullOrWhiteSpace;
         value = value.Replace(',', '.');
