@@ -16,7 +16,6 @@ public interface ISdrStoreService
 
 public class SdrStoreServiceConfig
 {
-    public string SdrRecordFolder { get; set; } = "sdr_data";
     public int FileCacheTimeMs { get; set; } = 10_000;
 }
 
@@ -24,17 +23,18 @@ public class SdrStoreServiceConfig
 [PartCreationPolicy(CreationPolicy.Shared)]
 public class SdrStoreService : ServiceWithConfigBase<SdrStoreServiceConfig>, ISdrStoreService
 {
+    public const string SdrRecordsDataFolder = "sdr_records";
+    
     [ImportingConstructor]
     public SdrStoreService(IAppService svc, IConfiguration cfg) : base(cfg)
     {
-        var dataFolder = InternalGetConfig(x => x.SdrRecordFolder);
-        var fileCacheTimeMs = InternalGetConfig(x => x.FileCacheTimeMs);
-        var dir = Path.Combine(svc.Paths.DataFolder, dataFolder);
-        if (Directory.Exists(dir) == false)
+        var dataFolder = Path.Combine(svc.Paths.DataFolder, SdrRecordsDataFolder);
+        if (Directory.Exists(dataFolder) == false)
         {
-            Directory.CreateDirectory(dir);
+            Directory.CreateDirectory(dataFolder);
         }
-        Store = new AsvSdrStore(dir, TimeSpan.FromMilliseconds(fileCacheTimeMs)).DisposeItWith(Disposable);
+        var fileCacheTimeMs = InternalGetConfig(x => x.FileCacheTimeMs);
+        Store = new AsvSdrStore(dataFolder, TimeSpan.FromMilliseconds(fileCacheTimeMs)).DisposeItWith(Disposable);
     }
 
     public IHierarchicalStore<Guid,IListDataFile<AsvSdrRecordFileMetadata>> Store { get; }
