@@ -2067,7 +2067,7 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SDM.
+        ///   Looks up a localized string similar to Sum depth of modulation measure units.
         /// </summary>
         public static string Sdm_Description {
             get {
@@ -2076,7 +2076,7 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sum depth of modulation measure units.
+        ///   Looks up a localized string similar to SDM.
         /// </summary>
         public static string Sdm_Title {
             get {

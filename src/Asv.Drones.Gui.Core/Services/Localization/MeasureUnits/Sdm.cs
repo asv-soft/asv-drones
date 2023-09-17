@@ -4,16 +4,14 @@ namespace Asv.Drones.Gui.Core;
 
 public enum SdmUnits
 {
-    Percent,
-    InParts
+    Percent
 }
 public class Sdm : MeasureUnitBase<double,SdmUnits>
 {
-    private const double PercentInParts = 100.0;
+    private const double PercentInParts = 0.01;
 
     private static readonly IMeasureUnitItem<double, SdmUnits>[] _units = {
-        new DoubleMeasureUnitItem<SdmUnits>(SdmUnits.Percent,RS.Ddm_Percent_Title,"%",true,"F2",1),
-        new DoubleMeasureUnitItem<SdmUnits>(SdmUnits.InParts,RS.Ddm_InParts_Title,"1",false, "F4",PercentInParts)
+        new DoubleMeasureUnitItem<SdmUnits>(SdmUnits.Percent,RS.Ddm_Percent_Title,"%",true,"F2",PercentInParts)
     };
     
     public Sdm(IConfiguration cfgSvc, string cfgKey) : base(cfgSvc, cfgKey, _units)

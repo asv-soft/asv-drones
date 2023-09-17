@@ -72,12 +72,12 @@ public class DoubleMeasureUnitItem<TEnum> : IMeasureUnitItem<double, TEnum>
     }
     public string Print(double value)
     {
-        return value.ToString(_formatString);
+        return value.ToString(_formatString, CultureInfo.InvariantCulture);
     }
 
     public string PrintWithUnits(double value)
     {
-        return $"{value.ToString(_formatString)} {Unit}";
+        return $"{value.ToString(_formatString, CultureInfo.InvariantCulture)} {Unit}";
     }
 
     public virtual bool IsValid(string? value)

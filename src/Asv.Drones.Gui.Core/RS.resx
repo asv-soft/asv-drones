@@ -951,10 +951,10 @@
     <value>Difference depth of modulation measure units</value>
   </data>
   <data name="Sdm_Title" xml:space="preserve">
-    <value>Sum depth of modulation measure units</value>
+    <value>SDM</value>
   </data>
   <data name="Sdm_Description" xml:space="preserve">
-    <value>SDM</value>
+    <value>Sum depth of modulation measure units</value>
   </data>
   <data name="HeaderTemplaterMenu_Header" xml:space="preserve">
     <value>Templater</value>
