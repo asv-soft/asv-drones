@@ -40,26 +40,30 @@ public class LatitudeUnitDeg : IMeasureUnitItem<double, LatitudeUnits>
         return value;
     }
 
-    public bool IsValid(string value)
+    public double Parse(string? value)
     {
-        return GeoPointLatitude.IsValid(value);
+        return value != null && GeoPointLatitude.TryParse(value, out var result) ? result : double.NaN;
     }
 
-    public string? GetErrorMessage(string value)
+    public bool IsValid(string? value)
+    {
+        return value != null && GeoPointLatitude.IsValid(value);
+    }
+
+    public string? GetErrorMessage(string? value)
     {
         return GeoPointLatitude.GetErrorMessage(value);
     }
 
-    public double ConvertToSi(string value)
-    {
-        return GeoPointLatitude.TryParse(value, out var result) ? result : double.NaN;
-    }
-
-    public string FromSiToString(double value)
+    public string Print(double value)
     {
         return value.ToString("F7");
     }
 
+    public string PrintWithUnits(double value)
+    {
+        return $"{value:F7}°";
+    }
     public string FromSiToStringWithUnits(double value)
     {
         return $"{value:F7}°";
@@ -82,28 +86,29 @@ public class LatitudeUnitDms : IMeasureUnitItem<double, LatitudeUnits>
         return value;
     }
 
-    public bool IsValid(string value)
+    public double Parse(string? value)
     {
-        return GeoPointLatitude.IsValid(value);
+        return value != null && GeoPointLatitude.TryParse(value, out var result) ? result : double.NaN;
     }
 
-    public string? GetErrorMessage(string value)
+    public bool IsValid(string? value)
+    {
+        return value != null && GeoPointLatitude.IsValid(value);
+    }
+
+    public string? GetErrorMessage(string? value)
     {
         return GeoPointLatitude.GetErrorMessage(value);
     }
 
-    public double ConvertToSi(string value)
-    {
-        return GeoPointLatitude.TryParse(value, out var result) ? result : double.NaN;
-    }
-
-    public string FromSiToString(double value)
+    public string Print(double value)
     {
         return GeoPointLatitude.PrintDms(value);
     }
 
-    public string FromSiToStringWithUnits(double value)
+    public string PrintWithUnits(double value)
     {
-        return FromSiToString(value);
+        return GeoPointLatitude.PrintDms(value);
     }
+
 }

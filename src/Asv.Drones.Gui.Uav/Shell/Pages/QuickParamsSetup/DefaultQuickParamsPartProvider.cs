@@ -10,17 +10,19 @@ namespace Asv.Drones.Gui.Uav;
 public class DefaultQuickParamsPartProvider : IQuickParamsPartProvider
 {
     private readonly ILocalizationService _loc;
+    private readonly ILogService _log;
 
     [ImportingConstructor]
-    public DefaultQuickParamsPartProvider(ILocalizationService loc)
+    public DefaultQuickParamsPartProvider(ILocalizationService loc, ILogService log)
     {
         _loc = loc;
+        _log = log;
     }
 
     public IEnumerable<IQuickParamsPart> Create(IVehicleClient vehicle)
     {
         yield return new IdentityQuickParamViewModel(vehicle);
-        yield return new SpeedsQuickParamViewModel(vehicle, _loc);
+        yield return new SpeedsQuickParamViewModel(vehicle, _loc, _log);
         yield return new ControllerReloadQuickParamViewModel(vehicle);
         yield return new FailSafeQuickParamViewModel(vehicle);
     }

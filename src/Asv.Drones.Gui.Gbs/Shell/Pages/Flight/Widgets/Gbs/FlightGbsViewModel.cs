@@ -54,8 +54,6 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
 
         MinimizedRttItems = _rttItems.Where(_ => _.IsMinimizedVisible);
 
-        BaseStation.Gbs.CustomMode.DistinctUntilChanged().Subscribe(SwitchMode).DisposeItWith(Disposable);
-        
         EnableAutoCommand = ReactiveCommand.CreateFromTask(EnableAutoMode, _canExecuteAutoCommand).DisposeItWith(Disposable);
         EnableFixedCommand = ReactiveCommand.CreateFromTask(EnableFixedMode, _canExecuteFixedCommand).DisposeItWith(Disposable);
         EnableIdleCommand = ReactiveCommand.CreateFromTask(EnableIdleMode, _canExecuteIdleCommand).DisposeItWith(Disposable);
@@ -64,6 +62,9 @@ public class FlightGbsViewModel:FlightGbsWidgetBase
         {
             IsMinimized = !IsMinimized;
         });
+        
+        // Subscribe only after creating commands
+        BaseStation.Gbs.CustomMode.DistinctUntilChanged().Subscribe(SwitchMode).DisposeItWith(Disposable);
 
         BaseStation.Gbs.BeidouSatellites.Subscribe(_ => BeidouSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);
         BaseStation.Gbs.GalSatellites.Subscribe(_ => GalSats = new GridLength(_, GridUnitType.Star)).DisposeItWith(Disposable);

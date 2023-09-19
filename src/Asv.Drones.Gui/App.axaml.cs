@@ -32,6 +32,12 @@ public partial class App : Application
 
     public App()
     {
+        LogManager.Setup().LoadConfiguration(builder =>
+        {
+            builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToDebug();
+            //builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToFile(fileName: "log.txt");
+        });
+        
         _container = new CompositionContainer(new AggregateCatalog(Catalogs().ToArray()), CompositionOptions.IsThreadSafe);
         // we need to export the container itself
         var batch = new CompositionBatch();
@@ -72,16 +78,11 @@ public partial class App : Application
     
     private IEnumerable<Assembly> Assemblies()
     {
-        //yield return GetType().Assembly;                   // Asv.Drones.Gui
+        yield return GetType().Assembly;                   // Asv.Drones.Gui 
         yield return typeof(CorePlugin).Assembly;            // Asv.Drones.Gui.Core
         yield return typeof(UavPlugin).Assembly;             // Asv.Drones.Gui.Uav
         yield return typeof(GbsPlugin).Assembly;             // Asv.Drones.Gui.Gbs
         yield return typeof(FlightSdrWidgetBase).Assembly;   // Asv.Drones.Gui.Sdr
-        // This section is for private plugins
-#if PROPRIETARY
-            yield return typeof(Afis.AfisPlugin).Assembly;        // [Asv.Drones.Gui.Afis]
-            yield return typeof(Weather.WeatherPlugin).Assembly;  // [Asv.Drones.Gui.Weather]
-#endif
     }
 
     private IEnumerable<ComposablePartCatalog> Catalogs()
@@ -90,15 +91,17 @@ public partial class App : Application
         {
             yield return asm;
         }
-
+        
         // Enable this feature to load plugins from folder
-        var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        if (dir != null)
+        var dir = Path.GetFullPath("./"); //Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        var cat = new DirectoryCatalog(dir, "Asv.Drones.Gui.Plugin.*.dll");
+        cat.Refresh();
+        Logger.Trace($"Search plugin in {cat.Path}");
+        foreach (var file in cat.LoadedFiles)
         {
-            var cat = new DirectoryCatalog(dir, "Asv.Drones.Gui.Plugins.*.dll");
-            cat.Refresh();
-            yield return cat;
+            Logger.Info($"Found plugin '{Path.GetFileName(file)}'");
         }
+        yield return cat;
 
     }
 

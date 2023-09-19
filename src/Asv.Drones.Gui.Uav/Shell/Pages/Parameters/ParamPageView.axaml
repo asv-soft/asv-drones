@@ -53,7 +53,7 @@
                                             Command="{Binding PinItem}" />
                                     </EventTriggerBehavior>
                                 </Interaction.Behaviors>
-                                <ToggleButton ToolTip.Tip="{x:Static uav:RS.ParametersEditorPageView_StarButton_ToolTip}" IsChecked="{Binding Starred}" Margin="10 0 0 0"
+                                <ToggleButton ToolTip.Tip="{x:Static uav:RS.ParametersEditorPageView_StarButton_ToolTip}" IsChecked="{Binding IsStarred}" Margin="10 0 0 0"
                                               BorderThickness="0" DockPanel.Dock="Right" Theme="{DynamicResource TransparentToggleButton}">
                                     <avalonia:MaterialIcon Width="20" Height="20" Kind="{Binding StarKind}"/>
                                 </ToggleButton>

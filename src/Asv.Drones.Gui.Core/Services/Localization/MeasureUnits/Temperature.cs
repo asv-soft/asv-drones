@@ -44,7 +44,13 @@ public class TemperatureCelsius : IMeasureUnitItem<double, TemperatureUnits>
         return value + ZeroCelsiusInKelvin;
     }
 
-    public bool IsValid(string value)
+    public double Parse(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return double.NaN;
+        return double.TryParse(value.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out var v) ? v : double.NaN;
+    }
+
+    public bool IsValid(string? value)
     {
         if (string.IsNullOrWhiteSpace(value)) return false;
         if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var v) == false)
@@ -52,7 +58,7 @@ public class TemperatureCelsius : IMeasureUnitItem<double, TemperatureUnits>
         return true;
     }
 
-    public string GetErrorMessage(string value)
+    public string GetErrorMessage(string? value)
     {
         if (string.IsNullOrWhiteSpace(value)) return RS.TemperatureCelsius_ErrorMessage_NullOrWhiteSpace;
         value = value.Replace(',', '.');
@@ -61,24 +67,13 @@ public class TemperatureCelsius : IMeasureUnitItem<double, TemperatureUnits>
         return null;
     }
 
-    public double ConvertToSi(string value)
+    public string Print(double value)
     {
-        if (string.IsNullOrWhiteSpace(value)) return double.NaN;
-        if (double.TryParse(value.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out var v))
-        {
-            return v + ZeroCelsiusInKelvin;
-        }
-        return double.NaN;
+        return $"{value:F1}";
     }
-
-    public string FromSiToString(double value)
+    public string PrintWithUnits(double value)
     {
-        return ConvertFromSi(value).ToString("F1");
-    }
-
-    public string FromSiToStringWithUnits(double value)
-    {
-        return $"{ConvertFromSi(value):F1} {Unit}";
+        return $"{value:F1} {Unit}";
     }
 }
 
@@ -92,32 +87,33 @@ public class TemperatureFarenheit : IMeasureUnitItem<double, TemperatureUnits>
     public bool IsSiUnit => false;
     public double ConvertFromSi(double siValue)
     {
-        return (siValue - ZeroCelsiusInKelvin) * (9 / 5) + ZeroCelsiusInFarenheit;
+        return (siValue - ZeroCelsiusInKelvin) * (9.0 / 5.0) + ZeroCelsiusInFarenheit;
     }
 
     public double ConvertToSi(double value)
     {
-        return (value - ZeroCelsiusInFarenheit) * (5 / 9) + ZeroCelsiusInKelvin;
+        return (value - ZeroCelsiusInFarenheit) * (5.0 / 9.0) + ZeroCelsiusInKelvin;
     }
 
-    public bool IsValid(string value)
+    public double Parse(string? value)
     {
-        if (string.IsNullOrWhiteSpace(value)) return false;
-        if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var v) == false)
-            return false;
-        return true;
+        if (string.IsNullOrWhiteSpace(value)) return double.NaN;
+        return double.TryParse(value.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out var v) ? v : double.NaN;
     }
 
-    public string GetErrorMessage(string value)
+    public bool IsValid(string? value)
+    {
+        return !string.IsNullOrWhiteSpace(value) && double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var v);
+    }
+
+    public string? GetErrorMessage(string? value)
     {
         if (string.IsNullOrWhiteSpace(value)) return RS.TemperatureFarenheit_ErrorMessage_NullOrWhiteSpace;
         value = value.Replace(',', '.');
-        if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var v) == false)
-            return RS.TemperatureFarenheit_ErrorMessage_NaN;
-        return null;
+        return double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var v) == false ? RS.TemperatureFarenheit_ErrorMessage_NaN : default;
     }
 
-    public double ConvertToSi(string value)
+    public double ConvertToSi(string? value)
     {
         if (string.IsNullOrWhiteSpace(value)) return double.NaN;
         if (double.TryParse(value.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out var v))
@@ -127,13 +123,14 @@ public class TemperatureFarenheit : IMeasureUnitItem<double, TemperatureUnits>
         return double.NaN;
     }
 
-    public string FromSiToString(double value)
+    public string Print(double value)
     {
-        return ConvertFromSi(value).ToString("F1");
+        return value.ToString("F1");
     }
 
-    public string FromSiToStringWithUnits(double value)
+    public string PrintWithUnits(double value)
     {
-        return $"{ConvertFromSi(value):F1} {Unit}";
+        return $"{value:F1} {Unit}";
     }
+
 }

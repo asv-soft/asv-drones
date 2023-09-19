@@ -5,6 +5,7 @@ using Asv.Cfg;
 using Asv.Cfg.Json;
 using Avalonia;
 using Avalonia.Controls.Templates;
+using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core;
 
@@ -22,7 +23,7 @@ public class CorePlugin: IPluginEntryPoint
         _applicationDataTemplateHost = applicationDataTemplateHost;
         var batch = new CompositionBatch();
         var path = GetAppPathInfo();
-        var config = new JsonOneFileConfiguration(path.ConfigFilePath, true, null);
+        var config = new JsonOneFileConfiguration(path.ConfigFilePath, true, TimeSpan.FromSeconds(1));
         batch.AddExportedValue(path);
         batch.AddExportedValue<IConfiguration>(config);
         batch.AddExportedValue(_defaultViewLocator = new ViewLocator(container));

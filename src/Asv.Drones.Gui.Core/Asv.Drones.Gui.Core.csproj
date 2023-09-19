@@ -1,11 +1,13 @@
  <Project Sdk="Microsoft.NET.Sdk">
-
+     <Import Project="$(SolutionDir)Asv.Drones.Gui.Custom.props"/>
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AssemblyVersion>$(ProductStrongVersion)</AssemblyVersion>
         <FileVersion>$(ProductExtendedVersion)</FileVersion>
+        <Configurations>Debug;Release</Configurations>
+        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
 
     <ItemGroup>
@@ -16,12 +18,12 @@
       <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
       <PackageReference Include="Avalonia.Xaml.Interactions" Version="$(AvaloniaVersion)" />
       <PackageReference Include="DocumentFormat.OpenXml" Version="2.20.0" />
-      <PackageReference Include="FluentAvaloniaUI" Version="2.0.0" />
-      <PackageReference Include="Material.Icons.Avalonia" Version="2.0.1" />
-      <PackageReference Include="ReactiveUI" Version="19.2.1" />
-      <PackageReference Include="ReactiveUI.Fody" Version="19.2.1" />
-      <PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
-      <PackageReference Include="System.ComponentModel.Composition" Version="7.0.0" />  
+      <PackageReference Include="FluentAvaloniaUI" Version="$(FluentAvaloniaUIVersion)" />
+      <PackageReference Include="Material.Icons.Avalonia" Version="$(MaterialIconsAvaloniaVersion)" />
+      <PackageReference Include="ReactiveUI" Version="$(ReactiveUIVersion)" />
+      <PackageReference Include="ReactiveUI.Fody" Version="$(ReactiveUIVersion)" />
+      <PackageReference Include="ReactiveUI.Validation" Version="$(ReactiveUIValidationVersion)" />
+      <PackageReference Include="System.ComponentModel.Composition" Version="$(CompositionVersion)" />
       <PackageReference Include="LiteDB" Version="5.0.16" />
     </ItemGroup>
     

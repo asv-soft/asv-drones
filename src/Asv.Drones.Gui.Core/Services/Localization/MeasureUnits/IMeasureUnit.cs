@@ -13,11 +13,24 @@ namespace Asv.Drones.Gui.Core
         public bool IsSiUnit { get; }
         public TValue ConvertFromSi(TValue siValue);
         public TValue ConvertToSi(TValue value);
-        bool IsValid(string value);
-        string? GetErrorMessage(string value);
-        TValue ConvertToSi(string value);
-        string FromSiToString(TValue value);
-        string FromSiToStringWithUnits(TValue value);
+        public TValue Parse(string? value);
+        bool IsValid(string? value);
+        string? GetErrorMessage(string? value);
+        string Print(TValue value);
+        string PrintWithUnits(TValue value);
+
+        public TValue ConvertToSi(string? value)
+        {
+            return ConvertToSi(Parse(value));
+        }
+        public string FromSiToString(TValue value)
+        {
+            return Print(ConvertFromSi(value));
+        }
+        public string FromSiToStringWithUnits(TValue value)
+        {
+            return PrintWithUnits(ConvertFromSi(value));
+        }
     }
     
     public interface IMeasureUnit<TValue,TEnum>
@@ -27,34 +40,35 @@ namespace Asv.Drones.Gui.Core
         IEnumerable<IMeasureUnitItem<TValue,TEnum>> AvailableUnits { get; }
         IRxEditableValue<IMeasureUnitItem<TValue,TEnum>> CurrentUnit { get; }
         IMeasureUnitItem<TValue,TEnum> SiUnit { get; }
+
+        public string FromSiToStringWithUnits(TValue value)
+        {
+            return CurrentUnit.Value.FromSiToStringWithUnits(value);
+        }
+        public string FromSiToString(TValue value)
+        {
+            return CurrentUnit.Value.FromSiToString(value);
+        }
+        public TValue ConvertFromSi(TValue value)
+        {
+            return CurrentUnit.Value.ConvertFromSi(value);
+        }
+        public TValue ConvertToSi(TValue value)
+        {
+            return CurrentUnit.Value.ConvertToSi(value);
+        }
+        public TValue ConvertToSi(string? value)
+        {
+            return CurrentUnit.Value.ConvertToSi(value);
+        }
+        public bool IsValid(string? value)
+        {
+            return CurrentUnit.Value.IsValid(value);
+        }
     }
     
     public static class MeasureUnitExtensions
     {
-        public static string FromSiToStringWithUnits<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, TValue value)
-        {
-            return src.CurrentUnit.Value.FromSiToStringWithUnits(value);
-        }
-        
-        public static string FromSiToString<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, TValue value)
-        {
-            return src.CurrentUnit.Value.FromSiToString(value);
-        }
-
-        public static TValue ConvertFromSi<TValue,TEnum>(this IMeasureUnit<TValue,TEnum> src, TValue value)
-       {
-           return src.CurrentUnit.Value.ConvertFromSi(value);
-       }
-       public static TValue ConvertToSi<TValue,TEnum>(this IMeasureUnit<TValue,TEnum> src, TValue value)
-       {
-           return src.CurrentUnit.Value.ConvertToSi(value);
-       }
-
-       public static bool IsValid<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, string value)
-       {
-           return src.CurrentUnit.Value.IsValid(value);
-       }
-
        public static bool IsValid<TEnum>(this IMeasureUnit<double, TEnum> src, double minSiValue, double maxSiValue, string value)
        {
            if (src.CurrentUnit.Value.IsValid(value) == false) return false;
@@ -63,23 +77,19 @@ namespace Asv.Drones.Gui.Core
            return true;
        }
 
-       public static string? GetErrorMessage<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, string value)
+       public static string? GetErrorMessage<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, string? value)
        {
            return src.CurrentUnit.Value.GetErrorMessage(value);
        }
-       public static string? GetErrorMessage<TEnum>(this IMeasureUnit<double, TEnum> src,double minSiValue, double maxSiValue, string value)
+       public static string? GetErrorMessage<TEnum>(this IMeasureUnit<double, TEnum> src,double minSiValue, double maxSiValue, string? value)
        {
            var msg = src.CurrentUnit.Value.GetErrorMessage(value);
-           if (msg.IsNullOrWhiteSpace() == false) return msg;
+           if (string.IsNullOrWhiteSpace(msg) == false) return msg;
            var siValue = src.CurrentUnit.Value.ConvertToSi(value);
            if ( siValue< minSiValue) return string.Format(RS.MeasureUnitExtensions_ErrorMessage_GreaterValue, src.CurrentUnit.Value.FromSiToStringWithUnits(minSiValue), src.SiUnit.FromSiToStringWithUnits(siValue));
            if (siValue > maxSiValue) return string.Format(RS.MeasureUnitExtensions_ErrorMessage_LesserValue, src.CurrentUnit.Value.FromSiToStringWithUnits(minSiValue), src.SiUnit.FromSiToStringWithUnits(siValue));
            return null;
        }
 
-       public static TValue ConvertToSi<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, string value)
-       {
-           return src.CurrentUnit.Value.ConvertToSi(value);
-       }
     }
 }

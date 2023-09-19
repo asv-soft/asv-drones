@@ -108,8 +108,8 @@
     <data name="MissionStatusView_ToggleWaypointsButton_ToolTip" xml:space="preserve">
     <value>On/off mission way points visibility</value>
   </data>
-    <data name="MissionStatusView_Total" xml:space="preserve">
-    <value>Total: {0}</value>
+  <data name="MissionStatusView_MissionDistance" xml:space="preserve">
+    <value>Mission: {0}</value>
   </data>
     <data name="MissionStatusView_MissionProgress_ToolTip" xml:space="preserve">
     <value>Current mission progress</value>
@@ -332,5 +332,8 @@
   </data>
   <data name="FlightUavView_FindButton_ToolTip" xml:space="preserve">
     <value>Find UAV</value>
+  </data>
+  <data name="MissionStatusView_TotalDistance" xml:space="preserve">
+    <value>Total: {0}</value>
   </data>
 </root>

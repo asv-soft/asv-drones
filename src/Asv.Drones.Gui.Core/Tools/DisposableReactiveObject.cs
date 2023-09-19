@@ -3,7 +3,7 @@ using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core
 {
-    public class DisposableViewModelBase : ReactiveObject
+    public class DisposableReactiveObject : ReactiveObject,IDisposable
     {
         private const int Disposed = 1;
         private const int NotDisposed = 0;

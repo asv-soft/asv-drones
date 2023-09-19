@@ -6,7 +6,7 @@ namespace Asv.Drones.Gui.Core
 {
     [Export(typeof(IShellMenuItem))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class ConnectionsShellMenuItem : DisposableViewModelBase, IShellMenuItem
+    public class ConnectionsShellMenuItem : DisposableReactiveObject, IShellMenuItem
     {
         public Uri Id { get; } = new("asv:shell.menu.connections");
         public string Name => RS.ConnectionsShellMenuItem_Name;

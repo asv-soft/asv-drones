@@ -2,7 +2,7 @@
 
 namespace Asv.Drones.Gui.Core
 {
-    public class ServiceWithConfigBase<TConfig>:DisposableViewModelBase 
+    public class ServiceWithConfigBase<TConfig>:DisposableReactiveObject 
         where TConfig : new()
     {
         private readonly IConfiguration _cfgService;

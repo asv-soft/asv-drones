@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Linq;
 using Asv.Common;
@@ -33,7 +34,8 @@ public class SdrStorePageViewModel:ShellPage
         {
             Store = new SdrStoreBrowserViewModel();
             Device = new SdrPayloadBrowserViewModel();
-           
+
+            Progress = 12.8;
         }
     }
 
@@ -43,13 +45,29 @@ public class SdrStorePageViewModel:ShellPage
         _log = log;
         _loc = loc;
         _store = store;
-        Store = new SdrStoreBrowserViewModel(store, log);
+        Store = new SdrStoreBrowserViewModel(store, loc, log);
         Device = new SdrPayloadBrowserViewModel(mavlink, loc, log);
-        DownloadRecord = ReactiveCommand.CreateFromTask(DownloadRecordImpl)
-            .DisposeItWith(Disposable);
+        
+        DownloadRecord = new CancellableCommandWithProgress<Unit, Unit>(DownloadRecordImpl,"Download record",log).DisposeItWith(Disposable);
+        Store.WhenValueChanged(_ => _.SelectedItem).Subscribe(TrySelectDeviceItem).DisposeItWith(Disposable);
+        Device.WhenValueChanged(_ => _.SelectedDevice!.SelectedRecord).Subscribe(TrySelectStoreItem).DisposeItWith(Disposable);
     }
 
-    private async Task<Unit> DownloadRecordImpl(CancellationToken cancel)
+    private void TrySelectDeviceItem(HierarchicalStoreEntryViewModel? sdrStoreEntityViewModel)
+    {
+        if (sdrStoreEntityViewModel == null) return;
+        Store.TrySelect(sdrStoreEntityViewModel.Id);
+    }
+
+    private void TrySelectStoreItem(SdrPayloadRecordViewModel? sdrPayloadRecordViewModel)
+    {
+        if (sdrPayloadRecordViewModel == null) return;
+        Device.TrySelect(sdrPayloadRecordViewModel.Record.Id);
+    }
+
+    public CancellableCommandWithProgress<Unit,Unit> DownloadRecord { get; private set; }
+
+    private async Task<Unit> DownloadRecordImpl(Unit arg, IProgress<double> progress, CancellationToken cancel)
     {
         var ifc = Device.SelectedDevice.Client.Sdr.Base;
         var rec = Device.SelectedDevice.SelectedRecord.Record;
@@ -58,34 +76,72 @@ public class SdrStorePageViewModel:ShellPage
         var recType = rec.DataType.Value;
         var recTypeAsUInt = (uint)recType;
         var take = 10U;
-        await rec.DownloadTagList(new CallbackProgress<double>(_ => { }),cancel);
-        // TODO: check that record already exist in storage by GUID
-        using var writer = _store.Store.Create(recId, _store.Store.RootFolderId, _ =>
+        await rec.DownloadTagList(new CallbackProgress<double>(_ =>
         {
-            rec.CopyTo(_);
-        });
-
-        rec.CopyMetadataTo(writer);
+            Progress = _ * 26;
+        }),cancel);
         
-        using var subscribe = ifc.OnRecordData.Where(_=>_.MessageId == recTypeAsUInt).Subscribe(_ => SaveRecord(_));
-        for (var i = 0U; i < count; i+=take)
+        var parent = Store.SelectedItem == null ? _store.Store.RootFolderId :
+            Store.SelectedItem.IsFile ? Store.SelectedItem.ParentId : Store.SelectedItem.Id;
+
+        using var writer = 
+            _store.Store.FileExists(rec.Id) 
+                ? _store.Store.OpenFile(rec.Id) 
+                : _store.Store.CreateFile(recId, rec.Name.Value, (Guid)parent);
+        Progress = 0;
+        rec.CopyMetadataTo(writer.File);        
+        
+        var remoteCount = rec.DataCount.Value;
+        Debug.WriteLine($"Begin read {remoteCount} items from device");
+        for (uint i = 0; i < remoteCount; i+=take)
         {
-            var result = await ifc.GetRecordDataList(recId, i*take, take, cancel);    
+            var chunk = new ListDataFileHelper.Chunk { Skip = i , Take = take };
+            using var linkedCancel = CancellationTokenSource.CreateLinkedTokenSource(cancel, DisposeCancel);
+            linkedCancel.CancelAfter(10*1000); // TODO: change timeout
+            var tcs = new TaskCompletionSource();
+            await using var c1 = linkedCancel.Token.Register(() => tcs.TrySetCanceled());
+            var readCount = 0;
+            using var subscribe = ifc.OnRecordData.Where(packetV2=>packetV2.MessageId == recTypeAsUInt).Subscribe(x =>
+            {
+                Interlocked.Increment(ref readCount);
+                Debug.WriteLine($"Save record {x.Name}");
+                SaveRecord(writer.File, x);
+            });
+            Debug.WriteLine($"Request skip:{chunk.Skip} , take:{chunk.Take}");
+            var result = await ifc.GetRecordDataList(recId, chunk.Skip, chunk.Take, cancel);
+            if (result.ItemsCount == 0) break;
+
+            using var subscribe2 = Observable.Timer(TimeSpan.FromMilliseconds(100), TimeSpan.FromMilliseconds(100))
+                .Subscribe(_ =>
+                {
+                    if (readCount >= (int)result.ItemsCount)
+                    {
+                        Debug.WriteLine($"Complete");
+                        tcs.TrySetResult();
+                    }
+                });
+            await tcs.Task;
+            Progress = (i / (double)remoteCount) * 26d;
         }
-        
+
+        Progress = 0;
+        await Store.Refresh.Execute();
         return Unit.Default;
-        
-
     }
 
-    private void SaveRecord(IPacketV2<IPayload> payload)
+
+    private void SaveRecord(IListDataFile<AsvSdrRecordFileMetadata> writer, IPacketV2<IPayload> payload)
     {
-        
+        writer.Write(payload);
     }
+    
     public SdrStoreBrowserViewModel Store { get; }
     
+    [Reactive]
     public SdrPayloadBrowserViewModel Device { get; set; }
-    public ReactiveCommand<Unit,Unit> DownloadRecord { get; }
+
+    [Reactive]
+    public double Progress { get; set; }
 }
 
 

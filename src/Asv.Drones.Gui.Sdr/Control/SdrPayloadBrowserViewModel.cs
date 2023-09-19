@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Linq;
 using Asv.Common;
@@ -24,6 +25,7 @@ public class SdrPayloadBrowserViewModel:ViewModelBase
 
 
     public const string UriString = "asv:sdr.device.browser";
+
     public SdrPayloadBrowserViewModel():base(UriString)
     {
         if (Design.IsDesignMode)
@@ -37,7 +39,6 @@ public class SdrPayloadBrowserViewModel:ViewModelBase
                 }));
         }
     }
-    
     
     public SdrPayloadBrowserViewModel(IMavlinkDevicesService mavlink, ILocalizationService loc, ILogService log):this()
     {
@@ -54,12 +55,27 @@ public class SdrPayloadBrowserViewModel:ViewModelBase
             .Where(_=>_ != null)
             .Subscribe(_=>_.DownloadRecords.Execute().Subscribe())
             .DisposeItWith(Disposable);
+        
+        this.WhenAnyValue(_ => _.SelectedDevice)
+            .Subscribe(_ =>
+            {
+                IsAnySelected = _ != null;
+            })
+            .DisposeItWith(Disposable);
     }
 
     public ReadOnlyObservableCollection<SdrDeviceViewModel> Devices => _devices;
     
     [Reactive]
-    public SdrDeviceViewModel SelectedDevice { get; set; }
+    public SdrDeviceViewModel? SelectedDevice { get; set; }
+
+    [Reactive]
+    public bool IsAnySelected { get; set; } 
+    
+    public void TrySelect(Guid recordId)
+    {
+        SelectedDevice?.TrySelect(recordId);
+    }
 }
 
 public class SdrDeviceViewModel:ViewModelBase
@@ -116,6 +132,13 @@ public class SdrDeviceViewModel:ViewModelBase
         
         DownloadRecords.ThrownExceptions.Subscribe(_ => _log.Error("Record", "Error to download records", _))
             .DisposeItWith(Disposable);
+        
+        this.WhenAnyValue(_ => _.SelectedRecord)
+            .Subscribe(_ =>
+            {
+                IsAnySelected = _ != null;
+            })
+            .DisposeItWith(Disposable);
     }
 
     [Reactive]
@@ -128,8 +151,18 @@ public class SdrDeviceViewModel:ViewModelBase
     
     [Reactive]
     public SdrPayloadRecordViewModel SelectedRecord { get; set; }
-
+    
+    [Reactive]
+    public bool IsAnySelected { get; set; }
+    
     public ISdrClientDevice Client { get; }
+
+    public void TrySelect(Guid recordId)
+    {
+        var item = Items.FirstOrDefault(x => x.Record.Id == recordId);
+        if (item == null) return;
+        SelectedRecord = item;
+    }
 }
 
 

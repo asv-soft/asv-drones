@@ -1,11 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="$(SolutionDir)Asv.Drones.Gui.Custom.props"/>
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <RuntimeIdentifier>browser-wasm</RuntimeIdentifier>
         <WasmMainJSPath>AppBundle\main.js</WasmMainJSPath>
         <OutputType>Exe</OutputType>
+        <Configurations>Debug;Release</Configurations>
+        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
-
+   
+    
     <ItemGroup>
         <WasmExtraFilesToDeploy Include="AppBundle\**"/>
     </ItemGroup>

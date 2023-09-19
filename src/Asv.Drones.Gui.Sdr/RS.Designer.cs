@@ -348,7 +348,7 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Record name.
+        ///   Looks up a localized string similar to Record name (required).
         /// </summary>
         public static string RecordStartView_RecordName_Title {
             get {
@@ -362,6 +362,15 @@ namespace Asv.Drones.Gui.Sdr {
         public static string RecordStartView_RecordName_Watermark {
             get {
                 return ResourceManager.GetString("RecordStartView_RecordName_Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record tags (optional).
+        /// </summary>
+        public static string RecordStartView_RecordTags_Title {
+            get {
+                return ResourceManager.GetString("RecordStartView_RecordTags_Title", resourceCulture);
             }
         }
         
@@ -479,6 +488,105 @@ namespace Asv.Drones.Gui.Sdr {
         public static string SdrRttViewModel_SumPower_Title {
             get {
                 return ResourceManager.GetString("SdrRttViewModel_SumPower_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string SdrStoreBrowserViewModel_SearchWatermark {
+            get {
+                return ResourceManager.GetString("SdrStoreBrowserViewModel_SearchWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total samples: {0}.
+        /// </summary>
+        public static string SdrStoreBrowserViewModel_TotalFileSamples {
+            get {
+                return ResourceManager.GetString("SdrStoreBrowserViewModel_TotalFileSamples", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File size: {0}.
+        /// </summary>
+        public static string SdrStoreBrowserViewModel_TotalFileSize {
+            get {
+                return ResourceManager.GetString("SdrStoreBrowserViewModel_TotalFileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete &quot;{0}&quot;?.
+        /// </summary>
+        public static string SdrStoreEntityViewModel_DeleteDialog_Content {
+            get {
+                return ResourceManager.GetString("SdrStoreEntityViewModel_DeleteDialog_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string SdrStoreEntityViewModel_DeleteDialog_PrimaryButton {
+            get {
+                return ResourceManager.GetString("SdrStoreEntityViewModel_DeleteDialog_PrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string SdrStoreEntityViewModel_DeleteDialog_SecondaryButton {
+            get {
+                return ResourceManager.GetString("SdrStoreEntityViewModel_DeleteDialog_SecondaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm delete.
+        /// </summary>
+        public static string SdrStoreEntityViewModel_DeleteDialog_Title {
+            get {
+                return ResourceManager.GetString("SdrStoreEntityViewModel_DeleteDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move.
+        /// </summary>
+        public static string SdrStoreEntityViewModel_MoveDialog_PrimaryButton {
+            get {
+                return ResourceManager.GetString("SdrStoreEntityViewModel_MoveDialog_PrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string SdrStoreEntityViewModel_MoveDialog_SecondaryButton {
+            get {
+                return ResourceManager.GetString("SdrStoreEntityViewModel_MoveDialog_SecondaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change location.
+        /// </summary>
+        public static string SdrStoreEntityViewModel_MoveDialog_Title {
+            get {
+                return ResourceManager.GetString("SdrStoreEntityViewModel_MoveDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not valid record name.
+        /// </summary>
+        public static string SdrStoreEntityViewModel_Name_Validation_ErrorMessage {
+            get {
+                return ResourceManager.GetString("SdrStoreEntityViewModel_Name_Validation_ErrorMessage", resourceCulture);
             }
         }
         

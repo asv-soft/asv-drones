@@ -122,7 +122,12 @@ namespace Asv.Drones.Gui.Uav
 
             FollowUavCommand = ReactiveCommand.Create(() =>
             {
-                Map.ItemToFollow = null;
+                if (Map.ItemToFollow != null)
+                {
+                    Map.ItemToFollow = null;
+                    IsFollowed = false;
+                    return;
+                }
                 
                 if (Map is MapPageViewModel vm)
                 {
@@ -138,8 +143,8 @@ namespace Asv.Drones.Gui.Uav
                 
                 if (findUavVehicle != null)
                 {
-                    IsFollowed = !IsFollowed;
-                    if (IsFollowed) Map.ItemToFollow = findUavVehicle;
+                    IsFollowed = true;
+                    Map.ItemToFollow = findUavVehicle;
                 }
             }).DisposeItWith(Disposable);
 

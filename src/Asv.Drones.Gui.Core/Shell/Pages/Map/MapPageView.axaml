@@ -43,6 +43,7 @@
 						map:MapView.IsEditable ="{CompiledBinding IsEditable,Mode=OneWay}"
 						map:MapView.OffsetX="{Binding OffsetX,ElementName=AnchorView}"
 						map:MapView.OffsetY="{Binding OffsetY,ElementName=AnchorView}"
+						map:MapView.IsFilled="{CompiledBinding IsFilled, Mode=TwoWay}"
 						IsInEditMode="{CompiledBinding IsInEditMode, Mode=TwoWay}"
 						OffsetXType="{CompiledBinding OffsetX}"
 						OffsetYType="{CompiledBinding OffsetY}"

@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="$(SolutionDir)Asv.Drones.Gui.Custom.props"/>
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
@@ -6,32 +7,27 @@
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <AssemblyVersion>$(ProductStrongVersion)</AssemblyVersion>
         <FileVersion>$(ProductExtendedVersion)</FileVersion>
+        <Configurations>Debug;Release</Configurations>
+        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-
-        <DefineConstants>TRACE;PROPRIETARY</DefineConstants>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-        <DefineConstants>TRACE;PROPRIETARY</DefineConstants>
-
-    </PropertyGroup>
-
 
     <ItemGroup>
         <AvaloniaResource Include="Assets\**" />
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Asv.Cfg" Version="$(AsvCommonVersion)" />
         <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
-        <PackageReference Include="FluentAvaloniaUI" Version="2.0.0" />
-        <PackageReference Include="Material.Icons.Avalonia" Version="2.0.1" />
-        <PackageReference Include="NLog" Version="5.2.0" />
-        <PackageReference Include="System.ComponentModel.Composition" Version="7.0.0" />
-        <PackageReference Include="Asv.Cfg" Version="1.10.1" />
+        <PackageReference Include="FluentAvaloniaUI" Version="$(FluentAvaloniaUIVersion)" />
+        <PackageReference Include="Material.Icons.Avalonia" Version="$(MaterialIconsAvaloniaVersion)" />
+        <PackageReference Include="System.ComponentModel.Composition" Version="$(CompositionVersion)" />
+        <PackageReference Include="NLog" Version="$(NLogVersion)" />
+        
+        
     </ItemGroup>
 
     <ItemGroup>
@@ -59,15 +55,5 @@
         <ProjectReference Include="..\Asv.Drones.Gui.Sdr\Asv.Drones.Gui.Sdr.csproj" />
         <ProjectReference Include="..\Asv.Drones.Gui.Uav\Asv.Drones.Gui.Uav.csproj" />
     </ItemGroup>
-
-    <Choose>
-        <When Condition="$([System.Text.RegularExpressions.Regex]::IsMatch( $(DefineConstants), '^(.*;)*PROPRIETARY(;.*)*$'))">
-            <!-- When PROPRIETARY is defined. -->
-            <ItemGroup>
-                <ProjectReference Include="..\..\..\asv-drones-gui-afis\src\Asv.Drones.Gui.Afis\Asv.Drones.Gui.Afis.csproj" />
-                <ProjectReference Include="..\..\..\asv-drones-gui-weather\src\Asv.Drones.Gui.Weather\Asv.Drones.Gui.Weather.csproj" />
-            </ItemGroup>
-        </When>
-        <!-- other conditions -->
-    </Choose>
+   
 </Project>

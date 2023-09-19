@@ -1,6 +1,5 @@
 using System.Collections.ObjectModel;
 using System.Reactive;
-using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
@@ -31,9 +30,9 @@ public class SdrRecordViewModel:ViewModelBase, IActivatableViewModel
             Description = "365 rec. (45 kb)";
             _tagItems = new ReadOnlyObservableCollection<TagViewModel>(new ObservableCollection<TagViewModel>(new List<TagViewModel>
             {
-                new() {Name = "Tag1: 65.4654"},
-                new() {Name = "Tag2: 4554654"},
-                new() {Name = "Tag2: value1"},
+                new(new TagId(Guid.NewGuid(),Guid.NewGuid()), "Tag1: 65.4654"),
+                new(new TagId(Guid.NewGuid(),Guid.NewGuid()), "Tag1: 65.4654"),
+                new(new TagId(Guid.NewGuid(),Guid.NewGuid()), "Tag1: 65.4654"),
             }));
         }
     }
@@ -72,22 +71,22 @@ public class SdrRecordViewModel:ViewModelBase, IActivatableViewModel
     {
         if (tag.Type == AsvSdrRecordTagType.AsvSdrRecordTagTypeInt64)
         {
-            return new LongTagViewModel(tag);
+            return new LongTagViewModel(tag.Id, tag.Name, tag.GetInt64());
         }
         else if (tag.Type == AsvSdrRecordTagType.AsvSdrRecordTagTypeUint64)
         {
-            return new ULongTagViewModel(tag);
+            return new ULongTagViewModel(tag.Id, tag.Name, tag.GetUint64());
         }
         else if (tag.Type == AsvSdrRecordTagType.AsvSdrRecordTagTypeReal64)
         {
-            return new DoubleTagViewModel(tag);  
+            return new DoubleTagViewModel(tag.Id, tag.Name, tag.GetReal64());
         }
         else if (tag.Type == AsvSdrRecordTagType.AsvSdrRecordTagTypeString8)
         {
-            return new StringTagViewModel(tag);
+            return new StringTagViewModel(tag.Id, tag.Name, tag.GetString());
         }
 
-        return new TagViewModel(tag);
+        return new TagViewModel(tag.Id, tag.Name);
     }
     
     [Reactive]
@@ -103,81 +102,4 @@ public class SdrRecordViewModel:ViewModelBase, IActivatableViewModel
     public ReadOnlyObservableCollection<TagViewModel> Items => _items;
     
     public ViewModelActivator Activator { get; } = new();
-}
-
-public class TagViewModel:ReactiveObject
-{
-    public TagViewModel()
-    {
-        
-    }
-    
-    public TagViewModel(AsvSdrClientRecordTag tag)
-    {
-        Name = tag.ToString();
-    }
-    
-    public string Name { get; set; } = null!;
-    
-    public ICommand Remove { get; set; }
-}
-
-public class LongTagViewModel : TagViewModel
-{
-    public LongTagViewModel()
-    {
-        
-    }
-    
-    public LongTagViewModel(AsvSdrClientRecordTag tag) : base(tag)
-    {
-        Value = tag.GetInt64();
-    }
-    
-    public long Value { get; set; }
-}
-
-public class ULongTagViewModel : TagViewModel
-{
-    public ULongTagViewModel()
-    {
-        
-    }
-    
-    public ULongTagViewModel(AsvSdrClientRecordTag tag) : base(tag)
-    {
-        Value = tag.GetUint64();
-    }
-    
-    public ulong Value { get; set; }
-}
-
-public class DoubleTagViewModel : TagViewModel
-{
-    public DoubleTagViewModel()
-    {
-        
-    }
-    
-    public DoubleTagViewModel(AsvSdrClientRecordTag tag) : base(tag)
-    {
-        Value = tag.GetReal64();
-    }
-    
-    public double Value { get; set; }
-}
-
-public class StringTagViewModel : TagViewModel
-{
-    public StringTagViewModel()
-    {
-        
-    }
-    
-    public StringTagViewModel(AsvSdrClientRecordTag tag) : base(tag)
-    {
-        Value = tag.GetString();
-    }
-    
-    public string Value { get; set; }
 }

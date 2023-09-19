@@ -30,7 +30,7 @@ namespace Asv.Drones.Gui.Core
         Uri Id { get; }
     }
 
-    public class ViewModelBase : DisposableViewModelBase, IViewModel
+    public class ViewModelBase : DisposableReactiveObject, IViewModel
     {
         protected ViewModelBase(Uri id)
         {

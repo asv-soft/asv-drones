@@ -11,12 +11,23 @@
     <Design.DataContext>
         <sdr:SdrStorePageViewModel/>
     </Design.DataContext>
-    <Grid ColumnDefinitions="2*,30,1*">
-        <sdr:SdrStoreBrowserView DataContext="{Binding Store}"/>
-        <Button Grid.Column="1" Height="100" Content="{avalonia:MaterialIconExt Kind=TransferLeft}" Theme="{DynamicResource TransparentButton}" Command="{Binding DownloadRecord}" />
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" MinWidth="300"/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="1*" MinWidth="300"/>
+        </Grid.ColumnDefinitions>
+        <sdr:SdrStoreBrowserView Grid.Column="0" DataContext="{Binding Store}"/>
+        <GridSplitter Grid.Column="1"/>
+        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1">
+            <Button Height="50" Content="{avalonia:MaterialIconExt Kind=TransferLeft}" Theme="{DynamicResource TransparentButton}" Command="{Binding DownloadRecord.Command}"/>
+            <Grid>
+                <Rectangle HorizontalAlignment="Left" Width="26" Margin="2" Height="1" Fill="Gray"/>
+                <Border HorizontalAlignment="Left" Width="{Binding Progress}" Margin="2" CornerRadius="2" ClipToBounds="True">
+                    <Rectangle Height="5" Fill="#40b5e0"/>
+                </Border>
+            </Grid>
+        </StackPanel>
         <sdr:SdrPayloadBrowserView Grid.Column="2" DataContext="{Binding Device}"/>
-       
-        
     </Grid>
-    
 </UserControl>

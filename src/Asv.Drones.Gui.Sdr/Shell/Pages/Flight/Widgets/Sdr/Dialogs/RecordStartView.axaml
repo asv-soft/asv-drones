@@ -5,89 +5,101 @@
              xmlns:sdr="clr-namespace:Asv.Drones.Gui.Sdr"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              mc:Ignorable="d"
+             Height="350"
+             Width="450"
+             MinWidth="450"
+             MaxWidth="450"
              x:Class="Asv.Drones.Gui.Sdr.RecordStartView"
              x:DataType="sdr:RecordStartViewModel">
     <Design.DataContext>
         <sdr:RecordStartViewModel/>
     </Design.DataContext>
     
-    <StackPanel Margin="8" Spacing="8">
-        <TextBlock Text="{x:Static sdr:RS.RecordStartView_RecordName_Title}" FontSize="20"/>
-        <TextBox Watermark="{x:Static sdr:RS.RecordStartView_RecordName_Watermark}" Text="{Binding RecordName}"/>
-        <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Tags}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.DataTemplates>
-                <DataTemplate DataType="sdr:LongTagViewModel">
-                    <Border Margin="4" Background="CornflowerBlue" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
-                        <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
-                            <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
-                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                <TextBlock FontSize="12" Foreground="White" Text="{Binding Name}"/>
-                                <TextBlock FontSize="12" Foreground="White" Text=": "/>
-                                <TextBlock FontSize="12" Foreground="White" Text="{Binding Value}"/>
-                            </StackPanel>
-                            <Button VerticalAlignment="Center" BorderThickness="0" Background="Transparent" Width="18" Height="18" Command="{Binding Remove}">
-                                <avalonia:MaterialIcon Kind="Close" Width="14" Height="14"/>
-                            </Button>
-                        </StackPanel>
-                    </Border>
-                </DataTemplate>
-                <DataTemplate DataType="sdr:ULongTagViewModel">
-                    <Border Margin="4" Background="#FE8256" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
-                        <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
-                            <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
-                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                <TextBlock FontSize="12" Foreground="White" Text="{Binding Name}"/>
-                                <TextBlock FontSize="12" Foreground="White" Text=": "/>
-                                <TextBlock FontSize="12" Foreground="White" Text="{Binding Value}"/>
-                            </StackPanel>
-                            <Button VerticalAlignment="Center" BorderThickness="0" Background="Transparent" Width="18" Height="18" Command="{Binding Remove}">
-                                <avalonia:MaterialIcon Kind="Close" Width="14" Height="14"/>
-                            </Button>
-                        </StackPanel>
-                    </Border>
-                </DataTemplate>
-                <DataTemplate DataType="sdr:DoubleTagViewModel">
-                    <Border Margin="4" Background="#ACC865" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
-                        <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
-                            <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
-                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                <TextBlock FontSize="12" Foreground="White" Text="{Binding Name}"/>
-                                <TextBlock FontSize="12" Foreground="White" Text=": "/>
-                                <TextBlock FontSize="12" Foreground="White" Text="{Binding Value}"/>
-                            </StackPanel>
-                            <Button VerticalAlignment="Center" BorderThickness="0" Background="Transparent" Width="16" Height="16" Command="{Binding Remove}">
-                                <avalonia:MaterialIcon Kind="Close" Width="14" Height="14"/>
-                            </Button>
-                        </StackPanel>
-                    </Border>
-                </DataTemplate>
-                <DataTemplate DataType="sdr:StringTagViewModel">
-                    <Border Margin="4" Background="#CD91B6" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
-                        <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
-                            <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
-                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                <TextBlock FontSize="12" Foreground="White" Text="{Binding Name}"/>
-                                <TextBlock FontSize="12" Foreground="White" Text=": "/>
-                                <TextBlock FontSize="12" Foreground="White" Text="{Binding Value}"/>
-                            </StackPanel>
-                            <Button VerticalAlignment="Center" BorderThickness="0" Background="Transparent" Width="18" Height="18" Command="{Binding Remove}">
-                                <avalonia:MaterialIcon Kind="Close" Width="14" Height="14"/>
-                            </Button>
-                        </StackPanel>
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.DataTemplates>
-        </ItemsControl>
-        <Grid ColumnDefinitions="*, 4, 100, 4, Auto">
-            <TextBox Grid.Column="0" Watermark="{x:Static sdr:RS.RecordStartView_TagName_Watermark}" Text="{Binding TagName}"/>
-            <ComboBox Grid.Column="2" Width="100" ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}"/>
-            <Button Grid.Column="4" Content="{x:Static sdr:RS.RecordStartView_AddButton_Title}" Command="{Binding AddTag}" VerticalAlignment="Top"/>
-        </Grid>
-        <TextBox Watermark="{x:Static sdr:RS.RecordStartView_TagValue_Watermark}" Text="{Binding TagValue}"/>
-    </StackPanel>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Margin="8" Spacing="8">
+            <TextBlock Text="{x:Static sdr:RS.RecordStartView_RecordName_Title}" FontSize="20"/>
+            <TextBox Watermark="{x:Static sdr:RS.RecordStartView_RecordName_Watermark}" Text="{Binding RecordName}"/>
+        </StackPanel>
+        <Expander Header="{x:Static sdr:RS.RecordStartView_RecordTags_Title}" FontSize="15">
+            <ScrollViewer>
+                <StackPanel Margin="10" Spacing="8">
+                    <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Tags}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.DataTemplates>
+                            <DataTemplate DataType="sdr:LongTagViewModel">
+                                <Border Margin="4" Background="CornflowerBlue" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
+                                    <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
+                                        <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
+                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                            <TextBlock FontSize="12" Foreground="White" Text="{Binding Name}"/>
+                                            <TextBlock FontSize="12" Foreground="White" Text=": "/>
+                                            <TextBlock FontSize="12" Foreground="White" Text="{Binding Value}"/>
+                                        </StackPanel>
+                                        <Button VerticalAlignment="Center" BorderThickness="0" Background="Transparent" Width="18" Height="18" Command="{Binding Remove}">
+                                            <avalonia:MaterialIcon Kind="Close" Width="14" Height="14"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                            <DataTemplate DataType="sdr:ULongTagViewModel">
+                                <Border Margin="4" Background="#FE8256" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
+                                    <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
+                                        <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
+                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                            <TextBlock FontSize="12" Foreground="White" Text="{Binding Name}"/>
+                                            <TextBlock FontSize="12" Foreground="White" Text=": "/>
+                                            <TextBlock FontSize="12" Foreground="White" Text="{Binding Value}"/>
+                                        </StackPanel>
+                                        <Button VerticalAlignment="Center" BorderThickness="0" Background="Transparent" Width="18" Height="18" Command="{Binding Remove}">
+                                            <avalonia:MaterialIcon Kind="Close" Width="14" Height="14"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                            <DataTemplate DataType="sdr:DoubleTagViewModel">
+                                <Border Margin="4" Background="#ACC865" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
+                                    <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
+                                        <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
+                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                            <TextBlock FontSize="12" Foreground="White" Text="{Binding Name}"/>
+                                            <TextBlock FontSize="12" Foreground="White" Text=": "/>
+                                            <TextBlock FontSize="12" Foreground="White" Text="{Binding Value}"/>
+                                        </StackPanel>
+                                        <Button VerticalAlignment="Center" BorderThickness="0" Background="Transparent" Width="16" Height="16" Command="{Binding Remove}">
+                                            <avalonia:MaterialIcon Kind="Close" Width="14" Height="14"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                            <DataTemplate DataType="sdr:StringTagViewModel">
+                                <Border Margin="4" Background="#CD91B6" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
+                                    <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
+                                        <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
+                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                            <TextBlock FontSize="12" Foreground="White" Text="{Binding Name}"/>
+                                            <TextBlock FontSize="12" Foreground="White" Text=": "/>
+                                            <TextBlock FontSize="12" Foreground="White" Text="{Binding Value}"/>
+                                        </StackPanel>
+                                        <Button VerticalAlignment="Center" BorderThickness="0" Background="Transparent" Width="18" Height="18" Command="{Binding Remove}">
+                                            <avalonia:MaterialIcon Kind="Close" Width="14" Height="14"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.DataTemplates>
+                    </ItemsControl>
+                    <Grid ColumnDefinitions="*, 4, 100, 4, Auto">
+                        <TextBox Grid.Column="0" Watermark="{x:Static sdr:RS.RecordStartView_TagName_Watermark}" Text="{Binding TagName}"/>
+                        <ComboBox Grid.Column="2" Width="100" ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}"/>
+                        <Button Grid.Column="4" Content="{x:Static sdr:RS.RecordStartView_AddButton_Title}" Command="{Binding AddTag}" VerticalAlignment="Top"/>
+                    </Grid>
+                    <TextBox Watermark="{x:Static sdr:RS.RecordStartView_TagValue_Watermark}" Text="{Binding TagValue}"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Expander>
+    </DockPanel>
 </UserControl>

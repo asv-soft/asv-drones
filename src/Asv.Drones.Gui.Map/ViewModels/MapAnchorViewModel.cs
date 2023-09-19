@@ -98,6 +98,8 @@ namespace Asv.Avalonia.Map
         public string Description { get; set; }
         [Reactive]
         public double Size { get; set; } = 32;
+        [Reactive]
+        public bool IsFilled { get; set; }
         
         public virtual ReadOnlyObservableCollection<MapAnchorActionViewModel> Actions { get; }
         
