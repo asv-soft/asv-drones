@@ -879,6 +879,33 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Field strength measure units.
+        /// </summary>
+        public static string FieldStrength_Description {
+            get {
+                return ResourceManager.GetString("FieldStrength_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to µV/m.
+        /// </summary>
+        public static string FieldStrength_MicroVoltsPerMeter_Unit {
+            get {
+                return ResourceManager.GetString("FieldStrength_MicroVoltsPerMeter_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field strength.
+        /// </summary>
+        public static string FieldStrength_Title {
+            get {
+                return ResourceManager.GetString("FieldStrength_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Flight mode.
         /// </summary>
         public static string FlightShellMenuItem_Name {
