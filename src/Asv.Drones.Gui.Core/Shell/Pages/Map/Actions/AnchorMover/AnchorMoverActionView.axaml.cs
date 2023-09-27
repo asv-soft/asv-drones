@@ -13,6 +13,6 @@ public partial class AnchorMoverActionView : ReactiveUserControl<AnchorMoverActi
     public AnchorMoverActionView()
     {
         InitializeComponent();
-        HotKeyManager.SetHotKey(editAnchorsToggleButton, new KeyGesture(Key.LeftCtrl, KeyModifiers.Control));
+        HotKeyManager.SetHotKey(editAnchorsToggleButton, new KeyGesture(Key.LeftAlt, KeyModifiers.Alt));
     }
 }
