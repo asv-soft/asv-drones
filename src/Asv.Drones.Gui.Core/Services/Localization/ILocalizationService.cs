@@ -86,7 +86,8 @@ namespace Asv.Drones.Gui.Core
         IMeasureUnit<double, BearingUnits> Bearing { get; }
         IMeasureUnit<double, TemperatureUnits> Temperature { get; }
         IMeasureUnit<double, DegreeUnits> Degree { get; }
-        
+        IMeasureUnit<double, FieldStrengthUnits> FieldStrength { get; }
+
         #endregion
 
         public GeoPoint ToSiGeoPoint(string? latitude, string? longitude, string? altitude)

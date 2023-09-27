@@ -1006,4 +1006,13 @@
   <data name="Sdm_Title" xml:space="preserve">
 	  <value>СГМ</value>
   </data>
+  <data name="FieldStrength_Title" xml:space="preserve">
+	  <value>Напряжённость поля</value>
+  </data>
+  <data name="FieldStrength_Description" xml:space="preserve">
+	  <value>Единицы измерения напряжённости поля</value>
+  </data>
+  <data name="FieldStrength_MicroVoltsPerMeter_Unit" xml:space="preserve">
+	  <value>мкВ/м</value>
+  </data>
 </root>
