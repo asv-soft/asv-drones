@@ -208,7 +208,10 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         };
             
         var viewModel = new RecordStartViewModel();
-            
+        
+        if (SelectedMode != null) 
+            viewModel.RecordName = $"{DateTime.Now:YY_MM_DD_HH_MM}_{SelectedMode.Mode}";
+        
         viewModel.ApplyDialog(dialog);
             
         dialog.Content = viewModel;
@@ -366,7 +369,7 @@ public class SdrModeViewModel:ReactiveObject
     public string Name { get; }
     public AsvSdrCustomMode Mode { get; }
 
-    public SdrModeViewModel(string name, AsvSdrCustomMode mode,MaterialIconKind icon)
+    public SdrModeViewModel(string name, AsvSdrCustomMode mode, MaterialIconKind icon)
     {
         Name = name;
         Mode = mode;
