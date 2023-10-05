@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
+using Avalonia.Media;
 using Material.Icons;
 
 namespace Asv.Drones.Gui.Core
@@ -11,6 +12,8 @@ namespace Asv.Drones.Gui.Core
         public Uri Id { get; } = new("asv:shell.menu.connections");
         public string Name => RS.ConnectionsShellMenuItem_Name;
         public Uri NavigateTo => ConnectionsViewModel.BaseUri;
+        
+        public Brush IconColor { get; }
         public string Icon => MaterialIconDataProvider.GetData(MaterialIconKind.Lan);
         public ShellMenuPosition Position => ShellMenuPosition.Bottom;
         public ShellMenuItemType Type => ShellMenuItemType.PageNavigation;

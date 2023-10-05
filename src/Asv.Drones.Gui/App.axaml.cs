@@ -35,7 +35,8 @@ public partial class App : Application
         LogManager.Setup().LoadConfiguration(builder =>
         {
             builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToDebug();
-            //builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToFile(fileName: "log.txt");
+            /*builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToConsole();*/
+            builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToFile(fileName: "log.txt");
         });
         
         _container = new CompositionContainer(new AggregateCatalog(Catalogs().ToArray()), CompositionOptions.IsThreadSafe);
@@ -92,8 +93,16 @@ public partial class App : Application
             yield return asm;
         }
         
-        // Enable this feature to load plugins from folder
-        var dir = Path.GetFullPath("./"); //Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        var path = Assembly.GetExecutingAssembly().Location;
+        string? dir;
+        if (string.IsNullOrWhiteSpace(path) == false)
+        {
+            dir = Path.GetDirectoryName(path);
+        }
+        else
+        {
+            dir = Path.GetDirectoryName(Environment.CurrentDirectory);
+        }
         var cat = new DirectoryCatalog(dir, "Asv.Drones.Gui.Plugin.*.dll");
         cat.Refresh();
         Logger.Trace($"Search plugin in {cat.Path}");

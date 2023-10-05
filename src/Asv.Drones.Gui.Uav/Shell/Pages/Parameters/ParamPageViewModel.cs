@@ -109,13 +109,13 @@ public class ParamPageViewModel: ShellPage
                 Init(copter.Params);
                 break;
             case DeviceClass.GbsRtk:
-                var gbs = _svc.GetVehicleByFullId(id);
+                var gbs = _svc.GetGbsByFullId(id);
                 if (gbs == null) return;
                 DeviceName = gbs.Name.Value;
                 Init(gbs.Params);
                 break;
             case DeviceClass.SdrPayload:
-                var sdr = _svc.GetVehicleByFullId(id);
+                var sdr = _svc.GetPayloadsByFullId(id);
                 if (sdr == null) return;
                 DeviceName = sdr.Name.Value;
                 Init(sdr.Params);
