@@ -208,9 +208,11 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         };
             
         var viewModel = new RecordStartViewModel();
-        
-        if (SelectedMode != null) 
-            viewModel.RecordName = $"{DateTime.Now:YY_MM_DD_HH_MM}_{SelectedMode.Mode}";
+
+        if (SelectedMode != null)
+        {
+            viewModel.RecordName = $"{DateTime.Now:yy_MM_dd_hh_mm}_{SelectedMode.Name}";
+        }
         
         viewModel.ApplyDialog(dialog);
             
