@@ -153,7 +153,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             }
             _configuration.Set(_config);
             return Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode,
-                (ulong)Math.Round(_freqInMHzMeasureUnit.ConvertToSi(FrequencyInMhz)), 1, 1, cancel);
+                (ulong)Math.Round(_freqInMHzMeasureUnit.ConvertToSi(FrequencyInMhz)), 5, 5, cancel);
         });
         UpdateMode.ThrownExceptions.Subscribe(ex =>
         {
@@ -211,7 +211,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
 
         if (SelectedMode != null)
         {
-            viewModel.RecordName = $"{DateTime.Now:yy_MM_dd_hh_mm}_{SelectedMode.Name}";
+            viewModel.RecordName = $"{SelectedMode.Name}_{DateTime.Now:yy_MM_dd_hh_mm}";
         }
         
         viewModel.ApplyDialog(dialog);
