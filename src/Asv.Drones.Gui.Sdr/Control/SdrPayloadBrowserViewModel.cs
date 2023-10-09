@@ -62,7 +62,10 @@ public class SdrPayloadBrowserViewModel:ViewModelBase
                 IsAnySelected = _ != null;
             })
             .DisposeItWith(Disposable);
+       
     }
+
+    public ReactiveCommand<Unit,Unit> Refresh { get; set; }
 
     public ReadOnlyObservableCollection<SdrDeviceViewModel> Devices => _devices;
     

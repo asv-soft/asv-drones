@@ -3,8 +3,10 @@ using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
+using DocumentFormat.OpenXml.Office2010.CustomUI;
 using NLog;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Sdr;
 
@@ -28,14 +30,18 @@ public class CancellableCommandWithProgress<TArg,TResult>: DisposableReactiveObj
         _name = name;
         _log = log ?? throw new ArgumentNullException(nameof(log));
         _scheduler = scheduler ?? RxApp.MainThreadScheduler;
-
+        
         Command = ReactiveCommand.CreateFromObservable<TArg,TResult>(arg => Observable
             .StartAsync(token=>InternalExecute(arg,token), _scheduler)
             .TakeUntil(Cancel!)).DisposeItWith(Disposable);
         Command.ThrownExceptions.ObserveOn(_scheduler).Subscribe(InternalError).DisposeItWith(Disposable);
         Cancel = ReactiveCommand.Create(InternalCancel, Command.IsExecuting,_scheduler)
             .DisposeItWith(Disposable);
+        Command.IsExecuting.Subscribe(x => IsExecuting = x).DisposeItWith(Disposable);
     }
+
+    [Reactive]
+    public bool IsExecuting { get; set; }
 
     private void InternalError(Exception exception)
     {

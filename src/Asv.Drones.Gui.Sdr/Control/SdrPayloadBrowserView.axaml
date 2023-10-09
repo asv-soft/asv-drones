@@ -8,6 +8,12 @@
              x:CompileBindings="True"
              x:DataType="sdr:SdrPayloadBrowserViewModel"
              x:Class="Asv.Drones.Gui.Sdr.SdrPayloadBrowserView">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="FolderBrush" Color="#FBC02D"/>
+        <SolidColorBrush x:Key="FileBrush" Color="#40b5e0"/>
+        <SolidColorBrush x:Key="DeleteBrush" Color="#D84315"/>
+        <x:Double x:Key="IconSize">18</x:Double>
+    </UserControl.Resources>
     <Design.DataContext>
         <sdr:SdrPayloadBrowserViewModel/>
     </Design.DataContext>
@@ -25,16 +31,22 @@
             Padding="{DynamicResource ButtonPadding}"
             CornerRadius="{StaticResource ControlCornerRadius}">
             <DockPanel>
-                <ComboBox DockPanel.Dock="Top" ItemsSource="{Binding Devices}" HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedDevice}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="Memory" Foreground="BlueViolet"  Width="18" Height="18" Margin="0,0,5,0"/>
-                            <TextBlock VerticalAlignment="Center" DockPanel.Dock="Top" Text="{Binding Name}" />      
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+                <DockPanel DockPanel.Dock="Top" > 
+                    <Button DockPanel.Dock="Right" Margin="8,0,0,0"  Command="{Binding SelectedDevice.DownloadRecords}">
+                        <avalonia:MaterialIcon Kind="Refresh" Foreground="{StaticResource FileBrush}" />
+                    </Button>
+                    <ComboBox ItemsSource="{Binding Devices}" HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedDevice}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="Memory" Foreground="BlueViolet"  Width="18" Height="18" Margin="0,0,5,0"/>
+                                    <TextBlock VerticalAlignment="Center" DockPanel.Dock="Top" Text="{Binding Name}" />      
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </DockPanel>
+                
                 <ListBox DataContext="{Binding SelectedDevice, Mode=TwoWay}" Margin="0,8,0,0" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedRecord, Mode=TwoWay}">
                 <ListBox.Styles>
                     <Style Selector="ListBoxItem" x:DataType="sdr:SdrPayloadRecordViewModel">
@@ -95,7 +107,6 @@
                             DockPanel.Dock="Right" Theme="{DynamicResource TransparentButton}" Command="{Binding SelectedRecord.Delete}">
                             <avalonia:MaterialIcon Kind="Close" Width="18" Height="18" Foreground="#D84315"/>
                         </Button>
-                                
                         <TextBlock VerticalAlignment="Center" Text="{Binding SelectedRecord.Name}"/>
                     </DockPanel>
                     <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding SelectedRecord.Tags}">
@@ -120,7 +131,6 @@
                                         <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
                                     </StackPanel>
                                 </Border>
-                               
                             </DataTemplate>
                             <DataTemplate DataType="sdr:DoubleTagViewModel">
                                 <Border ToolTip.Tip="Float64" Background="#ACC865" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
@@ -129,7 +139,6 @@
                                         <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
                                     </StackPanel>
                                 </Border>
-                            
                             </DataTemplate>
                             <DataTemplate DataType="sdr:StringTagViewModel">
                                 <Border ToolTip.Tip="String8" Background="#CD91B6" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
