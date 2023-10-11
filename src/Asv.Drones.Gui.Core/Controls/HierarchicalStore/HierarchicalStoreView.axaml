@@ -70,7 +70,7 @@
                     <TreeView SelectionMode="Toggle" Margin="0,8,0,8" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                         <TreeView.ItemTemplate>
                             <TreeDataTemplate ItemsSource="{Binding Items}">
-                                <DockPanel HorizontalAlignment="Stretch">
+                                <DockPanel HorizontalAlignment="Stretch" LastChildFill="False">
                                     <avalonia:MaterialIcon
                                         Margin="0,0,8,0"
                                         Classes.folder="{Binding IsFolder}"
@@ -79,7 +79,7 @@
                                         Classes.selected="{Binding IsSelected}"
                                         Width="15" Height="15"/>
                                     <TextBlock MinWidth="120" Text="{Binding Name}"/>
-                                    <TextBlock Foreground="Gray" Text="{Binding Description}"/>
+                                    <TextBlock DockPanel.Dock="Right" Foreground="Gray" Text="{Binding Description}"/>
                                 </DockPanel>
                             </TreeDataTemplate>
                         </TreeView.ItemTemplate>
