@@ -107,46 +107,51 @@ public partial class App : Application
         }
     }
 
+    private void InitContainer()
+    {
+        var batch = new CompositionBatch();
+        batch.AddExportedValue(_container);
+        batch.AddExportedValue<IDataTemplateHost>(this);
+        _container.Compose(batch);
+            
+        #region loading plugins entry points
+
+        var plugins = _container.GetExports<IPluginEntryPoint, IPluginMetadata>().ToArray();
+        var sort = plugins.ToDictionary(_=>_.Metadata.Name, _=>_.Metadata.Dependency);
+        Logger.Info($"Begin loading plugins [{plugins.Length} items]");
+        foreach (var name in DepthFirstSearch.Sort(sort))
+        {
+            try
+            {
+                Logger.Trace($"Init {name}");
+                var plugin = plugins.First(_ => _.Metadata.Name == name);
+                var item = new KeyValuePair<IPluginMetadata, IPluginEntryPoint>(plugin.Metadata, plugin.Value);
+                _plugins.Push(item);
+                Logger.Debug($"Load plugin entry point '{plugin.Metadata.Name}' depended on [{string.Join(",", plugin.Metadata.Dependency)}]");
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e,$"Error to load plugin entry point: {name}:{e.Message}");
+                if (Debugger.IsAttached)
+                {
+                    Debugger.Break();
+                }
+            }
+        }
+        
+        // This is done so that plugins won't load in design time
+        if (Design.IsDesignMode) _plugins.Clear();
+
+        #endregion
+    }
+
     public override void OnFrameworkInitializationCompleted()
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             _container = new CompositionContainer(new AggregateCatalog(Catalogs().ToArray()), CompositionOptions.IsThreadSafe);
-            // we need to export the container itself
-            var batch = new CompositionBatch();
-            batch.AddExportedValue(_container);
-            batch.AddExportedValue<IDataTemplateHost>(this);
-            _container.Compose(batch);
             
-            #region loading plugins entry points
-
-            var plugins = _container.GetExports<IPluginEntryPoint, IPluginMetadata>().ToArray();
-            var sort = plugins.ToDictionary(_=>_.Metadata.Name, _=>_.Metadata.Dependency);
-            Logger.Info($"Begin loading plugins [{plugins.Length} items]");
-            foreach (var name in DepthFirstSearch.Sort(sort))
-            {
-                try
-                {
-                    Logger.Trace($"Init {name}");
-                    var plugin = plugins.First(_ => _.Metadata.Name == name);
-                    var item = new KeyValuePair<IPluginMetadata, IPluginEntryPoint>(plugin.Metadata, plugin.Value);
-                    _plugins.Push(item);
-                    Logger.Debug($"Load plugin entry point '{plugin.Metadata.Name}' depended on [{string.Join(",", plugin.Metadata.Dependency)}]");
-                }
-                catch (Exception e)
-                {
-                    Logger.Error(e,$"Error to load plugin entry point: {name}:{e.Message}");
-                    if (Debugger.IsAttached)
-                    {
-                        Debugger.Break();
-                    }
-                }
-            }
-        
-            // This is done so that plugins won't load in design time
-            if (Design.IsDesignMode) _plugins.Clear();
-
-            #endregion
+            InitContainer();
             
             desktop.ShutdownRequested += OnShutdownRequested;
             var configuration = _container.GetExportedValue<IConfiguration>();
@@ -154,6 +159,7 @@ public partial class App : Application
             var window = new MainWindow(configuration);
             var navigation = _container.GetExportedValue<INavigationService>();
             navigation?.InitStorageProvider(window.StorageProvider);
+            
             desktop.MainWindow = new MainWindow
             {
                 DataContext = _container.GetExportedValue<IShell>()
@@ -162,41 +168,8 @@ public partial class App : Application
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
             _container = new CompositionContainer(new AggregateCatalog(AndroidCatalogs().ToArray()), CompositionOptions.IsThreadSafe);
-            // we need to export the container itself
-            var batch = new CompositionBatch();
-            batch.AddExportedValue(_container);
-            batch.AddExportedValue<IDataTemplateHost>(this);
-            _container.Compose(batch);
             
-            #region loading plugins entry points
-
-            var plugins = _container.GetExports<IPluginEntryPoint, IPluginMetadata>().ToArray();
-            var sort = plugins.ToDictionary(_=>_.Metadata.Name, _=>_.Metadata.Dependency);
-            Logger.Info($"Begin loading plugins [{plugins.Length} items]");
-            foreach (var name in DepthFirstSearch.Sort(sort))
-            {
-                try
-                {
-                    Logger.Trace($"Init {name}");
-                    var plugin = plugins.First(_ => _.Metadata.Name == name);
-                    var item = new KeyValuePair<IPluginMetadata, IPluginEntryPoint>(plugin.Metadata, plugin.Value);
-                    _plugins.Push(item);
-                    Logger.Debug($"Load plugin entry point '{plugin.Metadata.Name}' depended on [{string.Join(",", plugin.Metadata.Dependency)}]");
-                }
-                catch (Exception e)
-                {
-                    Logger.Error(e,$"Error to load plugin entry point: {name}:{e.Message}");
-                    if (Debugger.IsAttached)
-                    {
-                        Debugger.Break();
-                    }
-                }
-            }
-        
-            // This is done so that plugins won't load in design time
-            if (Design.IsDesignMode) _plugins.Clear();
-
-            #endregion
+            InitContainer();
 
             singleViewPlatform.MainView = new ShellView
             {
