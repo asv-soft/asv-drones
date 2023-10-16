@@ -233,10 +233,10 @@ public class GpSdrRttViewModel : ViewModelBase, ISdrRttWidget
                 TotalPowerValue = _.Payload.TotalPower;
                 TotalPowerStringValue = loc.Power.FromSiToString(_.Payload.TotalPower);
                 TotalDdmStringValue = _loc.DdmGp.FromSiToString(_.Payload.TotalAm150 - _.Payload.TotalAm90);
-                TotalSdmStringValue = _loc.Sdm.FromSiToString((_.Payload.TotalAm90 + _.Payload.TotalAm150) * 100.0);
-                TotalAm90StringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.TotalAm90 * 100.0);
-                TotalAm150StringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.TotalAm150 * 100.0);
-                Phi90StringValue = _loc.Phase.FromSiToString(_.Payload.Phi90CrsVsClr);
+                TotalSdmStringValue = _loc.Sdm.FromSiToString((_.Payload.TotalAm90 + _.Payload.TotalAm150));
+                TotalAm90StringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.TotalAm90);
+                TotalAm150StringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.TotalAm150);
+                Phi90StringValue = _.Payload.GnssFixType.ToString("G"); //_loc.Phase.FromSiToString(_.Payload.Phi90CrsVsClr);
                 Phi150StringValue = _loc.Phase.FromSiToString(_.Payload.Phi150CrsVsClr);
                 TotalFreq90StringValue = _freqInHzMeasureUnit?.FromSiToString(_.Payload.TotalFreq90);
                 TotalFreq150StringValue = _freqInHzMeasureUnit?.FromSiToString(_.Payload.TotalFreq150);
@@ -244,17 +244,17 @@ public class GpSdrRttViewModel : ViewModelBase, ISdrRttWidget
                 CrsPowerValue = _.Payload.CrsPower;
                 CrsPowerStringValue = loc.Power.FromSiToString(_.Payload.CrsPower);
                 CrsDdmStringValue = _loc.DdmGp.FromSiToString(_.Payload.CrsAm150 - _.Payload.CrsAm90);
-                CrsSdmStringValue = _loc.Sdm.FromSiToString((_.Payload.CrsAm90 + _.Payload.CrsAm150) * 100.0);
-                CrsAm90StringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.CrsAm90 * 100.0);
-                CrsAm150StringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.CrsAm150 * 100.0);
+                CrsSdmStringValue = _loc.Sdm.FromSiToString((_.Payload.CrsAm90 + _.Payload.CrsAm150));
+                CrsAm90StringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.CrsAm90);
+                CrsAm150StringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.CrsAm150);
                 CrsFrequencyStringValue = _freqInKHzMeasureUnit?.FromSiToString(_.Payload.CrsCarrierOffset);
 
                 ClrPowerValue = _.Payload.ClrPower;
                 ClrPowerStringValue = loc.Power.FromSiToString(_.Payload.ClrPower);
                 ClrDdmStringValue = _loc.DdmGp.FromSiToString(_.Payload.ClrAm150 - _.Payload.ClrAm90);
-                ClrSdmStringValue = _loc.Sdm.FromSiToString((_.Payload.ClrAm90 + _.Payload.ClrAm150) * 100.0);
-                ClrAm90StringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.ClrAm90 * 100.0);
-                ClrAm150StringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.ClrAm150 * 100.0);
+                ClrSdmStringValue = _loc.Sdm.FromSiToString((_.Payload.ClrAm90 + _.Payload.ClrAm150));
+                ClrAm90StringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.ClrAm90);
+                ClrAm150StringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.ClrAm150);
                 ClrFrequencyStringValue = _freqInKHzMeasureUnit?.FromSiToString(_.Payload.ClrCarrierOffset);
             })
             .DisposeItWith(Disposable);

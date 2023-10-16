@@ -9,10 +9,10 @@ namespace Asv.Drones.Gui.Uav;
 
 [Export(typeof(IViewModelProvider<IShellMenuItem>))]
 [PartCreationPolicy(CreationPolicy.NonShared)]
-public class UavShellMenuItemProvider : ViewModelProviderBase<IShellMenuItem>
+public class VehiclesShellMenuItemProvider : ViewModelProviderBase<IShellMenuItem>
 {
     [ImportingConstructor]
-     public UavShellMenuItemProvider(IMavlinkDevicesService svc)
+     public VehiclesShellMenuItemProvider(IMavlinkDevicesService svc)
      {
          svc.Vehicles.Transform(_ => (IShellMenuItem)new ShellMenuItem($"asv:shell.menu.uav.{_.FullId}")
          {

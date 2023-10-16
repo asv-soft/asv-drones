@@ -983,4 +983,13 @@
   <data name="TemplaterView_ClearTagsList" xml:space="preserve">
     <value>Clear tags list</value>
   </data>
+  <data name="FieldStrength_Title" xml:space="preserve">
+    <value>Field strength</value>
+  </data>
+  <data name="FieldStrength_Description" xml:space="preserve">
+    <value>Field strength measure units</value>
+  </data>
+  <data name="FieldStrength_MicroVoltsPerMeter_Unit" xml:space="preserve">
+    <value>µV/m</value>
+  </data>
 </root>

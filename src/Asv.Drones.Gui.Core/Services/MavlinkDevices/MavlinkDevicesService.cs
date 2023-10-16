@@ -174,13 +174,15 @@ namespace Asv.Drones.Gui.Core
 
         private ISdrClientDevice CreateSdrDevice(IMavlinkDevice device)
         {
-            return new SdrClientDevice(Router, new MavlinkClientIdentity
+            var dev = new SdrClientDevice(Router, new MavlinkClientIdentity
             {
                 TargetSystemId = device.SystemId,
                 TargetComponentId = device.ComponentId,
                 SystemId = _systemId.Value,
                 ComponentId = _componentId.Value,
             },InternalGetConfig(_ => _.Sdr), _sequenceCalculator, RxApp.MainThreadScheduler);
+            ((ParamsClientEx)dev.Params).Init(new MavParamByteWiseEncoding(),ArraySegment<ParamDescription>.Empty);
+            return dev;
         }
 
         private IGbsClientDevice CreateBaseStation(IMavlinkDevice device)

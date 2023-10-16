@@ -56,14 +56,18 @@ public class LongitudeUnitDeg :  IMeasureUnitItem<double, LongitudeUnits>
 
     public string Print(double value)
     {
-        return value.ToString("F7");
+        return value.ToString("F6");
     }
 
     public string PrintWithUnits(double value)
     {
-        return $"{value:F7}°";
+        return $"{value:F6}°";
     }
-
+    
+    public string FromSiToStringWithUnits(double value)
+    {
+        return $"{value:F6}°";
+    }
 }
 
 public class LongitudeUnitDms : IMeasureUnitItem<double, LongitudeUnits>

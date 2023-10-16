@@ -52,6 +52,7 @@ namespace Asv.Drones.Gui.Core
             Bearing = new Bearing(cfgSvc, nameof(Bearing)).DisposeItWith(Disposable);
             Temperature = new Temperature(cfgSvc, nameof(Temperature)).DisposeItWith(Disposable);
             Degree = new Degrees(cfgSvc, nameof(Degree)).DisposeItWith(Disposable);
+            FieldStrength = new FieldStrength(cfgSvc, nameof(FieldStrength)).DisposeItWith(Disposable);
         }
 
         public IRxEditableValue<LanguageInfo> CurrentLanguage { get; }
@@ -91,6 +92,7 @@ namespace Asv.Drones.Gui.Core
         public IMeasureUnit<double, BearingUnits> Bearing { get; }
         public IMeasureUnit<double, TemperatureUnits> Temperature { get; }
         public IMeasureUnit<double, DegreeUnits> Degree { get; }
+        public IMeasureUnit<double, FieldStrengthUnits> FieldStrength { get; }
         #endregion
 
     }
