@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -347,6 +348,22 @@ public abstract class HierarchicalStoreViewModel<TKey,TFile>:HierarchicalStoreVi
    
     public virtual string GetEntryDescription(IHierarchicalStoreEntry<TKey> nodeItem)
     {
+        var entry = nodeItem as FileSystemHierarchicalStoreEntry<TKey>;
+        
+        if (entry == null) return string.Empty;
+        
+        if (nodeItem.Type == FolderStoreEntryType.Folder)
+        {
+            var info = new DirectoryInfo(entry.FullPath);
+            return info.CreationTime.ToString(CultureInfo.CurrentCulture);
+        }
+        
+        if(nodeItem.Type == FolderStoreEntryType.File)
+        {
+            var info = new FileInfo(entry.FullPath);
+            return info.CreationTime.ToString(CultureInfo.CurrentCulture);
+        }
+        
         return string.Empty;
     }
 }
