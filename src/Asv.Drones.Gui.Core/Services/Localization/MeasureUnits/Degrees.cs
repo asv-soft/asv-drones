@@ -89,32 +89,27 @@ public class MsMeasureUnit : IMeasureUnitItem<double, DegreeUnits>
 
     public double Parse(string? value)
     {
-        return value != null && Angle.TryParse(value, out var result) ? result : double.NaN;
-        //return value != null && AngleMs.TryParse(value, out var result) ? result : double.NaN;
+        return value != null && AngleMs.TryParse(value, out var result) ? result : double.NaN;
     }
 
     public bool IsValid(string? value)
     {
-        return value != null && Angle.IsValid(value);
-        //return value != null && AngleMs.IsValid(value);
+        return value != null && AngleMs.IsValid(value);
     }
 
     public string? GetErrorMessage(string? value)
     {
-        return Angle.GetErrorMessage(value);
-        //return AngleMs.GetErrorMessage(value);
+        return AngleMs.GetErrorMessage(value);
     }
 
     public string Print(double value)
     {
-        return Angle.PrintDms(value);
-        //return AngleMs.PrintDms(value);
+        return AngleMs.PrintMs(value);
     }
 
     public string PrintWithUnits(double value)
     {
-        return Angle.PrintDms(value);
-        //return AngleMs.PrintDms(value);
+        return AngleMs.PrintMs(value);
     }
 
 }
