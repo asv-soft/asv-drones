@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Data;
+using Avalonia.Data.Converters;
 using FluentAvalonia.UI.Controls;
 
 namespace Asv.Drones.Gui.Core
@@ -18,6 +19,10 @@ namespace Asv.Drones.Gui.Core
                     [!NavigationViewItem.IconSourceProperty] = new Binding(nameof(IShellMenuItem.Icon)),
                     [!ContentControl.ContentProperty] = new Binding(nameof(IShellMenuItem.Name)),
                     [!NavigationViewItem.MenuItemsSourceProperty] = new Binding(nameof(IShellMenuItem.Items)),
+                    [!NavigationViewItem.SelectsOnInvokedProperty] =  new Binding(nameof(IShellMenuItem.NavigateTo))
+                    {
+                        Converter = ObjectConverters.IsNotNull
+                    }
                 });
             HeaderTemplate = new FuncDataTemplate<IShellMenuItem>((value, namescope) =>
                 new NavigationViewItemHeader()

@@ -22,6 +22,6 @@ namespace Asv.Drones.Gui.Core
         public ShellMenuPosition Position { get; init; }
         public ShellMenuItemType Type { get; init; }
         public int Order { get; init; }
-        public ReadOnlyObservableCollection<IShellMenuItem>? Items { get; }
+        public ReadOnlyObservableCollection<IShellMenuItem>? Items { get; set; }
     }
 }
