@@ -239,4 +239,13 @@
     <data name="RecordStartView_RecordTags_Title" xml:space="preserve">
         <value>Теги записи (опционально)</value>
     </data>
+    <data name="SdrPayloadBrowserView_Sort_Title" xml:space="preserve">
+        <value>Сортировать по:</value>
+    </data>
+    <data name="SdrPayloadBrowserView_Sort_By_Name" xml:space="preserve">
+        <value>Имени</value>
+    </data>
+    <data name="SdrPayloadBrowserView_Sort_By_Date" xml:space="preserve">
+        <value>Дате</value>
+    </data>
 </root>
