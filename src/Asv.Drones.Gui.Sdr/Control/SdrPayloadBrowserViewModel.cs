@@ -118,12 +118,13 @@ public class SdrDeviceViewModel:ViewModelBase
         _log = log;
         Client = device;
         device.Sdr.Records
-            .Transform(_=>new SdrPayloadRecordViewModel(device.Heartbeat.FullId,_,_log,_loc))
+            .Transform(_=>new SdrPayloadRecordViewModel(device.Heartbeat.FullId,_,_log,_loc, device.Sdr))
             .SortBy(_=>_.CreatedDateTime)
             .Bind(out _items)
             .DisposeMany()
             .Subscribe()
             .DisposeItWith(Disposable);
+        
         this.WhenValueChanged(_ => SelectedRecord)
             .Where(_=>_ != null)
             .Subscribe(_=>_.DownloadTags.Execute().Subscribe())

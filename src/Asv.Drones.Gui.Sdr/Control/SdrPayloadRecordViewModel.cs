@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Reactive;
+using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
@@ -14,6 +15,7 @@ namespace Asv.Drones.Gui.Sdr;
 public class SdrPayloadRecordViewModel:ViewModelBase
 {
     private ReadOnlyObservableCollection<TagViewModel> _tags;
+    private readonly IAsvSdrClientEx _sdrClient;
 
     public SdrPayloadRecordViewModel(Guid id):base($"asv:sdr.device.browser?id{id}")
     {
@@ -25,9 +27,11 @@ public class SdrPayloadRecordViewModel:ViewModelBase
         }));
     }
     
-    public SdrPayloadRecordViewModel(ushort deviceId, IAsvSdrClientRecord record, ILogService log, ILocalizationService loc)
+    public SdrPayloadRecordViewModel(ushort deviceId, IAsvSdrClientRecord record, ILogService log, ILocalizationService loc, IAsvSdrClientEx sdrClient)
         :this(record.Id)
     {
+        _sdrClient = sdrClient;
+
         Record = record;
         
         record.Name.Subscribe(_=>Name = _).DisposeItWith(Disposable);
@@ -49,6 +53,8 @@ public class SdrPayloadRecordViewModel:ViewModelBase
             {
                 if (Name != null) log.Error(Name, "Error to download tags", _);
             }).DisposeItWith(Disposable);
+        Delete = ReactiveCommand.CreateFromTask(_ => _sdrClient.DeleteRecord(record.Id, _))
+            .DisposeItWith(Disposable);
     }
 
     public string Description { get; set; }
@@ -57,7 +63,7 @@ public class SdrPayloadRecordViewModel:ViewModelBase
     [Reactive]
     public bool IsSelected { get; set; }
     public ReadOnlyObservableCollection<TagViewModel> Tags => _tags;
-    public ReactiveCommand<Unit,Unit> Delete { get; }
+    public ICommand Delete { get; }
     
     public double DownloadTagsProgress { get; set; }
     public ReactiveCommand<Unit,bool> DownloadTags { get; }
