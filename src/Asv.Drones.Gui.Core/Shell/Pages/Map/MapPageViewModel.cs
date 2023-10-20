@@ -184,7 +184,11 @@ namespace Asv.Drones.Gui.Core
             IsInDialogMode = true;
             var tcs = new TaskCompletionSource();
             await using var c1 = cancel.Register(() => tcs.TrySetCanceled());
-            this.WhenAnyValue(_ => _.IsInDialogMode).Where(_ => IsInDialogMode == false).Subscribe(_ => tcs.TrySetResult(), cancel);
+            this.WhenAnyValue(_ => _.IsInDialogMode).Where(_ => IsInDialogMode == false).Subscribe(_ =>
+            {
+                tcs.TrySetResult();
+                SelectedItem = null;
+            }, cancel);
             await tcs.Task;
             return DialogTarget;
         }
