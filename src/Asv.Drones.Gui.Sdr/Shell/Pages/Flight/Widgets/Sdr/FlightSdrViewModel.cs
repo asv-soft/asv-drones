@@ -21,12 +21,15 @@ namespace Asv.Drones.Gui.Sdr;
 
 public class FlightSdrViewModelConfig
 {
-    public string GpFrequencyInMhz { get; set; }
-    public string LlzFrequencyInMhz { get; set; }
-    public string VorFrequencyInMhz { get; set; }
-    
+    public string GpFrequencyInMhz { get; set; } = "108";
+    public string LlzFrequencyInMhz { get; set; } = "108";
+    public string VorFrequencyInMhz { get; set; } = "108";
+
     public string LlzChannel { get; set; }
     public string VorChannel { get; set; }
+
+    public float WriteFrequency { get; set; } = 5;
+    public uint ThinningFrequency { get; set; } = 5;
 }
 
 public class FlightSdrViewModel:FlightSdrWidgetBase
@@ -152,8 +155,8 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
                     break;
             }
             _configuration.Set(_config);
-            return Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode,
-                (ulong)Math.Round(_freqInMHzMeasureUnit.ConvertToSi(FrequencyInMhz)), 5, 5, cancel);
+               return Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode,
+                (ulong)Math.Round(_freqInMHzMeasureUnit.ConvertToSi(FrequencyInMhz)), _config.WriteFrequency, _config.ThinningFrequency, cancel);
         });
         UpdateMode.ThrownExceptions.Subscribe(ex =>
         {
