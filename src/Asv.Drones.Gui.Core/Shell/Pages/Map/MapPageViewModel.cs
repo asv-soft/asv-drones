@@ -22,7 +22,8 @@ namespace Asv.Drones.Gui.Core
         
         private IDisposable _disposableMapUpdate;
         
-
+        public const string UriString = "asv:shell.page.map";
+        
         /// <summary>
         /// This constructor is used for design time
         /// </summary>
@@ -32,6 +33,7 @@ namespace Asv.Drones.Gui.Core
         }
 
         public MapPageViewModel(Uri id, IMapService map,
+            IEnumerable<IHeaderMenuItem> exportedMenuItems,
             IEnumerable<IViewModelProvider<IMapAnchor>> markers,
             IEnumerable<IViewModelProvider<IMapWidget>> widgets,
                 IEnumerable<IViewModelProvider<IMapAction>> actions):base(id)
@@ -126,7 +128,33 @@ namespace Asv.Drones.Gui.Core
                 .Subscribe(SetUpFollow)
                 .DisposeItWith(Disposable);
 
-            Disposable.AddAction(() => _disposableMapUpdate?.Dispose());
+           Markers.ToObservableChangeSet()
+               .Transform(_ => (IHeaderMenuItem)new HeaderMenuItem(_.Id)
+               {
+                   Header = _.Id.AbsoluteUri,
+                   Icon = _.Icon,
+                   Command = ReactiveCommand.Create(() =>
+                   {
+                       Center = _.Location;
+                       //SelectedItem = _;
+                   })
+               })
+               .Bind(out var anchorMenuItems)
+               .Subscribe()
+               .DisposeItWith(Disposable);
+
+           var menuItem = exportedMenuItems.FirstOrDefault(_ => _ is HeaderAnchorsMenu);
+
+           if (menuItem != null)
+           {
+               menuItem.Items = anchorMenuItems;
+           }
+           
+            Disposable.AddAction(() =>
+            {
+                menuItem.Items = null;
+                _disposableMapUpdate?.Dispose();
+            });
         }
 
         private void SetUpFollow(IMapAnchor anchor)
