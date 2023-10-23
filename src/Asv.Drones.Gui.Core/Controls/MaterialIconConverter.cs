@@ -8,7 +8,7 @@ namespace Asv.Drones.Gui.Core
 {
     public class MaterialIconConverter : IValueConverter
     {
-        public static IValueConverter  Instance { get; } = new MaterialIconConverter();
+        public static IValueConverter Instance { get; } = new MaterialIconConverter();
         
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {

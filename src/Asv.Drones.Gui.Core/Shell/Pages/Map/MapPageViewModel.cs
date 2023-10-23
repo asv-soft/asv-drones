@@ -152,7 +152,8 @@ namespace Asv.Drones.Gui.Core
            
             Disposable.AddAction(() =>
             {
-                menuItem.Items = null;
+                if (menuItem != null) 
+                    menuItem.Items = null;
                 _disposableMapUpdate?.Dispose();
             });
         }

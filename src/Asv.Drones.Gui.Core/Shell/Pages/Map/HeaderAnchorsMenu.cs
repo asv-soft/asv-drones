@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
-using System.Reactive.Linq;
 using Asv.Common;
 using Material.Icons;
 using ReactiveUI;
@@ -14,12 +13,11 @@ public class HeaderAnchorsMenu : HeaderMenuItem
 {
     public const string UriString = HeaderMenuItem.UriString + "/anchors";
     public static readonly Uri Uri = new(UriString);
-    private readonly ReadOnlyObservableCollection<IHeaderMenuItem> _items;
 
     [ImportingConstructor]
     public HeaderAnchorsMenu() : base(Uri)
     {
-        Header = "Anchors";
+        Header = RS.HeaderAnchorsMenu_Title;
         Icon = MaterialIconKind.Anchor;
         Order = short.MinValue;
 
