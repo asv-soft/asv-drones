@@ -19,7 +19,7 @@ public class VehiclesShellMenuItemProvider : ViewModelProviderBase<IShellMenuIte
              Name = $"Arducopter [{_.FullId}]",
              Icon = MaterialIconDataProvider.GetData(MaterialIconKind.Drone),
              Position = ShellMenuPosition.Top,
-             Type = ShellMenuItemType.PageNavigation,
+             Type = ShellMenuItemType.Group,
              Order = _.FullId,
              Items = new ReadOnlyObservableCollection<IShellMenuItem>(new ObservableCollection<IShellMenuItem>()
              {

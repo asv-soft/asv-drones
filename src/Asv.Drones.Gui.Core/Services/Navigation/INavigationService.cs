@@ -15,7 +15,6 @@ namespace Asv.Drones.Gui.Core
         /// Navigate to IShell page by URI
         /// </summary>
         /// <param name="uri"></param>    
-        void GoTo(Uri uri);
-
+        Task<bool> GoTo(Uri uri);
     }
 }

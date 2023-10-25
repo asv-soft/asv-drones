@@ -4,9 +4,13 @@ using ReactiveUI.Fody.Helpers;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Reactive.Linq;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using Asv.Cfg;
 using Asv.Common;
+using FluentAvalonia.UI.Controls;
 using Material.Icons;
+using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core
 {
@@ -18,7 +22,7 @@ namespace Asv.Drones.Gui.Core
         public static readonly Uri Uri = new(UriString);
         
         private readonly INavigationService _navigation;
-        private IShellMenuItem _selectedMenu = null!;
+        private IShellMenuItem _previousSelectedMenu = null!;
         private readonly ReadOnlyObservableCollection<IShellMenuItem> _menuItems = null!;
         private readonly ReadOnlyObservableCollection<IShellMenuItem> _footerMenuItems = null!;
         private readonly ReadOnlyObservableCollection<LogMessageViewModel> _messages = null!;
@@ -27,6 +31,7 @@ namespace Asv.Drones.Gui.Core
         private readonly ReadOnlyObservableCollection<IHeaderMenuItem> _headerMenu = null!;
         private readonly IThemeService _themeService;
         private readonly IConfiguration _config;
+        private int _updatingSelection = 0;
 
         public ShellViewModel():base(Uri)
         {
@@ -150,9 +155,42 @@ namespace Asv.Drones.Gui.Core
             #endregion
             
             _themeService = themeService;
+
+            this.WhenAnyValue(x => x.SelectedMenu)
+                .Subscribe(OnSelectionChanged)
+                .DisposeItWith(Disposable);
         }
 
-        
+        private async void OnSelectionChanged(IShellMenuItem v)
+        {
+            if (Interlocked.Exchange(ref _updatingSelection , 1) == 1)
+            {
+                return;
+            }
+    
+            try 
+            {
+                if (v == null) return;
+
+                if (v.Type == ShellMenuItemType.PageNavigation) 
+                {
+                    var isNavigationComplete = await _navigation.GoTo(v.NavigateTo);
+
+                    if (isNavigationComplete) 
+                    {
+                        _previousSelectedMenu = v;
+                    } 
+                    else 
+                    {
+                        SelectedMenu = _previousSelectedMenu;
+                    }
+                }
+            }
+            finally 
+            {
+                Interlocked.Exchange(ref _updatingSelection , 0);
+            }
+        }
 
         [Reactive]
         public string Title { get; set; } = null!;
@@ -160,19 +198,8 @@ namespace Asv.Drones.Gui.Core
         [Reactive]
         public IShellPage CurrentPage { get; set; } = null!;
 
-        public IShellMenuItem SelectedMenu
-        {
-            get => _selectedMenu;
-            set
-            {
-                _selectedMenu = value;
-                if (_selectedMenu == null) return;
-                if (_selectedMenu.Type == ShellMenuItemType.PageNavigation)
-                {
-                    _navigation.GoTo(_selectedMenu.NavigateTo);
-                }
-            }
-        }
+        [Reactive] 
+        public IShellMenuItem SelectedMenu { get; set; } = null!;
         public ReadOnlyObservableCollection<IHeaderMenuItem> HeaderMenuItems => _headerMenu;
         public ReadOnlyObservableCollection<IShellMenuItem> MenuItems => _menuItems;
         public ReadOnlyObservableCollection<IShellMenuItem> FooterMenuItems => _footerMenuItems;
