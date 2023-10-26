@@ -12,7 +12,6 @@
         <SolidColorBrush x:Key="FolderBrush" Color="#FBC02D"/>
         <SolidColorBrush x:Key="FileBrush" Color="#40b5e0"/>
         <SolidColorBrush x:Key="DeleteBrush" Color="#D84315"/>
-        <x:Double x:Key="IconSize">18</x:Double>
     </UserControl.Resources>
     <Design.DataContext>
         <sdr:SdrPayloadBrowserViewModel/>
@@ -23,8 +22,7 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="200" MinHeight="200"/>
         </Grid.RowDefinitions>
-        <Border
-            Grid.Row="0"
+        <Border Grid.Row="0"
             Background="{DynamicResource ControlFillColorDefaultBrush}"
             BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
@@ -35,6 +33,29 @@
                     <Button DockPanel.Dock="Right" Margin="8,0,0,0"  Command="{Binding SelectedDevice.DownloadRecords}">
                         <avalonia:MaterialIcon Kind="Refresh" Foreground="{StaticResource FileBrush}" />
                     </Button>
+                    <DropDownButton IsEnabled="{CompiledBinding SelectedDevice, Converter={x:Static ObjectConverters.IsNotNull}}" 
+                                    DockPanel.Dock="Right" Margin="8,0,0,0">
+                        <DropDownButton.Flyout>
+                            <Flyout>
+                                <StackPanel Spacing="8">
+                                    <TextBlock Text="{x:Static sdr:RS.SdrPayloadBrowserView_Sort_Title}"/>
+                                    <ToggleButton IsChecked="{CompiledBinding SelectedDevice.IsSortByName}" >
+                                        <StackPanel Orientation="Horizontal">
+                                            <avalonia:MaterialIcon Kind="Abc"/>
+                                            <TextBlock Text="{x:Static sdr:RS.SdrPayloadBrowserView_Sort_By_Name}"/>
+                                        </StackPanel>
+                                    </ToggleButton>
+                                    <ToggleButton IsChecked="{CompiledBinding !SelectedDevice.IsSortByName}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <avalonia:MaterialIcon Kind="DateRange"/>
+                                            <TextBlock Text="{x:Static sdr:RS.SdrPayloadBrowserView_Sort_By_Date}"/>
+                                        </StackPanel>
+                                    </ToggleButton>
+                                </StackPanel>
+                            </Flyout>
+                        </DropDownButton.Flyout>
+                        <avalonia:MaterialIcon Kind="Sort" Foreground="{StaticResource FileBrush}" />
+                    </DropDownButton>
                     <ComboBox ItemsSource="{Binding Devices}" HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedDevice}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
@@ -100,11 +121,10 @@
                                 </Style>
                             </avalonia:MaterialIcon.Styles>
                         </avalonia:MaterialIcon>
-                                
-                        <Button
-                            Name="PART_Delete" 
+                        <Button Name="PART_Delete" 
                             IsHitTestVisible="True" Padding="3" 
-                            DockPanel.Dock="Right" Theme="{DynamicResource TransparentButton}" Command="{Binding SelectedRecord.Delete}">
+                            DockPanel.Dock="Right" Theme="{DynamicResource TransparentButton}" 
+                            Command="{Binding SelectedRecord.Delete}">
                             <avalonia:MaterialIcon Kind="Close" Width="18" Height="18" Foreground="#D84315"/>
                         </Button>
                         <TextBlock VerticalAlignment="Center" Text="{Binding SelectedRecord.Name}"/>

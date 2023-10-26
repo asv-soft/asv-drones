@@ -995,4 +995,7 @@
   <data name="Degrees_MS_Title" xml:space="preserve">
     <value>[M]′[S]′′</value>
   </data>
+  <data name="HeaderAnchorsMenu_Title" xml:space="preserve">
+    <value>Anchors</value>
+  </data>
 </root>

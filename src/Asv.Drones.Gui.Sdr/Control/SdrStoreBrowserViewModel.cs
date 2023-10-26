@@ -38,7 +38,15 @@ public class SdrStoreBrowserViewModel:HierarchicalStoreViewModel<Guid,IListDataF
         var metadata = file.File.ReadMetadata();
         return SdrTagViewModelHelper.ConvertToTag(metadata).ToImmutableArray();
     }
-
+    
+    protected override void RefreshImpl()
+    {
+        if (_svc.Store is FileSystemHierarchicalStore<Guid, IListDataFile<AsvSdrRecordFileMetadata>> fileStore)
+        {
+            fileStore.UpdateEntries();
+        }
+        base.RefreshImpl();
+    }
 
     public ILocalizationService Localization => _loc;
 }

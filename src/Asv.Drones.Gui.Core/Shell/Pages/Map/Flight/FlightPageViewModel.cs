@@ -22,9 +22,10 @@ namespace Asv.Drones.Gui.Core
         
         [ImportingConstructor]
         public FlightPageViewModel( IMapService map, IConfiguration cfg,
+            [ImportMany(HeaderMenuItem.UriString)]IEnumerable<IHeaderMenuItem> exportedMenuItems,
             [ImportMany(UriString)] IEnumerable<IViewModelProvider<IMapAnchor>> markers,
             [ImportMany(UriString)] IEnumerable<IViewModelProvider<IMapWidget>> widgets,
-            [ImportMany(UriString)] IEnumerable<IViewModelProvider<IMapAction>> actions):base(Uri,map,markers,widgets,actions)
+            [ImportMany(UriString)] IEnumerable<IViewModelProvider<IMapAction>> actions):base(Uri,map,exportedMenuItems,markers,widgets,actions)
         {
             Title = RS.FlightShellMenuItem_Name;
             Icon = MaterialIconKind.Map;
