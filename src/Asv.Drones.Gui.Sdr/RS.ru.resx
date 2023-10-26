@@ -239,4 +239,58 @@
     <data name="RecordStartView_RecordTags_Title" xml:space="preserve">
         <value>Теги записи (опционально)</value>
     </data>
+    <data name="SdrSettingsViewModel_Header" xml:space="preserve">
+        <value>Настройки SDR</value>
+    </data>
+    <data name="SdrSettingsViewModel_Description" xml:space="preserve">
+        <value>В этом разделе можно настроить различные параметры SDR.</value>
+    </data>
+    <data name="SdrSettingsViewModel_DefaultFreqs_Title" xml:space="preserve">
+        <value>Частоты по умолчанию</value>
+    </data>
+    <data name="SdrSettingsViewModel_VorFreq_Header" xml:space="preserve">
+        <value>Частота VOR</value>
+    </data>
+    <data name="SdrSettingsViewModel_VorFreq_Description" xml:space="preserve">
+        <value>В этом разделе можно настроить частоту VOR по умолчанию.</value>
+    </data>
+    <data name="SdrSettingsViewModel_LlzFreq_Header" xml:space="preserve">
+        <value>Частота LLZ</value>
+    </data>
+    <data name="SdrSettingsViewModel_LLzFreq_Description" xml:space="preserve">
+        <value>В этом разделе можно настроить частоту LLZ по умолчанию.</value>
+    </data>
+    <data name="SdrSettingsViewModel_GpFreq_Header" xml:space="preserve">
+        <value>Частота GP</value>
+    </data>
+    <data name="SdrSettingsViewModel_GpFreq_Description" xml:space="preserve">
+        <value>В этом разделе можно настроить частоту GP по умолчанию.</value>
+    </data>
+    <data name="SdrSettingsViewModel_DataThinning_Header" xml:space="preserve">
+        <value>Прореживание данных</value>
+    </data>
+    <data name="SdrSettingsViewModel_DataThinning_Description" xml:space="preserve">
+        <value>В этом разделе можно настроить частоту прореживания данных по умолчанию.</value>
+    </data>
+    <data name="SdrSettingsViewModel_FileWriteFreq_Header" xml:space="preserve">
+        <value>Частота записи в файл</value>
+    </data>
+    <data name="SdrSettingsViewModel_FileWriteFreq_Description" xml:space="preserve">
+        <value>В этом разделе можно настроить частоту записи в файл по умолчанию.</value>
+    </data>
+    <data name="SdrSettingsViewModel_DefaultChannels_Title" xml:space="preserve">
+        <value>Каналы по умолчанию</value>
+    </data>
+    <data name="SdrSettingsViewModel_LLzChannel_Description" xml:space="preserve">
+        <value>В этом разделе можно настроить канал LLZ по умолчанию.</value>
+    </data>
+    <data name="SdrSettingsViewModel_LlzChannel_Header" xml:space="preserve">
+        <value>Канал LLZ</value>
+    </data>
+    <data name="SdrSettingsViewModel_VorChannel_Header" xml:space="preserve">
+        <value>Канал VOR</value>
+    </data>
+    <data name="SdrSettingsViewModel_VorChannel_Description" xml:space="preserve">
+        <value>В этом разделе можно настроить канал VOR по умолчанию.</value>
+    </data>
 </root>
