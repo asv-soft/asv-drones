@@ -309,7 +309,7 @@ public abstract class HierarchicalStoreViewModel<TKey,TFile>:HierarchicalStoreVi
 
     protected override void RefreshImpl()
     {
-        _source.Clear();    
+        _source.Clear();
         _source.AddOrUpdate(_store.GetEntries());
     }
 
