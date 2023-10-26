@@ -14,23 +14,24 @@ namespace Asv.Drones.Gui.Core
         {
             
         }
+        
         [Reactive]
         public int Order { get; set; }
         [Reactive]
-        public MaterialIconKind Icon { get;set; }
+        public MaterialIconKind Icon { get; set; }
         [Reactive]
-        public string Header { get;set; }
+        public string Header { get; set; }
         [Reactive]
-        public ICommand Command { get;set; }
+        public ICommand Command { get; set; }
         [Reactive]
-        public object? CommandParameter { get;set; }
+        public object? CommandParameter { get; set; }
         [Reactive]
-        public bool IsVisible { get;set; } = true;
+        public bool IsVisible { get; set; } = true;
         [Reactive]
-        public bool StaysOpenOnClick { get;set; }
-
-        [Reactive] public bool IsEnabled { get; set; } = true;
-        public virtual ReadOnlyObservableCollection<IHeaderMenuItem>? Items { get; }
+        public bool StaysOpenOnClick { get; set; }
+        [Reactive] 
+        public bool IsEnabled { get; set; } = true;
+        public virtual ReadOnlyObservableCollection<IHeaderMenuItem>? Items { get; set; }
         [Reactive]
         public KeyGesture? HotKey { get; set; }
     }
