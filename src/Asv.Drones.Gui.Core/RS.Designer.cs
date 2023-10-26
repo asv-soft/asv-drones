@@ -1014,6 +1014,15 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Anchors.
+        /// </summary>
+        public static string HeaderAnchorsMenu_Title {
+            get {
+                return ResourceManager.GetString("HeaderAnchorsMenu_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Coordinates calculator.
         /// </summary>
         public static string HeaderCoordinatesCalculatorMenu_Header {
