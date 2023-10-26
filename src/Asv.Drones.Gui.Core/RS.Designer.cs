@@ -798,6 +798,15 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [M]′[S]′′.
+        /// </summary>
+        public static string Degrees_MS_Title {
+            get {
+                return ResourceManager.GetString("Degrees_MS_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Angle.
         /// </summary>
         public static string Degrees_Title {
