@@ -447,6 +447,33 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string SdrPayloadBrowserView_Sort_By_Date {
+            get {
+                return ResourceManager.GetString("SdrPayloadBrowserView_Sort_By_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string SdrPayloadBrowserView_Sort_By_Name {
+            get {
+                return ResourceManager.GetString("SdrPayloadBrowserView_Sort_By_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort by:.
+        /// </summary>
+        public static string SdrPayloadBrowserView_Sort_Title {
+            get {
+                return ResourceManager.GetString("SdrPayloadBrowserView_Sort_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to N\A.
         /// </summary>
         public static string SdrRttItem_ValueNotAvailable {

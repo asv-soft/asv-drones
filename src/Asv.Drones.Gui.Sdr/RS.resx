@@ -246,6 +246,15 @@
     <data name="RecordStartView_RecordTags_Title" xml:space="preserve">
         <value>Record tags (optional)</value>
     </data>
+    <data name="SdrPayloadBrowserView_Sort_Title" xml:space="preserve">
+        <value>Sort by:</value>
+    </data>
+    <data name="SdrPayloadBrowserView_Sort_By_Name" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="SdrPayloadBrowserView_Sort_By_Date" xml:space="preserve">
+        <value>Date</value>
+    </data>
     <data name="SdrSettingsViewModel_Header" xml:space="preserve">
         <value>SDR settings</value>
     </data>
