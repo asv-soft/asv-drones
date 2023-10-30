@@ -1015,4 +1015,13 @@
   <data name="FieldStrength_MicroVoltsPerMeter_Unit" xml:space="preserve">
 	  <value>мкВ/м</value>
   </data>
+  <data name="Degrees_DM_Title" xml:space="preserve">
+	  <value>[Г]°[М]′</value>
+  </data>
+  <data name="MeasureUnitsSettingsViewModelBearing" xml:space="preserve">
+	  <value>Азимут</value>
+  </data>
+  <data name="MeasureUnitsSettingsViewModelBearingDescription" xml:space="preserve">
+	  <value>Измените текущие единицы измерения азимута.</value>
+  </data>
 </root>

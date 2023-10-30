@@ -151,9 +151,7 @@ namespace Asv.Drones.Gui.Core
             
             _themeService = themeService;
         }
-
         
-
         [Reactive]
         public string Title { get; set; } = null!;
 
