@@ -789,6 +789,15 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [D]°[M]′.
+        /// </summary>
+        public static string Degrees_DM_Title {
+            get {
+                return ResourceManager.GetString("Degrees_DM_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [D]°[M]′[S]′′.
         /// </summary>
         public static string Degrees_DMS_Title {
@@ -1689,11 +1698,29 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change the current measure units of angle.
+        ///   Looks up a localized string similar to Change the current measure units of angle..
         /// </summary>
         public static string MeasureUnitsSettingsViewModelAngleDescription {
             get {
                 return ResourceManager.GetString("MeasureUnitsSettingsViewModelAngleDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bearing.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModelBearing {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModelBearing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of bearing..
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModelBearingDescription {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModelBearingDescription", resourceCulture);
             }
         }
         

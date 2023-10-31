@@ -161,6 +161,12 @@ namespace Asv.Drones.Gui.Core
             
             _themeService = themeService;
 
+        }
+        
+        [Reactive]
+        public string Title { get; set; } = null!;
+
+
             this.WhenValueChanged(x => x.SelectedMenu)
                 .Subscribe(OnSelectionChanged)
                 .DisposeItWith(Disposable);
@@ -184,6 +190,7 @@ namespace Asv.Drones.Gui.Core
                 }
             }
         }
+
 
 
         private async void OnSelectionChanged(IShellMenuItem? newItem)
