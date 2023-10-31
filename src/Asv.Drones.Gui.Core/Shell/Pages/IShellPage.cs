@@ -14,5 +14,7 @@ namespace Asv.Drones.Gui.Core
         /// </summary>
         /// <param name="link"></param>
         void SetArgs(Uri link);
+
+        Task<bool> TryClose();
     }
 }

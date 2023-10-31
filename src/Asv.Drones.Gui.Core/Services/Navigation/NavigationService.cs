@@ -40,7 +40,7 @@ namespace Asv.Drones.Gui.Core
             _shell = shellPage ?? throw new ArgumentNullException(nameof(shellPage));
         }
 
-        public void GoTo(Uri link)
+        public async Task<bool> GoTo(Uri link)
         {
             if (_shell == null)
             {
@@ -52,19 +52,28 @@ namespace Asv.Drones.Gui.Core
             {
                 throw new Exception($"Unknown uri scheme. Want {UriScheme}. Got:{link.Scheme}");
             }
-            
+
             var current = _shell.CurrentPage;
-            if (current?.GetType().GetCustomAttribute<PartCreationPolicyAttribute>()!.CreationPolicy == CreationPolicy.NonShared)
+            if (current != null)
             {
-                current.Dispose();
+                var canClose = await current.TryClose();
+                
+                if (canClose && current.GetType().GetCustomAttribute<PartCreationPolicyAttribute>()!.CreationPolicy == CreationPolicy.NonShared)
+                {
+                    current.Dispose();
+                }
+                else
+                {
+                    return false;
+                }
             }
+            
             var viewModel = _container.GetExportedValue<IShellPage>(link.AbsolutePath);
             
             viewModel?.SetArgs(link);
             _shell.CurrentPage = viewModel;
+            return true;
         }
-
-        
     }
     
 }

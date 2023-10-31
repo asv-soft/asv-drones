@@ -23,4 +23,9 @@ public class ShellPage : ViewModelBase,IShellPage
     {
             
     }
+
+    public virtual Task<bool> TryClose()
+    {
+        return Task.FromResult(true);
+    }
 }

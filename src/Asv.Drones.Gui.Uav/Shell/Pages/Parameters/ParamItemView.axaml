@@ -31,15 +31,9 @@
                         <avalonia:MaterialIcon IsVisible="{CompiledBinding !IsPinned}" Width="25" Height="25" Kind="PinOutline"/>    
                     </Panel>
                 </Button>
-                <Button ToolTip.Tip="Need to save param" 
-                        Background="Transparent" 
-                        BorderThickness="0"
-                        DockPanel.Dock="Right"
-                        IsVisible="{Binding !IsSynced}">
-                    <Panel>
-                        <avalonia:MaterialIcon Width="25" Foreground="Green" Height="25" Kind="FloppyDisk"/>        
-                    </Panel>
-                </Button>
+                <Panel DockPanel.Dock="Right" IsVisible="{Binding !IsSynced}">
+                    <avalonia:MaterialIcon Width="25" Foreground="Green" Height="25" Kind="FloppyDisk"/>        
+                </Panel>
                 <TextBlock Text="{CompiledBinding Name}" 
                            FontWeight="Bold" 
                            VerticalAlignment="Center" 
