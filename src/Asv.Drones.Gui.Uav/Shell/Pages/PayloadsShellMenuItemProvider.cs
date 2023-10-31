@@ -20,7 +20,7 @@ public class PayloadsShellMenuItemProvider : ViewModelProviderBase<IShellMenuIte
                 Name = $"Payload [{_.FullId}]",
                 Icon = MaterialIconDataProvider.GetData(MaterialIconKind.WrenchCog),
                 Position = ShellMenuPosition.Top,
-                Type = ShellMenuItemType.PageNavigation,
+                Type = ShellMenuItemType.Group,
                 Order = _.FullId,
                 Items = new ReadOnlyObservableCollection<IShellMenuItem>(new ObservableCollection<IShellMenuItem>
                 {

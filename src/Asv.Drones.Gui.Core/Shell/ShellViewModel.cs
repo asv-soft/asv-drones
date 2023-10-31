@@ -161,18 +161,13 @@ namespace Asv.Drones.Gui.Core
             
             _themeService = themeService;
 
-        }
-        
-        [Reactive]
-        public string Title { get; set; } = null!;
-
-
+            
             this.WhenValueChanged(x => x.SelectedMenu)
                 .Subscribe(OnSelectionChanged)
                 .DisposeItWith(Disposable);
-           this.WhenValueChanged(x => x.IsPaneOpen)
-               .Subscribe(OnPaneOpenChanged)
-               .DisposeItWith(Disposable);
+            this.WhenValueChanged(x => x.IsPaneOpen)
+                .Subscribe(OnPaneOpenChanged)
+                .DisposeItWith(Disposable);
         }
 
         private void OnPaneOpenChanged(bool isPanOpened)
