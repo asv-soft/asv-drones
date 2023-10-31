@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
+using FluentAvalonia.UI.Controls;
 
 namespace Asv.Drones.Gui.Core;
 
@@ -27,5 +28,7 @@ public partial class ShellView : UserControl
     {
         var vm = this.DataContext as ShellViewModel;
         vm?.OnLoaded();
+        
     }
+
 }

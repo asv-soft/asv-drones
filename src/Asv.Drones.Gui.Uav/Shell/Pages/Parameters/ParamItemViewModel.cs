@@ -26,6 +26,7 @@ public class ParamItemViewModel : ViewModelBase
     private readonly ILogService _log;
     private readonly ObservableAsPropertyHelper<bool> _isWriting;
     private readonly ObservableAsPropertyHelper<bool> _isUpdate;
+    private readonly IParamItem _paramItem;
     private bool _internalUpdate;
     
     public ParamItemViewModel() : base(new Uri("asv:designMode"))
@@ -40,6 +41,7 @@ public class ParamItemViewModel : ViewModelBase
     public ParamItemViewModel(IParamItem paramItem, ILogService log) : base(new Uri(ParamPageViewModel.UriString+$".item{paramItem.Name}"))
     {
         _log = log;
+        _paramItem = paramItem;
         PinItem = ReactiveCommand.Create(() =>
         {
             IsPinned = !IsPinned;
@@ -249,5 +251,10 @@ public class ParamItemViewModel : ViewModelBase
     {
         IsStarred = item.IsStarred;
         IsPinned = item.IsPinned;
+    }
+
+    public async void WriteParamData()
+    {
+        await _paramItem.Write();
     }
 }

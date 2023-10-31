@@ -20,12 +20,16 @@
     </UserControl.Styles>
     <DockPanel>
         <Grid DockPanel.Dock="Top" Name="TitleBarHost" ColumnDefinitions="Auto,Auto,*,Auto" HorizontalAlignment="Stretch">
-            <Image Margin="13 10"
-                   IsHitTestVisible="False"
-                   Source="/Assets/icon.ico"
-                   Width="25" Height="25"
-                   DockPanel.Dock="Left"
-                   Name="WindowIcon"/>
+            <ToggleButton Theme="{DynamicResource TransparentButton}" Padding="11,5,7,6" Margin="3,0,0,0" IsChecked="{Binding IsPaneOpen, Mode=TwoWay}">
+                <Image 
+                    
+                       IsHitTestVisible="False"
+                       Source="/Assets/icon.ico"
+                       Width="25" Height="25"
+                       DockPanel.Dock="Left"
+                       Name="WindowIcon"/>
+            </ToggleButton>
+            
             <Menu Grid.Column="1" ItemsSource="{Binding HeaderMenuItems}" >
                 <Menu.Styles>
                     <Style Selector="MenuItem" x:DataType="core:IHeaderMenuItem">
@@ -85,13 +89,15 @@
 
         <ui:NavigationView 
                            PaneDisplayMode="Left"
-                           IsPaneOpen="False"
+                           IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay}"
+                           IsPaneToggleButtonVisible="False"
                            Name="NavView"
                            IsSettingsVisible="False"
-                           SelectedItem="{Binding SelectedMenu}"
+                           SelectedItem="{Binding SelectedMenu, Mode=TwoWay}"
                            MenuItemsSource="{Binding MenuItems}"
                            FooterMenuItemsSource="{Binding FooterMenuItems}"
                            MenuItemTemplateSelector="{x:Static core:MenuItemTemplateSelector.Instance}">
+            
             <Panel>
                 <!-- <Image Margin="100" Source="../Assets/program-logo.png"/> -->
                 <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{CompiledBinding CurrentPage}"/>

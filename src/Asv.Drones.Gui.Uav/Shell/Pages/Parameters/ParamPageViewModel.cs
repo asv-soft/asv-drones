@@ -10,6 +10,7 @@ using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using DynamicData;
 using DynamicData.Binding;
+using FluentAvalonia.UI.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -203,6 +204,42 @@ public class ParamPageViewModel: ShellPage
                 }
             });
         }).DisposeItWith(Disposable);
+    }
+
+    public override async Task<bool> TryClose()
+    {
+        var notSyncedParams = _viewedParamsList.Items.Where(_ => !_.IsSynced).ToArray();
+        
+        if (notSyncedParams.Any())
+        {
+            var dialog = new ContentDialog()
+            {
+                Content = "There are unsaved changes, do you want to save them?",
+                IsSecondaryButtonEnabled = true,
+                PrimaryButtonText = "Save",
+                SecondaryButtonText = "Don't save",
+                CloseButtonText = "Close"
+            };
+            
+            var result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                foreach (var param in notSyncedParams)
+                {
+                    param.WriteParamData();
+                    param.IsSynced = true;
+                }
+
+                return true;
+            }
+
+            if (result == ContentDialogResult.Secondary) return true;
+
+            if (result == ContentDialogResult.None) return false;
+        }
+        
+        return true;
     }
 
     private void OnRefreshError(Exception ex)

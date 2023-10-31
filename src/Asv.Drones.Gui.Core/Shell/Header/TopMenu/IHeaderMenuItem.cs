@@ -14,7 +14,7 @@ namespace Asv.Drones.Gui.Core
         object? CommandParameter { get; }
         bool IsVisible { get; }
         bool StaysOpenOnClick { get; }
-        ReadOnlyObservableCollection<IHeaderMenuItem>? Items { get; }
+        ReadOnlyObservableCollection<IHeaderMenuItem>? Items { get; set; }
         public bool IsEnabled { get; }
         public KeyGesture? HotKey { get; }
     }

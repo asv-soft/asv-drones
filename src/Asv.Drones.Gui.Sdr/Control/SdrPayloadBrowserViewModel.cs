@@ -118,8 +118,8 @@ public class SdrDeviceViewModel:ViewModelBase
         _log = log;
         Client = device;
         device.Sdr.Records
-            .Transform(_=>new SdrPayloadRecordViewModel(device.Heartbeat.FullId,_,_log,_loc, device.Sdr))
-            .SortBy(_=>_.CreatedDateTime)
+            .Transform(_=>new SdrPayloadRecordViewModel(device.Heartbeat.FullId, _, _log, _loc, device.Sdr))
+            .SortBy(_ => IsSortByName ? _.Name : _.CreatedDateTime)
             .Bind(out _items)
             .DisposeMany()
             .Subscribe()
@@ -145,6 +145,9 @@ public class SdrDeviceViewModel:ViewModelBase
             .DisposeItWith(Disposable);
     }
 
+    [Reactive] 
+    public bool IsSortByName { get; set; } = true;
+    
     [Reactive]
     public double DownloadRecordsProgress { get; set; }
     public ReactiveCommand<Unit,bool> DownloadRecords { get; }

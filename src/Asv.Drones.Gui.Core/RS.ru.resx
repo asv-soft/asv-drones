@@ -1015,6 +1015,7 @@
   <data name="FieldStrength_MicroVoltsPerMeter_Unit" xml:space="preserve">
 	  <value>мкВ/м</value>
   </data>
+
   <data name="Degrees_DM_Title" xml:space="preserve">
 	  <value>[Г]°[М]′</value>
   </data>
@@ -1023,5 +1024,9 @@
   </data>
   <data name="MeasureUnitsSettingsViewModelBearingDescription" xml:space="preserve">
 	  <value>Измените текущие единицы измерения азимута.</value>
+
+  <data name="HeaderAnchorsMenu_Title" xml:space="preserve">
+	  <value>Якори</value>
+
   </data>
 </root>

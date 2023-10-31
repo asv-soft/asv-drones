@@ -992,6 +992,7 @@
   <data name="FieldStrength_MicroVoltsPerMeter_Unit" xml:space="preserve">
     <value>µV/m</value>
   </data>
+
   <data name="Degrees_DM_Title" xml:space="preserve">
     <value>[D]°[M]′</value>
   </data>
@@ -1000,5 +1001,6 @@
   </data>
   <data name="MeasureUnitsSettingsViewModelBearingDescription" xml:space="preserve">
     <value>Change the current measure units of bearing.</value>
+
   </data>
 </root>

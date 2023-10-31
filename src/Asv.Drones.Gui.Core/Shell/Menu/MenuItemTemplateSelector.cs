@@ -1,3 +1,4 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Data;
@@ -6,6 +7,9 @@ using FluentAvalonia.UI.Controls;
 
 namespace Asv.Drones.Gui.Core
 {
+   
+    
+    
     public class MenuItemTemplateSelector : DataTemplateSelector
     {
         private static readonly FuncDataTemplate<IShellMenuItem> SimpleItem;
@@ -13,16 +17,25 @@ namespace Asv.Drones.Gui.Core
 
         static MenuItemTemplateSelector()
         {
+            
+            
+            
+
             SimpleItem = new FuncDataTemplate<IShellMenuItem>((value, namescope) =>
                 new NavigationViewItem
                 {
+
                     [!NavigationViewItem.IconSourceProperty] = new Binding(nameof(IShellMenuItem.Icon)),
                     [!ContentControl.ContentProperty] = new Binding(nameof(IShellMenuItem.Name)),
                     [!NavigationViewItem.MenuItemsSourceProperty] = new Binding(nameof(IShellMenuItem.Items)),
-                    [!NavigationViewItem.SelectsOnInvokedProperty] =  new Binding(nameof(IShellMenuItem.NavigateTo))
+                    [!ListBoxItem.IsSelectedProperty] = new Binding(nameof(IShellMenuItem.IsSelected)),
+                    [!Visual.IsVisibleProperty] = new Binding(nameof(IShellMenuItem.IsVisible), BindingMode.TwoWay),
+                    SelectsOnInvoked = true,
+                    /*[!NavigationViewItem.SelectsOnInvokedProperty] =  new Binding(nameof(IShellMenuItem.NavigateTo))
                     {
                         Converter = ObjectConverters.IsNotNull
-                    }
+                    }*/
+
                 });
             HeaderTemplate = new FuncDataTemplate<IShellMenuItem>((value, namescope) =>
                 new NavigationViewItemHeader()
@@ -31,7 +44,7 @@ namespace Asv.Drones.Gui.Core
                 });
         }
 
-        public static MenuItemTemplateSelector Instance = new();
+        public static readonly MenuItemTemplateSelector Instance = new();
         
 
         protected override IDataTemplate SelectTemplateCore(object item)
