@@ -4,6 +4,7 @@ namespace Asv.Drones.Gui.Core
 {
     public interface IShellMenuItem : IViewModel
     {
+        IShellMenuItem? Parent { get; set; }
         string Name { get; }
         Uri NavigateTo { get; }
         string Icon { get; }
@@ -11,6 +12,8 @@ namespace Asv.Drones.Gui.Core
         ShellMenuItemType Type { get; }
         int Order { get; }
         ReadOnlyObservableCollection<IShellMenuItem>? Items { get; }
+        bool IsSelected { get; set; }
+        bool IsVisible { get; set; }
     }
 
     public enum ShellMenuPosition

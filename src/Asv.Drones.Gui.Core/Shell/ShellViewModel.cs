@@ -3,11 +3,15 @@ using DynamicData;
 using ReactiveUI.Fody.Helpers;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Asv.Cfg;
 using Asv.Common;
+using Avalonia.Controls.Generators;
+using Avalonia.Threading;
+using DynamicData.Binding;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using ReactiveUI;
@@ -22,7 +26,7 @@ namespace Asv.Drones.Gui.Core
         public static readonly Uri Uri = new(UriString);
         
         private readonly INavigationService _navigation;
-        private IShellMenuItem _previousSelectedMenu = null!;
+        
         private readonly ReadOnlyObservableCollection<IShellMenuItem> _menuItems = null!;
         private readonly ReadOnlyObservableCollection<IShellMenuItem> _footerMenuItems = null!;
         private readonly ReadOnlyObservableCollection<LogMessageViewModel> _messages = null!;
@@ -31,7 +35,8 @@ namespace Asv.Drones.Gui.Core
         private readonly ReadOnlyObservableCollection<IHeaderMenuItem> _headerMenu = null!;
         private readonly IThemeService _themeService;
         private readonly IConfiguration _config;
-        private int _updatingSelection = 0;
+        private int _selectionInProgressFlag = 0;
+        private IShellMenuItem _previousSuccessSelectedMenu;
 
         public ShellViewModel():base(Uri)
         {
@@ -156,40 +161,65 @@ namespace Asv.Drones.Gui.Core
             
             _themeService = themeService;
 
-            this.WhenAnyValue(x => x.SelectedMenu)
+            this.WhenValueChanged(x => x.SelectedMenu)
                 .Subscribe(OnSelectionChanged)
                 .DisposeItWith(Disposable);
+           this.WhenValueChanged(x => x.IsPaneOpen)
+               .Subscribe(OnPaneOpenChanged)
+               .DisposeItWith(Disposable);
         }
 
-        private async void OnSelectionChanged(IShellMenuItem v)
+        private void OnPaneOpenChanged(bool isPanOpened)
         {
-            if (Interlocked.Exchange(ref _updatingSelection , 1) == 1)
+            if (SelectedMenu == null) return;
+            if (isPanOpened)
             {
-                return;
+               
             }
-    
-            try 
+            else
             {
-                if (v == null) return;
-
-                if (v.Type == ShellMenuItemType.PageNavigation) 
+                if (_previousSuccessSelectedMenu.Parent != null)
                 {
-                    var isNavigationComplete = await _navigation.GoTo(v.NavigateTo);
-
-                    if (isNavigationComplete) 
-                    {
-                        _previousSelectedMenu = v;
-                    } 
-                    else 
-                    {
-                        SelectedMenu = _previousSelectedMenu;
-                    }
+                    _previousSuccessSelectedMenu.Parent.IsSelected = true;
                 }
             }
-            finally 
+        }
+
+
+        private async void OnSelectionChanged(IShellMenuItem? newItem)
+        {
+            if (newItem == null) return;
+            // if we don't need change selection
+            if (newItem == _previousSuccessSelectedMenu) return;
+            if (newItem.Type != ShellMenuItemType.PageNavigation) return;
+
+            var isNavigationSuccess = await _navigation.GoTo(newItem.NavigateTo);
+            if (isNavigationSuccess)
             {
-                Interlocked.Exchange(ref _updatingSelection , 0);
+                _previousSuccessSelectedMenu = newItem;
             }
+            else
+            {
+                if (_previousSuccessSelectedMenu.Parent != null)
+                {
+                    if (IsPaneOpen)
+                    {
+                        _previousSuccessSelectedMenu.IsSelected = true;
+                        SelectedMenu = _previousSuccessSelectedMenu;
+                    }
+                    else
+                    {
+                        _previousSuccessSelectedMenu.Parent.IsSelected = true;
+                    }
+                }
+                else
+                {
+                    _previousSuccessSelectedMenu.IsSelected = true;
+                }
+
+            }
+
+
         }
 
         [Reactive]
@@ -199,12 +229,15 @@ namespace Asv.Drones.Gui.Core
         public IShellPage CurrentPage { get; set; } = null!;
 
         [Reactive] 
-        public IShellMenuItem SelectedMenu { get; set; } = null!;
+        public IShellMenuItem? SelectedMenu { get; set; } = null!;
         public ReadOnlyObservableCollection<IHeaderMenuItem> HeaderMenuItems => _headerMenu;
         public ReadOnlyObservableCollection<IShellMenuItem> MenuItems => _menuItems;
         public ReadOnlyObservableCollection<IShellMenuItem> FooterMenuItems => _footerMenuItems;
         public ReadOnlyObservableCollection<LogMessageViewModel> Messages => _messages;
         public ReadOnlyObservableCollection<IShellStatusItem> StatusItems => _statusItems;
+
+        [Reactive]
+        public bool IsPaneOpen { get; set; }
 
         public void OnLoaded()
         {
