@@ -342,6 +342,6 @@
     <value>Не сохранять</value>
   </data>
   <data name="ParamPageViewModel_DataLossDialog_Title" xml:space="preserve">
-    <value>Отмена</value>
+    <value>Предупреждение о возможной потере данных</value>
   </data>
 </root>
