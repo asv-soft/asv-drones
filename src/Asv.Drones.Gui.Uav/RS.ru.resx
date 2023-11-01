@@ -329,4 +329,19 @@
   <data name="MissionStatusView_MissionDistance" xml:space="preserve">
     <value>Миссия: {0}</value>
   </data>
+  <data name="ParamPageViewModel_DataLossDialog_CloseButtonText" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="ParamPageViewModel_DataLossDialog_Content" xml:space="preserve">
+    <value>Вы пытаетесь открыть другой пункт меню, но в текущем у вас есть несохраненные изменения. Хотите сохранить их?</value>
+  </data>
+  <data name="ParamPageViewModel_DataLossDialog_PrimaryButtonText" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="ParamPageViewModel_DataLossDialog_SecondaryButtonText" xml:space="preserve">
+    <value>Не сохранять</value>
+  </data>
+  <data name="ParamPageViewModel_DataLossDialog_Title" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
 </root>

@@ -336,4 +336,19 @@
   <data name="MissionStatusView_TotalDistance" xml:space="preserve">
     <value>Total: {0}</value>
   </data>
+  <data name="ParamPageViewModel_DataLossDialog_Title" xml:space="preserve">
+    <value>Potential data loss warning</value>
+  </data>
+  <data name="ParamPageViewModel_DataLossDialog_Content" xml:space="preserve">
+    <value>You're trying to open another menu folder, but you have unsaved changes in the current one. Do you want to save them?</value>
+  </data>
+  <data name="ParamPageViewModel_DataLossDialog_PrimaryButtonText" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ParamPageViewModel_DataLossDialog_SecondaryButtonText" xml:space="preserve">
+    <value>Don't save</value>
+  </data>
+  <data name="ParamPageViewModel_DataLossDialog_CloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
 </root>
