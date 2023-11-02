@@ -438,6 +438,51 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string ParamPageViewModel_DataLossDialog_CloseButtonText {
+            get {
+                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;re trying to open another menu folder, but you have unsaved changes in the current one. Do you want to save them?.
+        /// </summary>
+        public static string ParamPageViewModel_DataLossDialog_Content {
+            get {
+                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string ParamPageViewModel_DataLossDialog_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t save.
+        /// </summary>
+        public static string ParamPageViewModel_DataLossDialog_SecondaryButtonText {
+            get {
+                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_SecondaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Potential data loss warning.
+        /// </summary>
+        public static string ParamPageViewModel_DataLossDialog_Title {
+            get {
+                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Advanced setup.
         /// </summary>
         public static string QuickParamsSetupPageView_AdvancedSetupButton_Text {
