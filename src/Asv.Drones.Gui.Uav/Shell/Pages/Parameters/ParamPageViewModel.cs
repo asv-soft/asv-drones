@@ -63,6 +63,7 @@ public class ParamPageViewModel: ShellPage
             .Subscribe(_ => FilterPipe.OnNext(item => item.Filter(SearchText, ShowStaredOnly)))
             .DisposeItWith(Disposable);
          _viewedParamsList = new SourceList<ParamItemViewModel>().DisposeItWith(Disposable);
+
          _viewedParamsList.Connect()
              .Bind(out _viewedParams)
              .Subscribe()
@@ -150,6 +151,8 @@ public class ParamPageViewModel: ShellPage
         inputPipe
             .Filter(FilterPipe)
             .SortBy(_ => _.Name)
+            .AutoRefresh(v => v.IsSynced)
+            .Sort(SortExpressionComparer<ParamItemViewModel>.Descending(v => !v.IsSynced))
             .Bind(out var leftItems)
             .Subscribe()
             .DisposeItWith(Disposable);

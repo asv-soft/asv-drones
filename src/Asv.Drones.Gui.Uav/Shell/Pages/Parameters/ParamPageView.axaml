@@ -59,6 +59,9 @@
                                 </ToggleButton>
                                 <avalonia:MaterialIcon IsVisible="{Binding IsPinned}" Width="20"
                                                        Margin="10 0 0 0" DockPanel.Dock="Right" Kind="Pin"/>
+                                <avalonia:MaterialIcon IsVisible="{Binding !IsSynced}" Width="20"
+                                                       Margin="10 0 0 0" DockPanel.Dock="Right" Kind="FloppyDisk"
+                                                       Foreground="Green" />
                                 <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding Name}"/>
                              </DockPanel>    
                         </DataTemplate>
