@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Uav;
+using Asv.IO;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
 using DynamicData;
@@ -14,6 +15,126 @@ using MavType = Asv.Mavlink.V2.Common.MavType;
 
 namespace Asv.Drones.Gui.Core
 {
+
+    public class ProxyRouter : DisposableOnceWithCancel, IMavlinkRouter, IDataStream
+    {
+        private MavlinkRouter _mavlinkRouter;
+        
+        private long _rxBytes;
+        private long _txBytes;
+        private long _rxBytes1;
+        private long _txBytes1;
+
+        private Random _passChance = new();
+        private double _rxPassThrough;
+        private double _txPassThrough;
+
+        public ProxyRouter(MavlinkDevicesService svc,
+            Action<IPacketDecoder<IPacketV2<IPayload>>> register, string name = "MavlinkRouter",
+            IScheduler? publishScheduler = null)
+        {
+            _mavlinkRouter = new MavlinkRouter(register, name, publishScheduler);
+
+            svc.RxPassThrough
+                .Subscribe(v => _rxPassThrough = v)
+                .DisposeItWith(Disposable);
+            
+            svc.TxPassThrough
+                .Subscribe(v => _txPassThrough = v)
+                .DisposeItWith(Disposable);
+        }
+
+        public IDisposable Subscribe(IObserver<IPacketV2<IPayload>> observer)
+        {
+            //TODO: corrupt packets here
+            var chance = _passChance.NextDouble();
+            
+            
+            return _mavlinkRouter.Subscribe(observer);
+        }
+        
+        public IDisposable Subscribe(IObserver<byte[]> observer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Send(IPacketV2<IPayload> packet, CancellationToken cancel)
+        {
+            return _mavlinkRouter.Send(packet, cancel);
+        }
+
+        public IPacketV2<IPayload> CreatePacketByMessageId(int messageId)
+        {
+            return _mavlinkRouter.CreatePacketByMessageId(messageId);
+        }
+
+        public bool WrapToV2ExtensionEnabled
+        {
+            get => _mavlinkRouter.WrapToV2ExtensionEnabled;
+            set => _mavlinkRouter.WrapToV2ExtensionEnabled = value;
+        }
+
+        public long RxPackets => _mavlinkRouter.RxPackets;
+        public long TxPackets => _mavlinkRouter.TxPackets;
+        public long SkipPackets => _mavlinkRouter.SkipPackets;
+
+        public IObservable<DeserializePackageException> DeserializePackageErrors => _mavlinkRouter.DeserializePackageErrors;
+        public IObservable<IPacketV2<IPayload>> OnSendPacket => _mavlinkRouter.OnSendPacket;
+        public IDataStream DataStream => _mavlinkRouter.DataStream;
+        public Guid AddPort(MavlinkPortConfig settings)
+        {
+            return _mavlinkRouter.AddPort(settings);
+        }
+
+        public bool RemovePort(Guid id)
+        {
+            return _mavlinkRouter.RemovePort(id);
+        }
+
+        public Guid[] GetPorts()
+        {
+            return _mavlinkRouter.GetPorts();
+        }
+
+        public bool SetEnabled(Guid id, bool enabled)
+        {
+            return _mavlinkRouter.SetEnabled(id, enabled);
+        }
+
+        public MavlinkPortInfo? GetInfo(Guid id)
+        {
+            return _mavlinkRouter.GetInfo(id);
+        }
+
+        public MavlinkPortConfig? GetConfig(Guid id)
+        {
+            return _mavlinkRouter.GetConfig(id);
+        }
+
+        public MavlinkPortConfig[] GetConfig()
+        {
+            return _mavlinkRouter.GetConfig();
+        }
+
+        public Task<bool> Send(byte[] data, int count, CancellationToken cancel)
+        {
+            return _mavlinkRouter.Send(data, count, cancel);
+        }
+
+        public string Name => _mavlinkRouter.Name;
+
+        long IDataStream.RxBytes => _rxBytes1;
+
+        long IDataStream.TxBytes => _txBytes1;
+
+        long IMavlinkRouter.RxBytes => _rxBytes;
+
+        long IMavlinkRouter.TxBytes => _txBytes;
+
+        public IObservable<Guid> OnAddPort => _mavlinkRouter.OnAddPort;
+        public IObservable<Guid> OnRemovePort => _mavlinkRouter.OnRemovePort;
+        public IObservable<Guid> OnConfigChanged => _mavlinkRouter.OnConfigChanged;
+    }
     public class MavlinkDeviceServiceConfig
     {
         public MavlinkPortConfig[] Ports { get; set; } = {
@@ -38,10 +159,12 @@ namespace Asv.Drones.Gui.Core
     {
         private readonly IPacketSequenceCalculator _sequenceCalculator;
         private readonly ILogService _log;
-        private readonly MavlinkRouter _mavlinkRouter;
+        private readonly IMavlinkRouter _mavlinkRouter;
         private readonly RxValue<byte> _systemId;
         private readonly RxValue<byte> _componentId;
         private readonly RxValue<TimeSpan> _heartBeatRate;
+        private readonly RxValue<double> _rxPassThrough;
+        private readonly RxValue<double> _txPassThrough;
         private readonly RxValue<bool> _needReloadToApplyConfig = new(false);
         private readonly MavlinkDeviceBrowser _deviceBrowser;
         private readonly IObservableCache<string, ushort> _logNames;
@@ -51,10 +174,13 @@ namespace Asv.Drones.Gui.Core
         {
             _sequenceCalculator = sequenceCalculator ?? throw new ArgumentNullException(nameof(sequenceCalculator));
             _log = log ?? throw new ArgumentNullException(nameof(log));
+
+            _rxPassThrough = new RxValue<double>(1.0f);
+            _txPassThrough = new RxValue<double>(1.0f);
             
             #region InitUriHost mavlink router
 
-            _mavlinkRouter = new MavlinkRouter(MavlinkV2Connection.RegisterDefaultDialects,publishScheduler: RxApp.MainThreadScheduler).DisposeItWith(Disposable);
+            _mavlinkRouter = new ProxyRouter(this, MavlinkV2Connection.RegisterDefaultDialects, publishScheduler: RxApp.MainThreadScheduler).DisposeItWith(Disposable);
             _mavlinkRouter.WrapToV2ExtensionEnabled = InternalGetConfig(_ => _.WrapToV2ExtensionEnabled);
             foreach (var port in InternalGetConfig(_ => _.Ports))
             {
@@ -254,6 +380,8 @@ namespace Asv.Drones.Gui.Core
         public IRxEditableValue<TimeSpan> HeartbeatRate => _heartBeatRate;
         public IObservable<IChangeSet<IVehicleClient, ushort>> Vehicles { get; }
         public IRxEditableValue<TimeSpan> DeviceTimeout => _deviceBrowser.DeviceTimeout;
+        public IRxEditableValue<double> RxPassThrough => _rxPassThrough;
+        public IRxEditableValue<double> TxPassThrough => _txPassThrough;
 
         public IVehicleClient? GetVehicleByFullId(ushort id)
         {
