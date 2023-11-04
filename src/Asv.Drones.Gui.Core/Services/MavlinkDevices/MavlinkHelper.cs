@@ -1,5 +1,6 @@
 ﻿using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
+using Asv.Mavlink.V2.Minimal;
 using Material.Icons;
 
 namespace Asv.Drones.Gui.Core

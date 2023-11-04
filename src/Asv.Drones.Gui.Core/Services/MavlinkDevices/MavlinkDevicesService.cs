@@ -7,10 +7,11 @@ using Asv.Common;
 using Asv.Drones.Gui.Uav;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
+using Asv.Mavlink.V2.Minimal;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
-using MavType = Asv.Mavlink.V2.Common.MavType;
+
 
 namespace Asv.Drones.Gui.Core
 {
