@@ -140,7 +140,7 @@
                                 <Border ToolTip.Tip="Int64" Background="CornflowerBlue" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
                                     <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
                                         <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
-                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
+                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding .}"/>
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
@@ -148,7 +148,7 @@
                                 <Border ToolTip.Tip="UInt64" Background="#FE8256" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
                                     <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
                                         <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
-                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
+                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding .}"/>
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
@@ -156,7 +156,7 @@
                                 <Border ToolTip.Tip="Float64" Background="#ACC865" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
                                     <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
                                         <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
-                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
+                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding .}"/>
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
@@ -164,7 +164,7 @@
                                 <Border ToolTip.Tip="String8" Background="#CD91B6" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
                                     <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
                                         <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
-                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
+                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding .}"/>
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
@@ -172,7 +172,7 @@
                                 <Border ToolTip.Tip="NoType" Background="DarkOrange" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
                                     <StackPanel Orientation="Horizontal" Spacing="2" Margin="3">
                                         <avalonia:MaterialIcon VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Kind="TagOutline" Width="14" Height="14" />
-                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>    
+                                        <TextBlock FontSize="12" Foreground="White"  Text="{Binding Name}"/>
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
