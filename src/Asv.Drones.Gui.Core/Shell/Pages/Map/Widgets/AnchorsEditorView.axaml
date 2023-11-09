@@ -20,10 +20,11 @@
             </StackPanel>
             <Grid ColumnDefinitions="*, 15, 3*">
                 <TextBlock Text="Latitude" TextWrapping="NoWrap" Grid.Column="0"/>
-                <TextBox Text="{CompiledBinding Latitude}" Grid.Column="2"
-                         IsFocused="{CompiledBinding IsLatFocused, Mode=OneWayToSource}"
-                         IsReadOnly="{CompiledBinding !Map.SelectedItem.IsInEditMode}" 
-                         IsEnabled="{CompiledBinding Map.SelectedItem.IsEditable}">
+                <TextBox  Grid.Column="2"
+                         IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
+                    <Interaction.Behaviors>
+                        <core:LostFocusUpdateBindingBehavior Text="{CompiledBinding Latitude}"/>
+                    </Interaction.Behaviors>
                     <TextBox.InnerRightContent>
                         <TextBlock Text="{CompiledBinding LatitudeUnits}" VerticalAlignment="Center" Margin="8 4"/>
                     </TextBox.InnerRightContent>
@@ -31,21 +32,20 @@
             </Grid>
             <Grid ColumnDefinitions="*, 15, 3*">
                 <TextBlock Text="Longitude" Grid.Column="0"/>
-                <TextBox Text="{CompiledBinding Longitude}" Grid.Column="2" 
-                         IsFocused="{CompiledBinding IsLonFocused, Mode=OneWayToSource}"
-                         IsReadOnly="{CompiledBinding !Map.SelectedItem.IsInEditMode}" 
-                         IsEnabled="{CompiledBinding Map.SelectedItem.IsEditable}">
+                <TextBox  Grid.Column="2" 
+                         IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
+                    <Interaction.Behaviors>
+                        <core:LostFocusUpdateBindingBehavior Text="{CompiledBinding Longitude}"/>
+                    </Interaction.Behaviors>
                     <TextBox.InnerRightContent>
-                        <TextBlock Text="{CompiledBinding LongitudeUnits}" VerticalAlignment="Center" Margin="8 4"/>
+                        <TextBlock Text="{Binding LongitudeUnits }" VerticalAlignment="Center" Margin="8 4"/>
                     </TextBox.InnerRightContent>
                 </TextBox>
             </Grid>
             <Grid ColumnDefinitions="*, 15, 3*">
                 <TextBlock Text="Altitude" Grid.Column="0"/>
                 <TextBox Text="{CompiledBinding Altitude}" Grid.Column="2"
-                         IsFocused="{CompiledBinding IsAltFocused, Mode=OneWayToSource}"
-                         IsReadOnly="{CompiledBinding !Map.SelectedItem.IsInEditMode}" 
-                         IsEnabled="{CompiledBinding Map.SelectedItem.IsEditable}">
+                         IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
                     <TextBox.InnerRightContent>
                         <TextBlock Text="{CompiledBinding AltitudeUnits}" VerticalAlignment="Center" Margin="8 4"/>
                     </TextBox.InnerRightContent>

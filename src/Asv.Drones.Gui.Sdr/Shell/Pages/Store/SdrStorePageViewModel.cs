@@ -15,6 +15,7 @@ using DynamicData.Binding;
 using NLog;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using AsvSdrHelper = Asv.Mavlink.AsvSdrHelper;
 
 namespace Asv.Drones.Gui.Sdr;
 
@@ -190,10 +191,16 @@ public class SdrStorePageViewModel:ShellPage
         await using var c1 = linkedCancel.Token.Register(() => tcs.TrySetCanceled());
         var readCount = 0;
         DateTime lastUpdate = DateTime.Now;
+        var from = chunk.Skip;
+        var to = chunk.Skip + chunk.Take;
         using var subscribe = ifc.OnRecordData.Where(packetV2=>packetV2.MessageId == recTypeAsUInt).Subscribe(x =>
         {
-            var items = Interlocked.Increment(ref readCount);
-            Logger.Trace($"Save {items} record {x.Name}");
+            // we need to check, that it's requested packet, but not just stream telemetry packet
+            if (AsvSdrRecordFileHelper.TryReadDataIndex(x,out var dataIndex) == false) return;
+            if (dataIndex < from || dataIndex > to) return;
+            
+            Interlocked.Increment(ref readCount);
+            Logger.Trace($"Save {dataIndex} record {x.Name}");
             file.Write(x);
             lastUpdate = DateTime.Now;
         });
