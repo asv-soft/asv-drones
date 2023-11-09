@@ -42,20 +42,36 @@ namespace Asv.Drones.Gui.Core
             svc.TxPassThrough
                 .Subscribe(v => _txPassThrough = v)
                 .DisposeItWith(Disposable);
+
+            _mavlinkRouter.OnAddPort.Subscribe(SetPortPassThrough).DisposeItWith(Disposable);
+        }
+
+        private void SetPortPassThrough(Guid guid)
+        {
+            
         }
 
         public IDisposable Subscribe(IObserver<IPacketV2<IPayload>> observer)
         {
             //TODO: corrupt packets here
             var chance = _passChance.NextDouble();
-            
-            
-            return _mavlinkRouter.Subscribe(observer);
+            if (chance <= _txPassThrough)
+            {
+                return _mavlinkRouter.Subscribe(observer);
+            }
+
+            return null;
         }
         
         public IDisposable Subscribe(IObserver<byte[]> observer)
         {
-            throw new NotImplementedException();
+            var chance = _passChance.NextDouble();
+            if (chance <= _txPassThrough)
+            {
+                return _mavlinkRouter.Subscribe(observer);
+            }
+
+            return null;
         }
 
         public Task Send(IPacketV2<IPayload> packet, CancellationToken cancel)
