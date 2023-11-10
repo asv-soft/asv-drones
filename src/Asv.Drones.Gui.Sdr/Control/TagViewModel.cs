@@ -114,6 +114,10 @@ public class LongTagViewModel : TagViewModel
         Value = value;
     }
     public long Value { get; set; }
+    public override string ToString()
+    {
+        return $"{Name}:{Value}";
+    }
 }
 
 public class ULongTagViewModel : TagViewModel
@@ -123,6 +127,10 @@ public class ULongTagViewModel : TagViewModel
         Value = value;
     }
     public ulong Value { get; set; }
+    public override string ToString()
+    {
+        return $"{Name}:{Value}";
+    }
 }
 
 public class DoubleTagViewModel : TagViewModel
@@ -132,6 +140,10 @@ public class DoubleTagViewModel : TagViewModel
         Value = value;
     }
     public double Value { get; set; }
+    public override string ToString()
+    {
+        return $"{Name}:{Value}";
+    }
 }
 
 public class StringTagViewModel : TagViewModel
@@ -141,4 +153,8 @@ public class StringTagViewModel : TagViewModel
         Value = value;
     }
     public string Value { get; set; }
+    public override string ToString()
+    {
+        return $"{Name}:{Value}";
+    }
 }
