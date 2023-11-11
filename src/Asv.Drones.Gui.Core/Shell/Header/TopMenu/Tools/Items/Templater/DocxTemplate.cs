@@ -6,7 +6,7 @@ using DocumentFormat.OpenXml.Office2010.Word.DrawingShape;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Vml;
 using DocumentFormat.OpenXml.Wordprocessing;
-
+using SkiaSharp;
 using DW = DocumentFormat.OpenXml.Drawing.Wordprocessing;
 using PIC = DocumentFormat.OpenXml.Drawing.Pictures;
 
@@ -81,15 +81,22 @@ public class DocxTemplate : IDocxTemplate
     /// <param name="imgFileName">path to image</param>
     /// <param name="width"></param>
     /// <param name="height"></param>
-    public void Image(string tag, string imgFileName, double width, double height)
+    public void Image(string tag, string imgFileName)
     {
         var mainPart = _document.MainDocumentPart;
         var imagePart = mainPart.AddImagePart(ImagePartType.Png);
+        
         using (var stream = new FileStream(imgFileName, FileMode.Open))
         {
             imagePart.FeedData(stream);
         }
-        AddImageToBody(_document, mainPart.GetIdOfPart(imagePart), tag, ImagePartType.Png, width, height);
+        using(var stream = new FileStream(imgFileName, FileMode.Open))
+        using (SKManagedStream skStream = new SKManagedStream(stream))
+        using (SKBitmap skBitmap = SKBitmap.Decode(skStream))
+        {
+            AddImageToBody(_document, mainPart.GetIdOfPart(imagePart), tag, ImagePartType.Png, skBitmap.Width, skBitmap.Height);
+        }
+       
     }
 
     /// <summary>
@@ -100,12 +107,16 @@ public class DocxTemplate : IDocxTemplate
     /// <param name="imageStream">image stream</param>
     /// <param name="width"></param>
     /// <param name="height"></param>
-    public void Image(string tag, MemoryStream imageStream, double width, double height)
+    public void Image(string tag, MemoryStream imageStream)
     {
         var mainPart = _document.MainDocumentPart;
         var imagePart = mainPart.AddImagePart(ImagePartType.Png);
         imagePart.FeedData(imageStream);
-        AddImageToBody(_document, mainPart.GetIdOfPart(imagePart), tag, ImagePartType.Png, width, height);
+        using (SKManagedStream skStream = new SKManagedStream(imageStream))
+        using (SKBitmap skBitmap = SKBitmap.Decode(skStream))
+        {
+            AddImageToBody(_document, mainPart.GetIdOfPart(imagePart), tag, ImagePartType.Png, skBitmap.Width, skBitmap.Height);
+        }
     }
     
     /// <summary>

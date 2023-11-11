@@ -24,7 +24,7 @@ public class HeaderToolsMenu : HeaderMenuItem
             .Bind(out _items)
             .Subscribe()
             .DisposeItWith(Disposable);
-
+        
         Header = RS.HeaderToolsMenu_Header;
         Icon = MaterialIconKind.Tools;
         Order = short.MinValue;

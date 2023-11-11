@@ -6,7 +6,8 @@
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              mc:Ignorable="d" Width="550" Height="500"
              x:DataType="core:TemplaterViewModel"
-             x:Class="Asv.Drones.Gui.Core.TemplaterView">
+             x:Class="Asv.Drones.Gui.Core.TemplaterView"
+             x:Name="Root">
     <Design.DataContext>
         <core:TemplaterViewModel/>
     </Design.DataContext>
@@ -30,7 +31,7 @@
                         </DropDownButton.Content>
                         <DropDownButton.Flyout>
                             <MenuFlyout Placement="Bottom">
-                                <MenuItem Command="{CompiledBinding AddStringTag}">
+                                <MenuItem Command="{CompiledBinding AddEmptyStringTag}">
                                     <MenuItem.Header>
                                         <StackPanel Spacing="8" Orientation="Horizontal">
                                             <avalonia:MaterialIcon Kind="CodeString" Foreground="RosyBrown"/>
@@ -38,7 +39,7 @@
                                         </StackPanel>
                                     </MenuItem.Header>
                                 </MenuItem>
-                                <MenuItem Command="{CompiledBinding AddImageTag}">
+                                <MenuItem Command="{CompiledBinding AddEmptyImageTag}">
                                     <MenuItem.Header>
                                         <StackPanel Spacing="8" Orientation="Horizontal">
                                             <avalonia:MaterialIcon Kind="Image" Foreground="SkyBlue"/>

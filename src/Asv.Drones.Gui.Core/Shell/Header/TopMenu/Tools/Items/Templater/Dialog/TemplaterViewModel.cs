@@ -35,8 +35,8 @@ public class TemplaterViewModel : ViewModelBaseWithValidation
     {
         
         ClearTagsList = ReactiveCommand.Create(ClearTagsListImpl);
-        AddStringTag = ReactiveCommand.Create(AddStringTagImpl);
-        AddImageTag = ReactiveCommand.Create(AddImageTagImpl);
+        AddEmptyStringTag = ReactiveCommand.Create(() => AddStringTag());
+        AddEmptyImageTag = ReactiveCommand.Create(() => AddImageTag());
     }
 
     [ImportingConstructor]
@@ -75,10 +75,10 @@ public class TemplaterViewModel : ViewModelBaseWithValidation
     public ICommand ClearTagsList { get; set; }
     
     [Reactive]
-    public ICommand AddStringTag { get; set; }
+    public ICommand AddEmptyStringTag { get; set; }
     
     [Reactive]
-    public ICommand AddImageTag { get; set; }
+    public ICommand AddEmptyImageTag { get; set; }
     
     [Reactive]
     public string TemplatePath { get; set; }
@@ -86,24 +86,27 @@ public class TemplaterViewModel : ViewModelBaseWithValidation
     [Reactive]
     public string ResultPath { get; set; }
     
+    [Reactive]
+    public bool IsReportPrint { get; set; }
+    
     public ReadOnlyObservableCollection<TagElement> Tags => _tags;
-    
-    private void AddStringTagImpl()
-    {
-        var currentGuid = Guid.NewGuid();
-        _tagsList.Add(new StringTagElement(currentGuid, ReactiveCommand.Create(() =>
-        {
-            _tagsList.Remove(_tags.FirstOrDefault(_ => _.Id == currentGuid));
-        })){Tag = "", Value = ""});
-    }
-    
-    private void AddImageTagImpl()
+
+    public void AddImageTag(string tag = "", string path = "")
     {
         var currentGuid = Guid.NewGuid();
         _tagsList.Add(new ImageTagElement(currentGuid, ReactiveCommand.Create(() =>
         {
             _tagsList.Remove(_tags.FirstOrDefault(_ => _.Id == currentGuid));
-        })){Tag = "", Path = ""});
+        })){Tag = tag, Path = path});
+    }
+    
+    public void AddStringTag(string tag = "", string value = "")
+    {
+        var currentGuid = Guid.NewGuid();
+        _tagsList.Add(new StringTagElement(currentGuid, ReactiveCommand.Create(() =>
+        {
+            _tagsList.Remove(_tags.FirstOrDefault(_ => _.Id == currentGuid));
+        })){Tag = tag, Value = value});
     }
     
     private void ClearTagsListImpl()
@@ -125,7 +128,7 @@ public class TemplaterViewModel : ViewModelBaseWithValidation
             }
             else if (tag is ImageTagElement imgTag)
             {
-                template.Image(imgTag.Tag, imgTag.Path, 1, 1);
+                template.Image(imgTag.Tag, imgTag.Path);
             }
         }
         
