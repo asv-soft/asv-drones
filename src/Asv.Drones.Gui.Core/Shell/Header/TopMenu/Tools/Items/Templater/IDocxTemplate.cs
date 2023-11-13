@@ -10,7 +10,7 @@ public interface IDocxTemplate : IDisposable
     /// <param name="imgFileName">path to image</param>
     /// <param name="width"></param>
     /// <param name="height"></param>
-    void Image(string tag, string path, double width, double height);
+    void Image(string tag, string path);
     /// <summary>
     /// Insert an image referenced either by a file path or a memory stream
     /// at a location marked by a tag in the document. 
@@ -19,7 +19,7 @@ public interface IDocxTemplate : IDisposable
     /// <param name="imageStream">image stream</param>
     /// <param name="width"></param>
     /// <param name="height"></param>
-    void Image(string tag, MemoryStream imageStream, double width, double height);
+    void Image(string tag, MemoryStream imageStream);
     /// <summary>
     /// This method is used to replace a specific tag
     /// with a provided text in headers, footers, and the document body.
