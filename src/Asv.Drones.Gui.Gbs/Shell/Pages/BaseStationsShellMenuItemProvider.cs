@@ -20,7 +20,7 @@ public class BaseStationsShellMenuItemProvider : ViewModelProviderBase<IShellMen
                 Name = $"Ground station [{_.FullId}]",
                 Icon = MaterialIconDataProvider.GetData(GbsIconHelper.DefaultIcon),
                 Position = ShellMenuPosition.Top,
-                Type = ShellMenuItemType.PageNavigation,
+                Type = ShellMenuItemType.Group,
                 Order = _.FullId,
                 Items = new ReadOnlyObservableCollection<IShellMenuItem>(new ObservableCollection<IShellMenuItem>
                 {
