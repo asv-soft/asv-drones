@@ -31,7 +31,7 @@ public class VehiclesShellMenuItemProvider : ViewModelProviderBase<IShellMenuIte
 
 public class SdrGroupShellMenuItem:ShellMenuItem
 {
-    public SdrGroupShellMenuItem(ISdrClientDevice sdr, CompositionContainer compositionContainer) : base($"asv:shell.menu.gbs.{sdr.FullId}")
+    public SdrGroupShellMenuItem(ISdrClientDevice sdr, CompositionContainer compositionContainer) : base($"asv:shell.menu.sdr.{sdr.FullId}")
     {
         sdr.Name.Subscribe(x => Name = x).DisposeItWith(Disposable);
 
@@ -52,9 +52,9 @@ public class SdrGroupShellMenuItem:ShellMenuItem
 
 [Export(typeof(IShellMenuItem<ISdrClientDevice>))]
 [PartCreationPolicy(CreationPolicy.NonShared)]
-public class VehicleParamsEditorShellMenuItem : ShellMenuItem,IShellMenuItem<ISdrClientDevice>
+public class SdrParamsEditorShellMenuItem : ShellMenuItem,IShellMenuItem<ISdrClientDevice>
 {
-    public VehicleParamsEditorShellMenuItem() : base($"asv:shell.menu.gbs.params?{Guid.NewGuid()}")
+    public SdrParamsEditorShellMenuItem() : base($"asv:shell.menu.sdr.params?{Guid.NewGuid()}")
     {
         Icon = MaterialIconDataProvider.GetData(MaterialIconKind.WrenchCog);
         Position = ShellMenuPosition.Top;

@@ -51,8 +51,4 @@
     <ItemGroup>
         <ProjectReference Include="..\Asv.Drones.Gui.Core\Asv.Drones.Gui.Core.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Shell\Pages\Calibration\" />
-    </ItemGroup>
 </Project>
