@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel.Composition;
-using Avalonia.Media;
+﻿using System.ComponentModel.Composition;
 using Material.Icons;
 
 namespace Asv.Drones.Gui.Core

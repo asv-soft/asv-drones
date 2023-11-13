@@ -73,8 +73,8 @@ public class DegreesMeasureUnit : IMeasureUnitItem<double, DegreeUnits>
 public class MsMeasureUnit : IMeasureUnitItem<double, DegreeUnits>
 {
     public DegreeUnits Id => DegreeUnits.MinutesSeconds;
-    public string Title => RS.Degrees_MS_Title;
-    public string Unit => RS.Degrees_MS_Title;
+    public string Title => "[M]′[S]′′";
+    public string Unit => "[M]′[S]′′";
     public bool IsSiUnit => false;
     //Not usable
     public double ConvertFromSi(double siValue)

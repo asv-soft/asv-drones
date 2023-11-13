@@ -1,6 +1,4 @@
-﻿using System.Reactive;
-
-namespace Asv.Drones.Gui.Core
+﻿namespace Asv.Drones.Gui.Core
 {
     public interface ILogService
     {

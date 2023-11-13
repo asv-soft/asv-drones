@@ -2,11 +2,11 @@
 using System.ComponentModel.Composition;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
-using Asv.Mavlink;
+using Asv.Drones.Gui.Uav;
 using DynamicData;
 using Material.Icons;
 
-namespace Asv.Drones.Gui.Uav;
+namespace Asv.Drones.Gui.Sdr;
 
 [Export(typeof(IViewModelProvider<IShellMenuItem>))]
 [PartCreationPolicy(CreationPolicy.NonShared)]
@@ -17,8 +17,8 @@ public class PayloadsShellMenuItemProvider : ViewModelProviderBase<IShellMenuIte
     {
         svc.Payloads.Transform(_ => (IShellMenuItem)new ShellMenuItem($"asv:shell.menu.payload.{_.FullId}")
             {
-                Name = $"Payload [{_.FullId}]",
-                Icon = MaterialIconDataProvider.GetData(MaterialIconKind.WrenchCog),
+                Name = $"SDR payload [{_.FullId}]",
+                Icon = MaterialIconDataProvider.GetData(SdrIconHelper.DefaultIcon),
                 Position = ShellMenuPosition.Top,
                 Type = ShellMenuItemType.Group,
                 Order = _.FullId,
@@ -26,9 +26,9 @@ public class PayloadsShellMenuItemProvider : ViewModelProviderBase<IShellMenuIte
                 {
                     new ShellMenuItem($"asv:shell.menu.params.{_.FullId}")  
                     {       
-                        Name = string.Format(RS.ParametersEditorPageViewModel_Title, _.FullId),  
+                        Name = "Settings",  
                         NavigateTo = ParamPageViewModel.GenerateUri(_.FullId, _.Class),  
-                        Icon = MaterialIconDataProvider.GetData(MaterialIconKind.ViewList),  
+                        Icon = MaterialIconDataProvider.GetData(MaterialIconKind.WrenchCog),  
                         Position = ShellMenuPosition.Top,  
                         Type = ShellMenuItemType.PageNavigation,  
                         Order = _.FullId  

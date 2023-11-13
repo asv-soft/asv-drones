@@ -807,15 +807,6 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [M]′[S]′′.
-        /// </summary>
-        public static string Degrees_MS_Title {
-            get {
-                return ResourceManager.GetString("Degrees_MS_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Angle.
         /// </summary>
         public static string Degrees_Title {
@@ -1028,15 +1019,6 @@ namespace Asv.Drones.Gui.Core {
         public static string GlobalCommands_OpenStoreDialogTitle {
             get {
                 return ResourceManager.GetString("GlobalCommands_OpenStoreDialogTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Anchors.
-        /// </summary>
-        public static string HeaderAnchorsMenu_Title {
-            get {
-                return ResourceManager.GetString("HeaderAnchorsMenu_Title", resourceCulture);
             }
         }
         
@@ -1856,6 +1838,168 @@ namespace Asv.Drones.Gui.Core {
         public static string PacketViewerViewModel_SeparatorDialog_Title {
             get {
                 return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove all pinned parameters.
+        /// </summary>
+        public static string ParametersEditorPageView_PinsOffButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageView_PinsOffButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Star this parameter.
+        /// </summary>
+        public static string ParametersEditorPageView_StarButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageView_StarButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show only starred parameters.
+        /// </summary>
+        public static string ParametersEditorPageView_StarsToggleButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageView_StarsToggleButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update all parameters.
+        /// </summary>
+        public static string ParametersEditorPageView_UpdateButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageView_UpdateButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string ParametersEditorPageViewModel_Search {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageViewModel_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameters editor [{0}].
+        /// </summary>
+        public static string ParametersEditorPageViewModel_Title {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total: {0}.
+        /// </summary>
+        public static string ParametersEditorPageViewModel_Total {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageViewModel_Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On/off pin for this parameter.
+        /// </summary>
+        public static string ParametersEditorParameterView_PinToggleButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorParameterView_PinToggleButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reboot required.
+        /// </summary>
+        public static string ParametersEditorParameterView_RebootRequired {
+            get {
+                return ResourceManager.GetString("ParametersEditorParameterView_RebootRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string ParametersEditorParameterView_UpdateButton {
+            get {
+                return ResourceManager.GetString("ParametersEditorParameterView_UpdateButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update this parameter from UAV.
+        /// </summary>
+        public static string ParametersEditorParameterView_UpdateButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorParameterView_UpdateButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write.
+        /// </summary>
+        public static string ParametersEditorParameterView_WriteButton {
+            get {
+                return ResourceManager.GetString("ParametersEditorParameterView_WriteButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write this parameter to UAV.
+        /// </summary>
+        public static string ParametersEditorParameterView_WriteButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorParameterView_WriteButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string ParamPageViewModel_DataLossDialog_CloseButtonText {
+            get {
+                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;re trying to open another menu folder, but you have unsaved changes in the current one. Do you want to save them?.
+        /// </summary>
+        public static string ParamPageViewModel_DataLossDialog_Content {
+            get {
+                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string ParamPageViewModel_DataLossDialog_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t save.
+        /// </summary>
+        public static string ParamPageViewModel_DataLossDialog_SecondaryButtonText {
+            get {
+                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_SecondaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Potential data loss warning.
+        /// </summary>
+        public static string ParamPageViewModel_DataLossDialog_Title {
+            get {
+                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_Title", resourceCulture);
             }
         }
         

@@ -2,7 +2,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
-using FluentAvalonia.UI.Controls;
 
 namespace Asv.Drones.Gui.Core;
 

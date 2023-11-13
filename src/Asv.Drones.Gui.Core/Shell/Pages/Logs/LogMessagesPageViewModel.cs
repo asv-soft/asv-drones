@@ -4,7 +4,6 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Asv.Cfg;
 using Asv.Common;
-using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 

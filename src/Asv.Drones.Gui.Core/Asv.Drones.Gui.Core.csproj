@@ -53,6 +53,14 @@
         <DependentUpon>HeaderCoordinatesCalculatorDialog.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Shell\Pages\Parameters\ParamItemView.axaml.cs">
+        <DependentUpon>ParamItemView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Shell\Pages\Parameters\ParamPageView.axaml.cs">
+        <DependentUpon>ParamPageView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>

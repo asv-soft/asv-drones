@@ -49,7 +49,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     {
         if (Design.IsDesignMode)
         {
-            Icon = MaterialIconKind.Memory;
+            Icon = SdrIconHelper.DefaultIcon;
             _rttWidgets = new ObservableCollection<ISdrRttWidget>(new List<ISdrRttWidget>
             {
                 new LlzSdrRttViewModel(),
@@ -96,7 +96,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
                 }
             }).DisposeItWith(Disposable);
         
-        Icon = MaterialIconKind.Memory;
+        Icon = SdrIconHelper.DefaultIcon;
         Title = RS.FlightSdrViewModel_Title;
         Location = WidgetLocation.Right;
 

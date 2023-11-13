@@ -6,7 +6,7 @@ using System.Reactive.Subjects;
 using System.Web;
 using Asv.Cfg;
 using Asv.Common;
-using Asv.Drones.Gui.Core;
+using Asv.Drones.Gui.Uav;
 using Asv.Mavlink;
 using DynamicData;
 using DynamicData.Binding;
@@ -14,7 +14,7 @@ using FluentAvalonia.UI.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
-namespace Asv.Drones.Gui.Uav;
+namespace Asv.Drones.Gui.Core;
 
 public class ParamsConfig
 {

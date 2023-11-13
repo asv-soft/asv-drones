@@ -1,6 +1,4 @@
-﻿using Asv.Common;
-using Asv.Drones.Core;
-using Avalonia.Platform.Storage;
+﻿using Asv.Drones.Core;
 
 namespace Asv.Drones.Gui.Core
 {

@@ -17,7 +17,7 @@ public class HeaderAnchorsMenu : HeaderMenuItem
     [ImportingConstructor]
     public HeaderAnchorsMenu() : base(Uri)
     {
-        Header = RS.HeaderAnchorsMenu_Title;
+        Header = "Anchors";
         Icon = MaterialIconKind.Anchor;
         Order = short.MinValue;
 

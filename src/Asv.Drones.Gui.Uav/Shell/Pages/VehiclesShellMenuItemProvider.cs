@@ -17,7 +17,7 @@ public class VehiclesShellMenuItemProvider : ViewModelProviderBase<IShellMenuIte
          svc.Vehicles.Transform(_ => (IShellMenuItem)new ShellMenuItem($"asv:shell.menu.uav.{_.FullId}")
          {
              Name = $"Arducopter [{_.FullId}]",
-             Icon = MaterialIconDataProvider.GetData(MaterialIconKind.Drone),
+             Icon = MaterialIconDataProvider.GetData(MaterialIconKind.Navigation),
              Position = ShellMenuPosition.Top,
              Type = ShellMenuItemType.Group,
              Order = _.FullId,
@@ -34,9 +34,9 @@ public class VehiclesShellMenuItemProvider : ViewModelProviderBase<IShellMenuIte
                  },
                  new ShellMenuItem($"asv:shell.menu.params.{_.FullId}")
                  {
-                     Name = string.Format(RS.ParametersEditorPageViewModel_Title, _.FullId),
+                     Name = "Settings",
                      NavigateTo = ParamPageViewModel.GenerateUri(_.FullId, _.Class),
-                     Icon = MaterialIconDataProvider.GetData(MaterialIconKind.ViewList),
+                     Icon = MaterialIconDataProvider.GetData(MaterialIconKind.WrenchCog),
                      Position = ShellMenuPosition.Top,
                      Type = ShellMenuItemType.PageNavigation,
                      Order = _.FullId

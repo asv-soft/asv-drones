@@ -2,7 +2,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Data;
-using Avalonia.Data.Converters;
 using FluentAvalonia.UI.Controls;
 
 namespace Asv.Drones.Gui.Core

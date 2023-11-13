@@ -3,18 +3,11 @@ using DynamicData;
 using ReactiveUI.Fody.Helpers;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
-using System.Diagnostics;
 using System.Reactive.Linq;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using Asv.Cfg;
 using Asv.Common;
-using Avalonia.Controls.Generators;
-using Avalonia.Threading;
 using DynamicData.Binding;
-using FluentAvalonia.UI.Controls;
 using Material.Icons;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core
 {

@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
-using System.Reactive.Subjects;
 using System.Windows.Input;
 using Asv.Cfg;
 using Asv.Common;

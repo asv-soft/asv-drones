@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace Asv.Drones.Gui.Core;
+﻿namespace Asv.Drones.Gui.Core;
 
 internal static class DocxTemplateHelper
 {

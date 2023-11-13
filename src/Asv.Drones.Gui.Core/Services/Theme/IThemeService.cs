@@ -1,5 +1,4 @@
 ﻿using Asv.Common;
-using Avalonia.Media;
 using Avalonia.Styling;
 
 namespace Asv.Drones.Gui.Core

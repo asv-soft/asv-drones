@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Asv.Common;
+﻿using Asv.Common;
 using System.Globalization;
 
 namespace Asv.Drones.Gui.Core
