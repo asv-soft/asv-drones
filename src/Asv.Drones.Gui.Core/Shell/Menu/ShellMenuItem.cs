@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using Asv.Common;
 using DynamicData.Binding;
+using FluentAvalonia.UI.Controls;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Core
@@ -15,13 +16,15 @@ namespace Asv.Drones.Gui.Core
         }
         public ShellMenuItem(string id) : base(id)
         {
+            
         }
 
+        public InfoBadge InfoBadge { get; set; }
         public IShellMenuItem Parent { get; set; }
 
         [Reactive]
-        public string Name { get; init; }
-        public Uri NavigateTo { get; init; }
+        public string Name { get; set; }
+        public Uri NavigateTo { get; set; }
         [Reactive]
         public string Icon { get; init; }
         public ShellMenuPosition Position { get; init; }

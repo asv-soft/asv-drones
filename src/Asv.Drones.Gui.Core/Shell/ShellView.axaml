@@ -91,6 +91,7 @@
                            PaneDisplayMode="Left"
                            IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay}"
                            IsPaneToggleButtonVisible="False"
+                           CompactPaneLength="55"
                            Name="NavView"
                            IsSettingsVisible="False"
                            SelectedItem="{Binding SelectedMenu, Mode=TwoWay}"

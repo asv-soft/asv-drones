@@ -172,7 +172,7 @@ namespace Asv.Drones.Gui.Core
             }
             else
             {
-                if (_previousSuccessSelectedMenu.Parent != null)
+                if (_previousSuccessSelectedMenu?.Parent != null)
                 {
                     _previousSuccessSelectedMenu.Parent.IsSelected = true;
                 }
@@ -181,8 +181,9 @@ namespace Asv.Drones.Gui.Core
 
 
 
-        private async void OnSelectionChanged(IShellMenuItem? newItem)
+        private async void OnSelectionChanged(object? item)
         {
+            var newItem = item as IShellMenuItem;
             if (newItem == null) return;
             // if we don't need change selection
             if (newItem == _previousSuccessSelectedMenu) return;
@@ -224,7 +225,7 @@ namespace Asv.Drones.Gui.Core
         public IShellPage CurrentPage { get; set; } = null!;
 
         [Reactive] 
-        public IShellMenuItem? SelectedMenu { get; set; } = null!;
+        public object? SelectedMenu { get; set; } = null!;
         public ReadOnlyObservableCollection<IHeaderMenuItem> HeaderMenuItems => _headerMenu;
         public ReadOnlyObservableCollection<IShellMenuItem> MenuItems => _menuItems;
         public ReadOnlyObservableCollection<IShellMenuItem> FooterMenuItems => _footerMenuItems;
