@@ -150,15 +150,6 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Payload.
-        /// </summary>
-        public static string FlightSdrViewModel_Title {
-            get {
-                return ResourceManager.GetString("FlightSdrViewModel_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Error to set payload mode.
         /// </summary>
         public static string FlightSdrViewModel_UpdateMode_Error_Message {

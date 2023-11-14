@@ -42,7 +42,7 @@ public class GbsGroupShellMenuItem:ShellMenuItem
         Order = gbs.FullId;
 
         Items = new ReadOnlyObservableCollection<IShellMenuItem>(new ObservableCollection<IShellMenuItem>(compositionContainer.GetExportedValues<IShellMenuItem<IGbsClientDevice>>()
-            .Select(x=>x.Init(gbs))));
+            .Select(x=>x.Init(gbs)).OrderBy(x=>x.Order)));
         InfoBadge = new InfoBadge
         {
             Value = gbs.Identity.TargetSystemId,

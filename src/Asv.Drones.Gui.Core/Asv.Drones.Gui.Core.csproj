@@ -85,9 +85,5 @@
       <None Remove="Assets\program-logo.png" />
       <AvaloniaResource Include="Assets\program-logo.png" />
     </ItemGroup>
-    
-    <ItemGroup>
-      <Folder Include="Shell\Pages\Map\Planing\Widgets\" />
-    </ItemGroup>
 
 </Project>

@@ -158,11 +158,15 @@ namespace Asv.Drones.Gui.Core
 
             #region Logs
 
-            _logNames = Vehicles
+            
+            _logNames = Vehicles.Transform(x=>(IClientDevice)x)
+                .Merge(BaseStations.Transform(x=>(IClientDevice)x))
+                .Merge(Payloads.Transform(x=>(IClientDevice)x))
+                .Merge(AdsbDevices.Transform(x=>(IClientDevice)x))
                 .AutoRefreshOnObservable(_ => _.Name)
                 .Filter(_=>_.Name.Value!=null)
                 .Transform(_ => _.Name.Value,true)
-                .AsObservableCache();
+                .AsObservableCache().DisposeItWith(Disposable);
             _mavlinkRouter
                 .Filter<StatustextPacket>()
                 .ObserveOn(RxApp.MainThreadScheduler)

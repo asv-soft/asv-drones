@@ -27,7 +27,7 @@ public class HeaderToolsMenu : HeaderMenuItem
         
         Header = RS.HeaderToolsMenu_Header;
         Icon = MaterialIconKind.Tools;
-        Order = short.MinValue;
+        Order = ushort.MaxValue;
     }
 
     public override ReadOnlyObservableCollection<IHeaderMenuItem>? Items => _items;

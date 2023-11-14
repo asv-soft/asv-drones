@@ -42,6 +42,7 @@ namespace Asv.Drones.Gui.Core
         
         private string GetSourceName(string rootSource)
         {
+            return rootSource;
             return $"{_hostName}.{rootSource}";
         }
 

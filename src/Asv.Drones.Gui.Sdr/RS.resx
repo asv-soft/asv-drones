@@ -147,9 +147,6 @@
     <data name="FlightSdrViewModel_Frequency_Validation_ErrorMessage" xml:space="preserve">
         <value>Value must be greater than 0</value>
     </data>
-    <data name="FlightSdrViewModel_Title" xml:space="preserve">
-        <value>Payload</value>
-    </data>
     <data name="FlightSdrViewModel_UpdateMode_Error_Sender" xml:space="preserve">
         <value>Set mode</value>
     </data>

@@ -24,6 +24,7 @@ namespace Asv.Drones.Gui.Core
 
         [Reactive]
         public string Name { get; set; }
+        [Reactive]
         public Uri NavigateTo { get; set; }
         [Reactive]
         public string Icon { get; init; }

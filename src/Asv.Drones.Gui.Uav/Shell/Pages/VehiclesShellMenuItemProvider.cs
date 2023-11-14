@@ -39,7 +39,7 @@ public class VehicleGroupShellMenuItem:ShellMenuItem
         Order = vehicle.FullId;
 
         Items = new ReadOnlyObservableCollection<IShellMenuItem>(new ObservableCollection<IShellMenuItem>(compositionContainer.GetExportedValues<IShellMenuItem<IVehicleClient>>()
-            .Select(x=>x.Init(vehicle))));
+            .Select(x=>x.Init(vehicle)).OrderBy(x=>x.Order)));
         InfoBadge = new InfoBadge
         {
             Value = vehicle.Identity.TargetSystemId,

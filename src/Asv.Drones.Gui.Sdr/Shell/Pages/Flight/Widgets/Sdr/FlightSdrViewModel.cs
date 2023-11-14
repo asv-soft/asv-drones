@@ -10,6 +10,7 @@ using Asv.Mavlink;
 using Asv.Mavlink.V2.AsvSdr;
 using Asv.Mavlink.V2.Common;
 using Avalonia.Controls;
+using DocumentFormat.OpenXml.Wordprocessing;
 using DynamicData;
 using DynamicData.Binding;
 using FluentAvalonia.UI.Controls;
@@ -97,7 +98,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             }).DisposeItWith(Disposable);
         
         Icon = SdrIconHelper.DefaultIcon;
-        Title = RS.FlightSdrViewModel_Title;
+        payload.Name.Subscribe(x=>Title = x).DisposeItWith(Disposable);
         Location = WidgetLocation.Right;
 
         payload.Sdr.SupportedModes.DistinctUntilChanged()

@@ -31,10 +31,10 @@ namespace Asv.Drones.Gui.Core
                     [!ListBoxItem.IsSelectedProperty] = new Binding(nameof(IShellMenuItem.IsSelected)),
                     [!Visual.IsVisibleProperty] = new Binding(nameof(IShellMenuItem.IsVisible), BindingMode.TwoWay),
                     SelectsOnInvoked = true,
-                    [!NavigationViewItem.SelectsOnInvokedProperty] =  new Binding(nameof(IShellMenuItem.NavigateTo))
+                    /*[!NavigationViewItem.SelectsOnInvokedProperty] =  new Binding(nameof(IShellMenuItem.NavigateTo))
                     {
                         Converter = ObjectConverters.IsNotNull
-                    }
+                    }*/
 
                 });
             HeaderTemplate = new FuncDataTemplate<IShellMenuItem>((value, namescope) =>

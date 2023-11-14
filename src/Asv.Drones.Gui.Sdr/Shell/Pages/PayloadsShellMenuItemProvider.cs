@@ -41,7 +41,7 @@ public class SdrGroupShellMenuItem:ShellMenuItem
         Order = sdr.FullId;
 
         Items = new ReadOnlyObservableCollection<IShellMenuItem>(new ObservableCollection<IShellMenuItem>(compositionContainer.GetExportedValues<IShellMenuItem<ISdrClientDevice>>()
-            .Select(x=>x.Init(sdr))));
+            .Select(x=>x.Init(sdr)).OrderBy(x=>x.Order)));
         InfoBadge = new InfoBadge
         {
             Value = sdr.Identity.TargetSystemId,
