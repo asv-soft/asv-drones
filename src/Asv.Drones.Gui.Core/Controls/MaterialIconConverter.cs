@@ -19,6 +19,16 @@ namespace Asv.Drones.Gui.Core
                 };
             }
 
+            if (value is string str)
+            {
+                if (Enum.TryParse(str,true, out kind))
+                {
+                    return new MaterialIcon
+                    {
+                        Kind = kind
+                    };
+                }
+            }
             return new MaterialIcon();
         }
 
