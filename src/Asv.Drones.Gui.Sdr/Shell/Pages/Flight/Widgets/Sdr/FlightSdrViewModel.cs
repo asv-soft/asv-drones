@@ -210,12 +210,9 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             SecondaryButtonText = RS.FlightSdrViewModel_RecordStartDialog_SecondaryButton_Name
         };
             
-        var viewModel = new RecordStartViewModel();
-
-        if (SelectedMode != null)
-        {
-            viewModel.RecordName = $"{SelectedMode.Name}_{DateTime.Now:yy_MM_dd_hh_mm}";
-        }
+        var viewModel = new RecordStartViewModel(Payload);
+        
+        viewModel.RecordName = $"{Modes.First(_ => _.Mode == Payload.Sdr.CustomMode.Value).Name}_{DateTime.Now:yy_MM_dd_hh_mm}";
         
         viewModel.ApplyDialog(dialog);
             
@@ -231,6 +228,24 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
                 startMavResult = await Payload.Sdr.StartRecord(viewModel.RecordName, cancel);
                 if (cancel.IsCancellationRequested || startMavResult == MavResult.MavResultAccepted) break;
             }
+            
+            var tagMavResult = MavResult.MavResultUnsupported;
+            
+            for (int i = 0; i < 5; i++)
+            {
+                tagMavResult = await Payload.Sdr.CurrentRecordSetTag("Kit", 
+                    viewModel.SelectedKit, cancel).ConfigureAwait(false);
+                if (cancel.IsCancellationRequested || tagMavResult == MavResult.MavResultAccepted) break;
+            }
+            
+            tagMavResult = MavResult.MavResultUnsupported;
+            
+            for (int i = 0; i < 5; i++)
+            {
+                tagMavResult = await Payload.Sdr.CurrentRecordSetTag("Mission", 
+                    viewModel.SelectedMission, cancel).ConfigureAwait(false);
+                if (cancel.IsCancellationRequested || tagMavResult == MavResult.MavResultAccepted) break;
+            }
 
             if (cancel.IsCancellationRequested) return;
             
@@ -238,7 +253,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             {
                 foreach (var tag in viewModel.Tags)
                 {
-                    var tagMavResult = MavResult.MavResultUnsupported;
+                    tagMavResult = MavResult.MavResultUnsupported;
                     
                     if (tag is LongTagViewModel longTag)
                     {

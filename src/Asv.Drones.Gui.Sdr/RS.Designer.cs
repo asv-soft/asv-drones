@@ -348,6 +348,24 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kit type (required).
+        /// </summary>
+        public static string RecordStartView_RecordKit_Title {
+            get {
+                return ResourceManager.GetString("RecordStartView_RecordKit_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mission type (required).
+        /// </summary>
+        public static string RecordStartView_RecordMission_Title {
+            get {
+                return ResourceManager.GetString("RecordStartView_RecordMission_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Record name (required).
         /// </summary>
         public static string RecordStartView_RecordName_Title {
