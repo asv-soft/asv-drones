@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Reactive;
 using Asv.Cfg;
 
 namespace Asv.Drones.Gui.Core;

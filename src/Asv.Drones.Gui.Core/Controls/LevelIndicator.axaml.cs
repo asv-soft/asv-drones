@@ -1,10 +1,5 @@
-using System.Reactive.Linq;
-using Asv.Common;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using Avalonia.Media;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core;
 

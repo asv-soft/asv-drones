@@ -7,10 +7,11 @@ using Asv.Common;
 using Asv.Drones.Gui.Uav;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
+using Asv.Mavlink.V2.Minimal;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
-using MavType = Asv.Mavlink.V2.Common.MavType;
+
 
 namespace Asv.Drones.Gui.Core
 {
@@ -157,11 +158,15 @@ namespace Asv.Drones.Gui.Core
 
             #region Logs
 
-            _logNames = Vehicles
+            
+            _logNames = Vehicles.Transform(x=>(IClientDevice)x)
+                .Merge(BaseStations.Transform(x=>(IClientDevice)x))
+                .Merge(Payloads.Transform(x=>(IClientDevice)x))
+                .Merge(AdsbDevices.Transform(x=>(IClientDevice)x))
                 .AutoRefreshOnObservable(_ => _.Name)
                 .Filter(_=>_.Name.Value!=null)
                 .Transform(_ => _.Name.Value,true)
-                .AsObservableCache();
+                .AsObservableCache().DisposeItWith(Disposable);
             _mavlinkRouter
                 .Filter<StatustextPacket>()
                 .ObserveOn(RxApp.MainThreadScheduler)

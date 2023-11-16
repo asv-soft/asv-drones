@@ -15,14 +15,14 @@
     <Border Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8" CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True">
         <StackPanel Margin="10" Spacing="8">
             <DockPanel DockPanel.Dock="Top">
-                <Grid DockPanel.Dock="Right" IsVisible="{Binding IsRecordVisible}">
+                <Panel DockPanel.Dock="Right" IsVisible="{Binding IsRecordVisible}">
                     <Button IsVisible="{Binding IsRecordStarted}" Command="{Binding StopRecord}" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
                         <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="RecordRec" Foreground="DarkRed"  Width="25" Height="25" />
                     </Button>
                     <Button IsVisible="{Binding !IsRecordStarted}" Command="{Binding StartRecord}" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
                         <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="RecordRec" Foreground="Gray"  Width="25" Height="25" />
                     </Button>
-                </Grid>
+                </Panel>
                 
                 <DropDownButton DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
                     <StackPanel Orientation="Horizontal">
@@ -82,6 +82,21 @@
                 </DockPanel>
             </Grid>
             <Button Command="{Binding UpdateMode}" HorizontalAlignment="Stretch">Set</Button>
+            <StackPanel Spacing="3">
+                <Button HorizontalAlignment="Stretch" IsVisible="{Binding !IsMissionStarted}" Command="{Binding StartMission}">Start mission</Button>
+                <Button HorizontalAlignment="Stretch" IsVisible="{Binding IsMissionStarted}" Command="{Binding StopMission}">Stop mission</Button>
+                <TextBlock Text="{Binding MissionStatusText}"/>
+                <ProgressBar IsVisible="{Binding IsMissionStarted}" IsIndeterminate="True" />   
+            </StackPanel>
+            <!--<Grid ColumnDefinitions="*,8,Auto">
+                
+                <Button Grid.Column="2" IsVisible="{Binding !UpdateMission.IsExecuting}"  Command="{Binding UpdateMission.Command}">
+                    <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="Sync" Width="20" Height="20" Foreground="#40b5e0" />
+                </Button>
+                <Button Grid.Column="2" IsVisible="{Binding UpdateMission.IsExecuting}" Command="{Binding UpdateMission.Cancel}">
+                    <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="Cancel" Width="20" Height="20" />
+                </Button>
+            </Grid>-->
             <ItemsControl ItemsSource="{Binding RttWidgets}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

@@ -1,9 +1,7 @@
 using System.ComponentModel.Composition;
 using System.Globalization;
 using System.Reactive;
-using System.Windows.Input;
 using Asv.Common;
-using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
 using Avalonia.Controls;
@@ -11,7 +9,7 @@ using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
-namespace Asv.Drones.Gui.Uav;
+namespace Asv.Drones.Gui.Core;
 
 public class ParamItemViewModelConfig
 {

@@ -3,11 +3,8 @@ using Asv.Common;
 
 namespace Asv.Drones.Gui.Core
 {
-   
-
-    public interface IMeasureUnitItem<TValue, out TEnum>
+    public interface IMeasureUnitItem<TValue>
     {
-        public TEnum Id { get; }
         public string Title { get; }
         public string Unit { get; }
         public bool IsSiUnit { get; }
@@ -31,6 +28,12 @@ namespace Asv.Drones.Gui.Core
         {
             return PrintWithUnits(ConvertFromSi(value));
         }
+    }
+
+    public interface IMeasureUnitItem<TValue, out TEnum>:IMeasureUnitItem<TValue>
+    {
+        public TEnum Id { get; }
+        
     }
     
     public interface IMeasureUnit<TValue,TEnum>

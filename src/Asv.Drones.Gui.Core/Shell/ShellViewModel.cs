@@ -3,18 +3,11 @@ using DynamicData;
 using ReactiveUI.Fody.Helpers;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
-using System.Diagnostics;
 using System.Reactive.Linq;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using Asv.Cfg;
 using Asv.Common;
-using Avalonia.Controls.Generators;
-using Avalonia.Threading;
 using DynamicData.Binding;
-using FluentAvalonia.UI.Controls;
 using Material.Icons;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core
 {
@@ -35,8 +28,10 @@ namespace Asv.Drones.Gui.Core
         private readonly ReadOnlyObservableCollection<IHeaderMenuItem> _headerMenu = null!;
         private readonly IThemeService _themeService;
         private readonly IConfiguration _config;
+        private readonly IShellMenuForSelectedPage _menuForSelectedPage;
         private int _selectionInProgressFlag = 0;
         private IShellMenuItem _previousSuccessSelectedMenu;
+        private IObservable<IChangeSet<IHeaderMenuItem,Uri>> _headerMenuSource;
 
         public ShellViewModel():base(Uri)
         {
@@ -45,7 +40,7 @@ namespace Asv.Drones.Gui.Core
                 Title = "MissionFile.asv";
                 _headerMenu = new(new(new IHeaderMenuItem[]
                 {
-                    new HeaderMenuItem(new($"asv://{Guid.NewGuid()}")){Header = "File", Icon = MaterialIconKind.File},
+                    new HeaderMenuItem(new Uri($"asv://{Guid.NewGuid()}")){Header = "File", Icon = MaterialIconKind.File},
                 }));
                 _menuItems = new (new (new IShellMenuItem[] 
                     {
@@ -79,12 +74,14 @@ namespace Asv.Drones.Gui.Core
             ILogService logService, 
             IThemeService themeService,
             IConfiguration config,
+            IShellMenuForSelectedPage menuForSelectedPage,
             [ImportMany(HeaderMenuItem.UriString)] IEnumerable<IViewModelProvider<IHeaderMenuItem>> headerMenuProviders,
             [ImportMany] IEnumerable<IViewModelProvider<IShellMenuItem>> menuProviders,
             [ImportMany] IEnumerable<IViewModelProvider<IShellStatusItem>> statusProviders) : this()
         {
             _navigation = navigation ?? throw new ArgumentNullException(nameof(navigation));
-            _config = config;
+            _config = config ?? throw new ArgumentNullException(nameof(config));
+            _menuForSelectedPage = menuForSelectedPage ?? throw new ArgumentNullException(nameof(menuForSelectedPage));
             if (logService == null) throw new ArgumentNullException(nameof(logService));
             if (menuProviders == null) throw new ArgumentNullException(nameof(menuProviders));
             if (statusProviders == null) throw new ArgumentNullException(nameof(statusProviders));
@@ -160,7 +157,6 @@ namespace Asv.Drones.Gui.Core
             #endregion
             
             _themeService = themeService;
-
             
             this.WhenValueChanged(x => x.SelectedMenu)
                 .Subscribe(OnSelectionChanged)
@@ -168,7 +164,10 @@ namespace Asv.Drones.Gui.Core
             this.WhenValueChanged(x => x.IsPaneOpen)
                 .Subscribe(OnPaneOpenChanged)
                 .DisposeItWith(Disposable);
+            
         }
+        
+        
 
         private void OnPaneOpenChanged(bool isPanOpened)
         {
@@ -179,7 +178,7 @@ namespace Asv.Drones.Gui.Core
             }
             else
             {
-                if (_previousSuccessSelectedMenu.Parent != null)
+                if (_previousSuccessSelectedMenu?.Parent != null)
                 {
                     _previousSuccessSelectedMenu.Parent.IsSelected = true;
                 }
@@ -188,8 +187,9 @@ namespace Asv.Drones.Gui.Core
 
 
 
-        private async void OnSelectionChanged(IShellMenuItem? newItem)
+        private async void OnSelectionChanged(object? item)
         {
+            var newItem = item as IShellMenuItem;
             if (newItem == null) return;
             // if we don't need change selection
             if (newItem == _previousSuccessSelectedMenu) return;
@@ -199,6 +199,7 @@ namespace Asv.Drones.Gui.Core
             if (isNavigationSuccess)
             {
                 _previousSuccessSelectedMenu = newItem;
+                _menuForSelectedPage.SelectedPageChanged(CurrentPage);
             }
             else
             {
@@ -231,7 +232,7 @@ namespace Asv.Drones.Gui.Core
         public IShellPage CurrentPage { get; set; } = null!;
 
         [Reactive] 
-        public IShellMenuItem? SelectedMenu { get; set; } = null!;
+        public object? SelectedMenu { get; set; } = null!;
         public ReadOnlyObservableCollection<IHeaderMenuItem> HeaderMenuItems => _headerMenu;
         public ReadOnlyObservableCollection<IShellMenuItem> MenuItems => _menuItems;
         public ReadOnlyObservableCollection<IShellMenuItem> FooterMenuItems => _footerMenuItems;

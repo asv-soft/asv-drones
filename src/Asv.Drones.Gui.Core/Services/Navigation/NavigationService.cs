@@ -4,7 +4,6 @@ using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
 using Asv.Cfg;
 using Avalonia.Platform.Storage;
-using Avalonia.Platform.Storage.FileIO;
 
 namespace Asv.Drones.Gui.Core
 {
@@ -57,14 +56,11 @@ namespace Asv.Drones.Gui.Core
             if (current != null)
             {
                 var canClose = await current.TryClose();
+                if (canClose == false) return false;
                 
-                if (canClose && current.GetType().GetCustomAttribute<PartCreationPolicyAttribute>()!.CreationPolicy == CreationPolicy.NonShared)
+                if (current.GetType().GetCustomAttribute<PartCreationPolicyAttribute>()!.CreationPolicy == CreationPolicy.NonShared)
                 {
                     current.Dispose();
-                }
-                else
-                {
-                    return false;
                 }
             }
             

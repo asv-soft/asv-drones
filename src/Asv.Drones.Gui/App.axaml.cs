@@ -56,17 +56,25 @@ public partial class App : Application
             yield return asm;
         }
         
-        var path = Assembly.GetExecutingAssembly().Location;
+        /*var path = System.Environment.CurrentDirectory;
+        
         string? dir;
         if (string.IsNullOrWhiteSpace(path) == false)
         {
-            dir = Path.GetDirectoryName(path);
+            if (Directory.Exists(path) == false)
+            {
+                dir = Path.GetDirectoryName(path);    
+            }
+            else
+            {
+                dir = path;
+            }
         }
         else
         {
             dir = Path.GetDirectoryName(Environment.CurrentDirectory);
-        }
-        var cat = new DirectoryCatalog(dir, "Asv.Drones.Gui.Plugin.*.dll");
+        }*/
+        var cat = new DirectoryCatalog(System.Environment.CurrentDirectory, "Asv.Drones.Gui.Plugin.*.dll");
         cat.Refresh();
         Logger.Trace($"Search plugin in {cat.Path}");
         foreach (var file in cat.LoadedFiles)

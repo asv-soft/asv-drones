@@ -1003,4 +1003,58 @@
     <value>Change the current measure units of bearing.</value>
 
   </data>
+  <data name="ParametersEditorParameterView_PinToggleButton_ToolTip" xml:space="preserve">
+    <value>On/off pin for this parameter</value>
+  </data>
+  <data name="ParametersEditorParameterView_UpdateButton_ToolTip" xml:space="preserve">
+    <value>Update this parameter from UAV</value>
+  </data>
+  <data name="ParametersEditorParameterView_WriteButton_ToolTip" xml:space="preserve">
+    <value>Write this parameter to UAV</value>
+  </data>
+  <data name="ParametersEditorParameterView_RebootRequired" xml:space="preserve">
+    <value>Reboot required</value>
+  </data>
+  <data name="ParametersEditorParameterView_UpdateButton" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="ParametersEditorParameterView_WriteButton" xml:space="preserve">
+    <value>Write</value>
+  </data>
+  <data name="ParamPageViewModel_DataLossDialog_Title" xml:space="preserve">
+    <value>Potential data loss warning</value>
+  </data>
+  <data name="ParamPageViewModel_DataLossDialog_Content" xml:space="preserve">
+    <value>You're trying to open another menu folder, but you have unsaved changes in the current one. Do you want to save them?</value>
+  </data>
+  <data name="ParamPageViewModel_DataLossDialog_PrimaryButtonText" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ParamPageViewModel_DataLossDialog_SecondaryButtonText" xml:space="preserve">
+    <value>Don't save</value>
+  </data>
+  <data name="ParamPageViewModel_DataLossDialog_CloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ParametersEditorPageView_StarsToggleButton_ToolTip" xml:space="preserve">
+    <value>Show only starred parameters</value>
+  </data>
+  <data name="ParametersEditorPageView_UpdateButton_ToolTip" xml:space="preserve">
+    <value>Update all parameters</value>
+  </data>
+  <data name="ParametersEditorPageView_PinsOffButton_ToolTip" xml:space="preserve">
+    <value>Remove all pinned parameters</value>
+  </data>
+  <data name="ParametersEditorPageViewModel_Title" xml:space="preserve">
+    <value>Parameters editor [{0}]</value>
+  </data>
+  <data name="ParametersEditorPageViewModel_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="ParametersEditorPageViewModel_Total" xml:space="preserve">
+    <value>Total: {0}</value>
+  </data>
+  <data name="ParametersEditorPageView_StarButton_ToolTip" xml:space="preserve">
+    <value>Star this parameter</value>
+  </data>
 </root>

@@ -14,6 +14,10 @@ namespace Asv.Drones.Gui.Core
         {
             
         }
+        public HeaderMenuItem(string id) : base(id)
+        {
+            
+        }
         
         [Reactive]
         public int Order { get; set; }

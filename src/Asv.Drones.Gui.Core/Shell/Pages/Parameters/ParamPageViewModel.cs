@@ -6,7 +6,7 @@ using System.Reactive.Subjects;
 using System.Web;
 using Asv.Cfg;
 using Asv.Common;
-using Asv.Drones.Gui.Core;
+using Asv.Drones.Gui.Uav;
 using Asv.Mavlink;
 using DynamicData;
 using DynamicData.Binding;
@@ -14,7 +14,7 @@ using FluentAvalonia.UI.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
-namespace Asv.Drones.Gui.Uav;
+namespace Asv.Drones.Gui.Core;
 
 public class ParamsConfig
 {
@@ -63,6 +63,7 @@ public class ParamPageViewModel: ShellPage
             .Subscribe(_ => FilterPipe.OnNext(item => item.Filter(SearchText, ShowStaredOnly)))
             .DisposeItWith(Disposable);
          _viewedParamsList = new SourceList<ParamItemViewModel>().DisposeItWith(Disposable);
+
          _viewedParamsList.Connect()
              .Bind(out _viewedParams)
              .Subscribe()
@@ -150,6 +151,8 @@ public class ParamPageViewModel: ShellPage
         inputPipe
             .Filter(FilterPipe)
             .SortBy(_ => _.Name)
+            .AutoRefresh(v => v.IsSynced)
+            .Sort(SortExpressionComparer<ParamItemViewModel>.Descending(v => !v.IsSynced))
             .Bind(out var leftItems)
             .Subscribe()
             .DisposeItWith(Disposable);
@@ -214,11 +217,12 @@ public class ParamPageViewModel: ShellPage
         {
             var dialog = new ContentDialog()
             {
-                Content = "There are unsaved changes, do you want to save them?",
+                Title = RS.ParamPageViewModel_DataLossDialog_Title,
+                Content = RS.ParamPageViewModel_DataLossDialog_Content,
                 IsSecondaryButtonEnabled = true,
-                PrimaryButtonText = "Save",
-                SecondaryButtonText = "Don't save",
-                CloseButtonText = "Close"
+                PrimaryButtonText = RS.ParamPageViewModel_DataLossDialog_PrimaryButtonText,
+                SecondaryButtonText = RS.ParamPageViewModel_DataLossDialog_SecondaryButtonText,
+                CloseButtonText = RS.ParamPageViewModel_DataLossDialog_CloseButtonText
             };
             
             var result = await dialog.ShowAsync();

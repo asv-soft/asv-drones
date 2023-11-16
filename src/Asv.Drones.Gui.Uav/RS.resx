@@ -66,15 +66,7 @@
     <data name="UavRttItem_ValueNotAvailable" xml:space="preserve">
     <value>N\A</value>
   </data>
-    <data name="ParametersEditorPageViewModel_Title" xml:space="preserve">
-    <value>Parameters editor [{0}]</value>
-  </data>
-    <data name="ParametersEditorPageViewModel_Search" xml:space="preserve">
-    <value>Search</value>
-  </data>
-    <data name="ParametersEditorPageViewModel_Total" xml:space="preserve">
-    <value>Total: {0}</value>
-  </data>
+    
     <data name="CpuLoadUavRttView_ToolTip" xml:space="preserve">
     <value>CPU load of UAV</value>
   </data>
@@ -114,36 +106,10 @@
     <data name="MissionStatusView_MissionProgress_ToolTip" xml:space="preserve">
     <value>Current mission progress</value>
   </data>
-    <data name="ParametersEditorPageView_StarsToggleButton_ToolTip" xml:space="preserve">
-    <value>Show only starred parameters</value>
-  </data>
-    <data name="ParametersEditorPageView_UpdateButton_ToolTip" xml:space="preserve">
-    <value>Update all parameters</value>
-  </data>
-    <data name="ParametersEditorPageView_PinsOffButton_ToolTip" xml:space="preserve">
-    <value>Remove all pinned parameters</value>
-  </data>
-    <data name="ParametersEditorParameterView_PinToggleButton_ToolTip" xml:space="preserve">
-    <value>On/off pin for this parameter</value>
-  </data>
-    <data name="ParametersEditorParameterView_UpdateButton_ToolTip" xml:space="preserve">
-    <value>Update this parameter from UAV</value>
-  </data>
-    <data name="ParametersEditorParameterView_WriteButton_ToolTip" xml:space="preserve">
-    <value>Write this parameter to UAV</value>
-  </data>
-    <data name="ParametersEditorParameterView_RebootRequired" xml:space="preserve">
-    <value>Reboot required</value>
-  </data>
-    <data name="ParametersEditorPageView_StarButton_ToolTip" xml:space="preserve">
-    <value>Star this parameter</value>
-  </data>
-    <data name="ParametersEditorParameterView_UpdateButton" xml:space="preserve">
-    <value>Update</value>
-  </data>
-    <data name="ParametersEditorParameterView_WriteButton" xml:space="preserve">
-    <value>Write</value>
-  </data>
+    
+    
+   
+  
     <data name="AltitudeIndicator_Vibration_ToolTip" xml:space="preserve">
     <value>Vibration and clipping of UAV</value>
   </data>
@@ -336,4 +302,5 @@
   <data name="MissionStatusView_TotalDistance" xml:space="preserve">
     <value>Total: {0}</value>
   </data>
+  
 </root>

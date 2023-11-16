@@ -5,7 +5,6 @@ using Asv.Cfg;
 using Asv.Cfg.Json;
 using Avalonia;
 using Avalonia.Controls.Templates;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core;
 

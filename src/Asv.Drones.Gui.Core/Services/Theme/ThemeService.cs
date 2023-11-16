@@ -2,9 +2,6 @@
 using Asv.Cfg;
 using Asv.Common;
 using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Media;
 using Avalonia.Styling;
 using FluentAvalonia.Styling;
 

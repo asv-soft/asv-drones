@@ -24,7 +24,7 @@ namespace Asv.Drones.Gui.Core
             SimpleItem = new FuncDataTemplate<IShellMenuItem>((value, namescope) =>
                 new NavigationViewItem
                 {
-
+                    [!NavigationViewItem.InfoBadgeProperty] = new Binding(nameof(IShellMenuItem.InfoBadge)),
                     [!NavigationViewItem.IconSourceProperty] = new Binding(nameof(IShellMenuItem.Icon)),
                     [!ContentControl.ContentProperty] = new Binding(nameof(IShellMenuItem.Name)),
                     [!NavigationViewItem.MenuItemsSourceProperty] = new Binding(nameof(IShellMenuItem.Items)),
