@@ -130,9 +130,10 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
                 case AsvSdrCustomMode.AsvSdrCustomModeIdle: default:
                     break;
             }
+            // TODO: add reference poewer text box
             _configuration.Set(_config);
                return Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode,
-                (ulong)Math.Round(_freqInMHzMeasureUnit.ConvertToSi(FrequencyInMhz)), _config.WriteFrequency, _config.ThinningFrequency, cancel);
+                (ulong)Math.Round(_freqInMHzMeasureUnit.ConvertToSi(FrequencyInMhz)), _config.WriteFrequency, _config.ThinningFrequency, -50, cancel);
         });
         UpdateMode.ThrownExceptions.Subscribe(ex =>
         {
