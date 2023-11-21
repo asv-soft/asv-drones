@@ -21,9 +21,9 @@ public class DefaultQuickParamsPartProvider : IQuickParamsPartProvider
 
     public IEnumerable<IQuickParamsPart> Create(IVehicleClient vehicle)
     {
-        yield return new IdentityQuickParamViewModel(vehicle);
+        yield return new IdentityQuickParamViewModel(vehicle, _log);
         yield return new SpeedsQuickParamViewModel(vehicle, _loc, _log);
-        yield return new ControllerReloadQuickParamViewModel(vehicle);
+        yield return new ControllerReloadQuickParamViewModel(vehicle, _log);
         yield return new FailSafeQuickParamViewModel(vehicle);
     }
 }
