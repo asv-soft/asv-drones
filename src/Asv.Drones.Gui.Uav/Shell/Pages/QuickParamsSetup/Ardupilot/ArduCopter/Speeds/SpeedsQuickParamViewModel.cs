@@ -2,10 +2,8 @@ using System.ComponentModel.Composition;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
-using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using ReactiveUI.Validation.Extensions;
 
 namespace Asv.Drones.Gui.Uav;
 
@@ -19,9 +17,7 @@ public class SpeedsQuickParamViewModel : QuickParamsPartBase
     private readonly ILocalizationService _loc;
     private readonly ILogService _log;
     public override int Order => 1;
-
     public override bool IsRebootRequired => false;
-
     public override bool IsVisibleInAdvancedMode => false;
     
     [ImportingConstructor]

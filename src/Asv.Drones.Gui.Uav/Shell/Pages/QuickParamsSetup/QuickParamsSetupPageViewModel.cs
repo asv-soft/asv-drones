@@ -77,28 +77,31 @@ public class QuickParamsSetupPageViewModel : ShellPage
             .ToProperty(this, _ => _.IsNotAllSynced, out _isNotAllSynced)
             .DisposeItWith(Disposable);
 
-        WriteAll = ReactiveCommand.Create(async () =>
-            {
-                foreach (var item in _itemsList.Items)
-                {
-                    await item.Write();
-                    await item.Read();
-                    item.RaisePropertyChanged();
-                }
-            }, 
+        WriteAll = ReactiveCommand.CreateFromTask(WriteAllImpl, 
             this.WhenValueChanged(_ => _.IsNotAllSynced, false));
-        ReadAll = ReactiveCommand.CreateFromTask(async () =>
-        {
-            foreach (var item in _itemsList.Items)
-            {
-                await item.Read();
-            }
-        });
+        
+        ReadAll = ReactiveCommand.CreateFromTask(ReadAllImpl);
     }
-    
-    
-    [Reactive]
-    public ICommand AdvancedToggle { get; set; }
+
+    private async Task WriteAllImpl(CancellationToken token)
+    {
+        foreach (var item in _itemsList.Items)
+        {
+            if (token.IsCancellationRequested) break;
+            await item.Write();
+            await item.Read();
+            item.RaisePropertyChanged();
+        }
+    }
+
+    private async Task ReadAllImpl(CancellationToken token)
+    {
+        foreach (var item in _itemsList.Items)
+        {
+            if (token.IsCancellationRequested) break;
+            await item.Read();
+        }
+    }    
     
     [Reactive]
     public ICommand WriteAll { get; set; }
@@ -115,8 +118,6 @@ public class QuickParamsSetupPageViewModel : ShellPage
     public string DeviceName { get; set; }
     
     public ReadOnlyObservableCollection<IQuickParamsPart> Items => _items;
-
-    public bool IsRebootRequired { get; set; }
 
     public override void SetArgs(Uri link)
     {
