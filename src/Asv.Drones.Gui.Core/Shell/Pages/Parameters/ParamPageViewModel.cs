@@ -152,7 +152,7 @@ public class ParamPageViewModel: ShellPage
             .Filter(FilterPipe)
             .SortBy(_ => _.Name)
             .AutoRefresh(v => v.IsSynced)
-            .Sort(SortExpressionComparer<ParamItemViewModel>.Descending(v => !v.IsSynced))
+            //.Sort(SortExpressionComparer<ParamItemViewModel>.Descending(v => !v.IsSynced))
             .Bind(out var leftItems)
             .Subscribe()
             .DisposeItWith(Disposable);
