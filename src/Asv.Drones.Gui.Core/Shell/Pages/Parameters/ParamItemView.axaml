@@ -41,7 +41,10 @@
                            HorizontalAlignment="Center"/>
             </DockPanel>
             <TextBlock Text="{CompiledBinding DisplayName}" TextWrapping="Wrap" Margin="10 5"/>
-            <TextBox Text="{CompiledBinding Value}" Margin="10 5">
+            <TextBox Margin="10 5">
+                <Interaction.Behaviors>
+                    <core:LostFocusUpdateBindingBehavior Text="{CompiledBinding Value}"/>
+                </Interaction.Behaviors>
                 <TextBox.InnerRightContent>
                     <TextBlock Text="{CompiledBinding Units}" Margin="10 0" VerticalAlignment="Center"/>
                 </TextBox.InnerRightContent>
