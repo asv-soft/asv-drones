@@ -92,7 +92,7 @@ namespace Asv.Drones.Gui.Uav
         protected override void InternalAfterMapInit(IMap context)
         {
             base.InternalAfterMapInit(context);
-            // TODO: Localize ???
+            // DONE: Localize
             Icon = MavlinkHelper.GetIcon(Vehicle.Class);
             Vehicle.Name.Subscribe(_ => Title = string.Format(RS.PlaningMissionViewModel_InternalAfterMapInit_Vehicle_Name_Subscribe,_))
                 .DisposeItWith(Disposable);
