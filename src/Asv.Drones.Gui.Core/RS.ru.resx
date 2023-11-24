@@ -1084,4 +1084,55 @@
     <data name="ParametersEditorPageViewModel_Total" xml:space="preserve">
     <value>Всего: {0}</value>
   </data>
+  <data name="HierarhicalStoreView_Search_Textbox_Watermark" xml:space="preserve">
+	  <value>Поиск</value>
+  </data>
+  <data name="PacketViewerViewDockPanelText" xml:space="preserve">
+	  <value>Просмотр пакетов</value>
+  </data>
+  <data name="PacketViewer_Expander_MessageSources" xml:space="preserve">
+	  <value>Источники сообщений</value>
+  </data>
+  <data name="PacketViewer_Expander_MessageTypes" xml:space="preserve">
+	  <value>Типы сообщений</value>
+  </data>
+  <data name="HierarchicalStoreView_TextBlock_Text_MoveFolder" xml:space="preserve">
+	  <value>Переместить папку</value>
+  </data>
+  <data name="HierarchicalStoreView_TextBlock_Text_MoveHere" xml:space="preserve">
+	  <value>Переместить сюда</value>
+  </data>
+  <data name="HierarchicalStoreView_TextBlock_Text_Cancel" xml:space="preserve">
+	  <value>Отмена</value>
+  </data>
+  <data name="AnchorsEditorView_TextBlock_Latitude_Text" xml:space="preserve">
+	  <value>Широта</value>
+  </data>
+  <data name="AnchorsEditorView_TextBlock_Altitude_Text" xml:space="preserve">
+	  <value>Высота</value>
+  </data>
+  <data name="AnchorsEditorView_TextBlock_Longitude_Text" xml:space="preserve">
+	  <value>Долгота</value>
+  </data>
+  <data name="MavlinkHelper_GetTypeName_FixedWing" xml:space="preserve">
+	  <value>Неподвижное крыло</value>
+  </data>
+  <data name="MavlinkHelper_GetTypeName_Helicopter" xml:space="preserve">
+	  <value>Вертолёт</value>
+  </data>
+  <data name="MavlinkHelper_GetTypeName_HexaRotor" xml:space="preserve">
+	  <value>Гексакоптер</value>
+  </data>
+  <data name="MavlinkHelper_GetTypeName_OctoRotor" xml:space="preserve">
+	  <value>Октокоптер</value>
+  </data>
+  <data name="MavlinkHelper_GetTypeName_QuadRotor" xml:space="preserve">
+	  <value>Квадрокоптер</value>
+  </data>
+  <data name="MavlinkHelper_GetTypeName_TriCopter" xml:space="preserve">
+	  <value>Трикоптер</value>
+  </data>
+  <data name="MavlinkHelper_GetTypeName_UnknownType" xml:space="preserve">
+	  <value>Неизвестный тип</value>
+  </data>
 </root>

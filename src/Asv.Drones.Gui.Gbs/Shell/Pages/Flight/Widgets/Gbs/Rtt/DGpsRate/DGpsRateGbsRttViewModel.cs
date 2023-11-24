@@ -9,7 +9,8 @@ public class DGpsRateGbsRttViewModel : GbsRttItem
 {
     public DGpsRateGbsRttViewModel()
     {
-        DGpsRate = "30Kb/s";
+        // DONE: Localize
+        DGpsRate = string.Format(RS.DGpsRateGbsRttViewModel_DGpsRate,_rateValue);
     }
 
     public DGpsRateGbsRttViewModel(IGbsClientDevice baseStation, ILocalizationService localizationService) : base(baseStation, GenerateUri(baseStation,"dgpsrate"))
@@ -20,6 +21,8 @@ public class DGpsRateGbsRttViewModel : GbsRttItem
             .Subscribe(_ => DGpsRate = localizationService.ByteRate.ConvertToStringWithUnits(_))
             .DisposeItWith(Disposable);
     }
+
+    private readonly int _rateValue = 30;
     
     [Reactive]
     public string DGpsRate { get; set; } = RS.GbsRttItem_ValueNotAvailable;

@@ -789,6 +789,24 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SDR Records.
+        /// </summary>
+        public static string SdrStorePageViewModel_Title_SDR_Records {
+            get {
+                return ResourceManager.GetString("SdrStorePageViewModel_Title_SDR_Records", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SDR store.
+        /// </summary>
+        public static string SdrStoreShellMenuItem_Name {
+            get {
+                return ResourceManager.GetString("SdrStoreShellMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Field strength.
         /// </summary>
         public static string VorSdrRttViewModel_FieldStrength_Title {

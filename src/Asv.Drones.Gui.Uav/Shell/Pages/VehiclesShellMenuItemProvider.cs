@@ -58,7 +58,7 @@ public class VehicleParamsEditorShellMenuItem : ShellMenuItem,IShellMenuItem<IVe
         Position = ShellMenuPosition.Top;
         Type = ShellMenuItemType.PageNavigation;
         Order = 100;
-        Name = "Settings";
+        Name = RS.VehiclesShellMenuItemProvider_ShellMenuItem_Settings; // DONE: Localize
     }
 
 

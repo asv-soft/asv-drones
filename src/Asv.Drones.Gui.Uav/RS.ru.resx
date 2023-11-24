@@ -293,5 +293,64 @@
   <data name="MissionStatusView_MissionDistance" xml:space="preserve">
     <value>Миссия: {0}</value>
   </data>
-  
+  <data name="VehiclesShellMenuItemProvider_ShellMenuItem_Settings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="LandAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Немедленно приземлиться</value>
+  </data>
+  <data name="GoToMapAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Перейти в точку</value>
+  </data>
+  <data name="GoToMapAnchorActionViewModel_ExecuteImpl_ShowTargetDialog_Value" xml:space="preserve">
+    <value>Выберите точку в которую нужно перейти</value>
+  </data>
+  <data name="GoToMapAnchorActionViewModel_ExecuteImpl_LogInfo_Value" xml:space="preserve">
+    <value>Пользователь отправил переход в точку {0} для {1}</value>
+  </data>
+  <data name="LandAnchorActionViewModel_ExecuteImpl_LogInfo" xml:space="preserve">
+    <value>Пользователь отправил команду приземлиться для {0}</value>
+  </data>
+  <data name="RtlAnchorActionViewModel_RTL" xml:space="preserve">
+    <value>Вернуться в точку запуска</value>
+  </data>
+  <data name="RtlAnchorActionViewModel_ExecuteImpl_LogInfo" xml:space="preserve">
+    <value>Пользователь отправил команду вернуться в точку запуска для {0}</value>
+  </data>
+  <data name="RoiAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Установить ROI</value>
+  </data>
+  <data name="RoiAnchorActionViewModel_ExecuteImpl_ShowTargetDialog_Value" xml:space="preserve">
+    <value>Выберите цель для назначения ROI</value>
+  </data>
+  <data name="RoiAnchorActionViewModel_ExecuteImpl_LogInfo" xml:space="preserve">
+    <value>Пользователь назначил ROI  '{0}' для {1}</value>
+  </data>
+  <data name="TakeOffAnchorActionViewModel_OnCommandError" xml:space="preserve">
+    <value>Не получиось разблокировать/заблокировать двигатели {0}</value>
+  </data>
+  <data name="AttitudeViewModel_Vehicle_UpdateStatusText_Armed" xml:space="preserve">
+    <value>Разблокирован</value>
+  </data>
+  <data name="AttitudeViewModel_Vehicle_UpdateStatusText_Disarmed" xml:space="preserve">
+    <value>Заблокирован</value>
+  </data>
+  <data name="PlaningMissionViewModel_InternalAfterMapInit_Vehicle_Name_Subscribe" xml:space="preserve">
+    <value>Миссия БПЛА -  {0}</value>
+  </data>
+  <data name="StartAutoAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Начать миссию</value>
+  </data>
+  <data name="StartAutoAnchorActionViewModel_ExecuteImpl_LogInfo" xml:space="preserve">
+    <value>Пользователь отправил команду начать миссию для {0}</value>
+  </data>
+  <data name="PlaningMissionViewModel_OnDownloadError_LogInfo" xml:space="preserve">
+    <value>Ошибка при загрузке миссии для {0}</value>
+  </data>
+  <data name="PlaningMissionViewModel_OnUploadError_LogInfo" xml:space="preserve">
+    <value>Ошибка при отправки мисси для {0}</value>
+  </data>
+  <data name="PlaningMissionViewModel_OnClearError_LogInfo" xml:space="preserve">
+    <value>Ошибка при удалении миссии для {0}</value>
+  </data>
 </root>

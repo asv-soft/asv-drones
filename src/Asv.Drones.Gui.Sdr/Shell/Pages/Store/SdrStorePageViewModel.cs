@@ -40,7 +40,8 @@ public class SdrStorePageViewModel:ShellPage
 
     public SdrStorePageViewModel() : base(UriString)
     {
-        Title = "SDR Records";
+        // DONE: Localize
+        Title = RS.SdrStorePageViewModel_Title_SDR_Records;
         if (Design.IsDesignMode)
         {
             Store = new SdrStoreBrowserViewModel();
