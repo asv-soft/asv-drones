@@ -15,16 +15,16 @@ namespace Asv.Drones.Gui.Uav
         public LandAnchorActionViewModel(IVehicleClient vehicle, IMap map,ILogService log) : base(vehicle, map,log)
         {
             _log = log;
-            // TODO: Localize
-            Title = "Immediately land";
+            
+            Title = RS.LandAnchorActionViewModel_Title;
             Icon = MaterialIconKind.ArrowDownBoldHexagonOutline;
             Vehicle.Position.IsArmed.Select(_ => _).Subscribe(CanExecute).DisposeItWith(Disposable);
         }
 
         protected override async Task ExecuteImpl(CancellationToken cancel)
         {
-            // TODO: Localize
-            _log.Info(LogName, $"User send DoLand for {Vehicle.Name.Value}");
+            
+            _log.Info(LogName,  string.Format(RS.LandAnchorActionViewModel_ExecuteImpl_LogInfo, Vehicle.Name.Value));
             await Vehicle.DoLand(cancel);
         }
     }
