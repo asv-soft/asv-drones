@@ -15,16 +15,16 @@ namespace Asv.Drones.Gui.Uav
         public StartAutoAnchorActionViewModel(IVehicleClient vehicle, IMap map, ILogService log) : base(vehicle, map, log)
         {
             _log = log;
-            // TODO: Localize
-            Title = "Start mission";
+            // DONE: Localize
+            Title = RS.StartAutoAnchorActionViewModel_Title;
             Icon = MaterialIconKind.RayStartArrow;
             Vehicle.Position.IsArmed.Select(_ => _).Subscribe(CanExecute).DisposeItWith(Disposable);
         }
 
         protected override async Task ExecuteImpl(CancellationToken cancel)
         {
-            // TODO: Localize
-            _log.Info(LogName, $"User send Start mission for {Vehicle.Name.Value}");
+            // DONE: Localize
+            _log.Info(LogName,  string.Format(RS.StartAutoAnchorActionViewModel_ExecuteImpl_LogInfo, Vehicle.Name.Value));
             await Vehicle.SetAutoMode(cancel);
             await Vehicle.Missions.Base.MissionSetCurrent(0, cancel);
         }

@@ -92,9 +92,9 @@ namespace Asv.Drones.Gui.Uav
         protected override void InternalAfterMapInit(IMap context)
         {
             base.InternalAfterMapInit(context);
-            // TODO: Localize
+            // DONE: Localize
             Icon = MavlinkHelper.GetIcon(Vehicle.Class);
-            Vehicle.Name.Subscribe(_ => Title = $"{_} mission")
+            Vehicle.Name.Subscribe(_ => Title = string.Format(RS.PlaningMissionViewModel_InternalAfterMapInit_Vehicle_Name_Subscribe,_))
                 .DisposeItWith(Disposable);
             this.WhenAnyValue(_ => _.SelectedItem)
                 .Where(_=>_!=null)
@@ -133,8 +133,8 @@ namespace Asv.Drones.Gui.Uav
 
         private void OnDownloadError(Exception exception)
         {   
-            //TODO: Localize
-            _log.Error(Title, $"Download mission error {Vehicle.Name.Value}", exception);
+            
+            _log.Error(Title, string.Format(RS.PlaningMissionViewModel_OnDownloadError_LogInfo, Vehicle.Name.Value), exception);
         }
 
         private async Task DownloadImpl(CancellationToken cancel)
@@ -156,8 +156,8 @@ namespace Asv.Drones.Gui.Uav
 
         protected void OnUploadError(Exception exception)
         {
-            //TODO: Localize
-            _log.Error(Title, $"Upload mission error {Vehicle.Name.Value}", exception);
+           
+            _log.Error(Title, string.Format(RS.PlaningMissionViewModel_OnUploadError_LogInfo, Vehicle.Name.Value), exception);
         }
 
         protected async Task UploadImpl(CancellationToken cancel)
@@ -183,8 +183,8 @@ namespace Asv.Drones.Gui.Uav
 
         private void OnClearError(Exception exception)
         {
-            //TODO: Localize
-            _log.Error(Title, $"Clear mission error {Vehicle.Name.Value}", exception);
+            
+            _log.Error(Title, string.Format(RS.PlaningMissionViewModel_OnClearError_LogInfo, Vehicle.Name.Value) , exception);
         }
 
         private async Task ClearImpl(CancellationToken cancel)

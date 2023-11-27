@@ -143,4 +143,10 @@
     <data name="FlightGbsView_Minimize_ToolTip" xml:space="preserve">
         <value>Свернуть/Развернуть НБС</value>
     </data>
+    <data name="FlightGbsView_Button_Content_DisableRTK" xml:space="preserve">
+        <value>Отключить RTK</value>
+    </data>
+    <data name="DGpsRateGbsRttViewModel_DGpsRate" xml:space="preserve">
+        <value>{0} kб\с</value>
+    </data>
 </root>
