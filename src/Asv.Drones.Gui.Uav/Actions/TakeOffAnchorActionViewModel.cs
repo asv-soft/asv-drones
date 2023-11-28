@@ -22,7 +22,7 @@ namespace Asv.Drones.Gui.Uav
             _cfg = cfg;
             _loc = loc;
             
-            Title = "TakeOff"; // TODO: Localize
+            Title = RS.TakeOffAnchorActionViewModel_Title; // DONE: Localize 
             Icon = MaterialIconKind.ArrowUpBoldHexagonOutline;
             Vehicle.Position.IsArmed.Select(_ => !_).Subscribe(CanExecute).DisposeItWith(Disposable);
             var cmd = ReactiveCommand.CreateFromTask(ExecuteImpl, CanExecute);
@@ -32,7 +32,7 @@ namespace Asv.Drones.Gui.Uav
         
         private void OnCommandError(Exception ex)
         {
-            _log.Error("Arm",$"Error to arm/disarm {Vehicle.Name.Value}",ex); // TODO: Localize
+            _log.Error("Arm",string.Format(RS.TakeOffAnchorActionViewModel_OnCommandError, Vehicle.Name.Value),ex); // DONE: Localize
         }
 
         protected override async Task ExecuteImpl(CancellationToken cancel)

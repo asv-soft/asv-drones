@@ -14,16 +14,16 @@ namespace Asv.Drones.Gui.Uav
         public RtlAnchorActionViewModel(IVehicleClient vehicle, IMap map,ILogService log) : base(vehicle, map,log)
         {
             _log = log;
-            // TODO: Localize
-            Title = "Return to launch (RTL)";
+            // DONE: Localize
+            Title = RS.RtlAnchorActionViewModel_RTL;
             Icon = MaterialIconKind.HomeCircleOutline;
             Vehicle.Position.IsArmed.Select(_ => _).Subscribe(CanExecute).DisposeItWith(Disposable);
         }
 
         protected override async Task ExecuteImpl(CancellationToken cancel)
         {
-            // TODO: Localize
-            _log.Info(LogName, $"User send Return To the Launch(RTL) for {Vehicle.Name.Value}");
+            // DONE: Localize
+            _log.Info(LogName, string.Format(RS.RtlAnchorActionViewModel_ExecuteImpl_LogInfo, Vehicle.Name.Value));
             await Vehicle.DoRtl(cancel);
         }
     }

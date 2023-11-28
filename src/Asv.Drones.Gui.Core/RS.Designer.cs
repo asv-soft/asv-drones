@@ -222,6 +222,33 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Altitude.
+        /// </summary>
+        public static string AnchorsEditorView_TextBlock_Altitude_Text {
+            get {
+                return ResourceManager.GetString("AnchorsEditorView_TextBlock_Altitude_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude.
+        /// </summary>
+        public static string AnchorsEditorView_TextBlock_Latitude_Text {
+            get {
+                return ResourceManager.GetString("AnchorsEditorView_TextBlock_Latitude_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude.
+        /// </summary>
+        public static string AnchorsEditorView_TextBlock_Longitude_Text {
+            get {
+                return ResourceManager.GetString("AnchorsEditorView_TextBlock_Longitude_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bearing measure units.
         /// </summary>
         public static string Bearing_Description {
@@ -1023,6 +1050,15 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Anchors.
+        /// </summary>
+        public static string HeaderAnchorsMenu_Title {
+            get {
+                return ResourceManager.GetString("HeaderAnchorsMenu_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Coordinates calculator.
         /// </summary>
         public static string HeaderCoordinatesCalculatorMenu_Header {
@@ -1100,6 +1136,42 @@ namespace Asv.Drones.Gui.Core {
         public static string HeaderToolsMenu_Header {
             get {
                 return ResourceManager.GetString("HeaderToolsMenu_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string HierarchicalStoreView_TextBlock_Text_Cancel {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_TextBlock_Text_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Folder.
+        /// </summary>
+        public static string HierarchicalStoreView_TextBlock_Text_MoveFolder {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_TextBlock_Text_MoveFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Here.
+        /// </summary>
+        public static string HierarchicalStoreView_TextBlock_Text_MoveHere {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_TextBlock_Text_MoveHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string HierarhicalStoreView_Search_Textbox_Watermark {
+            get {
+                return ResourceManager.GetString("HierarhicalStoreView_Search_Textbox_Watermark", resourceCulture);
             }
         }
         
@@ -1536,6 +1608,69 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fixed wing.
+        /// </summary>
+        public static string MavlinkHelper_GetTypeName_FixedWing {
+            get {
+                return ResourceManager.GetString("MavlinkHelper_GetTypeName_FixedWing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Helicopter.
+        /// </summary>
+        public static string MavlinkHelper_GetTypeName_Helicopter {
+            get {
+                return ResourceManager.GetString("MavlinkHelper_GetTypeName_Helicopter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hexarotor.
+        /// </summary>
+        public static string MavlinkHelper_GetTypeName_HexaRotor {
+            get {
+                return ResourceManager.GetString("MavlinkHelper_GetTypeName_HexaRotor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Octorotor.
+        /// </summary>
+        public static string MavlinkHelper_GetTypeName_OctoRotor {
+            get {
+                return ResourceManager.GetString("MavlinkHelper_GetTypeName_OctoRotor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quadrotor.
+        /// </summary>
+        public static string MavlinkHelper_GetTypeName_QuadRotor {
+            get {
+                return ResourceManager.GetString("MavlinkHelper_GetTypeName_QuadRotor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tricopter.
+        /// </summary>
+        public static string MavlinkHelper_GetTypeName_TriCopter {
+            get {
+                return ResourceManager.GetString("MavlinkHelper_GetTypeName_TriCopter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown type.
+        /// </summary>
+        public static string MavlinkHelper_GetTypeName_UnknownType {
+            get {
+                return ResourceManager.GetString("MavlinkHelper_GetTypeName_UnknownType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value must be a number.
         /// </summary>
         public static string MeasureUnitBase_ErrorMessage_NotANumber {
@@ -1806,6 +1941,24 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Message sources.
+        /// </summary>
+        public static string PacketViewer_Expander_MessageSources {
+            get {
+                return ResourceManager.GetString("PacketViewer_Expander_MessageSources", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message types.
+        /// </summary>
+        public static string PacketViewer_Expander_MessageTypes {
+            get {
+                return ResourceManager.GetString("PacketViewer_Expander_MessageTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Packet Viewer.
         /// </summary>
         public static string PacketViewerShellMenuItem_Name {
@@ -1847,6 +2000,15 @@ namespace Asv.Drones.Gui.Core {
         public static string PacketViewerView_Save {
             get {
                 return ResourceManager.GetString("PacketViewerView_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packet Viewer.
+        /// </summary>
+        public static string PacketViewerViewDockPanelText {
+            get {
+                return ResourceManager.GetString("PacketViewerViewDockPanelText", resourceCulture);
             }
         }
         

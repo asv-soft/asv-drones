@@ -99,6 +99,8 @@ namespace Asv.Drones.Gui.Core
     }
     
     
+    
+    
 
 
 

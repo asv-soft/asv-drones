@@ -306,4 +306,16 @@
     <data name="SdrSettingsViewModel_VorChannel_Header" xml:space="preserve">
         <value>VOR channel</value>
     </data>
+    <data name="RecordStartView_RecordKit_Title" xml:space="preserve">
+        <value>Kit type (required)</value>
+    </data>
+    <data name="RecordStartView_RecordMission_Title" xml:space="preserve">
+        <value>Mission type (required)</value>
+    </data>
+    <data name="SdrStorePageViewModel_Title_SDR_Records" xml:space="preserve">
+        <value>SDR Records</value>
+    </data>
+    <data name="SdrStoreShellMenuItem_Name" xml:space="preserve">
+        <value>SDR store</value>
+    </data>
 </root>

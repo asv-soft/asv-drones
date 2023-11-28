@@ -299,4 +299,16 @@
     <data name="SdrSettingsViewModel_VorChannel_Description" xml:space="preserve">
         <value>В этом разделе можно настроить канал VOR по умолчанию.</value>
     </data>
+    <data name="RecordStartView_RecordKit_Title" xml:space="preserve">
+        <value>Тип комплекта (обязательно)</value>
+    </data>
+    <data name="RecordStartView_RecordMission_Title" xml:space="preserve">
+        <value>Тип миссии (обязательно)</value>
+    </data>
+    <data name="SdrStorePageViewModel_Title_SDR_Records" xml:space="preserve">
+        <value>Записи SDR</value>
+    </data>
+    <data name="SdrStoreShellMenuItem_Name" xml:space="preserve">
+        <value>SDR хранилище</value>
+    </data>
 </root>

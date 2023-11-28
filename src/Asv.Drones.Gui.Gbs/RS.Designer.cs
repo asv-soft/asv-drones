@@ -141,6 +141,15 @@ namespace Asv.Drones.Gui.Gbs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} kb/s.
+        /// </summary>
+        public static string DGpsRateGbsRttViewModel_DGpsRate {
+            get {
+                return ResourceManager.GetString("DGpsRateGbsRttViewModel_DGpsRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accuracy.
         /// </summary>
         public static string FixedModeView_Accuracy_Name {
@@ -245,6 +254,15 @@ namespace Asv.Drones.Gui.Gbs {
         public static string FixedModeViewModel_StartFailed {
             get {
                 return ResourceManager.GetString("FixedModeViewModel_StartFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable RTK.
+        /// </summary>
+        public static string FlightGbsView_Button_Content_DisableRTK {
+            get {
+                return ResourceManager.GetString("FlightGbsView_Button_Content_DisableRTK", resourceCulture);
             }
         }
         

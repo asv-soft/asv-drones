@@ -64,7 +64,7 @@ namespace Asv.Drones.Gui.Uav
                 .Subscribe(_ =>
             {
                 IsArmed = _;
-                UpdateStatusText(_ ? "Armed" : "Disarmed"); // TODO: Localize
+                UpdateStatusText(_ ? RS.AttitudeViewModel_Vehicle_UpdateStatusText_Armed : RS.AttitudeViewModel_Vehicle_UpdateStatusText_Disarmed); 
             }).DisposeItWith(Disposable);
             _vehicle.Position.ArmedTime
                 .DistinctUntilChanged()

@@ -19,7 +19,8 @@
                 <TextBlock Text="{CompiledBinding Map.SelectedItem.Title}"/>
             </StackPanel>
             <Grid ColumnDefinitions="*, 15, 3*">
-                <TextBlock Text="Latitude" TextWrapping="NoWrap" Grid.Column="0"/>
+                
+                <TextBlock Text="{x:Static core:RS.AnchorsEditorView_TextBlock_Latitude_Text}" TextWrapping="NoWrap" Grid.Column="0"/>
                 <TextBox  Grid.Column="2"
                          IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
                     <Interaction.Behaviors>
@@ -31,7 +32,7 @@
                 </TextBox>
             </Grid>
             <Grid ColumnDefinitions="*, 15, 3*">
-                <TextBlock Text="Longitude" Grid.Column="0"/>
+                <TextBlock Text="{x:Static core:RS.AnchorsEditorView_TextBlock_Longitude_Text}" Grid.Column="0"/>
                 <TextBox  Grid.Column="2" 
                          IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
                     <Interaction.Behaviors>
@@ -43,7 +44,7 @@
                 </TextBox>
             </Grid>
             <Grid ColumnDefinitions="*, 15, 3*">
-                <TextBlock Text="Altitude" Grid.Column="0"/>
+                <TextBlock Text="{x:Static core:RS.AnchorsEditorView_TextBlock_Altitude_Text}" Grid.Column="0"/>
                 <TextBox Text="{CompiledBinding Altitude}" Grid.Column="2"
                          IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
                     <TextBox.InnerRightContent>
