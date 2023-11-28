@@ -29,7 +29,6 @@ public class PlaningMissionRoiPointViewModel : PlaningMissionPointViewModel
     
     public override void CreateVehicleItems(IVehicleClient vehicle, ISdrClientDevice? sdr)
     {
-        MissionClientExHelper.AddRoiMissionItem(vehicle.Missions, Point.Location);
         vehicle.Missions.AddRoiMissionItem(Point.Location, MavRoi.MavRoiLocation);
     }
 }
