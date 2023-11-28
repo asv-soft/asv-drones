@@ -1150,4 +1150,37 @@
   <data name="MavlinkHelper_GetTypeName_UnknownType" xml:space="preserve">
     <value>Unknown type</value>
   </data>
+  <data name="PlaningMissionEditorViewModel_TakeOffMenuItem_Title" xml:space="preserve">
+    <value>Take off</value>
+  </data>
+  <data name="PlaningMissionEditorViewModel_DoLandMenuItem_Title" xml:space="preserve">
+    <value>Do land</value>
+  </data>
+  <data name="PlaningMissionEditorViewModel_WaypointMenuItem_Title" xml:space="preserve">
+    <value>Waypoint</value>
+  </data>
+  <data name="PlaningMissionEditorViewModel_RoiMenuItem_Title" xml:space="preserve">
+    <value>ROI</value>
+  </data>
+  <data name="PlaningMissionEditorViewModel_ReplacePointFlyoutMenuItem" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="PlaningMissionEditorViewModel_AddPointFlyoutMenuItem_Title" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PlaningPageViewModel_DataLossDialog_Title" xml:space="preserve">
+    <value>Potential data loss warning</value>
+  </data>
+  <data name="PlaningPageViewModel_DataLossDialog_Content" xml:space="preserve">
+    <value>You're trying to open another menu folder, but you have unsaved changes in the current one. Do you want to save them?</value>
+  </data>
+  <data name="PlaningPageViewModel_DataLossDialog_PrimaryButtonText" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="PlaningPageViewModel_DataLossDialog_SecondaryButtonText" xml:space="preserve">
+    <value>Don't save</value>
+  </data>
+  <data name="PlaningPageViewModel_DataLossDialog_CloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
 </root>

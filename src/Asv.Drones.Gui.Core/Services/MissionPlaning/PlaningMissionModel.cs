@@ -15,7 +15,7 @@ public enum PlaningMissionPointType
     // !!! DON'T CHANGE ORDER. ONLY ADD ITEMS !!!
     TakeOff,
     DoLand,
-    Navigation,
+    Waypoint,
     Roi
     // !!! DON'T CHANGE ORDER. ONLY ADD ITEMS !!!
 }

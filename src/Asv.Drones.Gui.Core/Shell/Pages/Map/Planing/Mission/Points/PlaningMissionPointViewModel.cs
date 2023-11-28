@@ -44,6 +44,7 @@ public class PlaningMissionPointViewModel : ViewModelBaseWithValidation
             .WhereNotNull()
             .Subscribe(_ =>
             {
+                IsChanged = true;
                 if(MissionAnchor != null)
                     MissionAnchor.Title = _;
             })
@@ -52,19 +53,21 @@ public class PlaningMissionPointViewModel : ViewModelBaseWithValidation
         this.WhenValueChanged(_ => _.Index)
             .Subscribe(_ =>
             {
+                IsChanged = true;
                 _point.Index = _;
                 if(MissionAnchor != null)
                     MissionAnchor.Index = _;
                 Name = $"{Type} {_}";
-                
             }).DisposeItWith(Disposable);
 
         this.WhenValueChanged(_ => _.Type)
             .Subscribe(_ =>
             {
+                IsChanged = true;
                 _point.Type = _;
                 Name = $"{_} {Index}";
             }).DisposeItWith(Disposable);
+        
     }
     public PlaningMissionPointModel Point => _point;
     [Reactive]

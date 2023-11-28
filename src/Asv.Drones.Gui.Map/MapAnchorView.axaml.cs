@@ -11,7 +11,7 @@ using ReactiveUI;
 namespace Asv.Avalonia.Map
 {
     [PseudoClasses(":pressed", ":selected")]
-    public class MapAnchorView : TemplatedControl,ISelectable
+    public class MapAnchorView : TemplatedControl, ISelectable
     {
         public MapAnchorView()
         {

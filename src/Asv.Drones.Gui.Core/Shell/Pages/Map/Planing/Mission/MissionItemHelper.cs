@@ -6,6 +6,8 @@ namespace Asv.Drones.Gui.Core;
 
 public static class MissionItemHelper
 {
+    //TODO: Add or replace in Mavlink AddNavMissionItem, AddTakeOffMissionItem, AddLandMissionItem, AddRoiMissionItem.
+    
     /// <summary>
     /// Adds navigation waypoint to MissionClients collection
     /// </summary>
@@ -99,7 +101,7 @@ public static class MissionItemHelper
         {
             MavCmd.MavCmdNavLand => PlaningMissionPointType.DoLand,
             MavCmd.MavCmdNavTakeoff => PlaningMissionPointType.TakeOff,
-            MavCmd.MavCmdNavWaypoint => PlaningMissionPointType.Navigation,
+            MavCmd.MavCmdNavWaypoint => PlaningMissionPointType.Waypoint,
             MavCmd.MavCmdDoSetRoi or MavCmd.MavCmdDoSetRoiLocation => PlaningMissionPointType.Roi,
             _ => throw new ArgumentOutOfRangeException(command.ToString())
         };

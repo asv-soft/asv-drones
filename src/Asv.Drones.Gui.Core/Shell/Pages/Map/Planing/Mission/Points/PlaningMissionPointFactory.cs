@@ -5,21 +5,7 @@ namespace Asv.Drones.Gui.Core;
 
 public interface IPlaningMissionPointFactory
 {
-    IEnumerable<PlaningMissionPointFactoryOption> AddablePoints { get; }
     public PlaningMissionPointViewModel Create(PlaningMissionPointModel point, PlaningMissionViewModel mission);
-}
-
-public class PlaningMissionPointFactoryOption
-{
-    public PlaningMissionPointFactoryOption(string name, MaterialIconKind icon, PlaningMissionPointType type)
-    {
-        Name = name;
-        Type = type;
-        Icon = icon;
-    }
-    public string Name { get; }
-    public MaterialIconKind Icon { get; }
-    public PlaningMissionPointType Type { get; }
 }
 
 [Export(typeof(IPlaningMissionPointFactory))]
@@ -34,17 +20,7 @@ public class PlaningMissionPointFactory : IPlaningMissionPointFactory
     {
         _svc = svc;
         _loc = loc;
-        
-        AddablePoints = new[]
-        {
-            new PlaningMissionPointFactoryOption("Take off", MaterialIconKind.FlightTakeoff, PlaningMissionPointType.TakeOff),
-            new PlaningMissionPointFactoryOption("Do land", MaterialIconKind.FlightLand, PlaningMissionPointType.DoLand),
-            new PlaningMissionPointFactoryOption("Navigation", MaterialIconKind.Location, PlaningMissionPointType.Navigation),
-            new PlaningMissionPointFactoryOption("ROI", MaterialIconKind.ImageFilterCenterFocus, PlaningMissionPointType.Roi)
-        };
     }
-    
-    public IEnumerable<PlaningMissionPointFactoryOption> AddablePoints { get; }
 
     public PlaningMissionPointViewModel Create(PlaningMissionPointModel point, PlaningMissionViewModel mission)
     {
@@ -54,7 +30,7 @@ public class PlaningMissionPointFactory : IPlaningMissionPointFactory
                 return new PlaningMissionTakeOffPointViewModel(point, mission, _svc, _loc);
             case PlaningMissionPointType.DoLand:
                 return new PlaningMissionLandPointViewModel(point, mission, _svc, _loc);
-            case PlaningMissionPointType.Navigation:
+            case PlaningMissionPointType.Waypoint:
                 return new PlaningMissionNavigationPointViewModel(point, mission, _svc, _loc);
             case PlaningMissionPointType.Roi:
                 return new PlaningMissionRoiPointViewModel(point, mission, _svc, _loc);

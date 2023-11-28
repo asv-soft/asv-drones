@@ -17,12 +17,14 @@ public class PlaningMissionNavigationPointViewModel : PlaningMissionPointViewMod
             .Subscribe(_ =>
             {
                 MissionAnchor.Index = _;
+                IsChanged = true;
             }).DisposeItWith(Disposable);
         
         MissionAnchor.WhenAnyValue(_ => _.Location)
             .Subscribe(_ =>
             {
                 Point.Location = _;
+                IsChanged = true;
             }).DisposeItWith(Disposable);
     }
     

@@ -2274,6 +2274,60 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_AddPointFlyoutMenuItem_Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_AddPointFlyoutMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do land.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_DoLandMenuItem_Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_DoLandMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_ReplacePointFlyoutMenuItem {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_ReplacePointFlyoutMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ROI.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_RoiMenuItem_Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_RoiMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take off.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_TakeOffMenuItem_Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_TakeOffMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waypoint.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_WaypointMenuItem_Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_WaypointMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name must be not empty.
         /// </summary>
         public static string PlaningMissionViewModel_NameMustBeNotEmpty {
@@ -2288,6 +2342,51 @@ namespace Asv.Drones.Gui.Core {
         public static string PlaningMissionViewModel_SelectTargetLocation {
             get {
                 return ResourceManager.GetString("PlaningMissionViewModel_SelectTargetLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string PlaningPageViewModel_DataLossDialog_CloseButtonText {
+            get {
+                return ResourceManager.GetString("PlaningPageViewModel_DataLossDialog_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;re trying to open another menu folder, but you have unsaved changes in the current one. Do you want to save them?.
+        /// </summary>
+        public static string PlaningPageViewModel_DataLossDialog_Content {
+            get {
+                return ResourceManager.GetString("PlaningPageViewModel_DataLossDialog_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string PlaningPageViewModel_DataLossDialog_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("PlaningPageViewModel_DataLossDialog_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t save.
+        /// </summary>
+        public static string PlaningPageViewModel_DataLossDialog_SecondaryButtonText {
+            get {
+                return ResourceManager.GetString("PlaningPageViewModel_DataLossDialog_SecondaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Potential data loss warning.
+        /// </summary>
+        public static string PlaningPageViewModel_DataLossDialog_Title {
+            get {
+                return ResourceManager.GetString("PlaningPageViewModel_DataLossDialog_Title", resourceCulture);
             }
         }
         

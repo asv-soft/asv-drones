@@ -38,13 +38,13 @@ public class PlaningMissionEditorViewModel : PlaningWidgetBase
         
         _addItems = new MissionPointFlyoutMenuItem
         {
-            Title = "Add",
+            Title = RS.PlaningMissionEditorViewModel_AddPointFlyoutMenuItem_Title,
             Icon = MaterialIconKind.Add,
             Items =
             {
                 new MissionPointFlyoutMenuItem
                 {
-                    Title = "Take off",
+                    Title = RS.PlaningMissionEditorViewModel_TakeOffMenuItem_Title,
                     Type = PlaningMissionPointType.TakeOff,
                     Icon = MaterialIconKind.FlightTakeoff,
                     Command = ReactiveCommand.Create(() =>
@@ -54,7 +54,7 @@ public class PlaningMissionEditorViewModel : PlaningWidgetBase
                 },
                 new MissionPointFlyoutMenuItem
                 {
-                    Title = "Do land",
+                    Title = RS.PlaningMissionEditorViewModel_DoLandMenuItem_Title,
                     Type = PlaningMissionPointType.DoLand,
                     Icon = MaterialIconKind.FlightLand,
                     Command = ReactiveCommand.Create(() =>
@@ -64,17 +64,17 @@ public class PlaningMissionEditorViewModel : PlaningWidgetBase
                 },
                 new MissionPointFlyoutMenuItem
                 {
-                    Title = "Navigation",
-                    Type = PlaningMissionPointType.Navigation,
+                    Title = RS.PlaningMissionEditorViewModel_WaypointMenuItem_Title,
+                    Type = PlaningMissionPointType.Waypoint,
                     Icon = MaterialIconKind.Location,
                     Command = ReactiveCommand.Create(() =>
                     {
-                        Context.Mission.AddPointCmd.Execute(PlaningMissionPointType.Navigation).Subscribe();
+                        Context.Mission.AddPointCmd.Execute(PlaningMissionPointType.Waypoint).Subscribe();
                     })
                 },
                 new MissionPointFlyoutMenuItem
                 {
-                    Title = "ROI",
+                    Title = RS.PlaningMissionEditorViewModel_RoiMenuItem_Title,
                     Type = PlaningMissionPointType.Roi,
                     Icon = MaterialIconKind.ImageFilterCenterFocus,
                     Command = ReactiveCommand.Create(() =>
@@ -87,13 +87,13 @@ public class PlaningMissionEditorViewModel : PlaningWidgetBase
         
         _replaceItems = new MissionPointFlyoutMenuItem
         {
-            Title = "Replace",
+            Title = RS.PlaningMissionEditorViewModel_ReplacePointFlyoutMenuItem,
             Icon = MaterialIconKind.FindReplace,
             Items =
             {
                 new MissionPointFlyoutMenuItem
                 {
-                    Title = "Take off",
+                    Title = RS.PlaningMissionEditorViewModel_TakeOffMenuItem_Title,
                     Type = PlaningMissionPointType.TakeOff,
                     Icon = MaterialIconKind.FlightTakeoff,
                     Command = ReactiveCommand.Create(() =>
@@ -103,7 +103,7 @@ public class PlaningMissionEditorViewModel : PlaningWidgetBase
                 },
                 new MissionPointFlyoutMenuItem
                 {
-                    Title = "Do land",
+                    Title = RS.PlaningMissionEditorViewModel_DoLandMenuItem_Title,
                     Type = PlaningMissionPointType.DoLand,
                     Icon = MaterialIconKind.FlightLand,
                     Command = ReactiveCommand.Create(() =>
@@ -113,17 +113,17 @@ public class PlaningMissionEditorViewModel : PlaningWidgetBase
                 },
                 new MissionPointFlyoutMenuItem
                 {
-                    Title = "Navigation",
-                    Type = PlaningMissionPointType.Navigation,
+                    Title = RS.PlaningMissionEditorViewModel_WaypointMenuItem_Title,
+                    Type = PlaningMissionPointType.Waypoint,
                     Icon = MaterialIconKind.Location,
                     Command = ReactiveCommand.Create(() =>
                     {
-                        Context.Mission.ReplacePointCmd.Execute(PlaningMissionPointType.Navigation).Subscribe();
+                        Context.Mission.ReplacePointCmd.Execute(PlaningMissionPointType.Waypoint).Subscribe();
                     })
                 },
                 new MissionPointFlyoutMenuItem
                 {
-                    Title = "ROI",
+                    Title = RS.PlaningMissionEditorViewModel_RoiMenuItem_Title,
                     Type = PlaningMissionPointType.Roi,
                     Icon = MaterialIconKind.ImageFilterCenterFocus,
                     Command = ReactiveCommand.Create(() =>

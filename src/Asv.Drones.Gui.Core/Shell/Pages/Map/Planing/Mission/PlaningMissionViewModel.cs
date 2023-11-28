@@ -25,7 +25,7 @@ public class PlaningMissionViewModel : ViewModelBaseWithValidation
     private readonly ReadOnlyObservableCollection<PlaningMissionPointViewModel> _points;
     private readonly IPlaningMissionContext _context;
 
-    public PlaningMissionViewModel():base("asv:shell.page.planing-mission.mission")
+    public PlaningMissionViewModel() : base("asv:shell.page.planing-mission.mission")
     {
         if (Design.IsDesignMode)
         {
@@ -73,13 +73,13 @@ public class PlaningMissionViewModel : ViewModelBaseWithValidation
             })
             .DisposeItWith(Disposable);
         
-        _points.ToObservableChangeSet()
-            .WhenValueChanged(x=>x.IsChanged)
-            .Where(x=>x)
+        _points.ToObservableChangeSet(_ => _.Index)
+            .WhenValueChanged(x => x.IsChanged)
+            .Where(x => x)
             .Subscribe(_ => IsChanged = true)
             .DisposeItWith(Disposable);
         
-        this.WhenAnyValue(_ => _.Name).Subscribe(_=>IsChanged = true).DisposeItWith(Disposable);
+        this.WhenAnyValue(_ => _.Name).Subscribe(_ => IsChanged = true).DisposeItWith(Disposable);
         this.ValidationRule(x => x.Name, name => !string.IsNullOrWhiteSpace(name), RS.PlaningMissionViewModel_NameMustBeNotEmpty);
         
         this.WhenValueChanged(_ => _.SelectedPoint)
@@ -202,6 +202,7 @@ public class PlaningMissionViewModel : ViewModelBaseWithValidation
     private void Load(PlaningMissionModel model, SemVersion fileVersion)
     {
         model.Points.ForEach(x=>_source.AddOrUpdate(x));
+        _points.ForEach(_ => _.IsChanged = false);
     }
     
     private PlaningMissionModel Save(SemVersion fileVersion)
@@ -227,6 +228,8 @@ public class PlaningMissionViewModel : ViewModelBaseWithValidation
         {
             _svc.MissionStore.RenameFile(_id, Name);
         }
+        
+        Points.ForEach(_ => _.IsChanged = false);
         IsChanged = false;
     }
 

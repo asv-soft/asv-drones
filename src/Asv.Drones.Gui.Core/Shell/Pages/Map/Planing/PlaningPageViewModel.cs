@@ -40,6 +40,7 @@ namespace Asv.Drones.Gui.Core
         private readonly ILogService _log;
         private ReadOnlyObservableCollection<IHeaderMenuItem> _uploadMenuItems;
         private ReadOnlyObservableCollection<IHeaderMenuItem> _downloadMenuItems;
+        private readonly IConfiguration _cfg;
 
         [ImportingConstructor]
         public PlaningPageViewModel(IMapService map, IConfiguration cfg, IPlaningMission svc, ILogService log,
@@ -53,6 +54,7 @@ namespace Asv.Drones.Gui.Core
             Icon = MaterialIconKind.MapMarkerCheck;
             PlanningConfig = cfg.Get<PlanningPageViewModelConfig>();
 
+            _cfg = cfg;
             _svc = svc;
             _log = log;
             _devices = devices;
@@ -205,6 +207,38 @@ namespace Asv.Drones.Gui.Core
             }
         }
         
+        public override async Task<bool> TryClose()
+        {
+            if (Mission == null) return true;
+            
+            if (Mission.IsChanged)
+            {
+                var dialog = new ContentDialog
+                {
+                    Title = RS.PlaningPageViewModel_DataLossDialog_Title,
+                    Content = RS.PlaningPageViewModel_DataLossDialog_Content,
+                    PrimaryButtonText = RS.PlaningPageViewModel_DataLossDialog_PrimaryButtonText,
+                    SecondaryButtonText = RS.PlaningPageViewModel_DataLossDialog_SecondaryButtonText,
+                    CloseButtonText = RS.PlaningPageViewModel_DataLossDialog_CloseButtonText,
+                    IsSecondaryButtonEnabled = true
+                };
+
+                var result = await dialog.ShowAsync();
+
+                if (result == ContentDialogResult.Primary)
+                {
+                    Mission.SaveImpl();
+                    
+                    return true;
+                }
+
+                if (result == ContentDialogResult.Secondary) return true;
+
+                if (result == ContentDialogResult.None) return false;
+            }
+
+            return true;
+        }
         
         private async Task OpenBrowserImpl(CancellationToken arg)
         {
@@ -231,21 +265,29 @@ namespace Asv.Drones.Gui.Core
         
         public void OpenMission(Guid id)
         {
-            Mission?.Dispose();
-            
-            using var handle = _svc.MissionStore.OpenFile(id);
-            
-            Mission = new PlaningMissionViewModel(handle.Id, handle.Name, _log, _taskFactory, 
-                _container, _svc, this);
-            
-            Mission.Load(handle.File);
-            
-            _anchorProvider.Update(Mission);
-        
-            if (Mission.Points.Count > 0)
-                Center = Mission.Points.FirstOrDefault()!.MissionAnchor.Location;
+            try
+            {
+                Mission?.Dispose();
 
-            Mission.IsChanged = false;
+                using (var handle = _svc.MissionStore.OpenFile(id))
+                {
+                    Mission = new PlaningMissionViewModel(handle.Id, handle.Name, _log, _taskFactory,
+                        _container, _svc, this);
+
+                    Mission.Load(handle.File);
+
+                    _anchorProvider.Update(Mission);
+
+                    if (Mission.Points.Count > 0)
+                        Center = Mission.Points.FirstOrDefault()!.MissionAnchor.Location;
+
+                    Mission.IsChanged = false;
+                }
+            }
+            catch (Exception e)
+            {
+                _log.Error("Planing", e.Message, e);   
+            }
         }
 
         public double UploadProgress { get; set; }
