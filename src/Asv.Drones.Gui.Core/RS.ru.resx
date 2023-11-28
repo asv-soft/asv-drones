@@ -1084,6 +1084,45 @@
     <data name="ParametersEditorPageViewModel_Total" xml:space="preserve">
     <value>Всего: {0}</value>
   </data>
+    <data name="MissionEditorView_Points_Title" xml:space="preserve">
+	  <value>Точки миссии</value>
+  </data>
+    <data name="HeaderPlaningFileMenuItem_Title" xml:space="preserve">
+	  <value>Файл</value>
+  </data>
+    <data name="HeaderPlaningFileOpenMenuItem_Title" xml:space="preserve">
+	  <value>Открыть</value>
+  </data>
+    <data name="PlanningPageViewModel_MissionBrowserDialog_Title" xml:space="preserve">
+	  <value>Выберите файл миссии</value>
+  </data>
+    <data name="PlanningPageViewModel_MissionBrowserDialog_PrimaryButton" xml:space="preserve">
+	  <value>Открыть</value>
+  </data>
+    <data name="PlanningPageViewModel_MissionBrowserDialog_SecondaryButton" xml:space="preserve">
+	  <value>Отмена</value>
+  </data>
+    <data name="HeaderPlaningFileDeleteMenuItem_Title" xml:space="preserve">
+	  <value>Удалить</value>
+  </data>
+    <data name="HeaderPlaningFileDownloadMenuItem_Title" xml:space="preserve">
+	  <value>Скачать</value>
+  </data>
+    <data name="HeaderPlaningFileUploadMenuItem_Title" xml:space="preserve">
+	  <value>Загрузить</value>
+  </data>
+    <data name="PlaningMissionViewModel_NameMustBeNotEmpty" xml:space="preserve">
+	  <value>Имя не должно быть пустым</value>
+  </data>
+    <data name="HeaderPlaningFileSaveMenuItem_Title" xml:space="preserve">
+	  <value>Сохранить</value>
+  </data>
+    <data name="PlanningPageViewModel_MissionUploaded" xml:space="preserve">
+	  <value>Миссия загружена!</value>
+  </data>
+    <data name="PlaningMissionViewModel_SelectTargetLocation" xml:space="preserve">
+	  <value>Укажите местоположение точки</value>
+  </data>
   <data name="HierarhicalStoreView_Search_Textbox_Watermark" xml:space="preserve">
 	  <value>Поиск</value>
   </data>
@@ -1134,5 +1173,38 @@
   </data>
   <data name="MavlinkHelper_GetTypeName_UnknownType" xml:space="preserve">
 	  <value>Неизвестный тип</value>
+  </data>
+  <data name="PlaningMissionEditorViewModel_WaypointMenuItem_Title" xml:space="preserve">
+	  <value>Путевая точка</value>
+  </data>
+  <data name="PlaningMissionEditorViewModel_TakeOffMenuItem_Title" xml:space="preserve">
+	  <value>Взлёт</value>
+  </data>
+  <data name="PlaningMissionEditorViewModel_RoiMenuItem_Title" xml:space="preserve">
+	  <value>Регион интересов</value>
+  </data>
+  <data name="PlaningMissionEditorViewModel_DoLandMenuItem_Title" xml:space="preserve">
+	  <value>Посадка</value>
+  </data>
+  <data name="PlaningMissionEditorViewModel_ReplacePointFlyoutMenuItem" xml:space="preserve">
+	  <value>Заменить</value>
+  </data>
+  <data name="PlaningMissionEditorViewModel_AddPointFlyoutMenuItem_Title" xml:space="preserve">
+	  <value>Добавить</value>
+  </data>
+  <data name="PlaningPageViewModel_DataLossDialog_PrimaryButtonText" xml:space="preserve">
+	  <value>Сохранить</value>
+  </data>
+  <data name="PlaningPageViewModel_DataLossDialog_SecondaryButtonText" xml:space="preserve">
+	  <value>Не сохранять</value>
+  </data>
+  <data name="PlaningPageViewModel_DataLossDialog_CloseButtonText" xml:space="preserve">
+	  <value>Отмена</value>
+  </data>
+  <data name="PlaningPageViewModel_DataLossDialog_Title" xml:space="preserve">
+	  <value>Предупреждение о возможной потере данных</value>
+  </data>
+  <data name="PlaningPageViewModel_DataLossDialog_Content" xml:space="preserve">
+	  <value>Вы пытаетесь открыть другой пункт меню, но в текущем у вас есть несохраненные изменения. Хотите сохранить их?</value>
   </data>
 </root>

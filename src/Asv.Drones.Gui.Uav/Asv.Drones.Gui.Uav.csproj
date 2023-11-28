@@ -46,5 +46,19 @@
       <ProjectReference Include="..\Asv.Drones.Gui.Core\Asv.Drones.Gui.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Shell\Pages\Flight\Layers\Anchors\UavAnchor\Actions\Dialogs\RebootAutopilotView.axaml" />
+      <UpToDateCheckInput Remove="Shell\Pages\Flight\Layers\Anchors\UavAnchor\Actions\Dialogs\SelectModeView.axaml" />
+      <UpToDateCheckInput Remove="Shell\Pages\Flight\Layers\Anchors\UavAnchor\Actions\Dialogs\TakeOffView.axaml" />
+      <UpToDateCheckInput Remove="Shell\Pages\Planing\Widgets\Mission\PlaningMissionItemView.axaml" />
+      <UpToDateCheckInput Remove="Shell\Pages\Planing\Widgets\Mission\PlaningMissionView.axaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Actions\Dialogs\RebootAutopilotView.axaml" />
+      <AdditionalFiles Include="Actions\Dialogs\SelectModeView.axaml" />
+      <AdditionalFiles Include="Actions\Dialogs\TakeOffView.axaml" />
+    </ItemGroup>
+
  
 </Project>

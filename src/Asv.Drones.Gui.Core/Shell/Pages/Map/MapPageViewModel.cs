@@ -9,11 +9,9 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Core
 {
-   
-    
     public class MapPageViewModel:ShellPage,IMap
     {
-        private readonly ReadOnlyObservableCollection<IMapAnchor> _markers;
+        private protected readonly ReadOnlyObservableCollection<IMapAnchor> _markers;
         private readonly ReadOnlyObservableCollection<IMapWidget> _widgets;
         private readonly ReadOnlyObservableCollection<IMapWidget> _leftWidgets;
         private readonly ReadOnlyObservableCollection<IMapWidget> _rightWidgets;
