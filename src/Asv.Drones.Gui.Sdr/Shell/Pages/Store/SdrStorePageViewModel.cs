@@ -135,7 +135,8 @@ public class SdrStorePageViewModel:ShellPage
             alreadyDownloaded += readed;
             progress.Report((alreadyDownloaded / (double)remoteCount));
             DownloadRecordAction = $"Read {alreadyDownloaded} of {writer.File.Count}";
-        }
+        }    
+        
         await Store.Refresh.Execute();
         return Unit.Default;
     }

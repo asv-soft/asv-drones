@@ -318,4 +318,13 @@
     <data name="SdrStoreShellMenuItem_Name" xml:space="preserve">
         <value>SDR store</value>
     </data>
+    <data name="FlightSdrView_StartMission_Title" xml:space="preserve">
+        <value>Start mission</value>
+    </data>
+    <data name="FlightSdrView_StopMission_Title" xml:space="preserve">
+        <value>Stop mission</value>
+    </data>
+    <data name="FlightSdrView_SetMode_Title" xml:space="preserve">
+        <value>Set mode</value>
+    </data>
 </root>

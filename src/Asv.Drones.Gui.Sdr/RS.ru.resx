@@ -311,4 +311,13 @@
     <data name="SdrStoreShellMenuItem_Name" xml:space="preserve">
         <value>SDR хранилище</value>
     </data>
+    <data name="FlightSdrView_StartMission_Title" xml:space="preserve">
+        <value>Старт миссии</value>
+    </data>
+    <data name="FlightSdrView_StopMission_Title" xml:space="preserve">
+        <value>Стоп миссии</value>
+    </data>
+    <data name="FlightSdrView_SetMode_Title" xml:space="preserve">
+        <value>Установить режим</value>
+    </data>
 </root>

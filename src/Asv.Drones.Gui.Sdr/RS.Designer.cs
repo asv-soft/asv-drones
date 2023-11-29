@@ -60,6 +60,33 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set mode.
+        /// </summary>
+        public static string FlightSdrView_SetMode_Title {
+            get {
+                return ResourceManager.GetString("FlightSdrView_SetMode_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start mission.
+        /// </summary>
+        public static string FlightSdrView_StartMission_Title {
+            get {
+                return ResourceManager.GetString("FlightSdrView_StartMission_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop mission.
+        /// </summary>
+        public static string FlightSdrView_StopMission_Title {
+            get {
+                return ResourceManager.GetString("FlightSdrView_StopMission_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reboot OS.
         /// </summary>
         public static string FlightSdrView_SystemControlAction_Reboot_Title {

@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
     <ProductVersion>0.1.0</ProductVersion>
     <AvaloniaVersion>11.0.0</AvaloniaVersion>
-    <AsvCommonVersion>1.13.0</AsvCommonVersion>
-    <AsvMavlinkVersion>3.6.0-alpha07</AsvMavlinkVersion>
+    <AsvCommonVersion>1.13.1</AsvCommonVersion>
+    <AsvMavlinkVersion>3.6.0-alpha08</AsvMavlinkVersion>
     <FluentAvaloniaUIVersion>2.0.0</FluentAvaloniaUIVersion>
     <ReactiveUIVersion>19.3.3</ReactiveUIVersion>
     <MaterialIconsAvaloniaVersion>2.0.1</MaterialIconsAvaloniaVersion>

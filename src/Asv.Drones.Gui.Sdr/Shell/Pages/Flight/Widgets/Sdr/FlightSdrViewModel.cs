@@ -10,6 +10,7 @@ using Asv.Mavlink;
 using Asv.Mavlink.V2.AsvSdr;
 using Asv.Mavlink.V2.Common;
 using Avalonia.Controls;
+using Avalonia.Media;
 using DocumentFormat.OpenXml.Wordprocessing;
 using DynamicData;
 using DynamicData.Binding;
@@ -34,6 +35,22 @@ public class FlightSdrViewModelConfig
     public uint ThinningFrequency { get; set; } = 5;
 }
 
+public class ReferencePowerItem
+{
+    public ReferencePowerItem(string name, float power, bool isDefault,MaterialIconKind icon)
+    {
+        Name = name;
+        Power = power;
+        IsDefault = isDefault;
+        Icon = icon;
+    }
+
+    public MaterialIconKind Icon { get; set; }
+    public string Name { get; set; }
+    public float Power { get; set; }
+    public bool IsDefault { get; set; }
+}
+
 public class FlightSdrViewModel:FlightSdrWidgetBase
 {
     private readonly ISdrClientDevice _payload;
@@ -55,6 +72,13 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             {
                 new LlzSdrRttViewModel(),
             });
+            ReferencePowerItems = new[]
+            {
+                new ReferencePowerItem("Low signal", -100, false, MaterialIconKind.SignalCellular1),
+                new ReferencePowerItem("Normal", -60, true, MaterialIconKind.SignalCellular2),
+                new ReferencePowerItem("High signal", 0, false, MaterialIconKind.SignalCellular3),
+            };
+            RefPowerSelectedItem = ReferencePowerItems[1];
         }
     }
 
@@ -68,8 +92,29 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
         _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         _config = _configuration.Get<FlightSdrViewModelConfig>();
         _freqInMHzMeasureUnit = _loc.Frequency.AvailableUnits.First(_ => _.Id == Core.FrequencyUnits.MHz);
-
         
+        ReferencePowerItems = new[]
+        {
+            new ReferencePowerItem("Low signal", -100, false, MaterialIconKind.SignalCellular1),
+            new ReferencePowerItem("Normal", -60, true, MaterialIconKind.SignalCellular2),
+            new ReferencePowerItem("High signal", 0, false, MaterialIconKind.SignalCellular3),
+        };
+        RefPowerSelectedItem = ReferencePowerItems[1];
+        
+        payload.Sdr.Base.Status.Select(_=>_.RefPower)
+            .DistinctUntilChanged()
+            .Where(x=>!float.IsNaN(x))
+            .Subscribe(x=>RefPowerSelectedItem = ReferencePowerItems.MinItem(t=>t.Power - x))
+            .DisposeItWith(Disposable);
+        payload.Sdr.Base.Status.Select(_=>_.SignalOverflow)
+            .DistinctUntilChanged()
+            .Where(x=>!float.IsNaN(x))
+            .Subscribe(x=>
+            {
+                SignalOverflowValue = x;
+                IsSignalOverflow = x > 0.8;
+            })
+            .DisposeItWith(Disposable);
         
         this.WhenValueChanged(_ => _.SelectedMode)
             .Subscribe(SelectedModeChanged).DisposeItWith(Disposable);
@@ -130,10 +175,16 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
                 case AsvSdrCustomMode.AsvSdrCustomModeIdle: default:
                     break;
             }
-            // TODO: add reference poewer text box
+            
+            var refPower = -60.0f;
+            if (RefPowerSelectedItem!= null)
+            {
+                refPower = RefPowerSelectedItem.Power;
+            }
+            
             _configuration.Set(_config);
                return Payload.Sdr.SetModeAndCheckResult(SelectedMode.Mode,
-                (ulong)Math.Round(_freqInMHzMeasureUnit.ConvertToSi(FrequencyInMhz)), _config.WriteFrequency, _config.ThinningFrequency, -50, cancel);
+                (ulong)Math.Round(_freqInMHzMeasureUnit.ConvertToSi(FrequencyInMhz)), _config.WriteFrequency, _config.ThinningFrequency, refPower, cancel);
         });
         UpdateMode.ThrownExceptions.Subscribe(ex =>
         {
@@ -231,6 +282,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
                 FrequencyInMhz = _config.GpFrequencyInMhz;
                 IsIdleMode = false;
                 IsGpMode = true;
+                
                 break;
             case AsvSdrCustomMode.AsvSdrCustomModeLlz:
                 Channels = SdrRttHelper.GetLlzChannels();
@@ -436,7 +488,17 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     public ReactiveCommand<Unit,Unit> StopRecord { get; }
     public ICommand SafeRebootOSCommand { get; set; }
     public ICommand SafeShutdownOSCommand { get; set; }
-   
+
+
+    [Reactive]
+    public ReferencePowerItem[] ReferencePowerItems { get; set; }
+    [Reactive]
+    public ReferencePowerItem RefPowerSelectedItem { get; set; }
+
+    [Reactive]
+    public double SignalOverflowValue { get; set; }
+    [Reactive]
+    public bool IsSignalOverflow { get; set; }
 }
 public class SdrModeViewModel:ReactiveObject
 {
