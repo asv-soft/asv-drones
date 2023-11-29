@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.Composition;
-using System.Reactive.Linq;
 using System.Windows.Input;
 using Asv.Cfg;
 using Asv.Common;

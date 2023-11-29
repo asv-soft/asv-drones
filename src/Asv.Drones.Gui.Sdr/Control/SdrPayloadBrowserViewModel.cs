@@ -62,7 +62,10 @@ public class SdrPayloadBrowserViewModel:ViewModelBase
                 IsAnySelected = _ != null;
             })
             .DisposeItWith(Disposable);
+       
     }
+
+    public ReactiveCommand<Unit,Unit> Refresh { get; set; }
 
     public ReadOnlyObservableCollection<SdrDeviceViewModel> Devices => _devices;
     
@@ -114,13 +117,16 @@ public class SdrDeviceViewModel:ViewModelBase
         _loc = loc;
         _log = log;
         Client = device;
+        
         device.Sdr.Records
-            .Transform(_=>new SdrPayloadRecordViewModel(device.Heartbeat.FullId,_,_log,_loc))
-            .SortBy(_=>_.CreatedDateTime)
+            .Transform(_=>new SdrPayloadRecordViewModel(device.Heartbeat.FullId, _, _log, _loc, device.Sdr))
+            .SortBy(_ => IsSortByName ? _.Name : _.CreatedDateTime, 
+                IsSortByName ? SortDirection.Ascending : SortDirection.Descending)
             .Bind(out _items)
             .DisposeMany()
             .Subscribe()
             .DisposeItWith(Disposable);
+        
         this.WhenValueChanged(_ => SelectedRecord)
             .Where(_=>_ != null)
             .Subscribe(_=>_.DownloadTags.Execute().Subscribe())
@@ -139,8 +145,18 @@ public class SdrDeviceViewModel:ViewModelBase
                 IsAnySelected = _ != null;
             })
             .DisposeItWith(Disposable);
+        
+        this.WhenAnyValue(_ => _.IsSortByName)
+            .Subscribe(_ =>
+            {
+                DownloadRecords.Execute().Subscribe();
+            })
+            .DisposeItWith(Disposable);
     }
 
+    [Reactive] 
+    public bool IsSortByName { get; set; } = true;
+    
     [Reactive]
     public double DownloadRecordsProgress { get; set; }
     public ReactiveCommand<Unit,bool> DownloadRecords { get; }

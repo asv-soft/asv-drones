@@ -66,15 +66,7 @@
     <data name="UavRttItem_ValueNotAvailable" xml:space="preserve">
     <value>N\A</value>
   </data>
-    <data name="ParametersEditorPageViewModel_Title" xml:space="preserve">
-    <value>Parameters editor [{0}]</value>
-  </data>
-    <data name="ParametersEditorPageViewModel_Search" xml:space="preserve">
-    <value>Search</value>
-  </data>
-    <data name="ParametersEditorPageViewModel_Total" xml:space="preserve">
-    <value>Total: {0}</value>
-  </data>
+    
     <data name="CpuLoadUavRttView_ToolTip" xml:space="preserve">
     <value>CPU load of UAV</value>
   </data>
@@ -114,36 +106,10 @@
     <data name="MissionStatusView_MissionProgress_ToolTip" xml:space="preserve">
     <value>Current mission progress</value>
   </data>
-    <data name="ParametersEditorPageView_StarsToggleButton_ToolTip" xml:space="preserve">
-    <value>Show only starred parameters</value>
-  </data>
-    <data name="ParametersEditorPageView_UpdateButton_ToolTip" xml:space="preserve">
-    <value>Update all parameters</value>
-  </data>
-    <data name="ParametersEditorPageView_PinsOffButton_ToolTip" xml:space="preserve">
-    <value>Remove all pinned parameters</value>
-  </data>
-    <data name="ParametersEditorParameterView_PinToggleButton_ToolTip" xml:space="preserve">
-    <value>On/off pin for this parameter</value>
-  </data>
-    <data name="ParametersEditorParameterView_UpdateButton_ToolTip" xml:space="preserve">
-    <value>Update this parameter from UAV</value>
-  </data>
-    <data name="ParametersEditorParameterView_WriteButton_ToolTip" xml:space="preserve">
-    <value>Write this parameter to UAV</value>
-  </data>
-    <data name="ParametersEditorParameterView_RebootRequired" xml:space="preserve">
-    <value>Reboot required</value>
-  </data>
-    <data name="ParametersEditorPageView_StarButton_ToolTip" xml:space="preserve">
-    <value>Star this parameter</value>
-  </data>
-    <data name="ParametersEditorParameterView_UpdateButton" xml:space="preserve">
-    <value>Update</value>
-  </data>
-    <data name="ParametersEditorParameterView_WriteButton" xml:space="preserve">
-    <value>Write</value>
-  </data>
+    
+    
+   
+  
     <data name="AltitudeIndicator_Vibration_ToolTip" xml:space="preserve">
     <value>Vibration and clipping of UAV</value>
   </data>
@@ -335,5 +301,65 @@
   </data>
   <data name="MissionStatusView_TotalDistance" xml:space="preserve">
     <value>Total: {0}</value>
+  </data>
+  <data name="VehiclesShellMenuItemProvider_ShellMenuItem_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="LandAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Immediately land</value>
+  </data>
+  <data name="GoToMapAnchorActionViewModel_Title" xml:space="preserve">
+    <value>GoTo</value>
+  </data>
+  <data name="GoToMapAnchorActionViewModel_ExecuteImpl_ShowTargetDialog_Value" xml:space="preserve">
+    <value>Select target for GoTo action</value>
+  </data>
+  <data name="GoToMapAnchorActionViewModel_ExecuteImpl_LogInfo_Value" xml:space="preserve">
+    <value>User send GoTo '{0}' for {0}</value>
+  </data>
+  <data name="LandAnchorActionViewModel_ExecuteImpl_LogInfo" xml:space="preserve">
+    <value>User send DoLand for {0}</value>
+  </data>
+  <data name="RtlAnchorActionViewModel_RTL" xml:space="preserve">
+    <value>Return to launch (RTL)</value>
+  </data>
+  <data name="RtlAnchorActionViewModel_ExecuteImpl_LogInfo" xml:space="preserve">
+    <value>User send Return To the Launch(RTL) for {0}</value>
+  </data>
+  <data name="RoiAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Set ROI</value>
+  </data>
+  <data name="RoiAnchorActionViewModel_ExecuteImpl_ShowTargetDialog_Value" xml:space="preserve">
+    <value>Select target for region of interests (ROI)</value>
+  </data>
+  <data name="RoiAnchorActionViewModel_ExecuteImpl_LogInfo" xml:space="preserve">
+    <value>User set ROI '{0}' for {1}</value>
+  </data>
+  <data name="TakeOffAnchorActionViewModel_OnCommandError" xml:space="preserve">
+    <value>Error to arm/disarm {0}</value>
+  </data>
+  <data name="AttitudeViewModel_Vehicle_UpdateStatusText_Armed" xml:space="preserve">
+    <value>Armed</value>
+  </data>
+  <data name="AttitudeViewModel_Vehicle_UpdateStatusText_Disarmed" xml:space="preserve">
+    <value>Disarmed</value>
+  </data>
+  <data name="PlaningMissionViewModel_InternalAfterMapInit_Vehicle_Name_Subscribe" xml:space="preserve">
+    <value>{0} mission</value>
+  </data>
+  <data name="StartAutoAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Start mission</value>
+  </data>
+  <data name="StartAutoAnchorActionViewModel_ExecuteImpl_LogInfo" xml:space="preserve">
+    <value>User send Start mission for {0}</value>
+  </data>
+  <data name="PlaningMissionViewModel_OnDownloadError_LogInfo" xml:space="preserve">
+    <value>Download mission error {0}</value>
+  </data>
+  <data name="PlaningMissionViewModel_OnUploadError_LogInfo" xml:space="preserve">
+    <value>Upload mission error {0}</value>
+  </data>
+  <data name="PlaningMissionViewModel_OnClearError_LogInfo" xml:space="preserve">
+    <value>Clear mission error {0}</value>
   </data>
 </root>

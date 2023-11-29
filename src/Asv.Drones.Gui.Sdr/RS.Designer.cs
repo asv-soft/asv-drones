@@ -60,6 +60,33 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set mode.
+        /// </summary>
+        public static string FlightSdrView_SetMode_Title {
+            get {
+                return ResourceManager.GetString("FlightSdrView_SetMode_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start mission.
+        /// </summary>
+        public static string FlightSdrView_StartMission_Title {
+            get {
+                return ResourceManager.GetString("FlightSdrView_StartMission_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop mission.
+        /// </summary>
+        public static string FlightSdrView_StopMission_Title {
+            get {
+                return ResourceManager.GetString("FlightSdrView_StopMission_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reboot OS.
         /// </summary>
         public static string FlightSdrView_SystemControlAction_Reboot_Title {
@@ -146,15 +173,6 @@ namespace Asv.Drones.Gui.Sdr {
         public static string FlightSdrViewModel_StopRecord_Error_Sender {
             get {
                 return ResourceManager.GetString("FlightSdrViewModel_StopRecord_Error_Sender", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Payload.
-        /// </summary>
-        public static string FlightSdrViewModel_Title {
-            get {
-                return ResourceManager.GetString("FlightSdrViewModel_Title", resourceCulture);
             }
         }
         
@@ -348,6 +366,24 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kit type (required).
+        /// </summary>
+        public static string RecordStartView_RecordKit_Title {
+            get {
+                return ResourceManager.GetString("RecordStartView_RecordKit_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mission type (required).
+        /// </summary>
+        public static string RecordStartView_RecordMission_Title {
+            get {
+                return ResourceManager.GetString("RecordStartView_RecordMission_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Record name (required).
         /// </summary>
         public static string RecordStartView_RecordName_Title {
@@ -447,6 +483,33 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string SdrPayloadBrowserView_Sort_By_Date {
+            get {
+                return ResourceManager.GetString("SdrPayloadBrowserView_Sort_By_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string SdrPayloadBrowserView_Sort_By_Name {
+            get {
+                return ResourceManager.GetString("SdrPayloadBrowserView_Sort_By_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort by:.
+        /// </summary>
+        public static string SdrPayloadBrowserView_Sort_Title {
+            get {
+                return ResourceManager.GetString("SdrPayloadBrowserView_Sort_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to N\A.
         /// </summary>
         public static string SdrRttItem_ValueNotAvailable {
@@ -488,6 +551,168 @@ namespace Asv.Drones.Gui.Sdr {
         public static string SdrRttViewModel_SumPower_Title {
             get {
                 return ResourceManager.GetString("SdrRttViewModel_SumPower_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In this section you can configure the default data thinning frequency..
+        /// </summary>
+        public static string SdrSettingsViewModel_DataThinning_Description {
+            get {
+                return ResourceManager.GetString("SdrSettingsViewModel_DataThinning_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data thinning.
+        /// </summary>
+        public static string SdrSettingsViewModel_DataThinning_Header {
+            get {
+                return ResourceManager.GetString("SdrSettingsViewModel_DataThinning_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default channels.
+        /// </summary>
+        public static string SdrSettingsViewModel_DefaultChannels_Title {
+            get {
+                return ResourceManager.GetString("SdrSettingsViewModel_DefaultChannels_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default frequencies.
+        /// </summary>
+        public static string SdrSettingsViewModel_DefaultFreqs_Title {
+            get {
+                return ResourceManager.GetString("SdrSettingsViewModel_DefaultFreqs_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In this section, you can configure various SDR parameters..
+        /// </summary>
+        public static string SdrSettingsViewModel_Description {
+            get {
+                return ResourceManager.GetString("SdrSettingsViewModel_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In this section you can configure the default frequency of writing to file..
+        /// </summary>
+        public static string SdrSettingsViewModel_FileWriteFreq_Description {
+            get {
+                return ResourceManager.GetString("SdrSettingsViewModel_FileWriteFreq_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency of writing to file.
+        /// </summary>
+        public static string SdrSettingsViewModel_FileWriteFreq_Header {
+            get {
+                return ResourceManager.GetString("SdrSettingsViewModel_FileWriteFreq_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In this section you can configure the default GP frequency..
+        /// </summary>
+        public static string SdrSettingsViewModel_GpFreq_Description {
+            get {
+                return ResourceManager.GetString("SdrSettingsViewModel_GpFreq_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GP frequency.
+        /// </summary>
+        public static string SdrSettingsViewModel_GpFreq_Header {
+            get {
+                return ResourceManager.GetString("SdrSettingsViewModel_GpFreq_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SDR settings.
+        /// </summary>
+        public static string SdrSettingsViewModel_Header {
+            get {
+                return ResourceManager.GetString("SdrSettingsViewModel_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In this section you can configure the default LLZ channel..
+        /// </summary>
+        public static string SdrSettingsViewModel_LLzChannel_Description {
+            get {
+                return ResourceManager.GetString("SdrSettingsViewModel_LLzChannel_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LLZ channel.
+        /// </summary>
+        public static string SdrSettingsViewModel_LlzChannel_Header {
+            get {
+                return ResourceManager.GetString("SdrSettingsViewModel_LlzChannel_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In this section you can configure the default LLZ frequency..
+        /// </summary>
+        public static string SdrSettingsViewModel_LLzFreq_Description {
+            get {
+                return ResourceManager.GetString("SdrSettingsViewModel_LLzFreq_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LLZ frequency.
+        /// </summary>
+        public static string SdrSettingsViewModel_LlzFreq_Header {
+            get {
+                return ResourceManager.GetString("SdrSettingsViewModel_LlzFreq_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In this section you can configure the default VOR channel..
+        /// </summary>
+        public static string SdrSettingsViewModel_VorChannel_Description {
+            get {
+                return ResourceManager.GetString("SdrSettingsViewModel_VorChannel_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VOR channel.
+        /// </summary>
+        public static string SdrSettingsViewModel_VorChannel_Header {
+            get {
+                return ResourceManager.GetString("SdrSettingsViewModel_VorChannel_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In this section you can configure the default VOR frequency..
+        /// </summary>
+        public static string SdrSettingsViewModel_VorFreq_Description {
+            get {
+                return ResourceManager.GetString("SdrSettingsViewModel_VorFreq_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VOR frequency.
+        /// </summary>
+        public static string SdrSettingsViewModel_VorFreq_Header {
+            get {
+                return ResourceManager.GetString("SdrSettingsViewModel_VorFreq_Header", resourceCulture);
             }
         }
         
@@ -587,6 +812,24 @@ namespace Asv.Drones.Gui.Sdr {
         public static string SdrStoreEntityViewModel_Name_Validation_ErrorMessage {
             get {
                 return ResourceManager.GetString("SdrStoreEntityViewModel_Name_Validation_ErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SDR Records.
+        /// </summary>
+        public static string SdrStorePageViewModel_Title_SDR_Records {
+            get {
+                return ResourceManager.GetString("SdrStorePageViewModel_Title_SDR_Records", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SDR store.
+        /// </summary>
+        public static string SdrStoreShellMenuItem_Name {
+            get {
+                return ResourceManager.GetString("SdrStoreShellMenuItem_Name", resourceCulture);
             }
         }
         

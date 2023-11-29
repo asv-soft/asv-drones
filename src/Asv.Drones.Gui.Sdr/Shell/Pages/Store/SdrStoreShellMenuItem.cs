@@ -10,7 +10,8 @@ public class SdrStoreShellMenuItem:ShellMenuItem
 {
     public SdrStoreShellMenuItem():base("asv:shell.menu.sdr-store")
     {
-        Name = "SDR store";
+        // DONE: Localize
+        Name = RS.SdrStoreShellMenuItem_Name;
         NavigateTo = SdrStorePageViewModel.Uri;
         Icon = MaterialIconDataProvider.GetData(MaterialIconKind.DatabaseOutline);
         Position = ShellMenuPosition.Top;

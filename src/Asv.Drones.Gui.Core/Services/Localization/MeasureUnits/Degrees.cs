@@ -6,6 +6,7 @@ namespace Asv.Drones.Gui.Core;
 public enum DegreeUnits
 {
     Degrees,
+    MinutesSeconds,
     DegreesMinutesSeconds
 }
 
@@ -13,6 +14,7 @@ public class Degrees : MeasureUnitBase<double, DegreeUnits>
 {
     private static readonly IMeasureUnitItem<double, DegreeUnits>[] _units = {
         new DegreesMeasureUnit(),
+        new MsMeasureUnit(),
         new DmsMeasureUnit()
     };
     
@@ -64,6 +66,50 @@ public class DegreesMeasureUnit : IMeasureUnitItem<double, DegreeUnits>
     public string PrintWithUnits(double value)
     {
         return $"{value} {Unit}";
+    }
+
+}
+
+public class MsMeasureUnit : IMeasureUnitItem<double, DegreeUnits>
+{
+    public DegreeUnits Id => DegreeUnits.MinutesSeconds;
+    public string Title => "[M]′[S]′′";
+    public string Unit => "[M]′[S]′′";
+    public bool IsSiUnit => false;
+    //Not usable
+    public double ConvertFromSi(double siValue)
+    {
+        return siValue;
+    }
+    //Not usable
+    public double ConvertToSi(double value)
+    {
+        return value;
+    }
+
+    public double Parse(string? value)
+    {
+        return value != null && AngleMs.TryParse(value, out var result) ? result : double.NaN;
+    }
+
+    public bool IsValid(string? value)
+    {
+        return value != null && AngleMs.IsValid(value);
+    }
+
+    public string? GetErrorMessage(string? value)
+    {
+        return AngleMs.GetErrorMessage(value);
+    }
+
+    public string Print(double value)
+    {
+        return AngleMs.PrintMs(value);
+    }
+
+    public string PrintWithUnits(double value)
+    {
+        return AngleMs.PrintMs(value);
     }
 
 }

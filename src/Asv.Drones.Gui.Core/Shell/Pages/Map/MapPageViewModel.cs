@@ -9,11 +9,9 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Core
 {
-   
-    
     public class MapPageViewModel:ShellPage,IMap
     {
-        private readonly ReadOnlyObservableCollection<IMapAnchor> _markers;
+        private protected readonly ReadOnlyObservableCollection<IMapAnchor> _markers;
         private readonly ReadOnlyObservableCollection<IMapWidget> _widgets;
         private readonly ReadOnlyObservableCollection<IMapWidget> _leftWidgets;
         private readonly ReadOnlyObservableCollection<IMapWidget> _rightWidgets;
@@ -22,7 +20,8 @@ namespace Asv.Drones.Gui.Core
         
         private IDisposable _disposableMapUpdate;
         
-
+        public const string UriString = "asv:shell.page.map";
+        
         /// <summary>
         /// This constructor is used for design time
         /// </summary>
@@ -32,6 +31,7 @@ namespace Asv.Drones.Gui.Core
         }
 
         public MapPageViewModel(Uri id, IMapService map,
+            IEnumerable<IHeaderMenuItem> exportedMenuItems,
             IEnumerable<IViewModelProvider<IMapAnchor>> markers,
             IEnumerable<IViewModelProvider<IMapWidget>> widgets,
                 IEnumerable<IViewModelProvider<IMapAction>> actions):base(id)
@@ -126,7 +126,34 @@ namespace Asv.Drones.Gui.Core
                 .Subscribe(SetUpFollow)
                 .DisposeItWith(Disposable);
 
-            Disposable.AddAction(() => _disposableMapUpdate?.Dispose());
+           Markers.ToObservableChangeSet()
+               .Transform(_ => (IHeaderMenuItem)new HeaderMenuItem(_.Id)
+               {
+                   Header = _.Id.AbsoluteUri,
+                   Icon = _.Icon,
+                   Command = ReactiveCommand.Create(() =>
+                   {
+                       Center = _.Location;
+                       //SelectedItem = _;
+                   })
+               })
+               .Bind(out var anchorMenuItems)
+               .Subscribe()
+               .DisposeItWith(Disposable);
+
+           var menuItem = exportedMenuItems.FirstOrDefault(_ => _ is HeaderAnchorsMenu);
+
+           if (menuItem != null)
+           {
+               menuItem.Items = anchorMenuItems;
+           }
+           
+            Disposable.AddAction(() =>
+            {
+                if (menuItem != null) 
+                    menuItem.Items = null;
+                _disposableMapUpdate?.Dispose();
+            });
         }
 
         private void SetUpFollow(IMapAnchor anchor)
@@ -184,7 +211,11 @@ namespace Asv.Drones.Gui.Core
             IsInDialogMode = true;
             var tcs = new TaskCompletionSource();
             await using var c1 = cancel.Register(() => tcs.TrySetCanceled());
-            this.WhenAnyValue(_ => _.IsInDialogMode).Where(_ => IsInDialogMode == false).Subscribe(_ => tcs.TrySetResult(), cancel);
+            this.WhenAnyValue(_ => _.IsInDialogMode).Where(_ => IsInDialogMode == false).Subscribe(_ =>
+            {
+                tcs.TrySetResult();
+                SelectedItem = null;
+            }, cancel);
             await tcs.Task;
             return DialogTarget;
         }

@@ -13,9 +13,9 @@ namespace Asv.Drones.Gui.Uav
         [ImportingConstructor]
         public FlightsMapLayerProvider(IMavlinkDevicesService svc,
             ILocalizationService loc,
-            [ImportMany]IEnumerable<IFlightUavActionProvider> actions)
+            [ImportMany]IEnumerable<IUavActionProvider> actions)
         {
-            var uav = svc.Vehicles.Transform(_=>new UavAnchor(_,loc,actions)).ChangeKey((k, _) => _.Id).Transform(_=>(IMapAnchor)_);
+            var uav = svc.Vehicles.Transform(_=>new FlightUavAnchor(_,loc,actions)).ChangeKey((k, _) => _.Id).Transform(_=>(IMapAnchor)_);
             var roi = svc.Vehicles.Transform(_ => new RoiAnchor(_)).ChangeKey((k, _) => _.Id).Transform(_ => (IMapAnchor)_);
             var home = svc.Vehicles.Transform(_ => new HomeAnchor(_)).ChangeKey((k, _) => _.Id).Transform(_ => (IMapAnchor)_);
             var goTo = svc.Vehicles.Transform(_ => new GoToAnchor(_)).ChangeKey((k, _) => _.Id).Transform(_ => (IMapAnchor)_);
@@ -27,8 +27,7 @@ namespace Asv.Drones.Gui.Uav
                 .DisposeMany()
                 .TransformMany(_ => _.Items, _ => _.Id)
                 .Transform(_ => (IMapAnchor)_);
-                
-
+            
             var anchors = svc.Vehicles
                 .Transform(_ => new UavFlightMissionMapLayer(_))
                 .DisposeMany()

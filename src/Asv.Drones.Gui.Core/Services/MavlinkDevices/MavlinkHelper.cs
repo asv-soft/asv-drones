@@ -1,5 +1,6 @@
 ﻿using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
+using Asv.Mavlink.V2.Minimal;
 using Material.Icons;
 
 namespace Asv.Drones.Gui.Core
@@ -30,17 +31,17 @@ namespace Asv.Drones.Gui.Core
 
         public static string GetTypeName(MavType type)
         {
-            // TODO: Localize
+            // DONE: Localize
             return type switch
             {
-                MavType.MavTypeFixedWing => "Fixed wing",
-                MavType.MavTypeGeneric => "Quadrotor",
-                MavType.MavTypeQuadrotor => "Quadrotor",
-                MavType.MavTypeHexarotor => "Hexarotor",
-                MavType.MavTypeOctorotor => "Octorotor",
-                MavType.MavTypeTricopter => "Tricopter",
-                MavType.MavTypeHelicopter => "Helicopter",
-                _ => "Unknown type"
+                MavType.MavTypeFixedWing => RS.MavlinkHelper_GetTypeName_FixedWing,
+                MavType.MavTypeGeneric => RS.MavlinkHelper_GetTypeName_QuadRotor,
+                MavType.MavTypeQuadrotor => RS.MavlinkHelper_GetTypeName_QuadRotor,
+                MavType.MavTypeHexarotor => RS.MavlinkHelper_GetTypeName_HexaRotor,
+                MavType.MavTypeOctorotor => RS.MavlinkHelper_GetTypeName_OctoRotor,
+                MavType.MavTypeTricopter => RS.MavlinkHelper_GetTypeName_TriCopter,
+                MavType.MavTypeHelicopter => RS.MavlinkHelper_GetTypeName_Helicopter,
+                _ => RS.MavlinkHelper_GetTypeName_UnknownType
             };
         }
 

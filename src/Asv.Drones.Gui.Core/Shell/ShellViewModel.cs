@@ -6,6 +6,7 @@ using System.ComponentModel.Composition;
 using System.Reactive.Linq;
 using Asv.Cfg;
 using Asv.Common;
+using DynamicData.Binding;
 using Material.Icons;
 
 namespace Asv.Drones.Gui.Core
@@ -18,7 +19,7 @@ namespace Asv.Drones.Gui.Core
         public static readonly Uri Uri = new(UriString);
         
         private readonly INavigationService _navigation;
-        private IShellMenuItem _selectedMenu = null!;
+        
         private readonly ReadOnlyObservableCollection<IShellMenuItem> _menuItems = null!;
         private readonly ReadOnlyObservableCollection<IShellMenuItem> _footerMenuItems = null!;
         private readonly ReadOnlyObservableCollection<LogMessageViewModel> _messages = null!;
@@ -27,6 +28,10 @@ namespace Asv.Drones.Gui.Core
         private readonly ReadOnlyObservableCollection<IHeaderMenuItem> _headerMenu = null!;
         private readonly IThemeService _themeService;
         private readonly IConfiguration _config;
+        private readonly IShellMenuForSelectedPage _menuForSelectedPage;
+        private int _selectionInProgressFlag = 0;
+        private IShellMenuItem _previousSuccessSelectedMenu;
+        private IObservable<IChangeSet<IHeaderMenuItem,Uri>> _headerMenuSource;
 
         public ShellViewModel():base(Uri)
         {
@@ -35,7 +40,7 @@ namespace Asv.Drones.Gui.Core
                 Title = "MissionFile.asv";
                 _headerMenu = new(new(new IHeaderMenuItem[]
                 {
-                    new HeaderMenuItem(new($"asv://{Guid.NewGuid()}")){Header = "File", Icon = MaterialIconKind.File},
+                    new HeaderMenuItem(new Uri($"asv://{Guid.NewGuid()}")){Header = "File", Icon = MaterialIconKind.File},
                 }));
                 _menuItems = new (new (new IShellMenuItem[] 
                     {
@@ -69,12 +74,14 @@ namespace Asv.Drones.Gui.Core
             ILogService logService, 
             IThemeService themeService,
             IConfiguration config,
+            IShellMenuForSelectedPage menuForSelectedPage,
             [ImportMany(HeaderMenuItem.UriString)] IEnumerable<IViewModelProvider<IHeaderMenuItem>> headerMenuProviders,
             [ImportMany] IEnumerable<IViewModelProvider<IShellMenuItem>> menuProviders,
             [ImportMany] IEnumerable<IViewModelProvider<IShellStatusItem>> statusProviders) : this()
         {
             _navigation = navigation ?? throw new ArgumentNullException(nameof(navigation));
-            _config = config;
+            _config = config ?? throw new ArgumentNullException(nameof(config));
+            _menuForSelectedPage = menuForSelectedPage ?? throw new ArgumentNullException(nameof(menuForSelectedPage));
             if (logService == null) throw new ArgumentNullException(nameof(logService));
             if (menuProviders == null) throw new ArgumentNullException(nameof(menuProviders));
             if (statusProviders == null) throw new ArgumentNullException(nameof(statusProviders));
@@ -150,9 +157,73 @@ namespace Asv.Drones.Gui.Core
             #endregion
             
             _themeService = themeService;
+            
+            this.WhenValueChanged(x => x.SelectedMenu)
+                .Subscribe(OnSelectionChanged)
+                .DisposeItWith(Disposable);
+            this.WhenValueChanged(x => x.IsPaneOpen)
+                .Subscribe(OnPaneOpenChanged)
+                .DisposeItWith(Disposable);
+            
+        }
+        
+        
+
+        private void OnPaneOpenChanged(bool isPanOpened)
+        {
+            if (SelectedMenu == null) return;
+            if (isPanOpened)
+            {
+               
+            }
+            else
+            {
+                if (_previousSuccessSelectedMenu?.Parent != null)
+                {
+                    _previousSuccessSelectedMenu.Parent.IsSelected = true;
+                }
+            }
         }
 
-        
+
+
+        private async void OnSelectionChanged(object? item)
+        {
+            var newItem = item as IShellMenuItem;
+            if (newItem == null) return;
+            // if we don't need change selection
+            if (newItem == _previousSuccessSelectedMenu) return;
+            if (newItem.Type != ShellMenuItemType.PageNavigation) return;
+
+            var isNavigationSuccess = await _navigation.GoTo(newItem.NavigateTo);
+            if (isNavigationSuccess)
+            {
+                _previousSuccessSelectedMenu = newItem;
+                _menuForSelectedPage.SelectedPageChanged(CurrentPage);
+            }
+            else
+            {
+                if (_previousSuccessSelectedMenu.Parent != null)
+                {
+                    if (IsPaneOpen)
+                    {
+                        _previousSuccessSelectedMenu.IsSelected = true;
+                        SelectedMenu = _previousSuccessSelectedMenu;
+                    }
+                    else
+                    {
+                        _previousSuccessSelectedMenu.Parent.IsSelected = true;
+                    }
+                }
+                else
+                {
+                    _previousSuccessSelectedMenu.IsSelected = true;
+                }
+
+            }
+
+
+        }
 
         [Reactive]
         public string Title { get; set; } = null!;
@@ -160,24 +231,16 @@ namespace Asv.Drones.Gui.Core
         [Reactive]
         public IShellPage CurrentPage { get; set; } = null!;
 
-        public IShellMenuItem SelectedMenu
-        {
-            get => _selectedMenu;
-            set
-            {
-                _selectedMenu = value;
-                if (_selectedMenu == null) return;
-                if (_selectedMenu.Type == ShellMenuItemType.PageNavigation)
-                {
-                    _navigation.GoTo(_selectedMenu.NavigateTo);
-                }
-            }
-        }
+        [Reactive] 
+        public object? SelectedMenu { get; set; } = null!;
         public ReadOnlyObservableCollection<IHeaderMenuItem> HeaderMenuItems => _headerMenu;
         public ReadOnlyObservableCollection<IShellMenuItem> MenuItems => _menuItems;
         public ReadOnlyObservableCollection<IShellMenuItem> FooterMenuItems => _footerMenuItems;
         public ReadOnlyObservableCollection<LogMessageViewModel> Messages => _messages;
         public ReadOnlyObservableCollection<IShellStatusItem> StatusItems => _statusItems;
+
+        [Reactive]
+        public bool IsPaneOpen { get; set; }
 
         public void OnLoaded()
         {

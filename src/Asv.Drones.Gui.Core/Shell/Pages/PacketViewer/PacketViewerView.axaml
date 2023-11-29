@@ -48,7 +48,7 @@
                 </TextBox.Styles>
             </TextBox>
             <avalonia:MaterialIcon DockPanel.Dock="Left" Height="30" Width="30" Kind="Package"/>
-            <TextBlock DockPanel.Dock="Left" Margin="8 0" FontSize="30" Text="Packet viewer"/>
+            <TextBlock DockPanel.Dock="Left" Margin="8 0" FontSize="30" Text="{x:Static core:RS.PacketViewerViewDockPanelText }"/>
         </DockPanel>
 
         <ListBox ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Column="0" Grid.Row="1" Margin="0,0,8,0" SelectedItem="{Binding SelectedPacket}" ItemsSource="{Binding Packets}" Grid.IsSharedSizeScope="True">
@@ -79,7 +79,7 @@
         </ListBox>
 
         <DockPanel Grid.Column="1" Grid.Row="1" Margin="0,8,0,0" MinWidth="340">
-            <Expander DockPanel.Dock="Top" Header="Message sourses">
+            <Expander DockPanel.Dock="Top" Header="{x:Static core:RS.PacketViewer_Expander_MessageSources}">
                 <DockPanel>
                     <CheckBox DockPanel.Dock="Top" HorizontalAlignment="Left"  IsChecked="True" Checked="SourcesChecked" Unchecked="SourcesUnchecked" Content="{x:Static core:RS.PacketViewerView_CheckAll}" />
                     <ListBox HorizontalAlignment="Stretch" x:Name="SourceFilters" ItemsSource="{Binding FiltersBySource}" Grid.IsSharedSizeScope="True">
@@ -102,7 +102,7 @@
                     </ListBox>
                 </DockPanel>
             </Expander>
-            <Expander Header="Message types" Margin="0 5">
+            <Expander Header="{x:Static core:RS.PacketViewer_Expander_MessageTypes}" Margin="0 5">
                 <DockPanel>
                     <CheckBox DockPanel.Dock="Top" HorizontalAlignment="Left"  IsChecked="True" Checked="TypesChecked" Unchecked="TypesUnchecked" Content="{x:Static core:RS.PacketViewerView_CheckAll}" />
                     <ListBox HorizontalAlignment="Stretch" x:Name="TypeFilters" ItemsSource="{Binding FiltersByType}" Grid.IsSharedSizeScope="True">

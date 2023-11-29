@@ -27,5 +27,7 @@ public partial class ShellView : UserControl
     {
         var vm = this.DataContext as ShellViewModel;
         vm?.OnLoaded();
+        
     }
+
 }

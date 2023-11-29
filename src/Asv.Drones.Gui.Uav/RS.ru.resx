@@ -59,15 +59,7 @@
     <data name="UavRttItem_ValueNotAvailable" xml:space="preserve">
     <value>Н\Д</value>
   </data>
-    <data name="ParametersEditorPageViewModel_Title" xml:space="preserve">
-    <value>Редактор параметров [{0}]</value>
-  </data>
-    <data name="ParametersEditorPageViewModel_Search" xml:space="preserve">
-    <value>Найти</value>
-  </data>
-    <data name="ParametersEditorPageViewModel_Total" xml:space="preserve">
-    <value>Всего: {0}</value>
-  </data>
+   
     <data name="CpuLoadUavRttView_ToolTip" xml:space="preserve">
     <value>Загрузка процессора БПЛА</value>
   </data>
@@ -104,36 +96,8 @@
   <data name="MissionStatusView_MissionProgress_ToolTip" xml:space="preserve">
     <value>Текущий прогресс миссии</value>
   </data>
-    <data name="ParametersEditorPageView_StarsToggleButton_ToolTip" xml:space="preserve">
-    <value>Показать только избранные параметры</value>
-  </data>
-    <data name="ParametersEditorPageView_UpdateButton_ToolTip" xml:space="preserve">
-    <value>Обновить все параметры</value>
-  </data>
-    <data name="ParametersEditorPageView_PinsOffButton_ToolTip" xml:space="preserve">
-    <value>Убрать все прикреплённые параметры</value>
-  </data>
-    <data name="ParametersEditorParameterView_PinToggleButton_ToolTip" xml:space="preserve">
-    <value>Включить/выключить закрепление этого параметра</value>
-  </data>
-    <data name="ParametersEditorParameterView_UpdateButton_ToolTip" xml:space="preserve">
-    <value>Обновить этот парметр из БПЛА</value>
-  </data>
-    <data name="ParametersEditorParameterView_WriteButton_ToolTip" xml:space="preserve">
-    <value>Записать этот парметр в БПЛА</value>
-  </data>
-    <data name="ParametersEditorParameterView_RebootRequired" xml:space="preserve">
-    <value>Требуется перезагрузка</value>
-  </data>
-    <data name="ParametersEditorPageView_StarButton_ToolTip" xml:space="preserve">
-    <value>Добавить параметр в избранные</value>
-  </data>
-    <data name="ParametersEditorParameterView_UpdateButton" xml:space="preserve">
-    <value>Обновить</value>
-  </data>
-    <data name="ParametersEditorParameterView_WriteButton" xml:space="preserve">
-    <value>Записать</value>
-  </data>
+    
+  
     <data name="AltitudeIndicator_Vibration_ToolTip" xml:space="preserve">
     <value>Вибрация и клиппинг БПЛА</value>
   </data>
@@ -328,5 +292,65 @@
   </data>
   <data name="MissionStatusView_MissionDistance" xml:space="preserve">
     <value>Миссия: {0}</value>
+  </data>
+  <data name="VehiclesShellMenuItemProvider_ShellMenuItem_Settings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="LandAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Немедленно приземлиться</value>
+  </data>
+  <data name="GoToMapAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Перейти в точку</value>
+  </data>
+  <data name="GoToMapAnchorActionViewModel_ExecuteImpl_ShowTargetDialog_Value" xml:space="preserve">
+    <value>Выберите точку в которую нужно перейти</value>
+  </data>
+  <data name="GoToMapAnchorActionViewModel_ExecuteImpl_LogInfo_Value" xml:space="preserve">
+    <value>Пользователь отправил переход в точку {0} для {1}</value>
+  </data>
+  <data name="LandAnchorActionViewModel_ExecuteImpl_LogInfo" xml:space="preserve">
+    <value>Пользователь отправил команду приземлиться для {0}</value>
+  </data>
+  <data name="RtlAnchorActionViewModel_RTL" xml:space="preserve">
+    <value>Вернуться в точку запуска</value>
+  </data>
+  <data name="RtlAnchorActionViewModel_ExecuteImpl_LogInfo" xml:space="preserve">
+    <value>Пользователь отправил команду вернуться в точку запуска для {0}</value>
+  </data>
+  <data name="RoiAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Установить ROI</value>
+  </data>
+  <data name="RoiAnchorActionViewModel_ExecuteImpl_ShowTargetDialog_Value" xml:space="preserve">
+    <value>Выберите цель для назначения ROI</value>
+  </data>
+  <data name="RoiAnchorActionViewModel_ExecuteImpl_LogInfo" xml:space="preserve">
+    <value>Пользователь назначил ROI  '{0}' для {1}</value>
+  </data>
+  <data name="TakeOffAnchorActionViewModel_OnCommandError" xml:space="preserve">
+    <value>Не получиось разблокировать/заблокировать двигатели {0}</value>
+  </data>
+  <data name="AttitudeViewModel_Vehicle_UpdateStatusText_Armed" xml:space="preserve">
+    <value>Разблокирован</value>
+  </data>
+  <data name="AttitudeViewModel_Vehicle_UpdateStatusText_Disarmed" xml:space="preserve">
+    <value>Заблокирован</value>
+  </data>
+  <data name="PlaningMissionViewModel_InternalAfterMapInit_Vehicle_Name_Subscribe" xml:space="preserve">
+    <value>Миссия БПЛА -  {0}</value>
+  </data>
+  <data name="StartAutoAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Начать миссию</value>
+  </data>
+  <data name="StartAutoAnchorActionViewModel_ExecuteImpl_LogInfo" xml:space="preserve">
+    <value>Пользователь отправил команду начать миссию для {0}</value>
+  </data>
+  <data name="PlaningMissionViewModel_OnDownloadError_LogInfo" xml:space="preserve">
+    <value>Ошибка при загрузке миссии для {0}</value>
+  </data>
+  <data name="PlaningMissionViewModel_OnUploadError_LogInfo" xml:space="preserve">
+    <value>Ошибка при отправки мисси для {0}</value>
+  </data>
+  <data name="PlaningMissionViewModel_OnClearError_LogInfo" xml:space="preserve">
+    <value>Ошибка при удалении миссии для {0}</value>
   </data>
 </root>

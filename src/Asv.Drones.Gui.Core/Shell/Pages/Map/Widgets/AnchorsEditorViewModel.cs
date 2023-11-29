@@ -12,6 +12,7 @@ public class AnchorsEditorViewModel : MapWidgetBase
     private readonly ILocalizationService _loc;
     private bool _internalChange;
     private IDisposable? _locationSubscription;
+    private IMapAnchor _prevAnchor;
     
     public const string UriString = "asv:shell.page.map.anchors-editor";
 
@@ -23,11 +24,37 @@ public class AnchorsEditorViewModel : MapWidgetBase
     public AnchorsEditorViewModel(ILocalizationService loc) : this()
     {
         _loc = loc;
-
         Disposable.AddAction(() =>
         {
             _locationSubscription?.Dispose();
         });
+
+        Order = int.MaxValue;
+        
+        this.WhenAnyValue(_ => _.Latitude)
+            .Subscribe(UpdateLatitude)
+            .DisposeItWith(Disposable);
+        this.WhenAnyValue(_ => _.Longitude)
+            .Subscribe(UpdateLongitude)
+            .DisposeItWith(Disposable);
+        this.WhenAnyValue(_ => _.Altitude)
+            .Subscribe(UpdateAltitude)
+            .DisposeItWith(Disposable);
+        
+        this.ValidationRule(x => x.Latitude,
+                _ => _loc.Latitude.IsValid(_),
+                _ => _loc.Latitude.GetErrorMessage(_) ?? string.Empty)
+            .DisposeItWith(Disposable);
+        
+        this.ValidationRule(x => x.Longitude,
+                _ => _loc.Longitude.IsValid(_),
+                _ => _loc.Longitude.GetErrorMessage(_) ?? string.Empty)
+            .DisposeItWith(Disposable);
+        
+        this.ValidationRule(x => x.Altitude,
+                _ => _loc.Altitude.IsValid(_),
+                _ => _loc.Altitude.GetErrorMessage(_) ?? string.Empty)
+            .DisposeItWith(Disposable);
     }
     
     [Reactive]
@@ -51,7 +78,72 @@ public class AnchorsEditorViewModel : MapWidgetBase
     [Reactive]
     public string AltitudeUnits { get; set; }
 
-    
+    private void UpdateLatitude(string latitude)
+    {
+        if (_internalChange) return;
+        if (!string.IsNullOrWhiteSpace(latitude) && _loc.Latitude.IsValid(latitude))
+        {
+            var prevLocation = _prevAnchor.Location;
+            var newLocation = _prevAnchor.Location = new GeoPoint(
+                _loc.Latitude.CurrentUnit.Value.ConvertToSi(latitude),
+                prevLocation.Longitude, prevLocation.Altitude);    
+            // if new location is equal to previous location then we need to update longitude string
+            if (prevLocation.Equals(newLocation))
+            {
+                _internalChange = true;
+                Latitude = _loc.Longitude.FromSiToString(prevLocation.Latitude);
+                _internalChange = false;
+            }
+            else
+            {
+                _prevAnchor.Location = newLocation;
+            }
+        }
+    }
+    private void UpdateLongitude(string longitude)
+    {
+        if (_internalChange) return;
+        if (!string.IsNullOrWhiteSpace(longitude) && _loc.Longitude.IsValid(longitude))
+        {
+            var prevLocation = _prevAnchor.Location;
+            var newLocation = new GeoPoint(prevLocation.Latitude,
+                _loc.Longitude.CurrentUnit.Value.ConvertToSi(longitude), 
+                prevLocation.Altitude);
+            // if new location is equal to previous location then we need to update longitude string
+            if (prevLocation.Equals(newLocation))
+            {
+                _internalChange = true;
+                Longitude = _loc.Longitude.FromSiToString(prevLocation.Longitude);
+                _internalChange = false;
+            }
+            else
+            {
+                _prevAnchor.Location = newLocation;
+            }
+        }
+    }
+    private void UpdateAltitude(string altitude)
+    {
+        if (_internalChange) return;
+        if (!string.IsNullOrWhiteSpace(altitude) && _loc.Altitude.IsValid(altitude))
+        {
+            var prevLocation = _prevAnchor.Location;
+            var newLocation = _prevAnchor.Location = new GeoPoint(prevLocation.Latitude,
+                prevLocation.Longitude, 
+                _loc.Altitude.CurrentUnit.Value.ConvertToSi(altitude));
+            // if new location is equal to previous location then we need to update string
+            if (prevLocation.Equals(newLocation))
+            {
+                _internalChange = true;
+                Altitude = _loc.Longitude.FromSiToString(prevLocation.Altitude);
+                _internalChange = false;
+            }
+            else
+            {
+                _prevAnchor.Location = newLocation;
+            }
+        }
+    }
     
     protected override void InternalAfterMapInit(IMap context)
     {
@@ -62,11 +154,19 @@ public class AnchorsEditorViewModel : MapWidgetBase
         context.WhenValueChanged(_ => _.SelectedItem)
             .Subscribe(_ =>
             {
+                if (_prevAnchor != null && _prevAnchor.IsInEditMode)
+                {
+                    UpdateLatitude(Latitude);
+                    UpdateLongitude(Longitude);
+                    UpdateAltitude(Altitude);
+                }
+                
                 _locationSubscription?.Dispose();
                 _locationSubscription = null;
                 
                 if (_ != null)
                 {
+                    _prevAnchor = _;
                     IsVisible = true;
                     
                     _locationSubscription = _.WhenAnyValue(_ => _.Location)
@@ -88,64 +188,6 @@ public class AnchorsEditorViewModel : MapWidgetBase
             })
             .DisposeItWith(Disposable);
         
-        this.WhenPropertyChanged(_ => _.Latitude, false)
-            .Subscribe(_ =>
-            {
-                if (_internalChange) return;
-
-                if (context.SelectedItem != null && !string.IsNullOrWhiteSpace(_.Value) && 
-                    _loc.Latitude.IsValid(_.Value) && context.SelectedItem.IsInEditMode)
-                {
-                    var prevLocation = context.SelectedItem.Location;
-                    context.SelectedItem.Location = new GeoPoint(_loc.Latitude.CurrentUnit.Value.ConvertToSi(_.Value),
-                        prevLocation.Longitude, prevLocation.Altitude);
-                }
-            })
-            .DisposeItWith(Disposable);
-        
-        this.WhenPropertyChanged(_ => _.Longitude, false)
-            .Subscribe(_ =>
-            {
-                if (_internalChange) return;
-                
-                if (context.SelectedItem != null && !string.IsNullOrWhiteSpace(_.Value)&& 
-                    _loc.Longitude.IsValid(_.Value) && context.SelectedItem.IsInEditMode)
-                {
-                    var prevLocation = context.SelectedItem.Location;
-                    context.SelectedItem.Location = new GeoPoint(prevLocation.Latitude,
-                        _loc.Longitude.CurrentUnit.Value.ConvertToSi(_.Value), prevLocation.Altitude);
-                }
-            })
-            .DisposeItWith(Disposable);
-        
-        this.WhenPropertyChanged(_ => _.Altitude, false)
-            .Subscribe(_ =>
-            {
-                if (_internalChange) return;
-                
-                if (context.SelectedItem != null && !string.IsNullOrWhiteSpace(_.Value) && 
-                    _loc.Altitude.IsValid(_.Value) && context.SelectedItem.IsInEditMode)
-                {
-                    var prevLocation = context.SelectedItem.Location;
-                    context.SelectedItem.Location = new GeoPoint(prevLocation.Latitude,
-                        prevLocation.Longitude, _loc.Altitude.CurrentUnit.Value.ConvertToSi(_.Value));
-                }
-            })
-            .DisposeItWith(Disposable);
-        
-        this.ValidationRule(x => x.Latitude,
-                _ => _loc.Latitude.IsValid(_),
-                _ => _loc.Latitude.GetErrorMessage(_))
-            .DisposeItWith(Disposable);
-        
-        this.ValidationRule(x => x.Longitude,
-                _ => _loc.Longitude.IsValid(_),
-                _ => _loc.Longitude.GetErrorMessage(_))
-            .DisposeItWith(Disposable);
-        
-        this.ValidationRule(x => x.Altitude,
-                _ => _loc.Altitude.IsValid(_),
-                _ => _loc.Altitude.GetErrorMessage(_))
-            .DisposeItWith(Disposable);
+       
     }
 }

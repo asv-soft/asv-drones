@@ -79,6 +79,12 @@ namespace Asv.Drones.Gui.Core
             this.WhenAnyValue(_ => _.SelectedAngleUnit)
                 .Subscribe(_localization.Degree.CurrentUnit)
                 .DisposeItWith(Disposable);
+            
+            _localization.Bearing.CurrentUnit.Subscribe(_ => SelectedBearingUnit = _)
+                .DisposeItWith(Disposable);
+            this.WhenAnyValue(_ => _.SelectedBearingUnit)
+                .Subscribe(_localization.Bearing.CurrentUnit)
+                .DisposeItWith(Disposable);
         }
         
         [Reactive]
@@ -129,5 +135,12 @@ namespace Asv.Drones.Gui.Core
             _localization.Degree.AvailableUnits;
         
         public string AngleIcon => MaterialIconDataProvider.GetData(MaterialIconKind.AngleAcute);
+        
+        [Reactive]
+        public IMeasureUnitItem<double, BearingUnits> SelectedBearingUnit { get; set; }
+        
+        public IEnumerable<IMeasureUnitItem<double, BearingUnits>> BearingUnits => 
+            _localization.Bearing.AvailableUnits;
+        
     }
 }

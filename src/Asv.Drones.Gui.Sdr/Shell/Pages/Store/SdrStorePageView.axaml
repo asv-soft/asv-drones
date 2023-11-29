@@ -11,23 +11,33 @@
     <Design.DataContext>
         <sdr:SdrStorePageViewModel/>
     </Design.DataContext>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" MinWidth="300"/>
-            <ColumnDefinition Width="30"/>
-            <ColumnDefinition Width="1*" MinWidth="300"/>
-        </Grid.ColumnDefinitions>
-        <sdr:SdrStoreBrowserView Grid.Column="0" DataContext="{Binding Store}"/>
-        <GridSplitter Grid.Column="1"/>
-        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1">
-            <Button Height="50" Content="{avalonia:MaterialIconExt Kind=TransferLeft}" Theme="{DynamicResource TransparentButton}" Command="{Binding DownloadRecord.Command}"/>
-            <Grid>
-                <Rectangle HorizontalAlignment="Left" Width="26" Margin="2" Height="1" Fill="Gray"/>
-                <Border HorizontalAlignment="Left" Width="{Binding Progress}" Margin="2" CornerRadius="2" ClipToBounds="True">
-                    <Rectangle Height="5" Fill="#40b5e0"/>
-                </Border>
-            </Grid>
-        </StackPanel>
-        <sdr:SdrPayloadBrowserView Grid.Column="2" DataContext="{Binding Device}"/>
-    </Grid>
+    <Panel>
+        <Grid IsVisible="{Binding !DownloadRecord.IsExecuting}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" MinWidth="300"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="1*" MinWidth="300"/>
+            </Grid.ColumnDefinitions>
+       
+            <sdr:SdrStoreBrowserView Grid.Column="0" DataContext="{Binding Store}"/>
+            <GridSplitter Grid.Column="1"/>
+            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1">
+                <Button Height="50" Content="{avalonia:MaterialIconExt Kind=TransferLeft}" Theme="{DynamicResource TransparentButton}" Command="{Binding DownloadRecord.Command}"/>
+            </StackPanel>
+            <sdr:SdrPayloadBrowserView Grid.Column="2" DataContext="{Binding Device}"/>
+            
+        </Grid>
+        <Border Background="{DynamicResource ThemeBackgroundBrush}" Grid.ColumnSpan="3" Grid.Column="0"
+                IsVisible="{Binding DownloadRecord.IsExecuting}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
+                <TextBlock  Text="{Binding DownloadRecordCaption}"/>
+                <ProgressBar Width="100" Value="{Binding DownloadRecord.Progress}" Minimum="0" Maximum="1"/>
+                <TextBlock Text="{Binding DownloadRecordAction}"/>
+                <Button Command="{Binding DownloadRecord.Cancel}">
+                    <TextBlock Text="Cancel"></TextBlock>
+                </Button>
+            </StackPanel>
+        </Border>
+    </Panel>
+    
 </UserControl>

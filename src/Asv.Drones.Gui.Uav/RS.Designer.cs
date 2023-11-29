@@ -96,6 +96,24 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Armed.
+        /// </summary>
+        public static string AttitudeViewModel_Vehicle_UpdateStatusText_Armed {
+            get {
+                return ResourceManager.GetString("AttitudeViewModel_Vehicle_UpdateStatusText_Armed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disarmed.
+        /// </summary>
+        public static string AttitudeViewModel_Vehicle_UpdateStatusText_Disarmed {
+            get {
+                return ResourceManager.GetString("AttitudeViewModel_Vehicle_UpdateStatusText_Disarmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Battery level.
         /// </summary>
         public static string BatteryUavRttView_ToolTip {
@@ -222,6 +240,33 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User send GoTo &apos;{0}&apos; for {0}.
+        /// </summary>
+        public static string GoToMapAnchorActionViewModel_ExecuteImpl_LogInfo_Value {
+            get {
+                return ResourceManager.GetString("GoToMapAnchorActionViewModel_ExecuteImpl_LogInfo_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select target for GoTo action.
+        /// </summary>
+        public static string GoToMapAnchorActionViewModel_ExecuteImpl_ShowTargetDialog_Value {
+            get {
+                return ResourceManager.GetString("GoToMapAnchorActionViewModel_ExecuteImpl_ShowTargetDialog_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GoTo.
+        /// </summary>
+        public static string GoToMapAnchorActionViewModel_Title {
+            get {
+                return ResourceManager.GetString("GoToMapAnchorActionViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Distance from UAV to home.
         /// </summary>
         public static string HomeDistanceUavRttView_ToolTip {
@@ -245,6 +290,24 @@ namespace Asv.Drones.Gui.Uav {
         public static string IdentityQuickParamView_Header {
             get {
                 return ResourceManager.GetString("IdentityQuickParamView_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User send DoLand for {0}.
+        /// </summary>
+        public static string LandAnchorActionViewModel_ExecuteImpl_LogInfo {
+            get {
+                return ResourceManager.GetString("LandAnchorActionViewModel_ExecuteImpl_LogInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Immediately land.
+        /// </summary>
+        public static string LandAnchorActionViewModel_Title {
+            get {
+                return ResourceManager.GetString("LandAnchorActionViewModel_Title", resourceCulture);
             }
         }
         
@@ -321,119 +384,38 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove all pinned parameters.
+        ///   Looks up a localized string similar to {0} mission.
         /// </summary>
-        public static string ParametersEditorPageView_PinsOffButton_ToolTip {
+        public static string PlaningMissionViewModel_InternalAfterMapInit_Vehicle_Name_Subscribe {
             get {
-                return ResourceManager.GetString("ParametersEditorPageView_PinsOffButton_ToolTip", resourceCulture);
+                return ResourceManager.GetString("PlaningMissionViewModel_InternalAfterMapInit_Vehicle_Name_Subscribe", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Star this parameter.
+        ///   Looks up a localized string similar to Clear mission error {0}.
         /// </summary>
-        public static string ParametersEditorPageView_StarButton_ToolTip {
+        public static string PlaningMissionViewModel_OnClearError_LogInfo {
             get {
-                return ResourceManager.GetString("ParametersEditorPageView_StarButton_ToolTip", resourceCulture);
+                return ResourceManager.GetString("PlaningMissionViewModel_OnClearError_LogInfo", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show only starred parameters.
+        ///   Looks up a localized string similar to Download mission error {0}.
         /// </summary>
-        public static string ParametersEditorPageView_StarsToggleButton_ToolTip {
+        public static string PlaningMissionViewModel_OnDownloadError_LogInfo {
             get {
-                return ResourceManager.GetString("ParametersEditorPageView_StarsToggleButton_ToolTip", resourceCulture);
+                return ResourceManager.GetString("PlaningMissionViewModel_OnDownloadError_LogInfo", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update all parameters.
+        ///   Looks up a localized string similar to Upload mission error {0}.
         /// </summary>
-        public static string ParametersEditorPageView_UpdateButton_ToolTip {
+        public static string PlaningMissionViewModel_OnUploadError_LogInfo {
             get {
-                return ResourceManager.GetString("ParametersEditorPageView_UpdateButton_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search.
-        /// </summary>
-        public static string ParametersEditorPageViewModel_Search {
-            get {
-                return ResourceManager.GetString("ParametersEditorPageViewModel_Search", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Parameters editor [{0}].
-        /// </summary>
-        public static string ParametersEditorPageViewModel_Title {
-            get {
-                return ResourceManager.GetString("ParametersEditorPageViewModel_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Total: {0}.
-        /// </summary>
-        public static string ParametersEditorPageViewModel_Total {
-            get {
-                return ResourceManager.GetString("ParametersEditorPageViewModel_Total", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to On/off pin for this parameter.
-        /// </summary>
-        public static string ParametersEditorParameterView_PinToggleButton_ToolTip {
-            get {
-                return ResourceManager.GetString("ParametersEditorParameterView_PinToggleButton_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reboot required.
-        /// </summary>
-        public static string ParametersEditorParameterView_RebootRequired {
-            get {
-                return ResourceManager.GetString("ParametersEditorParameterView_RebootRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Update.
-        /// </summary>
-        public static string ParametersEditorParameterView_UpdateButton {
-            get {
-                return ResourceManager.GetString("ParametersEditorParameterView_UpdateButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Update this parameter from UAV.
-        /// </summary>
-        public static string ParametersEditorParameterView_UpdateButton_ToolTip {
-            get {
-                return ResourceManager.GetString("ParametersEditorParameterView_UpdateButton_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Write.
-        /// </summary>
-        public static string ParametersEditorParameterView_WriteButton {
-            get {
-                return ResourceManager.GetString("ParametersEditorParameterView_WriteButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Write this parameter to UAV.
-        /// </summary>
-        public static string ParametersEditorParameterView_WriteButton_ToolTip {
-            get {
-                return ResourceManager.GetString("ParametersEditorParameterView_WriteButton_ToolTip", resourceCulture);
+                return ResourceManager.GetString("PlaningMissionViewModel_OnUploadError_LogInfo", resourceCulture);
             }
         }
         
@@ -560,6 +542,51 @@ namespace Asv.Drones.Gui.Uav {
         public static string RoiAnchor_Vehicle_Yaw_Sample_Unit {
             get {
                 return ResourceManager.GetString("RoiAnchor_Vehicle_Yaw_Sample_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User set ROI &apos;{0}&apos; for {1}.
+        /// </summary>
+        public static string RoiAnchorActionViewModel_ExecuteImpl_LogInfo {
+            get {
+                return ResourceManager.GetString("RoiAnchorActionViewModel_ExecuteImpl_LogInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select target for region of interests (ROI).
+        /// </summary>
+        public static string RoiAnchorActionViewModel_ExecuteImpl_ShowTargetDialog_Value {
+            get {
+                return ResourceManager.GetString("RoiAnchorActionViewModel_ExecuteImpl_ShowTargetDialog_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set ROI.
+        /// </summary>
+        public static string RoiAnchorActionViewModel_Title {
+            get {
+                return ResourceManager.GetString("RoiAnchorActionViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User send Return To the Launch(RTL) for {0}.
+        /// </summary>
+        public static string RtlAnchorActionViewModel_ExecuteImpl_LogInfo {
+            get {
+                return ResourceManager.GetString("RtlAnchorActionViewModel_ExecuteImpl_LogInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return to launch (RTL).
+        /// </summary>
+        public static string RtlAnchorActionViewModel_RTL {
+            get {
+                return ResourceManager.GetString("RtlAnchorActionViewModel_RTL", resourceCulture);
             }
         }
         
@@ -897,6 +924,24 @@ namespace Asv.Drones.Gui.Uav {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User send Start mission for {0}.
+        /// </summary>
+        public static string StartAutoAnchorActionViewModel_ExecuteImpl_LogInfo {
+            get {
+                return ResourceManager.GetString("StartAutoAnchorActionViewModel_ExecuteImpl_LogInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start mission.
+        /// </summary>
+        public static string StartAutoAnchorActionViewModel_Title {
+            get {
+                return ResourceManager.GetString("StartAutoAnchorActionViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set altitude above ground level (AGL) for takeoff command..
         /// </summary>
         public static string TakeOffAnchorActionViewModel_DialogDescription {
@@ -929,6 +974,15 @@ namespace Asv.Drones.Gui.Uav {
         public static string TakeOffAnchorActionViewModel_LogMessage {
             get {
                 return ResourceManager.GetString("TakeOffAnchorActionViewModel_LogMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error to arm/disarm {0}.
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_OnCommandError {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_OnCommandError", resourceCulture);
             }
         }
         
@@ -992,6 +1046,15 @@ namespace Asv.Drones.Gui.Uav {
         public static string UavRttItem_ValueNotAvailable {
             get {
                 return ResourceManager.GetString("UavRttItem_ValueNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string VehiclesShellMenuItemProvider_ShellMenuItem_Settings {
+            get {
+                return ResourceManager.GetString("VehiclesShellMenuItemProvider_ShellMenuItem_Settings", resourceCulture);
             }
         }
         

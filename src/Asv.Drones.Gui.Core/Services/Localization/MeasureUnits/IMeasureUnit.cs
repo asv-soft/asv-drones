@@ -1,13 +1,13 @@
 ﻿#nullable enable
+using System.Globalization;
 using Asv.Common;
+using Avalonia;
+using Avalonia.Data.Converters;
 
 namespace Asv.Drones.Gui.Core
 {
-   
-
-    public interface IMeasureUnitItem<TValue, out TEnum>
+    public interface IMeasureUnitItem<TValue>
     {
-        public TEnum Id { get; }
         public string Title { get; }
         public string Unit { get; }
         public bool IsSiUnit { get; }
@@ -31,6 +31,12 @@ namespace Asv.Drones.Gui.Core
         {
             return PrintWithUnits(ConvertFromSi(value));
         }
+    }
+
+    public interface IMeasureUnitItem<TValue, out TEnum>:IMeasureUnitItem<TValue>
+    {
+        public TEnum Id { get; }
+        
     }
     
     public interface IMeasureUnit<TValue,TEnum>
@@ -91,5 +97,37 @@ namespace Asv.Drones.Gui.Core
            return null;
        }
 
+    }
+
+
+    public static class MeasureUnitConverter
+    {
+        static MeasureUnitConverter()
+        {
+            DoubleInstance = new MeasureUnitConverter<double>();
+            UlongInstance = new MeasureUnitConverter<ulong>();
+        }
+
+        public static MeasureUnitConverter<ulong> UlongInstance { get; set; }
+        public static MeasureUnitConverter<double> DoubleInstance { get; }
+    }
+    
+
+    public class MeasureUnitConverter<TValue> : IMultiValueConverter
+    {
+        
+        
+        public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
+        {
+            if (values.Count == 1)
+                return System.Convert.ChangeType(values[0], targetType, culture);
+            if (values is [_, IMeasureUnitItem<TValue> measureUnit, ..])
+            {
+                var value = (TValue)System.Convert.ChangeType(values[0], typeof(TValue), culture)!;
+                return measureUnit.Print(value);
+            }
+
+            return AvaloniaProperty.UnsetValue;
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace Asv.Drones.Gui;
 
 public partial class App : Application
 {
-    private readonly CompositionContainer _container;
+    private CompositionContainer _container;
     private readonly Stack<KeyValuePair<IPluginMetadata, IPluginEntryPoint>> _plugins = new();
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -35,16 +35,93 @@ public partial class App : Application
         LogManager.Setup().LoadConfiguration(builder =>
         {
             builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToDebug();
-            //builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToFile(fileName: "log.txt");
+            /*builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToConsole();*/
+            builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToFile(fileName: "log.txt");
         });
+    }
+    
+    private IEnumerable<Assembly> Assemblies()
+    {
+        yield return GetType().Assembly;                   // Asv.Drones.Gui 
+        yield return typeof(CorePlugin).Assembly;            // Asv.Drones.Gui.Core
+        yield return typeof(UavPlugin).Assembly;             // Asv.Drones.Gui.Uav
+        yield return typeof(GbsPlugin).Assembly;             // Asv.Drones.Gui.Gbs
+        yield return typeof(FlightSdrWidgetBase).Assembly;   // Asv.Drones.Gui.Sdr
+    }
+
+    private IEnumerable<ComposablePartCatalog> Catalogs()
+    {
+        foreach (var asm in Assemblies().Distinct().Select(assembly => new AssemblyCatalog(assembly)))
+        {
+            yield return asm;
+        }
         
-        _container = new CompositionContainer(new AggregateCatalog(Catalogs().ToArray()), CompositionOptions.IsThreadSafe);
-        // we need to export the container itself
+        /*var path = System.Environment.CurrentDirectory;
+        
+        string? dir;
+        if (string.IsNullOrWhiteSpace(path) == false)
+        {
+            if (Directory.Exists(path) == false)
+            {
+                dir = Path.GetDirectoryName(path);    
+            }
+            else
+            {
+                dir = path;
+            }
+        }
+        else
+        {
+            dir = Path.GetDirectoryName(Environment.CurrentDirectory);
+        }*/
+        var cat = new DirectoryCatalog(System.Environment.CurrentDirectory, "Asv.Drones.Gui.Plugin.*.dll");
+        cat.Refresh();
+        Logger.Trace($"Search plugin in {cat.Path}");
+        foreach (var file in cat.LoadedFiles)
+        {
+            Logger.Info($"Found plugin '{Path.GetFileName(file)}'");
+        }
+        yield return cat;
+
+    }
+    
+    private IEnumerable<ComposablePartCatalog> AndroidCatalogs()
+    {
+        foreach (var asm in Assemblies().Distinct().Select(assembly => new AssemblyCatalog(assembly)))
+        {
+            yield return asm;
+        }
+        
+        // Enable this feature to load plugins from folder
+        var dir = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/.__override__/"; //Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        var cat = new DirectoryCatalog(dir, "Asv.Drones.Gui.Plugin.*.dll");
+        cat.Refresh();
+        Logger.Trace($"Search plugin in {cat.Path}");
+        foreach (var file in cat.LoadedFiles)
+        {
+            Logger.Info($"Found plugin '{Path.GetFileName(file)}'");
+        }
+        yield return cat;
+    }
+
+    public override void Initialize()
+    {
+        AvaloniaXamlLoader.Load(this);
+        // Default logic doesn't auto detect windows theme anymore in designer
+        // to stop light mode, force here
+        if (Design.IsDesignMode)
+        {
+            RequestedThemeVariant = ThemeVariant.Dark;
+        }
+    }
+
+    private void InitContainer()
+    {
         var batch = new CompositionBatch();
         batch.AddExportedValue(_container);
         batch.AddExportedValue<IDataTemplateHost>(this);
         _container.Compose(batch);
-        
+            
         #region loading plugins entry points
 
         var plugins = _container.GetExports<IPluginEntryPoint, IPluginMetadata>().ToArray();
@@ -75,45 +152,39 @@ public partial class App : Application
 
         #endregion
     }
-    
-    private IEnumerable<Assembly> Assemblies()
-    {
-        yield return GetType().Assembly;                   // Asv.Drones.Gui 
-        yield return typeof(CorePlugin).Assembly;            // Asv.Drones.Gui.Core
-        yield return typeof(UavPlugin).Assembly;             // Asv.Drones.Gui.Uav
-        yield return typeof(GbsPlugin).Assembly;             // Asv.Drones.Gui.Gbs
-        yield return typeof(FlightSdrWidgetBase).Assembly;   // Asv.Drones.Gui.Sdr
-    }
 
-    private IEnumerable<ComposablePartCatalog> Catalogs()
+    public override void OnFrameworkInitializationCompleted()
     {
-        foreach (var asm in Assemblies().Distinct().Select(assembly => new AssemblyCatalog(assembly)))
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            yield return asm;
+            _container = new CompositionContainer(new AggregateCatalog(Catalogs().ToArray()), CompositionOptions.IsThreadSafe);
+            
+            InitContainer();
+            
+            desktop.ShutdownRequested += OnShutdownRequested;
+            var configuration = _container.GetExportedValue<IConfiguration>();
+            Debug.Assert(configuration != null, nameof(configuration) + " != null");
+            var window = new MainWindow(configuration);
+            var navigation = _container.GetExportedValue<INavigationService>();
+            navigation?.InitStorageProvider(window.StorageProvider);
+            
+            desktop.MainWindow = new MainWindow
+            {
+                DataContext = _container.GetExportedValue<IShell>()
+            };
+        }
+        else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
+        {
+            _container = new CompositionContainer(new AggregateCatalog(AndroidCatalogs().ToArray()), CompositionOptions.IsThreadSafe);
+            
+            InitContainer();
+
+            singleViewPlatform.MainView = new ShellView
+            {
+                DataContext = _container.GetExportedValue<IShell>()
+            };
         }
         
-        // Enable this feature to load plugins from folder
-        var dir = Path.GetFullPath("./"); //Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        var cat = new DirectoryCatalog(dir, "Asv.Drones.Gui.Plugin.*.dll");
-        cat.Refresh();
-        Logger.Trace($"Search plugin in {cat.Path}");
-        foreach (var file in cat.LoadedFiles)
-        {
-            Logger.Info($"Found plugin '{Path.GetFileName(file)}'");
-        }
-        yield return cat;
-
-    }
-
-    public override void Initialize()
-    {
-        AvaloniaXamlLoader.Load(this);
-        // Default logic doesn't auto detect windows theme anymore in designer
-        // to stop light mode, force here
-        if (Design.IsDesignMode)
-        {
-            RequestedThemeVariant = ThemeVariant.Dark;
-        }
         foreach (var plugin in _plugins)
         {
             try
@@ -129,32 +200,6 @@ public partial class App : Application
                     Debugger.Break();
                 }
             }
-        }
-    }
-
-    public override void OnFrameworkInitializationCompleted()
-    {
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-        {
-            desktop.ShutdownRequested += OnShutdownRequested;
-            var configuration = _container.GetExportedValue<IConfiguration>();
-            Debug.Assert(configuration != null, nameof(configuration) + " != null");
-            var window = new MainWindow(configuration);
-            var navigation = _container.GetExportedValue<INavigationService>();
-            navigation?.InitStorageProvider(window.StorageProvider);
-            desktop.MainWindow = new MainWindow
-            {
-                DataContext = _container.GetExportedValue<IShell>()
-            };
-            
-        }
-        else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
-        {
-           
-            singleViewPlatform.MainView = new ShellView
-            {
-                DataContext = _container.GetExportedValue<IShell>()
-            };
         }
 
         base.OnFrameworkInitializationCompleted();

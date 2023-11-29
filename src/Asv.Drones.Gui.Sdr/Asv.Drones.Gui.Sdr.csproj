@@ -45,6 +45,7 @@
           <DependentUpon>SdrStoreBrowserView.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
+        <Compile Remove="Shell\Pages\Calibration\CalibrationView.axaml.cs" />
     </ItemGroup>
 
     <ItemGroup>

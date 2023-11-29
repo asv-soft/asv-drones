@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Asv.Common;
+﻿using Asv.Common;
 using System.Globalization;
 
 namespace Asv.Drones.Gui.Core
@@ -86,7 +85,8 @@ namespace Asv.Drones.Gui.Core
         IMeasureUnit<double, BearingUnits> Bearing { get; }
         IMeasureUnit<double, TemperatureUnits> Temperature { get; }
         IMeasureUnit<double, DegreeUnits> Degree { get; }
-        
+        IMeasureUnit<double, FieldStrengthUnits> FieldStrength { get; }
+
         #endregion
 
         public GeoPoint ToSiGeoPoint(string? latitude, string? longitude, string? altitude)
@@ -97,6 +97,8 @@ namespace Asv.Drones.Gui.Core
             return new GeoPoint(lat,lon,alt);
         }
     }
+    
+    
     
     
 

@@ -5,7 +5,7 @@
              xmlns:sdr="clr-namespace:Asv.Drones.Gui.Sdr"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              mc:Ignorable="d"
-             Height="350"
+             Height="450"
              Width="450"
              MinWidth="450"
              MaxWidth="450"
@@ -16,9 +16,21 @@
     </Design.DataContext>
     
     <DockPanel>
-        <StackPanel DockPanel.Dock="Top" Margin="8" Spacing="8">
-            <TextBlock Text="{x:Static sdr:RS.RecordStartView_RecordName_Title}" FontSize="20"/>
+        <StackPanel DockPanel.Dock="Top" Margin="0 8" Spacing="8">
+            <TextBlock Text="{x:Static sdr:RS.RecordStartView_RecordName_Title}" FontSize="15"/>
             <TextBox Watermark="{x:Static sdr:RS.RecordStartView_RecordName_Watermark}" Text="{Binding RecordName}"/>
+            <Grid ColumnDefinitions="*, 8, *">
+                <StackPanel Grid.Column="0" Spacing="8">
+                    <TextBlock Text="{x:Static sdr:RS.RecordStartView_RecordKit_Title}" FontSize="15"/>
+                    <ComboBox HorizontalAlignment="Stretch" ItemsSource="{CompiledBinding Kits}"
+                              SelectedItem="{CompiledBinding SelectedKit}"/>    
+                </StackPanel>
+                <StackPanel Grid.Column="2" Spacing="8">
+                    <TextBlock Text="{x:Static sdr:RS.RecordStartView_RecordMission_Title}" FontSize="15"/>
+                    <ComboBox HorizontalAlignment="Stretch" ItemsSource="{CompiledBinding Missions}" 
+                              SelectedItem="{CompiledBinding SelectedMission}"/>    
+                </StackPanel>
+            </Grid>
         </StackPanel>
         <Expander Header="{x:Static sdr:RS.RecordStartView_RecordTags_Title}" FontSize="15">
             <ScrollViewer>

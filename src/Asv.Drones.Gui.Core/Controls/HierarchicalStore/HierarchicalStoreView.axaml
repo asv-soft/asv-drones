@@ -64,13 +64,13 @@
                             <avalonia:MaterialIcon Kind="Refresh" Foreground="{StaticResource FileBrush}" />
                         </Button>
                         <Border DockPanel.Dock="Top">
-                            <TextBox Watermark="Search" Text="{Binding SearchText}"/>    
+                            <TextBox Watermark="{x:Static core:RS.HierarhicalStoreView_Search_Textbox_Watermark }" Text="{Binding SearchText}"/>    
                         </Border>
                     </DockPanel>
                     <TreeView SelectionMode="Toggle" Margin="0,8,0,8" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                         <TreeView.ItemTemplate>
                             <TreeDataTemplate ItemsSource="{Binding Items}">
-                                <DockPanel HorizontalAlignment="Stretch">
+                                <DockPanel HorizontalAlignment="Stretch" LastChildFill="False">
                                     <avalonia:MaterialIcon
                                         Margin="0,0,8,0"
                                         Classes.folder="{Binding IsFolder}"
@@ -79,7 +79,7 @@
                                         Classes.selected="{Binding IsSelected}"
                                         Width="15" Height="15"/>
                                     <TextBlock MinWidth="120" Text="{Binding Name}"/>
-                                    <TextBlock Foreground="Gray" Text="{Binding Description}"/>
+                                    <TextBlock DockPanel.Dock="Right" Foreground="Gray" Text="{Binding Description}"/>
                                 </DockPanel>
                             </TreeDataTemplate>
                         </TreeView.ItemTemplate>
@@ -198,18 +198,18 @@
                 BorderThickness="1"
                 CornerRadius="{StaticResource ControlCornerRadius}">
             <DockPanel>
-                <TextBlock DockPanel.Dock="Top" Text="Move folder"> </TextBlock>
+                <TextBlock DockPanel.Dock="Top" Text="{x:Static core:RS.HierarchicalStoreView_TextBlock_Text_MoveFolder}"> </TextBlock>
                 <Grid ColumnDefinitions="*,8,*" DockPanel.Dock="Bottom" >
                     <Button HorizontalAlignment="Stretch" DockPanel.Dock="Bottom" Command="{Binding SelectedItem.EndMove, FallbackValue=x:Null }">
                         <StackPanel  Spacing="8" Orientation="Horizontal">
                             <avalonia:MaterialIcon Kind="MoveToInbox"/>
-                            <TextBlock Text="Move here"/>
+                            <TextBlock Text="{x:Static core:RS.HierarchicalStoreView_TextBlock_Text_MoveHere}"/>
                         </StackPanel>
                     </Button>
                     <Button Grid.Column="2" HorizontalAlignment="Stretch" Command="{Binding SelectedItem.CancelMove, FallbackValue=x:Null }">
                         <StackPanel Spacing="8" Orientation="Horizontal">
                             <avalonia:MaterialIcon Kind="Cancel"/>
-                            <TextBlock Text="Cancel"/>
+                            <TextBlock Text="{x:Static core:RS.HierarchicalStoreView_TextBlock_Text_Cancel}"/>
                         </StackPanel>
                     </Button>
                 </Grid>

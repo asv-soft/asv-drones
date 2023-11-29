@@ -1,6 +1,5 @@
 ﻿using System.Collections.Immutable;
 using System.ComponentModel.Composition;
-using System.Reactive;
 using System.Reactive.Subjects;
 using Asv.Cfg;
 using Asv.Common;
@@ -43,6 +42,7 @@ namespace Asv.Drones.Gui.Core
         
         private string GetSourceName(string rootSource)
         {
+            return rootSource;
             return $"{_hostName}.{rootSource}";
         }
 

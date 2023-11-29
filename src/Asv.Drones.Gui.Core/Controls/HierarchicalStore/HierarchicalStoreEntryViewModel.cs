@@ -4,7 +4,6 @@ using Asv.Common;
 using Asv.Mavlink;
 using DynamicData;
 using DynamicData.Binding;
-using DynamicData.PLinq;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 

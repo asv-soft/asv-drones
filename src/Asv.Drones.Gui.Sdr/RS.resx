@@ -147,9 +147,6 @@
     <data name="FlightSdrViewModel_Frequency_Validation_ErrorMessage" xml:space="preserve">
         <value>Value must be greater than 0</value>
     </data>
-    <data name="FlightSdrViewModel_Title" xml:space="preserve">
-        <value>Payload</value>
-    </data>
     <data name="FlightSdrViewModel_UpdateMode_Error_Sender" xml:space="preserve">
         <value>Set mode</value>
     </data>
@@ -245,5 +242,89 @@
     </data>
     <data name="RecordStartView_RecordTags_Title" xml:space="preserve">
         <value>Record tags (optional)</value>
+    </data>
+    <data name="SdrPayloadBrowserView_Sort_Title" xml:space="preserve">
+        <value>Sort by:</value>
+    </data>
+    <data name="SdrPayloadBrowserView_Sort_By_Name" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="SdrPayloadBrowserView_Sort_By_Date" xml:space="preserve">
+        <value>Date</value>
+    </data>
+    <data name="SdrSettingsViewModel_Header" xml:space="preserve">
+        <value>SDR settings</value>
+    </data>
+    <data name="SdrSettingsViewModel_Description" xml:space="preserve">
+        <value>In this section, you can configure various SDR parameters.</value>
+    </data>
+    <data name="SdrSettingsViewModel_DefaultFreqs_Title" xml:space="preserve">
+        <value>Default frequencies</value>
+    </data>
+    <data name="SdrSettingsViewModel_VorFreq_Description" xml:space="preserve">
+        <value>In this section you can configure the default VOR frequency.</value>
+    </data>
+    <data name="SdrSettingsViewModel_VorFreq_Header" xml:space="preserve">
+        <value>VOR frequency</value>
+    </data>
+    <data name="SdrSettingsViewModel_LLzFreq_Description" xml:space="preserve">
+        <value>In this section you can configure the default LLZ frequency.</value>
+    </data>
+    <data name="SdrSettingsViewModel_LlzFreq_Header" xml:space="preserve">
+        <value>LLZ frequency</value>
+    </data>
+    <data name="SdrSettingsViewModel_GpFreq_Description" xml:space="preserve">
+        <value>In this section you can configure the default GP frequency.</value>
+    </data>
+    <data name="SdrSettingsViewModel_GpFreq_Header" xml:space="preserve">
+        <value>GP frequency</value>
+    </data>
+    <data name="SdrSettingsViewModel_DataThinning_Description" xml:space="preserve">
+        <value>In this section you can configure the default data thinning frequency.</value>
+    </data>
+    <data name="SdrSettingsViewModel_DataThinning_Header" xml:space="preserve">
+        <value>Data thinning</value>
+    </data>
+    <data name="SdrSettingsViewModel_FileWriteFreq_Description" xml:space="preserve">
+        <value>In this section you can configure the default frequency of writing to file.</value>
+    </data>
+    <data name="SdrSettingsViewModel_FileWriteFreq_Header" xml:space="preserve">
+        <value>Frequency of writing to file</value>
+    </data>
+    <data name="SdrSettingsViewModel_DefaultChannels_Title" xml:space="preserve">
+        <value>Default channels</value>
+    </data>
+    <data name="SdrSettingsViewModel_LlzChannel_Header" xml:space="preserve">
+        <value>LLZ channel</value>
+    </data>
+    <data name="SdrSettingsViewModel_LLzChannel_Description" xml:space="preserve">
+        <value>In this section you can configure the default LLZ channel.</value>
+    </data>
+    <data name="SdrSettingsViewModel_VorChannel_Description" xml:space="preserve">
+        <value>In this section you can configure the default VOR channel.</value>
+    </data>
+    <data name="SdrSettingsViewModel_VorChannel_Header" xml:space="preserve">
+        <value>VOR channel</value>
+    </data>
+    <data name="RecordStartView_RecordKit_Title" xml:space="preserve">
+        <value>Kit type (required)</value>
+    </data>
+    <data name="RecordStartView_RecordMission_Title" xml:space="preserve">
+        <value>Mission type (required)</value>
+    </data>
+    <data name="SdrStorePageViewModel_Title_SDR_Records" xml:space="preserve">
+        <value>SDR Records</value>
+    </data>
+    <data name="SdrStoreShellMenuItem_Name" xml:space="preserve">
+        <value>SDR store</value>
+    </data>
+    <data name="FlightSdrView_StartMission_Title" xml:space="preserve">
+        <value>Start mission</value>
+    </data>
+    <data name="FlightSdrView_StopMission_Title" xml:space="preserve">
+        <value>Stop mission</value>
+    </data>
+    <data name="FlightSdrView_SetMode_Title" xml:space="preserve">
+        <value>Set mode</value>
     </data>
 </root>

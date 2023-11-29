@@ -12,17 +12,25 @@
     <Design.DataContext>
         <sdr:FlightSdrViewModel/>
     </Design.DataContext>
+    <UserControl.Styles>
+        <Style Selector="ProgressBar#OverflowProgressBar.overflow">
+            <Setter Property="Foreground" Value="Red"/>
+        </Style>
+        <Style Selector="ProgressBar#OverflowProgressBar">
+            <Setter Property="Foreground" Value="Green"/>
+        </Style>
+    </UserControl.Styles>
     <Border Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8" CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True">
         <StackPanel Margin="10" Spacing="8">
             <DockPanel DockPanel.Dock="Top">
-                <Grid DockPanel.Dock="Right" IsVisible="{Binding IsRecordVisible}">
+                <Panel DockPanel.Dock="Right" IsVisible="{Binding IsRecordVisible}">
                     <Button IsVisible="{Binding IsRecordStarted}" Command="{Binding StopRecord}" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
                         <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="RecordRec" Foreground="DarkRed"  Width="25" Height="25" />
                     </Button>
                     <Button IsVisible="{Binding !IsRecordStarted}" Command="{Binding StartRecord}" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
                         <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="RecordRec" Foreground="Gray"  Width="25" Height="25" />
                     </Button>
-                </Grid>
+                </Panel>
                 
                 <DropDownButton DockPanel.Dock="Left" Padding="3" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" >
                     <StackPanel Orientation="Horizontal">
@@ -63,25 +71,73 @@
                    </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <Grid IsVisible="{Binding !IsIdleMode}">
-                <DockPanel>
-                    <DropDownButton VerticalAlignment="Top" IsVisible="{CompiledBinding !IsGpMode}" Margin="8 0 0 0" DockPanel.Dock="Right">
-                        <avalonia:MaterialIcon Kind="Table"/>
-                        <DropDownButton.Flyout>
-                            <Flyout>
-                                <AutoCompleteBox Width="250" ItemsSource="{Binding Channels}" 
-                                                 Text="{Binding Channel}"/>
-                            </Flyout>
-                        </DropDownButton.Flyout>
-                    </DropDownButton>
-                    <TextBox Text="{Binding FrequencyInMhz}">
-                        <TextBox.InnerRightContent>
-                            <TextBlock Margin="8 0" Text="{Binding FrequencyUnits}" VerticalAlignment="Center" />
-                        </TextBox.InnerRightContent>
-                    </TextBox>
-                </DockPanel>
+            <Grid IsVisible="{Binding !IsIdleMode}" ColumnDefinitions="*,8,Auto,0,Auto">
+                <TextBox Grid.Column="0" Text="{Binding FrequencyInMhz}">
+                    <TextBox.InnerRightContent>
+                        <TextBlock Margin="8 0" Text="{Binding FrequencyUnits}" VerticalAlignment="Center" />
+                    </TextBox.InnerRightContent>
+                </TextBox>
+                <DropDownButton Grid.Column="2" VerticalAlignment="Top" IsVisible="{CompiledBinding !IsGpMode}" Margin="0,0,8,0">
+                    <avalonia:MaterialIcon Kind="Table"/>
+                    <DropDownButton.Flyout>
+                        <Flyout>
+                            <AutoCompleteBox Width="250" ItemsSource="{Binding Channels}" 
+                                             Text="{Binding Channel}"/>
+                        </Flyout>
+                    </DropDownButton.Flyout>
+                </DropDownButton>
+            
+                <Panel MinWidth="150" Grid.Column="4">
+                    <ComboBox  HorizontalAlignment="Stretch" SelectedItem="{Binding RefPowerSelectedItem}" ItemsSource="{Binding ReferencePowerItems}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="sdr:ReferencePowerItem">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <avalonia:MaterialIcon Kind="{Binding Icon, Mode=OneWay}" Width="16" Height="16"/>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>    
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ProgressBar x:Name="OverflowProgressBar" Margin="5,0"  VerticalAlignment="Bottom" Minimum="0" Maximum="1" Value="{Binding SignalOverflowValue}"
+                                 Classes.overflow="{Binding IsSignalOverflow}" >
+                       
+                    </ProgressBar>
+                </Panel>
+                
             </Grid>
-            <Button Command="{Binding UpdateMode}" HorizontalAlignment="Stretch">Set</Button>
+            
+            <Button Command="{Binding UpdateMode}" HorizontalAlignment="Stretch">
+                <StackPanel Spacing="8" Orientation="Horizontal">
+                    <avalonia:MaterialIcon Kind="Check"/>
+                    <TextBlock Text="{x:Static sdr:RS.FlightSdrView_StartMission_Title}"/>
+                </StackPanel>
+                
+            </Button>
+            <StackPanel Spacing="3">
+                <Button HorizontalAlignment="Stretch" IsVisible="{Binding !IsMissionStarted}" Command="{Binding StartMission}">
+                    <StackPanel Spacing="8" Orientation="Horizontal">
+                        <avalonia:MaterialIcon Kind="RayStartArrow"/>
+                        <TextBlock Text="{x:Static sdr:RS.FlightSdrView_StartMission_Title}"/>
+                    </StackPanel>
+                </Button>
+                <Button HorizontalAlignment="Stretch" IsVisible="{Binding IsMissionStarted}" Command="{Binding StopMission}">
+                    <StackPanel Spacing="8" Orientation="Horizontal">
+                        <avalonia:MaterialIcon Kind="RayStartArrow"/>
+                        <TextBlock Text="{x:Static sdr:RS.FlightSdrView_StopMission_Title}"/>
+                    </StackPanel>
+                </Button>
+                <TextBlock Text="{Binding MissionStatusText}"/>
+                <ProgressBar IsVisible="{Binding IsMissionStarted}" IsIndeterminate="True" />   
+            </StackPanel>
+            <!--<Grid ColumnDefinitions="*,8,Auto">
+                
+                <Button Grid.Column="2" IsVisible="{Binding !UpdateMission.IsExecuting}"  Command="{Binding UpdateMission.Command}">
+                    <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="Sync" Width="20" Height="20" Foreground="#40b5e0" />
+                </Button>
+                <Button Grid.Column="2" IsVisible="{Binding UpdateMission.IsExecuting}" Command="{Binding UpdateMission.Cancel}">
+                    <avalonia:MaterialIcon DockPanel.Dock="Left" Kind="Cancel" Width="20" Height="20" />
+                </Button>
+            </Grid>-->
             <ItemsControl ItemsSource="{Binding RttWidgets}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

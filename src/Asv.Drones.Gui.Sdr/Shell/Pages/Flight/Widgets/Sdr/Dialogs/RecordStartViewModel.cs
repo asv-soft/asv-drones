@@ -3,12 +3,14 @@ using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
+using Asv.Mavlink.V2.AsvSdr;
 using Avalonia.Controls;
 using DocumentFormat.OpenXml.Presentation;
 using FluentAvalonia.UI.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
+using AsvSdrHelper = Asv.Mavlink.AsvSdrHelper;
 
 namespace Asv.Drones.Gui.Sdr;
 
@@ -16,8 +18,9 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
 {
     public const string UriString = FlightSdrViewModel.UriString + ".dialogs.startrecord";
     public static readonly Uri Uri = new(UriString);
-    
-    public RecordStartViewModel() : base(Uri)
+    private readonly AsvSdrCustomMode _selectedMode;
+
+    public RecordStartViewModel(ISdrClientDevice payload) : base(Uri)
     {
         if (Design.IsDesignMode)
         {
@@ -25,7 +28,9 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
             doubleTag.Remove = ReactiveCommand.Create(() => { Tags.Remove(doubleTag); });
             Tags.Add(doubleTag);
         }
-
+        
+        _selectedMode = payload.Sdr.CustomMode.Value;
+        
         AddTag = ReactiveCommand.Create(() =>
         {
             if (TagName.IsNullOrWhiteSpace() | TagValue.IsNullOrWhiteSpace() | RecordName.IsNullOrWhiteSpace() | 
@@ -61,6 +66,8 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
         }, this.IsValid());
         
         SelectedType = Types.First();
+        SelectedKit = Kits.First();
+        SelectedMission = Missions.First();
         
         this.ValidationRule(x => x.TagName, _ =>
             {
@@ -159,6 +166,24 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
     
     public ICommand AddTag { get; }
 
+    [Reactive]
+    public IEnumerable<int> Kits { get; set; } = Enumerable.Range(1, 16);
+
+    [Reactive] 
+    public int SelectedKit { get; set; }
+    
+    public string[] Missions => _selectedMode switch
+    {
+        AsvSdrCustomMode.AsvSdrCustomModeGp => new [] {"Zero", "Cross", "Upper", "Lower"},
+        AsvSdrCustomMode.AsvSdrCustomModeLlz => new [] {"Zero", "Cross", "Left", "Right"},
+        AsvSdrCustomMode.AsvSdrCustomModeVor => new [] {"Bearing", "Radial"},
+        AsvSdrCustomMode.AsvSdrCustomModeIdle => Array.Empty<string>(),
+        _ => Array.Empty<string>()
+    };
+    
+    [Reactive]
+    public string SelectedMission { get; set; }
+    
     public string[] Types => new[]
     {
         "String8",
@@ -179,5 +204,6 @@ public class RecordStartViewModel : ViewModelBaseWithValidation
     [Reactive]
     public string TagValue { get; set; }
 
-    [Reactive] public ObservableCollection<TagViewModel> Tags { get; set; } = new ObservableCollection<TagViewModel>();
+    [Reactive] 
+    public ObservableCollection<TagViewModel> Tags { get; set; } = new();
 }
