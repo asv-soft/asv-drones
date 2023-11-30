@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}" #ДАЙТЕ ТОКЕН!!!!!!!!!!!!!!!!!!!!
+          repo_token: "${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}" 
           prerelease: false
           files: |
             *Setup.exe
