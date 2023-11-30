@@ -63,7 +63,7 @@ public class CorePlugin: IPluginEntryPoint
     private IAppInfo GetAppInfo()
     {
         var assm = _applicationDataTemplateHost.GetType().Assembly.GetName(); // hack - to get application assembly
-        var version = assm.Version?.ToString() ?? "0.0.0";
+        var version = assm.Version != null ? $"{assm.Version.Major}.{assm.Version.Minor}.{assm.Version.Build}" : "0.0.0";
         var name = assm.Name ?? "Asv.Drones";
         const string author = "https://asv.me/";
         const string appUrl = "https://docs.asv.me/";

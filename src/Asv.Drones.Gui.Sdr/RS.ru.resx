@@ -320,4 +320,7 @@
     <data name="FlightSdrView_SetMode_Title" xml:space="preserve">
         <value>Установить режим</value>
     </data>
+    <data name="FlightSdrView_UpdateMode_Title" xml:space="preserve">
+        <value>Обновить режим</value>
+    </data>
 </root>

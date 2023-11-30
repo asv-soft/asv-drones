@@ -109,9 +109,8 @@
             <Button Command="{Binding UpdateMode}" HorizontalAlignment="Stretch">
                 <StackPanel Spacing="8" Orientation="Horizontal">
                     <avalonia:MaterialIcon Kind="Check"/>
-                    <TextBlock Text="{x:Static sdr:RS.FlightSdrView_StartMission_Title}"/>
+                    <TextBlock Text="{x:Static sdr:RS.FlightSdrView_UpdateMode_Title}"/>
                 </StackPanel>
-                
             </Button>
             <StackPanel Spacing="3">
                 <Button HorizontalAlignment="Stretch" IsVisible="{Binding !IsMissionStarted}" Command="{Binding StartMission}">
