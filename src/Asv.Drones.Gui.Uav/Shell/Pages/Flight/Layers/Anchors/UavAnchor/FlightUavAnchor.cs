@@ -34,7 +34,17 @@ namespace Asv.Drones.Gui.Uav
             IsVisible = true;
             Icon = MavlinkHelper.GetIcon(vehicle.Class);
             vehicle.Position.Current.Subscribe(_ => Location = _).DisposeItWith(Disposable);
-            vehicle.Position.Yaw.Select(_ => Math.Round(_, 0)).DistinctUntilChanged().Subscribe(_ => RotateAngle = _).DisposeItWith(Disposable);
+            vehicle.Position.Yaw.Select(_ => Math.Round(_, 0)).DistinctUntilChanged().Subscribe(v =>
+            {
+                if (vehicle.Class == DeviceClass.Plane)
+                {
+                    RotateAngle = v - 45;
+                }
+                else
+                {
+                    RotateAngle = v;
+                }
+            }).DisposeItWith(Disposable);
             Title = vehicle.Name.Value;
             vehicle.Name.Subscribe(_ => Title = _).DisposeItWith(Disposable);
             vehicle.Position.Current.Subscribe(_ => UpdateDescription()).DisposeItWith(Disposable);
