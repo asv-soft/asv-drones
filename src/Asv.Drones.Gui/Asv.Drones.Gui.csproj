@@ -5,10 +5,11 @@
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-        <AssemblyVersion>$(ProductStrongVersion)</AssemblyVersion>
-        <FileVersion>$(ProductExtendedVersion)</FileVersion>
+        <AssemblyVersion>$(ProductVersion)</AssemblyVersion>
+        <FileVersion>$(ProductVersion)</FileVersion>
         <Configurations>Debug;Release</Configurations>
         <Platforms>AnyCPU</Platforms>
+        <Version>$(ProductVersion)</Version>
     </PropertyGroup>
 
     <ItemGroup>
