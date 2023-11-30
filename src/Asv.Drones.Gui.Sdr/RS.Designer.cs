@@ -105,6 +105,15 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update mode.
+        /// </summary>
+        public static string FlightSdrView_UpdateMode_Title {
+            get {
+                return ResourceManager.GetString("FlightSdrView_UpdateMode_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value must be greater than 0.
         /// </summary>
         public static string FlightSdrViewModel_Frequency_Validation_ErrorMessage {
