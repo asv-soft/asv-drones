@@ -19,10 +19,8 @@
                 <TextBlock Text="{CompiledBinding Map.SelectedItem.Title}"/>
             </StackPanel>
             <Grid ColumnDefinitions="*, 15, 3*">
-                
                 <TextBlock Text="{x:Static core:RS.AnchorsEditorView_TextBlock_Latitude_Text}" TextWrapping="NoWrap" Grid.Column="0"/>
-                <TextBox  Grid.Column="2"
-                         IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
+                <TextBox Grid.Column="2" IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
                     <Interaction.Behaviors>
                         <core:LostFocusUpdateBindingBehavior Text="{CompiledBinding Latitude}"/>
                     </Interaction.Behaviors>
@@ -33,8 +31,7 @@
             </Grid>
             <Grid ColumnDefinitions="*, 15, 3*">
                 <TextBlock Text="{x:Static core:RS.AnchorsEditorView_TextBlock_Longitude_Text}" Grid.Column="0"/>
-                <TextBox  Grid.Column="2" 
-                         IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
+                <TextBox Grid.Column="2" IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
                     <Interaction.Behaviors>
                         <core:LostFocusUpdateBindingBehavior Text="{CompiledBinding Longitude}"/>
                     </Interaction.Behaviors>
@@ -45,8 +42,10 @@
             </Grid>
             <Grid ColumnDefinitions="*, 15, 3*">
                 <TextBlock Text="{x:Static core:RS.AnchorsEditorView_TextBlock_Altitude_Text}" Grid.Column="0"/>
-                <TextBox Text="{CompiledBinding Altitude}" Grid.Column="2"
-                         IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
+                <TextBox Grid.Column="2" IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
+                    <Interaction.Behaviors>
+                        <core:LostFocusUpdateBindingBehavior Text="{CompiledBinding Altitude}"/>
+                    </Interaction.Behaviors>
                     <TextBox.InnerRightContent>
                         <TextBlock Text="{CompiledBinding AltitudeUnits}" VerticalAlignment="Center" Margin="8 4"/>
                     </TextBox.InnerRightContent>
