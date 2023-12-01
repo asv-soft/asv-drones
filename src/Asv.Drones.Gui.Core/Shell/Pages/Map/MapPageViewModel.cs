@@ -203,21 +203,39 @@ namespace Asv.Drones.Gui.Core
         [Reactive]
         public string DialogText { get; set; }
 
-        
+
 
         public async Task<GeoPoint> ShowTargetDialog(string text, CancellationToken cancel)
         {
-            DialogText = text;
-            IsInDialogMode = true;
-            var tcs = new TaskCompletionSource();
-            await using var c1 = cancel.Register(() => tcs.TrySetCanceled());
-            this.WhenAnyValue(_ => _.IsInDialogMode).Where(_ => IsInDialogMode == false).Subscribe(_ =>
+            try
             {
-                tcs.TrySetResult();
-                SelectedItem = null;
-            }, cancel);
-            await tcs.Task;
-            return DialogTarget;
+                DialogText = text;
+
+                if (cancel.IsCancellationRequested)
+                {
+                    //TODO: Localize
+                    DialogText = "Canceled";
+
+                    return DialogTarget;
+                }
+
+                IsInDialogMode = true;
+                var tcs = new TaskCompletionSource();
+                await using var c1 = cancel.Register(() => tcs.TrySetCanceled());
+                this.WhenAnyValue(_ => _.IsInDialogMode).Where(_ => IsInDialogMode == false).Subscribe(_ =>
+                {
+                    tcs.TrySetResult();
+                    SelectedItem = null;
+                }, cancel);
+                await tcs.Task;
+                return DialogTarget;
+            }
+            catch (TaskCanceledException ex)
+            {
+                DialogText = "Canceled";
+
+                return DialogTarget;
+            }
         }
 
         #endregion
