@@ -19,13 +19,6 @@ public class MapRulerActionViewModel:MapActionBase
             .Subscribe(SetUpRuler)
             .DisposeItWith(Disposable);
     }
-
-    protected override void InternalWhenMapLoaded(IMap context)
-    {
-       // base.InternalWhenMapLoaded(context);
-      //  SetUpRuler(false);
-    }
-    
     private async void SetUpRuler(bool isEnabled)
     {
         if (Map == null) return;
@@ -52,10 +45,7 @@ public class MapRulerActionViewModel:MapActionBase
         }
         polygon.Ruler.Value.IsVisible.OnNext(isEnabled);
     }
-
     private static CancellationTokenSource _tokenSource = new CancellationTokenSource();
-    
     [Reactive] 
-   
     public bool IsRulerEnabled { get; set; }
 }
