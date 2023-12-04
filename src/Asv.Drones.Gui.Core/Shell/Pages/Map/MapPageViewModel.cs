@@ -225,11 +225,7 @@ namespace Asv.Drones.Gui.Core
             }, cancel);
             await tcs.Task;
             return DialogTarget;
-        
         }
-           
-
         }
-
         #endregion
 }
