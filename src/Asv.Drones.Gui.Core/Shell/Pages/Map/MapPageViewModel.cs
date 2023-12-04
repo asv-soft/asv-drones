@@ -207,6 +207,8 @@ namespace Asv.Drones.Gui.Core
 
         public async Task<GeoPoint> ShowTargetDialog(string text, CancellationToken cancel)
         {
+            try
+            {
                 DialogText = text;
                 IsInDialogMode = true;
                 var tcs = new TaskCompletionSource();
@@ -218,6 +220,13 @@ namespace Asv.Drones.Gui.Core
                 }, cancel);
                 await tcs.Task;
                 return DialogTarget;
+            }
+            catch (TaskCanceledException)
+            {
+                DialogText = "Canceled";
+                return DialogTarget;
+            }
+
         }
 
         #endregion

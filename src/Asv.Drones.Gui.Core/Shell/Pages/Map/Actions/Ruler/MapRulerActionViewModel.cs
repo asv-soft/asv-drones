@@ -16,7 +16,7 @@ public class MapRulerActionViewModel:MapActionBase
     [ImportingConstructor]
     public MapRulerActionViewModel( ILogService log) : base("asv:shell.page.map.action.ruler")
     {
-        
+       
         this.WhenValueChanged(_ => _.IsRulerEnabled)
             .Subscribe(SetUpRuler)
             .DisposeItWith(Disposable);
@@ -46,20 +46,20 @@ public class MapRulerActionViewModel:MapActionBase
         
         if(isEnabled)
         {
-            _tokenSource = new CancellationTokenSource();
-            _token = _tokenSource.Token;
-            var start = await Map.ShowTargetDialog(RS.MapPageViewModel_RulerStartPoint_Description, _token);
-            
-            var stop = await Map.ShowTargetDialog(RS.MapPageViewModel_RulerStopPoint_Description, _token);
-            
-            polygon.Ruler.Value.Start.OnNext(start);
-            polygon.Ruler.Value.Stop.OnNext(stop);
+                _tokenSource = new CancellationTokenSource();
+                _token = _tokenSource.Token;
+                var start = await Map.ShowTargetDialog(RS.MapPageViewModel_RulerStartPoint_Description, _token);
+                if (_tokenSource.IsCancellationRequested) return;
+                var stop = await Map.ShowTargetDialog(RS.MapPageViewModel_RulerStopPoint_Description, _token);
+                if (_tokenSource.IsCancellationRequested) return;
+                polygon.Ruler.Value.Start.OnNext(start);
+                polygon.Ruler.Value.Stop.OnNext(stop);
         }
         polygon.Ruler.Value.IsVisible.OnNext(isEnabled);
     }
 
-    public static CancellationTokenSource _tokenSource = new CancellationTokenSource();
-    private CancellationToken _token = _tokenSource.Token;
+    private static CancellationTokenSource _tokenSource;
+    private CancellationToken _token;
 
     [Reactive] 
    
