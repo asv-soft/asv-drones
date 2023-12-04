@@ -170,7 +170,7 @@
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Border Padding="2" Width="{Binding Width}">
+                                        <Border Padding="2">
                                             <Border HorizontalAlignment="Stretch" Background="{Binding Color}" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
                                                 <Grid ColumnDefinitions="18,*,18" Margin="3" HorizontalAlignment="Stretch" >
                                                     <avalonia:MaterialIcon  VerticalAlignment="Center" Foreground="White" Kind="TagOutline" Width="15" Height="15" />
@@ -179,7 +179,6 @@
                                                         <avalonia:MaterialIcon Kind="Close" Width="14" Height="14"/>
                                                     </Button>
                                                 </Grid>
-                                                
                                             </Border>    
                                         </Border>
                                     </DataTemplate>
