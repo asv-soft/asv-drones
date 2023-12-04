@@ -33,7 +33,6 @@
         <Generator>PublicResXFileCodeGenerator</Generator>
         <LastGenOutput>RS.Designer.cs</LastGenOutput>
       </EmbeddedResource>
-      <EmbeddedResource Remove="Shell\Pages\Map\Actions\Cancel\**" />
     </ItemGroup>
 
     <ItemGroup>
