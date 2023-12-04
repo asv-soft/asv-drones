@@ -33,6 +33,7 @@
         <Generator>PublicResXFileCodeGenerator</Generator>
         <LastGenOutput>RS.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+      <EmbeddedResource Remove="Shell\Pages\Map\Actions\Cancel\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -61,6 +62,7 @@
         <DependentUpon>ParamPageView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Remove="Shell\Pages\Map\Actions\Cancel\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -71,6 +73,7 @@
     <ItemGroup>
       <AdditionalFiles Include="Shell\Status\FileStorage\ShellStatusFileStorageView.axaml" />
       <AdditionalFiles Include="Shell\Status\MapCache\ShellStatusMapCacheView.axaml" />
+      <AdditionalFiles Remove="Shell\Pages\Map\Actions\Cancel\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -84,6 +87,12 @@
       <AvaloniaResource Include="Assets\icon.ico" />
       <None Remove="Assets\program-logo.png" />
       <AvaloniaResource Include="Assets\program-logo.png" />
+      <AvaloniaResource Remove="Shell\Pages\Map\Actions\Cancel\**" />
+      <None Remove="Shell\Pages\Map\Actions\Cancel\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AvaloniaXaml Remove="Shell\Pages\Map\Actions\Cancel\**" />
     </ItemGroup>
 
 </Project>

@@ -12,7 +12,7 @@ namespace Asv.Drones.Gui.Core;
 [PartCreationPolicy(CreationPolicy.NonShared)]
 public class MapRulerActionViewModel:MapActionBase
 {
-   
+    
     [ImportingConstructor]
     public MapRulerActionViewModel( ILogService log) : base("asv:shell.page.map.action.ruler")
     {
@@ -25,53 +25,44 @@ public class MapRulerActionViewModel:MapActionBase
     protected override void InternalWhenMapLoaded(IMap context)
     {
        // base.InternalWhenMapLoaded(context);
-        //SetUpRuler(false);
+      //  SetUpRuler(false);
     }
-        
-   static CancellationTokenSource tokenSource = new CancellationTokenSource();
-    CancellationToken token = tokenSource.Token;
-   
-   
-    private async void SetUpRuler(bool isVisible)
+    
+    private async void SetUpRuler(bool isEnabled)
     {
-        
-        
-        GeoPoint start ;
-        GeoPoint stop ;
         if (Map == null) return;
         
         var polygon = Map.Markers.FirstOrDefault(x => x is RulerPolygon) as RulerPolygon;
 
         if (polygon == null) return;
-
-
-        if (isVisible == false)
+        
+        if (isEnabled == false)
         {
-               tokenSource.Cancel();
-                polygon.Ruler.Value.Start.OnNext(null);
-                polygon.Ruler.Value.Stop.OnNext(null);
-                polygon.Ruler.Value.IsVisible.OnNext(false);
-                 tokenSource.Dispose();
-                return;
+            _tokenSource.Cancel();
+            polygon.Ruler.Value.Start.OnNext(null);
+            polygon.Ruler.Value.Stop.OnNext(null);
+            _tokenSource.Dispose();
         }
         
-        if (isVisible)
+        if(isEnabled)
         {
-            tokenSource = new CancellationTokenSource();
-            start = await Map.ShowTargetDialog(RS.MapPageViewModel_RulerStartPoint_Description, token);
-            if (tokenSource.IsCancellationRequested == true)
-            {
-                return;
-            }
-            stop = await Map.ShowTargetDialog(RS.MapPageViewModel_RulerStopPoint_Description, token);
+            _tokenSource = new CancellationTokenSource();
+            _token = _tokenSource.Token;
+            var start = await Map.ShowTargetDialog(RS.MapPageViewModel_RulerStartPoint_Description, _token);
+            
+            var stop = await Map.ShowTargetDialog(RS.MapPageViewModel_RulerStopPoint_Description, _token);
+            
             polygon.Ruler.Value.Start.OnNext(start);
             polygon.Ruler.Value.Stop.OnNext(stop);
         }
-        polygon.Ruler.Value.IsVisible.OnNext(isVisible);
+        polygon.Ruler.Value.IsVisible.OnNext(isEnabled);
     }
-    
-    [Reactive]
-    
+
+    public static CancellationTokenSource _tokenSource = new CancellationTokenSource();
+    private CancellationToken _token = _tokenSource.Token;
+
+    [Reactive] 
+   
     public bool IsRulerEnabled { get; set; }
     
 }
