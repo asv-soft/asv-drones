@@ -31,35 +31,33 @@ public class MapRulerActionViewModel:MapActionBase
     private async void SetUpRuler(bool isEnabled)
     {
         if (Map == null) return;
-        
         var polygon = Map.Markers.FirstOrDefault(x => x is RulerPolygon) as RulerPolygon;
-
         if (polygon == null) return;
         
-        if (isEnabled == false)
-        {
-            _tokenSource.Cancel();
-            polygon.Ruler.Value.Start.OnNext(null);
-            polygon.Ruler.Value.Stop.OnNext(null);
-            _tokenSource.Dispose();
-        }
-        
+        _tokenSource.Cancel();
+        _tokenSource = new CancellationTokenSource();
         if(isEnabled)
         {
-                _tokenSource = new CancellationTokenSource();
-                _token = _tokenSource.Token;
-                var start = await Map.ShowTargetDialog(RS.MapPageViewModel_RulerStartPoint_Description, _token);
-                if (_tokenSource.IsCancellationRequested) return;
-                var stop = await Map.ShowTargetDialog(RS.MapPageViewModel_RulerStopPoint_Description, _token);
-                if (_tokenSource.IsCancellationRequested) return;
+            try
+            {
+                var start = await Map.ShowTargetDialog(RS.MapPageViewModel_RulerStartPoint_Description,
+                    _tokenSource.Token);
+                var stop = await Map.ShowTargetDialog(RS.MapPageViewModel_RulerStopPoint_Description,
+                    _tokenSource.Token);
                 polygon.Ruler.Value.Start.OnNext(start);
                 polygon.Ruler.Value.Stop.OnNext(stop);
+            }
+            catch (TaskCanceledException)
+            {
+                return;
+            }
         }
         polygon.Ruler.Value.IsVisible.OnNext(isEnabled);
+        
     }
 
-    private static CancellationTokenSource _tokenSource;
-    private CancellationToken _token;
+    private static CancellationTokenSource _tokenSource = new CancellationTokenSource();
+    
 
     [Reactive] 
    
