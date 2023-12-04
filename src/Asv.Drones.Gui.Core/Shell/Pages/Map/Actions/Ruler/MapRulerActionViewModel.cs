@@ -12,11 +12,9 @@ namespace Asv.Drones.Gui.Core;
 [PartCreationPolicy(CreationPolicy.NonShared)]
 public class MapRulerActionViewModel:MapActionBase
 {
-    
     [ImportingConstructor]
     public MapRulerActionViewModel( ILogService log) : base("asv:shell.page.map.action.ruler")
     {
-       
         this.WhenValueChanged(_ => _.IsRulerEnabled)
             .Subscribe(SetUpRuler)
             .DisposeItWith(Disposable);
@@ -53,14 +51,11 @@ public class MapRulerActionViewModel:MapActionBase
             }
         }
         polygon.Ruler.Value.IsVisible.OnNext(isEnabled);
-        
     }
 
     private static CancellationTokenSource _tokenSource = new CancellationTokenSource();
     
-
     [Reactive] 
    
     public bool IsRulerEnabled { get; set; }
-    
 }
