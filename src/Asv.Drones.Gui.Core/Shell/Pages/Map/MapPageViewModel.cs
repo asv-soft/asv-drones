@@ -11,7 +11,7 @@ namespace Asv.Drones.Gui.Core
 {
     public class MapPageViewModel:ShellPage,IMap
     {
-        private protected readonly ReadOnlyObservableCollection<IMapAnchor> _markers;
+        private readonly ReadOnlyObservableCollection<IMapAnchor> _markers;
         private readonly ReadOnlyObservableCollection<IMapWidget> _widgets;
         private readonly ReadOnlyObservableCollection<IMapWidget> _leftWidgets;
         private readonly ReadOnlyObservableCollection<IMapWidget> _rightWidgets;
@@ -190,8 +190,7 @@ namespace Asv.Drones.Gui.Core
         public IMapAnchor ItemToFollow { get; set; }
         [Reactive]
         public bool IsInAnchorEditMode { get; set; }
-       
-
+        
         #endregion
 
         #region Map dialog
@@ -202,20 +201,20 @@ namespace Asv.Drones.Gui.Core
         public bool IsInDialogMode { get; set; }
         [Reactive]
         public string DialogText { get; set; }
-
-
-
+        
         public async Task<GeoPoint> ShowTargetDialog(string text, CancellationToken cancel)
         {
             var tcs = new TaskCompletionSource<GeoPoint>();
             DialogText = text;
             IsInDialogMode = true;
+            
             await using var c1 = cancel.Register(() =>
             {
                 tcs.TrySetCanceled();
                 IsInDialogMode = false;
                 SelectedItem = null;
             });
+            
             this.WhenAnyValue(_ => _.IsInDialogMode).Where(_ => IsInDialogMode == false).Subscribe(_ =>
             {
                 if (!tcs.Task.IsCanceled)
@@ -223,9 +222,11 @@ namespace Asv.Drones.Gui.Core
                     tcs.TrySetResult(DialogTarget);
                 }
             }, cancel);
+            
             await tcs.Task;
             return DialogTarget;
         }
-        }
+        
         #endregion
+    }
 }

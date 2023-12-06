@@ -1,7 +1,5 @@
 using System.ComponentModel.Composition;
 using Asv.Common;
-using Avalonia.Controls.Shapes;
-using DocumentFormat.OpenXml.Spreadsheet;
 using DynamicData.Binding;
 using ReactiveUI.Fody.Helpers;
 
@@ -19,6 +17,7 @@ public class MapRulerActionViewModel:MapActionBase
             .Subscribe(SetUpRuler)
             .DisposeItWith(Disposable);
     }
+    
     private async void SetUpRuler(bool isEnabled)
     {
         if (Map == null) return;
@@ -27,6 +26,7 @@ public class MapRulerActionViewModel:MapActionBase
         
         _tokenSource.Cancel();
         _tokenSource = new CancellationTokenSource();
+        
         if(isEnabled)
         {
             try
@@ -43,9 +43,12 @@ public class MapRulerActionViewModel:MapActionBase
                 return;
             }
         }
+        
         polygon.Ruler.Value.IsVisible.OnNext(isEnabled);
     }
-    private static CancellationTokenSource _tokenSource = new CancellationTokenSource();
+    
+    private static CancellationTokenSource _tokenSource = new ();
+    
     [Reactive] 
     public bool IsRulerEnabled { get; set; }
 }
