@@ -1183,4 +1183,7 @@
   <data name="PlaningPageViewModel_DataLossDialog_CloseButtonText" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="ParametersEditorPageViewModel_Loaded" xml:space="preserve">
+    <value>Loaded: {0}</value>
+  </data>
 </root>

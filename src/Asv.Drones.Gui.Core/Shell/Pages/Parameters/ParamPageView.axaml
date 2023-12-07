@@ -43,7 +43,11 @@
                         </TextBox.InnerRightContent>
                     </TextBox>
                 </DockPanel>
-                <TextBlock DockPanel.Dock="Bottom" Text="{Binding Total, StringFormat={x:Static core:RS.ParametersEditorPageViewModel_Total}}"/>
+               <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+                   <TextBlock  Text="{Binding Total, StringFormat={x:Static core:RS.ParametersEditorPageViewModel_Total}}"/>
+                   <TextBlock Text="/"></TextBlock>
+                   <TextBlock  Text="{Binding Loaded, StringFormat={x:Static core:RS.ParametersEditorPageViewModel_Loaded}}"/>
+               </StackPanel>
                 <ListBox SelectedItem="{Binding SelectedItem}" 
                          ItemsSource="{Binding Params}">
                     <ListBox.ItemTemplate>
@@ -75,6 +79,7 @@
                 <StackPanel IsVisible="{Binding IsRefreshing}" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock Text="Loading..."/>
                     <ProgressBar Width="100" Value="{Binding Progress}" Minimum="0" Maximum="1"/>    
+                    <Button Margin="0,10,0,0" Content="Cancel" Command="{Binding StopUpdateParams}"></Button>
                 </StackPanel>
                 
                 <ScrollViewer IsVisible="{Binding !IsRefreshing}">
