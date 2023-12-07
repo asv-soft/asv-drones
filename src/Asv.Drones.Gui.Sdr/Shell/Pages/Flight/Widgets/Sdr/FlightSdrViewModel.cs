@@ -60,7 +60,8 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     private readonly ISdrRttWidgetProvider[] _providers;
     private readonly ObservableCollection<ISdrRttWidget> _rttWidgets = new();
     private readonly IMeasureUnitItem<double,FrequencyUnits> _freqInMHzMeasureUnit;
-    private FlightSdrViewModelConfig _config; 
+    private FlightSdrViewModelConfig _config;
+    
     public static Uri GenerateUri(ISdrClientDevice sdr) => FlightSdrWidgetBase.GenerateUri(sdr,"sdr");
 
     public FlightSdrViewModel()
@@ -220,6 +221,8 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
             payload.Sdr.SystemControlAction(AsvSdrSystemControlAction.AsvSdrSystemControlActionReboot, cancel));
         SafeShutdownOSCommand = ReactiveCommand.CreateFromTask(cancel =>
             payload.Sdr.SystemControlAction(AsvSdrSystemControlAction.AsvSdrSystemControlActionShutdown, cancel));
+        SafeRestartSDRCommand = ReactiveCommand.CreateFromTask(cancel =>
+            payload.Sdr.SystemControlAction(AsvSdrSystemControlAction.AsvSdrSystemControlActionRestart, cancel));
         
        
         this.ValidationRule(x => x.FrequencyInMhz,
@@ -488,6 +491,7 @@ public class FlightSdrViewModel:FlightSdrWidgetBase
     public ReactiveCommand<Unit,Unit> StopRecord { get; }
     public ICommand SafeRebootOSCommand { get; set; }
     public ICommand SafeShutdownOSCommand { get; set; }
+    public ICommand SafeRestartSDRCommand { get; set; }
 
 
     [Reactive]

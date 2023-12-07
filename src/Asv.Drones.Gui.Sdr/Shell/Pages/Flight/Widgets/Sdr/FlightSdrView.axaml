@@ -39,6 +39,14 @@
                     </StackPanel>
                     <DropDownButton.Flyout>
                         <MenuFlyout Placement="Bottom">
+                            <MenuItem Command="{CompiledBinding SafeRestartSDRCommand}">
+                                <MenuItem.Header>
+                                    <StackPanel Orientation="Horizontal" Spacing="3">
+                                        <avalonia:MaterialIcon Kind="Restart" Foreground="Green" />
+                                        <TextBlock Text="{x:Static sdr:RS.FlightSdrView_SystemControlAction_Restart_Title}" />
+                                    </StackPanel>
+                                </MenuItem.Header>
+                            </MenuItem>
                             <MenuItem  Command="{CompiledBinding SafeRebootOSCommand}">
                                 <MenuItem.Header>
                                     <StackPanel Orientation="Horizontal" Spacing="3">

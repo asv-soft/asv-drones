@@ -96,6 +96,15 @@ namespace Asv.Drones.Gui.Sdr {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restart SDR.
+        /// </summary>
+        public static string FlightSdrView_SystemControlAction_Restart_Title {
+            get {
+                return ResourceManager.GetString("FlightSdrView_SystemControlAction_Restart_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shutdown OS.
         /// </summary>
         public static string FlightSdrView_SystemControlAction_Shutdown_Title {

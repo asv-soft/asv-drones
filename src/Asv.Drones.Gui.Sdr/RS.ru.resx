@@ -323,4 +323,7 @@
     <data name="FlightSdrView_UpdateMode_Title" xml:space="preserve">
         <value>Обновить режим</value>
     </data>
+    <data name="FlightSdrView_SystemControlAction_Restart_Title" xml:space="preserve">
+        <value>Перезапустить SDR</value>
+    </data>
 </root>
