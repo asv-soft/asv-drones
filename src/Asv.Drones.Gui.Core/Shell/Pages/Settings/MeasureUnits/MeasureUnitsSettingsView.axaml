@@ -10,7 +10,7 @@
     <Design.DataContext>
         <core:MeasureUnitsSettingsViewModel/>
     </Design.DataContext>
-    <core:OptionsDisplayItem Header="{x:Static core:RS.MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Title}" 
+    <core:OptionsDisplayItem Grid.IsSharedSizeScope="True" Header="{x:Static core:RS.MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Title}" 
                              Description="{x:Static core:RS.MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Description}"
                              Expands="True"
                              IsExpanded="False"

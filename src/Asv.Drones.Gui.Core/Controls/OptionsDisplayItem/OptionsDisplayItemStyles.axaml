@@ -58,7 +58,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"></RowDefinition> 
                                 <RowDefinition Height="Auto"></RowDefinition> 
-                                <RowDefinition Height="Auto"></RowDefinition> 
+                                <RowDefinition Height="Auto" SharedSizeGroup="description"></RowDefinition> 
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -88,8 +88,7 @@
                                        VerticalAlignment="Center"
                                        Grid.Column="0"
                                        Grid.Row="2" 
-                                       Grid.ColumnSpan="4"
-                                       MinHeight="48"/>
+                                       Grid.ColumnSpan="4"/>
                             <ContentPresenter Content="{TemplateBinding ActionButton}"
                                               Grid.Column="2"
                                               Grid.RowSpan="2"
