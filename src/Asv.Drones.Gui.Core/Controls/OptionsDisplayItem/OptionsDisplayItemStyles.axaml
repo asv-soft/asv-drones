@@ -5,10 +5,17 @@
     <Design.PreviewWith>
         <Border Padding="20" MinHeight="300">
             <StackPanel>
+                <core:OptionsDisplayItem  Header="MeasureUnits" Classes="MeasureUnits"
+                                          Description="This is a description of whatever this does"
+                                          Icon="Save"
+                                          Expands="True">
+                    </core:OptionsDisplayItem>
+                
+                
                 <core:OptionsDisplayItem Header="Header"
-                                          Description="This is a description of whatver this does"
-                                          Icon="Save" 
-                                          Navigates="True"/>
+                                         Description="This is a description of whatver this does"
+                                         Icon="Save" 
+                                         Navigates="True"/>
 
                 <core:OptionsDisplayItem Header="Header"
                                           Description="This is a description of whatver this does"
@@ -21,9 +28,11 @@
                                           Icon="Save"
                                           Expands="True"
                                           Content="Hello World" />
+               
             </StackPanel>
         </Border>
     </Design.PreviewWith>  
+    
     <Style Selector="core|OptionsDisplayItem.MeasureUnits">
         <Setter Property="Width" Value="350"></Setter>
         <Setter Property="Background" Value="{DynamicResource ControlFillColorDefaultBrush}" />
@@ -34,7 +43,7 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <StackPanel>
-                    <ToolTip.Tip >
+                    <ToolTip.Tip>
                         <StackPanel>
                             <TextBlock Text="{TemplateBinding Description}"></TextBlock>
                         </StackPanel>
@@ -47,7 +56,7 @@
                             CornerRadius="{TemplateBinding CornerRadius}">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" ></RowDefinition> 
+                                <RowDefinition Height="*"></RowDefinition> 
                                 <RowDefinition Height="Auto"></RowDefinition> 
                                 <RowDefinition Height="Auto"></RowDefinition> 
                             </Grid.RowDefinitions>
@@ -67,23 +76,20 @@
                             
                             <TextBlock Text="{TemplateBinding Header}"
                                        Classes="BaseTextBlockStyle"
-                                       VerticalAlignment="Center"
                                        HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
                                        TextTrimming="CharacterEllipsis"
                                        Grid.Column="1"/>
                             
                             <TextBlock Text="{TemplateBinding Description}"
-                                       MaxWidth="150"
-                                       MaxLines="1"
-                                       HorizontalAlignment="Left"
-                                       TextTrimming="CharacterEllipsis"
-                                       Classes="CaptionTextBlockStyle"
-                                       VerticalAlignment="Top"
                                        TextWrapping="Wrap"
-                                       Grid.Column="1"
-                                       Grid.Row="1">
-                                      
-                            </TextBlock>
+                                       HorizontalAlignment="Left"
+                                       Classes="CaptionTextBlockStyle"
+                                       VerticalAlignment="Center"
+                                       Grid.Column="0"
+                                       Grid.Row="2" 
+                                       Grid.ColumnSpan="4"
+                                       MinHeight="48"/>
                             <ContentPresenter Content="{TemplateBinding ActionButton}"
                                               Grid.Column="2"
                                               Grid.RowSpan="2"
@@ -143,14 +149,13 @@
                                        Classes="BaseTextBlockStyle"
                                        VerticalAlignment="Bottom"
                                        HorizontalAlignment="Left"
-                                       TextTrimming="CharacterEllipsis"
                                        Grid.Column="1"/>
                             <TextBlock Text="{TemplateBinding Description}"
                                        Classes="CaptionTextBlockStyle"
                                        VerticalAlignment="Top"
                                        TextWrapping="Wrap"
                                        Grid.Column="1"
-                                       Grid.Row="1" />
+                                       Grid.Row="1"/>
 
                             <ContentPresenter Content="{TemplateBinding ActionButton}"
                                               Grid.Column="2"
