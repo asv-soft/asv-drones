@@ -45,8 +45,6 @@
                 </DockPanel>
                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
                    <TextBlock  Text="{Binding Total, StringFormat={x:Static core:RS.ParametersEditorPageViewModel_Total}}"/>
-                   <TextBlock Text="/"></TextBlock>
-                   <TextBlock  Text="{Binding Loaded, StringFormat={x:Static core:RS.ParametersEditorPageViewModel_Loaded}}"/>
                </StackPanel>
                 <ListBox SelectedItem="{Binding SelectedItem}" 
                          ItemsSource="{Binding Params}">

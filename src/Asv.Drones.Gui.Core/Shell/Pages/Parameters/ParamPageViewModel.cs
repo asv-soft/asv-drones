@@ -131,7 +131,6 @@ public class ParamPageViewModel: ShellPage
     
     private void Init(IParamsClientEx paramsIfc)
     {
-        IsUpdate = true;
         @paramsIfc.RemoteCount.Where(_ => _.HasValue).Subscribe(_ => Total = _.Value).DisposeItWith(Disposable);
         var inputPipe = @paramsIfc.Items
             .Transform(_ => new ParamItemViewModel(_,_log))
@@ -152,7 +151,7 @@ public class ParamPageViewModel: ShellPage
         inputPipe
             .Filter(FilterPipe)
             .SortBy(_ => _.Name)
-            .AutoRefresh(v => v.IsSynced).Filter(_=>IsUpdate)
+            .AutoRefresh(v => v.IsSynced)
             //.Sort(SortExpressionComparer<ParamItemViewModel>.Descending(v => !v.IsSynced))
             .Bind(out var leftItems)
             .Subscribe()
@@ -184,7 +183,7 @@ public class ParamPageViewModel: ShellPage
 
         UpdateParams = ReactiveCommand.CreateFromTask(async cancel =>
         {
-            IsUpdate = true;
+            
             _cancellationTokenSource = new CancellationTokenSource().DisposeItWith(Disposable);
                 var viewed = _viewedParamsList.Items.Select(_ => _.GetConfig()).ToArray();
                 _viewedParamsList.Clear();
@@ -199,7 +198,6 @@ public class ParamPageViewModel: ShellPage
                 }
                 finally
                 {
-                    Loaded = Convert.ToInt32(paramsIfc.LocalCount.Value);
                     foreach (var item in viewed)
                     {
                         var existItem = allItems.FirstOrDefault(_ => _.Name == item.Name);
@@ -218,13 +216,10 @@ public class ParamPageViewModel: ShellPage
         StopUpdateParams = ReactiveCommand.Create(() =>
         {
             _cancellationTokenSource.Cancel();
-            IsUpdate = false;
-            
         });
         
         RemoveAllPins = ReactiveCommand.Create(() =>
         {
-            
             _viewedParamsList.Edit(_ =>
             {
                 foreach (var item in _)
@@ -282,9 +277,6 @@ public class ParamPageViewModel: ShellPage
     public bool ShowStaredOnly { get; set; }
     [Reactive]
     public double Progress { get; set; }
-
-    [Reactive] 
-    public  bool IsUpdate { get; set; } = new();
     [Reactive]
     public ReactiveCommand<Unit,Unit> Clear { get; set; }
     [Reactive]
