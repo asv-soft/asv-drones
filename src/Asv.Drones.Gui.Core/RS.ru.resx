@@ -1207,4 +1207,7 @@
   <data name="PlaningPageViewModel_DataLossDialog_Content" xml:space="preserve">
 	  <value>Вы пытаетесь открыть другой пункт меню, но в текущем у вас есть несохраненные изменения. Хотите сохранить их?</value>
   </data>
+  <data name="ParametersEditorPageViewModel_Loaded" xml:space="preserve">
+	  <value>Получено: {0}</value>
+  </data>
 </root>
