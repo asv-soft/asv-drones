@@ -156,13 +156,11 @@ public class ParamPageViewModel: ShellPage
             .Bind(out var leftItems)
             .Subscribe()
             .DisposeItWith(Disposable);
-        
         inputPipe
             .AutoRefresh(_ => _.IsStarred)
             .Filter(_ => _.IsStarred)
             .Subscribe(_ =>
             {
-                
                 foreach (var item in _)
                 {
                     var existItem = _config.Params.FirstOrDefault(__ => __.Name == item.Current.Name);
@@ -183,7 +181,6 @@ public class ParamPageViewModel: ShellPage
 
         UpdateParams = ReactiveCommand.CreateFromTask(async cancel =>
         {
-            
             _cancellationTokenSource = new CancellationTokenSource().DisposeItWith(Disposable);
                 var viewed = _viewedParamsList.Items.Select(_ => _.GetConfig()).ToArray();
                 _viewedParamsList.Clear();
