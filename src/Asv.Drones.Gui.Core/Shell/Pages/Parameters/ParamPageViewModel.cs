@@ -194,7 +194,6 @@ public class ParamPageViewModel: ShellPage
                 catch (TaskCanceledException)
                 {
                     _log.Info("User", "Canceled updating params");
-                   
                 }
                 finally
                 {
@@ -203,21 +202,16 @@ public class ParamPageViewModel: ShellPage
                         var existItem = allItems.FirstOrDefault(_ => _.Name == item.Name);
                         if (existItem == null) continue;
                         existItem.SetConfig(item);
-                        _viewedParamsList.Add(existItem);
-                      
+                        _viewedParamsList.Add(existItem); 
                     }
-                   
-                   
                 }
         }).DisposeItWith(Disposable);
         UpdateParams.IsExecuting.ToProperty(this, _ => _.IsRefreshing, out _isRefreshing).DisposeItWith(Disposable);
         UpdateParams.ThrownExceptions.Subscribe(OnRefreshError).DisposeItWith(Disposable);
-
         StopUpdateParams = ReactiveCommand.Create(() =>
         {
             _cancellationTokenSource.Cancel();
         });
-        
         RemoveAllPins = ReactiveCommand.Create(() =>
         {
             _viewedParamsList.Edit(_ =>
