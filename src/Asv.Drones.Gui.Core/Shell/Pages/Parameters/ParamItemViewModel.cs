@@ -21,7 +21,6 @@ public class ParamItemViewModelConfig
 [PartCreationPolicy(CreationPolicy.NonShared)]
 public class ParamItemViewModel : ViewModelBase
 {
-    
     private readonly ILogService _log;
     private readonly ObservableAsPropertyHelper<bool> _isWriting;
     private readonly ObservableAsPropertyHelper<bool> _isUpdate;
@@ -36,7 +35,6 @@ public class ParamItemViewModel : ViewModelBase
             DisplayName = Name;
         }
     }
-    
     public ParamItemViewModel(IParamItem paramItem, ILogService log) : base(new Uri(ParamPageViewModel.UriString+$".item{paramItem.Name}"))
     {
         _log = log;
@@ -91,7 +89,6 @@ public class ParamItemViewModel : ViewModelBase
         
         this.WhenAnyValue(_ => _.Value).Subscribe(_ =>
         {
-            
             _internalUpdate = true;
             switch (paramItem.Type)
             {
