@@ -7,7 +7,7 @@
     <ProductVersion>0.2.1</ProductVersion>
     <AvaloniaVersion>11.0.0</AvaloniaVersion>
     <AsvCommonVersion>1.13.1</AsvCommonVersion>
-    <AsvMavlinkVersion>3.6.0-alpha09</AsvMavlinkVersion>
+    <AsvMavlinkVersion>3.6.0-alpha11</AsvMavlinkVersion>
     <FluentAvaloniaUIVersion>2.0.0</FluentAvaloniaUIVersion>
     <ReactiveUIVersion>19.3.3</ReactiveUIVersion>
     <MaterialIconsAvaloniaVersion>2.0.1</MaterialIconsAvaloniaVersion>
