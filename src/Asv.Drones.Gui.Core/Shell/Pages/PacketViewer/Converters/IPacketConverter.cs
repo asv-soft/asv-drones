@@ -2,39 +2,48 @@ using Asv.Mavlink;
 
 namespace Asv.Drones.Gui.Core;
 
+/// <summary>
+/// Represents the formatting options for packet data.
+/// </summary>
 public enum PacketFormatting
 {
     /// <summary>
     /// One-line formatting
     /// </summary>
     None,
+
     /// <summary>
-    /// Multi-line formatting
+    /// Represents the formatting options for packet content.
     /// </summary>
     Indented
 }
 
+/// <summary>
+/// Represents an interface for converting packet payloads to string representation.
+/// </summary>
 public interface IPacketConverter
 {
     /// <summary>
-    /// Converter order in the list of all converters.
+    /// Gets the order of the converter in the list of all converters.
     /// </summary>
     int Order { get; }
+
     /// <summary>
-    /// Checks whether is converter can convert this packet type payload or not.
+    /// Checks whether the converter can convert the payload of a given packet.
     /// </summary>
-    /// <param name="packet">Packet to convert</param>
-    /// <returns>If true - can convert, false if not</returns>
+    /// <param name="packet">The packet to convert</param>
+    /// <returns>Returns true if the converter can convert the payload, false otherwise</returns>
     bool CanConvert(IPacketV2<IPayload> packet);
+
     /// <summary>
     /// Converts packet's payload to string.
     /// </summary>
-    /// <param name="packet">Packet to convert</param>
+    /// <param name="packet">The packet to convert.</param>
     /// <param name="formatting">
-    /// Formatting of result string.
-    /// Needed to create packets with special formatting.
-    /// 'None' - by default.
+    /// The formatting of the result string. This is optional and is used to create packets with special formatting. The default value is 'None'.
     /// </param>
-    /// <returns>String packet representation</returns>
+    /// <returns>
+    /// A string representation of the packet.
+    /// </returns>
     string Convert(IPacketV2<IPayload> packet, PacketFormatting formatting = PacketFormatting.None);
 }
