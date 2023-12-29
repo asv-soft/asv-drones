@@ -1,7 +1,4 @@
-[![Continuous integration for MacOS](https://github.com/asv-soft/asv-drones/actions/workflows/macos_release.yml/badge.svg)](https://github.com/asv-soft/asv-drones/actions/workflows/macos_release.yml)
-[![Continuous integration for Windows](https://github.com/asv-soft/asv-drones/actions/workflows/windows_release.yml/badge.svg)](https://github.com/asv-soft/asv-drones/actions/workflows/windows_release.yml)
-[![Continuous integration for Ubuntu](https://github.com/asv-soft/asv-drones/actions/workflows/ubuntu_release.yml/badge.svg)](https://github.com/asv-soft/asv-drones/actions/workflows/ubuntu_release.yml)
-[![Continuous integration for Android](https://github.com/asv-soft/asv-drones/actions/workflows/android_release.yml/badge.svg)](https://github.com/asv-soft/asv-drones/actions/workflows/android_release.yml)
+[![Release](https://github.com/asv-soft/asv-drones/actions/workflows/ReleaseDeployAction.yml/badge.svg)](https://github.com/asv-soft/asv-drones/actions/workflows/ReleaseDeployAction.yml)
 
 ## 1. Introduction
 
