@@ -54,13 +54,13 @@
                 CornerRadius="{StaticResource ControlCornerRadius}">
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Top" IsVisible="{Binding IsHeaderVisible}">
-                        <Button IsVisible="{Binding IsCreateFolderAvailable}" DockPanel.Dock="Right" Margin="8,0,0,0" Command="{Binding CreateNewFolder}">
+                        <Button IsVisible="{Binding IsCreateFolderAvailable}" DockPanel.Dock="Right" Margin="8,0,0,0" ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_Button_ToolTip_CreateNewFolder}" Command="{Binding CreateNewFolder}">
                             <avalonia:MaterialIcon Kind="FolderPlusOutline" Foreground="{StaticResource FolderBrush}" />
                         </Button>
-                        <Button IsVisible="{Binding IsCreateFileAvailable}" DockPanel.Dock="Right" Margin="8,0,0,0"  Command="{Binding CreateNewFile}">
+                        <Button IsVisible="{Binding IsCreateFileAvailable}" DockPanel.Dock="Right" Margin="8,0,0,0" ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_Button_ToolTip_CreateNewFile}" Command="{Binding CreateNewFile}">
                             <avalonia:MaterialIcon Kind="FilePlusOutline" Foreground="{StaticResource FileBrush}" />
                         </Button>
-                        <Button DockPanel.Dock="Right" Margin="8,0,0,0"  Command="{Binding Refresh}">
+                        <Button DockPanel.Dock="Right" Margin="8,0,0,0" ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_Button_ToolTip_Refresh}"  Command="{Binding Refresh}">
                             <avalonia:MaterialIcon Kind="Refresh" Foreground="{StaticResource FileBrush}" />
                         </Button>
                         <Border DockPanel.Dock="Top">

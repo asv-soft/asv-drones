@@ -1186,4 +1186,13 @@
   <data name="ParametersEditorPageViewModel_Loaded" xml:space="preserve">
     <value>Loaded: {0}</value>
   </data>
+  <data name="HierarchicalStoreView_Button_ToolTip_Refresh" xml:space="preserve">
+    <value>Refresh </value>
+  </data>
+  <data name="HierarchicalStoreView_Button_ToolTip_CreateNewFolder" xml:space="preserve">
+    <value>Create New Folder</value>
+  </data>
+  <data name="HierarchicalStoreView_Button_ToolTip_CreateNewFile" xml:space="preserve">
+    <value>Create New File</value>
+  </data>
 </root>
