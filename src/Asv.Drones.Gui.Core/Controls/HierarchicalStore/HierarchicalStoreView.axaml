@@ -102,17 +102,20 @@
                             <StackPanel DockPanel.Dock="Right" Spacing="8" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Orientation="Horizontal">
                                 <Button
                                     HotKey="F2"
+                                    ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_Folder_Button_EditFolderName}"
                                     IsVisible="{Binding !IsInEditNameMode}"
                                     Command="{Binding BeginEditName}">
                                     <avalonia:MaterialIcon Kind="Pencil" Foreground="{StaticResource FileBrush}"/>
                                 </Button>
                                 <Button
                                     IsVisible="{Binding !IsInEditNameMode}"
+                                    ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_Folder_Button_MoveFolderToFolder}"
                                     Command="{Binding BeginMove}">
                                     <avalonia:MaterialIcon Kind="FolderMoveOutline" Foreground="{StaticResource FileBrush}"/>
                                 </Button>
                                 <Button
                                     IsVisible="{Binding !IsInEditNameMode}"
+                                    ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_Folder_Button_DeleteFolder}"
                                     Command="{Binding DeleteEntry}">
                                     <avalonia:MaterialIcon Kind="Trash" Foreground="{StaticResource DeleteBrush}"/>
                                 </Button>
@@ -135,16 +138,19 @@
                             <StackPanel DockPanel.Dock="Right" Spacing="8"  Orientation="Horizontal">
                                 <Button
                                     HotKey="F2"
+                                    ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_Button_EditFileName}"
                                     IsVisible="{Binding !IsInEditNameMode}"
                                     Command="{Binding BeginEditName}">
                                     <avalonia:MaterialIcon Kind="Pencil" Foreground="{StaticResource FileBrush}"/>
                                 </Button>
                                 <Button
+                                    ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_File_Button_MoveFile}"
                                     IsVisible="{Binding !IsInEditNameMode}"
                                     Command="{Binding BeginMove}">
                                     <avalonia:MaterialIcon Kind="FileMoveOutline" Foreground="{StaticResource FileBrush}"/>
                                 </Button>
                                 <Button
+                                    ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_File_Button_DeleteFile}"
                                     IsVisible="{Binding !IsInEditNameMode}"
                                     Command="{Binding DeleteEntry}">
                                     <avalonia:MaterialIcon Kind="Trash" Foreground="{StaticResource DeleteBrush}"/>

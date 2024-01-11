@@ -1195,4 +1195,31 @@
   <data name="HierarchicalStoreView_Button_ToolTip_CreateNewFile" xml:space="preserve">
     <value>Create New File</value>
   </data>
+  <data name="HierarchicalStoreView_Folder_Button_EditFolderName" xml:space="preserve">
+    <value>Rename Folder</value>
+  </data>
+  <data name="HierarchicalStoreView_Folder_Button_MoveFolderToFolder" xml:space="preserve">
+    <value>Move Folder</value>
+  </data>
+  <data name="HierarchicalStoreView_Folder_Button_DeleteFolder" xml:space="preserve">
+    <value>Delete Folder</value>
+  </data>
+  <data name="HierarchicalStoreView_File_Button_DeleteFile" xml:space="preserve">
+    <value>Delete File</value>
+  </data>
+  <data name="HierarchicalStoreView_Button_DeleteFile" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="HierarchicalStoreView_Button_EditFileName" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="HierarchicalStoreView_Button_MovefileToFolder" xml:space="preserve">
+    <value>Move To Folder</value>
+  </data>
+  <data name="HierarchicalStoreView_File_Button_EditeFileName" xml:space="preserve">
+    <value>Rename File</value>
+  </data>
+  <data name="HierarchicalStoreView_File_Button_MoveFile" xml:space="preserve">
+    <value>Move File</value>
+  </data>
 </root>
