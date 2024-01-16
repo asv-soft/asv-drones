@@ -1,8 +1,13 @@
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using Asv.Cfg;
 using Asv.Common;
@@ -27,20 +32,20 @@ public class ParamPageViewModel: ShellPage
 {
     private readonly IMavlinkDevicesService _svc;
     private readonly ILogService _log;
-    
     private readonly IConfiguration _cfg;
+    private CancellationTokenSource _cancellationTokenSource;
     private ReadOnlyObservableCollection<ParamItemViewModel> _viewedParams;
     private ObservableAsPropertyHelper<bool> _isRefreshing;
     private readonly SourceList<ParamItemViewModel> _viewedParamsList;
     private ParamItemViewModel _selectedItem;
     private Subject<bool> _canClearSearchText = new ();
     private ParamsConfig _config;
-
+    private IParamsClientEx _paramsIfc;
     #region Uri
 
     public const string UriString = "asv:shell.page.params";
     public static Uri GenerateUri(ushort id, DeviceClass @class) => new($"{UriString}?id={id}&class={@class:G}");
-
+    
     #endregion
 
     public ParamPageViewModel():base(UriString)
@@ -54,21 +59,18 @@ public class ParamPageViewModel: ShellPage
         _svc = svc ?? throw new ArgumentNullException(nameof(svc));
         _log = log ?? throw new ArgumentNullException(nameof(log));
         _cfg = cfg ?? throw new ArgumentNullException(nameof(cfg));
-
         _config = _cfg.Get<ParamsConfig>();
-
         FilterPipe.DisposeItWith(Disposable);
         this.WhenAnyValue(_ => _.SearchText, _ => _.ShowStaredOnly)
             .Throttle(TimeSpan.FromMilliseconds(100), RxApp.MainThreadScheduler)
             .Subscribe(_ => FilterPipe.OnNext(item => item.Filter(SearchText, ShowStaredOnly)))
             .DisposeItWith(Disposable);
          _viewedParamsList = new SourceList<ParamItemViewModel>().DisposeItWith(Disposable);
-
+         _cancellationTokenSource = new CancellationTokenSource().DisposeItWith(Disposable);
          _viewedParamsList.Connect()
              .Bind(out _viewedParams)
              .Subscribe()
              .DisposeItWith(Disposable);
-
          this.WhenValueChanged(_ => _.SearchText)
              .Subscribe(_ =>
              {
@@ -93,7 +95,6 @@ public class ParamPageViewModel: ShellPage
         var query =  HttpUtility.ParseQueryString(link.Query);
         if (ushort.TryParse(query["id"], out var id) == false) return;
         if (Enum.TryParse<DeviceClass>(query["class"], true, out var deviceClass) == false) return;
-        
         switch (deviceClass)
         {
             case DeviceClass.Unknown:
@@ -127,11 +128,10 @@ public class ParamPageViewModel: ShellPage
         }
         Title = $"Params: {DeviceName}";
     }
-
+    
     private void Init(IParamsClientEx paramsIfc)
     {
         @paramsIfc.RemoteCount.Where(_ => _.HasValue).Subscribe(_ => Total = _.Value).DisposeItWith(Disposable);
-        
         var inputPipe = @paramsIfc.Items
             .Transform(_ => new ParamItemViewModel(_,_log))
             .DisposeMany()
@@ -156,7 +156,6 @@ public class ParamPageViewModel: ShellPage
             .Bind(out var leftItems)
             .Subscribe()
             .DisposeItWith(Disposable);
-        
         inputPipe
             .AutoRefresh(_ => _.IsStarred)
             .Filter(_ => _.IsStarred)
@@ -166,8 +165,7 @@ public class ParamPageViewModel: ShellPage
                 {
                     var existItem = _config.Params.FirstOrDefault(__ => __.Name == item.Current.Name);
                     
-                    if(existItem != null)
-                        _config.Params.Remove(existItem);
+                    if(existItem != null) _config.Params.Remove(existItem);
                     
                     _config.Params.Add(new ParamItemViewModelConfig
                     {
@@ -183,20 +181,34 @@ public class ParamPageViewModel: ShellPage
 
         UpdateParams = ReactiveCommand.CreateFromTask(async cancel =>
         {
-            var viewed = _viewedParamsList.Items.Select(_ => _.GetConfig()).ToArray();
-            _viewedParamsList.Clear();
-            await paramsIfc.ReadAll(new Progress<double>(_ => Progress = _), cancel);
-            foreach (var item in viewed)
-            {
-                var existItem = allItems.FirstOrDefault(_ => _.Name == item.Name);
-                if (existItem == null) continue;
-                existItem.SetConfig(item);
-                _viewedParamsList.Add(existItem);
-            }
+            _cancellationTokenSource = new CancellationTokenSource().DisposeItWith(Disposable);
+                var viewed = _viewedParamsList.Items.Select(_ => _.GetConfig()).ToArray();
+                _viewedParamsList.Clear();
+                try
+                {
+                    await paramsIfc.ReadAll(new Progress<double>(_ => Progress = _), _cancellationTokenSource.Token);
+                }
+                catch (TaskCanceledException)
+                {
+                    _log.Info("User", "Canceled updating params");
+                }
+                finally
+                {
+                    foreach (var item in viewed)
+                    {
+                        var existItem = allItems.FirstOrDefault(_ => _.Name == item.Name);
+                        if (existItem == null) continue;
+                        existItem.SetConfig(item);
+                        _viewedParamsList.Add(existItem); 
+                    }
+                }
         }).DisposeItWith(Disposable);
         UpdateParams.IsExecuting.ToProperty(this, _ => _.IsRefreshing, out _isRefreshing).DisposeItWith(Disposable);
         UpdateParams.ThrownExceptions.Subscribe(OnRefreshError).DisposeItWith(Disposable);
-        
+        StopUpdateParams = ReactiveCommand.Create(() =>
+        {
+            _cancellationTokenSource.Cancel();
+        });
         RemoveAllPins = ReactiveCommand.Create(() =>
         {
             _viewedParamsList.Edit(_ =>
@@ -209,7 +221,7 @@ public class ParamPageViewModel: ShellPage
         }).DisposeItWith(Disposable);
     }
 
-    public override async Task<bool> TryClose()
+    public override async Task <bool> TryClose()
     {
         var notSyncedParams = _viewedParamsList.Items.Where(_ => !_.IsSynced).ToArray();
         
@@ -256,18 +268,17 @@ public class ParamPageViewModel: ShellPage
     public bool ShowStaredOnly { get; set; }
     [Reactive]
     public double Progress { get; set; }
-    
     [Reactive]
     public ReactiveCommand<Unit,Unit> Clear { get; set; }
     [Reactive]
     public ReactiveCommand<Unit,Unit> UpdateParams { get; set; }
     [Reactive]
+    public ReactiveCommand<Unit,Unit> StopUpdateParams { get; set; }
+    [Reactive]
     public ReactiveCommand<Unit,Unit> RemoveAllPins { get; set; }
     public Subject<Func<ParamItemViewModel, bool>> FilterPipe { get; } = new();
-
     [Reactive]
     public ReadOnlyObservableCollection<ParamItemViewModel> Params { get; set; }
-
     public ReadOnlyObservableCollection<ParamItemViewModel> ViewedParams => _viewedParams;
     [Reactive]
     public string DeviceName { get; set; }
@@ -275,7 +286,8 @@ public class ParamPageViewModel: ShellPage
     public string SearchText { get; set; }
     [Reactive]
     public int Total { get; set; }
-
+    [Reactive]
+    public int Loaded { get; set; }
     public ParamItemViewModel SelectedItem
     {
         get => _selectedItem;

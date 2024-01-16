@@ -2103,6 +2103,15 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loaded: {0}.
+        /// </summary>
+        public static string ParametersEditorPageViewModel_Loaded {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageViewModel_Loaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string ParametersEditorPageViewModel_Search {

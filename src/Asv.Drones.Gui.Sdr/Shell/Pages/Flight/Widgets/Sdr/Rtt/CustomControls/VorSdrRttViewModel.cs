@@ -166,8 +166,8 @@ public class VorSdrRttViewModel : ViewModelBase, ISdrRttWidget
                 PowerStringValue = _loc.Power.FromSiToString(_.Payload.Power);
                 FrequencyOffsetStringValue = _freqInKHzMeasureUnit?.FromSiToString(_.Payload.CarrierOffset);
                 BearingStringValue = _loc.Bearing.FromSiToString(_.Payload.Azimuth);
-                Am30HzStringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.Am30 * 100.0);
-                Am9960HzStringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.Am9960 * 100.0);
+                Am30HzStringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.Am30);
+                Am9960HzStringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.Am9960);
                 FmDeviationStringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.Deviation * 100.0);
                 IdCodeStringValue = new string(_.Payload.CodeId.Select(__ => __ == '\0' ? ' ' : __).ToArray());
                 VoiceAmStringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.CodeIdAm1020 * 100.0);

@@ -5,10 +5,17 @@
     <Design.PreviewWith>
         <Border Padding="20" MinHeight="300">
             <StackPanel>
+                <core:OptionsDisplayItem  Header="MeasureUnits" Classes="MeasureUnits"
+                                          Description="This is a description of whatever this does"
+                                          Icon="Save"
+                                          Expands="True">
+                    </core:OptionsDisplayItem>
+                
+                
                 <core:OptionsDisplayItem Header="Header"
-                                          Description="This is a description of whatver this does"
-                                          Icon="Save" 
-                                          Navigates="True"/>
+                                         Description="This is a description of whatver this does"
+                                         Icon="Save" 
+                                         Navigates="True"/>
 
                 <core:OptionsDisplayItem Header="Header"
                                           Description="This is a description of whatver this does"
@@ -21,11 +28,100 @@
                                           Icon="Save"
                                           Expands="True"
                                           Content="Hello World" />
+               
             </StackPanel>
         </Border>
     </Design.PreviewWith>  
-
+    
+    <Style Selector="core|OptionsDisplayItem.MeasureUnits">
+        <Setter Property="Width" Value="350"></Setter>
+        <Setter Property="Background" Value="{DynamicResource ControlFillColorDefaultBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="{StaticResource ButtonPadding}" />
+        <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel>
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{TemplateBinding Description}"></TextBlock>
+                        </StackPanel>
+                    </ToolTip.Tip>
+                    <Border Name="LayoutRoot"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="12"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition> 
+                                <RowDefinition Height="Auto"></RowDefinition> 
+                                <RowDefinition Height="Auto" SharedSizeGroup="description"></RowDefinition> 
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Viewbox Name="IconHost"
+                                     Width="24" Height="24"
+                                     Grid.RowSpan="2"
+                                     Margin="8 4 12 4">
+                                <ContentPresenter Content="{TemplateBinding Icon}"
+                                                  Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                            </Viewbox>
+                            
+                            <TextBlock Text="{TemplateBinding Header}"
+                                       Classes="BaseTextBlockStyle"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       TextTrimming="CharacterEllipsis"
+                                       Grid.Column="1"/>
+                            
+                            <TextBlock Text="{TemplateBinding Description}"
+                                       TextWrapping="Wrap"
+                                       HorizontalAlignment="Left"
+                                       Classes="CaptionTextBlockStyle"
+                                       VerticalAlignment="Center"
+                                       Grid.Column="0"
+                                       Grid.Row="2" 
+                                       Grid.ColumnSpan="4"/>
+                            <ContentPresenter Content="{TemplateBinding ActionButton}"
+                                              Grid.Column="2"
+                                              Grid.RowSpan="2"
+                                              VerticalAlignment="Stretch"
+                                              HorizontalAlignment="Right"
+                                              Margin="8 4" />
+                            <ui:SymbolIcon Name="Chevron"
+                                           Margin="8 4"
+                                           Grid.Column="3"
+                                           Grid.RowSpan="2"
+                                           FontSize="20"
+                                           Foreground="{DynamicResource TextFillColorPrimaryBrush}" /> 
+                        </Grid>
+                    </Border>
+                   
+                    <ContentPresenter Name="ExpandedContentPresenter"
+                                      Content="{TemplateBinding Content}"
+                                      VerticalContentAlignment="Stretch"
+                                      HorizontalContentAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      HorizontalAlignment="Stretch"
+                                      Grid.Row="2"
+                                      Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                                      BorderBrush="{TemplateBinding BorderBrush}"
+                                      BorderThickness="1 0 1 1"
+                                      Grid.ColumnSpan="4"
+                                      Padding="12"/>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
     <Style Selector="core|OptionsDisplayItem">
+        <Setter Property="MinWidth" Value="300"></Setter>
         <Setter Property="Background" Value="{DynamicResource ControlFillColorDefaultBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -48,20 +144,17 @@
                                 <ContentPresenter Content="{TemplateBinding Icon}"
                                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
                             </Viewbox>
-
                             <TextBlock Text="{TemplateBinding Header}"
                                        Classes="BaseTextBlockStyle"
                                        VerticalAlignment="Bottom"
                                        HorizontalAlignment="Left"
-                                       TextTrimming="CharacterEllipsis"
                                        Grid.Column="1"/>
-
                             <TextBlock Text="{TemplateBinding Description}"
                                        Classes="CaptionTextBlockStyle"
                                        VerticalAlignment="Top"
                                        TextWrapping="Wrap"
                                        Grid.Column="1"
-                                       Grid.Row="1" />
+                                       Grid.Row="1"/>
 
                             <ContentPresenter Content="{TemplateBinding ActionButton}"
                                               Grid.Column="2"
