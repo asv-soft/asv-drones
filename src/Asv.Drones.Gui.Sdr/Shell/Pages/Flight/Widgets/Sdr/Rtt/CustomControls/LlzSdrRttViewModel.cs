@@ -276,7 +276,7 @@ public class LlzSdrRttViewModel : ViewModelBase, ISdrRttWidget
                 TotalSdmStringValue = _loc.Sdm.FromSiToString((_.Payload.TotalAm90 + _.Payload.TotalAm150));
                 TotalAm90StringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.TotalAm90);
                 TotalAm150StringValue = _loc.AmplitudeModulation.FromSiToString(_.Payload.TotalAm150);
-                Phi90StringValue = _.Payload.GnssFixType.ToString("G");//_loc.Phase.FromSiToString(_.Payload.Phi90CrsVsClr);
+                Phi90StringValue = _loc.Phase.FromSiToString(_.Payload.Phi90CrsVsClr);
                 Phi150StringValue = _loc.Phase.FromSiToString(_.Payload.Phi150CrsVsClr);
                 IdCodeStringValue = new string(_.Payload.CodeId.Select(__ => __ == '\0' ? ' ' : __).ToArray());
                 TotalFreq90StringValue = _freqInHzMeasureUnit?.FromSiToString(_.Payload.TotalFreq90);
