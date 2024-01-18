@@ -1140,60 +1140,6 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel.
-        /// </summary>
-        public static string HierarchicalStoreView_TextBlock_Text_Cancel {
-            get {
-                return ResourceManager.GetString("HierarchicalStoreView_TextBlock_Text_Cancel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move Folder.
-        /// </summary>
-        public static string HierarchicalStoreView_TextBlock_Text_MoveFolder {
-            get {
-                return ResourceManager.GetString("HierarchicalStoreView_TextBlock_Text_MoveFolder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move Here.
-        /// </summary>
-        public static string HierarchicalStoreView_TextBlock_Text_MoveHere {
-            get {
-                return ResourceManager.GetString("HierarchicalStoreView_TextBlock_Text_MoveHere", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search.
-        /// </summary>
-        public static string HierarhicalStoreView_Search_Textbox_Watermark {
-            get {
-                return ResourceManager.GetString("HierarhicalStoreView_Search_Textbox_Watermark", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to GHz.
-        /// </summary>
-        public static string ItemsRate_GigaHerzUnit {
-            get {
-                return ResourceManager.GetString("ItemsRate_GigaHerzUnit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hz.
-        /// </summary>
-        public static string ItemsRate_HerzUnit {
-            get {
-                return ResourceManager.GetString("ItemsRate_HerzUnit", resourceCulture);
-            }
-        }
-        
-           /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string HierarchicalStoreView_Button_DeleteFile {
@@ -1235,6 +1181,15 @@ namespace Asv.Drones.Gui.Core {
         public static string HierarchicalStoreView_Button_ToolTip_CreateNewFolder {
             get {
                 return ResourceManager.GetString("HierarchicalStoreView_Button_ToolTip_CreateNewFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move File from Explorer.
+        /// </summary>
+        public static string HierarchicalStoreView_Button_ToolTip_Move_File_Explorer {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_Button_ToolTip_Move_File_Explorer", resourceCulture);
             }
         }
         
@@ -1298,6 +1253,60 @@ namespace Asv.Drones.Gui.Core {
         public static string HierarchicalStoreView_Folder_Button_MoveFolderToFolder {
             get {
                 return ResourceManager.GetString("HierarchicalStoreView_Folder_Button_MoveFolderToFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string HierarchicalStoreView_TextBlock_Text_Cancel {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_TextBlock_Text_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Folder.
+        /// </summary>
+        public static string HierarchicalStoreView_TextBlock_Text_MoveFolder {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_TextBlock_Text_MoveFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Here.
+        /// </summary>
+        public static string HierarchicalStoreView_TextBlock_Text_MoveHere {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_TextBlock_Text_MoveHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string HierarhicalStoreView_Search_Textbox_Watermark {
+            get {
+                return ResourceManager.GetString("HierarhicalStoreView_Search_Textbox_Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GHz.
+        /// </summary>
+        public static string ItemsRate_GigaHerzUnit {
+            get {
+                return ResourceManager.GetString("ItemsRate_GigaHerzUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hz.
+        /// </summary>
+        public static string ItemsRate_HerzUnit {
+            get {
+                return ResourceManager.GetString("ItemsRate_HerzUnit", resourceCulture);
             }
         }
         

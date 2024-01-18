@@ -6,12 +6,16 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Asv.Mavlink;
 using Asv.Common;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media;
 using DynamicData;
 using DynamicData.Binding;
+using FluentAvalonia.UI.Windowing;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Color = Avalonia.Media.Color;
 
 namespace Asv.Drones.Gui.Core;
 
@@ -21,6 +25,8 @@ public class HierarchicalStoreViewModel : ViewModelBase
 
     protected HierarchicalStoreViewModel(Uri id) : base(id)
     {
+        StartFileDialog = ReactiveCommand.Create(StartFileDialogImpl).DisposeItWith(Disposable);
+        StartFileDialog.ThrownExceptions.Subscribe(ex => OnError(HierarchicalStoreAction.StartFileDialog,ex)).DisposeItWith(Disposable);
         CreateNewFile = ReactiveCommand.Create(CreateNewFileImpl)
             .DisposeItWith(Disposable);
         CreateNewFile.ThrownExceptions
@@ -151,8 +157,9 @@ public class HierarchicalStoreViewModel : ViewModelBase
     public virtual ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel> FolderItems { get; }
     [Reactive]
     public HierarchicalStoreEntryViewModel? SelectedItem { get; set; }
-    public ReactiveCommand<Unit,Unit> CreateNewFolder { get; set; }
+    public ReactiveCommand<Unit,Unit> StartFileDialog { get; set; }
     public ReactiveCommand<Unit,Unit> CreateNewFile { get; set; }
+    public ReactiveCommand<Unit,Unit> CreateNewFolder { get; set; }
     public ReactiveCommand<Unit,Unit> Refresh { get; set; }
     public bool IsHeaderVisible { get; set; } = true;
 
@@ -167,6 +174,10 @@ public class HierarchicalStoreViewModel : ViewModelBase
             return true;
         }
         return false;
+    }
+    protected virtual void StartFileDialogImpl()
+    {
+        
     }
     protected virtual void RefreshImpl()
     {
@@ -312,8 +323,56 @@ public abstract class HierarchicalStoreViewModel<TKey,TFile>:HierarchicalStoreVi
         _source.Clear();
         _source.AddOrUpdate(_store.GetEntries());
     }
-
     
+    protected override async void StartFileDialogImpl()
+    {
+        var openFileDialog = new OpenFileDialog()
+        {
+            Title = "Выберите файл",
+            AllowMultiple = true
+        };
+        openFileDialog.Filters.Add(
+            new FileDialogFilter() { 
+                Name = "SDR",
+                Extensions = { "SDR" } 
+            });
+        var selectedFiles = await openFileDialog.ShowAsync(new Window());
+        string rootPath = AppDomain.CurrentDomain.BaseDirectory;
+        var destinationPath = rootPath+"asv-data-folder/sdr_records";
+        ProcessStartInfo startInfo;
+        if (selectedFiles != null && selectedFiles.Length > 0)
+        {
+            foreach (var file in selectedFiles)
+            {
+                try
+                {
+                    await Task.Run(() =>
+                    {
+                        File.Move(file, Path.Combine(destinationPath, Path.GetFileName(file)), true);
+                    }); 
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    startInfo = new ProcessStartInfo
+                    {
+                        FileName = Path.GetFileName(file),
+                        Verb = "runas", 
+                    };
+                    try
+                    {
+                        Process.Start(startInfo);
+                    }
+                    catch (Exception)
+                    {
+                        _log.Error("System","Error to resolve move operation");
+                    }
+                }
+            } 
+            RefreshImpl();
+        }
+     
+    }
+
 
     public override ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel> Items => _tree;
     public override ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel> FolderItems => _treeFolder;
@@ -327,7 +386,7 @@ public abstract class HierarchicalStoreViewModel<TKey,TFile>:HierarchicalStoreVi
         _store.RenameEntry(itemId, name);
         Refresh.Execute().Subscribe();
     }
-
+    
     public void MoveEntryImpl(TKey id, TKey parentId)
     {
         _store.MoveEntry(id,parentId);
@@ -372,5 +431,6 @@ public enum HierarchicalStoreAction
 {
     Refresh,
     CreateFile,
-    CreateFolder
+    CreateFolder,
+    StartFileDialog
 }

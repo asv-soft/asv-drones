@@ -1222,4 +1222,7 @@
   <data name="HierarchicalStoreView_File_Button_MoveFile" xml:space="preserve">
     <value>Move File</value>
   </data>
+  <data name="HierarchicalStoreView_Button_ToolTip_Move_File_Explorer" xml:space="preserve">
+    <value>Move File from Explorer</value>
+  </data>
 </root>
