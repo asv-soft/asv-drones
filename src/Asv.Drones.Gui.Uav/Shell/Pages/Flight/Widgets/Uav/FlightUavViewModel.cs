@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Reactive.Linq;
 using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Core;
@@ -72,6 +73,19 @@ namespace Asv.Drones.Gui.Uav
                 .DisposeMany()
                 .Subscribe()
                 .DisposeItWith(Disposable);
+
+            Vehicle.Position.Current.Subscribe(p =>
+            {
+                LastKnownPosition = p;
+            });
+
+            Vehicle.Heartbeat.Link.DistinctUntilChanged().Subscribe(s =>
+            {
+                if (s == LinkState.Disconnected)
+                {
+                    log.Info(LogName, $"Last known position: {LastKnownPosition}");
+                }
+            });
 
             MinimizedRttItems = _rttItems.Where(_ => _.IsMinimizedVisible).ToList();
 
@@ -206,7 +220,8 @@ namespace Asv.Drones.Gui.Uav
         public MissionStatusViewModel MissionStatus { get; }
         public ReadOnlyObservableCollection<IUavRttItem> RttItems => _rttItems;
         public IEnumerable<IUavRttItem> MinimizedRttItems { get; set; }
-        
+
+        public GeoPoint LastKnownPosition { get; set; }
         public string LogName => "Map." + Title;
 
         [Reactive] 
