@@ -20,7 +20,7 @@ public partial class MainWindow : AppWindow
     {
         InitializeComponent();
 #if DEBUG
-        this.AttachDevTools();
+             this.AttachDevTools();
 #endif
         MinWidth = 450;
         MinHeight = 400;

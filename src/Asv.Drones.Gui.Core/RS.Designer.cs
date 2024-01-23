@@ -1185,11 +1185,11 @@ namespace Asv.Drones.Gui.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move File from Explorer.
+        ///   Looks up a localized string similar to Open SDR Folder.
         /// </summary>
-        public static string HierarchicalStoreView_Button_ToolTip_Move_File_Explorer {
+        public static string HierarchicalStoreView_Button_ToolTip_Open_Records_Folder {
             get {
-                return ResourceManager.GetString("HierarchicalStoreView_Button_ToolTip_Move_File_Explorer", resourceCulture);
+                return ResourceManager.GetString("HierarchicalStoreView_Button_ToolTip_Open_Records_Folder", resourceCulture);
             }
         }
         

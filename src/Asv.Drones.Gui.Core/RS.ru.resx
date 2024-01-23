@@ -1246,7 +1246,7 @@
   <data name="HierarchicalStoreView_Folder_Button_DeleteFolder" xml:space="preserve">
 	  <value>Удалить папку</value>
   </data>
-  <data name="HierarchicalStoreView_Button_ToolTip_Move_File_Explorer" xml:space="preserve">
-	  <value>Переместить файл из проводника</value>
+  <data name="HierarchicalStoreView_Button_ToolTip_Open_Records_Folder" xml:space="preserve">
+	  <value>Открыть директорию полезной нагрузки</value>
   </data>
 </root>

@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reactive;
@@ -22,23 +23,21 @@ namespace Asv.Drones.Gui.Core;
 
 public class HierarchicalStoreViewModel : ViewModelBase
 {
-
     protected HierarchicalStoreViewModel(Uri id) : base(id)
     {
-        StartFileDialog = ReactiveCommand.Create(StartFileDialogImpl).DisposeItWith(Disposable);
-        StartFileDialog.ThrownExceptions.Subscribe(ex => OnError(HierarchicalStoreAction.StartFileDialog,ex)).DisposeItWith(Disposable);
+        IsOsSupportFileExplorer = Environment.OSVersion.Platform != PlatformID.Other;
+        OpenRecordsFolder = ReactiveCommand.Create(OpenRecordsFolderImpl).DisposeItWith(Disposable);
+        OpenRecordsFolder.ThrownExceptions.Subscribe(ex => OnError(HierarchicalStoreAction.StartFileDialog,ex)).DisposeItWith(Disposable);
         CreateNewFile = ReactiveCommand.Create(CreateNewFileImpl)
             .DisposeItWith(Disposable);
         CreateNewFile.ThrownExceptions
             .Subscribe(ex => OnError( HierarchicalStoreAction.CreateFile,ex))
             .DisposeItWith(Disposable);
-        
         CreateNewFolder = ReactiveCommand.Create(CreateNewFolderImpl)
             .DisposeItWith(Disposable);
         CreateNewFolder.ThrownExceptions
             .Subscribe(ex => OnError( HierarchicalStoreAction.CreateFolder,ex))
             .DisposeItWith(Disposable);      
-        
         Refresh = ReactiveCommand.Create(()=>
             {
                 var selectedId = SelectedItem?.Id;
@@ -54,9 +53,8 @@ public class HierarchicalStoreViewModel : ViewModelBase
             .Subscribe(ex => OnError( HierarchicalStoreAction.Refresh,ex))
             .DisposeItWith(Disposable);
     }
+
    
-    
-    
     public HierarchicalStoreViewModel():this(new($"asv:{Guid.NewGuid()}"))
     {
         if (Design.IsDesignMode == false)
@@ -105,8 +103,6 @@ public class HierarchicalStoreViewModel : ViewModelBase
                                 Color = new SolidColorBrush(Color.Parse("#CD91B6")),
                                 Name = "ShortShort",
                             },
-                            
-                            
                         })),
                         IsFile = true,
                     },
@@ -125,7 +121,6 @@ public class HierarchicalStoreViewModel : ViewModelBase
                             },
                         }))
                     },
-                    
                 }));
             FolderItems = new ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel>(
                 new ObservableCollection<HierarchicalStoreEntryViewModel>(new List<HierarchicalStoreEntryViewModel>
@@ -157,7 +152,7 @@ public class HierarchicalStoreViewModel : ViewModelBase
     public virtual ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel> FolderItems { get; }
     [Reactive]
     public HierarchicalStoreEntryViewModel? SelectedItem { get; set; }
-    public ReactiveCommand<Unit,Unit> StartFileDialog { get; set; }
+    public ReactiveCommand<Unit,Unit> OpenRecordsFolder { get; set; }
     public ReactiveCommand<Unit,Unit> CreateNewFile { get; set; }
     public ReactiveCommand<Unit,Unit> CreateNewFolder { get; set; }
     public ReactiveCommand<Unit,Unit> Refresh { get; set; }
@@ -175,31 +170,31 @@ public class HierarchicalStoreViewModel : ViewModelBase
         }
         return false;
     }
-    protected virtual void StartFileDialogImpl()
+    protected virtual void OpenRecordsFolderImpl()
     {
-        
     }
+    
     protected virtual void RefreshImpl()
     {
         
     }
     protected virtual void CreateNewFileImpl()
     {
-        
     }
+    
     protected virtual void CreateNewFolderImpl()
     {
-        
     }    
+    
     protected virtual void OnError(HierarchicalStoreAction action, Exception ex)
     {
-        
     }
    
     [Reactive] 
     public bool IsCreateFolderAvailable { get; set; } = true;
     [Reactive] 
     public bool IsCreateFileAvailable { get; set; } = true;
+    public bool IsOsSupportFileExplorer { get; }
 
     [Reactive]
     public HierarchicalStoreEntryViewModel? SelectedItemMoveTo { get; set; }
@@ -324,53 +319,13 @@ public abstract class HierarchicalStoreViewModel<TKey,TFile>:HierarchicalStoreVi
         _source.AddOrUpdate(_store.GetEntries());
     }
     
-    protected override async void StartFileDialogImpl()
+    
+    protected override void OpenRecordsFolderImpl()
     {
-        var openFileDialog = new OpenFileDialog()
-        {
-            Title = "Выберите файл",
-            AllowMultiple = true
-        };
-        openFileDialog.Filters.Add(
-            new FileDialogFilter() { 
-                Name = "SDR",
-                Extensions = { "SDR" } 
-            });
-        var selectedFiles = await openFileDialog.ShowAsync(new Window());
-        string rootPath = AppDomain.CurrentDomain.BaseDirectory;
-        var destinationPath = rootPath+"asv-data-folder/sdr_records";
-        ProcessStartInfo startInfo;
-        if (selectedFiles != null && selectedFiles.Length > 0)
-        {
-            foreach (var file in selectedFiles)
-            {
-                try
-                {
-                    await Task.Run(() =>
-                    {
-                        File.Move(file, Path.Combine(destinationPath, Path.GetFileName(file)), true);
-                    }); 
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    startInfo = new ProcessStartInfo
-                    {
-                        FileName = Path.GetFileName(file),
-                        Verb = "runas", 
-                    };
-                    try
-                    {
-                        Process.Start(startInfo);
-                    }
-                    catch (Exception)
-                    {
-                        _log.Error("System","Error to resolve move operation");
-                    }
-                }
-            } 
-            RefreshImpl();
-        }
-     
+        var recordsFolder = AppDomain.CurrentDomain.BaseDirectory + @"asv-data-folder\sdr_records";
+        if (Environment.OSVersion.Platform == PlatformID.Win32NT) Process.Start("explorer.exe", recordsFolder);
+        if (Environment.OSVersion.Platform == PlatformID.Unix) Process.Start("xdg-open", recordsFolder);
+        if (Environment.OSVersion.Platform == PlatformID.MacOSX) Process.Start("open", recordsFolder);
     }
 
 

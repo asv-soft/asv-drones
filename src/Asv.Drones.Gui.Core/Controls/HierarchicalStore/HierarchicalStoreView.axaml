@@ -63,8 +63,8 @@
                         <Button DockPanel.Dock="Right" Margin="8,0,0,0" ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_Button_ToolTip_Refresh}"  Command="{Binding Refresh}">
                             <avalonia:MaterialIcon Kind="Refresh" Foreground="{StaticResource FileBrush}" />
                         </Button>
-                        <Button DockPanel.Dock="Right" Margin="8,0,0,0" ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_Button_ToolTip_Move_File_Explorer}"  Command="{Binding StartFileDialog}">
-                            <avalonia:MaterialIcon Kind="Plus" Foreground="{StaticResource FileBrush}" />
+                        <Button DockPanel.Dock="Right" IsVisible="{Binding IsOsSupportFileExplorer}" Margin="8,0,0,0" ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_Button_ToolTip_Open_Records_Folder}"  Command="{Binding OpenRecordsFolder}">
+                            <avalonia:MaterialIcon Kind="Folder" Foreground="{StaticResource FolderBrush}" />
                         </Button>
                         <Border DockPanel.Dock="Top">
                             <TextBox Watermark="{x:Static core:RS.HierarhicalStoreView_Search_Textbox_Watermark }" Text="{Binding SearchText}"/>    
