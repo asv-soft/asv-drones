@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="$(SolutionDir)Asv.Drones.Gui.Custom.props"/>
+    <PropertyGroup>
+        <CustomPropsPath Condition=" '$(SolutionDir)' == '$(ProjectDir)' ">../Asv.Drones.Gui.Custom.props</CustomPropsPath>
+        <CustomPropsPath Condition=" '$(SolutionDir)' != '$(ProjectDir)' ">$(SolutionDir)Asv.Drones.Gui.Custom.props</CustomPropsPath>
+    </PropertyGroup>
+    <Import Project="$(CustomPropsPath)"/>
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>

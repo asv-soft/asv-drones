@@ -1,7 +1,4 @@
 <Project>
-  <ItemGroup>
-    
-  </ItemGroup>
   <PropertyGroup>
     <Nullable>enable</Nullable>
     <ProductVersion>0.2.1</ProductVersion>

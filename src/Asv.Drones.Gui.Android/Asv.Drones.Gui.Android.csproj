@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="$(SolutionDir)Asv.Drones.Gui.Custom.props"/>
+    <PropertyGroup>
+        <CustomPropsPath Condition=" '$(SolutionDir)' == '$(ProjectDir)' ">../Asv.Drones.Gui.Custom.props</CustomPropsPath>
+        <CustomPropsPath Condition=" '$(SolutionDir)' != '$(ProjectDir)' ">$(SolutionDir)Asv.Drones.Gui.Custom.props</CustomPropsPath>
+    </PropertyGroup>
+    <Import Project="$(CustomPropsPath)"/>
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net7.0-android</TargetFramework>
@@ -9,7 +13,7 @@
         <ApplicationVersion>1</ApplicationVersion>
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
         <AndroidPackageFormat>apk</AndroidPackageFormat>
-        <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
+        <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
         <PublishTrimmed>false</PublishTrimmed>
         <AndroidLinkMode>None</AndroidLinkMode>
         <RunAOTCompilation>false</RunAOTCompilation>
