@@ -324,7 +324,7 @@ public abstract class HierarchicalStoreViewModel<TKey,TFile>:HierarchicalStoreVi
     {
         var recordsFolder = AppDomain.CurrentDomain.BaseDirectory + @"asv-data-folder\sdr_records";
         if (Environment.OSVersion.Platform == PlatformID.Win32NT) Process.Start("explorer.exe", recordsFolder);
-        if (Environment.OSVersion.Platform == PlatformID.Unix) Process.Start("xdg-open", recordsFolder);
+        if (Environment.OSVersion.Platform == PlatformID.Unix) Process.Start("open", recordsFolder);
         if (Environment.OSVersion.Platform == PlatformID.MacOSX) Process.Start("open", recordsFolder);
     }
 
