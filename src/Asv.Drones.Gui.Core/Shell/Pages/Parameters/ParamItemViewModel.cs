@@ -35,7 +35,6 @@ public class ParamItemViewModel : ViewModelBase
             DisplayName = Name;
         }
     }
-    
     public ParamItemViewModel(IParamItem paramItem, ILogService log) : base(new Uri(ParamPageViewModel.UriString+$".item{paramItem.Name}"))
     {
         _log = log;

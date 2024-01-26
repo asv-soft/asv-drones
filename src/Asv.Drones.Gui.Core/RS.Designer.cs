@@ -1193,6 +1193,114 @@ namespace Asv.Drones.Gui.Core {
             }
         }
         
+           /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string HierarchicalStoreView_Button_DeleteFile {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_Button_DeleteFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename.
+        /// </summary>
+        public static string HierarchicalStoreView_Button_EditFileName {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_Button_EditFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move To Folder.
+        /// </summary>
+        public static string HierarchicalStoreView_Button_MovefileToFolder {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_Button_MovefileToFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New File.
+        /// </summary>
+        public static string HierarchicalStoreView_Button_ToolTip_CreateNewFile {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_Button_ToolTip_CreateNewFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Folder.
+        /// </summary>
+        public static string HierarchicalStoreView_Button_ToolTip_CreateNewFolder {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_Button_ToolTip_CreateNewFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh .
+        /// </summary>
+        public static string HierarchicalStoreView_Button_ToolTip_Refresh {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_Button_ToolTip_Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete File.
+        /// </summary>
+        public static string HierarchicalStoreView_File_Button_DeleteFile {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_File_Button_DeleteFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename File.
+        /// </summary>
+        public static string HierarchicalStoreView_File_Button_EditeFileName {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_File_Button_EditeFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move File.
+        /// </summary>
+        public static string HierarchicalStoreView_File_Button_MoveFile {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_File_Button_MoveFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Folder.
+        /// </summary>
+        public static string HierarchicalStoreView_Folder_Button_DeleteFolder {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_Folder_Button_DeleteFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename Folder.
+        /// </summary>
+        public static string HierarchicalStoreView_Folder_Button_EditFolderName {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_Folder_Button_EditFolderName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Folder.
+        /// </summary>
+        public static string HierarchicalStoreView_Folder_Button_MoveFolderToFolder {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_Folder_Button_MoveFolderToFolder", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to KHz.
         /// </summary>
@@ -2099,6 +2207,15 @@ namespace Asv.Drones.Gui.Core {
         public static string ParametersEditorPageView_UpdateButton_ToolTip {
             get {
                 return ResourceManager.GetString("ParametersEditorPageView_UpdateButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loaded: {0}.
+        /// </summary>
+        public static string ParametersEditorPageViewModel_Loaded {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageViewModel_Loaded", resourceCulture);
             }
         }
         

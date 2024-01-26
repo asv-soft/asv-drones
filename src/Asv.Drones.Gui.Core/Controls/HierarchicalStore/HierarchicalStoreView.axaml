@@ -54,13 +54,13 @@
                 CornerRadius="{StaticResource ControlCornerRadius}">
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Top" IsVisible="{Binding IsHeaderVisible}">
-                        <Button IsVisible="{Binding IsCreateFolderAvailable}" DockPanel.Dock="Right" Margin="8,0,0,0" Command="{Binding CreateNewFolder}">
+                        <Button IsVisible="{Binding IsCreateFolderAvailable}" DockPanel.Dock="Right" Margin="8,0,0,0" ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_Button_ToolTip_CreateNewFolder}" Command="{Binding CreateNewFolder}">
                             <avalonia:MaterialIcon Kind="FolderPlusOutline" Foreground="{StaticResource FolderBrush}" />
                         </Button>
-                        <Button IsVisible="{Binding IsCreateFileAvailable}" DockPanel.Dock="Right" Margin="8,0,0,0"  Command="{Binding CreateNewFile}">
+                        <Button IsVisible="{Binding IsCreateFileAvailable}" DockPanel.Dock="Right" Margin="8,0,0,0" ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_Button_ToolTip_CreateNewFile}" Command="{Binding CreateNewFile}">
                             <avalonia:MaterialIcon Kind="FilePlusOutline" Foreground="{StaticResource FileBrush}" />
                         </Button>
-                        <Button DockPanel.Dock="Right" Margin="8,0,0,0"  Command="{Binding Refresh}">
+                        <Button DockPanel.Dock="Right" Margin="8,0,0,0" ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_Button_ToolTip_Refresh}"  Command="{Binding Refresh}">
                             <avalonia:MaterialIcon Kind="Refresh" Foreground="{StaticResource FileBrush}" />
                         </Button>
                         <Border DockPanel.Dock="Top">
@@ -102,17 +102,20 @@
                             <StackPanel DockPanel.Dock="Right" Spacing="8" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Orientation="Horizontal">
                                 <Button
                                     HotKey="F2"
+                                    ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_Folder_Button_EditFolderName}"
                                     IsVisible="{Binding !IsInEditNameMode}"
                                     Command="{Binding BeginEditName}">
                                     <avalonia:MaterialIcon Kind="Pencil" Foreground="{StaticResource FileBrush}"/>
                                 </Button>
                                 <Button
                                     IsVisible="{Binding !IsInEditNameMode}"
+                                    ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_Folder_Button_MoveFolderToFolder}"
                                     Command="{Binding BeginMove}">
                                     <avalonia:MaterialIcon Kind="FolderMoveOutline" Foreground="{StaticResource FileBrush}"/>
                                 </Button>
                                 <Button
                                     IsVisible="{Binding !IsInEditNameMode}"
+                                    ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_Folder_Button_DeleteFolder}"
                                     Command="{Binding DeleteEntry}">
                                     <avalonia:MaterialIcon Kind="Trash" Foreground="{StaticResource DeleteBrush}"/>
                                 </Button>
@@ -135,16 +138,19 @@
                             <StackPanel DockPanel.Dock="Right" Spacing="8"  Orientation="Horizontal">
                                 <Button
                                     HotKey="F2"
+                                    ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_Button_EditFileName}"
                                     IsVisible="{Binding !IsInEditNameMode}"
                                     Command="{Binding BeginEditName}">
                                     <avalonia:MaterialIcon Kind="Pencil" Foreground="{StaticResource FileBrush}"/>
                                 </Button>
                                 <Button
+                                    ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_File_Button_MoveFile}"
                                     IsVisible="{Binding !IsInEditNameMode}"
                                     Command="{Binding BeginMove}">
                                     <avalonia:MaterialIcon Kind="FileMoveOutline" Foreground="{StaticResource FileBrush}"/>
                                 </Button>
                                 <Button
+                                    ToolTip.Tip="{x:Static core:RS.HierarchicalStoreView_File_Button_DeleteFile}"
                                     IsVisible="{Binding !IsInEditNameMode}"
                                     Command="{Binding DeleteEntry}">
                                     <avalonia:MaterialIcon Kind="Trash" Foreground="{StaticResource DeleteBrush}"/>
@@ -170,7 +176,7 @@
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Border Padding="2" Width="{Binding Width}">
+                                        <Border Padding="2">
                                             <Border HorizontalAlignment="Stretch" Background="{Binding Color}" BorderThickness="1" CornerRadius="{DynamicResource ControlCornerRadius}">
                                                 <Grid ColumnDefinitions="18,*,18" Margin="3" HorizontalAlignment="Stretch" >
                                                     <avalonia:MaterialIcon  VerticalAlignment="Center" Foreground="White" Kind="TagOutline" Width="15" Height="15" />
@@ -179,7 +185,6 @@
                                                         <avalonia:MaterialIcon Kind="Close" Width="14" Height="14"/>
                                                     </Button>
                                                 </Grid>
-                                                
                                             </Border>    
                                         </Border>
                                     </DataTemplate>

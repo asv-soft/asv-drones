@@ -1207,4 +1207,43 @@
   <data name="PlaningPageViewModel_DataLossDialog_Content" xml:space="preserve">
 	  <value>Вы пытаетесь открыть другой пункт меню, но в текущем у вас есть несохраненные изменения. Хотите сохранить их?</value>
   </data>
+  <data name="ParametersEditorPageViewModel_Loaded" xml:space="preserve">
+	  <value>Получено: {0}</value>
+  </data>
+  <data name="HierarchicalStoreView_Button_ToolTip_CreateNewFile" xml:space="preserve">
+	  <value>Создать новый файл</value>
+  </data>
+  <data name="HierarchicalStoreView_Button_ToolTip_CreateNewFolder" xml:space="preserve">
+	  <value>Создать новую папку</value>
+  </data>
+  <data name="HierarchicalStoreView_Button_ToolTip_Refresh" xml:space="preserve">
+	  <value>Обновить</value>
+  </data>
+  <data name="HierarchicalStoreView_Button_DeleteFile" xml:space="preserve">
+	  <value>Удалить Файл</value>
+  </data>
+  <data name="HierarchicalStoreView_Button_EditFileName" xml:space="preserve">
+	  <value>Переименовать</value>
+  </data>
+  <data name="HierarchicalStoreView_Button_MovefileToFolder" xml:space="preserve">
+	  <value>Переместить</value>
+  </data>
+  <data name="HierarchicalStoreView_Folder_Button_MoveFolderToFolder" xml:space="preserve">
+	  <value>Переместить папку</value>
+  </data>
+  <data name="HierarchicalStoreView_Folder_Button_EditFolderName" xml:space="preserve">
+	  <value>Переименовать папку</value>
+  </data>
+  <data name="HierarchicalStoreView_File_Button_DeleteFile" xml:space="preserve">
+	  <value>Удалить файл</value>
+  </data>
+  <data name="HierarchicalStoreView_File_Button_EditeFileName" xml:space="preserve">
+	  <value>Переименовать файл</value>
+  </data>
+  <data name="HierarchicalStoreView_File_Button_MoveFile" xml:space="preserve">
+	  <value>Переместить файл</value>
+  </data>
+  <data name="HierarchicalStoreView_Folder_Button_DeleteFolder" xml:space="preserve">
+	  <value>Удалить папку</value>
+  </data>
 </root>
