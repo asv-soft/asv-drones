@@ -2,6 +2,7 @@
     <PropertyGroup>
         <CustomPropsPath Condition=" '$(SolutionDir)' == '$(ProjectDir)' ">../Asv.Drones.Gui.Custom.props</CustomPropsPath>
         <CustomPropsPath Condition=" '$(SolutionDir)' != '$(ProjectDir)' ">$(SolutionDir)Asv.Drones.Gui.Custom.props</CustomPropsPath>
+        <ApplicationIcon>..\Asv.Drones.Gui\Assets\icon.ico</ApplicationIcon>
     </PropertyGroup>
     <Import Project="$(CustomPropsPath)"/>
     <PropertyGroup>
@@ -28,5 +29,11 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Asv.Drones.Gui\Asv.Drones.Gui.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\Asv.Drones.Gui\Assets\icon.ico">
+        <Link>icon.ico</Link>
+      </None>
     </ItemGroup>
 </Project>
