@@ -86,8 +86,8 @@ To ensure a smooth development experience, follow the steps below to set up your
 - **Operating System:** This project is compatible with Windows, macOS, and Linux. Ensure that your development machine runs one of these supported operating systems.
 - **IDE (Integrated Development Environment):** We recommend using [Visual Studio](https://visualstudio.microsoft.com/) or [JetBrains Rider](https://www.jetbrains.com/rider/) as your IDE for C# development. Make sure to install the necessary extensions and plugins for a better development experience.
 
-#### 2. **.NET 7 Installation:**
-- This project is built using [.NET 7](https://dotnet.microsoft.com/download/dotnet/7.0), the latest version of the .NET platform. Install .NET 7 by following the instructions provided on the official [.NET website](https://dotnet.microsoft.com/download/dotnet/7.0).
+#### 2. **.NET Installation:**
+- This project is built using [.NET 6.0](https://dotnet.microsoft.com/download/dotnet/6.0) and [.NET 7.0](https://dotnet.microsoft.com/download/dotnet/7.0), the latests version of the .NET platform. We recommend installing .NET 7.0 by following the instructions provided on the official [.NET website](https://dotnet.microsoft.com/download/dotnet/7.0).
 
    ```bash
    # Check your current .NET version
