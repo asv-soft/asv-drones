@@ -14,7 +14,7 @@ jobs:
     runs-on: "windows-latest"
     
     steps:
-      - uses: "marvinpinto/asv-soft/action-automatic-release@updated20"
+      - uses: "asv-soft/action-automatic-release@updated20"
         with:
           repo_token: "${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}" 
           prerelease: false
