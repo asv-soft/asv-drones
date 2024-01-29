@@ -135,6 +135,10 @@ iscc ../win-arm64-install.iss
 iscc ../win-x86-install.iss
 iscc ../win-x64-install.iss
 
+
+wsl sed -i 's/\r//' linux_packages.sh
+wsl sed -i 's/\r//' osx_packages.sh
+
 wsl ../linux_packages.sh
 
 wsl ../osx_packages.sh

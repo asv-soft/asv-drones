@@ -3,6 +3,7 @@ using System.ComponentModel.Composition;
 using System.Reactive.Linq;
 using Asv.Drones.Gui.Core;
 using Asv.Mavlink;
+using Asv.Mavlink.V2.Common;
 using Avalonia.Media;
 using DynamicData.Binding;
 using FluentAvalonia.UI.Controls;
@@ -69,7 +70,7 @@ public class PlaningMissionBrowserViewModel : HierarchicalStoreViewModel<Guid,Pl
         }
     }
     
-    private HierarchicalStoreEntryTagViewModel ConvertToTag(PlaningMissionPointType argType)
+    private HierarchicalStoreEntryTagViewModel ConvertToTag(MavCmd argType)
     {
         return new HierarchicalStoreEntryTagViewModel
         {

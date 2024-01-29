@@ -3,6 +3,7 @@ using System.ComponentModel.Composition;
 using System.Reactive;
 using System.Windows.Input;
 using Asv.Common;
+using Asv.Mavlink.V2.Common;
 using Avalonia.Controls;
 using DynamicData;
 using DynamicData.Binding;
@@ -45,41 +46,41 @@ public class PlaningMissionEditorViewModel : PlaningWidgetBase
                 new MissionPointFlyoutMenuItem
                 {
                     Title = RS.PlaningMissionEditorViewModel_TakeOffMenuItem_Title,
-                    Type = PlaningMissionPointType.TakeOff,
+                    Type = MavCmd.MavCmdNavTakeoff,
                     Icon = MaterialIconKind.FlightTakeoff,
                     Command = ReactiveCommand.Create(() =>
                     {
-                        Context.Mission.AddPointCmd.Execute(PlaningMissionPointType.TakeOff).Subscribe();
+                        Context.Mission.AddPointCmd.Execute(MavCmd.MavCmdNavTakeoff).Subscribe();
                     })
                 },
                 new MissionPointFlyoutMenuItem
                 {
                     Title = RS.PlaningMissionEditorViewModel_DoLandMenuItem_Title,
-                    Type = PlaningMissionPointType.DoLand,
+                    Type = MavCmd.MavCmdNavLand,
                     Icon = MaterialIconKind.FlightLand,
                     Command = ReactiveCommand.Create(() =>
                     {
-                        Context.Mission.AddPointCmd.Execute(PlaningMissionPointType.DoLand).Subscribe();
+                        Context.Mission.AddPointCmd.Execute(MavCmd.MavCmdNavLand).Subscribe();
                     })
                 },
                 new MissionPointFlyoutMenuItem
                 {
                     Title = RS.PlaningMissionEditorViewModel_WaypointMenuItem_Title,
-                    Type = PlaningMissionPointType.Waypoint,
+                    Type = MavCmd.MavCmdNavWaypoint,
                     Icon = MaterialIconKind.Location,
                     Command = ReactiveCommand.Create(() =>
                     {
-                        Context.Mission.AddPointCmd.Execute(PlaningMissionPointType.Waypoint).Subscribe();
+                        Context.Mission.AddPointCmd.Execute(MavCmd.MavCmdNavWaypoint).Subscribe();
                     })
                 },
                 new MissionPointFlyoutMenuItem
                 {
                     Title = RS.PlaningMissionEditorViewModel_RoiMenuItem_Title,
-                    Type = PlaningMissionPointType.Roi,
+                    Type = MavCmd.MavCmdNavRoi,
                     Icon = MaterialIconKind.ImageFilterCenterFocus,
                     Command = ReactiveCommand.Create(() =>
                     {
-                        Context.Mission.AddPointCmd.Execute(PlaningMissionPointType.Roi).Subscribe();
+                        Context.Mission.AddPointCmd.Execute(MavCmd.MavCmdNavRoi).Subscribe();
                     })
                 }
             }
@@ -94,41 +95,41 @@ public class PlaningMissionEditorViewModel : PlaningWidgetBase
                 new MissionPointFlyoutMenuItem
                 {
                     Title = RS.PlaningMissionEditorViewModel_TakeOffMenuItem_Title,
-                    Type = PlaningMissionPointType.TakeOff,
+                    Type = MavCmd.MavCmdNavTakeoff,
                     Icon = MaterialIconKind.FlightTakeoff,
                     Command = ReactiveCommand.Create(() =>
                     {
-                        Context.Mission.ReplacePointCmd.Execute(PlaningMissionPointType.TakeOff).Subscribe();
+                        Context.Mission.ReplacePointCmd.Execute(MavCmd.MavCmdNavTakeoff).Subscribe();
                     })
                 },
                 new MissionPointFlyoutMenuItem
                 {
                     Title = RS.PlaningMissionEditorViewModel_DoLandMenuItem_Title,
-                    Type = PlaningMissionPointType.DoLand,
+                    Type = MavCmd.MavCmdNavLand,
                     Icon = MaterialIconKind.FlightLand,
                     Command = ReactiveCommand.Create(() =>
                     {
-                        Context.Mission.ReplacePointCmd.Execute(PlaningMissionPointType.DoLand).Subscribe();
+                        Context.Mission.ReplacePointCmd.Execute(MavCmd.MavCmdNavLand).Subscribe();
                     })
                 },
                 new MissionPointFlyoutMenuItem
                 {
                     Title = RS.PlaningMissionEditorViewModel_WaypointMenuItem_Title,
-                    Type = PlaningMissionPointType.Waypoint,
+                    Type = MavCmd.MavCmdNavWaypoint,
                     Icon = MaterialIconKind.Location,
                     Command = ReactiveCommand.Create(() =>
                     {
-                        Context.Mission.ReplacePointCmd.Execute(PlaningMissionPointType.Waypoint).Subscribe();
+                        Context.Mission.ReplacePointCmd.Execute(MavCmd.MavCmdNavWaypoint).Subscribe();
                     })
                 },
                 new MissionPointFlyoutMenuItem
                 {
                     Title = RS.PlaningMissionEditorViewModel_RoiMenuItem_Title,
-                    Type = PlaningMissionPointType.Roi,
+                    Type = MavCmd.MavCmdNavRoi,
                     Icon = MaterialIconKind.ImageFilterCenterFocus,
                     Command = ReactiveCommand.Create(() =>
                     {
-                        Context.Mission.ReplacePointCmd.Execute(PlaningMissionPointType.Roi).Subscribe();
+                        Context.Mission.ReplacePointCmd.Execute(MavCmd.MavCmdNavRoi).Subscribe();
                     })
                 }
             }
@@ -200,7 +201,7 @@ public class MissionPointFlyoutMenuItem : ReactiveObject
     public bool IsEnabled { get; set; } = true;
     public string Title { get; init; }
     public MaterialIconKind Icon { get; init; }
-    public PlaningMissionPointType Type { get; init; }
+    public MavCmd Type { get; init; }
     public ReactiveCommand<Unit,Unit> Command { get; init; }
     public List<MissionPointFlyoutMenuItem> Items { get; } = new();
 }

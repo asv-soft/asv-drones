@@ -3,6 +3,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.Reactive;
 using System.Reactive.Linq;
 using Asv.Common;
+using Asv.Mavlink.V2.Common;
 using Asv.Mavlink.Vehicle;
 using Avalonia.Controls;
 using DynamicData;
@@ -122,8 +123,8 @@ public class PlaningMissionViewModel : ViewModelBaseWithValidation
             .DisposeItWith(Disposable);
         
         _source.CountChanged.Subscribe(_ => IsChanged = true).DisposeItWith(Disposable);
-        AddPointCmd = ReactiveCommand.CreateFromTask<PlaningMissionPointType>(AddPointImpl).DisposeItWith(Disposable);
-        ReplacePointCmd = ReactiveCommand.Create<PlaningMissionPointType>(ReplacePointImpl).DisposeItWith(Disposable);
+        AddPointCmd = ReactiveCommand.CreateFromTask<MavCmd>(AddPointImpl).DisposeItWith(Disposable);
+        ReplacePointCmd = ReactiveCommand.Create<MavCmd>(ReplacePointImpl).DisposeItWith(Disposable);
         SaveCmd = ReactiveCommand.Create(SaveImpl, this.IsValid()).DisposeItWith(Disposable);
         SaveCmd.ThrownExceptions.Subscribe(ex=>log.Error("Planing",ex.Message,ex)).DisposeItWith(Disposable);
         MoveTop = ReactiveCommand.Create(() =>
@@ -165,8 +166,8 @@ public class PlaningMissionViewModel : ViewModelBaseWithValidation
     [Reactive]
     public double TotalDistance { get; set; }
     public ReadOnlyObservableCollection<PlaningMissionPointViewModel> Points => _points;
-    public ReactiveCommand<PlaningMissionPointType, Unit> AddPointCmd { get; }
-    public ReactiveCommand<PlaningMissionPointType, Unit> ReplacePointCmd { get; }
+    public ReactiveCommand<MavCmd, Unit> AddPointCmd { get; }
+    public ReactiveCommand<MavCmd, Unit> ReplacePointCmd { get; }
     public ReactiveCommand<Unit, Unit> MoveTop { get; }
     public ReactiveCommand<Unit, Unit> MoveDown { get; }
     public ReactiveCommand<Unit, Unit> SaveCmd { get; }
@@ -233,15 +234,15 @@ public class PlaningMissionViewModel : ViewModelBaseWithValidation
         IsChanged = false;
     }
 
-    private void ReplacePointImpl(PlaningMissionPointType typeName)
+    private void ReplacePointImpl(MavCmd type)
     {
         var selectedPoint = SelectedPoint;
-        selectedPoint.Point.Type = typeName;
+        selectedPoint.Point.Type = type;
         _source.Remove(SelectedPoint.Index);
         _source.AddOrUpdate(selectedPoint.Point);
     }
     
-    private async Task AddPointImpl(PlaningMissionPointType type, CancellationToken cancel)
+    private async Task AddPointImpl(MavCmd type, CancellationToken cancel)
     {
         //TODO: Make a possibility to insert points
         var indexToAdd = _source.Count == 0 ? 0 : _source.Keys.Max() + 1;

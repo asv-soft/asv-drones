@@ -4,6 +4,7 @@ using System.Reactive;
 using Asv.Avalonia.Map;
 using Asv.Common;
 using Asv.Mavlink;
+using Asv.Mavlink.V2.Common;
 using Avalonia.Media;
 using DynamicData;
 using DynamicData.Binding;
@@ -57,7 +58,7 @@ public class PlaningMissionPointViewModel : ViewModelBaseWithValidation
                 _point.Index = _;
                 if(MissionAnchor != null)
                     MissionAnchor.Index = _;
-                Name = $"{Type} {_}";
+                Name = $"{Type.GetPlaningMissionPointName()} {_}";
             }).DisposeItWith(Disposable);
 
         this.WhenValueChanged(_ => _.Type)
@@ -65,7 +66,7 @@ public class PlaningMissionPointViewModel : ViewModelBaseWithValidation
             {
                 IsChanged = true;
                 _point.Type = _;
-                Name = $"{_} {Index}";
+                Name = $"{_.GetPlaningMissionPointName()} {Index}";
             }).DisposeItWith(Disposable);
         
     }
@@ -75,7 +76,7 @@ public class PlaningMissionPointViewModel : ViewModelBaseWithValidation
     [Reactive]
     public string Name { get; set; }
     [Reactive]
-    public PlaningMissionPointType Type { get; set; }
+    public MavCmd Type { get; set; }
     [Reactive]
     public bool IsChanged { get; set; }
     [Reactive]

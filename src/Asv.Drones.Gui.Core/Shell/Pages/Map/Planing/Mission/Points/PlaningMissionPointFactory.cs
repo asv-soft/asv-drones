@@ -1,5 +1,9 @@
 ﻿using System.ComponentModel.Composition;
+using Asv.Common;
+using Asv.Mavlink;
+using Asv.Mavlink.V2.Common;
 using Material.Icons;
+using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core;
 
@@ -26,16 +30,16 @@ public class PlaningMissionPointFactory : IPlaningMissionPointFactory
     {
         switch (point.Type)
         {
-            case PlaningMissionPointType.TakeOff:
+            case MavCmd.MavCmdNavTakeoff:
                 return new PlaningMissionTakeOffPointViewModel(point, mission, _svc, _loc);
-            case PlaningMissionPointType.DoLand:
+            case MavCmd.MavCmdNavLand:
                 return new PlaningMissionLandPointViewModel(point, mission, _svc, _loc);
-            case PlaningMissionPointType.Waypoint:
+            case MavCmd.MavCmdNavWaypoint:
                 return new PlaningMissionNavigationPointViewModel(point, mission, _svc, _loc);
-            case PlaningMissionPointType.Roi:
+            case MavCmd.MavCmdNavRoi:
                 return new PlaningMissionRoiPointViewModel(point, mission, _svc, _loc);
             default:
-                throw new ArgumentOutOfRangeException();
+                return new PlaningMissionUnknownPointViewModel(point, mission, _svc, _loc);
         }
     }
 }

@@ -119,6 +119,12 @@
                             <TextBlock Margin="8 0 0 0" Text="{CompiledBinding Name}"/>
                         </DockPanel>
                     </DataTemplate>
+                    <DataTemplate DataType="core:PlaningMissionUnknownPointViewModel">
+                        <DockPanel>
+                            <avalonia:MaterialIcon Margin="8 0 0 0" Kind="QuestionMark" DockPanel.Dock="Left" Width="20" Height="20"/>
+                            <TextBlock Margin="8 0 0 0" Text="{CompiledBinding Name}"/>
+                        </DockPanel>
+                    </DataTemplate>
                 </ListBox.DataTemplates>
             </ListBox>
         </DockPanel>
