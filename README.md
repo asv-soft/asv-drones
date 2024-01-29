@@ -5,7 +5,7 @@
 
 
 
-[![Release](https://github.com/asv-soft/asv-drones/actions/workflows/ReleaseDeployAction.yml/badge.svg)](https://github.com/asv-soft/asv-drones/actions/workflows/ReleaseDeployAction.yml)
+[//]: [![Release](https://github.com/asv-soft/asv-drones/actions/workflows/ReleaseDeployAction.yml/badge.svg)](https://github.com/asv-soft/asv-drones/actions/workflows/ReleaseDeployAction.yml)
 
 ## 1. Introduction
 
