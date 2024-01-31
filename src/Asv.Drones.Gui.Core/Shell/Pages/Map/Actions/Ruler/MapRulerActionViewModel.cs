@@ -33,8 +33,18 @@ public class MapRulerActionViewModel:MapActionBase
             {
                 var start = await Map.ShowTargetDialog(RS.MapPageViewModel_RulerStartPoint_Description,
                     _tokenSource.Token);
+                if (start.Equals(GeoPoint.NaN))
+                {
+                    IsRulerEnabled = false;
+                    return;
+                }
                 var stop = await Map.ShowTargetDialog(RS.MapPageViewModel_RulerStopPoint_Description,
                     _tokenSource.Token);
+                if (stop.Equals(GeoPoint.NaN))
+                {
+                    IsRulerEnabled = false;
+                    return;
+                }
                 polygon.Ruler.Value.Start.OnNext(start);
                 polygon.Ruler.Value.Stop.OnNext(stop);
             }

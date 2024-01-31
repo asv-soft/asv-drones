@@ -24,9 +24,12 @@ namespace Asv.Drones.Gui.Uav
         {
             // DONE: Localize
             var target = await Map.ShowTargetDialog( RS.RoiAnchorActionViewModel_ExecuteImpl_ShowTargetDialog_Value, CancellationToken.None);
-            var point = new GeoPoint(target.Latitude, target.Longitude, (double)Vehicle.Position.Current.Value.Altitude);
-            _log.Info(LogName, string.Format(RS.RoiAnchorActionViewModel_ExecuteImpl_LogInfo, point, Vehicle.Name.Value));
-            await Vehicle.Position.SetRoi(point, CancellationToken.None);
+            if (!target.Equals(GeoPoint.NaN))
+            {
+                var point = new GeoPoint(target.Latitude, target.Longitude, (double)Vehicle.Position.Current.Value.Altitude);
+                _log.Info(LogName, string.Format(RS.RoiAnchorActionViewModel_ExecuteImpl_LogInfo, point, Vehicle.Name.Value));
+                await Vehicle.Position.SetRoi(point, CancellationToken.None);
+            }
         }
     }
 }

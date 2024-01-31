@@ -252,7 +252,10 @@ public class PlaningMissionViewModel : ViewModelBaseWithValidation
             Index = indexToAdd
         };
 
-        model.Location = await _context.ShowTargetDialog(RS.PlaningMissionViewModel_SelectTargetLocation, cancel);
+        var point = await _context.ShowTargetDialog(RS.PlaningMissionViewModel_SelectTargetLocation, cancel);
+        if (!point.Equals(GeoPoint.NaN))
+            model.Location = point;
+        
         _source.AddOrUpdate(model);
     }
     

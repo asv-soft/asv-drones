@@ -23,13 +23,16 @@ namespace Asv.Drones.Gui.Uav
         protected override async Task ExecuteImpl(CancellationToken cancel)
         {
             // DONE: Localize
-             var target = await Map.ShowTargetDialog(RS.GoToMapAnchorActionViewModel_ExecuteImpl_ShowTargetDialog_Value, CancellationToken.None);
-            var point = new GeoPoint(target.Latitude, target.Longitude, (double)Vehicle.Position.Current.Value.Altitude);
-            _log.Info(LogName,string.Format(RS.GoToMapAnchorActionViewModel_ExecuteImpl_LogInfo_Value, 
-                                                            point,
-                                                            Vehicle.Name.Value));
+            var target = await Map.ShowTargetDialog(RS.GoToMapAnchorActionViewModel_ExecuteImpl_ShowTargetDialog_Value, CancellationToken.None);
+            if (!target.Equals(GeoPoint.NaN))
+            {
+                var point = new GeoPoint(target.Latitude, target.Longitude, (double)Vehicle.Position.Current.Value.Altitude);
+                _log.Info(LogName,string.Format(RS.GoToMapAnchorActionViewModel_ExecuteImpl_LogInfo_Value, 
+                    point,
+                    Vehicle.Name.Value));
             
-            await Vehicle.GoTo(point, CancellationToken.None);
+                await Vehicle.GoTo(point, CancellationToken.None);
+            }
         }
     }
 }
