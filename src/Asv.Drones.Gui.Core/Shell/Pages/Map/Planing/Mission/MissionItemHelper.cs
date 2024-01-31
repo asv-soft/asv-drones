@@ -12,7 +12,11 @@ public static class MissionItemHelper
         {
             Index = missionItem.Index,
             Type = missionItem.Command.Value,
-            Location = missionItem.Location.Value
+            Location = missionItem.Location.Value,
+            Param1 = missionItem.Param1.Value,
+            Param2 = missionItem.Param2.Value,
+            Param3 = missionItem.Param3.Value,
+            Param4 = missionItem.Param4.Value
         };
     }
 }

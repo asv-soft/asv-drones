@@ -44,7 +44,7 @@ public class PlaningMissionAnchorProvider : ViewModelProviderBase<IMapAnchor>, I
         Source.Connect()
             .OnItemAdded(_ =>
             {
-                if(_ is not PlaningMissionRoiPointAnchor && _ is PlaningMissionAnchor anchor)
+                if(_ is not PlaningMissionDoSetRoiAnchor && _ is PlaningMissionAnchor anchor)
                     polygon.Points.AddOrUpdate(anchor);
             })
             .OnItemRemoved(_ =>
@@ -55,7 +55,7 @@ public class PlaningMissionAnchorProvider : ViewModelProviderBase<IMapAnchor>, I
             .WhenPropertyChanged(_ => _.Location)
             .Subscribe(_ =>
             {
-                polygon.Points.AddOrUpdate(Source.Items.Where(_ => _ is not PlaningMissionRoiPointAnchor & _ is PlaningMissionAnchor).Cast<PlaningMissionAnchor>());
+                polygon.Points.AddOrUpdate(Source.Items.Where(_ => _ is not PlaningMissionDoSetRoiAnchor & _ is PlaningMissionAnchor).Cast<PlaningMissionAnchor>());
             })
             .DisposeItWith(Disposable);
         
@@ -65,6 +65,7 @@ public class PlaningMissionAnchorProvider : ViewModelProviderBase<IMapAnchor>, I
             .AutoRefresh(_ => _.Index)
             // This is because merge many dont delete items from source when task removed
             // See similar problem here => https://www.magentaize.xyz/posts/mergemany-do-not-remove-elements-of-removed-observables-in-dynamicdata/
+            .Filter(_ => _.MissionAnchor != null)
             .Do(changes =>
             {
                 foreach (var x in changes)

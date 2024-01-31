@@ -20,11 +20,9 @@ public class PlaningMissionViewModel : ViewModelBaseWithValidation
 {
     private readonly Guid _id;
     private readonly IPlaningMission _svc;
-    private readonly CompositionContainer _container;
-    private readonly IPlaningMissionPointFactory _pointFactory;
+    private readonly IPlaningMissionContext _context;
     private readonly SourceCache<PlaningMissionPointModel, int> _source;
     private readonly ReadOnlyObservableCollection<PlaningMissionPointViewModel> _points;
-    private readonly IPlaningMissionContext _context;
 
     public PlaningMissionViewModel() : base("asv:shell.page.planing-mission.mission")
     {
@@ -38,12 +36,9 @@ public class PlaningMissionViewModel : ViewModelBaseWithValidation
             // }));
         }
     }
-    public PlaningMissionViewModel(Guid id, string name, ILogService log, IPlaningMissionPointFactory pointFactory, 
-        CompositionContainer container, IPlaningMission svc, IPlaningMissionContext context) : this()
+    public PlaningMissionViewModel(Guid id, string name, ILogService log, IPlaningMissionPointFactory pointFactory, IPlaningMission svc, IPlaningMissionContext context) : this()
     {
         _id = id;
-        _pointFactory = pointFactory;
-        _container = container;
         _context = context;
         _svc = svc;
         
@@ -54,7 +49,7 @@ public class PlaningMissionViewModel : ViewModelBaseWithValidation
             .Transform(x =>
             {
                 var point = pointFactory.Create(x, this);
-                if (_context.IsInAnchorEditMode)
+                if (_context.IsInAnchorEditMode && point.MissionAnchor != null)
                 {
                     point.MissionAnchor.IsInEditMode = true;
                 }
@@ -94,7 +89,7 @@ public class PlaningMissionViewModel : ViewModelBaseWithValidation
                 
                 context.SelectedItem = _.MissionAnchor;
 
-                if (!_.MissionAnchor.IsInEditMode)
+                if (_.MissionAnchor != null && !_.MissionAnchor.IsInEditMode)
                 {
                     context.Center = _.MissionAnchor.Location;
                 }
@@ -102,23 +97,11 @@ public class PlaningMissionViewModel : ViewModelBaseWithValidation
             .DisposeItWith(Disposable);
         
         context.WhenValueChanged(_ => _.SelectedItem)
-            .Subscribe(_ =>
+            .Subscribe(anchor =>
             {
-                if (_ == null)
-                {
-                    SelectedPoint = null;
-                    return;
-                }
+                if (anchor == null) return;
                 
-                var point = _points.FirstOrDefault(__ => __.MissionAnchor == _);
-                if (point != null)
-                {
-                    SelectedPoint = point;
-                    if (!point.MissionAnchor.IsInEditMode)
-                    {
-                        context.Center = point.MissionAnchor.Location;
-                    }
-                }
+                SelectedPoint = _points.FirstOrDefault(point => point.MissionAnchor == anchor);
             })
             .DisposeItWith(Disposable);
         
@@ -253,7 +236,15 @@ public class PlaningMissionViewModel : ViewModelBaseWithValidation
             Index = indexToAdd
         };
 
-        model.Location = await _context.ShowTargetDialog(RS.PlaningMissionViewModel_SelectTargetLocation, cancel);
+        if (type == MavCmd.MavCmdDoChangeSpeed)
+        {
+            model.Location = GeoPoint.Zero;
+        }
+        else
+        {
+            model.Location = await _context.ShowTargetDialog(RS.PlaningMissionViewModel_SelectTargetLocation, cancel);
+        }
+        
         _source.AddOrUpdate(model);
     }
     

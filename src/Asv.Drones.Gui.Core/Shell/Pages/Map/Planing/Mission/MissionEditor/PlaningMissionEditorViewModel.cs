@@ -20,8 +20,6 @@ public class PlaningMissionEditorViewModel : PlaningWidgetBase
     private readonly IPlaningMission _svc;
     private readonly ILocalizationService _loc;
     private readonly MissionPointFlyoutMenuItem _addItems;
-    private readonly MissionPointFlyoutMenuItem _replaceItems;
-    private IDisposable _selectedPointDisposable;
 
     public PlaningMissionEditorViewModel() : base(new Uri("asv:shell.page.mission.mission-editor"))
     {
@@ -75,61 +73,32 @@ public class PlaningMissionEditorViewModel : PlaningWidgetBase
                 },
                 new MissionPointFlyoutMenuItem
                 {
-                    Title = RS.PlaningMissionEditorViewModel_RoiMenuItem_Title,
-                    Type = MavCmd.MavCmdNavRoi,
-                    Icon = MaterialIconKind.ImageFilterCenterFocus,
-                    Command = ReactiveCommand.Create(() =>
-                    {
-                        Context.Mission.AddPointCmd.Execute(MavCmd.MavCmdNavRoi).Subscribe();
-                    })
-                }
-            }
-        };
-        
-        _replaceItems = new MissionPointFlyoutMenuItem
-        {
-            Title = RS.PlaningMissionEditorViewModel_ReplacePointFlyoutMenuItem,
-            Icon = MaterialIconKind.FindReplace,
-            Items =
-            {
-                new MissionPointFlyoutMenuItem
-                {
-                    Title = RS.PlaningMissionEditorViewModel_TakeOffMenuItem_Title,
-                    Type = MavCmd.MavCmdNavTakeoff,
-                    Icon = MaterialIconKind.FlightTakeoff,
-                    Command = ReactiveCommand.Create(() =>
-                    {
-                        Context.Mission.ReplacePointCmd.Execute(MavCmd.MavCmdNavTakeoff).Subscribe();
-                    })
-                },
-                new MissionPointFlyoutMenuItem
-                {
-                    Title = RS.PlaningMissionEditorViewModel_DoLandMenuItem_Title,
-                    Type = MavCmd.MavCmdNavLand,
-                    Icon = MaterialIconKind.FlightLand,
-                    Command = ReactiveCommand.Create(() =>
-                    {
-                        Context.Mission.ReplacePointCmd.Execute(MavCmd.MavCmdNavLand).Subscribe();
-                    })
-                },
-                new MissionPointFlyoutMenuItem
-                {
-                    Title = RS.PlaningMissionEditorViewModel_WaypointMenuItem_Title,
-                    Type = MavCmd.MavCmdNavWaypoint,
+                    Title = RS.PlaningMissionEditorViewModel_NavSplineWaypointMenuItem_Title,
+                    Type = MavCmd.MavCmdNavSplineWaypoint,
                     Icon = MaterialIconKind.Location,
                     Command = ReactiveCommand.Create(() =>
                     {
-                        Context.Mission.ReplacePointCmd.Execute(MavCmd.MavCmdNavWaypoint).Subscribe();
+                        Context.Mission.AddPointCmd.Execute(MavCmd.MavCmdNavSplineWaypoint).Subscribe();
                     })
                 },
                 new MissionPointFlyoutMenuItem
                 {
-                    Title = RS.PlaningMissionEditorViewModel_RoiMenuItem_Title,
-                    Type = MavCmd.MavCmdNavRoi,
+                    Title = RS.PlaningMissionEditorViewModel_DoSetRoiMenuItem_Title,
+                    Type = MavCmd.MavCmdDoSetRoi,
                     Icon = MaterialIconKind.ImageFilterCenterFocus,
                     Command = ReactiveCommand.Create(() =>
                     {
-                        Context.Mission.ReplacePointCmd.Execute(MavCmd.MavCmdNavRoi).Subscribe();
+                        Context.Mission.AddPointCmd.Execute(MavCmd.MavCmdDoSetRoi).Subscribe();
+                    })
+                },
+                new MissionPointFlyoutMenuItem
+                {
+                    Title = RS.PlaningMissionEditorViewModel_DoChangeSpeedMenuItem_Title,
+                    Type = MavCmd.MavCmdDoChangeSpeed,
+                    Icon = MaterialIconKind.Speedometer,
+                    Command = ReactiveCommand.Create(() =>
+                    {
+                        Context.Mission.AddPointCmd.Execute(MavCmd.MavCmdDoChangeSpeed).Subscribe();
                     })
                 }
             }
@@ -137,8 +106,7 @@ public class PlaningMissionEditorViewModel : PlaningWidgetBase
         
         AddablePoints.Add(new[]
             {
-                _addItems,
-                _replaceItems
+                _addItems
             }
         );
         
@@ -163,23 +131,6 @@ public class PlaningMissionEditorViewModel : PlaningWidgetBase
     protected override void InternalAfterMapInit(IMap context)
     {
         Context = (IPlaningMissionContext)context;
-        
-        Context.WhenAnyValue(_ => _.Mission)
-            .WhereNotNull()
-            .Subscribe(_ =>
-            {
-                if (_selectedPointDisposable != null)
-                {
-                    _selectedPointDisposable.Dispose();
-                    _selectedPointDisposable = null;
-                }
-                
-                _selectedPointDisposable = _.WhenAnyValue(_ => _.SelectedPoint)
-                    .Subscribe(_ =>
-                    {
-                        _replaceItems.IsEnabled = _ != null;
-                    });
-            }).DisposeItWith(Disposable);
     }
 
     [Reactive]
@@ -191,7 +142,6 @@ public class PlaningMissionEditorViewModel : PlaningWidgetBase
     public IPlaningMissionContext Context { get; set; }
     [Reactive]
     public string TotalDistance { get; set; }
-
     public List<MissionPointFlyoutMenuItem> AddablePoints { get; } = new();
 }
 

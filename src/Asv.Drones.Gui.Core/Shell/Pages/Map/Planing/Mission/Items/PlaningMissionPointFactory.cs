@@ -31,15 +31,19 @@ public class PlaningMissionPointFactory : IPlaningMissionPointFactory
         switch (point.Type)
         {
             case MavCmd.MavCmdNavTakeoff:
-                return new PlaningMissionTakeOffPointViewModel(point, mission, _svc, _loc);
+                return new PlaningMissionNavTakeoffViewModel(point, mission, _svc, _loc);
             case MavCmd.MavCmdNavLand:
-                return new PlaningMissionLandPointViewModel(point, mission, _svc, _loc);
+                return new PlaningMissionNavLandViewModel(point, mission, _svc, _loc);
             case MavCmd.MavCmdNavWaypoint:
-                return new PlaningMissionNavigationPointViewModel(point, mission, _svc, _loc);
-            case MavCmd.MavCmdNavRoi:
-                return new PlaningMissionRoiPointViewModel(point, mission, _svc, _loc);
+                return new PlaningMissionNavWaypointViewModel(point, mission, _svc, _loc);
+            case MavCmd.MavCmdDoSetRoi:
+                return new PlaningMissionDoSetRoiViewModel(point, mission, _svc, _loc);
+            case MavCmd.MavCmdDoChangeSpeed:
+                return new PlaningMissionDoChangeSpeedViewModel(point, mission, _svc, _loc);
+            case MavCmd.MavCmdNavSplineWaypoint:
+                return new PlaningMissionNavSplineWaypointViewModel(point, mission, _svc, _loc);
             default:
-                return new PlaningMissionUnknownPointViewModel(point, mission, _svc, _loc);
+                return new PlaningMissionUnknownViewModel(point, mission, _svc, _loc);
         }
     }
 }

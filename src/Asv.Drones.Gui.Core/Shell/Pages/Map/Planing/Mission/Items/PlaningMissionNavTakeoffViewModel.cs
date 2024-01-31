@@ -7,12 +7,14 @@ using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core;
 
-public class PlaningMissionRoiPointViewModel : PlaningMissionPointViewModel
+public class PlaningMissionNavTakeoffViewModel : PlaningMissionPointViewModel
 {
-    public PlaningMissionRoiPointViewModel(PlaningMissionPointModel point, PlaningMissionViewModel mission, 
+    public PlaningMissionNavTakeoffViewModel(PlaningMissionPointModel point, PlaningMissionViewModel mission, 
         IPlaningMission svc, ILocalizationService loc) : base(point, mission)
     {
-        MissionAnchor = new PlaningMissionRoiPointAnchor(point);
+        MissionAnchor = new PlaningMissionNavTakeoffAnchor(point);
+        
+        Icon = MaterialIconKind.FlightTakeoff;
         
         this.WhenAnyValue(_ => _.Index)
             .Subscribe(_ =>
@@ -27,10 +29,10 @@ public class PlaningMissionRoiPointViewModel : PlaningMissionPointViewModel
                 Point.Location = _;
                 IsChanged = true;
             }).DisposeItWith(Disposable);
-    }
-    
-    public override void CreateVehicleItems(IVehicleClient vehicle, ISdrClientDevice? sdr)
-    {
-        vehicle.Missions.AddRoiMissionItem(Point.Location, MavRoi.MavRoiLocation);
+        
+        Param1Title = RS.PlaningMissionNavTakeoffViewModel_Param1Title;
+        Param2Title = RS.PlaningMissionNavTakeoffViewModel_Param2Title;
+        Param3Title = RS.PlaningMissionNavTakeoffViewModel_Param3Title;
+        Param4Title = RS.PlaningMissionNavTakeoffViewModel_Param4Title;
     }
 }

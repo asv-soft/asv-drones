@@ -1180,9 +1180,6 @@
   <data name="PlaningMissionEditorViewModel_TakeOffMenuItem_Title" xml:space="preserve">
 	  <value>Взлёт</value>
   </data>
-  <data name="PlaningMissionEditorViewModel_RoiMenuItem_Title" xml:space="preserve">
-	  <value>Регион интересов</value>
-  </data>
   <data name="PlaningMissionEditorViewModel_DoLandMenuItem_Title" xml:space="preserve">
 	  <value>Посадка</value>
   </data>
@@ -1245,5 +1242,98 @@
   </data>
   <data name="HierarchicalStoreView_Folder_Button_DeleteFolder" xml:space="preserve">
 	  <value>Удалить папку</value>
+  </data>
+  <data name="PlaningMissionPointViewModel_Param1Title" xml:space="preserve">
+	  <value>Параметр 1</value>
+  </data>
+  <data name="PlaningMissionPointViewModel_Param2Title" xml:space="preserve">
+	  <value>Параметр 2</value>
+  </data>
+  <data name="PlaningMissionPointViewModel_Param3Title" xml:space="preserve">
+	  <value>Параметр 3</value>
+  </data>
+  <data name="PlaningMissionPointViewModel_Param4Title" xml:space="preserve">
+	  <value>Параметр 4</value>
+  </data>
+  <data name="PlaningMissionNavWaypointViewModel_Param1Title" xml:space="preserve">
+	  <value>Время удержания</value>
+  </data>
+  <data name="PlaningMissionNavWaypointViewModel_Param2Title" xml:space="preserve">
+	  <value>Радиус принятия</value>
+  </data>
+  <data name="PlaningMissionNavWaypointViewModel_Param3Title" xml:space="preserve">
+	  <value>Радиус прохождения</value>
+  </data>
+  <data name="PlaningMissionNavWaypointViewModel_Param4Title" xml:space="preserve">
+	  <value>Угол рыскания</value>
+  </data>
+  <data name="PlaningMissionNavSplineWaypointViewModel_Param1Title" xml:space="preserve">
+	  <value>Время удержания</value>
+  </data>
+  <data name="PlaningMissionNavSplineWaypointViewModel_Param2Title" xml:space="preserve">
+	  <value>Пустой</value>
+  </data>
+  <data name="PlaningMissionNavSplineWaypointViewModel_Param3Title" xml:space="preserve">
+	  <value>Пустой</value>
+  </data>
+  <data name="PlaningMissionNavSplineWaypointViewModel_Param4Title" xml:space="preserve">
+	  <value>Пустой</value>
+  </data>
+  <data name="PlaningMissionNavTakeoffViewModel_Param2Title" xml:space="preserve">
+	  <value>Пустой</value>
+  </data>
+  <data name="PlaningMissionNavTakeoffViewModel_Param3Title" xml:space="preserve">
+	  <value>Пустой</value>
+  </data>
+  <data name="PlaningMissionNavTakeoffViewModel_Param1Title" xml:space="preserve">
+	  <value>Угол наклона</value>
+  </data>
+  <data name="PlaningMissionNavTakeoffViewModel_Param4Title" xml:space="preserve">
+	  <value>Угол рыскания</value>
+  </data>
+  <data name="PlaningMissionNavLandViewModel_Param1Title" xml:space="preserve">
+	  <value>Высота отсечки</value>
+  </data>
+  <data name="PlaningMissionNavLandViewModel_Param2Title" xml:space="preserve">
+	  <value>Режим посадки</value>
+  </data>
+  <data name="PlaningMissionNavLandViewModel_Param3Title" xml:space="preserve">
+	  <value>Пустой</value>
+  </data>
+  <data name="PlaningMissionNavLandViewModel_Param4Title" xml:space="preserve">
+	  <value>Угол рыскания</value>
+  </data>
+  <data name="PlaningMissionDoSetRoiViewModel_Param1Title" xml:space="preserve">
+	  <value>Режим ROI</value>
+  </data>
+  <data name="PlaningMissionDoSetRoiViewModel_Param2Title" xml:space="preserve">
+	  <value>Индекс точки/ID цели</value>
+  </data>
+  <data name="PlaningMissionDoSetRoiViewModel_Param3Title" xml:space="preserve">
+	  <value>Индекс точки ROI</value>
+  </data>
+  <data name="PlaningMissionDoSetRoiViewModel_Param4Title" xml:space="preserve">
+	  <value>Пустой</value>
+  </data>
+  <data name="PlaningMissionDoChangeSpeedViewModel_Param4Title" xml:space="preserve">
+	  <value>Пустой</value>
+  </data>
+  <data name="PlaningMissionDoChangeSpeedViewModel_Param2Title" xml:space="preserve">
+	  <value>Скорость</value>
+  </data>
+  <data name="PlaningMissionDoChangeSpeedViewModel_Param1Title" xml:space="preserve">
+	  <value>Тип скорости</value>
+  </data>
+  <data name="PlaningMissionDoChangeSpeedViewModel_Param3Title" xml:space="preserve">
+	  <value>Мощность</value>
+  </data>
+  <data name="PlaningMissionEditorViewModel_DoSetRoiMenuItem_Title" xml:space="preserve">
+	  <value>Регион интересов</value>
+  </data>
+  <data name="PlaningMissionEditorViewModel_DoChangeSpeedMenuItem_Title" xml:space="preserve">
+	  <value>Изменить скорость</value>
+  </data>
+  <data name="PlaningMissionEditorViewModel_NavSplineWaypointMenuItem_Title" xml:space="preserve">
+	  <value>Сплайновая путевая точка</value>
   </data>
 </root>

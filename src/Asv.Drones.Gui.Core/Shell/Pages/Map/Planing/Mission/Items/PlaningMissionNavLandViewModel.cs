@@ -1,16 +1,19 @@
 ﻿using Asv.Common;
 using Asv.Mavlink;
+using Asv.Mavlink.V2.Common;
 using Material.Icons;
 using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core;
 
-public class PlaningMissionLandPointViewModel : PlaningMissionPointViewModel
+public class PlaningMissionNavLandViewModel : PlaningMissionPointViewModel
 {
-    public PlaningMissionLandPointViewModel(PlaningMissionPointModel point, PlaningMissionViewModel mission, 
+    public PlaningMissionNavLandViewModel(PlaningMissionPointModel point, PlaningMissionViewModel mission, 
         IPlaningMission svc, ILocalizationService loc) : base(point, mission)
     {
-        MissionAnchor = new PlaningMissionDoLandPointAnchor(point);
+        MissionAnchor = new PlaningMissionNavLandAnchor(point);
+        
+        Icon = MaterialIconKind.FlightLand;
         
         this.WhenAnyValue(_ => _.Index)
             .Subscribe(_ =>
@@ -25,11 +28,11 @@ public class PlaningMissionLandPointViewModel : PlaningMissionPointViewModel
                 Point.Location = _;
                 IsChanged = true;
             }).DisposeItWith(Disposable);
-    }
-    
-    public override void CreateVehicleItems(IVehicleClient vehicle, ISdrClientDevice? sdr)
-    {
-        vehicle.Missions.AddLandMissionItem(Point.Location);
+         
+        Param1Title = RS.PlaningMissionNavLandViewModel_Param1Title;
+        Param2Title = RS.PlaningMissionNavLandViewModel_Param2Title;
+        Param3Title = RS.PlaningMissionNavLandViewModel_Param3Title;
+        Param4Title = RS.PlaningMissionNavLandViewModel_Param4Title;
     }
 }
 

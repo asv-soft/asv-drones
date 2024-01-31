@@ -1,14 +1,18 @@
 ﻿using Asv.Common;
 using Asv.Mavlink;
+using Asv.Mavlink.V2.Common;
+using Material.Icons;
 using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core;
 
-public class PlaningMissionUnknownPointViewModel : PlaningMissionPointViewModel
+public class PlaningMissionUnknownViewModel : PlaningMissionPointViewModel
 {
-    public PlaningMissionUnknownPointViewModel(PlaningMissionPointModel point, PlaningMissionViewModel mission, IPlaningMission svc, ILocalizationService loc) : base(point, mission)
+    public PlaningMissionUnknownViewModel(PlaningMissionPointModel point, PlaningMissionViewModel mission, IPlaningMission svc, ILocalizationService loc) : base(point, mission)
     {
-        MissionAnchor = new PlaningMissionUnknownPointAnchor(point);
+        MissionAnchor = new PlaningMissionUnknownAnchor(point);
+
+        Icon = MaterialIconKind.QuestionMark;
         
         this.WhenAnyValue(_ => _.Index)
             .Subscribe(_ =>
@@ -27,6 +31,6 @@ public class PlaningMissionUnknownPointViewModel : PlaningMissionPointViewModel
     
     public override void CreateVehicleItems(IVehicleClient vehicle, ISdrClientDevice? sdr)
     {
-        //vehicle.Missions.AddTakeOffMissionItem(Point.Location);
+
     }
 }
