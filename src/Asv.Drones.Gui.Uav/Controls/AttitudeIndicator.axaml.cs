@@ -464,15 +464,15 @@ namespace Asv.Drones.Gui.Uav
         {
             if (source is not AttitudeIndicator indicator) return;
 
-            if (indicator.VibrationX < 0.30)
+            if (indicator.VibrationX < 30)
             {
                 indicator.BrushVibrationX = Colors.Red;
             }
-            else if (indicator.VibrationX > 0.30 & indicator.VibrationX < 0.60)
+            else if (indicator.VibrationX > 30 & indicator.VibrationX < 60)
             {
                 indicator.BrushVibrationX = Colors.Yellow;
             }
-            else if (indicator.VibrationX > 0.60)
+            else if (indicator.VibrationX > 60)
             {
                 indicator.BrushVibrationX = Colors.GreenYellow;
             }
@@ -482,15 +482,15 @@ namespace Asv.Drones.Gui.Uav
         {
             if (source is not AttitudeIndicator indicator) return;
 
-            if (indicator.VibrationY < 0.30)
+            if (indicator.VibrationY < 30)
             {
                 indicator.BrushVibrationY = Colors.Red;
             }
-            else if (indicator.VibrationY > 0.30 & indicator.VibrationY < 0.60)
+            else if (indicator.VibrationY > 30 & indicator.VibrationY < 60)
             {
                 indicator.BrushVibrationY = Colors.Yellow;
             }
-            else if (indicator.VibrationY > 0.60)
+            else if (indicator.VibrationY > 60)
             {
                 indicator.BrushVibrationY = Colors.GreenYellow;
             }
@@ -500,15 +500,15 @@ namespace Asv.Drones.Gui.Uav
         {
             if (source is not AttitudeIndicator indicator) return;
 
-            if (indicator.VibrationZ < 0.30)
+            if (indicator.VibrationZ < 30)
             {
                 indicator.BrushVibrationZ = Colors.Red;
             }
-            else if (indicator.VibrationZ > 0.30 & indicator.VibrationZ < 0.60)
+            else if (indicator.VibrationZ > 30 & indicator.VibrationZ < 60)
             {
                 indicator.BrushVibrationZ = Colors.Yellow;
             }
-            else if (indicator.VibrationZ > 0.60)
+            else if (indicator.VibrationZ > 60)
             {
                 indicator.BrushVibrationZ = Colors.GreenYellow;
             }
