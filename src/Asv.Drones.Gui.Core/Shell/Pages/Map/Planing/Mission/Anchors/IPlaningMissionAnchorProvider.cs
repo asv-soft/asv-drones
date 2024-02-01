@@ -8,17 +8,34 @@ using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core;
 
+/// <summary>
+/// Provides functionality to update a planning mission anchor.
+/// </summary>
 public interface IPlaningMissionAnchorProvider
 {
+    /// <summary>Updates the specified planning mission</summary>
+    /// <param name="mission">The PlanningMissionViewModel object containing the updated information. The parameter can be null.</param>
+    /// <remarks>
+    /// This method updates the planning mission with the provided information. If the parameter 'mission' is null, no update is performed.
+    /// </remarks>
     void Update(PlaningMissionViewModel? mission);
 }
 
+/// <summary>
+/// Provides the anchor for planning missions on the map.
+/// </summary>
 [Export(PlaningPageViewModel.UriString, typeof(IViewModelProvider<IMapAnchor>))]
 [PartCreationPolicy(CreationPolicy.NonShared)]
 public class PlaningMissionAnchorProvider : ViewModelProviderBase<IMapAnchor>, IPlaningMissionAnchorProvider
 {
+    /// <summary>
+    /// Represents a disposable object used for populating a mission subject.
+    /// </summary>
     private IDisposable? _missionPopulateSubject;
 
+    /// <summary>
+    /// This class provides anchor data for planning missions.
+    /// </summary>
     [ImportingConstructor]
     public PlaningMissionAnchorProvider()
     {
@@ -32,6 +49,10 @@ public class PlaningMissionAnchorProvider : ViewModelProviderBase<IMapAnchor>, I
         
     }
 
+    /// <summary>
+    /// Updates the planning mission with the provided mission view model.
+    /// </summary>
+    /// <param name="mission">The mission view model to update.</param>
     public void Update(PlaningMissionViewModel? mission)
     {
         _missionPopulateSubject?.Dispose();

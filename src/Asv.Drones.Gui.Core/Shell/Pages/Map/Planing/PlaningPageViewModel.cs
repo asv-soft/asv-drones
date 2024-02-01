@@ -20,28 +20,110 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Core
 {
+    /// <summary>
+    /// Represents the configuration for the PlanningPageViewModel.
+    /// </summary>
     public class PlanningPageViewModelConfig
     {
+        /// <summary>
+        /// Gets or sets the zoom level.
+        /// </summary>
+        /// <value>
+        /// The zoom level as a double.
+        /// </value>
         public double Zoom { get; set; }
+
+        /// <summary>
+        /// Gets or sets the center point on the map.
+        /// </summary>
+        /// <value>
+        /// The center point on the map.
+        /// </value>
         public GeoPoint MapCenter { get; set; }
     }
-    
+
+    /// <summary>
+    /// Represents the view model for the Planning page.
+    /// </summary>
     [ExportShellPage(UriString)]
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class PlaningPageViewModel : MapPageViewModel, IPlaningMissionContext
     {
+        /// <summary>
+        /// Represents the constant string for the URI.
+        /// </summary>
         public const string UriString = "asv:shell.page.map.planing";
+
+        /// <summary>
+        /// Represents a constant Uri.
+        /// </summary>
         public static readonly Uri Uri = new(UriString);
         private readonly IPlaningMissionAnchorProvider _anchorProvider;
+
+        /// <summary>
+        /// Represents an instance of a <see cref="IPlaningMissionPointFactory"/> that is used to create planning mission points.
+        /// </summary>
         private readonly IPlaningMissionPointFactory _taskFactory;
+
+        /// <summary>
+        /// Represents an instance of the IMavlinkDevicesService interface used for managing Mavlink devices.
+        /// </summary>
         private readonly IMavlinkDevicesService _devices;
+
+        /// <summary>
+        /// The CompositionContainer used for dependency injection and managing the lifetime of objects.
+        /// </summary>
         private readonly CompositionContainer _container;
+
+        /// <summary>
+        /// Represents an instance of the Planning Mission service.
+        /// </summary>
         private readonly IPlaningMission _svc;
+
+        /// <summary>
+        /// Represents a private, read-only instance of the <see cref="ILogService"/> interface.
+        /// </summary>
         private readonly ILogService _log;
+
+        /// <summary>
+        /// Represents a collection of menu items for uploading.
+        /// </summary>
         private ReadOnlyObservableCollection<IHeaderMenuItem> _uploadMenuItems;
+
+        /// <summary>
+        /// Holds the collection of download menu items.
+        /// </summary>
         private ReadOnlyObservableCollection<IHeaderMenuItem> _downloadMenuItems;
+
+        /// <summary>
+        /// Represents a private readonly variable that stores configuration information.
+        /// </summary>
+        /// <remarks>
+        /// This variable is of type IConfiguration and is used to access and utilize configuration information
+        /// within the scope of its class. It is marked as readonly, indicating that its value cannot be modified
+        /// after initialization.
+        /// </remarks>
         private readonly IConfiguration _cfg;
 
+        /// <summary>
+        /// View model for the Planning page.
+        /// </summary>
+        /// <remarks>
+        /// This view model provides functionality for uploading and downloading mission files, opening a browser, saving and deleting missions, and updating anchors.
+        /// It inherits from the base MapViewModel class.
+        /// </remarks>
+        /// <param name="map">The map service.</param>
+        /// <param name="cfg">The configuration service.</param>
+        /// <param name="svc">The planning mission service.</param>
+        /// <param name="log">The log service.</param>
+        /// <param name="container">The composition container.</param>
+        /// <param name="taskFactory">The planning mission point factory.</param>
+        /// <param name="devices">The MAVLink devices service.</param>
+        /// <param name="exportedMenuItems">A collection of exported menu items.</param>
+        /// <param name="markers">A collection of map markers.</param>
+        /// <param name="widgets">A collection of map widgets.</param>
+        /// <param name="actions">A collection of map actions.</param>
+        /// <seealso cref="MapViewModel"/>
         [ImportingConstructor]
         public PlaningPageViewModel(IMapService map, IConfiguration cfg, IPlaningMission svc, ILogService log,
             CompositionContainer container, IPlaningMissionPointFactory taskFactory, IMavlinkDevicesService devices,
@@ -170,6 +252,13 @@ namespace Asv.Drones.Gui.Core
                 }).DisposeItWith(Disposable);
         }
 
+        /// <summary>
+        /// Uploads a mission to a vehicle using the provided points.
+        /// </summary>
+        /// <param name="vehicle">The vehicle client to upload the mission to.</param>
+        /// <param name="sdr">The SDR client device used for creating vehicle items.</param>
+        /// <param name="points">The collection of planning mission points.</param>
+        /// <param name="cancel">The cancellation token for cancelling the upload.</param>
         private async Task UploadMission(IVehicleClient vehicle, ISdrClientDevice sdr, IEnumerable<PlaningMissionPointViewModel> points, CancellationToken cancel)
         {
             await vehicle.Missions.ClearRemote(cancel);
@@ -195,6 +284,12 @@ namespace Asv.Drones.Gui.Core
             }
         }
 
+        /// <summary>
+        /// Downloads the mission from the specified vehicle.
+        /// </summary>
+        /// <param name="vehicle">The vehicle client used to download the mission.</param>
+        /// <param name="cancel">The cancellation token used to cancel the download process.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         private async Task DownloadMission(IVehicleClient vehicle, CancellationToken cancel)
         {
             Mission?.ClearAllPoints();
@@ -206,7 +301,11 @@ namespace Asv.Drones.Gui.Core
                 Mission?.AddOrUpdatePoint(missionItem.TransformMissionItemToPointModel());
             }
         }
-        
+
+        /// <summary>
+        /// Tries to close the current mission.
+        /// </summary>
+        /// <returns>Returns a task representing the asynchronous operation. The task result is a boolean value indicating whether the mission was successfully closed or not.</returns>
         public override async Task<bool> TryClose()
         {
             if (Mission == null) return true;
@@ -239,7 +338,14 @@ namespace Asv.Drones.Gui.Core
 
             return true;
         }
-        
+
+        /// <summary>
+        /// Opens the browser dialog for selecting a mission.
+        /// </summary>
+        /// <param name="arg">The cancellation token.</param>
+        /// <returns>
+        /// A <see cref="Task"/> representing the asynchronous operation.
+        /// </returns>
         private async Task OpenBrowserImpl(CancellationToken arg)
         {
             var dialog = new ContentDialog
@@ -260,9 +366,21 @@ namespace Asv.Drones.Gui.Core
             }
         }
 
+        /// <summary>
+        /// Gets or sets the planning mission for the property.
+        /// </summary>
+        /// <remarks>
+        /// This property represents the planning mission associated with the property. The planning mission
+        /// contains information related to the mission such as the mission's view model.
+        /// </remarks>
+        /// <seealso cref="PlaningMissionViewModel"/>
         [Reactive]
         public PlaningMissionViewModel? Mission { get; set; }
-        
+
+        /// <summary>
+        /// Opens a mission with the specified ID.
+        /// </summary>
+        /// <param name="id">The ID of the mission to open.</param>
         public void OpenMission(Guid id)
         {
             try
@@ -295,16 +413,51 @@ namespace Asv.Drones.Gui.Core
             }
         }
 
+        /// <summary>
+        /// Gets or sets the upload progress in a decimal format.
+        /// </summary>
+        /// <remarks>
+        /// A value between 0 and 1 is expected.
+        /// 0 indicates no progress,
+        /// while 1 indicates the upload is complete.
+        /// </remarks>
         public double UploadProgress { get; set; }
-        
+
+        /// <summary>
+        /// Gets or sets the configuration for the PlanningPageViewModel.
+        /// The PlanningConfig property is decorated with the [Reactive] attribute, indicating that it is a reactive property.
+        /// </summary>
+        /// <value>The planning configuration.</value>
         [Reactive]
         public PlanningPageViewModelConfig PlanningConfig { get; set; }
     }
 }
 
+/// <summary>
+/// Represents the context for planning a mission.
+/// </summary>
 public interface IPlaningMissionContext : IMap
 {
+    /// <summary>
+    /// Gets or sets the Mission property of type PlaningMissionViewModel.
+    /// This property represents the mission associated with the planning process.
+    /// </summary>
+    /// <value>
+    /// The PlaningMissionViewModel object representing the mission.
+    /// </value>
     PlaningMissionViewModel Mission { get; set; }
+
+    /// <summary>
+    /// Opens the mission specified by the given id.
+    /// </summary>
+    /// <param name="id">The unique identifier of the mission to be opened.</param>
     void OpenMission(Guid id);
+
+    /// <summary>
+    /// Gets the progress of the upload as a decimal value between 0 and 1.
+    /// </summary>
+    /// <value>
+    /// The upload progress as a decimal value.
+    /// </value>
     public double UploadProgress { get; }
 }
