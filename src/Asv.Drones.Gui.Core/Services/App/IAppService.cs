@@ -2,23 +2,27 @@
 
 namespace Asv.Drones.Gui.Core
 {
-
-
+    /// <summary>
+    /// Represents an application service that provides information, paths, and a store for the application.
+    /// </summary>
     public interface IAppService
     {
         /// <summary>
-        /// Name, version and other info about application
+        /// Gets the name, version, and other information about the application.
         /// </summary>
         IAppInfo Info { get; }
+
         /// <summary>
-        /// Default application paths
+        /// Gets the default application paths.
         /// </summary>
+        /// <value>
+        /// The default application paths.
+        /// </value>
         IAppPathInfo Paths { get; }
+
         /// <summary>
-        /// Application store database, where all modules and plugins can store data
+        /// Gets the application store database, where all modules and plugins can store data.
         /// </summary>
         IAppStore Store { get; }
     }
-
-    
 }
