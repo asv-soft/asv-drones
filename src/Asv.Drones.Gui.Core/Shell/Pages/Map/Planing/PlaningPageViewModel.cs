@@ -387,20 +387,25 @@ namespace Asv.Drones.Gui.Core
             {
                 Mission?.Dispose();
 
-                using (var handle = _svc.MissionStore.OpenFile(id))
+                using var handle = _svc.MissionStore.OpenFile(id);
+                Mission = new PlaningMissionViewModel(handle.Id, handle.Name, _log, 
+                    _taskFactory, _svc, this);
+                Mission.Load(handle.File);
+
+                _anchorProvider.Update(Mission);
+
+                if (Mission.Points.Count > 0)
                 {
-                    Mission = new PlaningMissionViewModel(handle.Id, handle.Name, _log, _taskFactory,
-                        _container, _svc, this);
-
-                    Mission.Load(handle.File);
-
-                    _anchorProvider.Update(Mission);
-
-                    if (Mission.Points.Count > 0)
-                        Center = Mission.Points.FirstOrDefault()!.MissionAnchor.Location;
-
-                    Mission.IsChanged = false;
+                    foreach (var point in Mission.Points)
+                    {
+                        if (point is { MissionAnchor: not null })
+                        {
+                            Center = point.MissionAnchor.Location;
+                            break;
+                        }
+                    }
                 }
+                Mission.IsChanged = false;
             }
             catch (Exception e)
             {

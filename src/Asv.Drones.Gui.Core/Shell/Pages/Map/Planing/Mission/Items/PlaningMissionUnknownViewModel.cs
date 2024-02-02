@@ -1,17 +1,18 @@
-﻿using Asv.Avalonia.Map;
-using Asv.Common;
+﻿using Asv.Common;
 using Asv.Mavlink;
+using Asv.Mavlink.V2.Common;
 using Material.Icons;
 using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core;
 
-public class PlaningMissionNavigationPointViewModel : PlaningMissionPointViewModel
+public class PlaningMissionUnknownViewModel : PlaningMissionPointViewModel
 {
-    public PlaningMissionNavigationPointViewModel(PlaningMissionPointModel point, PlaningMissionViewModel mission, 
-        IPlaningMission svc, ILocalizationService loc) : base(point, mission)
+    public PlaningMissionUnknownViewModel(PlaningMissionPointModel point, PlaningMissionViewModel mission, IPlaningMission svc, ILocalizationService loc) : base(point, mission)
     {
-        MissionAnchor = new PlaningMissionNavigationPointAnchor(point);
+        MissionAnchor = new PlaningMissionUnknownAnchor(point);
+
+        Icon = MaterialIconKind.QuestionMark;
         
         this.WhenAnyValue(_ => _.Index)
             .Subscribe(_ =>
@@ -30,7 +31,6 @@ public class PlaningMissionNavigationPointViewModel : PlaningMissionPointViewMod
     
     public override void CreateVehicleItems(IVehicleClient vehicle, ISdrClientDevice? sdr)
     {
-        vehicle.Missions.AddNavMissionItem(Point.Location, 0);
+
     }
 }
-

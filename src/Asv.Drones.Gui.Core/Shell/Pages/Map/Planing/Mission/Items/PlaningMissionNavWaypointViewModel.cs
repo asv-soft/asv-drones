@@ -1,17 +1,20 @@
 ﻿using Asv.Avalonia.Map;
 using Asv.Common;
 using Asv.Mavlink;
+using Asv.Mavlink.V2.Common;
 using Material.Icons;
 using ReactiveUI;
 
 namespace Asv.Drones.Gui.Core;
 
-public class PlaningMissionTakeOffPointViewModel : PlaningMissionPointViewModel
+public class PlaningMissionNavWaypointViewModel : PlaningMissionPointViewModel
 {
-    public PlaningMissionTakeOffPointViewModel(PlaningMissionPointModel point, PlaningMissionViewModel mission, 
+    public PlaningMissionNavWaypointViewModel(PlaningMissionPointModel point, PlaningMissionViewModel mission, 
         IPlaningMission svc, ILocalizationService loc) : base(point, mission)
     {
-        MissionAnchor = new PlaningMissionTakeOffPointAnchor(point);
+        MissionAnchor = new PlaningMissionNavWaypointAnchor(point);
+        
+        Icon = MaterialIconKind.Location;
         
         this.WhenAnyValue(_ => _.Index)
             .Subscribe(_ =>
@@ -26,10 +29,11 @@ public class PlaningMissionTakeOffPointViewModel : PlaningMissionPointViewModel
                 Point.Location = _;
                 IsChanged = true;
             }).DisposeItWith(Disposable);
-    }
-    
-    public override void CreateVehicleItems(IVehicleClient vehicle, ISdrClientDevice? sdr)
-    {
-        vehicle.Missions.AddTakeOffMissionItem(Point.Location);
+
+        Param1Title = RS.PlaningMissionNavWaypointViewModel_Param1Title;
+        Param2Title = RS.PlaningMissionNavWaypointViewModel_Param2Title;
+        Param3Title = RS.PlaningMissionNavWaypointViewModel_Param3Title;
+        Param4Title = RS.PlaningMissionNavWaypointViewModel_Param4Title;
     }
 }
+

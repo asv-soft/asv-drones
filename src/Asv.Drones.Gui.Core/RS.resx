@@ -1159,7 +1159,7 @@
   <data name="PlaningMissionEditorViewModel_WaypointMenuItem_Title" xml:space="preserve">
     <value>Waypoint</value>
   </data>
-  <data name="PlaningMissionEditorViewModel_RoiMenuItem_Title" xml:space="preserve">
+  <data name="PlaningMissionEditorViewModel_DoSetRoiMenuItem_Title" xml:space="preserve">
     <value>ROI</value>
   </data>
   <data name="PlaningMissionEditorViewModel_ReplacePointFlyoutMenuItem" xml:space="preserve">
@@ -1221,5 +1221,95 @@
   </data>
   <data name="HierarchicalStoreView_File_Button_MoveFile" xml:space="preserve">
     <value>Move File</value>
+  </data>
+  <data name="PlaningMissionPointViewModel_Param1Title" xml:space="preserve">
+    <value>Parameter 1</value>
+  </data>
+  <data name="PlaningMissionPointViewModel_Param2Title" xml:space="preserve">
+    <value>Parameter 2</value>
+  </data>
+  <data name="PlaningMissionPointViewModel_Param3Title" xml:space="preserve">
+    <value>Parameter 3</value>
+  </data>
+  <data name="PlaningMissionPointViewModel_Param4Title" xml:space="preserve">
+    <value>Parameter 4</value>
+  </data>
+  <data name="PlaningMissionNavWaypointViewModel_Param1Title" xml:space="preserve">
+    <value>Hold time</value>
+  </data>
+  <data name="PlaningMissionNavWaypointViewModel_Param2Title" xml:space="preserve">
+    <value>Acceptance radius</value>
+  </data>
+  <data name="PlaningMissionNavWaypointViewModel_Param3Title" xml:space="preserve">
+    <value>Pass Radius</value>
+  </data>
+  <data name="PlaningMissionNavWaypointViewModel_Param4Title" xml:space="preserve">
+    <value>Yaw angle</value>
+  </data>
+  <data name="PlaningMissionNavSplineWaypointViewModel_Param1Title" xml:space="preserve">
+    <value>Hold time</value>
+  </data>
+  <data name="PlaningMissionNavSplineWaypointViewModel_Param2Title" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="PlaningMissionNavSplineWaypointViewModel_Param3Title" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="PlaningMissionNavSplineWaypointViewModel_Param4Title" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="PlaningMissionNavTakeoffViewModel_Param1Title" xml:space="preserve">
+    <value>Pitch angle</value>
+  </data>
+  <data name="PlaningMissionNavTakeoffViewModel_Param2Title" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="PlaningMissionNavTakeoffViewModel_Param3Title" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="PlaningMissionNavTakeoffViewModel_Param4Title" xml:space="preserve">
+    <value>Yaw angle</value>
+  </data>
+  <data name="PlaningMissionNavLandViewModel_Param1Title" xml:space="preserve">
+    <value>Abort altitude</value>
+  </data>
+  <data name="PlaningMissionNavLandViewModel_Param2Title" xml:space="preserve">
+    <value>Land mode</value>
+  </data>
+  <data name="PlaningMissionNavLandViewModel_Param3Title" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="PlaningMissionNavLandViewModel_Param4Title" xml:space="preserve">
+    <value>Yaw angle</value>
+  </data>
+  <data name="PlaningMissionDoSetRoiViewModel_Param1Title" xml:space="preserve">
+    <value>ROI mode</value>
+  </data>
+  <data name="PlaningMissionDoSetRoiViewModel_Param2Title" xml:space="preserve">
+    <value>WP index/Target ID</value>
+  </data>
+  <data name="PlaningMissionDoSetRoiViewModel_Param3Title" xml:space="preserve">
+    <value>ROI Index</value>
+  </data>
+  <data name="PlaningMissionDoSetRoiViewModel_Param4Title" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="PlaningMissionDoChangeSpeedViewModel_Param1Title" xml:space="preserve">
+    <value>Speed type</value>
+  </data>
+  <data name="PlaningMissionDoChangeSpeedViewModel_Param2Title" xml:space="preserve">
+    <value>Speed</value>
+  </data>
+  <data name="PlaningMissionDoChangeSpeedViewModel_Param3Title" xml:space="preserve">
+    <value>Throttle</value>
+  </data>
+  <data name="PlaningMissionDoChangeSpeedViewModel_Param4Title" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="PlaningMissionEditorViewModel_DoChangeSpeedMenuItem_Title" xml:space="preserve">
+    <value>Change speed</value>
+  </data>
+  <data name="PlaningMissionEditorViewModel_NavSplineWaypointMenuItem_Title" xml:space="preserve">
+    <value>Spline waypoint</value>
   </data>
 </root>
