@@ -74,20 +74,20 @@ namespace Asv.Drones.Gui.Uav
             vehicle.Connection
                 .Where(_=>_.SystemId == vehicle.Identity.TargetSystemId && _.MessageId == VibrationPacket.PacketMessageId)
                 .Cast<VibrationPacket>()
-                .Subscribe(_=> VibrationX = 1 - _.Payload.VibrationX)
+                .Subscribe(_=> VibrationX = 100 - _.Payload.VibrationX)
                 .DisposeItWith(Disposable);
 
             vehicle.Connection
                 .Where(_=>_.SystemId == vehicle.Identity.TargetSystemId && _.MessageId == VibrationPacket.PacketMessageId)
                 .Cast<VibrationPacket>()
                 
-                .Subscribe(_=> VibrationY = 1 - _.Payload.VibrationY)
+                .Subscribe(_=> VibrationY = 100 - _.Payload.VibrationY)
                 .DisposeItWith(Disposable);
             
             vehicle.Connection
                 .Where(_=>_.SystemId == vehicle.Identity.TargetSystemId && _.MessageId == VibrationPacket.PacketMessageId)
                 .Cast<VibrationPacket>()
-                .Subscribe(_=> VibrationZ = 1 - _.Payload.VibrationZ)
+                .Subscribe(_=> VibrationZ = 100 - _.Payload.VibrationZ)
                 .DisposeItWith(Disposable);
             
             vehicle.Connection
