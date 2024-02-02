@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
+using System.Windows.Input;
 using Asv.Avalonia.Map;
 using Asv.Common;
 using DynamicData;
@@ -154,6 +155,17 @@ namespace Asv.Drones.Gui.Core
                     menuItem.Items = null;
                 _disposableMapUpdate?.Dispose();
             });
+
+            DeselectAnchorsCommand = ReactiveCommand.Create(() =>
+            {
+                SelectedItem = null;
+
+                foreach (var mapAnchor in Markers)
+                {
+                    if (mapAnchor.IsSelected)
+                        mapAnchor.IsSelected = false;
+                }
+            });
         }
 
         private void SetUpFollow(IMapAnchor anchor)
@@ -168,8 +180,8 @@ namespace Asv.Drones.Gui.Core
         public ReadOnlyObservableCollection<IMapWidget> LeftWidgets => _leftWidgets;
         public ReadOnlyObservableCollection<IMapWidget> RightWidgets => _rightWidgets;
         public ReadOnlyObservableCollection<IMapWidget> BottomWidgets => _bottomWidgets;
-
         public ReadOnlyObservableCollection<IMapAction> MapActions => _mapActions;
+        public ICommand DeselectAnchorsCommand { get; set; }
         
         #region Map properties
 
