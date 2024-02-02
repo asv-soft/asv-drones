@@ -94,32 +94,18 @@
                         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
-                <ListBox.DataTemplates>
-                    <DataTemplate DataType="core:PlaningMissionRoiPointViewModel">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
                         <DockPanel>
-                            <avalonia:MaterialIcon Margin="8 0 0 0" Kind="ImageFilterCenterFocus" DockPanel.Dock="Left" Width="20" Height="20"/>
-                            <TextBlock Margin="8 0 0 0" Text="{CompiledBinding Name}"/>
+                            <avalonia:MaterialIcon Margin="8 0 0 0" 
+                                                   Kind="{CompiledBinding Icon}" 
+                                                   DockPanel.Dock="Left" 
+                                                   Width="20" Height="20"/>
+                            <TextBlock Margin="8 0 0 0" 
+                                       Text="{CompiledBinding Name}"/>
                         </DockPanel>
                     </DataTemplate>
-                    <DataTemplate DataType="core:PlaningMissionNavigationPointViewModel">
-                        <DockPanel>
-                            <avalonia:MaterialIcon Margin="8 0 0 0" Kind="Location" DockPanel.Dock="Left" Width="20" Height="20"/>
-                            <TextBlock Margin="8 0 0 0" Text="{CompiledBinding Name}"/>
-                        </DockPanel>
-                    </DataTemplate>
-                    <DataTemplate DataType="core:PlaningMissionTakeOffPointViewModel">
-                        <DockPanel>
-                            <avalonia:MaterialIcon Margin="8 0 0 0" Kind="FlightTakeoff" DockPanel.Dock="Left" Width="20" Height="20"/>
-                            <TextBlock Margin="8 0 0 0" Text="{CompiledBinding Name}"/>
-                        </DockPanel>
-                    </DataTemplate>
-                    <DataTemplate DataType="core:PlaningMissionLandPointViewModel">
-                        <DockPanel>
-                            <avalonia:MaterialIcon Margin="8 0 0 0" Kind="FlightLand" DockPanel.Dock="Left" Width="20" Height="20"/>
-                            <TextBlock Margin="8 0 0 0" Text="{CompiledBinding Name}"/>
-                        </DockPanel>
-                    </DataTemplate>
-                </ListBox.DataTemplates>
+                </ListBox.ItemTemplate>
             </ListBox>
         </DockPanel>
     </Border>

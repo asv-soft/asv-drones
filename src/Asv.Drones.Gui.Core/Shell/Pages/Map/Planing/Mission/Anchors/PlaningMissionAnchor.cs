@@ -12,7 +12,7 @@ public class PlaningMissionAnchor : MapAnchorBase
 
     protected PlaningMissionAnchor(PlaningMissionPointModel point) : base(new Uri(UriString.FormatWith($"{point.Index}/{point.Type}")))
     {
-        Title = $"{point.Type} {point.Index}";
+        Title = $"{point.Type.GetPlaningMissionPointName()} {point.Index}";
         Location = point.Location;
         IsFilled = true;
         IsEditable = true;

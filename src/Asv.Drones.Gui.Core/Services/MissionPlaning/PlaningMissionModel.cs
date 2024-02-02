@@ -1,4 +1,5 @@
 ﻿using Asv.Common;
+using Asv.Mavlink.V2.Common;
 using Newtonsoft.Json.Linq;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -10,22 +11,51 @@ public record PlaningMissionModel
     public List<PlaningMissionPointModel> Points { get; set; } = new();
 }
 
-public enum PlaningMissionPointType
-{
-    // !!! DON'T CHANGE ORDER. ONLY ADD ITEMS !!!
-    TakeOff,
-    DoLand,
-    Waypoint,
-    Roi
-    // !!! DON'T CHANGE ORDER. ONLY ADD ITEMS !!!
-}
-
 public class PlaningMissionPointModel
 {
+    /// <summary>
+    /// Item index
+    /// </summary>
     [Reactive]
     public int Index { get; set; }
+    
+    /// <summary>
+    /// Command type
+    /// </summary>
     [Reactive]
-    public PlaningMissionPointType Type { get; set; }
+    public MavCmd Type { get; set; }
+    
+    /// <summary>
+    /// Location
+    /// </summary>
     [Reactive]
     public GeoPoint Location { get; set; }
+    
+    /// <summary>
+    /// PARAM1, see MAV_CMD enum
+    /// OriginName: param1, Units: , IsExtended: false
+    /// </summary>
+    [Reactive]
+    public float Param1 { get; set; }
+
+    /// <summary>
+    /// PARAM2, see MAV_CMD enum
+    /// OriginName: param2, Units: , IsExtended: false
+    /// </summary>
+    [Reactive]
+    public float Param2 { get; set; }
+
+    /// <summary>
+    /// PARAM3, see MAV_CMD enum
+    /// OriginName: param3, Units: , IsExtended: false
+    /// </summary>
+    [Reactive]
+    public float Param3 { get; set; }
+
+    /// <summary>
+    /// PARAM4, see MAV_CMD enum
+    /// OriginName: param4, Units: , IsExtended: false
+    /// </summary>
+    [Reactive]
+    public float Param4 { get; set; }
 }

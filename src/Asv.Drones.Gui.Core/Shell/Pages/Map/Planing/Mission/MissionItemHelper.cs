@@ -8,24 +8,15 @@ public static class MissionItemHelper
 {
     public static PlaningMissionPointModel TransformMissionItemToPointModel(this MissionItem missionItem)
     {
-        var pointType = GetMissionPointTypeFromMavlinkCommand(missionItem.Command.Value);
         return new PlaningMissionPointModel
         {
             Index = missionItem.Index,
-            Type = pointType,
-            Location = missionItem.Location.Value
+            Type = missionItem.Command.Value,
+            Location = missionItem.Location.Value,
+            Param1 = missionItem.Param1.Value,
+            Param2 = missionItem.Param2.Value,
+            Param3 = missionItem.Param3.Value,
+            Param4 = missionItem.Param4.Value
         };
     }
-
-    public static PlaningMissionPointType GetMissionPointTypeFromMavlinkCommand(MavCmd command)
-    {
-        return command switch
-        {
-            MavCmd.MavCmdNavLand => PlaningMissionPointType.DoLand,
-            MavCmd.MavCmdNavTakeoff => PlaningMissionPointType.TakeOff,
-            MavCmd.MavCmdNavWaypoint => PlaningMissionPointType.Waypoint,
-            MavCmd.MavCmdDoSetRoi or MavCmd.MavCmdDoSetRoiLocation => PlaningMissionPointType.Roi,
-            _ => throw new ArgumentOutOfRangeException(command.ToString())
-        };
-    }  
 }

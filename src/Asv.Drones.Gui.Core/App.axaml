@@ -1,6 +1,7 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:core="clr-namespace:Asv.Drones.Gui.Core">
+        xmlns:core="clr-namespace:Asv.Drones.Gui.Core"
+        xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia">
     <Design.PreviewWith>
         <Border Padding="20">
             <Border Padding="20" MinHeight="300">
@@ -27,6 +28,9 @@
             </Border>
         </Border>
     </Design.PreviewWith>
+    <Styles.Resources>
+        <core:MultipleIsNotNullConverter x:Key="IsNotNullConverter" />
+    </Styles.Resources>
     <StyleInclude Source="avares://Asv.Drones.Gui.Core/Controls/OptionsDisplayItem/OptionsDisplayItemStyles.axaml"/>
     <StyleInclude Source="avares://Asv.Drones.Gui.Core/Controls/BatteryIndicator.axaml"/>
     <StyleInclude Source="avares://Asv.Drones.Gui.Core/Controls/GpsStatusIndicator.axaml"/>

@@ -4,6 +4,7 @@ using System.Reactive;
 using Asv.Avalonia.Map;
 using Asv.Common;
 using Asv.Mavlink;
+using Asv.Mavlink.V2.Common;
 using Avalonia.Media;
 using DynamicData;
 using DynamicData.Binding;
@@ -17,7 +18,8 @@ namespace Asv.Drones.Gui.Core;
 
 public class PlaningMissionPointViewModel : ViewModelBaseWithValidation
 {
-    private const string _uriString = "asv:shell.page.planing-mission.mission.point";
+    private const string UriString = "asv:shell.page.planing-mission.mission.point";
+    
     private readonly PlaningMissionViewModel _parent;
     private readonly PlaningMissionPointModel _point;
     
@@ -27,7 +29,7 @@ public class PlaningMissionPointViewModel : ViewModelBaseWithValidation
     }
 
     protected PlaningMissionPointViewModel(PlaningMissionPointModel point, PlaningMissionViewModel parent) 
-        : this($"{_uriString}.{point.Index}.{point.Type}")
+        : this($"{UriString}.{point.Index}.{point.Type}")
     {
         _parent = parent;
         _point = point;
@@ -57,7 +59,7 @@ public class PlaningMissionPointViewModel : ViewModelBaseWithValidation
                 _point.Index = _;
                 if(MissionAnchor != null)
                     MissionAnchor.Index = _;
-                Name = $"{Type} {_}";
+                Name = $"{Type.GetPlaningMissionPointName()} {_}";
             }).DisposeItWith(Disposable);
 
         this.WhenValueChanged(_ => _.Type)
@@ -65,7 +67,7 @@ public class PlaningMissionPointViewModel : ViewModelBaseWithValidation
             {
                 IsChanged = true;
                 _point.Type = _;
-                Name = $"{_} {Index}";
+                Name = $"{_.GetPlaningMissionPointName()} {Index}";
             }).DisposeItWith(Disposable);
         
     }
@@ -75,11 +77,22 @@ public class PlaningMissionPointViewModel : ViewModelBaseWithValidation
     [Reactive]
     public string Name { get; set; }
     [Reactive]
-    public PlaningMissionPointType Type { get; set; }
+    public MavCmd Type { get; set; }
     [Reactive]
     public bool IsChanged { get; set; }
     [Reactive]
     public PlaningMissionAnchor MissionAnchor { get; set; }
+    [Reactive]
+    public MaterialIconKind Icon { get; set; }
+    [Reactive]
+    public string Param1Title { get; set; } = RS.PlaningMissionPointViewModel_Param1Title;
+    [Reactive]
+    public string Param2Title { get; set; } = RS.PlaningMissionPointViewModel_Param2Title;
+    [Reactive]
+    public string Param3Title { get; set; } = RS.PlaningMissionPointViewModel_Param3Title;
+    [Reactive]
+    public string Param4Title { get; set; } = RS.PlaningMissionPointViewModel_Param4Title;
+    
     public ReactiveCommand<Unit, Unit> Delete { get; }
     public PlaningMissionPointModel SaveToJson(SemVersion fileVersion)
     {
@@ -87,11 +100,26 @@ public class PlaningMissionPointViewModel : ViewModelBaseWithValidation
         {
             Index = Index,
             Type = Type,
-            Location = MissionAnchor.Location
+            Location = MissionAnchor?.Location ?? GeoPoint.Zero,
+            Param1 = Point.Param1,
+            Param2 = Point.Param2,
+            Param3 = Point.Param3,
+            Param4 = Point.Param4
         };
     }
+    
     public virtual void CreateVehicleItems(IVehicleClient vehicle, ISdrClientDevice? sdr)
     {
-        
+        MissionItem missionItem = vehicle.Missions.Create();
+        missionItem.Location.OnNext(Point.Location);
+        missionItem.AutoContinue.OnNext(true);
+        missionItem.Command.OnNext(Type);
+        missionItem.Current.OnNext(false);
+        missionItem.Frame.OnNext(MavFrame.MavFrameGlobalInt);
+        missionItem.MissionType.OnNext(MavMissionType.MavMissionTypeMission);
+        missionItem.Param1.OnNext(Point.Param1);
+        missionItem.Param2.OnNext(Point.Param2);
+        missionItem.Param3.OnNext(Point.Param3);
+        missionItem.Param4.OnNext(Point.Param4);
     }
 }
