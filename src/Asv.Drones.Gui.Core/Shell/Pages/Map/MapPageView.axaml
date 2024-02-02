@@ -5,6 +5,8 @@
              xmlns:core="clr-namespace:Asv.Drones.Gui.Core"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:map="clr-namespace:Asv.Avalonia.Map;assembly=Asv.Drones.Gui.Map"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="core:MapPageViewModel"
              x:Class="Asv.Drones.Gui.Core.MapPageView">
@@ -12,8 +14,13 @@
 	<Design.DataContext>
         <core:MapPageViewModel/>
     </Design.DataContext>
-    <Grid d:ShowGridLines="True" ColumnDefinitions="*,5,3*,5,*" RowDefinitions="Auto,3*,5,*">
-        <map:MapView
+    <Grid d:ShowGridLines="True" ColumnDefinitions="*,5,3*,5,*" RowDefinitions="Auto,3*,5,*" Name="MainGrid">
+	    <i:Interaction.Behaviors>
+		    <ia:EventTriggerBehavior EventName="LostFocus" SourceObject="{Binding #MainGrid}">
+			    <ia:InvokeCommandAction Command="{CompiledBinding DeselectAnchorsCommand}" />
+		    </ia:EventTriggerBehavior>
+	    </i:Interaction.Behaviors>
+	    <map:MapView
 			MapProvider="{CompiledBinding MapProvider}"
 			SelectedItem="{Binding SelectedItem}"
 			Position="{CompiledBinding Center, Mode=TwoWay}"
