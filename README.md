@@ -66,14 +66,14 @@ Combine needed plugins and components to make application for your needs.
 ### Combining example:
 #### Asv.Drones + SDR
 <div align="center">
-   <img src="img/sdr-flight.png" alt="sdr-flight" width="650 />
-   <img src="img/sdr-settings.png" alt="sdr-flight" width="650 />
+   <img src="img/sdr-flight.png" alt="sdr-flight" width="650" />
+   <img src="img/sdr-settings.png" alt="sdr-settings" width="650" />
 </div>
 #### Asv.Drones + GBS
 <div align="center">
-   <img src="img/gbs-parameters.png" alt="sdr-flight" width="650 />
-   <img src="img/gbs-flight.png" alt="sdr-flight" width="650 />
-   <img src="img/gbs-settings.png" alt="sdr-flight" width="650 />
+   <img src="img/gbs-parameters.png" alt="gbs-parameters" width="650" />
+   <img src="img/gbs-flight.png" alt="gbs-flight" width="650" />
+   <img src="img/gbs-settings.png" alt="gbs-settings" width="650" />
 </div>
 
 ## 3. Getting Started
