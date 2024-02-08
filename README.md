@@ -65,11 +65,14 @@ Embark on a journey of exploration, experimentation, and innovation with Asv.Dro
 Combine needed plugins and components to make application for your needs.
 ### Combining example:
 #### Asv.Drones + SDR
+
 <div align="center">
    <img src="img/sdr-flight.png" alt="sdr-flight" width="650" />
    <img src="img/sdr-settings.png" alt="sdr-settings" width="650" />
 </div>
+
 #### Asv.Drones + GBS
+
 <div align="center">
    <img src="img/gbs-parameters.png" alt="gbs-parameters" width="650" />
    <img src="img/gbs-flight.png" alt="gbs-flight" width="650" />
