@@ -67,21 +67,7 @@ public partial class MainWindow : AppWindow
     {
         base.OnOpened(e);
         var thm = ActualThemeVariant;
-        // Enable Mica on Windows 11
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            // TODO: add Windows version to CoreWindow
-            if (IsWindows11 && thm != FluentAvaloniaTheme.HighContrastTheme)
-            {
-                //TransparencyBackgroundFallback = Brushes.Transparent;
-                //TransparencyLevelHint = WindowTransparencyLevel.Mica;
-
-                //TryEnableMicaEffect();
-            }
-        }
-
         if (_configuration == null) return;
-
         var shellViewConfig = _configuration.Get<MainWindowConfig>();
 
         if (shellViewConfig.IsMaximized)
@@ -129,11 +115,7 @@ public partial class MainWindow : AppWindow
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             // TODO: add Windows version to CoreWindow
-            if (IsWindows11 && ActualThemeVariant != FluentAvaloniaTheme.HighContrastTheme)
-            {
-                TryEnableMicaEffect();
-            }
-            else if (ActualThemeVariant != FluentAvaloniaTheme.HighContrastTheme)
+           if (ActualThemeVariant != FluentAvaloniaTheme.HighContrastTheme)
             {
                 // Clear the local value here, and let the normal styles take over for HighContrast theme
                 SetValue(BackgroundProperty, AvaloniaProperty.UnsetValue);
