@@ -85,11 +85,11 @@ Combine needed plugins and components to make application for your needs.
 
 To ensure a smooth development experience, follow the steps below to set up your development environment:
 
-#### 1. **Prerequisites:**
+### 3.1 Prerequisites:
 - **Operating System:** This project is compatible with Windows, macOS, and Linux. Ensure that your development machine runs one of these supported operating systems.
 - **IDE (Integrated Development Environment):** We recommend using [Visual Studio](https://visualstudio.microsoft.com/) or [JetBrains Rider](https://www.jetbrains.com/rider/) as your IDE for C# development. Make sure to install the necessary extensions and plugins for a better development experience.
 
-#### 2. **.NET Installation:**
+### 3.2 .NET Installation:
 - This project is built using [.NET 6.0](https://dotnet.microsoft.com/download/dotnet/6.0) and [.NET 7.0](https://dotnet.microsoft.com/download/dotnet/7.0), the latests version of the .NET platform. We recommend installing .NET 7.0 by following the instructions provided on the official [.NET website](https://dotnet.microsoft.com/download/dotnet/7.0).
 
    ```bash
@@ -97,33 +97,27 @@ To ensure a smooth development experience, follow the steps below to set up your
    dotnet --version
    ```
 
-#### 3. **Version Control:**
+### 3.3 Version Control:
 - If you haven't already, install a version control system such as [Git](https://git-scm.com/) to track changes and collaborate with other developers.
 
-#### 4. **Clone the Repository:**
+### 3.4 Clone the Repository:
 - Clone the project repository to your local machine using the following command:
 
    ```bash
    git clone https://github.com/asv-soft/asv-drones.git
    ```
 
-#### 5. **Restore Dependencies:**
-- Navigate to the project directory and restore the required dependencies using the following command:
+### 3.5 Restore Dependencies:
+- Navigate to the platform project directory and restore the required dependencies. There is 3 possible platform directories to build and debug our app: __Asv.Drones.Gui.Desktop__, __Asv.Drones.Gui.Android__, __Asv.Drones.Gui.iOS__.
+For example we will use __Asv.Drones.Gui.Desktop__ platform, so you have to execute the following command:
 
    ```bash
-   cd asv-drones
-   dotnet restore
+   cd asv-drones/src/Asv.Drones.Gui.Desktop
+   dotnet workload restore
    ```
 
-#### 6. **Open in IDE:**
-- Open the project in your preferred IDE. For Visual Studio Code, you can open the project by typing:
-
-   ```bash
-   code .
-   ```
-
-#### 7. **Build and Run:**
-- Build the project to ensure that everything is set up correctly:
+### 3.6 Build and Run:
+- After workload restore command you have to build the project to ensure that everything is set up correctly, and if it's not - try to restore workloads again:
 
    ```bash
    dotnet build
