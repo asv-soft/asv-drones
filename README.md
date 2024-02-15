@@ -69,10 +69,10 @@ Asv.Drones can work with different combinations of it's components
 **Ground Base Station Integration:** Asv.Drones offers seamless integration with ground base stations through our proprietary implementation called Asv.Drones.Gbs, available on GitHub [here](https://github.com/asv-soft/asv-drones-gbs). Built to operate via the MAVLink protocol, Asv.Drones.Gbs allows users to remotely manage and monitor drone operations from a centralized platform. Moreover, any other ground base station software compatible with MAVLink can seamlessly interface with our application, ensuring flexibility and interoperability across different systems (development of additional UI controls may be required). With Asv.Drones.Gbs, users can plan missions, monitor telemetry data, and adjust flight parameters with ease.
 
 <div align="center">
-   <img src="img/asv-drones-gbs-connections" alt="gbs-connections" width="650" />
-   <img src="img/asv-drones-gbs-settings" alt="gbs-parameters" width="650" />
-   <img src="img/asv-drones-gbs-widget" alt="gbs-widget" width="650" />
-   <img src="img/asv-drones-gbs-packets" alt="gbs-packets" width="650" />
+   <img src="img/asv-drones-gbs-connections.png" alt="gbs-connections" width="650" />
+   <img src="img/asv-drones-gbs-settings.png" alt="gbs-parameters" width="650" />
+   <img src="img/asv-drones-gbs-widget.png" alt="gbs-widget" width="650" />
+   <img src="img/asv-drones-gbs-packets.png" alt="gbs-packets" width="650" />
 </div>
 
 ### Example Of Usage With SDR
@@ -80,10 +80,10 @@ Asv.Drones can work with different combinations of it's components
 **SDR Integration:** Enhance your drone operations with Asv.Drones.Sdr, our custom-built SDR software available on GitHub [here](https://github.com/asv-soft/asv-drones-sdr). Designed to communicate via the MAVLink protocol, Asv.Drones.Sdr expands the capabilities of your drones beyond traditional control. Additionally, our software allows integration with any other SDR software that utilizes MAVLink, enabling a wide range of applications such as spectrum monitoring, signal intelligence, and radio relay (development of additional UI controls may be required). With Asv.Drones.Sdr, users can leverage SDR technology to scan and analyze radio frequency signals, intercept communication signals, and extend communication networks, empowering them to tackle diverse missions effectively.
 
 <div align="center">
-   <img src="img/asv-drones-sdr-connections" alt="sdr-connections" width="650" />
-   <img src="img/asv-drones-sdr-settings" alt="sdr-parameters" width="650" />
-   <img src="img/asv-drones-sdr-widget" alt="sdr-widget" width="650" />
-   <img src="img/asv-drones-sdr-packets" alt="sdr-packets" width="650" />
+   <img src="img/asv-drones-sdr-connections.png" alt="sdr-connections" width="650" />
+   <img src="img/asv-drones-sdr-settings.png" alt="sdr-parameters" width="650" />
+   <img src="img/asv-drones-sdr-widget.png" alt="sdr-widget" width="650" />
+   <img src="img/asv-drones-sdr-packets.png" alt="sdr-packets" width="650" />
 </div>
 
 ## 3. Getting Started
