@@ -164,14 +164,13 @@ public partial class App : Application
             desktop.ShutdownRequested += OnShutdownRequested;
             var configuration = _container.GetExportedValue<IConfiguration>();
             Debug.Assert(configuration != null, nameof(configuration) + " != null");
-            var window = new MainWindow(configuration);
-            var navigation = _container.GetExportedValue<INavigationService>();
-            navigation?.InitStorageProvider(window.StorageProvider);
-            
-            desktop.MainWindow = new MainWindow
+            var window = new MainWindow(configuration)
             {
                 DataContext = _container.GetExportedValue<IShell>()
             };
+            var navigation = _container.GetExportedValue<INavigationService>();
+            navigation?.InitStorageProvider(window.StorageProvider);
+            desktop.MainWindow = window;
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
