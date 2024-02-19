@@ -112,7 +112,7 @@
 		    </ItemsControl.ItemsPanel>
 		    <ItemsControl.ItemTemplate>
 			    <DataTemplate>
-				    <ContentPresenter Content="{Binding}" Margin="8,0,8,0" />
+				    <ContentPresenter Content="{Binding}" Margin="8,0,0,0" />
 			    </DataTemplate>
 		    </ItemsControl.ItemTemplate>
 	    </ItemsControl>

@@ -12,6 +12,7 @@ public class AnchorMoverActionViewModel : ViewModelBase, IMapAction
     
     public AnchorMoverActionViewModel() : base("asv:shell.page.map.action.move-anchors")
     {
+        
     }
     
     public IMapAction Init(IMap context)

@@ -102,8 +102,6 @@
                                 </ItemsControl>
                             </StackPanel>    
                         </Border>
-                        
-                        
                     </Popup>
                 </Grid>
                 

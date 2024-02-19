@@ -12,9 +12,9 @@
     </Design.DataContext>
     <UserControl.Styles>
         <Style Selector="Button.MapBottomButton">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="{x:Null}" />
-            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Width" Value="30" />
             <Setter Property="Height" Value="30" />
         </Style>

@@ -2,7 +2,6 @@ using System.ComponentModel.Composition;
 using Asv.Common;
 using DynamicData.Binding;
 using ReactiveUI.Fody.Helpers;
-
 namespace Asv.Drones.Gui.Core;
 
 [Export(FlightPageViewModel.UriString,typeof(IMapAction))]
