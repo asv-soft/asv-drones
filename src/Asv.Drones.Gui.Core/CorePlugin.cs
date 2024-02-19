@@ -22,7 +22,7 @@ public class CorePlugin: IPluginEntryPoint
         _applicationDataTemplateHost = applicationDataTemplateHost;
         var batch = new CompositionBatch();
         var path = GetAppPathInfo();
-        var config = new JsonOneFileConfiguration(path.ConfigFilePath, true, TimeSpan.FromSeconds(1));
+        var config = new JsonOneFileConfiguration(path.ConfigFilePath, true, null);
         batch.AddExportedValue(path);
         batch.AddExportedValue<IConfiguration>(config);
         batch.AddExportedValue(_defaultViewLocator = new ViewLocator(container));
