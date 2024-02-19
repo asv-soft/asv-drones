@@ -970,8 +970,7 @@ namespace Asv.Avalonia.Map
                 if (e.Source is Visual visual)
                 {
                     var pointerPoint = e.GetCurrentPoint(visual);
-
-                    if (pointerPoint.Properties.IsLeftButtonPressed || pointerPoint.Properties.IsRightButtonPressed)
+                    if (pointerPoint.Properties.IsRightButtonPressed)
                     {
                         DialogTarget = GeoPoint.NaN;
                         IsInDialogMode = false;
