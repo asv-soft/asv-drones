@@ -1,0 +1,137 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+        xmlns:api="clr-namespace:Asv.Drones.Gui.Api">
+    <Design.PreviewWith>
+        <api:LevelIndicator />
+    </Design.PreviewWith>
+
+    <Style Selector="api|LevelIndicator">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Viewbox>
+                    <Canvas Background="Transparent"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            Width="350"
+                            Height="41">
+                        <Rectangle x:Name="Level" Canvas.Top="0" Canvas.Left="0"
+                                   Fill="{TemplateBinding Foreground}"
+                                   Height="25"
+                                   Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Level}" />
+                        <Line Stroke="SteelBlue" StartPoint="0,28" EndPoint="350,28" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+
+                        <Line Stroke="SteelBlue" StartPoint="1,29" EndPoint="1,41" Margin="0,0,0,0" StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="12.5,29" EndPoint="12.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="25,29" EndPoint="25,36" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="37.5,29" EndPoint="37.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+
+                        <Line Stroke="SteelBlue" StartPoint="50,29" EndPoint="50,41" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="62.5,29" EndPoint="62.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="75,29" EndPoint="75,36" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="87.5,29" EndPoint="87.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+
+                        <Line Stroke="SteelBlue" StartPoint="100,29" EndPoint="100,41" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="112.5,29" EndPoint="112.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="125,29" EndPoint="125,36" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="137.5,29" EndPoint="137.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+
+                        <Line Stroke="SteelBlue" StartPoint="100,29" EndPoint="100,41" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="112.5,29" EndPoint="112.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="125,29" EndPoint="125,36" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="137.5,29" EndPoint="137.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+
+                        <Line Stroke="SteelBlue" StartPoint="150,29" EndPoint="150,41" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="162.5,29" EndPoint="162.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="175,29" EndPoint="175,36" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="187.5,29" EndPoint="187.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+
+                        <Line Stroke="SteelBlue" StartPoint="150,29" EndPoint="150,41" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="162.5,29" EndPoint="162.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="175,29" EndPoint="175,36" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="187.5,29" EndPoint="187.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+
+                        <Line Stroke="SteelBlue" StartPoint="200,29" EndPoint="200,41" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="212.5,29" EndPoint="212.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="225,29" EndPoint="225,36" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="237.5,29" EndPoint="237.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+
+                        <Line Stroke="SteelBlue" StartPoint="200,29" EndPoint="200,41" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="212.5,29" EndPoint="212.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="225,29" EndPoint="225,36" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="237.5,29" EndPoint="237.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+
+                        <Line Stroke="SteelBlue" StartPoint="250,29" EndPoint="250,41" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="262.5,29" EndPoint="262.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="275,29" EndPoint="275,36" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="287.5,29" EndPoint="287.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+
+                        <Line Stroke="SteelBlue" StartPoint="300,29" EndPoint="300,41" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="312.5,29" EndPoint="312.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="325,29" EndPoint="325,36" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="337.5,29" EndPoint="337.5,33" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+                        <Line Stroke="SteelBlue" StartPoint="349,29" EndPoint="349,41" Margin="0,0,0,0"
+                              StrokeThickness="2" />
+
+                        <Border Canvas.Top="0" Canvas.Left="0"
+                                Background="Transparent"
+                                Width="200"
+                                Height="41"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Opacity="{TemplateBinding Opacity}"
+                                CornerRadius="0"
+                                Padding="0">
+                        </Border>
+                    </Canvas>
+                </Viewbox>
+
+
+            </ControlTemplate>
+
+        </Setter>
+    </Style>
+</Styles>

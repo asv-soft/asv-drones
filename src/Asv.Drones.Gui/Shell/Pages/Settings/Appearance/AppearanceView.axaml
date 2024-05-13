@@ -1,0 +1,124 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+             xmlns:gui="clr-namespace:Asv.Drones.Gui"
+             xmlns:api="clr-namespace:Asv.Drones.Gui.Api;assembly=Asv.Drones.Gui.Api"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:CompileBindings="True"
+             x:DataType="gui:AppearanceViewModel"
+             x:Class="Asv.Drones.Gui.AppearanceView">
+    <Design.DataContext>
+        <gui:AppearanceViewModel />
+    </Design.DataContext>
+    <ScrollViewer>
+        <StackPanel Margin="8" Spacing="8">
+            <Grid Margin="16" ColumnDefinitions="*,Auto" RowDefinitions="*,Auto">
+
+                <DockPanel>
+                    <Image Source="/Assets/icon.ico"
+                           DockPanel.Dock="Left"
+                           Height="78" />
+
+                    <StackPanel Spacing="0" Margin="12 0">
+                        <TextBlock Text="{Binding Info.Name}"
+                                   Classes="TitleTextBlockStyle" />
+
+                        <TextBlock Text="{Binding Info.Version}"
+                                   Classes="BodyTextBlockStyle" />
+
+                        <TextBlock Text="{Binding Info.AppLicense}"
+                                   Classes="CaptionTextBlockStyle" />
+
+                        <controls:HyperlinkButton Padding="3,3" Margin="-3,0,0,0" HorizontalContentAlignment="Left"
+                                                  Content="{Binding Info.AppUrl}" NavigateUri="{Binding Info.AppUrl}" />
+                    </StackPanel>
+                </DockPanel>
+
+                <DockPanel Name="HeaderRightContent" Grid.Row="0" Grid.Column="1" Opacity="1">
+                    <DockPanel.RenderTransform>
+                        <TranslateTransform X="0" Y="0" />
+                    </DockPanel.RenderTransform>
+                    <Image Source="/Assets/avalonia-logo.ico"
+                           DockPanel.Dock="Left"
+                           Height="78" />
+
+                    <StackPanel Margin="12 0"
+                                VerticalAlignment="Center">
+                        <TextBlock Text="Avalonia"
+                                   Classes="SubtitleTextBlockStyle" />
+
+                        <TextBlock Text="{Binding Info.AvaloniaVersion}"
+                                   Classes="CaptionTextBlockStyle"
+                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                        <controls:HyperlinkButton Padding="3,3" Margin="-3,0,0,0" HorizontalContentAlignment="Left"
+                                                  Content="https://github.com/AvaloniaUI/Avalonia"
+                                                  NavigateUri="https://github.com/AvaloniaUI/Avalonia" />
+
+                    </StackPanel>
+                </DockPanel>
+            </Grid>
+            <api:OptionsDisplayItem Header="{x:Static gui:RS.SettingsThemeViewModel_CurrentTheme}"
+                                    Icon="DarkTheme"
+                                    Description="{x:Static gui:RS.SettingsThemeViewModel_ChangeThemeDescription}">
+                <api:OptionsDisplayItem.ActionButton>
+                    <ComboBox SelectedItem="{Binding SelectedTheme}"
+                              ItemsSource="{Binding AppThemes}"
+                              MinWidth="150">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </api:OptionsDisplayItem.ActionButton>
+            </api:OptionsDisplayItem>
+            <api:OptionsDisplayItem Header="{x:Static gui:RS.SettingsThemeViewModel_CurrentLanguage}"
+                                    Icon="{Binding LanguageIcon}"
+                                    Description="{x:Static gui:RS.SettingsThemeViewModel_CurrentLanguageDescription}">
+                <api:OptionsDisplayItem.ActionButton>
+                    <ComboBox SelectedItem="{Binding SelectedLanguage}"
+                              ItemsSource="{Binding AppLanguages}"
+                              MinWidth="150">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding DisplayName}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </api:OptionsDisplayItem.ActionButton>
+            </api:OptionsDisplayItem>
+            <api:OptionsDisplayItem Header="{x:Static gui:RS.MapSettingsView_MapProvider_Header}"
+                                    Icon="{Binding MapIcon}"
+                                    Description="{x:Static gui:RS.MapSettingsView_MapProvider_Description}">
+                <api:OptionsDisplayItem.ActionButton>
+                    <ComboBox SelectedItem="{Binding CurrentMapProvider}"
+                              ItemsSource="{Binding AvailableProviders}"
+                              DisplayMemberBinding="{Binding Name}"
+                              MinWidth="150" />
+                </api:OptionsDisplayItem.ActionButton>
+            </api:OptionsDisplayItem>
+            <api:OptionsDisplayItem Header="{x:Static gui:RS.AppearanceView_MapAccess_Header}"
+                                    Icon="{Binding MapAccessIcon}"
+                                    Description="{x:Static gui:RS.AppearanceView_MapAccess_Description}">
+                <api:OptionsDisplayItem.ActionButton>
+                    <ComboBox SelectedValue="{CompiledBinding CurrentMapAccessMode,Mode=TwoWay}"
+                              ItemsSource="{CompiledBinding AvailableAccessMode}"
+                              DisplayMemberBinding="{CompiledBinding Name}"
+                              MinWidth="150" />
+                </api:OptionsDisplayItem.ActionButton>
+            </api:OptionsDisplayItem>
+            <api:OptionsDisplayItem Header="{x:Static gui:RS.MapSettingsView_MapsInfo_Header}"
+                                    Icon="{Binding FolderIcon}"
+                                    Description="{CompiledBinding MapStorageDescription}">
+                <api:OptionsDisplayItem.ActionButton>
+                    <Button MinWidth="150" Content="{x:Static gui:RS.MapSettingsView_MapsInfo_ButtonTitle}"
+                            Command="{CompiledBinding ClearMapStorageCommand}" />
+                </api:OptionsDisplayItem.ActionButton>
+            </api:OptionsDisplayItem>
+
+        </StackPanel>
+    </ScrollViewer>
+
+</UserControl>

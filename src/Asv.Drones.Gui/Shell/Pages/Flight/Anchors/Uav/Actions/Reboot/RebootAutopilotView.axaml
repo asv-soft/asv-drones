@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:gui="clr-namespace:Asv.Drones.Gui"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Asv.Drones.Gui.RebootAutopilotView"
+             x:CompileBindings="True"
+             x:DataType="gui:RebootAutopilotViewModel">
+    <Design.DataContext>
+        <gui:RebootAutopilotViewModel />
+    </Design.DataContext>
+    <StackPanel Spacing="5">
+        <Grid RowDefinitions="Auto, 5, Auto">
+            <TextBlock Text="{x:Static gui:RS.RebootAutopilotView_AutopilotReboot_Description}"
+                       TextWrapping="Wrap" />
+            <ComboBox Grid.Row="2" ItemsSource="{CompiledBinding AutopilotValues}"
+                      SelectedItem="{CompiledBinding SelectedAutopilotRebootShutdown}" HorizontalAlignment="Stretch">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Description}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </Grid>
+        <Grid RowDefinitions="Auto, 5, Auto">
+            <TextBlock Grid.Row="0"
+                       Text="{x:Static gui:RS.RebootAutopilotView_CompanionReboot_Description}"
+                       TextWrapping="Wrap" />
+            <ComboBox Grid.Row="2" ItemsSource="{CompiledBinding CompanionValues}"
+                      SelectedItem="{CompiledBinding SelectedCompanionRebootShutdown}" HorizontalAlignment="Stretch">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Description}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </Grid>
+    </StackPanel>
+</UserControl>

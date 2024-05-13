@@ -1,0 +1,16 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+        </Border>
+    </Design.PreviewWith>
+
+    <StyleInclude Source="avares://Asv.Drones.Gui.Api/Tools/Controls/OptionsDisplayItem/OptionsDisplayItemStyles.axaml" />
+    <StyleInclude Source="avares://Asv.Drones.Gui.Api/Tools/Controls/Indicators/BatteryIndicator.axaml" />
+    <StyleInclude Source="avares://Asv.Drones.Gui.Api/Tools/Controls/Indicators/GpsStatusIndicator.axaml" />
+    <StyleInclude Source="avares://Asv.Drones.Gui.Api/Tools/Controls/Indicators/ConnectionQuality.axaml" />
+    <StyleInclude Source="avares://Asv.Drones.Gui.Api/Tools/Controls/Indicators/DigitIndicator.axaml" />
+    <StyleInclude Source="avares://Asv.Drones.Gui.Api/Tools/Controls/Indicators/LevelIndicator.axaml" />
+    <StyleInclude Source="avares://Asv.Drones.Gui.Api/Tools/Controls/Attitude/AttitudeIndicator.axaml" />
+</Styles>

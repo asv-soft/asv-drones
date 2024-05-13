@@ -1,0 +1,145 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+             xmlns:map="clr-namespace:Asv.Avalonia.Map;assembly=Asv.Avalonia.Map"
+             xmlns:api="clr-namespace:Asv.Drones.Gui.Api"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="api:MapPageViewModel"
+             x:Class="Asv.Drones.Gui.Api.MapPageView">
+
+    <Design.DataContext>
+        <api:MapPageViewModel />
+    </Design.DataContext>
+    <Grid d:ShowGridLines="True" ColumnDefinitions="*,5,3*,5,*" RowDefinitions="Auto,3*,5,*" Name="MainGrid">
+        <map:MapView
+            MapProvider="{CompiledBinding MapProvider}"
+            SelectedItem="{Binding SelectedItem}"
+            Position="{CompiledBinding Center, Mode=TwoWay}"
+            DialogText="{CompiledBinding DialogText}"
+            DialogTarget="{CompiledBinding DialogTarget, Mode=TwoWay}"
+            IsInDialogMode="{CompiledBinding IsInDialogMode, Mode=TwoWay}"
+            MaxZoom="{CompiledBinding MaxZoom, Mode=TwoWay}"
+            MinZoom="{CompiledBinding MinZoom, Mode=TwoWay}"
+            Zoom="{CompiledBinding Zoom, Mode=TwoWay}"
+            IsInAnchorEditMode="{CompiledBinding IsInAnchorEditMode, Mode=TwoWay}"
+            Grid.ColumnSpan="5"
+            Grid.Row="0"
+            Grid.RowSpan="4"
+            ItemsSource="{Binding Markers}">
+            <map:MapView.ItemTemplate>
+                <DataTemplate x:DataType="map:MapAnchorViewModel">
+                    <map:MapAnchorView
+                        Name="AnchorView"
+                        map:MapView.Location="{CompiledBinding Location, Mode=TwoWay}"
+                        map:MapView.Path="{CompiledBinding Path,Mode=TwoWay}"
+                        map:MapView.Stroke="{CompiledBinding Stroke,Mode=TwoWay}"
+                        map:MapView.Fill="{CompiledBinding Fill,Mode=TwoWay}"
+                        map:MapView.StrokeThickness="{CompiledBinding StrokeThickness,Mode=TwoWay}"
+                        map:MapView.StrokeDashArray="{CompiledBinding StrokeDashArray,Mode=TwoWay}"
+                        map:MapView.PathOpacity="{CompiledBinding PathOpacity,Mode=TwoWay}"
+                        map:MapView.ZOrder="{CompiledBinding ZOrder}"
+                        map:MapView.IsEditable="{CompiledBinding IsEditable,Mode=OneWay}"
+                        map:MapView.OffsetX="{Binding OffsetX,ElementName=AnchorView}"
+                        map:MapView.OffsetY="{Binding OffsetY,ElementName=AnchorView}"
+                        map:MapView.IsFilled="{CompiledBinding IsFilled, Mode=TwoWay}"
+                        IsInEditMode="{CompiledBinding IsInEditMode, Mode=TwoWay}"
+                        OffsetXType="{CompiledBinding OffsetX}"
+                        OffsetYType="{CompiledBinding OffsetY}"
+                        IsVisible="{CompiledBinding IsVisible,Mode=TwoWay}"
+                        IsSelected="{CompiledBinding IsSelected,Mode=TwoWay}"
+                        Icon="{CompiledBinding Icon}"
+                        IconBrush="{CompiledBinding IconBrush}"
+                        Title="{CompiledBinding Title}"
+                        RotateCenterX="{CompiledBinding RotateCenterX}"
+                        RotateCenterY="{CompiledBinding RotateCenterY}"
+                        RotateAngle="{CompiledBinding RotateAngle}"
+                        Size="{CompiledBinding Size}"
+                        Actions="{CompiledBinding Actions} "
+                        Description="{CompiledBinding Description}" />
+                </DataTemplate>
+            </map:MapView.ItemTemplate>
+        </map:MapView>
+        <ScrollViewer Margin="8,8,0,8" Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Background="{x:Null}">
+            <ItemsControl ItemsSource="{Binding LeftWidgets}" Background="{x:Null}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Spacing="8" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+        <ScrollViewer Margin="0,8,8,8" Grid.Row="0" Grid.Column="4" Grid.RowSpan="4" Background="{x:Null}">
+            <ItemsControl ItemsSource="{Binding RightWidgets}" Background="{x:Null}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Spacing="8" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+        <Border Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" Margin="0,5" 
+                IsVisible="{Binding BottomWidgets.Count}"
+                Background="{DynamicResource SolidBackgroundFillColorBase}" Opacity="0.8"
+                CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True">
+            <TabControl AutoScrollToSelectedItem="True" ItemsSource="{Binding BottomWidgets}"
+                        TabStripPlacement="Bottom" Background="Transparent">
+                <TabControl.Styles>
+                    <Style Selector="TabItem:selected /template/ Rectangle#PART_SelectedPipe">
+                        <Setter Property="Height" Value="2" />
+                        <Setter Property="ClipToBounds" Value="True" />
+                        <Setter Property="Margin" Value="5,0,5,3" />
+                        <Setter Property="Fill" Value="#366ace"/>
+                    </Style>
+                    <Style Selector="TabItem">
+                        <Setter Property="Padding" Value="10,0" />
+                        <Setter Property="MinHeight" Value="20" />
+                        <Setter Property="FontSize" Value="18" />
+                        <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+                    </Style>
+                </TabControl.Styles>
+                <TabControl.ItemTemplate>
+                    <DataTemplate x:DataType="api:IMapWidget">
+                        <StackPanel Margin="10,0,10,5">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <avalonia:MaterialIcon Kind="{CompiledBinding Icon}" Width="18" Height="18" />
+                                <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="{CompiledBinding Title}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+            </TabControl>
+        </Border>
+        <Border Grid.Row="1" Grid.Column="2" Opacity="0.8"
+                Background="{DynamicResource SolidBackgroundFillColorBase}" 
+                VerticalAlignment="Bottom" Padding="5,10" 
+                CornerRadius="{DynamicResource ControlCornerRadius}" >
+            <ItemsControl  ItemsSource="{Binding MapActions}" >
+                <ItemsControl.Styles>
+                    <Style Selector="ContentPresenter" x:DataType="api:IMapAction">
+                        <Setter Property="DockPanel.Dock" Value="{Binding Dock}" />
+                    </Style>
+                </ItemsControl.Styles>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <DockPanel LastChildFill="False" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <ContentPresenter Content="{Binding}" Margin="8,0,8,0" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>    
+        </Border>
+        <GridSplitter Width="5" Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" Background="Transparent"
+                      IsHitTestVisible="True" ResizeBehavior="PreviousAndNext" />
+        <GridSplitter Width="5" Grid.Row="0" Grid.RowSpan="4" Grid.Column="3" Background="Transparent"
+                      IsHitTestVisible="True" Opacity="1" ResizeBehavior="PreviousAndNext" />
+        <GridSplitter HorizontalAlignment="Stretch" Height="5" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="1"
+                      Background="Transparent" IsHitTestVisible="True" ResizeBehavior="PreviousAndNext" />
+    </Grid>
+</UserControl>

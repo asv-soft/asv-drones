@@ -1,0 +1,22 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:gui="clr-namespace:Asv.Drones.Gui"
+             mc:Ignorable="d" Width="400" Height="130"
+             x:DataType="gui:SeparatorViewModel"
+             x:Class="Asv.Drones.Gui.SeparatorView">
+    <Design.DataContext>
+        <gui:SeparatorViewModel />
+    </Design.DataContext>
+    <Panel>
+        <StackPanel Spacing="10" Margin="10">
+            <RadioButton Content="{x:Static gui:RS.PacketViewerViewModel_SeparatorDialog_Semicolon}"
+                         IsChecked="{Binding IsSemicolon}" />
+            <RadioButton Content="{x:Static gui:RS.PacketViewerViewModel_SeparatorDialog_Coma}"
+                         IsChecked="{Binding IsComa}" />
+            <RadioButton Content="{x:Static gui:RS.PacketViewerViewModel_SeparatorDialog_Tab}"
+                         IsChecked="{Binding IsTab}" />
+        </StackPanel>
+    </Panel>
+</UserControl>

@@ -1,17 +1,18 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="using:Asv.Drones.Gui"
-             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:styling="clr-namespace:FluentAvalonia.Styling;assembly=FluentAvalonia"
-             x:Class="Asv.Drones.Gui.App"
-             RequestedThemeVariant="Default">
-    
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             x:Class="Asv.Drones.Gui.App">
     <Application.Styles>
-        <styling:FluentAvaloniaTheme PreferSystemTheme="True" PreferUserAccentColor="True"  />
+        <styling:FluentAvaloniaTheme PreferSystemTheme="True" PreferUserAccentColor="True" />
         <avalonia:MaterialIconStyles />
-        <StyleInclude Source="avares://Asv.Drones.Gui.Map/App.axaml"/>
-        <StyleInclude Source="avares://Asv.Drones.Gui.Core/App.axaml"/>
-        <StyleInclude Source="avares://Asv.Drones.Gui.Uav/App.axaml"/>
+        <StyleInclude Source="avares://Asv.Avalonia.Map/App.axaml" />
+        <StyleInclude Source="avares://Asv.Avalonia.Toolkit/App.axaml" />
+
+        <StyleInclude Source="avares://Asv.Avalonia.Map/MapView.axaml" />
+        <StyleInclude Source="avares://Asv.Avalonia.Map/MapViewItem.axaml" />
+        <StyleInclude Source="avares://Asv.Avalonia.Map/MapAnchorView.axaml" />
+
         <Style Selector="TextBlock">
             <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
         </Style>
@@ -24,5 +25,7 @@
         <Style Selector="avalonia|MaterialIcon:disabled">
             <Setter Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
         </Style>
+        <StyleInclude Source="avares://Asv.Drones.Gui.Api/App.axaml" />
     </Application.Styles>
+
 </Application>

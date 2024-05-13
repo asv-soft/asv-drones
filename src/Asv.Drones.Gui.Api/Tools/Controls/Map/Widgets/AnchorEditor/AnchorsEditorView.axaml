@@ -1,0 +1,79 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:api="clr-namespace:Asv.Drones.Gui.Api"
+             mc:Ignorable="d"
+             d:DesignWidth="240"
+             x:Class="Asv.Drones.Gui.Api.AnchorsEditorView"
+             x:DataType="api:AnchorsEditorViewModel"
+             IsVisible="{CompiledBinding IsVisible}">
+    <Design.DataContext>
+        <api:AnchorsEditorViewModel />
+    </Design.DataContext>
+    <Border CornerRadius="{DynamicResource ControlCornerRadius}" ClipToBounds="True">
+        <StackPanel Margin="10" Spacing="8" Grid.IsSharedSizeScope="True">
+            <StackPanel Margin="0 0 0 10" Orientation="Horizontal" Spacing="8">
+                <avalonia:MaterialIcon Kind="{CompiledBinding Map.SelectedItem.Icon}" />
+                <TextBlock Text="{CompiledBinding Map.SelectedItem.Title}" />
+            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Name" />
+                    <ColumnDefinition SharedSizeGroup="Space" Width="15" />
+                    <ColumnDefinition SharedSizeGroup="Value" Width="250" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{x:Static api:RS.AnchorsEditorView_TextBlock_Latitude_Text}"
+                           Grid.Column="0" VerticalAlignment="Center" />
+                <TextBox Grid.Column="2" IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
+                    <Interaction.Behaviors>
+                        <api:LostFocusUpdateBindingBehavior Text="{CompiledBinding Latitude}" />
+                    </Interaction.Behaviors>
+                    <TextBox.InnerRightContent>
+                        <TextBlock Text="{CompiledBinding LatitudeUnits}" VerticalAlignment="Center" Margin="8 4" />
+                    </TextBox.InnerRightContent>
+                </TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Name" />
+                    <ColumnDefinition SharedSizeGroup="Space" />
+                    <ColumnDefinition SharedSizeGroup="Value" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{x:Static api:RS.AnchorsEditorView_TextBlock_Longitude_Text}"
+                           Grid.Column="0" VerticalAlignment="Center" />
+                <TextBox Grid.Column="2" IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
+                    <Interaction.Behaviors>
+                        <api:LostFocusUpdateBindingBehavior Text="{CompiledBinding Longitude}" />
+                    </Interaction.Behaviors>
+                    <TextBox.InnerRightContent>
+                        <TextBlock Text="{Binding LongitudeUnits }" VerticalAlignment="Center" Margin="8 4" />
+                    </TextBox.InnerRightContent>
+                </TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Name" />
+                    <ColumnDefinition SharedSizeGroup="Space" />
+                    <ColumnDefinition SharedSizeGroup="Value" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{x:Static api:RS.AnchorsEditorView_TextBlock_Altitude_Text}"
+                           Grid.Column="0" VerticalAlignment="Center" />
+                <TextBox Grid.Column="2" IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
+                    <Interaction.Behaviors>
+                        <api:LostFocusUpdateBindingBehavior Text="{CompiledBinding Altitude}" />
+                    </Interaction.Behaviors>
+                    <TextBox.InnerRightContent>
+                        <TextBlock Text="{CompiledBinding AltitudeUnits}" VerticalAlignment="Center" Margin="8 4" />
+                    </TextBox.InnerRightContent>
+                </TextBox>
+            </Grid>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <Button Content="{x:Static api:RS.Anchor_Editor_Action_Copy}" Command="{CompiledBinding CopyCommand}" />
+                <Button Content="{x:Static api:RS.Anchor_Editor_Action_Paste}" Command="{CompiledBinding PasteCommand}"
+                        IsVisible="{CompiledBinding IsEditable}" />
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</UserControl>

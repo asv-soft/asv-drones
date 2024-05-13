@@ -1,27 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <CustomPropsPath Condition=" '$(SolutionDir)' == '$(ProjectDir)' ">../Asv.Drones.Gui.Custom.props</CustomPropsPath>
-        <CustomPropsPath Condition=" '$(SolutionDir)' != '$(ProjectDir)' ">$(SolutionDir)Asv.Drones.Gui.Custom.props</CustomPropsPath>
-    </PropertyGroup>
-    <Import Project="$(CustomPropsPath)"/>
-    <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net7.0-android</TargetFramework>
+        <TargetFramework>net8.0-android</TargetFramework>
         <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
         <Nullable>enable</Nullable>
         <ApplicationId>me.asv.drones.gui</ApplicationId>
         <ApplicationVersion>1</ApplicationVersion>
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
         <AndroidPackageFormat>apk</AndroidPackageFormat>
-        <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
-        <PublishTrimmed>false</PublishTrimmed>
-        <AndroidLinkMode>None</AndroidLinkMode>
-        <RunAOTCompilation>false</RunAOTCompilation>
-        <Configurations>Debug;Release</Configurations>
-        <Platforms>AnyCPU</Platforms>
+        <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
     </PropertyGroup>
-    
-   
 
     <ItemGroup>
         <AndroidResource Include="Icon.png">
@@ -31,6 +19,7 @@
 
     <ItemGroup>
         <PackageReference Include="Avalonia.Android" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.1"/>
     </ItemGroup>
 
     <ItemGroup>

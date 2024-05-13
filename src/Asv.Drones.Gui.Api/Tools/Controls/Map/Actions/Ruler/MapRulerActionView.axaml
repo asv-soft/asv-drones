@@ -1,0 +1,29 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:api="clr-namespace:Asv.Drones.Gui.Api"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:CompileBindings="True"
+             x:DataType="api:MapRulerActionViewModel"
+             x:Class="Asv.Drones.Gui.Api.MapRulerActionView">
+    <Design.DataContext>
+        <api:MapRulerActionViewModel />
+    </Design.DataContext>
+    <UserControl.Styles>
+        <Style Selector="Button.MapBottomButton">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="{x:Null}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Width" Value="30" />
+            <Setter Property="Height" Value="30" />
+        </Style>
+        <Style Selector="Button:pointerover.MapBottomButton /template/ ContentPresenter">
+            <Setter Property="BorderBrush" Value="{x:Null}" />
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+    </UserControl.Styles>
+    <ToggleButton Classes="MapBottomButton" IsChecked="{Binding IsRulerEnabled}"
+                  Content="{avalonia:MaterialIconExt TapeMeasure}" />
+</UserControl>
