@@ -3741,6 +3741,15 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Packet Loss Chance.
+        /// </summary>
+        public static string PortView_PacketLossChance {
+            get {
+                return ResourceManager.GetString("PortView_PacketLossChance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disabled.
         /// </summary>
         public static string PortView_ToggleButton_Disabled {
@@ -3764,6 +3773,15 @@ namespace Asv.Drones.Gui {
         public static string PortViewModel_SkippedUnitTest {
             get {
                 return ResourceManager.GetString("PortViewModel_SkippedUnitTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packet Loss Chance should be between 0 and 100 inclusive.
+        /// </summary>
+        public static string PortViewModel_ValidPacketLossChance {
+            get {
+                return ResourceManager.GetString("PortViewModel_ValidPacketLossChance", resourceCulture);
             }
         }
         

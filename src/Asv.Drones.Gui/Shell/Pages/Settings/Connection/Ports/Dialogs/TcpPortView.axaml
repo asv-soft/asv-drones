@@ -17,8 +17,10 @@
             <TextBox Text="{Binding Title}" />
             <TextBlock Text="{x:Static gui:RS.TcpPortView_TcpIpAddress}" />
             <TextBox Text="{Binding IpAddress}" />
-            <TextBlock Text="{x:Static gui:RS.TcpPortView_TcpIpPort}" />
+            <TextBlock Text="{x:Static gui:RS.TcpPortView_TcpIpPort}"/>
             <TextBox Text="{CompiledBinding PortString,Mode= TwoWay}" />
+            <TextBlock Text="{x:Static gui:RS.PortView_PacketLossChance}" IsVisible="{Binding IsDebugMode}" />
+            <TextBox Text="{CompiledBinding PacketLossChanceString, Mode= TwoWay}" IsVisible="{Binding IsDebugMode}" />
             <RadioButton IsChecked="{Binding IsTcpIpServer}" Content="TCP\IP server" />
             <RadioButton IsChecked="{Binding !IsTcpIpServer}" Content="TCP\IP client" />
         </StackPanel>

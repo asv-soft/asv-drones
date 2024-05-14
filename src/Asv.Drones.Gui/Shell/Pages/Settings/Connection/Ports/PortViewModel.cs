@@ -186,7 +186,8 @@ namespace Asv.Drones.Gui
                     {
                         SelectedBaudRate = baudRate,
                         Title = info.Name,
-                        SelectedPort = uri.AbsolutePath
+                        SelectedPort = uri.AbsolutePath,
+                        PacketLossChance = info.PacketLossChance,
                     };
                     viewModel.ApplyDialog(dialogSerialContentDialog);
                     dialogSerialContentDialog.Content = viewModel;
@@ -211,6 +212,7 @@ namespace Asv.Drones.Gui
                         IpAddress = uri.Host,
                         Title = info.Name,
                         IsTcpIpServer = uri.ToString().Contains("?srv=true"),
+                        PacketLossChance = info.PacketLossChance,
                     };
                     viewModel.ApplyDialog(dialogTcpContentDialog);
                     dialogTcpContentDialog.Content = viewModel;
@@ -233,8 +235,8 @@ namespace Asv.Drones.Gui
                     {
                         Title = info.Name,
                         LocalPort = uri.Port,
-                        LocalIpAddress = uri.Host
-                        
+                        LocalIpAddress = uri.Host,
+                        PacketLossChance = info.PacketLossChance,
                     };
                     if (!uri.Query.IsNullOrWhiteSpace())
                     {

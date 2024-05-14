@@ -15,11 +15,12 @@
             <TextBlock Text="{x:Static gui:RS.SerialPortView_Title}" />
             <TextBox Text="{Binding Title}" />
             <TextBlock Text="{x:Static gui:RS.SerialPortView_PortName}" />
-            <AutoCompleteBox Margin="0,0" SelectedItem="{Binding SelectedPort}" ItemsSource="{Binding Ports}" />
+            <ComboBox Margin="0,0" SelectedItem="{Binding SelectedPort}" ItemsSource="{Binding Ports}" />
             <TextBlock Text="{x:Static gui:RS.SerialPortView_BaudRate}" />
-            <AutoCompleteBox SelectedItem="{Binding SelectedBaudRate}"
-                             FilterMode="StartsWith"
+            <ComboBox SelectedItem="{Binding SelectedBaudRate}"
                              ItemsSource="{Binding BaudRates}" />
+            <TextBlock Text="{x:Static gui:RS.PortView_PacketLossChance}" IsVisible="{Binding IsDebugMode}" />
+            <TextBox Text="{CompiledBinding PacketLossChanceString, Mode=TwoWay}" IsVisible="{Binding IsDebugMode}"/>
         </StackPanel>
     </Panel>
 

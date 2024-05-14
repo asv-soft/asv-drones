@@ -18,6 +18,8 @@
             <TextBox Text="{Binding LocalIpAddress} " />
             <TextBlock Text="{x:Static gui:RS.UdpPortView_LocalPortName}" />
             <TextBox Text="{Binding LocalPortString}" />
+            <TextBlock Text="{x:Static gui:RS.PortView_PacketLossChance}" IsVisible="{Binding IsDebugMode}" />
+            <TextBox Text="{CompiledBinding PacketLossChanceString, Mode=TwoWay}" IsVisible="{Binding IsDebugMode}"/>
             <ToggleSwitch OnContent="" OffContent="" Content="{x:Static gui:RS.UdpPortView_ToggleName}"
                           IsChecked="{Binding IsRemote}" />
             <StackPanel IsVisible="{Binding IsRemote}" IsEnabled="{Binding IsRemote}">

@@ -23,10 +23,14 @@ namespace Asv.Drones.Gui
         {
             LocalPortString = "";
             RemotePortString = "";
+            PacketLossChance = 0;
+#if DEBUG
+            IsDebugMode = true;
+#endif
             if (Design.IsDesignMode)
             {
             }
-
+            
             this.WhenValueChanged(x => x.LocalPort).Subscribe(v =>
             {
                 if (v != null) LocalPortString = v.ToString();
@@ -43,6 +47,14 @@ namespace Asv.Drones.Gui
             {
                 if (!string.IsNullOrWhiteSpace(v) & int.TryParse(v, out var port)) RemotePort = port;
             }).DisposeItWith(Disposable);
+            this.WhenValueChanged(x => x.PacketLossChanceString).Subscribe(v =>
+            {
+                if (v is not null && int.TryParse(v, out int chance)) PacketLossChance = chance;
+            }).DisposeItWith(Disposable);
+            this.WhenValueChanged(x => x.PacketLossChance).Subscribe(v =>
+            {
+                if (v is not null) PacketLossChanceString = PacketLossChance.ToString();
+            }).DisposeItWith(Disposable);
             this.WhenValueChanged(_ => IsRemote).Subscribe(_ => UpdateValidationRules()).DisposeItWith(Disposable);
         }
 
@@ -50,32 +62,59 @@ namespace Asv.Drones.Gui
         {
             this.ClearValidationRules();
 
-            this.ValidationRule(x => x.Title, _ => !string.IsNullOrWhiteSpace(_), RS.UdpPortViewModel_ValidTitle)
-                .DisposeItWith(Disposable);
+            this.ValidationRule(x => x.LocalPortString, localPortStr =>
+            {
+                var isInt = int.TryParse(localPortStr, out int port);
 
+                if (!isInt)
+                {
+                    return false;
+                }
+
+                return port is > 1 and < 65535;
+            }, RS.UdpPortViewModel_ValidLocalPort).DisposeItWith(Disposable);
+            this.ValidationRule(x => x.PacketLossChanceString, chanceStr =>
+                    {
+                        var isInt = int.TryParse(chanceStr, out int chance);
+
+                        if (!isInt)
+                        {
+                            return false;
+                        }
+                        
+                        return chance is <= 100 and >= 0;
+                    },
+                    RS.PortViewModel_ValidPacketLossChance)
+                .DisposeItWith(Disposable);
+            
+            this.ValidationRule(x => x.Title, title => !string.IsNullOrWhiteSpace(title), RS.UdpPortViewModel_ValidTitle)
+                .DisposeItWith(Disposable);
             this.ValidationRule(x => x.LocalIpAddress,
-                    _ => !string.IsNullOrWhiteSpace(_) && IPAddress.TryParse(_, out IPAddress? ip),
+                    ip => !string.IsNullOrWhiteSpace(ip) && IPAddress.TryParse(ip, out IPAddress? _),
                     RS.UdpPortViewModel_ValidLocalIpAddress)
                 .DisposeItWith(Disposable);
-
-            this.ValidationRule(x => x.LocalPort, _ => _ is > 1 and < 65535, RS.UdpPortViewModel_ValidLocalPort)
-                .DisposeItWith(Disposable);
-            this.ValidationRule(x => x.LocalPortString,
-                    _ => !string.IsNullOrWhiteSpace(_.ToString()) & int.TryParse(_, out int port),
-                    RS.UdpPortViewModel_ValidLocalPort)
+            
+            this.ValidationRule(x => x.PacketLossChance, chance => chance is not null,
+                    RS.PortViewModel_ValidPacketLossChance)
                 .DisposeItWith(Disposable);
 
             if (IsRemote)
             {
                 this.ValidationRule(x => x.RemoteIpAddress,
-                        _ => !string.IsNullOrWhiteSpace(_) && IPAddress.TryParse(_, out IPAddress? ip),
+                        ip => !string.IsNullOrWhiteSpace(ip) && IPAddress.TryParse(ip, out IPAddress? _),
                         RS.UdpPortViewModel_ValidRemoteIpAddress)
                     .DisposeItWith(Disposable);
-                this.ValidationRule(x => x.RemotePort, _ => _ is > 1 and < 65535, RS.UdpPortViewModel_ValidRemotePort)
-                    .DisposeItWith(Disposable);
-                this.ValidationRule(x => x.RemotePortString,
-                        _ => !string.IsNullOrWhiteSpace(_.ToString()) & int.TryParse(_, out int port),
-                        RS.UdpPortViewModel_ValidLocalPort)
+                this.ValidationRule(x => x.RemotePortString, portStr =>
+                    {
+                        var isInt = int.TryParse(portStr, out int port);
+
+                        if (!isInt)
+                        {
+                            return false;
+                        }
+                        
+                        return port is > 1 and < 65535;
+                    }, RS.UdpPortViewModel_ValidRemotePort)
                     .DisposeItWith(Disposable);
             }
         }
@@ -105,7 +144,8 @@ namespace Asv.Drones.Gui
                     Name = Title,
                     ConnectionString = $"udp://{LocalIpAddress}:{LocalPort}" +
                                        (IsRemote ? $"?rhost={RemoteIpAddress}&rport={RemotePort}" : string.Empty),
-                    IsEnabled = true
+                    IsEnabled = true,
+                    PacketLossChance = PacketLossChance ?? 0,
                 });
             }
             catch (Exception e)
@@ -121,5 +161,11 @@ namespace Asv.Drones.Gui
         [Reactive] public string RemoteIpAddress { get; set; }
         [Reactive] public int? RemotePort { get; set; }
         [Reactive] public string RemotePortString { get; set; }
+        
+        [Reactive] public int? PacketLossChance { get; set; } = 0;
+        
+        [Reactive] public string PacketLossChanceString { get; set; }
+        
+        public bool IsDebugMode { get; private set; }
     }
 }
