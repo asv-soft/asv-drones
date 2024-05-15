@@ -1823,4 +1823,10 @@
   <data name="QuickParametersSliderView_IsDescrete" xml:space="preserve">
     <value>Descrete</value>
   </data>
+  <data name="PortViewModel_ValidPacketLossChance" xml:space="preserve">
+    <value>Packet Loss Chance should be between 0 and 100 inclusive</value>
+  </data>
+  <data name="PortView_PacketLossChance" xml:space="preserve">
+    <value>Packet Loss Chance</value>
+  </data>
 </root>

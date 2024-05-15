@@ -31,28 +31,68 @@ namespace Asv.Drones.Gui
             Port = 7334;
             IpAddress = "172.16.0.1";
             IsTcpIpServer = true;
+            PacketLossChance = 0;
+#if DEBUG
+            IsDebugMode = true;
+#endif
+            
             this.WhenValueChanged(x => x.PortString).Subscribe(v =>
             {
                 if (v != null & int.TryParse(v, out int port)) Port = port;
+            }).DisposeItWith(Disposable);
+            this.WhenValueChanged(x => x.PacketLossChanceString).Subscribe(v =>
+            {
+                if (v is not null && int.TryParse(v, out int chance)) PacketLossChance = chance;
             }).DisposeItWith(Disposable);
             this.WhenValueChanged(x => x.Port).Subscribe(v =>
             {
                 if (v != null) PortString = Port.ToString();
             }).DisposeItWith(Disposable);
-            this.ValidationRule(x => x.Title, _ => !string.IsNullOrWhiteSpace(_), RS.TcpPortViewModel_ValidTitle)
-                .DisposeItWith(Disposable);
-            this.ValidationRule(x => x.PortString,
-                    _ => !string.IsNullOrWhiteSpace(_.ToString()) & int.TryParse(_, out int port),
-                    RS.TcpPortViewModel_ValidPort)
-                .DisposeItWith(Disposable);
-
-            this.ValidationRule(x => x.Port, _ => _ is > 1 and < 65535, RS.TcpPortViewModel_ValidPort)
-                .DisposeItWith(Disposable);
-            this.ValidationRule(x => x.Port, _ => _ is not null, RS.TcpPortViewModel_ValidPort)
+            this.WhenValueChanged(x => x.PacketLossChance).Subscribe(v =>
+            {
+                if (v is not null) PacketLossChanceString = PacketLossChance.ToString();
+            }).DisposeItWith(Disposable);
+            
+            this.ValidationRule(x => x.Title, title => !string.IsNullOrWhiteSpace(title), 
+                    RS.TcpPortViewModel_ValidTitle)
                 .DisposeItWith(Disposable);
             this.ValidationRule(x => x.IpAddress,
-                    _ => !string.IsNullOrWhiteSpace(_) && IPAddress.TryParse(_, out IPAddress? ip),
+                    ipStr => !string.IsNullOrWhiteSpace(ipStr) && IPAddress.TryParse(ipStr, out IPAddress? ip),
                     RS.TcpPortViewModel_ValidIpAddress)
+                .DisposeItWith(Disposable);
+            this.ValidationRule(x => x.PortString,
+                    portStr =>
+                    {
+                        var isInt = int.TryParse(portStr, out int port);
+
+                        if (!isInt)
+                        {
+                            return false;
+                        }
+
+                        return port is > 1 and < 65535;
+                    },
+                    RS.TcpPortViewModel_ValidPort)
+                .DisposeItWith(Disposable);
+            this.ValidationRule(x => x.PacketLossChanceString, chanceStr =>
+                    {
+                        var isInt = int.TryParse(chanceStr, out int chance);
+
+                        if (!isInt)
+                        {
+                            return false;
+                        }
+                        
+                        return chance is <= 100 and >= 0;
+                    },
+                    RS.PortViewModel_ValidPacketLossChance)
+                .DisposeItWith(Disposable);
+            
+            this.ValidationRule(x => x.PacketLossChance, chance => chance is not null,
+                    RS.PortViewModel_ValidPacketLossChance)
+                .DisposeItWith(Disposable);
+            this.ValidationRule(x => x.Port, port => port is not null, 
+                    RS.TcpPortViewModel_ValidPort)
                 .DisposeItWith(Disposable);
         }
 
@@ -78,6 +118,7 @@ namespace Asv.Drones.Gui
                         Name = Title,
                         ConnectionString = $"tcp://{IpAddress}:{port}" + (IsTcpIpServer ? "?srv=true" : string.Empty),
                         IsEnabled = true,
+                        PacketLossChance = PacketLossChance ?? 0,
                     });
                 }
                 catch (Exception e)
@@ -99,5 +140,11 @@ namespace Asv.Drones.Gui
         [Reactive] public bool IsTcpIpServer { get; set; }
 
         [Reactive] public string IpAddress { get; set; }
+
+        [Reactive] public int? PacketLossChance { get; set; } = 0;
+        
+        [Reactive] public string PacketLossChanceString { get; set; }
+        
+        public bool IsDebugMode { get; private set; }
     }
 }

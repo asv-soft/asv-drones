@@ -30,16 +30,46 @@ namespace Asv.Drones.Gui
 
         public SerialPortViewModel() : base(new Uri(WellKnownUri.ShellPageSettingsConnectionsPortsUri, "ports.serial"))
         {
-            this.ValidationRule(x => x.Title, _ => !string.IsNullOrWhiteSpace(_),
+            PacketLossChance = 0;
+            
+#if DEBUG
+            IsDebugMode = true;
+#endif
+            
+            this.WhenValueChanged(x => x.PacketLossChanceString).Subscribe(v =>
+            {
+                if (v is not null && int.TryParse(v, out int chance)) PacketLossChance = chance;
+            }).DisposeItWith(Disposable);
+            this.WhenValueChanged(x => x.PacketLossChance).Subscribe(v =>
+            {
+                if (v is not null) PacketLossChanceString = PacketLossChance.ToString();
+            }).DisposeItWith(Disposable);
+            
+            this.ValidationRule(x => x.Title, title => !string.IsNullOrWhiteSpace(title),
                     RS.SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name)
                 .DisposeItWith(Disposable);
-
-            this.ValidationRule(x => x.SelectedPort, _ => !string.IsNullOrWhiteSpace(_),
+            this.ValidationRule(x => x.SelectedPort, portStr => !string.IsNullOrWhiteSpace(portStr),
                     RS.SerialPortViewModel_SerialPortViewModel_ValidSerialPort)
                 .DisposeItWith(Disposable);
+            this.ValidationRule(x => x.PacketLossChanceString, chanceStr =>
+                    {
+                        var isInt = int.TryParse(chanceStr, out int chance);
 
-            this.ValidationRule(x => x.SelectedBaudRate, _ => _ is >= MinBaudRate and <= MaxBaudRate,
+                        if (!isInt)
+                        {
+                            return false;
+                        }
+                        
+                        return chance is <= 100 and >= 0;
+                    },
+                    RS.PortViewModel_ValidPacketLossChance)
+                .DisposeItWith(Disposable);
+
+            this.ValidationRule(x => x.SelectedBaudRate, baudRate => baudRate is >= MinBaudRate and <= MaxBaudRate,
                     string.Format(RS.SerialPortViewModel_SerialPortViewModel_BaudRateValid, MinBaudRate, MaxBaudRate))
+                .DisposeItWith(Disposable);
+            this.ValidationRule(x => x.PacketLossChance, chance => chance is not null,
+                    RS.PortViewModel_ValidPacketLossChance)
                 .DisposeItWith(Disposable);
 
             _myCache = new SourceList<string>()
@@ -81,7 +111,8 @@ namespace Asv.Drones.Gui
                 {
                     Name = Title,
                     ConnectionString = $"serial:{SelectedPort}?br={SelectedBaudRate}",
-                    IsEnabled = true
+                    IsEnabled = true,
+                    PacketLossChance = PacketLossChance ?? 0,
                 });
             }
             catch (Exception e)
@@ -122,5 +153,11 @@ namespace Asv.Drones.Gui
         [Reactive] public int? SelectedBaudRate { get; set; } = 115_200;
 
         [Reactive] public string SelectedPort { get; set; }
+
+        [Reactive] public int? PacketLossChance { get; set; } = 0;
+        
+        [Reactive] public string PacketLossChanceString { get; set; }
+
+        public bool IsDebugMode { get; private set; }
     }
 }
