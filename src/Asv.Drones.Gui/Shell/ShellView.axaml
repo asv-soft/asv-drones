@@ -1,0 +1,132 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:gui="clr-namespace:Asv.Drones.Gui"
+             xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:api="clr-namespace:Asv.Drones.Gui.Api;assembly=Asv.Drones.Gui.Api"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:CompileBindings="True"
+             x:Class="Asv.Drones.Gui.ShellView"
+             x:DataType="gui:ShellViewModel"
+             AttachedToVisualTree="OnAttachedToVisualTree">
+    <Design.DataContext>
+        <gui:ShellViewModel />
+    </Design.DataContext>
+    <UserControl.Styles>
+        <Style Selector="controls|NavigationViewItem">
+            <Setter Property="Content" Value="{Binding Title}" />
+        </Style>
+    </UserControl.Styles>
+    <DockPanel>
+        <Grid DockPanel.Dock="Top" Name="TitleBarHost" ColumnDefinitions="Auto,Auto,*,Auto"
+              HorizontalAlignment="Stretch">
+            <ToggleButton Theme="{DynamicResource TransparentButton}" Padding="11,5,7,6" Margin="3,0,0,0"
+                          IsChecked="{Binding IsPaneOpen, Mode=TwoWay}">
+                <Image
+                    IsHitTestVisible="False"
+                    Source="/Assets/icon.ico"
+                    Width="25" Height="25"
+                    DockPanel.Dock="Left"
+                    Name="WindowIcon" />
+            </ToggleButton>
+
+            <Menu Grid.Column="1" ItemsSource="{Binding HeaderMenuItems}">
+                <Menu.Styles>
+                    <Style Selector="MenuItem" x:DataType="api:IMenuItem">
+                        <Setter Property="Header" Value="{Binding Header}" />
+                        <Setter Property="Icon"
+                                Value="{Binding Icon, Converter={x:Static api:MaterialIconConverter.Instance}}" />
+                        <Setter Property="Command" Value="{Binding Command}" />
+                        <Setter Property="CommandParameter" Value="{Binding CommandParameter}" />
+                        <Setter Property="IsEnabled" Value="{Binding IsEnabled}" />
+                        <Setter Property="IsVisible" Value="{Binding IsVisible}" />
+                        <Setter Property="StaysOpenOnClick" Value="{Binding StaysOpenOnClick}" />
+                        <Setter Property="ItemsSource" Value="{Binding Items}" />
+                        <Setter Property="HotKey" Value="{Binding HotKey}" />
+                        <Setter Property="InputGesture" Value="{Binding HotKey}" />
+                    </Style>
+                </Menu.Styles>
+            </Menu>
+
+            <!--<Border Grid.Column="2" Padding="6">
+                <AutoCompleteBox Name="SearchBox"
+                                 MaxWidth="300"
+                                 Classes="Shell"
+                                 Watermark="Search">
+                    <AutoCompleteBox.Styles>
+                        <Style>
+                            
+                        </Style>
+                    </AutoCompleteBox.Styles>
+                </AutoCompleteBox>
+            </Border>-->
+            <Border IsVisible="{Binding CurrentPage, Converter={x:Static ObjectConverters.IsNotNull}}" Padding="10,5"
+                    Margin="5" CornerRadius="{DynamicResource ControlCornerRadius}" VerticalAlignment="Center"
+                    Grid.Column="2" HorizontalAlignment="Center" Background="#366ace">
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <avalonia:MaterialIcon Width="20" Height="20" Kind="{Binding CurrentPage.Icon}"
+                                           Foreground="#40b5e0" />
+                    <TextBlock Text="{Binding CurrentPage.Title}" HorizontalAlignment="Center"
+                               VerticalAlignment="Center" Foreground="White" />
+                </StackPanel>
+            </Border>
+
+        </Grid>
+        <ItemsControl ItemsSource="{Binding StatusItems}" Height="25" DockPanel.Dock="Bottom"
+                      Background="{DynamicResource InfoBarErrorSeverityBackgroundBrush}">
+            <ItemsControl.ItemContainerTheme>
+                <ControlTheme TargetType="ContentPresenter">
+                    <ControlTheme.Setters>
+                        <Setter Property="DockPanel.Dock" Value="Right" />
+                    </ControlTheme.Setters>
+                </ControlTheme>
+            </ItemsControl.ItemContainerTheme>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel LastChildFill="True" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ContentPresenter Content="{Binding}" Margin="8,0,8,0" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <controls:NavigationView
+            PaneDisplayMode="Left"
+            IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay}"
+            IsPaneToggleButtonVisible="False"
+            CompactPaneLength="55"
+            Name="NavView"
+            IsSettingsVisible="False"
+            SelectedItem="{Binding SelectedMenu, Mode=TwoWay}"
+            MenuItemsSource="{Binding MenuItems}"
+            FooterMenuItemsSource="{Binding FooterMenuItems}"
+            MenuItemTemplateSelector="{x:Static gui:MenuItemTemplateSelector.Instance}">
+
+            <Panel>
+                <!-- <Image Margin="100" Source="../Assets/program-logo.png"/> -->
+                <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                Content="{CompiledBinding CurrentPage}" />
+                <ItemsControl HorizontalAlignment="Center" MinWidth="600" ItemsSource="{Binding Messages}" Margin="8">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Spacing="8" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="gui:LogMessageViewModel">
+                            <controls:InfoBar ToolTip.Tip="{Binding Description}" Title="{Binding Title}"
+                                              IsOpen="{Binding IsOpen}" Severity="{Binding Severity}"
+                                              Message="{Binding Message}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Panel>
+        </controls:NavigationView>
+
+    </DockPanel>
+</UserControl>

@@ -1,47 +1,57 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <CustomPropsPath Condition=" '$(SolutionDir)' == '$(ProjectDir)' ">../Asv.Drones.Gui.Custom.props</CustomPropsPath>
-        <CustomPropsPath Condition=" '$(SolutionDir)' != '$(ProjectDir)' ">$(SolutionDir)Asv.Drones.Gui.Custom.props</CustomPropsPath>
-    </PropertyGroup>
-    <Import Project="$(CustomPropsPath)"/>
-    <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <AssemblyVersion>$(ProductVersion)</AssemblyVersion>
         <FileVersion>$(ProductVersion)</FileVersion>
-        <Configurations>Debug;Release</Configurations>
-        <Platforms>AnyCPU</Platforms>
         <Version>$(ProductVersion)</Version>
     </PropertyGroup>
-    
+
     <ItemGroup>
-        <AvaloniaResource Include="Assets\**" />
+        <AvaloniaResource Include="Assets\**"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Asv.Cfg" Version="$(AsvCommonVersion)" />
-        <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
-        <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
-        <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
+        <PackageReference Include="Asv.Cfg" Version="$(AsvCommonVersion)"/>
+        <PackageReference Include="Asv.Common" Version="$(AsvCommonVersion)"/>
+        <PackageReference Include="Asv.Avalonia.Toolkit" Version="$(AsvAvaloniaToolkitVersion)"/>
+        <PackageReference Include="Asv.Avalonia.Map" Version="$(AsvAvaloniaMapVersion)"/>
+
+        <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Avalonia.Xaml.Behaviors" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Avalonia.Xaml.Interactions" Version="$(AvaloniaVersion)"/>
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
-        <PackageReference Include="FluentAvaloniaUI" Version="$(FluentAvaloniaUIVersion)" />
-        <PackageReference Include="Material.Icons.Avalonia" Version="$(MaterialIconsAvaloniaVersion)" />
-        <PackageReference Include="System.ComponentModel.Composition" Version="$(CompositionVersion)" />
-        <PackageReference Include="NLog" Version="$(NLogVersion)" />
-        
-        
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="NLog" Version="$(NLogVersion)"/>
+
+        <PackageReference Include="NuGet.Packaging" Version="6.8.0"/>
+        <PackageReference Include="NuGet.Packaging.Core" Version="6.8.0"/>
+        <PackageReference Include="NuGet.Resolver" Version="6.8.0"/>
+        <PackageReference Include="NuGet.Protocol" Version="6.8.0"/>
+
+        <PackageReference Include="System.Composition" Version="$(CompositionVersion)"/>
+        <PackageReference Include="FluentAvaloniaUI" Version="$(FluentAvaloniaUIVersion)"/>
+        <PackageReference Include="Material.Icons.Avalonia" Version="$(MaterialIconsAvaloniaVersion)"/>
+
+        <PackageReference Include="ReactiveUI" Version="$(ReactiveUIVersion)"/>
+        <PackageReference Include="ReactiveUI.Fody" Version="$(ReactiveUIVersion)"/>
+        <PackageReference Include="ReactiveUI.Validation" Version="$(ReactiveUIValidationVersion)"/>
+
+
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Asv.Drones.Gui.Api\Asv.Drones.Gui.Api.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
         <EmbeddedResource Update="RS.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
             <LastGenOutput>RS.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
-        <EmbeddedResource Update="RS.ru.resx">
-            <DependentUpon>RS.resx</DependentUpon>
         </EmbeddedResource>
     </ItemGroup>
 
@@ -51,14 +61,46 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>RS.resx</DependentUpon>
         </Compile>
+        <Compile Update="MainWindow.axaml.cs">
+            <DependentUpon>MainWindow.axaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Shell\Pages\Settings\Measure\AppearanceView.axaml.cs">
+            <DependentUpon>AppearanceView.axaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Shell\Pages\Settings\Connection\Ports\PortBrowserView.axaml.cs">
+            <DependentUpon>DeviceBrowserView.axaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Shell\Pages\PacketViewer\PacketViewerView.axaml.cs">
+            <DependentUpon>PacketViewerView.axaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Shell\Pages\Flight\Dialogs\TakeOffView.axaml.cs">
+          <DependentUpon>TakeOffView.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Shell\Pages\Vehicle\QuickParams\VehicleQuickParamPageView.axaml.cs">
+          <DependentUpon>QuickParamPageView.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Shell\Pages\Vehicle\QuickParams\BaseParameterControls\Bitmask\QuickParametersBitmaskView.axaml.cs">
+          <DependentUpon>QuickParametersBitmaskView.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Shell\Pages\Vehicle\QuickParams\Ardupilot\Plane\StandardParameters\ArduPlaneQuickParamStandardTreePageView.axaml.cs">
+          <DependentUpon>ArduCopterQuickParamStandardTreePageView.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Asv.Drones.Gui.Core\Asv.Drones.Gui.Core.csproj" />
-        <ProjectReference Include="..\Asv.Drones.Gui.Gbs\Asv.Drones.Gui.Gbs.csproj" />
-        <ProjectReference Include="..\Asv.Drones.Gui.Map\Asv.Drones.Gui.Map.csproj" />
-        <ProjectReference Include="..\Asv.Drones.Gui.Sdr\Asv.Drones.Gui.Sdr.csproj" />
-        <ProjectReference Include="..\Asv.Drones.Gui.Uav\Asv.Drones.Gui.Uav.csproj" />
+        <AdditionalFiles Include="Shell\Pages\Settings\Appearance\Measure\MeasureView.axaml"/>
+        <AdditionalFiles Include="Shell\Status\StatusText\TextMessageStatusView.axaml"/>
     </ItemGroup>
-   
+
+    <ItemGroup>
+      <Folder Include="Shell\Pages\Vehicle\QuickParams\Px4\" />
+    </ItemGroup>
 </Project>

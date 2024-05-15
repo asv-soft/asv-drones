@@ -1,0 +1,258 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:gui="clr-namespace:Asv.Drones.Gui"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="Asv.Drones.Gui.LogViewerView"
+             x:DataType="gui:LogViewerViewModel">
+    <DockPanel Margin="8">
+        <Grid RowDefinitions="Auto,8,*,8,Auto">
+            <DockPanel Grid.Row="0">
+                <DropDownButton Margin="4 0 0 0" DockPanel.Dock="Right">
+                    <Button.Flyout>
+                        <Flyout>
+                            <StackPanel Spacing="8">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Button Command="{CompiledBinding SelectAllThreadIdsCommand}">
+                                        <avalonia:MaterialIcon Kind="CheckboxMultipleMarked" />
+                                    </Button>
+                                    <Button Command="{CompiledBinding DeselectAllThreadIdsCommand}">
+                                        <avalonia:MaterialIcon Kind="CheckboxMultipleBlank" />
+                                    </Button>
+                                </StackPanel>
+                                <ListBox MaxHeight="150" SelectionMode="Multiple, Toggle"
+                                         SelectionChanged="ListBox_OnSelectionChanged"
+                                         ItemsSource="{CompiledBinding AvailableThreadIds}"
+                                         SelectedItems="{CompiledBinding SelectedThreadIds}" />
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <avalonia:MaterialIcon Kind="ConsoleLine" />
+                        <TextBlock Text="{x:Static gui:RS.LogViewerView_Threads}" />
+                    </StackPanel>
+                </DropDownButton>
+                <DropDownButton Margin="4 0" DockPanel.Dock="Right">
+                    <Button.Flyout>
+                        <Flyout>
+                            <StackPanel Spacing="8">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Button Command="{CompiledBinding SelectAllClassesCommand}">
+                                        <avalonia:MaterialIcon Kind="CheckboxMultipleMarked" />
+                                    </Button>
+                                    <Button Command="{CompiledBinding DeselectAllClassesCommand}">
+                                        <avalonia:MaterialIcon Kind="CheckboxMultipleBlank" />
+                                    </Button>
+                                </StackPanel>
+                                <ListBox MaxHeight="150" SelectionMode="Multiple, Toggle"
+                                         SelectionChanged="ListBox_OnSelectionChanged"
+                                         ItemsSource="{CompiledBinding AvailableClasses}"
+                                         SelectedItems="{CompiledBinding SelectedClasses}" />
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <avalonia:MaterialIcon Kind="Graph" />
+                        <TextBlock Text="{x:Static gui:RS.LogViewerView_Classes}" />
+                    </StackPanel>
+                </DropDownButton>
+                <DropDownButton Margin="4 0" DockPanel.Dock="Right">
+                    <DropDownButton.Flyout>
+                        <Flyout>
+                            <StackPanel Spacing="8">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Button Command="{CompiledBinding SelectAllLevelsCommand}">
+                                        <avalonia:MaterialIcon Kind="CheckboxMultipleMarked" />
+                                    </Button>
+                                    <Button Command="{CompiledBinding DeselectAllLevelsCommand}">
+                                        <avalonia:MaterialIcon Kind="CheckboxMultipleBlank" />
+                                    </Button>
+                                </StackPanel>
+                                <ListBox MaxHeight="150" SelectionMode="Multiple, Toggle"
+                                         SelectionChanged="ListBox_OnSelectionChanged"
+                                         ItemsSource="{CompiledBinding AvailableLevels}"
+                                         SelectedItems="{CompiledBinding SelectedLevels}" />
+                            </StackPanel>
+                        </Flyout>
+                    </DropDownButton.Flyout>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <avalonia:MaterialIcon Kind="Checkbook" />
+                        <TextBlock Text="{x:Static gui:RS.LogViewerView_Levels}" />
+                    </StackPanel>
+                </DropDownButton>
+                <TextBox Margin="0 0 4 0" DockPanel.Dock="Left"
+                         VerticalAlignment="Center" Watermark="{x:Static gui:RS.LogViewerView_SearchText_Watermark}"
+                         Text="{CompiledBinding SearchText}">
+                    <TextBox.InnerLeftContent>
+                        <avalonia:MaterialIcon Margin="4 0" Kind="TabFind" />
+                    </TextBox.InnerLeftContent>
+                    <TextBox.InnerRightContent>
+                        <Button Command="{CompiledBinding ClearSearchTextCommand}" Width="25"
+                                Theme="{StaticResource TransparentButton}">
+                            <avalonia:MaterialIcon Kind="Clear" />
+                        </Button>
+                    </TextBox.InnerRightContent>
+                </TextBox>
+            </DockPanel>
+            <DockPanel Grid.Row="2">
+                <ScrollViewer>
+                    <ItemsControl ItemsSource="{CompiledBinding LogItems}" Grid.IsSharedSizeScope="True">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0 4">
+                                    <Grid.Styles>
+                                        <Style Selector="TextBlock">
+                                            <Setter Property="FontFamily" Value="Consolas" />
+                                        </Style>
+                                        <Style Selector="TextBlock.Trace">
+                                            <Setter Property="Foreground" Value="#6D788C" />
+                                        </Style>
+                                        <Style Selector="TextBlock.Debug">
+                                            <Setter Property="Foreground" Value="#A8B0C3" />
+                                        </Style>
+                                        <Style Selector="TextBlock.Information">
+                                            <Setter Property="Foreground" Value="#5A76A8" />
+                                        </Style>
+                                        <Style Selector="TextBlock.Warning">
+                                            <Setter Property="Foreground" Value="#DAA520" />
+                                        </Style>
+                                        <Style Selector="TextBlock.Error">
+                                            <Setter Property="Foreground" Value="#CC4B4C" />
+                                        </Style>
+                                        <Style Selector="TextBlock.Fatal">
+                                            <Setter Property="Foreground" Value="#8B0000" />
+                                        </Style>
+
+                                        <Style Selector="avalonia|MaterialIcon.Trace">
+                                            <Setter Property="Foreground" Value="#6D788C" />
+                                        </Style>
+                                        <Style Selector="avalonia|MaterialIcon.Debug">
+                                            <Setter Property="Foreground" Value="#A8B0C3" />
+                                        </Style>
+                                        <Style Selector="avalonia|MaterialIcon.Information">
+                                            <Setter Property="Foreground" Value="#5A76A8" />
+                                        </Style>
+                                        <Style Selector="avalonia|MaterialIcon.Warning">
+                                            <Setter Property="Foreground" Value="#DAA520" />
+                                        </Style>
+                                        <Style Selector="avalonia|MaterialIcon.Error">
+                                            <Setter Property="Foreground" Value="#CC4B4C" />
+                                        </Style>
+                                        <Style Selector="avalonia|MaterialIcon.Fatal">
+                                            <Setter Property="Foreground" Value="#8B0000" />
+                                        </Style>
+                                    </Grid.Styles>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition SharedSizeGroup="Icon" Width="Auto" />
+                                        <ColumnDefinition SharedSizeGroup="Timestamp" Width="Auto" />
+                                        <ColumnDefinition SharedSizeGroup="Class" Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Name="Icon" Margin="4 0" Grid.Column="0" Spacing="8"
+                                                Orientation="Horizontal">
+                                        <avalonia:MaterialIcon VerticalAlignment="Top"
+                                                               Classes.Debug="{Binding IsDebug}"
+                                                               Classes.Trace="{Binding IsTrace}"
+                                                               Classes.Information="{Binding IsInfo}"
+                                                               Classes.Warning="{Binding IsWarning}"
+                                                               Classes.Error="{Binding IsError}"
+                                                               Classes.Fatal="{Binding IsFatal}"
+                                                               HorizontalAlignment="Center"
+                                                               Kind="{CompiledBinding Kind}" />
+                                        <TextBlock VerticalAlignment="Top" Classes.Debug="{Binding IsDebug}"
+                                                   Classes.Trace="{Binding IsTrace}"
+                                                   Classes.Information="{Binding IsInfo}"
+                                                   Classes.Warning="{Binding IsWarning}"
+                                                   Classes.Error="{Binding IsError}"
+                                                   Classes.Fatal="{Binding IsFatal}"
+                                                   HorizontalAlignment="Center"
+                                                   Text="{CompiledBinding ThreadId}" TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <TextBlock Classes.Debug="{Binding IsDebug}"
+                                               Classes.Trace="{Binding IsTrace}"
+                                               Classes.Information="{Binding IsInfo}"
+                                               Classes.Warning="{Binding IsWarning}"
+                                               Classes.Error="{Binding IsError}"
+                                               Classes.Fatal="{Binding IsFatal}"
+                                               Name="Timestamp" Grid.Column="1" Margin="4 0" VerticalAlignment="Top"
+                                               HorizontalAlignment="Center"
+                                               Text="{CompiledBinding Timestamp}" TextWrapping="Wrap" />
+                                    <TextBlock Classes.Debug="{Binding IsDebug}"
+                                               Classes.Trace="{Binding IsTrace}"
+                                               Classes.Information="{Binding IsInfo}"
+                                               Classes.Warning="{Binding IsWarning}"
+                                               Classes.Error="{Binding IsError}"
+                                               Classes.Fatal="{Binding IsFatal}"
+                                               Name="Class" Grid.Column="2" Margin="4 0" VerticalAlignment="Top"
+                                               HorizontalAlignment="Right"
+                                               Text="{CompiledBinding Class}" TextWrapping="Wrap" />
+                                    <TextBlock Classes.Debug="{Binding IsDebug}"
+                                               Classes.Trace="{Binding IsTrace}"
+                                               Classes.Information="{Binding IsInfo}"
+                                               Classes.Warning="{Binding IsWarning}"
+                                               Classes.Error="{Binding IsError}"
+                                               Classes.Fatal="{Binding IsFatal}"
+                                               Name="Message" Grid.Column="3" Margin="4 0"
+                                               Text="{CompiledBinding Message}" TextWrapping="WrapWithOverflow" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </DockPanel>
+
+
+            <DockPanel Grid.Row="4" LastChildFill="True">
+                <Button Command="{CompiledBinding ClearLogsCommand}" VerticalAlignment="Stretch" Margin="0 0 4 0"
+                        DockPanel.Dock="Left">
+                    <avalonia:MaterialIcon Kind="Trash" />
+                </Button>
+
+                <ComboBox VerticalAlignment="Stretch" Margin="4 0 0 0" DockPanel.Dock="Right"
+                          Width="100" ItemsSource="{CompiledBinding PageSizes}"
+                          SelectedItem="{CompiledBinding PageSize}" />
+                <TextBlock Margin="4 0"
+                           VerticalAlignment="Center"
+                           DockPanel.Dock="Right"
+                           Text="{x:Static gui:RS.LogViewerView_TextBlock_By_Title}" />
+                <!-- By: -->
+                <Button Command="{CompiledBinding MoveToNextPageCommand}" VerticalAlignment="Stretch" Margin="4 0"
+                        DockPanel.Dock="Right">
+                    <avalonia:MaterialIcon Kind="NavigateNext" />
+                </Button>
+                <Border DockPanel.Dock="Right"
+                        Margin="4 0"
+                        MinWidth="40"
+                        CornerRadius="{StaticResource ControlCornerRadius}"
+                        Background="{DynamicResource ButtonBackground}"
+                        BorderBrush="{DynamicResource ButtonBorderBrush}"
+                        BorderThickness="1">
+                    <TextBlock Margin="4 0"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat='{}{0}/{1}'>
+                                <Binding Path="CurrentPageIndex" />
+                                <Binding Path="TotalPagesCount" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </Border>
+                <Button Command="{CompiledBinding MoveToPreviousPageCommand}" VerticalAlignment="Stretch" Margin="4 0"
+                        DockPanel.Dock="Right">
+                    <avalonia:MaterialIcon Kind="NavigateBefore" />
+                </Button>
+                <WrapPanel VerticalAlignment="Center">
+                    <TextBlock Margin="4 0"
+                               Text="{CompiledBinding TotalItemsCount, StringFormat={x:Static gui:RS.LogViewerView_TextBlock_TotalItemsCount}}" />
+                    <TextBlock Margin="4 0"
+                               Text="{CompiledBinding FilteredItemsCount, StringFormat={x:Static gui:RS.LogViewerView_TextBlock_FilteredItemsCount}}" />
+                    <TextBlock Margin="4 0"
+                               Text="{CompiledBinding LogItems.Count, StringFormat={x:Static gui:RS.LogViewerView_TextBlock_PageItemsCount}}" />
+                </WrapPanel>
+            </DockPanel>
+        </Grid>
+    </DockPanel>
+</UserControl>

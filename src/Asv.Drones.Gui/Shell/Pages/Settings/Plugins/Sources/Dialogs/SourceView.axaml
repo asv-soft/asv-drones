@@ -1,0 +1,48 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:gui="clr-namespace:Asv.Drones.Gui"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="400"
+             x:Class="Asv.Drones.Gui.SourceView"
+             x:DataType="gui:SourceViewModel">
+    <StackPanel Spacing="8">
+        <TextBox Name="Name" Watermark="{x:Static gui:RS.SourcesView_Name}" Text="{CompiledBinding Name}">
+            <TextBox.InnerLeftContent>
+                <StackPanel Orientation="Horizontal" Spacing="8" Margin="8 0">
+                    <avalonia:MaterialIcon Kind="Text" />
+                </StackPanel>
+            </TextBox.InnerLeftContent>
+        </TextBox>
+        <TextBox Name="SourceUri" Watermark="{x:Static gui:RS.SourcesView_URL}" Text="{CompiledBinding SourceUri}">
+            <TextBox.InnerLeftContent>
+                <StackPanel Orientation="Horizontal" Spacing="8" Margin="8 0">
+                    <avalonia:MaterialIcon Kind="Globe" />
+                </StackPanel>
+            </TextBox.InnerLeftContent>
+        </TextBox>
+        <TextBox Watermark="{x:Static gui:RS.SourcesView_Username}" Text="{CompiledBinding Username}">
+            <TextBox.InnerLeftContent>
+                <StackPanel Orientation="Horizontal" Spacing="8" Margin="8 0">
+                    <avalonia:MaterialIcon Kind="Person" />
+                </StackPanel>
+            </TextBox.InnerLeftContent>
+        </TextBox>
+        <TextBox Name="PassBox" Watermark="{x:Static gui:RS.SourcesView_Password}"
+                 PasswordChar="*" Text="{CompiledBinding Password}">
+            <TextBox.InnerLeftContent>
+                <avalonia:MaterialIcon Kind="Key" Margin="8 0" />
+            </TextBox.InnerLeftContent>
+            <TextBox.InnerRightContent>
+                <ToggleButton Theme="{StaticResource TransparentButton}"
+                              IsChecked="{Binding #PassBox.RevealPassword}">
+                    <Panel>
+                        <avalonia:MaterialIcon Kind="Eye" IsVisible="{Binding !#PassBox.RevealPassword}" />
+                        <avalonia:MaterialIcon Kind="EyeOff" IsVisible="{Binding #PassBox.RevealPassword}" />
+                    </Panel>
+                </ToggleButton>
+            </TextBox.InnerRightContent>
+        </TextBox>
+    </StackPanel>
+</UserControl>

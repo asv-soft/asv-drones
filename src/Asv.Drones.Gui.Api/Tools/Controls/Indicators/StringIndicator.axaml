@@ -1,0 +1,18 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:api="clr-namespace:Asv.Drones.Gui.Api">
+    <Design.PreviewWith>
+        <api:StringIndicator />
+    </Design.PreviewWith>
+
+    <Style Selector="api|StringIndicator">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel>
+                    <TextBlock FontSize="10" Text="{TemplateBinding Title}" HorizontalAlignment="Center" />
+                    <TextBlock FontSize="14" Text="{TemplateBinding Value}" HorizontalAlignment="Center" />
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

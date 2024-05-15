@@ -1,0 +1,41 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:gui="clr-namespace:Asv.Drones.Gui"
+             xmlns:api="clr-namespace:Asv.Drones.Gui.Api;assembly=Asv.Drones.Gui.Api"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Asv.Drones.Gui.PlaningMissionItemEditorView"
+             x:DataType="gui:PlaningMissionItemEditorViewModel">
+    <Design.DataContext>
+        <gui:PlaningMissionItemEditorViewModel />
+    </Design.DataContext>
+    <Border Padding="8" Opacity="0.8" ClipToBounds="True"
+            Background="{DynamicResource SolidBackgroundFillColorBase}"
+            CornerRadius="{DynamicResource ControlCornerRadius}">
+        <Border.IsVisible>
+            <MultiBinding Converter="{x:Static api:MultipleIsNotNullConverter.Instance}">
+                <Binding Path="Context.Mission" />
+                <Binding Path="Context.Mission.SelectedPoint" />
+            </MultiBinding>
+        </Border.IsVisible>
+        <DockPanel>
+            <StackPanel Margin="0 0 0 10" Spacing="4" Orientation="Horizontal" DockPanel.Dock="Top">
+                <avalonia:MaterialIcon Width="20" Height="20"
+                                       Kind="{CompiledBinding Context.Mission.SelectedPoint.Icon}" />
+                <TextBlock FontSize="18" Text="{CompiledBinding Context.Mission.SelectedPoint.Name}" />
+            </StackPanel>
+            <StackPanel Spacing="4">
+                <TextBlock Text="{CompiledBinding Context.Mission.SelectedPoint.Param1Title}" />
+                <TextBox Text="{CompiledBinding Param1}" />
+                <TextBlock Text="{CompiledBinding Context.Mission.SelectedPoint.Param2Title}" />
+                <TextBox Text="{CompiledBinding Param2}" />
+                <TextBlock Text="{CompiledBinding Context.Mission.SelectedPoint.Param3Title}" />
+                <TextBox Text="{CompiledBinding Param3}" />
+                <TextBlock Text="{CompiledBinding Context.Mission.SelectedPoint.Param4Title}" />
+                <TextBox Text="{CompiledBinding Param4}" />
+            </StackPanel>
+        </DockPanel>
+    </Border>
+</UserControl>

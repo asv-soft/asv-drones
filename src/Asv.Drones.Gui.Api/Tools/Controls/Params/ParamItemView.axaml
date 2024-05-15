@@ -1,0 +1,76 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:api="clr-namespace:Asv.Drones.Gui.Api"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Asv.Drones.Gui.Api.ParamItemView"
+             x:CompileBindings="True"
+             Width="400"
+             MinHeight="300"
+             x:DataType="api:ParamItemViewModel">
+    <Design.DataContext>
+        <api:ParamItemViewModel />
+    </Design.DataContext>
+    <Border Padding="{DynamicResource ButtonPadding}"
+            Background="{DynamicResource ControlFillColorDefaultBrush}"
+            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="{StaticResource ControlCornerRadius}"
+            Margin="8">
+        <StackPanel>
+            <DockPanel>
+                <Button Command="{CompiledBinding PinItem}"
+                        ToolTip.Tip="{x:Static api:RS.ParametersEditorParameterView_PinToggleButton_ToolTip}"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        DockPanel.Dock="Right">
+                    <Panel>
+                        <avalonia:MaterialIcon IsVisible="{CompiledBinding IsPinned}" Width="25" Height="25" Kind="Pin" />
+                        <avalonia:MaterialIcon IsVisible="{CompiledBinding !IsPinned}" Width="25" Height="25"
+                                               Kind="PinOutline" />
+                    </Panel>
+                </Button>
+                <Panel DockPanel.Dock="Right" IsVisible="{Binding !IsSynced}">
+                    <avalonia:MaterialIcon Width="25" Foreground="Green" Height="25" Kind="FloppyDisk" />
+                </Panel>
+                <TextBlock Text="{CompiledBinding Name}"
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center" />
+            </DockPanel>
+            <TextBlock Text="{CompiledBinding DisplayName}" TextWrapping="Wrap" Margin="10 5" />
+            <TextBox Margin="10 5">
+                <Interaction.Behaviors>
+                    <api:LostFocusUpdateBindingBehavior Text="{CompiledBinding Value}" />
+                </Interaction.Behaviors>
+                <TextBox.InnerRightContent>
+                    <TextBlock Text="{CompiledBinding Units}" Margin="10 0" VerticalAlignment="Center" />
+                </TextBox.InnerRightContent>
+            </TextBox>
+            <Grid Margin="10 5" ColumnDefinitions="*, 5, *">
+                <Button ToolTip.Tip="{x:Static api:RS.ParametersEditorParameterView_UpdateButton_ToolTip}"
+                        Command="{CompiledBinding Update}"
+                        HorizontalAlignment="Stretch"
+                        Grid.Column="0"
+                        Content="{x:Static api:RS.ParametersEditorParameterView_UpdateButton}" />
+                <Button ToolTip.Tip="{x:Static api:RS.ParametersEditorParameterView_WriteButton_ToolTip}"
+                        Command="{CompiledBinding Write}"
+                        HorizontalAlignment="Stretch"
+                        Grid.Column="2"
+                        Content="{x:Static api:RS.ParametersEditorParameterView_WriteButton}" />
+            </Grid>
+            <TextBlock Text="{CompiledBinding ValueDescription}" TextWrapping="Wrap" Margin="10 5" />
+            <TextBlock Text="{CompiledBinding Description}" TextWrapping="Wrap" Margin="10 5" />
+            <Border IsVisible="{CompiledBinding IsRebootRequired}"
+                    Margin="10 5"
+                    HorizontalAlignment="Left"
+                    Padding="5"
+                    Background="Red"
+                    CornerRadius="{StaticResource ControlCornerRadius}">
+                <TextBlock FontWeight="Bold" Text="{x:Static api:RS.ParametersEditorParameterView_RebootRequired}" />
+            </Border>
+        </StackPanel>
+    </Border>
+</UserControl>

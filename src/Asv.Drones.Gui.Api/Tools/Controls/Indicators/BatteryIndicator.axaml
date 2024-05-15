@@ -1,0 +1,48 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+        xmlns:api="clr-namespace:Asv.Drones.Gui.Api">
+    <Design.PreviewWith>
+        <api:BatteryIndicator Width="50" Height="50" Value="0.2" CriticalValue="0.2" WarningValue="0.45" MaxValue="1.1" />
+    </Design.PreviewWith>
+
+    <Style Selector="api|BatteryIndicator">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="CriticalBrush" Value="{StaticResource SystemFillColorCriticalBrush}" />
+        <Setter Property="WarningBrush" Value="{StaticResource SystemFillColorCautionBrush}" />
+        <Setter Property="NormalBrush" Value="{StaticResource SystemFillColorSuccessBrush}" />
+        <Setter Property="UnknownBrush" Value="{StaticResource SystemFillColorNeutralBrush}" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <avalonia:MaterialIcon Background="Transparent"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Width="{TemplateBinding Width}"
+                                       Height="{TemplateBinding Height}"
+                                       Kind="{TemplateBinding IconKind}" />
+            </ControlTemplate>
+        </Setter>
+    </Style>
+    <Style Selector="api|BatteryIndicator:critical /template/ avalonia|MaterialIcon">
+        <Setter Property="Foreground" Value="{Binding CriticalBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Style.Animations>
+            <Animation Duration="0:0:1" IterationCount="10">
+                <KeyFrame Cue="0%">
+                    <Setter Property="Opacity" Value="0.0" />
+                </KeyFrame>
+                <KeyFrame Cue="100%">
+                    <Setter Property="Opacity" Value="1.0" />
+                </KeyFrame>
+            </Animation>
+        </Style.Animations>
+    </Style>
+    <Style Selector="api|BatteryIndicator:warning /template/ avalonia|MaterialIcon">
+        <Setter Property="Foreground" Value="{Binding WarningBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+    </Style>
+    <Style Selector="api|BatteryIndicator:unknown /template/ avalonia|MaterialIcon">
+        <Setter Property="Foreground" Value="{Binding UnknownBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+    </Style>
+    <Style Selector="api|BatteryIndicator:normal /template/ avalonia|MaterialIcon">
+        <Setter Property="Foreground" Value="{Binding NormalBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+    </Style>
+</Styles>

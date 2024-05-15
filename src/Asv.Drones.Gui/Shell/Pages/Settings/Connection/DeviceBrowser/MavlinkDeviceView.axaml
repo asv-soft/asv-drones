@@ -1,0 +1,85 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:gui="clr-namespace:Asv.Drones.Gui"
+             mc:Ignorable="d" d:DesignWidth="900"
+             MinHeight="80"
+             MinWidth="600"
+             x:Class="Asv.Drones.Gui.MavlinkDeviceView"
+             x:CompileBindings="True"
+             x:DataType="gui:MavlinkDeviceViewModel">
+    <Design.DataContext>
+        <gui:MavlinkDeviceViewModel />
+    </Design.DataContext>
+    <UserControl.Styles>
+
+        <Style Selector="avalonia|MaterialIcon.Ping">
+            <Setter Property="Foreground" Value="{DynamicResource SystemFillColorSuccessBrush}" />
+            <Style.Animations>
+                <Animation Duration="0:0:1">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="Opacity" Value="1.0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Opacity" Value="0.0" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid Margin="8" ColumnDefinitions="40,*,Auto,Auto,Auto,Auto">
+
+        <avalonia:MaterialIcon HorizontalAlignment="Left" Width="25" Height="25" Grid.Column="0" Kind="{Binding Icon}" />
+        <StackPanel Margin="5,0,0,0" Grid.Column="1">
+            <TextBlock Text="{Binding Name}" Theme="{DynamicResource SubtitleTextBlockStyle}" />
+            <TextBlock Text="{Binding Description}" Theme="{DynamicResource CaptionTextBlockStyle}" />
+            <TextBlock Text="{Binding BaseModeText}" Theme="{DynamicResource CaptionTextBlockStyle}" />
+        </StackPanel>
+
+        <StackPanel Grid.Column="3" Margin="10,0" Spacing="3">
+            <TextBlock TextAlignment="Center" FontSize="16" Text="{x:Static gui:RS.MavlinkDeviceView_Status_Name}" />
+            <Border Background="{DynamicResource InfoBadgeBackground}" Padding="5,3"
+                    CornerRadius="{DynamicResource ListViewItemCornerRadius}">
+                <TextBlock Foreground="{DynamicResource InfoBadgeForeground}" TextAlignment="Center" FontSize="18"
+                           Text="{Binding SystemStatusText}" />
+            </Border>
+
+        </StackPanel>
+
+        <StackPanel Grid.Column="4" Margin="10,0" Spacing="3">
+            <TextBlock TextAlignment="Center" FontSize="16" Text="{x:Static gui:RS.MavlinkDeviceView_Mode_Name}" />
+            <Border Background="{DynamicResource InfoBadgeBackground}" Padding="5,3"
+                    CornerRadius="{DynamicResource ListViewItemCornerRadius}">
+                <TextBlock Foreground="{DynamicResource InfoBadgeForeground}" TextAlignment="Center" FontSize="18"
+                           Text="{Binding CustomModeText}" />
+            </Border>
+        </StackPanel>
+        <StackPanel Grid.Column="5" Margin="10,0" Spacing="3">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock TextAlignment="Center" FontSize="16" Text="{x:Static gui:RS.MavlinkDeviceView_Rate_Name}" />
+
+            </StackPanel>
+
+            <Border Background="{DynamicResource InfoBadgeBackground}" Padding="5,3"
+                    CornerRadius="{DynamicResource ListViewItemCornerRadius}">
+                <Panel>
+                    <avalonia:MaterialIcon Opacity="0"
+                                           HorizontalAlignment="Left"
+                                           Classes.Ping="{Binding ToggleLinkPing}"
+                                           Width="16" Height="16"
+                                           Foreground="{DynamicResource SystemFillColorCriticalBackgroundBrush}"
+                                           Kind="Heart" />
+                    <TextBlock Foreground="{DynamicResource InfoBadgeForeground}" TextAlignment="Center" FontSize="18"
+                               Text="{Binding RateText}" />
+                </Panel>
+
+            </Border>
+        </StackPanel>
+
+
+    </Grid>
+
+</UserControl>
