@@ -10,6 +10,5 @@ public partial class MapMoverActionView : ReactiveUserControl<MapMoverActionView
     public MapMoverActionView()
     {
         InitializeComponent();
-        HotKeyManager.SetHotKey(editAnchorsToggleButton, new KeyGesture(Key.LeftAlt, KeyModifiers.Alt));
     }
 }
