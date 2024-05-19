@@ -1,3 +1,4 @@
+using System.Collections.Specialized;
 using System.Composition.Hosting;
 using Asv.Cfg;
 using Asv.Common;
@@ -10,6 +11,10 @@ namespace Asv.Drones.Gui.Api;
 /// </summary>
 public interface IApplicationHost
 {
+    /// <summary>
+    /// Application args
+    /// </summary>
+    IAppArgs Args { get; }
     /// <summary>
     /// Base information about current application
     /// </summary>
@@ -65,4 +70,5 @@ public interface IApplicationHost
     /// Try to restart application
     /// </summary>
     void RestartApplication();
+   
 }
