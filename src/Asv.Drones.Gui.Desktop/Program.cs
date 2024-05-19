@@ -16,6 +16,8 @@ sealed class Program
     [STAThread]
     public static void Main(string[] args)
     {
+        AppArgs.Instance.TryParse(args);
+        AppArgs.Instance.TryParseFile();
         // This is for catch unhandled exception
         // https://docs.avaloniaui.net/ru/docs/concepts/unhandledexceptions
         try

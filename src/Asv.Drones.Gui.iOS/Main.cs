@@ -12,6 +12,8 @@ public class Application
     // This is the main entry point of the application.
     static void Main(string[] args)
     {
+        AppArgs.Instance.TryParse(args);
+        AppArgs.Instance.TryParseFile();
         // This is done to catch unhandled exceptions
         // https://docs.avaloniaui.net/ru/docs/concepts/unhandledexceptions
         try
