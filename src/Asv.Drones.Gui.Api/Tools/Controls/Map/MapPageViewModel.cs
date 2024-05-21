@@ -75,6 +75,25 @@ namespace Asv.Drones.Gui.Api
                 })
                 .DisposeItWith(Disposable);
 
+            this.WhenValueChanged(x => x.Zoom).Subscribe(x =>
+            {
+                foreach (var marker in _markers)
+                {
+                    if (x < 10)
+                    {
+                        marker.Size = 16 * (x / 10.0);
+                    }
+                    else if (x >= 10 && x <= 12)
+                    {
+                        marker.Size = 32 + (x - 10) * 8;
+                    }
+                    else
+                    {
+                        marker.Size = 48;
+                    }
+                }
+            }).DisposeItWith(Disposable);
+
             #endregion
 
             #region Widgets
