@@ -63,6 +63,8 @@ namespace Asv.Drones.Gui
 
             #endregion
 
+            Accuracy = new Accuracy(cfgSvc, nameof(Accuracy)).DisposeItWith(Disposable); // for gbs plugin only
+
             Altitude = new Altitude(cfgSvc, nameof(Altitude)).DisposeItWith(Disposable);
             Velocity = new Velocity(cfgSvc, nameof(Velocity)).DisposeItWith(Disposable);
             Distance = new Distance(cfgSvc, nameof(Distance)).DisposeItWith(Disposable);
@@ -109,6 +111,9 @@ namespace Asv.Drones.Gui
         
         public IMeasureUnit<double, AltitudeUnits> Altitude { get; }
         public IMeasureUnit<double, DistanceUnits> Distance { get; }
+        
+        public IMeasureUnit<double, DistanceUnits> Accuracy { get; } // need only for gbs plugin
+        
         public IMeasureUnit<double, LatitudeUnits> Latitude { get; }
         public IMeasureUnit<double, LongitudeUnits> Longitude { get; }
         public IMeasureUnit<double, VelocityUnits> Velocity { get; }

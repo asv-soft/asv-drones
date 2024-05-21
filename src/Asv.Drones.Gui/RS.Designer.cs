@@ -60,6 +60,60 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accuracy measure units.
+        /// </summary>
+        public static string Accuracy_Description {
+            get {
+                return ResourceManager.GetString("Accuracy_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meters.
+        /// </summary>
+        public static string Accuracy_Meters_Title {
+            get {
+                return ResourceManager.GetString("Accuracy_Meters_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m.
+        /// </summary>
+        public static string Accuracy_Meters_Unit {
+            get {
+                return ResourceManager.GetString("Accuracy_Meters_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nautical miles.
+        /// </summary>
+        public static string Accuracy_NauticalMiles_Title {
+            get {
+                return ResourceManager.GetString("Accuracy_NauticalMiles_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NM.
+        /// </summary>
+        public static string Accuracy_NauticalMiles_Unit {
+            get {
+                return ResourceManager.GetString("Accuracy_NauticalMiles_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accuracy.
+        /// </summary>
+        public static string Accuracy_Title {
+            get {
+                return ResourceManager.GetString("Accuracy_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accuracy.
         /// </summary>
         public static string AddNewMapPointView_Accuracy_Name {
