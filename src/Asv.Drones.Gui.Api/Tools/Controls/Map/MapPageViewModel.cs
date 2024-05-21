@@ -79,17 +79,17 @@ namespace Asv.Drones.Gui.Api
             {
                 foreach (var marker in _markers)
                 {
-                    if (x < 10)
+                    switch (x)
                     {
-                        marker.Size = 16 * (x / 10.0);
-                    }
-                    else if (x >= 10 && x <= 12)
-                    {
-                        marker.Size = 32 + (x - 10) * 8;
-                    }
-                    else
-                    {
-                        marker.Size = 48;
+                        case var zoom when zoom <= 10:
+                            marker.Size = 16 + (zoom - 1) * (32 - 16) / (10 - 1);
+                            break;
+                        case var zoom when zoom <= 12:
+                            marker.Size = 32 + (zoom - 10) * (48 - 32) / (12 - 10);
+                            break;
+                        default:
+                            marker.Size = 48;
+                            break;
                     }
                 }
             }).DisposeItWith(Disposable);
