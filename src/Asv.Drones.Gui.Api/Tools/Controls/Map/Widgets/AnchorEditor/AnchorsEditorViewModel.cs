@@ -6,6 +6,7 @@ using System.Windows;
 using Asv.Avalonia.Map;
 using Asv.Common;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Input.Platform;
 using Avalonia.Threading;
@@ -23,11 +24,71 @@ public class AnchorsEditorViewModel : MapWidgetBase
     private bool _internalChange;
     private IDisposable? _locationSubscription;
     private IMapAnchor? _prevAnchor;
-
+    #region ifDEBUG
     public AnchorsEditorViewModel() : base(WellKnownUri.UndefinedUri)
     {
         DesignTime.ThrowIfNotDesignMode();
+     if (Design.IsDesignMode)
+        {
+            IsVisible = true;
+            IsEditable = true;
+            IsCompactMode = true;
+            Actions = new[]
+            {
+                new MapAnchorActionViewModel()
+                {
+                    Icon = MaterialIconKind.Accelerometer,
+                    Title = "TakeOff"
+                },
+                new MapAnchorActionViewModel()
+                {
+                    Icon = MaterialIconKind.Accelerometer,
+                    Title = "ROI"
+                },
+                new MapAnchorActionViewModel()
+                {
+                    Icon = MaterialIconKind.Accelerometer,
+                    Title = "Land"
+                },
+                new MapAnchorActionViewModel()
+                {
+                    Icon = MaterialIconKind.Accelerometer,
+                    Title = "Reboot"
+                },
+                new MapAnchorActionViewModel()
+                {
+                    Icon = MaterialIconKind.Accelerometer,
+                    Title = "Start Mission"
+                },
+                new MapAnchorActionViewModel()
+                {
+                    Icon = MaterialIconKind.Accelerometer,
+                    Title = ""
+                },
+                new MapAnchorActionViewModel()
+                {
+                    Icon = MaterialIconKind.Accelerometer,
+                    Title = "Action"
+                },
+                new MapAnchorActionViewModel()
+                {
+                    Icon = MaterialIconKind.Accelerometer,
+                    Title = ":Some"
+                },
+                new MapAnchorActionViewModel()
+                {
+                    Icon = MaterialIconKind.Accelerometer,
+                    Title = ":Action"
+                },
+                new MapAnchorActionViewModel()
+                {
+                    Icon = MaterialIconKind.Accelerometer,
+                    Title = "SuperAction"
+                },
+            };
+        }
     }
+    #endregion
 
     protected AnchorsEditorViewModel(Uri id, ILocalizationService loc) : base(id)
     {
@@ -70,6 +131,8 @@ public class AnchorsEditorViewModel : MapWidgetBase
     protected AnchorsEditorViewModel(string id, ILocalizationService loc) : this(new Uri(id), loc)
     {
     }
+    [Reactive] public bool IsTitleCompactMode { get; set; }
+    [Reactive] public bool IsCompactMode { get; set; }
 
     [Reactive] public bool IsVisible { get; set; }
 
@@ -91,7 +154,9 @@ public class AnchorsEditorViewModel : MapWidgetBase
     [Reactive] public ReactiveCommand<Unit, Unit> PasteCommand { get; set; }
     
     [Reactive] private GeoPoint CopiedPoint { get; set; }
-    
+    [Reactive] public IEnumerable<MapAnchorActionViewModel> Actions { get; set; }
+
+
 
     private void CopyGeoPoint()
     {
@@ -196,6 +261,7 @@ public class AnchorsEditorViewModel : MapWidgetBase
 
                 if (_ != null)
                 {
+                    Actions = _.Actions;
                     _prevAnchor = _;
                     IsVisible = true;
                     IsEditable = _.IsEditable;
