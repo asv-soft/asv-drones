@@ -1829,4 +1829,22 @@
   <data name="PortView_PacketLossChance" xml:space="preserve">
     <value>Packet Loss Chance</value>
   </data>
+  <data name="Accuracy_Description" xml:space="preserve">
+    <value>Accuracy measure units</value>
+  </data>
+  <data name="Accuracy_Meters_Unit" xml:space="preserve">
+    <value>m</value>
+  </data>
+  <data name="Accuracy_Meters_Title" xml:space="preserve">
+    <value>Meters</value>
+  </data>
+  <data name="Accuracy_NauticalMiles_Title" xml:space="preserve">
+    <value>Nautical miles</value>
+  </data>
+  <data name="Accuracy_NauticalMiles_Unit" xml:space="preserve">
+    <value>NM</value>
+  </data>
+  <data name="Accuracy_Title" xml:space="preserve">
+    <value>Accuracy</value>
+  </data>
 </root>

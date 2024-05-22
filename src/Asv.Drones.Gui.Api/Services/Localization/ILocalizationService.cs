@@ -47,6 +47,8 @@ namespace Asv.Drones.Gui.Api
         IMeasureUnit<double, AltitudeUnits> Altitude { get; }
 
         IMeasureUnit<double, DistanceUnits> Distance { get; }
+        
+        IMeasureUnit<double, DistanceUnits> Accuracy { get; } // field for gbs plugin only
 
         IMeasureUnit<double, LatitudeUnits> Latitude { get; }
         IMeasureUnit<double, LongitudeUnits> Longitude { get; }
