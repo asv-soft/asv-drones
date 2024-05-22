@@ -19,6 +19,7 @@ namespace Asv.Drones.Gui.Api
         private readonly ReadOnlyObservableCollection<IMapAction> _mapActions;
         private IDisposable _disposableMapUpdate;
         private readonly SourceCache<IMapAnchor, Uri> _additionalAnchorsSource;
+        private readonly double _baseSizeAnchor = 32;
 
 
         /// <summary>
@@ -79,18 +80,13 @@ namespace Asv.Drones.Gui.Api
             {
                 foreach (var marker in _markers)
                 {
-                    switch (x)
+                    marker.Size = x switch
                     {
-                        case var zoom when zoom <= 10:
-                            marker.Size = 16 + (zoom - 1) * (32 - 16) / (10 - 1);
-                            break;
-                        case var zoom when zoom <= 12:
-                            marker.Size = 32 + (zoom - 10) * (48 - 32) / (12 - 10);
-                            break;
-                        default:
-                            marker.Size = 48;
-                            break;
-                    }
+                        var zoom when zoom <= 5 => _baseSizeAnchor * 0.5,
+                        var zoom when zoom > 5 && zoom <= 10 => _baseSizeAnchor * (zoom / 10),
+                        var zoom when zoom > 10 && zoom <= 12 => _baseSizeAnchor * 1.1,
+                        _ => _baseSizeAnchor * 1.2
+                    };
                 }
             }).DisposeItWith(Disposable);
 
