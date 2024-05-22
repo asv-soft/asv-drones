@@ -1,0 +1,68 @@
+name: Build and Publish Api NuGet
+
+on:
+  push:
+    tags:
+      - "api-v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/api-v')
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '8.0.x'
+          
+      - name: Setup NuGet config
+        env:
+            NUGET_USERNAME: ${{ secrets.USER_NAME }}
+            NUGET_PASSWORD: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
+        run: |
+            echo "<configuration>" > nuget.config
+            echo "<packageSources>" >> nuget.config
+            echo "<add key=\"nuget.org\" value=\"https://api.nuget.org/v3/index.json\" protocolVersion=\"3\" />" >> nuget.config
+            echo "<add key=\"asv\" value=\"https://nuget.pkg.github.com/asv-soft/index.json\" />" >> nuget.config
+            echo "</packageSources>" >> nuget.config
+            echo "<packageSourceCredentials>" >> nuget.config
+            echo "<asv>" >> nuget.config
+            echo "<add key=\"Username\" value=\"$NUGET_USERNAME\" />" >> nuget.config
+            echo "<add key=\"ClearTextPassword\" value=\"$NUGET_PASSWORD\" />" >> nuget.config
+            echo "</asv>" >> nuget.config
+            echo "</packageSourceCredentials>" >> nuget.config
+            echo "</configuration>" >> nuget.config
+
+      - name: Install dependencies
+        run: dotnet restore ./src/Asv.Drones.Gui.Api/Asv.Drones.Gui.Api.csproj
+
+      - name: Build
+        run: dotnet build ./src/Asv.Drones.Gui.Api/Asv.Drones.Gui.Api.csproj --configuration Release --no-restore
+
+      - name: Set version variable
+        env:
+          TAG: ${{ github.ref_name }}
+        run: echo "VERSION=${TAG#api-v}" >> $GITHUB_ENV
+        
+      - name: Read version from Directory.Build.props
+        id: read-version
+        run: echo "::set-output name=version::$(grep -oP '<ApiVersion>\K[^<]+' ./src/Directory.Build.props)"
+
+      - name: Compare tag with NuGet package version
+        run: |
+          if [ "${{ steps.read-version.outputs.version }}" != "${{ env.VERSION }}" ]; then
+            echo "Error: Tag does not match NuGet package version"
+            exit 1
+          fi
+
+      - name: Pack package
+        run: dotnet pack ./src/Asv.Drones.Gui.Api/Asv.Drones.Gui.Api.csproj -c Release /p:Version=${VERSION} --no-build -o .
+
+      - name: List output files
+        run: ls -la
+
+      - name: Push package to GitHub
+        run: dotnet nuget push Asv.Drones.Gui.Api.${VERSION}.nupkg --api-key ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }} --skip-duplicate --source "https://nuget.pkg.github.com/asv-soft/index.json"
