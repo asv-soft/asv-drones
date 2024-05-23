@@ -24,6 +24,7 @@ namespace Asv.Drones.Gui
             _vehicle = vehicle;
             _loc = loc;
             Size = 48;
+            BaseSize = 48;
             OffsetX = OffsetXEnum.Center;
             OffsetY = OffsetYEnum.Center;
             StrokeThickness = 1;

@@ -114,6 +114,7 @@ public class RulerStartAnchor : MapAnchorBase
     public RulerStartAnchor(Uri id, GeoPoint startPoint) : base(id)
     {
         Size = 48;
+        BaseSize = 48;
         OffsetX = OffsetXEnum.Center;
         OffsetY = OffsetYEnum.Bottom;
         StrokeThickness = 1;
@@ -131,6 +132,7 @@ public class RulerStopAnchor : MapAnchorBase
     public RulerStopAnchor(Uri id, RulerStartAnchor start, ILocalizationService loc, GeoPoint stopPoint) : base(id)
     {
         Size = 48;
+        BaseSize = 48;
         OffsetX = OffsetXEnum.Center;
         OffsetY = OffsetYEnum.Bottom;
         StrokeThickness = 1;

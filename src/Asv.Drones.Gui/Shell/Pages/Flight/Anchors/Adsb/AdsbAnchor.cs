@@ -14,6 +14,7 @@ public class AdsbAnchor : MapAnchorBase
         : base($"{WellKnownUri.ShellPageMapFlightAnchor}/{src.FullId}/{device.IcaoAddress}")
     {
         Size = 48;
+        BaseSize = 48;
         OffsetX = OffsetXEnum.Center;
         OffsetY = OffsetYEnum.Center;
         StrokeThickness = 1;

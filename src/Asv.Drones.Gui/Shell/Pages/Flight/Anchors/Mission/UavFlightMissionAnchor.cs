@@ -17,6 +17,7 @@ public class UavFlightMissionAnchor : FlightAnchorBase
         $"flight-mission/{missionItem.Index}")
     {
         Size = 16;
+        BaseSize = 16;
         OffsetX = OffsetXEnum.Center;
         OffsetY = OffsetYEnum.Bottom;
         Icon = ConvertIcon(missionItem.Command.Value);

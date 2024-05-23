@@ -14,6 +14,7 @@ namespace Asv.Drones.Gui
         public HomeAnchor(IVehicleClient vehicle) : base(vehicle, "home")
         {
             Size = 32;
+            BaseSize = 32;
             OffsetX = OffsetXEnum.Center;
             OffsetY = OffsetYEnum.Bottom;
             Icon = MaterialIconKind.HomeMapMarker;
