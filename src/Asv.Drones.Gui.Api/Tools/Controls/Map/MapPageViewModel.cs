@@ -82,10 +82,10 @@ namespace Asv.Drones.Gui.Api
                 {
                     marker.Size = x switch
                     {
-                        var zoom when zoom <= 5 => _baseSizeAnchor * 0.5,
-                        var zoom when zoom > 5 && zoom <= 10 => _baseSizeAnchor * (zoom / 10),
-                        var zoom when zoom > 10 && zoom <= 12 => _baseSizeAnchor * 1.1,
-                        _ => _baseSizeAnchor * 1.2
+                        var zoom when zoom <= 5 => marker.BaseSize * 0.5,
+                        var zoom when zoom > 5 && zoom <= 10 => marker.BaseSize * (zoom / 10),
+                        var zoom when zoom > 10 && zoom <= 12 => marker.BaseSize * 1.1,
+                        _ => marker.BaseSize * 1.2
                     };
                 }
             }).DisposeItWith(Disposable);

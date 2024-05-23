@@ -29,6 +29,8 @@ namespace Asv.Drones.Gui.Api
             return this;
         }
 
+        public double BaseSize { get; set; } = 32;
+
         protected virtual void InternalWhenMapLoaded(IMap map)
         {
             // do nothing            
