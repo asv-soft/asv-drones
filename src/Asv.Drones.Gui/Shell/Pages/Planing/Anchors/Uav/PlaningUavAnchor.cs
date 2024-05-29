@@ -28,6 +28,7 @@ namespace Asv.Drones.Gui
             OffsetX = OffsetXEnum.Center;
             OffsetY = OffsetYEnum.Center;
             StrokeThickness = 1;
+            BaseStrokeThickness = 1;
             Stroke = Brushes.Honeydew;
             IconBrush = Brushes.Red;
             IsVisible = true;

@@ -30,6 +30,7 @@ namespace Asv.Drones.Gui.Api
         }
 
         public double BaseSize { get; set; } = 32;
+        public double BaseStrokeThickness { get; set; } = 3;
 
         protected virtual void InternalWhenMapLoaded(IMap map)
         {

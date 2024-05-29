@@ -16,4 +16,5 @@ public interface IMapAnchor : IMapAnchorViewModel, IViewModel
     IMapAnchor Init(IMap map);
 
     double BaseSize { get; set; }
+    double BaseStrokeThickness { get; set; }
 }

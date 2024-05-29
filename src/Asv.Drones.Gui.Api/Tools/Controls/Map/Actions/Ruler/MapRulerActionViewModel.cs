@@ -118,6 +118,7 @@ public class RulerStartAnchor : MapAnchorBase
         OffsetX = OffsetXEnum.Center;
         OffsetY = OffsetYEnum.Bottom;
         StrokeThickness = 1;
+        BaseStrokeThickness = 1;
         IconBrush = Brushes.Indigo;
         Stroke = Brushes.White;
         IsVisible = true;
@@ -136,6 +137,7 @@ public class RulerStopAnchor : MapAnchorBase
         OffsetX = OffsetXEnum.Center;
         OffsetY = OffsetYEnum.Bottom;
         StrokeThickness = 1;
+        BaseStrokeThickness = 1;    
         IconBrush = Brushes.Indigo;
         Stroke = Brushes.White;
         IsVisible = true;

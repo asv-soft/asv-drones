@@ -20,6 +20,12 @@ namespace Asv.Drones.Gui.Api
         private IDisposable _disposableMapUpdate;
         private readonly SourceCache<IMapAnchor, Uri> _additionalAnchorsSource;
         private readonly double _baseSizeAnchor = 32;
+        
+        const double SmallSizeFactor = 0.5;
+        const double MediumSizeFactor = 1.1;
+        const double LargeSizeFactor = 1.2;
+        const double SmallStrokeFactor = 2.0 / 3.0;
+        const double LargeStrokeFactor = 7.0 / 3.0;
 
 
         /// <summary>
@@ -82,14 +88,22 @@ namespace Asv.Drones.Gui.Api
                 {
                     marker.Size = x switch
                     {
-                        var zoom when zoom <= 5 => marker.BaseSize * 0.5,
-                        var zoom when zoom > 5 && zoom <= 10 => marker.BaseSize * (zoom / 10),
-                        var zoom when zoom > 10 && zoom <= 12 => marker.BaseSize * 1.1,
-                        _ => marker.BaseSize * 1.2
+                        <= 5 => marker.BaseSize * SmallSizeFactor,
+                        var zoom and > 5 and <= 10 => marker.BaseSize * (zoom / 10),
+                        <= 12 and > 10 => marker.BaseSize * MediumSizeFactor,
+                        _ => marker.BaseSize * LargeSizeFactor
+                    };
+                    
+                    marker.StrokeThickness = x switch
+                    {
+                        <= 5 => marker.BaseStrokeThickness * SmallStrokeFactor,
+                        var zoom and > 5 and <= 10 => CalculateMediumStrokeFactor(marker),
+                        _ => marker.BaseStrokeThickness * LargeStrokeFactor
                     };
                 }
             }).DisposeItWith(Disposable);
 
+            
             #endregion
 
             #region Widgets
@@ -203,6 +217,10 @@ namespace Asv.Drones.Gui.Api
                         mapAnchor.IsSelected = false;
                 }
             });
+        }
+        private double CalculateMediumStrokeFactor(IMapAnchor model)
+        {
+            return model.BaseStrokeThickness * ((2 + ((Zoom - 5) / 5) * (5 - 2)) / 3);
         }
 
         private void SetUpFollow(IMapAnchor? anchor)
