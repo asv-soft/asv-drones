@@ -116,6 +116,11 @@ public class ShellViewModel : ViewModelBase, IShell
             .DisposeMany()
             .Subscribe()
             .DisposeItWith(Disposable);
+        
+        _messageSourceList
+            .LimitSizeTo(3)
+            .Subscribe()
+            .DisposeItWith(Disposable);
         // push new information messages to source cache
         // they will automatically be deleted after a timeout or if the user closes them
         log
