@@ -1,196 +1,243 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using System.ComponentModel.Composition.Primitives;
+using System.Collections.Immutable;
+using System.Composition.Convention;
+using System.Composition.Hosting;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Asv.Cfg;
+using Asv.Cfg.Json;
 using Asv.Common;
-using Asv.Drones.Gui.Core;
-using Asv.Drones.Gui.Gbs;
-using Asv.Drones.Gui.Sdr;
-using Asv.Drones.Gui.Uav;
+using Asv.Drones.Gui.Api;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Asv.Drones.Gui.Views;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Styling;
+using FluentAvalonia.Styling;
 using NLog;
 
 namespace Asv.Drones.Gui;
 
-public partial class App : Application
+public class AppHostConfig
 {
-    private CompositionContainer _container;
-    private readonly Stack<KeyValuePair<IPluginMetadata, IPluginEntryPoint>> _plugins = new();
+    public string? Theme { get; set; } = FluentAvaloniaTheme.DarkModeString;
+}
+
+public partial class App : Application, IApplicationHost
+{
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+    private ThemeItem[] _themes;
+
+    private bool _initThemeFirst;
+    private readonly Stack<KeyValuePair<IPluginMetadata, IPluginEntryPoint>> _plugins = [];
 
     public App()
     {
-        LogManager.Setup().LoadConfiguration(builder =>
+        // order of init members is important !!!
+        Paths = InitApplicationPaths();
+        Info = InitApplicationInfo();
+        Logs = new LogService(Args["logs-folder", Path.Combine(Paths.AppDataFolder, "logs")]);
+        Configuration = new JsonOneFileConfiguration(Args["config-file",Path.Combine(Paths.AppDataFolder, "config.json")], true,
+                                                     TimeSpan.FromMilliseconds(100));
+        Localization = new LocalizationServiceBase(Configuration);
+        var conventions = new ConventionBuilder();
+        var containerCfg = new ContainerConfiguration()
+                           .WithExport(typeof(IAppPathInfo), Paths)
+                           .WithExport(typeof(IAppInfo), Info)
+                           .WithExport(typeof(IApplicationHost), this)
+                           .WithExport(typeof(IDataTemplateHost), this)
+                           .WithExport(typeof(IConfiguration), Configuration)
+                           .WithExport(typeof(ILogService), Logs)
+                           .WithExport(typeof(ILocalizationService), Localization)
+                           .WithDefaultConventions(conventions);
+
+        PluginManager = Design.IsDesignMode
+                            ? NullPluginManager.Instance
+                            : new PluginManager(containerCfg, Args["plugin-folder", Paths.AppDataFolder], Configuration);
+        containerCfg = containerCfg
+                       .WithExport(typeof(IPluginManager), PluginManager)
+                       .WithAssemblies(DefaultAssemblies.Distinct()); // load dependencies from default assemblies        
+        Container = containerCfg.CreateContainer();
+        DataTemplateHost.DataTemplates.Add(new ViewLocator(Container));
+    }
+    
+    
+    private IEnumerable<Assembly> DefaultAssemblies
+    {
+        get
         {
-            builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToDebug();
-            /*builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToConsole();*/
-            builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToFile(fileName: "log.txt");
+            yield return GetType().Assembly;
+            yield return typeof(ExportViewAttribute).Assembly;
+        }
+    }
+
+
+    #region IApp host interface impl
+
+    public ILocalizationService Localization { get; }
+    public ILogService Logs { get; }
+    public IAppArgs Args => AppArgs.Instance;
+    public IAppInfo Info { get; }
+    public IAppPathInfo Paths { get; }
+    public IDataTemplateHost DataTemplateHost => this;
+    public CompositionHost Container { get; }
+    public IConfiguration Configuration { get; }
+    public IPluginManager PluginManager { get; }
+    public IEnumerable<IThemeInfo> Themes => _themes;
+    public IRxEditableValue<IThemeInfo> CurrentTheme { get; private set; }
+    public IShell? Shell { get; private set; }
+
+    public void RestartApplication()
+    {
+        Environment.Exit(0);
+    }
+
+
+    #endregion
+
+    #region Init functions
+
+    private IAppPathInfo InitApplicationPaths()
+    {
+#if DEBUG
+        var appDataBaseDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+#else
+        var appDataBaseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+#endif 
+        
+        
+        
+        // if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS()) // TODO: Check correct folders for OperatingSystem.IsAndroid() and OperatingSystem.IsIOS() ?
+
+        var defaultPath = appDataBaseDirectory == null
+            ? "asv-data-folder"
+            : Path.Combine(appDataBaseDirectory, "asv-data-folder");
+        
+        var info = new AppPathInfo
+        {
+            AppDataFolder = Args["data-folder",defaultPath],
+        };
+        if (Directory.Exists(info.AppDataFolder) == false) Directory.CreateDirectory(info.AppDataFolder);
+        return info;
+    }
+
+    private IAppInfo InitApplicationInfo()
+    {
+        const string zeroVersion = "0.0.0";
+        var assemblyName = GetType().Assembly.GetName(); // hack - to get application assembly
+        var version = assemblyName.Version != null
+                          ? $"{assemblyName.Version.Major}.{assemblyName.Version.Minor}.{assemblyName.Version.Build}"
+                          : zeroVersion;
+        var name = assemblyName.Name ?? "Asv.Drones";
+        const string author = "https://asv.me/";
+        const string appUrl = "https://docs.asv.me/";
+        const string licence = "MIT License";
+        var avaloniaVersion =
+            typeof(AppBuilder).Assembly.GetName().Version?.ToString() ?? zeroVersion; // hack to get Avalonia version
+        return new AppInfo
+        {
+            Name = name,
+            Version = version,
+            Author = author,
+            AppUrl = appUrl,
+            AppLicense = licence,
+            AvaloniaVersion = avaloniaVersion
+        };
+    }
+
+    private void InitThemes()
+    {
+        _themes =
+        [
+            new ThemeItem(FluentAvaloniaTheme.DarkModeString, RS.ThemeService_Themes_Dark, ThemeVariant.Dark),
+            new ThemeItem(FluentAvaloniaTheme.LightModeString, RS.ThemeService_Themes_Light, ThemeVariant.Light)
+        ];
+
+        CurrentTheme =
+            new RxValue<IThemeInfo>(
+                _themes.FirstOrDefault(item => item.Id.Equals(Configuration.Get<AppHostConfig>().Theme)) ??
+                throw new InvalidOperationException());
+        CurrentTheme.Subscribe(info =>
+        {
+            if (info is not ThemeItem item)
+            {
+                Logger.Error("Invalid theme item");
+                return;
+            }
+
+            RequestedThemeVariant = item.Theme;
+            // we no need to save theme on first init
+            if (_initThemeFirst == false)
+            {
+                _initThemeFirst = true;
+                return;
+            }
+            var config = Configuration.Get<AppHostConfig>();
+            config.Theme = info.Id;
+            Configuration.Set(config);
         });
     }
-    
-    private IEnumerable<Assembly> Assemblies()
-    {
-        yield return GetType().Assembly;                   // Asv.Drones.Gui 
-        yield return typeof(CorePlugin).Assembly;            // Asv.Drones.Gui.Core
-        yield return typeof(UavPlugin).Assembly;             // Asv.Drones.Gui.Uav
-        yield return typeof(GbsPlugin).Assembly;             // Asv.Drones.Gui.Gbs
-        yield return typeof(FlightSdrWidgetBase).Assembly;   // Asv.Drones.Gui.Sdr
-    }
 
-    private IEnumerable<ComposablePartCatalog> Catalogs()
-    {
-        foreach (var asm in Assemblies().Distinct().Select(assembly => new AssemblyCatalog(assembly)))
-        {
-            yield return asm;
-        }
-        
-        /*var path = System.Environment.CurrentDirectory;
-        
-        string? dir;
-        if (string.IsNullOrWhiteSpace(path) == false)
-        {
-            if (Directory.Exists(path) == false)
-            {
-                dir = Path.GetDirectoryName(path);    
-            }
-            else
-            {
-                dir = path;
-            }
-        }
-        else
-        {
-            dir = Path.GetDirectoryName(Environment.CurrentDirectory);
-        }*/
-        var cat = new DirectoryCatalog(System.Environment.CurrentDirectory, "Asv.Drones.Gui.Plugin.*.dll");
-        cat.Refresh();
-        Logger.Trace($"Search plugin in {cat.Path}");
-        foreach (var file in cat.LoadedFiles)
-        {
-            Logger.Info($"Found plugin '{Path.GetFileName(file)}'");
-        }
-        yield return cat;
+    #endregion
 
-    }
-    
-    private IEnumerable<ComposablePartCatalog> AndroidCatalogs()
-    {
-        foreach (var asm in Assemblies().Distinct().Select(assembly => new AssemblyCatalog(assembly)))
-        {
-            yield return asm;
-        }
-        
-        // Enable this feature to load plugins from folder
-        var dir = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/.__override__/"; //Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        var cat = new DirectoryCatalog(dir, "Asv.Drones.Gui.Plugin.*.dll");
-        cat.Refresh();
-        Logger.Trace($"Search plugin in {cat.Path}");
-        foreach (var file in cat.LoadedFiles)
-        {
-            Logger.Info($"Found plugin '{Path.GetFileName(file)}'");
-        }
-        yield return cat;
-    }
+    #region Base overrided methods
 
     public override void Initialize()
     {
-        AvaloniaXamlLoader.Load(this);
-        // Default logic doesn't auto detect windows theme anymore in designer
-        // to stop light mode, force here
         if (Design.IsDesignMode)
         {
+            AvaloniaXamlLoader.Load(this);
+            // Default logic doesn't auto detect windows theme anymore in designer
+            // to stop light mode, force here
             RequestedThemeVariant = ThemeVariant.Dark;
+            return;
         }
-    }
 
-    private void InitContainer()
-    {
-        var batch = new CompositionBatch();
-        batch.AddExportedValue(_container);
-        batch.AddExportedValue<IDataTemplateHost>(this);
-        _container.Compose(batch);
-            
-        #region loading plugins entry points
-
-        var plugins = _container.GetExports<IPluginEntryPoint, IPluginMetadata>().ToArray();
-        var sort = plugins.ToDictionary(_=>_.Metadata.Name, _=>_.Metadata.Dependency);
+        var plugins = Container.GetExports<Lazy<IPluginEntryPoint, PluginMetadata>>().ToImmutableArray();
+        var sort = plugins.ToDictionary(_ => _.Metadata.Name, x => x.Metadata.Dependency);
         Logger.Info($"Begin loading plugins [{plugins.Length} items]");
+        // we need to sort plugins by dependency
         foreach (var name in DepthFirstSearch.Sort(sort))
         {
             try
             {
-                Logger.Trace($"Init {name}");
+                Logger.Trace($"Init plugin {name}");
                 var plugin = plugins.First(_ => _.Metadata.Name == name);
                 var item = new KeyValuePair<IPluginMetadata, IPluginEntryPoint>(plugin.Metadata, plugin.Value);
                 _plugins.Push(item);
-                Logger.Debug($"Load plugin entry point '{plugin.Metadata.Name}' depended on [{string.Join(",", plugin.Metadata.Dependency)}]");
+                Logger.Debug(
+                    $"Load plugin entry point '{plugin.Metadata.Name}' depended on [{string.Join(",", plugin.Metadata.Dependency)}]");
             }
             catch (Exception e)
             {
-                Logger.Error(e,$"Error to load plugin entry point: {name}:{e.Message}");
+                Logger.Error(e, $"Error to load plugin entry point: {name}:{e.Message}");
                 if (Debugger.IsAttached)
                 {
                     Debugger.Break();
                 }
             }
         }
-        
-        // This is done so that plugins won't load in design time
-        if (Design.IsDesignMode) _plugins.Clear();
 
-        #endregion
+        AvaloniaXamlLoader.Load(this);
+        InitThemes();
     }
+
 
     public override void OnFrameworkInitializationCompleted()
     {
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-        {
-            _container = new CompositionContainer(new AggregateCatalog(Catalogs().ToArray()), CompositionOptions.IsThreadSafe);
-            
-            InitContainer();
-            
-            desktop.ShutdownRequested += OnShutdownRequested;
-            var configuration = _container.GetExportedValue<IConfiguration>();
-            Debug.Assert(configuration != null, nameof(configuration) + " != null");
-            var window = new MainWindow(configuration);
-            var navigation = _container.GetExportedValue<INavigationService>();
-            navigation?.InitStorageProvider(window.StorageProvider);
-            
-            desktop.MainWindow = new MainWindow
-            {
-                DataContext = _container.GetExportedValue<IShell>()
-            };
-        }
-        else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
-        {
-            _container = new CompositionContainer(new AggregateCatalog(AndroidCatalogs().ToArray()), CompositionOptions.IsThreadSafe);
-            
-            InitContainer();
+        #region Initialize plugins
 
-            singleViewPlatform.MainView = new ShellView
-            {
-                DataContext = _container.GetExportedValue<IShell>()
-            };
-        }
-        
         foreach (var plugin in _plugins)
         {
             try
             {
+                Logger.Trace($"Initialize plugin stage '{plugin.Key.Name}'");
                 plugin.Value.Initialize();
-                Logger.Trace($"Initialize plugin entry point '{plugin.Key.Name}'");
             }
             catch (Exception e)
             {
@@ -202,8 +249,31 @@ public partial class App : Application
             }
         }
 
+        #endregion
+
+        #region Create main window\activity
+
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.MainWindow = new MainWindow(Container)
+            {
+                DataContext = Shell = Container.GetExport<IShell>()
+            };
+        }
+        else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
+        {
+            singleViewPlatform.MainView = new ShellView()
+            {
+                DataContext = Shell = Container.GetExport<IShell>()
+            };
+        }
+
+        #endregion
+
         base.OnFrameworkInitializationCompleted();
-        
+
+        #region OnFrameworkInitializationCompleted for plugins
+
         foreach (var plugin in _plugins)
         {
             try
@@ -213,34 +283,19 @@ public partial class App : Application
             }
             catch (Exception e)
             {
-                Logger.Error(e, $"Error to call OnFrameworkInitializationCompleted for plugin entry point: {plugin.Key.Name}:{e.Message}");
+                Logger.Error(e,
+                             $"Error to call OnFrameworkInitializationCompleted for plugin entry point: {plugin.Key.Name}:{e.Message}");
                 if (Debugger.IsAttached)
                 {
                     Debugger.Break();
                 }
             }
         }
-        
+
+        #endregion
     }
 
-    private void OnShutdownRequested(object? sender, ShutdownRequestedEventArgs shutdownRequestedEventArgs)
-    {
-        foreach (var plugin in _plugins)
-        {
-            try
-            {
-                plugin.Value.OnShutdownRequested();
-                Logger.Trace($"Call plugin {plugin.Key.Name}.{nameof(plugin.Value.OnShutdownRequested)}()");
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e, $"Error to call {plugin.Key.Name}.{nameof(plugin.Value.OnShutdownRequested)}() at plugin entry point:{e.Message}");
-                if (Debugger.IsAttached)
-                {
-                    Debugger.Break();
-                }
-            }
-        }
-        _container.Dispose();
-    }
+    
+
+    #endregion
 }

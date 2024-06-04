@@ -1,0 +1,428 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:api="clr-namespace:Asv.Drones.Gui.Api">
+    <Design.PreviewWith>
+        <api:AttitudeIndicator Width="500" Height="500" RollAngle="0" PitchAngle="0" Velocity="0" Altitude="150"
+                               Heading="57" HomeAzimuth="37" VibrationX="0.6150423" VibrationY="0.4214542"
+                               VibrationZ="0.234787" />
+    </Design.PreviewWith>
+
+    <Style Selector="api|AttitudeIndicator">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Viewbox>
+                    <Canvas x:Name="Canvas"
+                            Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InternalWidth}"
+                            Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InternalHeight}"
+                            ClipToBounds="True" Background="Transparent">
+                        <Rectangle x:Name="Sky" Canvas.Top="-920" Canvas.Left="-210" Width="1420" Height="1420">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush EndPoint="0,0" StartPoint="0,1420">
+                                    <GradientStop Color="#64b5f6" Offset="0" />
+                                    <GradientStop Color="#1565c0" Offset="0.3" />
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                            <Rectangle.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform />
+                                    <SkewTransform />
+                                    <RotateTransform
+                                        Angle="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RollAngle}"
+                                        CenterX="0" CenterY="710" />
+                                    <TranslateTransform
+                                        X="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchTranslateX}"
+                                        Y="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchTranslateY}" />
+                                </TransformGroup>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle Canvas.Top="500" Canvas.Left="-210" Width="1420" Height="1420">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush EndPoint="0,1420" StartPoint="0,0">
+                                    <GradientStop Color="#4c8c4a" Offset="0" />
+                                    <GradientStop Color="#003300" Offset="0.3" />
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                            <Rectangle.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform />
+                                    <SkewTransform />
+                                    <RotateTransform
+                                        Angle="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RollAngle}"
+                                        CenterX="0" CenterY="-710" />
+                                    <TranslateTransform
+                                        X="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchTranslateX}"
+                                        Y="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchTranslateY}" />
+                                </TransformGroup>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+
+                        <Path Width="500" Height="500" Stroke="#e0e0e0" StrokeThickness="5">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform />
+                                    <SkewTransform />
+                                    <RotateTransform
+                                        Angle="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RollAngle}"
+                                        CenterX="250"
+                                        CenterY="250" />
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                            <Path.Data>
+                                <PathGeometry>
+                                    <PathFigure StartPoint="240,350" IsClosed="False">
+                                        <ArcSegment Size="300,300"
+                                                    IsLargeArc="False"
+                                                    SweepDirection="Clockwise"
+                                                    Point="760,350" />
+                                    </PathFigure>
+                                </PathGeometry>
+                            </Path.Data>
+                        </Path>
+
+                        <ItemsControl x:Name="Ticks" Canvas.Left="150" Canvas.Top="150" Width="700" Height="700"
+                                      ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RollItems}"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <ItemsControl.RenderTransform>
+                                <TransformGroup>
+                                    <RotateTransform
+                                        Angle="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RollAngle}"
+                                        CenterX="0" CenterY="0" />
+                                </TransformGroup>
+                            </ItemsControl.RenderTransform>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Grid />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel x:DataType="api:RollItem" Orientation="Vertical">
+                                        <StackPanel.RenderTransform>
+                                            <TransformGroup>
+                                                <RotateTransform CenterX="0" CenterY="0"
+                                                                 Angle="{CompiledBinding Value}" />
+                                            </TransformGroup>
+                                        </StackPanel.RenderTransform>
+                                        <TextBlock Text="{CompiledBinding Title}" TextAlignment="Center"
+                                                   Foreground="#e0e0e0" Margin="0,-5" Width="100" FontSize="37" />
+                                        <Line Stroke="#e0e0e0" StartPoint="350,0" EndPoint="350,10" Margin="0,0,0,0"
+                                              StrokeThickness="5">
+                                        </Line>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <ItemsControl x:Name="Ticks2" Canvas.Left="300" Canvas.Top="-920" Width="400" Height="2840"
+                                      ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchItems}"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <ItemsControl.RenderTransform>
+                                <TransformGroup>
+                                    <RotateTransform
+                                        Angle="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RollAngle}"
+                                        CenterX="0" CenterY="0" />
+                                    <TranslateTransform
+                                        X="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchTranslateX}"
+                                        Y="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchTranslateY}" />
+                                </TransformGroup>
+                            </ItemsControl.RenderTransform>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Grid />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel x:DataType="api:PitchItem" Orientation="Horizontal"
+                                                HorizontalAlignment="Center" IsVisible="{CompiledBinding IsVisible}">
+                                        <StackPanel.RenderTransform>
+                                            <TransformGroup>
+                                                <TranslateTransform X="0" Y="{CompiledBinding Value}" />
+                                            </TransformGroup>
+                                        </StackPanel.RenderTransform>
+                                        <TextBlock Margin="0,-25,10,0" Foreground="#e0e0e0"
+                                                   Text="{CompiledBinding Title}" TextAlignment="Right" Width="90"
+                                                   FontSize="35" />
+                                        <Line Stroke="#e0e0e0" Width="300" HorizontalAlignment="Center"
+                                              StartPoint="{CompiledBinding StartLine}"
+                                              EndPoint="{CompiledBinding StopLine}" StrokeThickness="3" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Path Canvas.Left="480" Canvas.Top="200" Width="40" Height="20" Stretch="Fill"
+                              Fill="#e53935" StrokeThickness="0.5">
+                            <Path.Data>
+                                <PathGeometry>
+                                    <PathFigure StartPoint="0,1" IsClosed="True">
+                                        <LineSegment Point="1,0" />
+                                        <LineSegment Point="2,1" />
+                                    </PathFigure>
+                                </PathGeometry>
+                            </Path.Data>
+                        </Path>
+
+
+                        <Line StartPoint="150,500" EndPoint="250,500" Stroke="#e53935" StrokeThickness="10" />
+                        <Line StartPoint="750,500" EndPoint="850,500" Stroke="#e53935" StrokeThickness="10" />
+                        <Line StartPoint="400,500" EndPoint="600,500" Stroke="#e0e0e0" StrokeThickness="5" />
+                        <Line StartPoint="400,540" EndPoint="502,500" Stroke="#e53935" StrokeThickness="10" />
+                        <Line StartPoint="498,500" EndPoint="600,540" Stroke="#e53935" StrokeThickness="10" />
+
+
+                        <!-- Velocity -->
+                        <Rectangle ToolTip.Tip="{x:Static api:RS.AttitudeIndicator_Velocity_ToolTip}" Canvas.Top="301"
+                                   Canvas.Left="-3" Fill="#e0e0e0" Opacity="0.3" StrokeThickness="0"
+                                   HorizontalAlignment="Stretch" Width="111" Height="398" />
+                        <ItemsControl ToolTip.Tip="{x:Static api:RS.AttitudeIndicator_Velocity_ToolTip}"
+                                      x:Name="Velocity" Canvas.Left="0" Canvas.Top="300" Width="110" Height="400"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VelocityItems}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas Width="110" Height="400" ClipToBounds="True" Background="Transparent" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.Styles>
+                                <Style Selector="ContentPresenter">
+                                    <Setter Property="Canvas.Top" Value="{Binding Position}" />
+                                </Style>
+                            </ItemsControl.Styles>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid x:DataType="api:ScaleItem" ColumnDefinitions="90,20"
+                                          IsVisible="{CompiledBinding IsVisible}" Width="110"
+                                          HorizontalAlignment="Stretch">
+                                        <TextBlock Grid.Column="0" Foreground="White" Text="{CompiledBinding Title}"
+                                                   Margin="0,-25,0,0" TextAlignment="Right" Width="85" FontSize="35" />
+                                        <Line Grid.Column="1" StartPoint="0,0" EndPoint="20,0" Stroke="#e0e0e0"
+                                              StrokeThickness="5" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Path ToolTip.Tip="{x:Static api:RS.AttitudeIndicator_Velocity_ToolTip}"
+                              Opacity="0.7" Canvas.Top="470" Canvas.Left="-1"
+                              Fill="#000a12" StrokeThickness="3" Stroke="#eceff1">
+                            <Path.Data>
+                                <PathGeometry>
+                                    <PathFigure StartPoint="2,5" IsClosed="True">
+                                        <LineSegment Point="2,55" />
+                                        <LineSegment Point="90,55" />
+                                        <LineSegment Point="105,30" />
+                                        <LineSegment Point="90,5" />
+                                    </PathFigure>
+                                </PathGeometry>
+                            </Path.Data>
+                        </Path>
+                        <TextBlock ToolTip.Tip="{x:Static api:RS.AttitudeIndicator_Velocity_ToolTip}" Canvas.Left="-1"
+                                   Canvas.Top="470" Margin="0,0,0,0" Foreground="White"
+                                   Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Velocity}"
+                                   TextAlignment="Right" FontSize="40" Width="87" FontWeight="DemiBold" />
+                        <Border ToolTip.Tip="{x:Static api:RS.AttitudeIndicator_Velocity_ToolTip}"
+                                BorderBrush="#e0e0e0" Canvas.Top="300" Canvas.Left="-3" BorderThickness="5"
+                                CornerRadius="3" Width="113" Height="400" />
+
+
+                        <!-- Altitude -->
+                        <Rectangle ToolTip.Tip="{x:Static api:RS.AttitudeIndicator_Altitude_ToolTip}" Canvas.Top="301"
+                                   Canvas.Right="-3" Fill="#e0e0e0" Opacity="0.3" StrokeThickness="0"
+                                   HorizontalAlignment="Stretch" Width="111" Height="398" />
+                        <ItemsControl ToolTip.Tip="{x:Static api:RS.AttitudeIndicator_Altitude_ToolTip}"
+                                      x:Name="Altitude" Canvas.Right="0" Canvas.Top="300" Width="110" Height="400"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=AltitudeItems}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas Width="110" Height="400" HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.Styles>
+                                <Style Selector="ContentPresenter">
+                                    <Setter Property="Canvas.Top" Value="{Binding Position}" />
+                                </Style>
+                            </ItemsControl.Styles>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid x:DataType="api:ScaleItem" ColumnDefinitions="20,90"
+                                          IsVisible="{CompiledBinding IsVisible}" Width="110"
+                                          HorizontalAlignment="Stretch">
+                                        <TextBlock Grid.Column="1" Foreground="White" Text="{CompiledBinding Title}"
+                                                   Margin="0,-25,0,0" TextAlignment="Left" Width="85" FontSize="35" />
+                                        <Line Grid.Column="0" StartPoint="0,0" EndPoint="20,0" Stroke="#e0e0e0"
+                                              StrokeThickness="5" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Path ToolTip.Tip="{x:Static api:RS.AttitudeIndicator_Altitude_ToolTip}"
+                              Opacity="0.7" Canvas.Right="-1" Canvas.Top="470"
+                              Fill="#000a12" StrokeThickness="3" Stroke="#eceff1">
+                            <Path.Data>
+                                <PathGeometry>
+                                    <PathFigure StartPoint="105,5" IsClosed="True">
+                                        <LineSegment Point="105,55" />
+                                        <LineSegment Point="15,55" />
+                                        <LineSegment Point="0,30" />
+                                        <LineSegment Point="15,5" />
+                                    </PathFigure>
+                                </PathGeometry>
+                            </Path.Data>
+                        </Path>
+                        <!-- <Polygon/> -->
+                        <TextBlock ToolTip.Tip="{x:Static api:RS.AttitudeIndicator_Altitude_ToolTip}" Canvas.Right="-1"
+                                   Canvas.Top="470" Margin="0,0,0,0" Foreground="White" FontWeight="DemiBold"
+                                   Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Altitude}"
+                                   VerticalAlignment="Center" TextAlignment="Left" FontSize="40" Width="87" />
+                        <Border ToolTip.Tip="{x:Static api:RS.AttitudeIndicator_Altitude_ToolTip}"
+                                BorderBrush="#e0e0e0" Canvas.Right="-3" Canvas.Top="300" BorderThickness="5"
+                                CornerRadius="3" Width="113" Height="400" />
+
+                        <!-- Сompass -->
+                        <Rectangle ToolTip.Tip="{x:Static api:RS.AttitudeIndicator_Compass_ToolTip}" Canvas.Left="-3"
+                                   Canvas.Top="-3" Width="1006" Height="93" Fill="White" Opacity="0.3" Stroke="Black"
+                                   StrokeThickness="3" HorizontalAlignment="Stretch" />
+                        <Line ToolTip.Tip="{x:Static api:RS.AttitudeIndicator_Compass_ToolTip}" StartPoint="0,80"
+                              EndPoint="1000,80" Stroke="#e0e0e0" StrokeThickness="5" />
+                        <ItemsControl x:Name="Heading" Canvas.Left="0" Canvas.Top="0" Width="1000" Height="80"
+                                      ToolTip.Tip="{x:Static api:RS.AttitudeIndicator_Compass_ToolTip}"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeadingItems}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas Width="1000" Height="80" ClipToBounds="True" Background="Transparent" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.Styles>
+                                <Style Selector="ContentPresenter">
+                                    <Setter Property="Canvas.Left" Value="{Binding Position}" />
+                                </Style>
+                            </ItemsControl.Styles>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid x:DataType="api:HeadingScaleItem" RowDefinitions="40,20"
+                                          IsVisible="{CompiledBinding IsVisible}" HorizontalAlignment="Stretch"
+                                          Margin="-40,15,0,0">
+                                        <TextBlock Grid.Row="0" Foreground="White" Text="{CompiledBinding Title}"
+                                                   HorizontalAlignment="Center" TextAlignment="Center" Width="80"
+                                                   FontSize="35" />
+                                        <Line Grid.Row="1" StartPoint="40,25" EndPoint="40,5" Stroke="#e0e0e0"
+                                              StrokeThickness="5" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Rectangle ToolTip.Tip="{x:Static api:RS.AttitudeIndicator_Compass_ToolTip}" Canvas.Left="450"
+                                   Canvas.Top="-3" Width="100" Height="80" Fill="#000a12" Opacity="0.7"
+                                   Stroke="#eceff1" StrokeThickness="3" HorizontalAlignment="Stretch" />
+                        <TextBlock ToolTip.Tip="{x:Static api:RS.AttitudeIndicator_Compass_ToolTip}" Canvas.Top="12"
+                                   Canvas.Left="460" Foreground="White"
+                                   Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Heading}"
+                                   VerticalAlignment="Center" TextAlignment="Center" FontWeight="DemiBold"
+                                   FontSize="45" Width="80" />
+
+                        <!-- Home -->
+                        <Path Canvas.Top="2"
+                              Canvas.Left="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HomeAzimuthPosition}"
+                              Fill="#e53935" StrokeThickness="3" Stroke="Red">
+                            <Path.Data>
+                                <PathGeometry>
+                                    <PathFigure StartPoint="-15,0" IsClosed="True">
+                                        <LineSegment Point="0,15" />
+                                        <LineSegment Point="15,0" />
+                                    </PathFigure>
+                                </PathGeometry>
+                            </Path.Data>
+                        </Path>
+
+
+                        <!-- Vibration -->
+
+                        <Border ToolTip.Tip="{x:Static api:RS.AltitudeIndicator_Vibration_ToolTip}"
+                                BorderBrush="#e0e0e0" BorderThickness="5" CornerRadius="3" Canvas.Top="105"
+                                Canvas.Left="-3" Height="185" Width="170" />
+                        <Border ToolTip.Tip="{x:Static api:RS.AltitudeIndicator_Vibration_ToolTip}" Background="White"
+                                Opacity="0.3" CornerRadius="3" Canvas.Top="105" Canvas.Left="-3" Height="185"
+                                Width="170" />
+                        <Grid ToolTip.Tip="{x:Static api:RS.AltitudeIndicator_Vibration_ToolTip}" Canvas.Top="110"
+                              Canvas.Left="10" Height="175" ColumnDefinitions="*, 10, *, 10, *"
+                              RowDefinitions="40, *, 2, *, 2, *, 40">
+                            <TextBlock Grid.Row="0" Grid.Column="0" FontSize="25" HorizontalAlignment="Center"
+                                       Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Clipping0}" />
+                            <TextBlock Grid.Row="0" Grid.Column="2" FontSize="25" HorizontalAlignment="Center"
+                                       Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Clipping1}" />
+                            <TextBlock Grid.Row="0" Grid.Column="4" FontSize="25" HorizontalAlignment="Center"
+                                       Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Clipping2}" />
+                            <TextBlock Grid.Row="6" Grid.Column="0" FontSize="25" HorizontalAlignment="Center" Text="X" />
+                            <TextBlock Grid.Row="6" Grid.Column="2" FontSize="25" HorizontalAlignment="Center" Text="Y" />
+                            <TextBlock Grid.Row="6" Grid.Column="4" FontSize="25" HorizontalAlignment="Center" Text="Z" />
+
+                            <Rectangle Grid.Column="0" Grid.Row="1" Width="40" Grid.RowSpan="5">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush>
+                                        <LinearGradientBrush.Transform>
+                                            <RotateTransform Angle="22.5" />
+                                        </LinearGradientBrush.Transform>
+                                        <GradientStops>
+                                            <GradientStop Color="White"
+                                                          Offset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VibrationX}" />
+                                            <GradientStop
+                                                Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BrushVibrationX}"
+                                                Offset="0" />
+                                        </GradientStops>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <Rectangle Grid.Column="2" Grid.Row="1" Width="40" Grid.RowSpan="5">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush>
+                                        <LinearGradientBrush.Transform>
+                                            <RotateTransform Angle="22.5" />
+                                        </LinearGradientBrush.Transform>
+                                        <GradientStops>
+                                            <GradientStop Color="White"
+                                                          Offset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VibrationY}" />
+                                            <GradientStop
+                                                Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BrushVibrationY}"
+                                                Offset="0" />
+                                        </GradientStops>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <Rectangle Grid.Column="4" Grid.Row="1" Width="40" Grid.RowSpan="5">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush>
+                                        <LinearGradientBrush.Transform>
+                                            <RotateTransform Angle="22.5" />
+                                        </LinearGradientBrush.Transform>
+                                        <GradientStops>
+                                            <GradientStop Color="White"
+                                                          Offset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VibrationZ}" />
+                                            <GradientStop
+                                                Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BrushVibrationZ}"
+                                                Offset="0" />
+                                        </GradientStops>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+
+                            <Rectangle Grid.Row="2" Grid.Column="0" Fill="Red" />
+                            <Rectangle Grid.Row="4" Grid.Column="0" Fill="Red" />
+                            <Rectangle Grid.Row="2" Grid.Column="2" Fill="Red" />
+                            <Rectangle Grid.Row="4" Grid.Column="2" Fill="Red" />
+                            <Rectangle Grid.Row="2" Grid.Column="4" Fill="Red" />
+                            <Rectangle Grid.Row="4" Grid.Column="4" Fill="Red" />
+                        </Grid>
+
+                        <TextBlock Canvas.Left="0" Canvas.Top="550" Foreground="#e53935" FontSize="100"
+                                   Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=StatusText, Mode=TwoWay}"
+                                   Width="1000" TextAlignment="Center" HorizontalAlignment="Center" />
+                    </Canvas>
+                </Viewbox>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

@@ -1,0 +1,82 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:api="clr-namespace:Asv.Drones.Gui.Api"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
+             x:CompileBindings="True"
+             x:DataType="api:TreeGroupViewModel"
+             x:Class="Asv.Drones.Gui.Api.TreeGroupView">
+    <Design.DataContext>
+        <api:TreeGroupViewModel />
+    </Design.DataContext>
+    <ScrollViewer Name="Root">
+        <StackPanel Orientation="Vertical"
+                    VerticalAlignment="Stretch"
+                    Margin="8" Spacing="8">
+
+            <ItemsControl ItemsSource="{Binding Items}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Spacing="8" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch"
+                            Command="{ReflectionBinding  DataContext.NavigateCommand, ElementName=Root}"
+                            CommandParameter="{Binding }">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <avalonia:MaterialIcon
+                                    Width="30" Height="30"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    Margin="8 4 12 4" Kind="{Binding Base.Icon}" />
+
+                                <TextBlock Text="{Binding Base.Name}"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center"
+                                           TextTrimming="CharacterEllipsis"
+                                           Theme="{DynamicResource BodyTextBlockStyle}"
+                                           Grid.Row="0" Grid.Column="1" />
+
+                                <TextBlock Text="{Binding Base.Description}"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center"
+                                           Theme="{DynamicResource CaptionTextBlockStyle}"
+                                           Foreground="{DynamicResource AccentTextFillColorDisabledBrush}"
+                                           Grid.Column="1"
+                                           Grid.Row="1" />
+                                <avalonia:MaterialIcon
+                                    Margin="8 4"
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Grid.RowSpan="2"
+                                    Width="20"
+                                    Height="20"
+                                    Kind="ChevronRight"
+                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                            </Grid>
+                        </Button>
+
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

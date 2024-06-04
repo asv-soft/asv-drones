@@ -1,25 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <CustomPropsPath Condition=" '$(SolutionDir)' == '$(ProjectDir)' ">../Asv.Drones.Gui.Custom.props</CustomPropsPath>
-        <CustomPropsPath Condition=" '$(SolutionDir)' != '$(ProjectDir)' ">$(SolutionDir)Asv.Drones.Gui.Custom.props</CustomPropsPath>
-        <ApplicationIcon>..\Asv.Drones.Gui\Assets\icon.ico</ApplicationIcon>
-    </PropertyGroup>
-    <Import Project="$(CustomPropsPath)"/>
-    <PropertyGroup>
         <OutputType>WinExe</OutputType>
+        <AssemblyVersion>$(ProductVersion)</AssemblyVersion>
+        <FileVersion>$(ProductVersion)</FileVersion>
+        <Version>$(ProductVersion)</Version>
         <!--If you are willing to use Windows/MacOS native APIs you will need to create 3 projects.
-        One for Windows with net7.0-windows TFM, one for MacOS with net7.0-macos and one with net7.0 TFM for Linux.-->
-        <TargetFramework>net7.0</TargetFramework>
+        One for Windows with net8.0-windows TFM, one for MacOS with net8.0-macos and one with net8.0 TFM for Linux.-->
+        <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-        <Configurations>Debug;Release</Configurations>
-        <Platforms>AnyCPU</Platforms>
+        <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
     </PropertyGroup>
 
     <PropertyGroup>
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
-
 
     <ItemGroup>
         <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)"/>
@@ -32,8 +27,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="..\Asv.Drones.Gui\Assets\icon.ico">
-        <Link>icon.ico</Link>
-      </None>
+        <AvaloniaResource Include="Assets\icon.ico"/>
     </ItemGroup>
 </Project>

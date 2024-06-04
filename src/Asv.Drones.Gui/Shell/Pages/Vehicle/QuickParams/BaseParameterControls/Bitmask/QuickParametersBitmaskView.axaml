@@ -1,0 +1,39 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:gui="clr-namespace:Asv.Drones.Gui"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800"
+             x:Class="Asv.Drones.Gui.QuickParametersBitmaskView"
+             x:DataType="gui:QuickParametersBitmaskViewModel">
+    <Design.DataContext>
+        <gui:QuickParametersBitmaskViewModel />
+    </Design.DataContext>
+    <DockPanel Margin="8" IsEnabled="{Binding IsInitialized}">
+        <DockPanel DockPanel.Dock="Top" LastChildFill="False">
+            <TextBlock Margin="0 0 4 0" DockPanel.Dock="Left" FontSize="20" 
+                       Text="{CompiledBinding ParameterTitle}" />
+            <TextBlock DockPanel.Dock="Left" FontWeight="Bold" FontSize="20" 
+                       Text="{Binding ParameterName, StringFormat='{}[{0}]'}" />
+            <avalonia:MaterialIcon DockPanel.Dock="Right" Foreground="Green" Width="22" Height="22" Kind="ContentSave" 
+                                   IsVisible="{CompiledBinding IsChanged}" />
+        </DockPanel>
+        <TextBlock DockPanel.Dock="Top" Margin="0 4" 
+                   Text="{CompiledBinding ParameterDescription}" TextWrapping="Wrap" />
+        <ItemsControl ItemsSource="{Binding Parts}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox Margin="0 0 8 0" 
+                              Content="{CompiledBinding Key}" 
+                              IsChecked="{CompiledBinding Value}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </DockPanel>
+</UserControl>

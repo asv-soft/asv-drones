@@ -58,5 +58,5432 @@ namespace Asv.Drones.Gui {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accuracy measure units.
+        /// </summary>
+        public static string Accuracy_Description {
+            get {
+                return ResourceManager.GetString("Accuracy_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meters.
+        /// </summary>
+        public static string Accuracy_Meters_Title {
+            get {
+                return ResourceManager.GetString("Accuracy_Meters_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m.
+        /// </summary>
+        public static string Accuracy_Meters_Unit {
+            get {
+                return ResourceManager.GetString("Accuracy_Meters_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nautical miles.
+        /// </summary>
+        public static string Accuracy_NauticalMiles_Title {
+            get {
+                return ResourceManager.GetString("Accuracy_NauticalMiles_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NM.
+        /// </summary>
+        public static string Accuracy_NauticalMiles_Unit {
+            get {
+                return ResourceManager.GetString("Accuracy_NauticalMiles_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accuracy.
+        /// </summary>
+        public static string Accuracy_Title {
+            get {
+                return ResourceManager.GetString("Accuracy_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accuracy.
+        /// </summary>
+        public static string AddNewMapPointView_Accuracy_Name {
+            get {
+                return ResourceManager.GetString("AddNewMapPointView_Accuracy_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude.
+        /// </summary>
+        public static string AddNewMapPointView_Altitude_Name {
+            get {
+                return ResourceManager.GetString("AddNewMapPointView_Altitude_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude.
+        /// </summary>
+        public static string AddNewMapPointView_Latitude_Name {
+            get {
+                return ResourceManager.GetString("AddNewMapPointView_Latitude_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude.
+        /// </summary>
+        public static string AddNewMapPointView_Longitude_Name {
+            get {
+                return ResourceManager.GetString("AddNewMapPointView_Longitude_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string AddNewMapPointView_Point_Name {
+            get {
+                return ResourceManager.GetString("AddNewMapPointView_Point_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accuracy must be greater or equal {0}..
+        /// </summary>
+        public static string AddNewMapPointViewModel_Accuracy_ValidValue {
+            get {
+                return ResourceManager.GetString("AddNewMapPointViewModel_Accuracy_ValidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name can not be empty.
+        /// </summary>
+        public static string AddNewMapPointViewModel_Name_ValidValue {
+            get {
+                return ResourceManager.GetString("AddNewMapPointViewModel_Name_ValidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string AddSourceView_Name {
+            get {
+                return ResourceManager.GetString("AddSourceView_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude measure units.
+        /// </summary>
+        public static string Altitude_Description {
+            get {
+                return ResourceManager.GetString("Altitude_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feets.
+        /// </summary>
+        public static string Altitude_Feet_Title {
+            get {
+                return ResourceManager.GetString("Altitude_Feet_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ft.
+        /// </summary>
+        public static string Altitude_Feet_Unit {
+            get {
+                return ResourceManager.GetString("Altitude_Feet_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meters.
+        /// </summary>
+        public static string Altitude_Meter_Title {
+            get {
+                return ResourceManager.GetString("Altitude_Meter_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m.
+        /// </summary>
+        public static string Altitude_Meter_Unit {
+            get {
+                return ResourceManager.GetString("Altitude_Meter_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude.
+        /// </summary>
+        public static string Altitude_Title {
+            get {
+                return ResourceManager.GetString("Altitude_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vibration and clipping of UAV.
+        /// </summary>
+        public static string AltitudeIndicator_Vibration_ToolTip {
+            get {
+                return ResourceManager.GetString("AltitudeIndicator_Vibration_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amplitude modulation measure units.
+        /// </summary>
+        public static string AmplitudeModulation_Description {
+            get {
+                return ResourceManager.GetString("AmplitudeModulation_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In parts.
+        /// </summary>
+        public static string AmplitudeModulation_InParts_Unit {
+            get {
+                return ResourceManager.GetString("AmplitudeModulation_InParts_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Percents.
+        /// </summary>
+        public static string AmplitudeModulation_Percent_Title {
+            get {
+                return ResourceManager.GetString("AmplitudeModulation_Percent_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AM.
+        /// </summary>
+        public static string AmplitudeModulation_Title {
+            get {
+                return ResourceManager.GetString("AmplitudeModulation_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move anchors.
+        /// </summary>
+        public static string AnchorMoverActionView_Title {
+            get {
+                return ResourceManager.GetString("AnchorMoverActionView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude.
+        /// </summary>
+        public static string AnchorsEditorView_TextBlock_Altitude_Text {
+            get {
+                return ResourceManager.GetString("AnchorsEditorView_TextBlock_Altitude_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude.
+        /// </summary>
+        public static string AnchorsEditorView_TextBlock_Latitude_Text {
+            get {
+                return ResourceManager.GetString("AnchorsEditorView_TextBlock_Latitude_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude.
+        /// </summary>
+        public static string AnchorsEditorView_TextBlock_Longitude_Text {
+            get {
+                return ResourceManager.GetString("AnchorsEditorView_TextBlock_Longitude_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select current map access mode.
+        /// </summary>
+        public static string AppearanceView_MapAccess_Description {
+            get {
+                return ResourceManager.GetString("AppearanceView_MapAccess_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map access.
+        /// </summary>
+        public static string AppearanceView_MapAccess_Header {
+            get {
+                return ResourceManager.GetString("AppearanceView_MapAccess_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cache only.
+        /// </summary>
+        public static string AppearanceViewModel_CacheOnly_AccessMode {
+            get {
+                return ResourceManager.GetString("AppearanceViewModel_CacheOnly_AccessMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server and Cache.
+        /// </summary>
+        public static string AppearanceViewModel_ServerAndCache_AccessMode {
+            get {
+                return ResourceManager.GetString("AppearanceViewModel_ServerAndCache_AccessMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server only.
+        /// </summary>
+        public static string AppearanceViewModel_ServerOnly_AccessMode {
+            get {
+                return ResourceManager.GetString("AppearanceViewModel_ServerOnly_AccessMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude.
+        /// </summary>
+        public static string AttitudeIndicator_Altitude_ToolTip {
+            get {
+                return ResourceManager.GetString("AttitudeIndicator_Altitude_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compass.
+        /// </summary>
+        public static string AttitudeIndicator_Compass_ToolTip {
+            get {
+                return ResourceManager.GetString("AttitudeIndicator_Compass_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velocity.
+        /// </summary>
+        public static string AttitudeIndicator_Velocity_ToolTip {
+            get {
+                return ResourceManager.GetString("AttitudeIndicator_Velocity_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Armed.
+        /// </summary>
+        public static string AttitudeViewModel_Vehicle_UpdateStatusText_Armed {
+            get {
+                return ResourceManager.GetString("AttitudeViewModel_Vehicle_UpdateStatusText_Armed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disarmed.
+        /// </summary>
+        public static string AttitudeViewModel_Vehicle_UpdateStatusText_Disarmed {
+            get {
+                return ResourceManager.GetString("AttitudeViewModel_Vehicle_UpdateStatusText_Disarmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Battery level.
+        /// </summary>
+        public static string BatteryUavRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("BatteryUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bearing measure units.
+        /// </summary>
+        public static string Bearing_Description {
+            get {
+                return ResourceManager.GetString("Bearing_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bearing.
+        /// </summary>
+        public static string Bearing_Title {
+            get {
+                return ResourceManager.GetString("Bearing_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Degrees.
+        /// </summary>
+        public static string BearingDegreeTitle {
+            get {
+                return ResourceManager.GetString("BearingDegreeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to B.
+        /// </summary>
+        public static string ByteSize_BytesUnit {
+            get {
+                return ResourceManager.GetString("ByteSize_BytesUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GB.
+        /// </summary>
+        public static string ByteSize_GigabytesUnit {
+            get {
+                return ResourceManager.GetString("ByteSize_GigabytesUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KB.
+        /// </summary>
+        public static string ByteSize_KilobytesUnit {
+            get {
+                return ResourceManager.GetString("ByteSize_KilobytesUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MB.
+        /// </summary>
+        public static string ByteSize_MegabytesUnit {
+            get {
+                return ResourceManager.GetString("ByteSize_MegabytesUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to B/s.
+        /// </summary>
+        public static string BytesRate_BytesPerSecondUnit {
+            get {
+                return ResourceManager.GetString("BytesRate_BytesPerSecondUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GB/s.
+        /// </summary>
+        public static string BytesRate_GigaBytesPerSecondUnit {
+            get {
+                return ResourceManager.GetString("BytesRate_GigaBytesPerSecondUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KB/s.
+        /// </summary>
+        public static string BytesRate_KiloBytesPerSecondUnit {
+            get {
+                return ResourceManager.GetString("BytesRate_KiloBytesPerSecondUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MB/s.
+        /// </summary>
+        public static string BytesRate_MegaBytesPerSecondUnit {
+            get {
+                return ResourceManager.GetString("BytesRate_MegaBytesPerSecondUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to N/A.
+        /// </summary>
+        public static string Common_NotAvailable {
+            get {
+                return ResourceManager.GetString("Common_NotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The rate at which the HEARTBEAT message must be transmitted to announce the existence of the system on the MAVLink network.
+        /// </summary>
+        public static string ConnectionsIdentificationView_HeartbeatRate_Description {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationView_HeartbeatRate_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heartbeat rate.
+        /// </summary>
+        public static string ConnectionsIdentificationView_HeartbeatRate_Header {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationView_HeartbeatRate_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to After that timeout of Heartbeat packet deviceService will be removed from deviceService list.
+        /// </summary>
+        public static string ConnectionsIdentificationView_HeartbeatTimeout_Description {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationView_HeartbeatTimeout_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heartbeat timeout.
+        /// </summary>
+        public static string ConnectionsIdentificationView_HeartbeatTimeout_Header {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationView_HeartbeatTimeout_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Each system has a network-unique system id, and each component has a system-unique component id that can be used for addressing/routing.
+        /// </summary>
+        public static string ConnectionsIdentificationView_SystemComponentId_Description {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationView_SystemComponentId_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System \ Component ID.
+        /// </summary>
+        public static string ConnectionsIdentificationView_SystemComponentId_Header {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationView_SystemComponentId_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timeout must be from {0} to {1}.
+        /// </summary>
+        public static string ConnectionsIdentificationViewModel_DeviceTimeout {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationViewModel_DeviceTimeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hz.
+        /// </summary>
+        public static string ConnectionsIdentificationViewModel_ToString {
+            get {
+                return ResourceManager.GetString("ConnectionsIdentificationViewModel_ToString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Serial.
+        /// </summary>
+        public static string ConnectionsPortsView_AddSerialCommand_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsPortsView_AddSerialCommand_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add TCP.
+        /// </summary>
+        public static string ConnectionsPortsView_AddTcpCommand_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsPortsView_AddTcpCommand_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add UDP.
+        /// </summary>
+        public static string ConnectionsPortsView_AddUdpCommand_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsPortsView_AddUdpCommand_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Point of entry that allows it to communicate with other devices in Mavlink network..
+        /// </summary>
+        public static string ConnectionsPortsView_Header_Description {
+            get {
+                return ResourceManager.GetString("ConnectionsPortsView_Header_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ports.
+        /// </summary>
+        public static string ConnectionsPortsView_Header_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsPortsView_Header_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connections.
+        /// </summary>
+        public static string ConnectionsShellMenuItem_Name {
+            get {
+                return ResourceManager.GetString("ConnectionsShellMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This page allows you to configure the basic settings on the Mavlink network.
+        /// </summary>
+        public static string ConnectionsView_Header_Description {
+            get {
+                return ResourceManager.GetString("ConnectionsView_Header_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mavlink network.
+        /// </summary>
+        public static string ConnectionsView_Header_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsView_Header_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string ConnectionsViewModel_AddDialogPort_Add {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_AddDialogPort_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string ConnectionsViewModel_AddDialogPort_Cancel {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_AddDialogPort_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new Mavlink serial port.
+        /// </summary>
+        public static string ConnectionsViewModel_AddSerialPortDialog_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_AddSerialPortDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new Mavlink TCP port.
+        /// </summary>
+        public static string ConnectionsViewModel_AddTcpPortDialog_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_AddTcpPortDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new Mavlink UDP port.
+        /// </summary>
+        public static string ConnectionsViewModel_AddUdpPortDialog_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_AddUdpPortDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accept.
+        /// </summary>
+        public static string ConnectionsViewModel_EditDialogPort_Accept {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditDialogPort_Accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string ConnectionsViewModel_EditDialogPort_Cancel {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditDialogPort_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit selected Mavlink serial port.
+        /// </summary>
+        public static string ConnectionsViewModel_EditSerialPortDialog_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditSerialPortDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit selected Mavlink TCP port.
+        /// </summary>
+        public static string ConnectionsViewModel_EditTcpPortDialog_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditTcpPortDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit selected Mavlink UDP port.
+        /// </summary>
+        public static string ConnectionsViewModel_EditUdpPortDialog_Title {
+            get {
+                return ResourceManager.GetString("ConnectionsViewModel_EditUdpPortDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Basic MAVLink connection settings.
+        /// </summary>
+        public static string ConnectionTreeMenuItem_Description {
+            get {
+                return ResourceManager.GetString("ConnectionTreeMenuItem_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Consumed energy.
+        /// </summary>
+        public static string ConsumedEnergyMahUavRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("ConsumedEnergyMahUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Here you can reload controller.
+        /// </summary>
+        public static string ControllerReloadQuickParamView_Description {
+            get {
+                return ResourceManager.GetString("ControllerReloadQuickParamView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Controller reload.
+        /// </summary>
+        public static string ControllerReloadQuickParamView_Header {
+            get {
+                return ResourceManager.GetString("ControllerReloadQuickParamView_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reload.
+        /// </summary>
+        public static string ControllerReloadQuickParamView_ReloadButton_Content {
+            get {
+                return ResourceManager.GetString("ControllerReloadQuickParamView_ReloadButton_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string CoordinatesCalculatorDialog_CloseButton {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorDialog_CloseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coordinates calculator.
+        /// </summary>
+        public static string CoordinatesCalculatorDialog_Title {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From altitude.
+        /// </summary>
+        public static string CoordinatesCalculatorView_FromAltitude {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_FromAltitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From altitude units.
+        /// </summary>
+        public static string CoordinatesCalculatorView_FromAltUnit {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_FromAltUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From latitude.
+        /// </summary>
+        public static string CoordinatesCalculatorView_FromLatitude {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_FromLatitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From lat/long units.
+        /// </summary>
+        public static string CoordinatesCalculatorView_FromLatLonUnit {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_FromLatLonUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From longitude.
+        /// </summary>
+        public static string CoordinatesCalculatorView_FromLongitude {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_FromLongitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From standard.
+        /// </summary>
+        public static string CoordinatesCalculatorView_FromStandard {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_FromStandard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To altitude.
+        /// </summary>
+        public static string CoordinatesCalculatorView_ToAltitude {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_ToAltitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To altitude units.
+        /// </summary>
+        public static string CoordinatesCalculatorView_ToAltUnit {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_ToAltUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To latitude.
+        /// </summary>
+        public static string CoordinatesCalculatorView_ToLatitude {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_ToLatitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To lat/long units.
+        /// </summary>
+        public static string CoordinatesCalculatorView_ToLatLonUnit {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_ToLatLonUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To longitude.
+        /// </summary>
+        public static string CoordinatesCalculatorView_ToLongitude {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_ToLongitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To standard.
+        /// </summary>
+        public static string CoordinatesCalculatorView_ToStandard {
+            get {
+                return ResourceManager.GetString("CoordinatesCalculatorView_ToStandard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CPU load of UAV.
+        /// </summary>
+        public static string CpuLoadUavRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("CpuLoadUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UAV current.
+        /// </summary>
+        public static string CurrentUavRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("CurrentUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In parts.
+        /// </summary>
+        public static string Ddm_InParts_Title {
+            get {
+                return ResourceManager.GetString("Ddm_InParts_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microamp.
+        /// </summary>
+        public static string Ddm_Microamp_Title {
+            get {
+                return ResourceManager.GetString("Ddm_Microamp_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microamp (Rus).
+        /// </summary>
+        public static string Ddm_MicroampRus_Title {
+            get {
+                return ResourceManager.GetString("Ddm_MicroampRus_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Percent.
+        /// </summary>
+        public static string Ddm_Percent_Title {
+            get {
+                return ResourceManager.GetString("Ddm_Percent_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to µA.
+        /// </summary>
+        public static string Ddm_µA_Unit {
+            get {
+                return ResourceManager.GetString("Ddm_µA_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Difference depth of modulation measure units.
+        /// </summary>
+        public static string DdmGp_Description {
+            get {
+                return ResourceManager.GetString("DdmGp_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DDM (Gp).
+        /// </summary>
+        public static string DdmGp_Title {
+            get {
+                return ResourceManager.GetString("DdmGp_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Difference depth of modulation measure units.
+        /// </summary>
+        public static string DdmLlz_Description {
+            get {
+                return ResourceManager.GetString("DdmLlz_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DDM (Llz).
+        /// </summary>
+        public static string DdmLlz_Title {
+            get {
+                return ResourceManager.GetString("DdmLlz_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [D]°.
+        /// </summary>
+        public static string Degrees_Degree_Title {
+            get {
+                return ResourceManager.GetString("Degrees_Degree_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Angle measure units.
+        /// </summary>
+        public static string Degrees_Description {
+            get {
+                return ResourceManager.GetString("Degrees_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [D]°[M]′.
+        /// </summary>
+        public static string Degrees_DM_Title {
+            get {
+                return ResourceManager.GetString("Degrees_DM_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [D]°[M]′[S]′′.
+        /// </summary>
+        public static string Degrees_DMS_Title {
+            get {
+                return ResourceManager.GetString("Degrees_DMS_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Angle.
+        /// </summary>
+        public static string Degrees_Title {
+            get {
+                return ResourceManager.GetString("Degrees_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of all devices found on the MAVLink network.
+        /// </summary>
+        public static string DeviceBrowserTreeMenuItem_Description {
+            get {
+                return ResourceManager.GetString("DeviceBrowserTreeMenuItem_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In this section you can see all found devices on the network.
+        /// </summary>
+        public static string DeviceBrowserView_Description {
+            get {
+                return ResourceManager.GetString("DeviceBrowserView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The device list is empty. Try adding ports or checking connections..
+        /// </summary>
+        public static string DeviceBrowserView_EmptyText {
+            get {
+                return ResourceManager.GetString("DeviceBrowserView_EmptyText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Device list.
+        /// </summary>
+        public static string DeviceBrowserView_Header {
+            get {
+                return ResourceManager.GetString("DeviceBrowserView_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distance measure units.
+        /// </summary>
+        public static string Distance_Description {
+            get {
+                return ResourceManager.GetString("Distance_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meters.
+        /// </summary>
+        public static string Distance_Meters_Title {
+            get {
+                return ResourceManager.GetString("Distance_Meters_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m.
+        /// </summary>
+        public static string Distance_Meters_Unit {
+            get {
+                return ResourceManager.GetString("Distance_Meters_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nautical miles.
+        /// </summary>
+        public static string Distance_NauticalMiles_Title {
+            get {
+                return ResourceManager.GetString("Distance_NauticalMiles_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NM.
+        /// </summary>
+        public static string Distance_NauticalMiles_Unit {
+            get {
+                return ResourceManager.GetString("Distance_NauticalMiles_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distance.
+        /// </summary>
+        public static string Distance_Title {
+            get {
+                return ResourceManager.GetString("Distance_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Here you can change FailSafe parameters.
+        /// </summary>
+        public static string FailSafeQuickParamView_Description {
+            get {
+                return ResourceManager.GetString("FailSafeQuickParamView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FailSafe parameters.
+        /// </summary>
+        public static string FailSafeQuickParamView_Header {
+            get {
+                return ResourceManager.GetString("FailSafeQuickParamView_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field strength measure units.
+        /// </summary>
+        public static string FieldStrength_Description {
+            get {
+                return ResourceManager.GetString("FieldStrength_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to µV/m.
+        /// </summary>
+        public static string FieldStrength_MicroVoltsPerMeter_Unit {
+            get {
+                return ResourceManager.GetString("FieldStrength_MicroVoltsPerMeter_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field strength.
+        /// </summary>
+        public static string FieldStrength_Title {
+            get {
+                return ResourceManager.GetString("FieldStrength_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flight mode.
+        /// </summary>
+        public static string FlightShellMenuItem_Name {
+            get {
+                return ResourceManager.GetString("FlightShellMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UAV time in flight.
+        /// </summary>
+        public static string FlightTimeUavRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("FlightTimeUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find UAV.
+        /// </summary>
+        public static string FlightUavView_FindButton_ToolTip {
+            get {
+                return ResourceManager.GetString("FlightUavView_FindButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Follow/Unfollow UAV.
+        /// </summary>
+        public static string FlightUavView_FollowButton_ToolTip {
+            get {
+                return ResourceManager.GetString("FlightUavView_FollowButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimize/Maximize UAV.
+        /// </summary>
+        public static string FlightUavView_Minimize_ToolTip {
+            get {
+                return ResourceManager.GetString("FlightUavView_Minimize_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to this UAV on map.
+        /// </summary>
+        public static string FlightUavView_MoveToButton_ToolTip {
+            get {
+                return ResourceManager.GetString("FlightUavView_MoveToButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uav actions.
+        /// </summary>
+        public static string FlightUavView_UavDropDownControls_Title {
+            get {
+                return ResourceManager.GetString("FlightUavView_UavDropDownControls_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set ROI.
+        /// </summary>
+        public static string FlightUavViewModel_RoiCommand_Name {
+            get {
+                return ResourceManager.GetString("FlightUavViewModel_RoiCommand_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return to Launch (RTL).
+        /// </summary>
+        public static string FlightUavViewModel_RtlCommand_Name {
+            get {
+                return ResourceManager.GetString("FlightUavViewModel_RtlCommand_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Mission.
+        /// </summary>
+        public static string FlightUavViewModel_StartMissionCommand_Name {
+            get {
+                return ResourceManager.GetString("FlightUavViewModel_StartMissionCommand_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take Off.
+        /// </summary>
+        public static string FlightUavViewModel_TakeOffCommand_Name {
+            get {
+                return ResourceManager.GetString("FlightUavViewModel_TakeOffCommand_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency measure units.
+        /// </summary>
+        public static string Frequency_Description {
+            get {
+                return ResourceManager.GetString("Frequency_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gigahertz.
+        /// </summary>
+        public static string Frequency_Gigahertz_Title {
+            get {
+                return ResourceManager.GetString("Frequency_Gigahertz_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GHz.
+        /// </summary>
+        public static string Frequency_Gigahertz_Unit {
+            get {
+                return ResourceManager.GetString("Frequency_Gigahertz_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hertz.
+        /// </summary>
+        public static string Frequency_Hertz_Title {
+            get {
+                return ResourceManager.GetString("Frequency_Hertz_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hz.
+        /// </summary>
+        public static string Frequency_Hertz_Unit {
+            get {
+                return ResourceManager.GetString("Frequency_Hertz_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kilohertz.
+        /// </summary>
+        public static string Frequency_Kilohertz_Title {
+            get {
+                return ResourceManager.GetString("Frequency_Kilohertz_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to kHz.
+        /// </summary>
+        public static string Frequency_Kilohertz_Unit {
+            get {
+                return ResourceManager.GetString("Frequency_Kilohertz_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Megahertz.
+        /// </summary>
+        public static string Frequency_Megahertz_Title {
+            get {
+                return ResourceManager.GetString("Frequency_Megahertz_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MHz.
+        /// </summary>
+        public static string Frequency_Megahertz_Unit {
+            get {
+                return ResourceManager.GetString("Frequency_Megahertz_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency.
+        /// </summary>
+        public static string Frequency_Title {
+            get {
+                return ResourceManager.GetString("Frequency_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open store file.
+        /// </summary>
+        public static string GlobalCommands_OpenStoreDialogTitle {
+            get {
+                return ResourceManager.GetString("GlobalCommands_OpenStoreDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User send GoTo &apos;{0}&apos; for {0}.
+        /// </summary>
+        public static string GoToMapAnchorActionViewModel_ExecuteImpl_LogInfo_Value {
+            get {
+                return ResourceManager.GetString("GoToMapAnchorActionViewModel_ExecuteImpl_LogInfo_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select target for GoTo action.
+        /// </summary>
+        public static string GoToMapAnchorActionViewModel_ExecuteImpl_ShowTargetDialog_Value {
+            get {
+                return ResourceManager.GetString("GoToMapAnchorActionViewModel_ExecuteImpl_ShowTargetDialog_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GoTo.
+        /// </summary>
+        public static string GoToMapAnchorActionViewModel_Title {
+            get {
+                return ResourceManager.GetString("GoToMapAnchorActionViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Anchors.
+        /// </summary>
+        public static string HeaderAnchorsMenu_Title {
+            get {
+                return ResourceManager.GetString("HeaderAnchorsMenu_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coordinates calculator.
+        /// </summary>
+        public static string HeaderCoordinatesCalculatorMenu_Header {
+            get {
+                return ResourceManager.GetString("HeaderCoordinatesCalculatorMenu_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string HeaderPlaningFileDeleteMenuItem_Title {
+            get {
+                return ResourceManager.GetString("HeaderPlaningFileDeleteMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        public static string HeaderPlaningFileDownloadMenuItem_Title {
+            get {
+                return ResourceManager.GetString("HeaderPlaningFileDownloadMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        public static string HeaderPlaningFileMenuItem_Title {
+            get {
+                return ResourceManager.GetString("HeaderPlaningFileMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string HeaderPlaningFileOpenMenuItem_Title {
+            get {
+                return ResourceManager.GetString("HeaderPlaningFileOpenMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string HeaderPlaningFileSaveMenuItem_Title {
+            get {
+                return ResourceManager.GetString("HeaderPlaningFileSaveMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        public static string HeaderPlaningFileUploadMenuItem_Title {
+            get {
+                return ResourceManager.GetString("HeaderPlaningFileUploadMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Templater.
+        /// </summary>
+        public static string HeaderTemplaterMenu_Header {
+            get {
+                return ResourceManager.GetString("HeaderTemplaterMenu_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tools.
+        /// </summary>
+        public static string HeaderToolsMenu_Header {
+            get {
+                return ResourceManager.GetString("HeaderToolsMenu_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string HierarchicalStoreView_TextBlock_Text_Cancel {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_TextBlock_Text_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Folder.
+        /// </summary>
+        public static string HierarchicalStoreView_TextBlock_Text_MoveFolder {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_TextBlock_Text_MoveFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Here.
+        /// </summary>
+        public static string HierarchicalStoreView_TextBlock_Text_MoveHere {
+            get {
+                return ResourceManager.GetString("HierarchicalStoreView_TextBlock_Text_MoveHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string HierarhicalStoreView_Search_Textbox_Watermark {
+            get {
+                return ResourceManager.GetString("HierarhicalStoreView_Search_Textbox_Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distance from UAV to home.
+        /// </summary>
+        public static string HomeDistanceUavRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("HomeDistanceUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Each system has a network-unique system id, and each component has a system-unique component id that can be used for addressing/routing.
+        /// </summary>
+        public static string IdentityQuickParamView_Description {
+            get {
+                return ResourceManager.GetString("IdentityQuickParamView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System ID.
+        /// </summary>
+        public static string IdentityQuickParamView_Header {
+            get {
+                return ResourceManager.GetString("IdentityQuickParamView_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GHz.
+        /// </summary>
+        public static string ItemsRate_GigaHerzUnit {
+            get {
+                return ResourceManager.GetString("ItemsRate_GigaHerzUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hz.
+        /// </summary>
+        public static string ItemsRate_HerzUnit {
+            get {
+                return ResourceManager.GetString("ItemsRate_HerzUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KHz.
+        /// </summary>
+        public static string ItemsRate_KiloHerzUnit {
+            get {
+                return ResourceManager.GetString("ItemsRate_KiloHerzUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MHz.
+        /// </summary>
+        public static string ItemsRate_MegaHerzUnit {
+            get {
+                return ResourceManager.GetString("ItemsRate_MegaHerzUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User send DoLand for {0}.
+        /// </summary>
+        public static string LandAnchorActionViewModel_ExecuteImpl_LogInfo {
+            get {
+                return ResourceManager.GetString("LandAnchorActionViewModel_ExecuteImpl_LogInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Immediately land.
+        /// </summary>
+        public static string LandAnchorActionViewModel_Title {
+            get {
+                return ResourceManager.GetString("LandAnchorActionViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [D]°.
+        /// </summary>
+        public static string Latitude_Degree_Title {
+            get {
+                return ResourceManager.GetString("Latitude_Degree_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude measure units.
+        /// </summary>
+        public static string Latitude_Description {
+            get {
+                return ResourceManager.GetString("Latitude_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [D]°[M]′[S]′′.
+        /// </summary>
+        public static string Latitude_DMS_Title {
+            get {
+                return ResourceManager.GetString("Latitude_DMS_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude.
+        /// </summary>
+        public static string Latitude_Title {
+            get {
+                return ResourceManager.GetString("Latitude_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UAV link quality.
+        /// </summary>
+        public static string LinkQualityUavRttView_ToolTip {
+            get {
+                return ResourceManager.GetString("LinkQualityUavRttView_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string LoggerView_Clear_Name {
+            get {
+                return ResourceManager.GetString("LoggerView_Clear_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string LoggerView_ErrorFilter_Name {
+            get {
+                return ResourceManager.GetString("LoggerView_ErrorFilter_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string LoggerView_InfoFilter_Name {
+            get {
+                return ResourceManager.GetString("LoggerView_InfoFilter_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trace.
+        /// </summary>
+        public static string LoggerView_TraceFilter_Name {
+            get {
+                return ResourceManager.GetString("LoggerView_TraceFilter_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string LoggerView_WarningFilter_Name {
+            get {
+                return ResourceManager.GetString("LoggerView_WarningFilter_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to by .
+        /// </summary>
+        public static string LogMessagesPageView_By {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_By", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of elements on one page .
+        /// </summary>
+        public static string LogMessagesPageView_By_ToolTip {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_By_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear all logs.
+        /// </summary>
+        public static string LogMessagesPageView_ClearAllButton_ToolTip {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_ClearAllButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filtered: {0}.
+        /// </summary>
+        public static string LogMessagesPageView_Filtered {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_Filtered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From {0}.
+        /// </summary>
+        public static string LogMessagesPageView_From {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_From", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to next page.
+        /// </summary>
+        public static string LogMessagesPageView_NextButton_ToolTip {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_NextButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to previous page.
+        /// </summary>
+        public static string LogMessagesPageView_PrevButton_ToolTip {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_PrevButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh all elements.
+        /// </summary>
+        public static string LogMessagesPageView_RefreshButton_ToolTip {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_RefreshButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string LogMessagesPageView_SearchWatermark {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_SearchWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to to {0}.
+        /// </summary>
+        public static string LogMessagesPageView_To {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total: {0}.
+        /// </summary>
+        public static string LogMessagesPageView_Total {
+            get {
+                return ResourceManager.GetString("LogMessagesPageView_Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear all log messages.
+        /// </summary>
+        public static string LogMessagesPageViewModel_ClearAllMessage {
+            get {
+                return ResourceManager.GetString("LogMessagesPageViewModel_ClearAllMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LogMessages.
+        /// </summary>
+        public static string LogMessagesPageViewModel_LogName {
+            get {
+                return ResourceManager.GetString("LogMessagesPageViewModel_LogName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error to refresh items.
+        /// </summary>
+        public static string LogMessagesPageViewModel_RefreshErrorMessage {
+            get {
+                return ResourceManager.GetString("LogMessagesPageViewModel_RefreshErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log messages.
+        /// </summary>
+        public static string LogMessagesShellMenuItem_Name {
+            get {
+                return ResourceManager.GetString("LogMessagesShellMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string LogMessageTypeHelper_GetDisplayName_Error {
+            get {
+                return ResourceManager.GetString("LogMessageTypeHelper_GetDisplayName_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string LogMessageTypeHelper_GetDisplayName_Info {
+            get {
+                return ResourceManager.GetString("LogMessageTypeHelper_GetDisplayName_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string LogMessageTypeHelper_GetDisplayName_Warning {
+            get {
+                return ResourceManager.GetString("LogMessageTypeHelper_GetDisplayName_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log viewer.
+        /// </summary>
+        public static string LogViewer_Name {
+            get {
+                return ResourceManager.GetString("LogViewer_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Classes.
+        /// </summary>
+        public static string LogViewerView_Classes {
+            get {
+                return ResourceManager.GetString("LogViewerView_Classes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Class.
+        /// </summary>
+        public static string LogViewerView_DataGrid_Class_Title {
+            get {
+                return ResourceManager.GetString("LogViewerView_DataGrid_Class_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Level.
+        /// </summary>
+        public static string LogViewerView_DataGrid_Level_Title {
+            get {
+                return ResourceManager.GetString("LogViewerView_DataGrid_Level_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message.
+        /// </summary>
+        public static string LogViewerView_DataGrid_Message_Title {
+            get {
+                return ResourceManager.GetString("LogViewerView_DataGrid_Message_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thread ID.
+        /// </summary>
+        public static string LogViewerView_DataGrid_ThreadId_Title {
+            get {
+                return ResourceManager.GetString("LogViewerView_DataGrid_ThreadId_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        public static string LogViewerView_DataGrid_Time_Title {
+            get {
+                return ResourceManager.GetString("LogViewerView_DataGrid_Time_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Levels.
+        /// </summary>
+        public static string LogViewerView_Levels {
+            get {
+                return ResourceManager.GetString("LogViewerView_Levels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search in messages.
+        /// </summary>
+        public static string LogViewerView_SearchText_Watermark {
+            get {
+                return ResourceManager.GetString("LogViewerView_SearchText_Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start date time:.
+        /// </summary>
+        public static string LogViewerView_StartDateTime_Title {
+            get {
+                return ResourceManager.GetString("LogViewerView_StartDateTime_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop date time:.
+        /// </summary>
+        public static string LogViewerView_StopDateTime_Title {
+            get {
+                return ResourceManager.GetString("LogViewerView_StopDateTime_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By:.
+        /// </summary>
+        public static string LogViewerView_TextBlock_By_Title {
+            get {
+                return ResourceManager.GetString("LogViewerView_TextBlock_By_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filtered: {0}.
+        /// </summary>
+        public static string LogViewerView_TextBlock_FilteredItemsCount {
+            get {
+                return ResourceManager.GetString("LogViewerView_TextBlock_FilteredItemsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On page: {0}.
+        /// </summary>
+        public static string LogViewerView_TextBlock_PageItemsCount {
+            get {
+                return ResourceManager.GetString("LogViewerView_TextBlock_PageItemsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total: {0}.
+        /// </summary>
+        public static string LogViewerView_TextBlock_TotalItemsCount {
+            get {
+                return ResourceManager.GetString("LogViewerView_TextBlock_TotalItemsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Threads.
+        /// </summary>
+        public static string LogViewerView_Threads {
+            get {
+                return ResourceManager.GetString("LogViewerView_Threads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string LogViewerViewModel_ClearDialog_CloseButton {
+            get {
+                return ResourceManager.GetString("LogViewerViewModel_ClearDialog_CloseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete the log?.
+        /// </summary>
+        public static string LogViewerViewModel_ClearDialog_Content {
+            get {
+                return ResourceManager.GetString("LogViewerViewModel_ClearDialog_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string LogViewerViewModel_ClearDialog_PrimaryButton {
+            get {
+                return ResourceManager.GetString("LogViewerViewModel_ClearDialog_PrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log deletion.
+        /// </summary>
+        public static string LogViewerViewModel_ClearDialog_Title {
+            get {
+                return ResourceManager.GetString("LogViewerViewModel_ClearDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [D]°.
+        /// </summary>
+        public static string Longitude_Degree_Title {
+            get {
+                return ResourceManager.GetString("Longitude_Degree_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude measure units.
+        /// </summary>
+        public static string Longitude_Description {
+            get {
+                return ResourceManager.GetString("Longitude_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [D]°[M]′[S]′′.
+        /// </summary>
+        public static string Longitude_DMS_Title {
+            get {
+                return ResourceManager.GetString("Longitude_DMS_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude.
+        /// </summary>
+        public static string Longitude_Title {
+            get {
+                return ResourceManager.GetString("Longitude_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select ruler starting point.
+        /// </summary>
+        public static string MapPageViewModel_RulerStartPoint_Description {
+            get {
+                return ResourceManager.GetString("MapPageViewModel_RulerStartPoint_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select ruler end point.
+        /// </summary>
+        public static string MapPageViewModel_RulerStopPoint_Description {
+            get {
+                return ResourceManager.GetString("MapPageViewModel_RulerStopPoint_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select current map provider.
+        /// </summary>
+        public static string MapSettingsView_MapProvider_Description {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapProvider_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map Provider.
+        /// </summary>
+        public static string MapSettingsView_MapProvider_Header {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapProvider_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change current map settings.
+        /// </summary>
+        public static string MapSettingsView_MapSettings_Description {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapSettings_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map settings.
+        /// </summary>
+        public static string MapSettingsView_MapSettings_Header {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapSettings_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear storage.
+        /// </summary>
+        public static string MapSettingsView_MapsInfo_ButtonTitle {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapsInfo_ButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current map storage is located at {0} and has a size of {1}.
+        /// </summary>
+        public static string MapSettingsView_MapsInfo_Description {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapsInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map storage.
+        /// </summary>
+        public static string MapSettingsView_MapsInfo_Header {
+            get {
+                return ResourceManager.GetString("MapSettingsView_MapsInfo_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maps.
+        /// </summary>
+        public static string MapSettingsViewModel_MapDialogTitle {
+            get {
+                return ResourceManager.GetString("MapSettingsViewModel_MapDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom mode.
+        /// </summary>
+        public static string MavlinkDeviceView_Mode_Name {
+            get {
+                return ResourceManager.GetString("MavlinkDeviceView_Mode_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heartbeat rate.
+        /// </summary>
+        public static string MavlinkDeviceView_Rate_Name {
+            get {
+                return ResourceManager.GetString("MavlinkDeviceView_Rate_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System status.
+        /// </summary>
+        public static string MavlinkDeviceView_Status_Name {
+            get {
+                return ResourceManager.GetString("MavlinkDeviceView_Status_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configure MAVLink network settings for this application.
+        /// </summary>
+        public static string MavlinkIdTreeMenuItem_Description {
+            get {
+                return ResourceManager.GetString("MavlinkIdTreeMenuItem_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mavlink.
+        /// </summary>
+        public static string MavlinkIdTreeMenuItem_Name_Mavlink {
+            get {
+                return ResourceManager.GetString("MavlinkIdTreeMenuItem_Name_Mavlink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_Altitude {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_Altitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of altitude..
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_AltitudeDescription {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_AltitudeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DDM Llz.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_DdmLlz {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_DdmLlz", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of DDM Llz..
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_DdmLlzDescription {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_DdmLlzDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distance.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_Distance {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_Distance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of distance..
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_DistanceDescription {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_DistanceDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nautical miles.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_DistanceInternationalNauticalMiles {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_DistanceInternationalNauticalMiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meters.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_DistanceMeters {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_DistanceMeters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_Latitude {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_Latitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of latitude &amp; longitude..
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_LatitudeLongitudeDescription {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_LatitudeLongitudeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Degrees.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegrees {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegrees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Degrees, minutes, seconds.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_Longitude {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_Longitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In this section you can specialize measurement units for various parameters..
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Description {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Measurement units.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Title {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_MeasurementUnits_Header_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velocity.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_Velocity {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_Velocity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of velocity..
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModel_VelocityDescription {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_VelocityDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Angle.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModelAngle {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModelAngle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of angle..
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModelAngleDescription {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModelAngleDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bearing.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModelBearing {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModelBearing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of bearing..
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModelBearingDescription {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModelBearingDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DDM GP.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModelDdmGp {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModelDdmGp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of DDM GP.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModelDdmGpDescription {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModelDdmGpDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temperature.
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModelTemperature {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModelTemperature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current measure units of temperature..
+        /// </summary>
+        public static string MeasureUnitsSettingsViewModelTemperatureDescription {
+            get {
+                return ResourceManager.GetString("MeasureUnitsSettingsViewModelTemperatureDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mission points.
+        /// </summary>
+        public static string MissionEditorView_Points_Title {
+            get {
+                return ResourceManager.GetString("MissionEditorView_Points_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disables mission trajectory and waypoints visibility.
+        /// </summary>
+        public static string MissionStatusView_DisableLayersButton_ToolTip {
+            get {
+                return ResourceManager.GetString("MissionStatusView_DisableLayersButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load mission from UAV.
+        /// </summary>
+        public static string MissionStatusView_GetMissionButton_ToolTip {
+            get {
+                return ResourceManager.GetString("MissionStatusView_GetMissionButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mission: {0}.
+        /// </summary>
+        public static string MissionStatusView_MissionDistance {
+            get {
+                return ResourceManager.GetString("MissionStatusView_MissionDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current mission progress.
+        /// </summary>
+        public static string MissionStatusView_MissionProgress_ToolTip {
+            get {
+                return ResourceManager.GetString("MissionStatusView_MissionProgress_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On/off mission trajectory visibility.
+        /// </summary>
+        public static string MissionStatusView_TogglePolygonButton_ToolTip {
+            get {
+                return ResourceManager.GetString("MissionStatusView_TogglePolygonButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On/off mission way points visibility.
+        /// </summary>
+        public static string MissionStatusView_ToggleWaypointsButton_ToolTip {
+            get {
+                return ResourceManager.GetString("MissionStatusView_ToggleWaypointsButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total: {0}.
+        /// </summary>
+        public static string MissionStatusView_TotalDistance {
+            get {
+                return ResourceManager.GetString("MissionStatusView_TotalDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to min.
+        /// </summary>
+        public static string MissionStatusViewModel_FlightMissionTime_Minutes {
+            get {
+                return ResourceManager.GetString("MissionStatusViewModel_FlightMissionTime_Minutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mission item &apos;{0}&apos; altitude is {1}. It is lower than Home altitude..
+        /// </summary>
+        public static string MissionStatusViewModel_PointLowerThanHome_Warning {
+            get {
+                return ResourceManager.GetString("MissionStatusViewModel_PointLowerThanHome_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message sources.
+        /// </summary>
+        public static string PacketViewer_Expander_MessageSources {
+            get {
+                return ResourceManager.GetString("PacketViewer_Expander_MessageSources", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message types.
+        /// </summary>
+        public static string PacketViewer_Expander_MessageTypes {
+            get {
+                return ResourceManager.GetString("PacketViewer_Expander_MessageTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packet Viewer.
+        /// </summary>
+        public static string PacketViewerShellMenuItem_Name {
+            get {
+                return ResourceManager.GetString("PacketViewerShellMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check/Uncheck All.
+        /// </summary>
+        public static string PacketViewerView_CheckAll {
+            get {
+                return ResourceManager.GetString("PacketViewerView_CheckAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear all packets.
+        /// </summary>
+        public static string PacketViewerView_ClearAll {
+            get {
+                return ResourceManager.GetString("PacketViewerView_ClearAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play/Pause.
+        /// </summary>
+        public static string PacketViewerView_PlayPause {
+            get {
+                return ResourceManager.GetString("PacketViewerView_PlayPause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save as CSV.
+        /// </summary>
+        public static string PacketViewerView_Save {
+            get {
+                return ResourceManager.GetString("PacketViewerView_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packet Viewer.
+        /// </summary>
+        public static string PacketViewerViewDockPanelText {
+            get {
+                return ResourceManager.GetString("PacketViewerViewDockPanelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coma [ , ].
+        /// </summary>
+        public static string PacketViewerViewModel_SeparatorDialog_Coma {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_Coma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string PacketViewerViewModel_SeparatorDialog_DialogPrimaryButton {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_DialogPrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string PacketViewerViewModel_SeparatorDialog_DialogSecondaryButton {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_DialogSecondaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Semicolon [ ; ].
+        /// </summary>
+        public static string PacketViewerViewModel_SeparatorDialog_Semicolon {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_Semicolon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horizontal tabulation [ Tab ].
+        /// </summary>
+        public static string PacketViewerViewModel_SeparatorDialog_Tab {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_Tab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the separator.
+        /// </summary>
+        public static string PacketViewerViewModel_SeparatorDialog_Title {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove all pinned parameters.
+        /// </summary>
+        public static string ParametersEditorPageView_PinsOffButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageView_PinsOffButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Star this parameter.
+        /// </summary>
+        public static string ParametersEditorPageView_StarButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageView_StarButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show only starred parameters.
+        /// </summary>
+        public static string ParametersEditorPageView_StarsToggleButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageView_StarsToggleButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update all parameters.
+        /// </summary>
+        public static string ParametersEditorPageView_UpdateButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageView_UpdateButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loaded: {0}.
+        /// </summary>
+        public static string ParametersEditorPageViewModel_Loaded {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageViewModel_Loaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string ParametersEditorPageViewModel_Search {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageViewModel_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameters editor [{0}].
+        /// </summary>
+        public static string ParametersEditorPageViewModel_Title {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total: {0}.
+        /// </summary>
+        public static string ParametersEditorPageViewModel_Total {
+            get {
+                return ResourceManager.GetString("ParametersEditorPageViewModel_Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On/off pin for this parameter.
+        /// </summary>
+        public static string ParametersEditorParameterView_PinToggleButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorParameterView_PinToggleButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reboot required.
+        /// </summary>
+        public static string ParametersEditorParameterView_RebootRequired {
+            get {
+                return ResourceManager.GetString("ParametersEditorParameterView_RebootRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string ParametersEditorParameterView_UpdateButton {
+            get {
+                return ResourceManager.GetString("ParametersEditorParameterView_UpdateButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update this parameter from UAV.
+        /// </summary>
+        public static string ParametersEditorParameterView_UpdateButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorParameterView_UpdateButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write.
+        /// </summary>
+        public static string ParametersEditorParameterView_WriteButton {
+            get {
+                return ResourceManager.GetString("ParametersEditorParameterView_WriteButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write this parameter to UAV.
+        /// </summary>
+        public static string ParametersEditorParameterView_WriteButton_ToolTip {
+            get {
+                return ResourceManager.GetString("ParametersEditorParameterView_WriteButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string ParamPageViewModel_DataLossDialog_CloseButtonText {
+            get {
+                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;re trying to open another menu folder, but you have unsaved changes in the current one. Do you want to save them?.
+        /// </summary>
+        public static string ParamPageViewModel_DataLossDialog_Content {
+            get {
+                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string ParamPageViewModel_DataLossDialog_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t save.
+        /// </summary>
+        public static string ParamPageViewModel_DataLossDialog_SecondaryButtonText {
+            get {
+                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_SecondaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Potential data loss warning.
+        /// </summary>
+        public static string ParamPageViewModel_DataLossDialog_Title {
+            get {
+                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Degrees.
+        /// </summary>
+        public static string Phase_Degree_Title {
+            get {
+                return ResourceManager.GetString("Phase_Degree_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phase measure units.
+        /// </summary>
+        public static string Phase_Description {
+            get {
+                return ResourceManager.GetString("Phase_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Radian.
+        /// </summary>
+        public static string Phase_Radian_Title {
+            get {
+                return ResourceManager.GetString("Phase_Radian_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rad.
+        /// </summary>
+        public static string Phase_Radian_Unit {
+            get {
+                return ResourceManager.GetString("Phase_Radian_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phase.
+        /// </summary>
+        public static string Phase_Title {
+            get {
+                return ResourceManager.GetString("Phase_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed type.
+        /// </summary>
+        public static string PlaningMissionDoChangeSpeedViewModel_Param1Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionDoChangeSpeedViewModel_Param1Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed.
+        /// </summary>
+        public static string PlaningMissionDoChangeSpeedViewModel_Param2Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionDoChangeSpeedViewModel_Param2Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Throttle.
+        /// </summary>
+        public static string PlaningMissionDoChangeSpeedViewModel_Param3Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionDoChangeSpeedViewModel_Param3Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empty.
+        /// </summary>
+        public static string PlaningMissionDoChangeSpeedViewModel_Param4Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionDoChangeSpeedViewModel_Param4Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ROI mode.
+        /// </summary>
+        public static string PlaningMissionDoSetRoiViewModel_Param1Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionDoSetRoiViewModel_Param1Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WP index/Target ID.
+        /// </summary>
+        public static string PlaningMissionDoSetRoiViewModel_Param2Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionDoSetRoiViewModel_Param2Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ROI Index.
+        /// </summary>
+        public static string PlaningMissionDoSetRoiViewModel_Param3Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionDoSetRoiViewModel_Param3Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empty.
+        /// </summary>
+        public static string PlaningMissionDoSetRoiViewModel_Param4Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionDoSetRoiViewModel_Param4Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_AddPointFlyoutMenuItem_Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_AddPointFlyoutMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change speed.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_DoChangeSpeedMenuItem_Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_DoChangeSpeedMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do land.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_DoLandMenuItem_Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_DoLandMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ROI.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_DoSetRoiMenuItem_Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_DoSetRoiMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_DownloadDialog_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_DownloadDialog_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_DownloadDialog_SecondaryButtonText {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_DownloadDialog_SecondaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select target to download missions.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_DownloadDialog_Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_DownloadDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spline waypoint.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_NavSplineWaypointMenuItem_Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_NavSplineWaypointMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_ReplacePointFlyoutMenuItem {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_ReplacePointFlyoutMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ROI.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_RoiMenuItem_Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_RoiMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take off.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_TakeOffMenuItem_Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_TakeOffMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_UploadDialog_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_UploadDialog_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_UploadDialog_SecondaryButtonText {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_UploadDialog_SecondaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select target to upload missions.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_UploadDialog_Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_UploadDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waypoint.
+        /// </summary>
+        public static string PlaningMissionEditorViewModel_WaypointMenuItem_Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionEditorViewModel_WaypointMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abort altitude.
+        /// </summary>
+        public static string PlaningMissionNavLandViewModel_Param1Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionNavLandViewModel_Param1Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Land mode.
+        /// </summary>
+        public static string PlaningMissionNavLandViewModel_Param2Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionNavLandViewModel_Param2Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empty.
+        /// </summary>
+        public static string PlaningMissionNavLandViewModel_Param3Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionNavLandViewModel_Param3Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yaw angle.
+        /// </summary>
+        public static string PlaningMissionNavLandViewModel_Param4Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionNavLandViewModel_Param4Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hold time.
+        /// </summary>
+        public static string PlaningMissionNavSplineWaypointViewModel_Param1Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionNavSplineWaypointViewModel_Param1Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empty.
+        /// </summary>
+        public static string PlaningMissionNavSplineWaypointViewModel_Param2Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionNavSplineWaypointViewModel_Param2Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empty.
+        /// </summary>
+        public static string PlaningMissionNavSplineWaypointViewModel_Param3Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionNavSplineWaypointViewModel_Param3Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empty.
+        /// </summary>
+        public static string PlaningMissionNavSplineWaypointViewModel_Param4Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionNavSplineWaypointViewModel_Param4Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pitch angle.
+        /// </summary>
+        public static string PlaningMissionNavTakeoffViewModel_Param1Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionNavTakeoffViewModel_Param1Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empty.
+        /// </summary>
+        public static string PlaningMissionNavTakeoffViewModel_Param2Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionNavTakeoffViewModel_Param2Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empty.
+        /// </summary>
+        public static string PlaningMissionNavTakeoffViewModel_Param3Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionNavTakeoffViewModel_Param3Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yaw angle.
+        /// </summary>
+        public static string PlaningMissionNavTakeoffViewModel_Param4Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionNavTakeoffViewModel_Param4Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hold time.
+        /// </summary>
+        public static string PlaningMissionNavWaypointViewModel_Param1Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionNavWaypointViewModel_Param1Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Acceptance radius.
+        /// </summary>
+        public static string PlaningMissionNavWaypointViewModel_Param2Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionNavWaypointViewModel_Param2Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pass Radius.
+        /// </summary>
+        public static string PlaningMissionNavWaypointViewModel_Param3Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionNavWaypointViewModel_Param3Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yaw angle.
+        /// </summary>
+        public static string PlaningMissionNavWaypointViewModel_Param4Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionNavWaypointViewModel_Param4Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter 1.
+        /// </summary>
+        public static string PlaningMissionPointViewModel_Param1Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionPointViewModel_Param1Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter 2.
+        /// </summary>
+        public static string PlaningMissionPointViewModel_Param2Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionPointViewModel_Param2Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter 3.
+        /// </summary>
+        public static string PlaningMissionPointViewModel_Param3Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionPointViewModel_Param3Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter 4.
+        /// </summary>
+        public static string PlaningMissionPointViewModel_Param4Title {
+            get {
+                return ResourceManager.GetString("PlaningMissionPointViewModel_Param4Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} mission.
+        /// </summary>
+        public static string PlaningMissionViewModel_InternalAfterMapInit_Vehicle_Name_Subscribe {
+            get {
+                return ResourceManager.GetString("PlaningMissionViewModel_InternalAfterMapInit_Vehicle_Name_Subscribe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name must be not empty.
+        /// </summary>
+        public static string PlaningMissionViewModel_NameMustBeNotEmpty {
+            get {
+                return ResourceManager.GetString("PlaningMissionViewModel_NameMustBeNotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear mission error {0}.
+        /// </summary>
+        public static string PlaningMissionViewModel_OnClearError_LogInfo {
+            get {
+                return ResourceManager.GetString("PlaningMissionViewModel_OnClearError_LogInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download mission error {0}.
+        /// </summary>
+        public static string PlaningMissionViewModel_OnDownloadError_LogInfo {
+            get {
+                return ResourceManager.GetString("PlaningMissionViewModel_OnDownloadError_LogInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload mission error {0}.
+        /// </summary>
+        public static string PlaningMissionViewModel_OnUploadError_LogInfo {
+            get {
+                return ResourceManager.GetString("PlaningMissionViewModel_OnUploadError_LogInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select target point location.
+        /// </summary>
+        public static string PlaningMissionViewModel_SelectTargetLocation {
+            get {
+                return ResourceManager.GetString("PlaningMissionViewModel_SelectTargetLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string PlaningPageViewModel_DataLossDialog_CloseButtonText {
+            get {
+                return ResourceManager.GetString("PlaningPageViewModel_DataLossDialog_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;re trying to open another menu folder, but you have unsaved changes in the current one. Do you want to save them?.
+        /// </summary>
+        public static string PlaningPageViewModel_DataLossDialog_Content {
+            get {
+                return ResourceManager.GetString("PlaningPageViewModel_DataLossDialog_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string PlaningPageViewModel_DataLossDialog_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("PlaningPageViewModel_DataLossDialog_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t save.
+        /// </summary>
+        public static string PlaningPageViewModel_DataLossDialog_SecondaryButtonText {
+            get {
+                return ResourceManager.GetString("PlaningPageViewModel_DataLossDialog_SecondaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Potential data loss warning.
+        /// </summary>
+        public static string PlaningPageViewModel_DataLossDialog_Title {
+            get {
+                return ResourceManager.GetString("PlaningPageViewModel_DataLossDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mission planing.
+        /// </summary>
+        public static string PlaningShellMenuItem_Name {
+            get {
+                return ResourceManager.GetString("PlaningShellMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string PlanningPageViewModel_MissionBrowserDialog_PrimaryButton {
+            get {
+                return ResourceManager.GetString("PlanningPageViewModel_MissionBrowserDialog_PrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string PlanningPageViewModel_MissionBrowserDialog_SecondaryButton {
+            get {
+                return ResourceManager.GetString("PlanningPageViewModel_MissionBrowserDialog_SecondaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select mission file.
+        /// </summary>
+        public static string PlanningPageViewModel_MissionBrowserDialog_Title {
+            get {
+                return ResourceManager.GetString("PlanningPageViewModel_MissionBrowserDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mission downloaded!.
+        /// </summary>
+        public static string PlanningPageViewModel_MissionDownloaded {
+            get {
+                return ResourceManager.GetString("PlanningPageViewModel_MissionDownloaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mission uploaded!.
+        /// </summary>
+        public static string PlanningPageViewModel_MissionUploaded {
+            get {
+                return ResourceManager.GetString("PlanningPageViewModel_MissionUploaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information about installed plugins.
+        /// </summary>
+        public static string PluginsInstalledTreeMenuItem_Description {
+            get {
+                return ResourceManager.GetString("PluginsInstalledTreeMenuItem_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installed.
+        /// </summary>
+        public static string PluginsInstalledTreeMenuItem_Name {
+            get {
+                return ResourceManager.GetString("PluginsInstalledTreeMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string PluginsInstalledView_CancelUninstall {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_CancelUninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading error.
+        /// </summary>
+        public static string PluginsInstalledView_LoadingError {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_LoadingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string PluginsInstalledView_Search {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Additional info.
+        /// </summary>
+        public static string PluginsInstalledView_Tab_AdditionalInfo {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string PluginsInstalledView_Tab_Description {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Tab_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uninstall.
+        /// </summary>
+        public static string PluginsInstalledView_Uninstall {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Uninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uninstalled.
+        /// </summary>
+        public static string PluginsInstalledView_Uninstalled {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Uninstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This plugin has been marked for deletion. It will be removed on the next application load..
+        /// </summary>
+        public static string PluginsInstalledView_UninstalledMessage {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_UninstalledMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uninstalled.
+        /// </summary>
+        public static string PluginsInstalledView_UninstalledMessageTitle {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_UninstalledMessageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string PluginsMarketView_Cancel {
+            get {
+                return ResourceManager.GetString("PluginsMarketView_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install.
+        /// </summary>
+        public static string PluginsMarketView_Install {
+            get {
+                return ResourceManager.GetString("PluginsMarketView_Install", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit plugins sources .
+        /// </summary>
+        public static string PluginsSourcesTreeMenuItem_Description {
+            get {
+                return ResourceManager.GetString("PluginsSourcesTreeMenuItem_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sources.
+        /// </summary>
+        public static string PluginsSourcesTreeMenuItem_Name {
+            get {
+                return ResourceManager.GetString("PluginsSourcesTreeMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string PluginsSourcesView_AddNewSource {
+            get {
+                return ResourceManager.GetString("PluginsSourcesView_AddNewSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new source.
+        /// </summary>
+        public static string PluginsSourcesView_AddSource {
+            get {
+                return ResourceManager.GetString("PluginsSourcesView_AddSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string PluginsSourcesView_DataGrid_Name {
+            get {
+                return ResourceManager.GetString("PluginsSourcesView_DataGrid_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string PluginsSourcesView_DataGrid_Password {
+            get {
+                return ResourceManager.GetString("PluginsSourcesView_DataGrid_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URL Address.
+        /// </summary>
+        public static string PluginsSourcesView_DataGrid_URL {
+            get {
+                return ResourceManager.GetString("PluginsSourcesView_DataGrid_URL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string PluginsSourcesView_DataGrid_User {
+            get {
+                return ResourceManager.GetString("PluginsSourcesView_DataGrid_User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string PluginsSourcesView_EditSource {
+            get {
+                return ResourceManager.GetString("PluginsSourcesView_EditSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string PluginsSourcesView_RemoveSource {
+            get {
+                return ResourceManager.GetString("PluginsSourcesView_RemoveSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string PluginsSourcesViewModel_AddAction_Label {
+            get {
+                return ResourceManager.GetString("PluginsSourcesViewModel_AddAction_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string PluginsSourcesViewModel_AddImpl_Add {
+            get {
+                return ResourceManager.GetString("PluginsSourcesViewModel_AddImpl_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string PluginsSourcesViewModel_AddImpl_Cancel {
+            get {
+                return ResourceManager.GetString("PluginsSourcesViewModel_AddImpl_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new plugin source.
+        /// </summary>
+        public static string PluginsSourcesViewModel_AddImpl_Title {
+            get {
+                return ResourceManager.GetString("PluginsSourcesViewModel_AddImpl_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string PluginsSourcesViewModel_AddNewSourceDialog_CloseButton {
+            get {
+                return ResourceManager.GetString("PluginsSourcesViewModel_AddNewSourceDialog_CloseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string PluginsSourcesViewModel_AddNewSourceDialog_PrimaryButton {
+            get {
+                return ResourceManager.GetString("PluginsSourcesViewModel_AddNewSourceDialog_PrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new repository.
+        /// </summary>
+        public static string PluginsSourcesViewModel_AddNewSourceDialog_Title {
+            get {
+                return ResourceManager.GetString("PluginsSourcesViewModel_AddNewSourceDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string PluginsSourcesViewModel_EditImpl_Save {
+            get {
+                return ResourceManager.GetString("PluginsSourcesViewModel_EditImpl_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit plugin source.
+        /// </summary>
+        public static string PluginsSourcesViewModel_EditImpl_Title {
+            get {
+                return ResourceManager.GetString("PluginsSourcesViewModel_EditImpl_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string PluginsSourcesViewModel_EditSourceDialog_CloseButton {
+            get {
+                return ResourceManager.GetString("PluginsSourcesViewModel_EditSourceDialog_CloseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply.
+        /// </summary>
+        public static string PluginsSourcesViewModel_EditSourceDialog_PrimaryButton {
+            get {
+                return ResourceManager.GetString("PluginsSourcesViewModel_EditSourceDialog_PrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit repository.
+        /// </summary>
+        public static string PluginsSourcesViewModel_EditSourceDialog_Title {
+            get {
+                return ResourceManager.GetString("PluginsSourcesViewModel_EditSourceDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error to remove plugin server.
+        /// </summary>
+        public static string PluginsSourcesViewModel_PluginsSourcesViewModel_Error_to_remove {
+            get {
+                return ResourceManager.GetString("PluginsSourcesViewModel_PluginsSourcesViewModel_Error_to_remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error to update plugin server list.
+        /// </summary>
+        public static string PluginsSourcesViewModel_PluginsSourcesViewModel_Error_to_update {
+            get {
+                return ResourceManager.GetString("PluginsSourcesViewModel_PluginsSourcesViewModel_Error_to_update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin Management allows users to install, configure, update, and remove plugins to customize and enhance the functionality of their software application.
+        /// </summary>
+        public static string PluginsTreeMenuItem_Description {
+            get {
+                return ResourceManager.GetString("PluginsTreeMenuItem_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugins.
+        /// </summary>
+        public static string PluginsTreeMenuItem_Name_Plugins {
+            get {
+                return ResourceManager.GetString("PluginsTreeMenuItem_Name_Plugins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packet Loss Chance.
+        /// </summary>
+        public static string PortView_PacketLossChance {
+            get {
+                return ResourceManager.GetString("PortView_PacketLossChance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string PortView_ToggleButton_Disabled {
+            get {
+                return ResourceManager.GetString("PortView_ToggleButton_Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string PortView_ToggleButton_Enabled {
+            get {
+                return ResourceManager.GetString("PortView_ToggleButton_Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to error.
+        /// </summary>
+        public static string PortViewModel_SkippedUnitTest {
+            get {
+                return ResourceManager.GetString("PortViewModel_SkippedUnitTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packet Loss Chance should be between 0 and 100 inclusive.
+        /// </summary>
+        public static string PortViewModel_ValidPacketLossChance {
+            get {
+                return ResourceManager.GetString("PortViewModel_ValidPacketLossChance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decibel to 1 milliwatt.
+        /// </summary>
+        public static string Power_Dbm_Title {
+            get {
+                return ResourceManager.GetString("Power_Dbm_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to dBm.
+        /// </summary>
+        public static string Power_Dbm_Unit {
+            get {
+                return ResourceManager.GetString("Power_Dbm_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power measure units.
+        /// </summary>
+        public static string Power_Description {
+            get {
+                return ResourceManager.GetString("Power_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power.
+        /// </summary>
+        public static string Power_Title {
+            get {
+                return ResourceManager.GetString("Power_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descrete.
+        /// </summary>
+        public static string QuickParametersSliderView_IsDescrete {
+            get {
+                return ResourceManager.GetString("QuickParametersSliderView_IsDescrete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced setup.
+        /// </summary>
+        public static string QuickParamsSetupPageView_AdvancedSetupButton_Text {
+            get {
+                return ResourceManager.GetString("QuickParamsSetupPageView_AdvancedSetupButton_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read all.
+        /// </summary>
+        public static string QuickParamsSetupPageView_ReadAllButton_Text {
+            get {
+                return ResourceManager.GetString("QuickParamsSetupPageView_ReadAllButton_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write all.
+        /// </summary>
+        public static string QuickParamsSetupPageView_WriteAllButton_Text {
+            get {
+                return ResourceManager.GetString("QuickParamsSetupPageView_WriteAllButton_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must click the write button if you want to save and apply the changes..
+        /// </summary>
+        public static string QuickParamsSetupPageView_WriteRequired_Message {
+            get {
+                return ResourceManager.GetString("QuickParamsSetupPageView_WriteRequired_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write required.
+        /// </summary>
+        public static string QuickParamsSetupPageView_WriteRequired_Title {
+            get {
+                return ResourceManager.GetString("QuickParamsSetupPageView_WriteRequired_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string RebootAutopilotAnchorActionViewModel_DialogPrimaryButton {
+            get {
+                return ResourceManager.GetString("RebootAutopilotAnchorActionViewModel_DialogPrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string RebootAutopilotAnchorActionViewModel_DialogSecondaryButton {
+            get {
+                return ResourceManager.GetString("RebootAutopilotAnchorActionViewModel_DialogSecondaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User sent Reboot Autopilot command with {0} and {1}.
+        /// </summary>
+        public static string RebootAutopilotAnchorActionViewModel_LogMessage {
+            get {
+                return ResourceManager.GetString("RebootAutopilotAnchorActionViewModel_LogMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reboot/Shutdown Autopilot.
+        /// </summary>
+        public static string RebootAutopilotAnchorActionViewModel_Title {
+            get {
+                return ResourceManager.GetString("RebootAutopilotAnchorActionViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose Autopilot reboot/shutdown mode.
+        /// </summary>
+        public static string RebootAutopilotView_AutopilotReboot_Description {
+            get {
+                return ResourceManager.GetString("RebootAutopilotView_AutopilotReboot_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose companion reboot/shutdown mode.
+        /// </summary>
+        public static string RebootAutopilotView_CompanionReboot_Description {
+            get {
+                return ResourceManager.GetString("RebootAutopilotView_CompanionReboot_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ms.
+        /// </summary>
+        public static string RelativeTime_MillisecondsUnit {
+            get {
+                return ResourceManager.GetString("RelativeTime_MillisecondsUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to s.
+        /// </summary>
+        public static string RelativeTime_SecondsUnit {
+            get {
+                return ResourceManager.GetString("RelativeTime_SecondsUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accuracy.
+        /// </summary>
+        public static string RemoveMapPointView_Accuracy_Name {
+            get {
+                return ResourceManager.GetString("RemoveMapPointView_Accuracy_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude.
+        /// </summary>
+        public static string RemoveMapPointView_Altitude_Name {
+            get {
+                return ResourceManager.GetString("RemoveMapPointView_Altitude_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this map point?.
+        /// </summary>
+        public static string RemoveMapPointView_ConfirmationText {
+            get {
+                return ResourceManager.GetString("RemoveMapPointView_ConfirmationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude.
+        /// </summary>
+        public static string RemoveMapPointView_Latitude_Name {
+            get {
+                return ResourceManager.GetString("RemoveMapPointView_Latitude_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude.
+        /// </summary>
+        public static string RemoveMapPointView_Longitude_Name {
+            get {
+                return ResourceManager.GetString("RemoveMapPointView_Longitude_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string RemoveMapPointView_Point_Name {
+            get {
+                return ResourceManager.GetString("RemoveMapPointView_Point_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ROI of.
+        /// </summary>
+        public static string RoiAnchor_Vehicle_Name {
+            get {
+                return ResourceManager.GetString("RoiAnchor_Vehicle_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yaw angle.
+        /// </summary>
+        public static string RoiAnchor_Vehicle_Yaw_Sample_Description {
+            get {
+                return ResourceManager.GetString("RoiAnchor_Vehicle_Yaw_Sample_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to deg.
+        /// </summary>
+        public static string RoiAnchor_Vehicle_Yaw_Sample_Unit {
+            get {
+                return ResourceManager.GetString("RoiAnchor_Vehicle_Yaw_Sample_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User set ROI &apos;{0}&apos; for {1}.
+        /// </summary>
+        public static string RoiAnchorActionViewModel_ExecuteImpl_LogInfo {
+            get {
+                return ResourceManager.GetString("RoiAnchorActionViewModel_ExecuteImpl_LogInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select target for region of interests (ROI).
+        /// </summary>
+        public static string RoiAnchorActionViewModel_ExecuteImpl_ShowTargetDialog_Value {
+            get {
+                return ResourceManager.GetString("RoiAnchorActionViewModel_ExecuteImpl_ShowTargetDialog_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set ROI.
+        /// </summary>
+        public static string RoiAnchorActionViewModel_Title {
+            get {
+                return ResourceManager.GetString("RoiAnchorActionViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User send Return To the Launch(RTL) for {0}.
+        /// </summary>
+        public static string RtlAnchorActionViewModel_ExecuteImpl_LogInfo {
+            get {
+                return ResourceManager.GetString("RtlAnchorActionViewModel_ExecuteImpl_LogInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return to launch (RTL).
+        /// </summary>
+        public static string RtlAnchorActionViewModel_RTL {
+            get {
+                return ResourceManager.GetString("RtlAnchorActionViewModel_RTL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New.
+        /// </summary>
+        public static string SavedCoordsView_AddNewButton_Name {
+            get {
+                return ResourceManager.GetString("SavedCoordsView_AddNewButton_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to in this section you can view and save new map coordinates for GBS Fixed Mode.
+        /// </summary>
+        public static string SavedCoordsView_Description {
+            get {
+                return ResourceManager.GetString("SavedCoordsView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saved Coordinates.
+        /// </summary>
+        public static string SavedCoordsView_Header {
+            get {
+                return ResourceManager.GetString("SavedCoordsView_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string SavedCoordsView_RemoveButton_Name {
+            get {
+                return ResourceManager.GetString("SavedCoordsView_RemoveButton_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string SavedCoordsViewModel_AddNewItem_CloseButtonText {
+            get {
+                return ResourceManager.GetString("SavedCoordsViewModel_AddNewItem_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string SavedCoordsViewModel_AddNewItem_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("SavedCoordsViewModel_AddNewItem_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new map coordinate.
+        /// </summary>
+        public static string SavedCoordsViewModel_AddNewItem_Title {
+            get {
+                return ResourceManager.GetString("SavedCoordsViewModel_AddNewItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string SavedCoordsViewModel_RemoveItem_CloseButtonText {
+            get {
+                return ResourceManager.GetString("SavedCoordsViewModel_RemoveItem_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string SavedCoordsViewModel_RemoveItem_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("SavedCoordsViewModel_RemoveItem_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Map Point.
+        /// </summary>
+        public static string SavedCoordsViewModel_RemoveItem_Title {
+            get {
+                return ResourceManager.GetString("SavedCoordsViewModel_RemoveItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sum depth of modulation measure units.
+        /// </summary>
+        public static string Sdm_Description {
+            get {
+                return ResourceManager.GetString("Sdm_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SDM.
+        /// </summary>
+        public static string Sdm_Title {
+            get {
+                return ResourceManager.GetString("Sdm_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close dialog when download finish.
+        /// </summary>
+        public static string SelectDownloadVehicleView_CloseOnFinish_Text {
+            get {
+                return ResourceManager.GetString("SelectDownloadVehicleView_CloseOnFinish_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select vehicle to download.
+        /// </summary>
+        public static string SelectDownloadVehicleView_SelectVehicle_Placeholder {
+            get {
+                return ResourceManager.GetString("SelectDownloadVehicleView_SelectVehicle_Placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vehicle.
+        /// </summary>
+        public static string SelectDownloadVehicleView_SelectVehicle_Title {
+            get {
+                return ResourceManager.GetString("SelectDownloadVehicleView_SelectVehicle_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vehicle download progress.
+        /// </summary>
+        public static string SelectDownloadVehicleView_VehicleLoadProgress_Text {
+            get {
+                return ResourceManager.GetString("SelectDownloadVehicleView_VehicleLoadProgress_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vehicle selection must be specified .
+        /// </summary>
+        public static string SelectDownloadVehicleViewModel_SelectVehicle_ValidationMessage {
+            get {
+                return ResourceManager.GetString("SelectDownloadVehicleViewModel_SelectVehicle_ValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change UAV mode from list.
+        /// </summary>
+        public static string SelectModeAnchorActionView_DialogDescription {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionView_DialogDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string SelectModeAnchorActionViewModel_DialogPrimaryButton {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionViewModel_DialogPrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string SelectModeAnchorActionViewModel_DialogSecondaryButton {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionViewModel_DialogSecondaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User sent SetVehicleMode from {0} to {1}.
+        /// </summary>
+        public static string SelectModeAnchorActionViewModel_LogMessage {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionViewModel_LogMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select UAV mode.
+        /// </summary>
+        public static string SelectModeAnchorActionViewModel_Title {
+            get {
+                return ResourceManager.GetString("SelectModeAnchorActionViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close dialog when upload finish.
+        /// </summary>
+        public static string SelectUploadVehicleView_CloseOnFinish_Text {
+            get {
+                return ResourceManager.GetString("SelectUploadVehicleView_CloseOnFinish_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select vehicle to upload.
+        /// </summary>
+        public static string SelectUploadVehicleView_SelectVehicle_Placeholder {
+            get {
+                return ResourceManager.GetString("SelectUploadVehicleView_SelectVehicle_Placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vehicle.
+        /// </summary>
+        public static string SelectUploadVehicleView_SelectVehicle_Title {
+            get {
+                return ResourceManager.GetString("SelectUploadVehicleView_SelectVehicle_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vehicle upload progress.
+        /// </summary>
+        public static string SelectUploadVehicleView_VehicleLoadProgress_Text {
+            get {
+                return ResourceManager.GetString("SelectUploadVehicleView_VehicleLoadProgress_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vehicle selection must be specified .
+        /// </summary>
+        public static string SelectUploadVehicleViewModel_SelectVehicle_ValidationMessage {
+            get {
+                return ResourceManager.GetString("SelectUploadVehicleViewModel_SelectVehicle_ValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Baud rate.
+        /// </summary>
+        public static string SerialPortView_BaudRate {
+            get {
+                return ResourceManager.GetString("SerialPortView_BaudRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port name.
+        /// </summary>
+        public static string SerialPortView_PortName {
+            get {
+                return ResourceManager.GetString("SerialPortView_PortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port title.
+        /// </summary>
+        public static string SerialPortView_Title {
+            get {
+                return ResourceManager.GetString("SerialPortView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Baud rate must be value from {0} to {1}.
+        /// </summary>
+        public static string SerialPortViewModel_SerialPortViewModel_BaudRateValid {
+            get {
+                return ResourceManager.GetString("SerialPortViewModel_SerialPortViewModel_BaudRateValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New serial {0}.
+        /// </summary>
+        public static string SerialPortViewModel_SerialPortViewModel_NewSerial {
+            get {
+                return ResourceManager.GetString("SerialPortViewModel_SerialPortViewModel_NewSerial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must specify a valid serial port name.
+        /// </summary>
+        public static string SerialPortViewModel_SerialPortViewModel_ValidSerialPort {
+            get {
+                return ResourceManager.GetString("SerialPortViewModel_SerialPortViewModel_ValidSerialPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must specify a valid name.
+        /// </summary>
+        public static string SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name {
+            get {
+                return ResourceManager.GetString("SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string SettingsShellMenuProvider_SettingsShellMenuProvider_Settings {
+            get {
+                return ResourceManager.GetString("SettingsShellMenuProvider_SettingsShellMenuProvider_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current application theme..
+        /// </summary>
+        public static string SettingsThemeViewModel_ChangeThemeDescription {
+            get {
+                return ResourceManager.GetString("SettingsThemeViewModel_ChangeThemeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string SettingsThemeViewModel_CurrentLanguage {
+            get {
+                return ResourceManager.GetString("SettingsThemeViewModel_CurrentLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current application language. The changes will be applied after a restart..
+        /// </summary>
+        public static string SettingsThemeViewModel_CurrentLanguageDescription {
+            get {
+                return ResourceManager.GetString("SettingsThemeViewModel_CurrentLanguageDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Theme.
+        /// </summary>
+        public static string SettingsThemeViewModel_CurrentTheme {
+            get {
+                return ResourceManager.GetString("SettingsThemeViewModel_CurrentTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flow direction.
+        /// </summary>
+        public static string SettingsThemeViewModel_FlowDirection {
+            get {
+                return ResourceManager.GetString("SettingsThemeViewModel_FlowDirection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the current application flow direction..
+        /// </summary>
+        public static string SettingsThemeViewModel_FlowDirectionDescription {
+            get {
+                return ResourceManager.GetString("SettingsThemeViewModel_FlowDirectionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must reload the program to apply the changes..
+        /// </summary>
+        public static string SettingsView_RebootRequiredDescription {
+            get {
+                return ResourceManager.GetString("SettingsView_RebootRequiredDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reboot required.
+        /// </summary>
+        public static string SettingsView_RebootRequiredTitle {
+            get {
+                return ResourceManager.GetString("SettingsView_RebootRequiredTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string SourcesView_Name {
+            get {
+                return ResourceManager.GetString("SourcesView_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New password.
+        /// </summary>
+        public static string SourcesView_Password {
+            get {
+                return ResourceManager.GetString("SourcesView_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URL Address.
+        /// </summary>
+        public static string SourcesView_URL {
+            get {
+                return ResourceManager.GetString("SourcesView_URL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string SourcesView_Username {
+            get {
+                return ResourceManager.GetString("SourcesView_Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name is required.
+        /// </summary>
+        public static string SourceViewModel_SourceViewModel_Name_is_required {
+            get {
+                return ResourceManager.GetString("SourceViewModel_SourceViewModel_Name_is_required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server URI is required.
+        /// </summary>
+        public static string SourceViewModel_SourceViewModel_SourceUri_is_required {
+            get {
+                return ResourceManager.GetString("SourceViewModel_SourceViewModel_SourceUri_is_required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Here you can change the speeds.
+        /// </summary>
+        public static string SpeedsQuickParamView_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speeds.
+        /// </summary>
+        public static string SpeedsQuickParamView_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude during Landing at which vehicle slows to LAND_SPEED. Increment - 0.1. Range 1-100. [{0:F2} cm] [{1:F2} ft]. Note: This parameter is for advanced users..
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_ALT_LOW_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_ALT_LOW_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Land altitude low (LAND_ALT_LOW).
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_ALT_LOW_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_ALT_LOW_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m.
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_ALT_LOW_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_ALT_LOW_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The descent speed for the final stage of landing in cm/s. Increment - 0.1. Range 0.3-2. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_SPEED_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Land speed (LAND_SPEED).
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_SPEED_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The descent speed for the first stage of landing in cm/s. If this is zero then WPNAV_SPEED_DN is used. Increment - 0.1. Range 0-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_SPEED_HIGH_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_HIGH_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Land speed high (LAND_SPEED_HIGH).
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_SPEED_HIGH_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_HIGH_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_SPEED_HIGH_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_HIGH_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_LAND_SPEED_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Defines the maximum speed in cm/s which the aircraft will travel horizontally while in loiter mode. Increment - 0.5. Range 0.2-35. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
+        /// </summary>
+        public static string SpeedsQuickParamView_LOIT_SPEED_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LOIT_SPEED_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loiter Horizontal Maximum Speed (LOIT_SPEED).
+        /// </summary>
+        public static string SpeedsQuickParamView_LOIT_SPEED_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LOIT_SPEED_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_LOIT_SPEED_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_LOIT_SPEED_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum vertical descending velocity the pilot may request in cm/s. If 0 PILOT_SPEED_UP value is used. Increment - 0.1. Range 0-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
+        /// </summary>
+        public static string SpeedsQuickParamView_PILOT_SPEED_DN_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_DN_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pilot maximum vertical speed descending (PILOT_SPEED_DN).
+        /// </summary>
+        public static string SpeedsQuickParamView_PILOT_SPEED_DN_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_DN_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_PILOT_SPEED_DN_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_DN_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum vertical ascending velocity the pilot may request in cm/s. Increment - 0.1. Range 0.5-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
+        /// </summary>
+        public static string SpeedsQuickParamView_PILOT_SPEED_UP_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_UP_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pilot maximum vertical speed ascending (PILOT_SPEED_UP).
+        /// </summary>
+        public static string SpeedsQuickParamView_PILOT_SPEED_UP_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_UP_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_PILOT_SPEED_UP_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_UP_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain horizontally while flying home. If this is set to zero, WPNAV_SPEED will be used instead. Increment - 50. Range 0-2000. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
+        /// </summary>
+        public static string SpeedsQuickParamView_RTL_SPEED_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_RTL_SPEED_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RTL speed (RTL_SPEED).
+        /// </summary>
+        public static string SpeedsQuickParamView_RTL_SPEED_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_RTL_SPEED_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_RTL_SPEED_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_RTL_SPEED_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain horizontally during a WP mission. Increment - 0.5. Range 0.2-20. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain while descending during a WP mission. Increment - 0.1. Range 0.1-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_DN_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_DN_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waypoint Descent Speed Target (WPNAV_SPEED_DN).
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_DN_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_DN_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_DN_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_DN_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waypoint Horizontal Speed Target (WPNAV_SPEED).
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain while climbing during a WP mission. Increment - 0.5. Range 0.1-10. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_UP_Description {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_UP_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waypoint Climb Speed Target (WPNAV_SPEED_UP).
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_UP_Header {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_UP_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string SpeedsQuickParamView_WPNAV_SPEED_UP_Units {
+            get {
+                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_UP_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User send Start mission for {0}.
+        /// </summary>
+        public static string StartAutoAnchorActionViewModel_ExecuteImpl_LogInfo {
+            get {
+                return ResourceManager.GetString("StartAutoAnchorActionViewModel_ExecuteImpl_LogInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start mission.
+        /// </summary>
+        public static string StartAutoAnchorActionViewModel_Title {
+            get {
+                return ResourceManager.GetString("StartAutoAnchorActionViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set altitude above ground level (AGL) for takeoff command..
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_DialogDescription {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_DialogDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take off.
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_DialogPrimaryButton {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_DialogPrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_DialogSecondaryButton {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_DialogSecondaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User send TakeOff at {0} altitude for {1}.
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_LogMessage {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_LogMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error to arm/disarm {0}.
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_OnCommandError {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_OnCommandError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take off.
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_Title {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude must be greater or equal {0}..
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_ValidValue {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_ValidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port title.
+        /// </summary>
+        public static string TcpPortView_PortTitle {
+            get {
+                return ResourceManager.GetString("TcpPortView_PortTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IP address.
+        /// </summary>
+        public static string TcpPortView_TcpIpAddress {
+            get {
+                return ResourceManager.GetString("TcpPortView_TcpIpAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port number.
+        /// </summary>
+        public static string TcpPortView_TcpIpPort {
+            get {
+                return ResourceManager.GetString("TcpPortView_TcpIpPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error to create port.
+        /// </summary>
+        public static string TcpPortViewModel_LogService_Error {
+            get {
+                return ResourceManager.GetString("TcpPortViewModel_LogService_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New TCP.
+        /// </summary>
+        public static string TcpPortViewModel_Title {
+            get {
+                return ResourceManager.GetString("TcpPortViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must insert a valid ip address.
+        /// </summary>
+        public static string TcpPortViewModel_ValidIpAddress {
+            get {
+                return ResourceManager.GetString("TcpPortViewModel_ValidIpAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port number must be value from 1 to 65535.
+        /// </summary>
+        public static string TcpPortViewModel_ValidPort {
+            get {
+                return ResourceManager.GetString("TcpPortViewModel_ValidPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must specify a valid name.
+        /// </summary>
+        public static string TcpPortViewModel_ValidTitle {
+            get {
+                return ResourceManager.GetString("TcpPortViewModel_ValidTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Celsius.
+        /// </summary>
+        public static string Temperature_Celsius_Title {
+            get {
+                return ResourceManager.GetString("Temperature_Celsius_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Farenheit.
+        /// </summary>
+        public static string Temperature_Farenheit_Title {
+            get {
+                return ResourceManager.GetString("Temperature_Farenheit_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kelvin.
+        /// </summary>
+        public static string Temperature_Kelvin_Title {
+            get {
+                return ResourceManager.GetString("Temperature_Kelvin_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must be a number.
+        /// </summary>
+        public static string TemperatureCelsius_ErrorMessage_NaN {
+            get {
+                return ResourceManager.GetString("TemperatureCelsius_ErrorMessage_NaN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value can&apos;t be null or white space.
+        /// </summary>
+        public static string TemperatureCelsius_ErrorMessage_NullOrWhiteSpace {
+            get {
+                return ResourceManager.GetString("TemperatureCelsius_ErrorMessage_NullOrWhiteSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must be a number.
+        /// </summary>
+        public static string TemperatureFarenheit_ErrorMessage_NaN {
+            get {
+                return ResourceManager.GetString("TemperatureFarenheit_ErrorMessage_NaN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value can&apos;t be null or white space.
+        /// </summary>
+        public static string TemperatureFarenheit_ErrorMessage_NullOrWhiteSpace {
+            get {
+                return ResourceManager.GetString("TemperatureFarenheit_ErrorMessage_NullOrWhiteSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string TemplaterDialog_CloseButton {
+            get {
+                return ResourceManager.GetString("TemplaterDialog_CloseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string TemplaterDialog_SaveButton {
+            get {
+                return ResourceManager.GetString("TemplaterDialog_SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add image tag.
+        /// </summary>
+        public static string TemplaterView_AddImageTag {
+            get {
+                return ResourceManager.GetString("TemplaterView_AddImageTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new tag.
+        /// </summary>
+        public static string TemplaterView_AddNewTag {
+            get {
+                return ResourceManager.GetString("TemplaterView_AddNewTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add string tag.
+        /// </summary>
+        public static string TemplaterView_AddStringTag {
+            get {
+                return ResourceManager.GetString("TemplaterView_AddStringTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear tags list.
+        /// </summary>
+        public static string TemplaterView_ClearTagsList {
+            get {
+                return ResourceManager.GetString("TemplaterView_ClearTagsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File path:.
+        /// </summary>
+        public static string TemplaterView_ResultPath {
+            get {
+                return ResourceManager.GetString("TemplaterView_ResultPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template path:.
+        /// </summary>
+        public static string TemplaterView_TemplatePath {
+            get {
+                return ResourceManager.GetString("TemplaterView_TemplatePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LeftToRight.
+        /// </summary>
+        public static string ThemeService_FlowDirections_LeftToRight {
+            get {
+                return ResourceManager.GetString("ThemeService_FlowDirections_LeftToRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RightToLeft.
+        /// </summary>
+        public static string ThemeService_FlowDirections_RightToLeft {
+            get {
+                return ResourceManager.GetString("ThemeService_FlowDirections_RightToLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contrast.
+        /// </summary>
+        public static string ThemeService_Themes_Contrast {
+            get {
+                return ResourceManager.GetString("ThemeService_Themes_Contrast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark.
+        /// </summary>
+        public static string ThemeService_Themes_Dark {
+            get {
+                return ResourceManager.GetString("ThemeService_Themes_Dark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light.
+        /// </summary>
+        public static string ThemeService_Themes_Light {
+            get {
+                return ResourceManager.GetString("ThemeService_Themes_Light", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AGL Altitude: {0}.
+        /// </summary>
+        public static string UavAnchor_AGL_Altitude {
+            get {
+                return ResourceManager.GetString("UavAnchor_AGL_Altitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GNSS Altitude: {0}.
+        /// </summary>
+        public static string UavAnchor_GNSS_Altitude {
+            get {
+                return ResourceManager.GetString("UavAnchor_GNSS_Altitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude: {0}.
+        /// </summary>
+        public static string UavAnchor_Latitude {
+            get {
+                return ResourceManager.GetString("UavAnchor_Latitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude: {0}.
+        /// </summary>
+        public static string UavAnchor_Longitude {
+            get {
+                return ResourceManager.GetString("UavAnchor_Longitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to N\A.
+        /// </summary>
+        public static string UavRttItem_ValueNotAvailable {
+            get {
+                return ResourceManager.GetString("UavRttItem_ValueNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IP Address.
+        /// </summary>
+        public static string UdpPortView_LocalIpAddress {
+            get {
+                return ResourceManager.GetString("UdpPortView_LocalIpAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port Number.
+        /// </summary>
+        public static string UdpPortView_LocalPortName {
+            get {
+                return ResourceManager.GetString("UdpPortView_LocalPortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string UdpPortView_PortTitle {
+            get {
+                return ResourceManager.GetString("UdpPortView_PortTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote IP Address.
+        /// </summary>
+        public static string UdpPortView_RemoteIpAddress {
+            get {
+                return ResourceManager.GetString("UdpPortView_RemoteIpAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote port number.
+        /// </summary>
+        public static string UdpPortView_RemotePortName {
+            get {
+                return ResourceManager.GetString("UdpPortView_RemotePortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify remote host.
+        /// </summary>
+        public static string UdpPortView_ToggleName {
+            get {
+                return ResourceManager.GetString("UdpPortView_ToggleName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New UDP.
+        /// </summary>
+        public static string UdpPortViewModel_Title {
+            get {
+                return ResourceManager.GetString("UdpPortViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a valid IP address.
+        /// </summary>
+        public static string UdpPortViewModel_ValidLocalIpAddress {
+            get {
+                return ResourceManager.GetString("UdpPortViewModel_ValidLocalIpAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port number must be a value between 1 and 65535.
+        /// </summary>
+        public static string UdpPortViewModel_ValidLocalPort {
+            get {
+                return ResourceManager.GetString("UdpPortViewModel_ValidLocalPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a valid IP address.
+        /// </summary>
+        public static string UdpPortViewModel_ValidRemoteIpAddress {
+            get {
+                return ResourceManager.GetString("UdpPortViewModel_ValidRemoteIpAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port number must be a value between 1 and 65535.
+        /// </summary>
+        public static string UdpPortViewModel_ValidRemotePort {
+            get {
+                return ResourceManager.GetString("UdpPortViewModel_ValidRemotePort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must specify a valid name.
+        /// </summary>
+        public static string UdpPortViewModel_ValidTitle {
+            get {
+                return ResourceManager.GetString("UdpPortViewModel_ValidTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quick settings.
+        /// </summary>
+        public static string VehicleQuickParamPageViewModel_Title {
+            get {
+                return ResourceManager.GetString("VehicleQuickParamPageViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Range: [{0}, {1}].
+        /// </summary>
+        public static string VehicleQuickParamSliderViewModel_Range {
+            get {
+                return ResourceManager.GetString("VehicleQuickParamSliderViewModel_Range", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Units: [{0}].
+        /// </summary>
+        public static string VehicleQuickParamSliderViewModel_Units {
+            get {
+                return ResourceManager.GetString("VehicleQuickParamSliderViewModel_Units", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        public static string VehicleQuickParamsStandardTreePage_Refresh {
+            get {
+                return ResourceManager.GetString("VehicleQuickParamsStandardTreePage_Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write.
+        /// </summary>
+        public static string VehicleQuickParamsStandardTreePage_Write {
+            get {
+                return ResourceManager.GetString("VehicleQuickParamsStandardTreePage_Write", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Here you can configure some of vehicle standard params. .
+        /// </summary>
+        public static string VehicleQuickParamStandardTreeMenuItem_Description {
+            get {
+                return ResourceManager.GetString("VehicleQuickParamStandardTreeMenuItem_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Standard params.
+        /// </summary>
+        public static string VehicleQuickParamStandardTreeMenuItem_Name {
+            get {
+                return ResourceManager.GetString("VehicleQuickParamStandardTreeMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quick settings.
+        /// </summary>
+        public static string VehiclesShellMenuItemProvider_ShellMenuItem_QuickSettings {
+            get {
+                return ResourceManager.GetString("VehiclesShellMenuItemProvider_ShellMenuItem_QuickSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string VehiclesShellMenuItemProvider_ShellMenuItem_Settings {
+            get {
+                return ResourceManager.GetString("VehiclesShellMenuItemProvider_ShellMenuItem_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velocity measure units.
+        /// </summary>
+        public static string Velocity_Description {
+            get {
+                return ResourceManager.GetString("Velocity_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to km/h.
+        /// </summary>
+        public static string Velocity_KilometersPerHourUnit {
+            get {
+                return ResourceManager.GetString("Velocity_KilometersPerHourUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to m/s.
+        /// </summary>
+        public static string Velocity_MetersPerSecondUnit {
+            get {
+                return ResourceManager.GetString("Velocity_MetersPerSecondUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mi/h.
+        /// </summary>
+        public static string Velocity_MilesPerHourUnit {
+            get {
+                return ResourceManager.GetString("Velocity_MilesPerHourUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velocity.
+        /// </summary>
+        public static string Velocity_Title {
+            get {
+                return ResourceManager.GetString("Velocity_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to V.
+        /// </summary>
+        public static string Voltage_Unit {
+            get {
+                return ResourceManager.GetString("Voltage_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UAV voltage.
+        /// </summary>
+        public static string VoltageUavRttItemView_ToolTip {
+            get {
+                return ResourceManager.GetString("VoltageUavRttItemView_ToolTip", resourceCulture);
+            }
+        }
     }
 }

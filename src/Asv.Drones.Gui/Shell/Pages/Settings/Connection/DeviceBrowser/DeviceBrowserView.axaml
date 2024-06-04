@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:gui="clr-namespace:Asv.Drones.Gui"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:CompileBindings="True"
+             x:Class="Asv.Drones.Gui.DeviceBrowserView"
+             x:DataType="gui:DeviceBrowserViewModel">
+    <Design.DataContext>
+        <gui:DeviceBrowserViewModel />
+    </Design.DataContext>
+    <Panel>
+        <ListBox IsVisible="{Binding Items.Count}" Padding="0" ItemsSource="{Binding Items}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Spacing="8" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ListBox>
+        <StackPanel IsVisible="{Binding !Items.Count}" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <avalonia:MaterialIcon Width="50" Height="50" Kind="ServerNetworkOff"
+                                   Foreground="{DynamicResource IndicatorUnknownBrush}" />
+            <TextBlock FontSize="20" TextWrapping="WrapWithOverflow" MaxWidth="400"
+                       Text="{x:Static gui:RS.DeviceBrowserView_EmptyText}" />
+        </StackPanel>
+
+    </Panel>
+
+</UserControl>

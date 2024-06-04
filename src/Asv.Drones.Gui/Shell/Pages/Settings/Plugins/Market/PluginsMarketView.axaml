@@ -1,0 +1,150 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:gui="clr-namespace:Asv.Drones.Gui"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:CompileBindings="True"
+             x:DataType="gui:PluginsMarketViewModel"
+             x:Class="Asv.Drones.Gui.PluginsMarketView">
+    <Design.DataContext>
+        <gui:PluginsMarketViewModel />
+    </Design.DataContext>
+    <Grid
+        ColumnDefinitions="2*,5,3*"
+        RowDefinitions="Auto,5,*">
+        <DockPanel>
+            <Button
+                DockPanel.Dock="Right"
+                IsVisible="{Binding !Search.IsExecuting}"
+                Theme="{DynamicResource TransparentButton}"
+                Command="{Binding Search.Command}">
+                <avalonia:MaterialIcon Kind="Refresh" />
+            </Button>
+            <Button
+                DockPanel.Dock="Right"
+                IsVisible="{Binding Search.IsExecuting}"
+                Theme="{DynamicResource TransparentButton}"
+                Command="{Binding Search.Cancel}">
+                <avalonia:MaterialIcon Kind="Cancel" />
+            </Button>
+
+
+            <TextBox Watermark="{x:Static gui:RS.PluginsInstalledView_Search}"
+                     Background="Transparent"
+                     CornerRadius="0"
+                     BorderThickness="0"
+                     Text="{Binding SearchString}">
+                <TextBox.InnerRightContent>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="&#xE721;"
+                                FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                Theme="{DynamicResource TransparentButton}"
+                                Command="{Binding $parent[TextBox].Clear}"
+                                IsHitTestVisible="False" />
+                    </StackPanel>
+                </TextBox.InnerRightContent>
+                <TextBox.InnerLeftContent>
+                    <Button Content="&#xE8BB;"
+                            FontFamily="{StaticResource SymbolThemeFontFamily}"
+                            Theme="{DynamicResource TransparentButton}"
+                            Command="{Binding $parent[TextBox].Clear}"
+                            IsVisible="{Binding Text, RelativeSource={RelativeSource FindAncestor, AncestorType=TextBox}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                </TextBox.InnerLeftContent>
+            </TextBox>
+        </DockPanel>
+
+        <Rectangle Grid.Column="0" Grid.Row="1" Fill="{DynamicResource ButtonBorderBrush}" Height="1"
+                   HorizontalAlignment="Stretch" />
+        <Rectangle Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Fill="{DynamicResource ButtonBorderBrush}" Width="1"
+                   VerticalAlignment="Stretch" />
+        <avalonia:MaterialIcon Grid.Row="0" Grid.RowSpan="3" Width="15" Height="15" Grid.Column="1"
+                               Kind="UnfoldMoreVertical" Foreground="{DynamicResource ButtonBorderBrush}" />
+        <ListBox Margin="4" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding Plugins}"
+                 SelectedItem="{Binding SelectedPlugin}">
+            <ListBox.Styles>
+                <Style Selector="ListBoxItem">
+                    <Setter Property="Padding" Value="4" />
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+            </ListBox.Styles>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*">
+                        <avalonia:MaterialIcon Margin="4" HorizontalAlignment="Left" Grid.RowSpan="2" Width="40"
+                                               Height="40" Kind="Package" />
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
+                            <TextBlock VerticalAlignment="Center" Theme="{DynamicResource BodyStrongTextBlockStyle}"
+                                       Margin="0,0,4,0" Text="{Binding Name}" />
+                            <TextBlock VerticalAlignment="Center" Theme="{DynamicResource CaptionTextBlockStyle}"
+                                       Foreground="{DynamicResource SystemAccentColorLight2}" Text="[" />
+                            <TextBlock VerticalAlignment="Center" Theme="{DynamicResource CaptionTextBlockStyle}"
+                                       Foreground="{DynamicResource SystemAccentColorLight2}"
+                                       Text="{Binding SourceName}" />
+                            <TextBlock VerticalAlignment="Center" Theme="{DynamicResource CaptionTextBlockStyle}"
+                                       Foreground="{DynamicResource SystemAccentColorLight2}" Text="]" />
+                        </StackPanel>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Theme="{DynamicResource CaptionTextBlockStyle}"
+                                   Foreground="{DynamicResource AccentTextFillColorDisabledBrush}"
+                                   Text="{Binding Author}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Panel Margin="8" VerticalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
+            <Panel IsVisible="{Binding SelectedPlugin, Converter={x:Static ObjectConverters.IsNotNull}}">
+                <DockPanel DataContext="{Binding SelectedPlugin}">
+                    <Grid DockPanel.Dock="Top" RowDefinitions="35,25,50" ColumnDefinitions="120,*">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                                   Theme="{DynamicResource SubtitleTextBlockStyle}" Text="{Binding Name}" />
+                        <StackPanel Orientation="Horizontal" Spacing="8" Grid.Row="1" Grid.Column="0"
+                                    Grid.ColumnSpan="2">
+                            <TextBlock Foreground="{DynamicResource AccentTextFillColorDisabledBrush}"
+                                       Theme="{DynamicResource BodyTextBlockStyle}" Text="{Binding SourceName}" />
+                            <TextBlock Foreground="{DynamicResource AccentTextFillColorDisabledBrush}"
+                                       Theme="{DynamicResource BodyTextBlockStyle}" Text="|" />
+                            <TextBlock Foreground="{DynamicResource AccentTextFillColorDisabledBrush}"
+                                       Theme="{DynamicResource BodyTextBlockStyle}" Text="{Binding Author}" />
+                        </StackPanel>
+
+
+                        <Panel Grid.Row="2" Grid.Column="0" IsVisible="{Binding !IsInstalled}">
+                            <Button Classes="accent" Width="100" IsVisible="{Binding !Install.IsExecuting}"
+                                    Command="{Binding Install.Command}"
+                                    Content="{x:Static gui:RS.PluginsMarketView_Install}" />
+                            <Button Classes="accent" Width="100" IsVisible="{Binding Install.IsExecuting}"
+                                    Command="{Binding Install.Cancel}"
+                                    Content="{x:Static gui:RS.PluginsMarketView_Cancel}" />
+                        </Panel>
+                        <TextBlock Grid.Row="2" Grid.Column="1" IsVisible="{Binding !IsInstalled}"
+                                   Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LastVersion}"
+                                   VerticalAlignment="Center" />
+
+                        <Button Grid.Row="2" Grid.Column="0" Width="100" IsVisible="{Binding IsInstalled}"
+                                Command="{Binding Uninstall.Command}"
+                                Content="{x:Static gui:RS.PluginsInstalledView_Uninstall}" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" IsVisible="{Binding IsInstalled}"
+                                   Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LocalVersion}"
+                                   VerticalAlignment="Center" />
+                    </Grid>
+                    <TabControl>
+                        <TabItem FontSize="18" Header="{x:Static gui:RS.PluginsInstalledView_Tab_Description}">
+                            <TextBlock Text="{Binding Description}" TextWrapping="WrapWithOverflow" />
+                        </TabItem>
+                        <TabItem FontSize="18" Header="{x:Static gui:RS.PluginsInstalledView_Tab_AdditionalInfo}" />
+                    </TabControl>
+                </DockPanel>
+            </Panel>
+            <StackPanel IsVisible="{Binding SelectedPlugin, Converter={x:Static ObjectConverters.IsNull}}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Spacing="8">
+                <avalonia:MaterialIcon Width="25" Height="25" Kind="ArrowLeft"
+                                       Foreground="{DynamicResource ButtonForegroundDisabled}" />
+                <TextBlock Foreground="{DynamicResource ButtonForegroundDisabled}" VerticalAlignment="Center"
+                           FontSize="15" TextWrapping="WrapWithOverflow" MaxWidth="400" Text="Please select plugin" />
+            </StackPanel>
+
+        </Panel>
+
+    </Grid>
+</UserControl>

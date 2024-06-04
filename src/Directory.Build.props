@@ -1,0 +1,19 @@
+<Project>
+    <PropertyGroup>
+        <ProductVersion>0.5.0</ProductVersion>
+        <ApiVersion>0.3.2</ApiVersion>
+        <ApiPrevVersion>0.3.1</ApiPrevVersion>
+        <AvaloniaVersion>11.0.6</AvaloniaVersion>
+        <AsvCommonVersion>2.0.0</AsvCommonVersion>
+        <AsvAvaloniaToolkitVersion>0.1.7</AsvAvaloniaToolkitVersion>
+        <AsvAvaloniaMapVersion>2.0.4</AsvAvaloniaMapVersion>
+        <AsvMavlinkVersion>3.8.0-alpha06</AsvMavlinkVersion>
+        <FluentAvaloniaUIVersion>2.0.5</FluentAvaloniaUIVersion>
+        <ReactiveUIVersion>19.5.41</ReactiveUIVersion>
+        <SystemReactiveVersion>6.0.0</SystemReactiveVersion>
+        <MaterialIconsAvaloniaVersion>2.0.1</MaterialIconsAvaloniaVersion>
+        <ReactiveUIValidationVersion>3.1.7</ReactiveUIValidationVersion>
+        <CompositionVersion>8.0.0</CompositionVersion>
+        <NLogVersion>5.2.8</NLogVersion>
+    </PropertyGroup>
+</Project>
