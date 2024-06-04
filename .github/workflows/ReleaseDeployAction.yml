@@ -10,14 +10,8 @@ on:
 # Automatically create a GitHub Release, with release details specified (the relevant commits)
 jobs:
   release:
-    name: "Release"
+    name: "Release on Windows"
     runs-on: "windows-latest"
     
     steps:
-      - uses: "asv-soft/action-automatic-release@updated20"
-        with:
-          repo_token: "${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}" 
-          prerelease: false
-          files: |
-            *Setup.exe
-            *.zip
+      - uses: "asv-soft/asv-drones/.github/workflows/Build for Windows@v1"
