@@ -41,8 +41,8 @@ public partial class App : Application, IApplicationHost
         // order of init members is important !!!
         Paths = InitApplicationPaths();
         Info = InitApplicationInfo();
-        Logs = new LogService(Paths);
-        Configuration = new JsonOneFileConfiguration(Path.Combine(Paths.AppDataFolder, "config.json"), true,
+        Logs = new LogService(Args["logs-folder", Path.Combine(Paths.AppDataFolder, "logs")]);
+        Configuration = new JsonOneFileConfiguration(Args["config-file",Path.Combine(Paths.AppDataFolder, "config.json")], true,
                                                      TimeSpan.FromMilliseconds(100));
         Localization = new LocalizationServiceBase(Configuration);
         var conventions = new ConventionBuilder();
@@ -58,15 +58,15 @@ public partial class App : Application, IApplicationHost
 
         PluginManager = Design.IsDesignMode
                             ? NullPluginManager.Instance
-                            : new PluginManager(containerCfg, Paths.AppDataFolder, Configuration);
+                            : new PluginManager(containerCfg, Args["plugin-folder", Paths.AppDataFolder], Configuration);
         containerCfg = containerCfg
                        .WithExport(typeof(IPluginManager), PluginManager)
                        .WithAssemblies(DefaultAssemblies.Distinct()); // load dependencies from default assemblies        
         Container = containerCfg.CreateContainer();
         DataTemplateHost.DataTemplates.Add(new ViewLocator(Container));
     }
-
-
+    
+    
     private IEnumerable<Assembly> DefaultAssemblies
     {
         get
@@ -81,6 +81,7 @@ public partial class App : Application, IApplicationHost
 
     public ILocalizationService Localization { get; }
     public ILogService Logs { get; }
+    public IAppArgs Args => AppArgs.Instance;
     public IAppInfo Info { get; }
     public IAppPathInfo Paths { get; }
     public IDataTemplateHost DataTemplateHost => this;
@@ -96,29 +97,30 @@ public partial class App : Application, IApplicationHost
         Environment.Exit(0);
     }
 
+
     #endregion
 
     #region Init functions
 
-    private static IAppPathInfo InitApplicationPaths()
+    private IAppPathInfo InitApplicationPaths()
     {
 #if DEBUG
         var appDataBaseDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 #else
         var appDataBaseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-#endif
-        var appData = appDataBaseDirectory == null
-                          ? "asv-data-folder"
-                          : Path.Combine(appDataBaseDirectory, "asv-data-folder");
-
-        var processFolder = Environment.ProcessPath ?? Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
+#endif 
+        
+        
+        
         // if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS()) // TODO: Check correct folders for OperatingSystem.IsAndroid() and OperatingSystem.IsIOS() ?
+
+        var defaultPath = appDataBaseDirectory == null
+            ? "asv-data-folder"
+            : Path.Combine(appDataBaseDirectory, "asv-data-folder");
+        
         var info = new AppPathInfo
         {
-            AppDataFolder = appDataBaseDirectory == null
-                                ? "asv-data-folder"
-                                : Path.Combine(appDataBaseDirectory, "asv-data-folder"),
+            AppDataFolder = Args["data-folder",defaultPath],
         };
         if (Directory.Exists(info.AppDataFolder) == false) Directory.CreateDirectory(info.AppDataFolder);
         return info;
@@ -292,6 +294,8 @@ public partial class App : Application, IApplicationHost
 
         #endregion
     }
+
+    
 
     #endregion
 }

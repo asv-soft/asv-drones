@@ -4,6 +4,7 @@ using Android.OS;
 using Avalonia;
 using Avalonia.Android;
 using Avalonia.ReactiveUI;
+using Environment = System.Environment;
 
 namespace Asv.Drones.Gui.Android;
 
@@ -17,6 +18,8 @@ public class MainActivity : AvaloniaMainActivity<App>
 {
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
+        AppArgs.Instance.TryParse(Environment.GetCommandLineArgs());
+        AppArgs.Instance.TryParseFile();
         // this is required to use the AndroidHttpClientHandler in main thread
         StrictMode.SetThreadPolicy(new StrictMode.ThreadPolicy.Builder().PermitAll().Build());
 

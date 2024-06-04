@@ -1861,4 +1861,22 @@
   <data name="PortView_PacketLossChance" xml:space="preserve">
     <value>Шанс потери пакетов</value>
   </data>
+  <data name="Accuracy_Description" xml:space="preserve">
+    <value>Единицы измерения точности</value>
+  </data>
+  <data name="Accuracy_Meters_Title" xml:space="preserve">
+    <value>Метры</value>
+  </data>
+  <data name="Accuracy_Meters_Unit" xml:space="preserve">
+    <value>м</value>
+  </data>
+  <data name="Accuracy_NauticalMiles_Title" xml:space="preserve">
+    <value>Морские мили</value>
+  </data>
+  <data name="Accuracy_NauticalMiles_Unit" xml:space="preserve">
+    <value>NM</value>
+  </data>
+  <data name="Accuracy_Title" xml:space="preserve">
+    <value>Точность</value>
+  </data>
 </root>

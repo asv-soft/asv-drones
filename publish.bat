@@ -48,7 +48,7 @@ cd ../../..
 
 setlocal enabledelayedexpansion
 
-set "xmlFile=src\Asv.Drones.Gui.Custom.props"
+set "xmlFile=src\Directory.Build.props"
 
 for /f "tokens=2 delims=<> " %%a in ('findstr /i "<ProductVersion>" "%xmlFile%"') do (
     set "productVersion=%%a"

@@ -22,13 +22,12 @@ public class LogService : DisposableOnceWithCancel, ILogService
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private readonly Subject<LogMessage> _onMessage;
-    private readonly IAppPathInfo _pathInfo;
+    private readonly string _logFile;
 
-    public LogService(IAppPathInfo pathInfo)
+    public LogService(string logsFolder)
     {
-        _pathInfo = pathInfo;
-        ArgumentNullException.ThrowIfNull(pathInfo);
-        var logsFolder = Path.Combine(pathInfo.AppDataFolder, "logs");
+        _logFile = Path.Combine(logsFolder, "log.log");
+        ArgumentNullException.ThrowIfNull(logsFolder);
         if (!Directory.Exists(logsFolder))
         {
             Directory.CreateDirectory(logsFolder);
@@ -43,7 +42,7 @@ public class LogService : DisposableOnceWithCancel, ILogService
 #endif
             builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToColoredConsole(layout: layout);
             builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToFile(
-                fileName: Path.Combine(logsFolder, "log.log"),
+                fileName: _logFile,
                 lineEnding: LineEndingMode.CRLF,
                 maxArchiveDays: 30,
                 maxArchiveFiles: 30,
@@ -76,13 +75,12 @@ public class LogService : DisposableOnceWithCancel, ILogService
 
     public void DeleteLogFile()
     {
-        var logsFilePath = Path.Combine(_pathInfo.AppDataFolder, "logs", "log.log");
-        if (File.Exists(logsFilePath)) File.Delete(logsFilePath);
+        if (File.Exists(_logFile)) File.Delete(_logFile);
     }
 
     public IEnumerable<LogItemViewModel> LoadItemsFromLogFile()
     {
-        var logsFilePath = Path.Combine(_pathInfo.AppDataFolder, "logs", "log.log");
+        var logsFilePath = _logFile;
 
         if (File.Exists(logsFilePath))
         {
