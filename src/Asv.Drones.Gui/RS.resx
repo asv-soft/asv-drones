@@ -1847,4 +1847,25 @@
   <data name="Accuracy_Title" xml:space="preserve">
     <value>Accuracy</value>
   </data>
+  <data name="HeaderPlaningFileSaveAsMenuItem_Title" xml:space="preserve">
+    <value>Save As...</value>
+  </data>
+  <data name="PlanningPageViewModel_MissionSavingBrowserDialog_PrimaryButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="PlanningPageViewModel_MissionSavingBrowserDialog_SecondaryButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="PlanningPageViewModel_MissionSavingBrowserDialog_Title" xml:space="preserve">
+    <value>Chose the file name to save</value>
+  </data>
+  <data name="PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_Title" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_PrimaryButtonText" xml:space="preserve">
+    <value>Rewrite</value>
+  </data>
+  <data name="PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_ContentText" xml:space="preserve">
+    <value>A file with the same name already exists. After performing this action, overwriting will occur. Are you sure you want to continue?</value>
+  </data>
 </root>

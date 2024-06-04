@@ -149,6 +149,7 @@ public class PlaningMissionViewModel : DisposableReactiveObjectWithValidation
     public ReactiveCommand<Unit, Unit> MoveTop { get; }
     public ReactiveCommand<Unit, Unit> MoveDown { get; }
     public ReactiveCommand<Unit, Unit> SaveCmd { get; }
+    public ReactiveCommand<Unit, Unit> SaveAsCmd { get; }
     [Reactive] public PlaningMissionPointViewModel SelectedPoint { get; set; }
 
 
