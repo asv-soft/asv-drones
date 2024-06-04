@@ -82,6 +82,9 @@ public class MapRulerActionViewModel : MapActionBase
     private void DisableRulerOnClick()
     {
         _tokenSource?.Cancel();
+        
+        if (Map == null) return;
+        
         if (_startAnchor != null)
         {
             Map.AdditionalAnchorsSource.Remove(_startAnchor.Id);
@@ -114,9 +117,11 @@ public class RulerStartAnchor : MapAnchorBase
     public RulerStartAnchor(Uri id, GeoPoint startPoint) : base(id)
     {
         Size = 48;
+        BaseSize = 48;
         OffsetX = OffsetXEnum.Center;
         OffsetY = OffsetYEnum.Bottom;
         StrokeThickness = 1;
+        BaseStrokeThickness = 1;
         IconBrush = Brushes.Indigo;
         Stroke = Brushes.White;
         IsVisible = true;
@@ -131,9 +136,11 @@ public class RulerStopAnchor : MapAnchorBase
     public RulerStopAnchor(Uri id, RulerStartAnchor start, ILocalizationService loc, GeoPoint stopPoint) : base(id)
     {
         Size = 48;
+        BaseSize = 48;
         OffsetX = OffsetXEnum.Center;
         OffsetY = OffsetYEnum.Bottom;
         StrokeThickness = 1;
+        BaseStrokeThickness = 1;    
         IconBrush = Brushes.Indigo;
         Stroke = Brushes.White;
         IsVisible = true;

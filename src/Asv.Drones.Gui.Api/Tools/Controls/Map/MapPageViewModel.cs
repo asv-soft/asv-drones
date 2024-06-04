@@ -19,6 +19,13 @@ namespace Asv.Drones.Gui.Api
         private readonly ReadOnlyObservableCollection<IMapAction> _mapActions;
         private IDisposable _disposableMapUpdate;
         private readonly SourceCache<IMapAnchor, Uri> _additionalAnchorsSource;
+        private readonly double _baseSizeAnchor = 32;
+        
+        const double SmallSizeFactor = 0.5;
+        const double MediumSizeFactor = 1.1;
+        const double LargeSizeFactor = 1.2;
+        const double SmallStrokeFactor = 2.0 / 3.0;
+        const double LargeStrokeFactor = 7.0 / 3.0;
 
 
         /// <summary>
@@ -75,6 +82,28 @@ namespace Asv.Drones.Gui.Api
                 })
                 .DisposeItWith(Disposable);
 
+            this.WhenValueChanged(x => x.Zoom).Subscribe(x =>
+            {
+                foreach (var marker in _markers)
+                {
+                    marker.Size = x switch
+                    {
+                        <= 5 => marker.BaseSize * SmallSizeFactor,
+                        var zoom and > 5 and <= 10 => marker.BaseSize * (zoom / 10),
+                        <= 12 and > 10 => marker.BaseSize * MediumSizeFactor,
+                        _ => marker.BaseSize * LargeSizeFactor
+                    };
+                    
+                    marker.StrokeThickness = x switch
+                    {
+                        <= 5 => marker.BaseStrokeThickness * SmallStrokeFactor,
+                        var zoom and > 5 and <= 10 => CalculateMediumStrokeFactor(marker),
+                        _ => marker.BaseStrokeThickness * LargeStrokeFactor
+                    };
+                }
+            }).DisposeItWith(Disposable);
+
+            
             #endregion
 
             #region Widgets
@@ -188,6 +217,10 @@ namespace Asv.Drones.Gui.Api
                         mapAnchor.IsSelected = false;
                 }
             });
+        }
+        private double CalculateMediumStrokeFactor(IMapAnchor model)
+        {
+            return model.BaseStrokeThickness * ((2 + ((Zoom - 5) / 5) * (5 - 2)) / 3);
         }
 
         private void SetUpFollow(IMapAnchor? anchor)

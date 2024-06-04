@@ -11,12 +11,11 @@ namespace Asv.Drones.Gui;
 
 public class UavFlightMissionAnchor : FlightAnchorBase
 {
-    private readonly MissionItem _missionItem;
-
     public UavFlightMissionAnchor(MissionItem missionItem, IVehicleClient vehicle) : base(vehicle,
         $"flight-mission/{missionItem.Index}")
     {
         Size = 16;
+        BaseSize = 16;
         OffsetX = OffsetXEnum.Center;
         OffsetY = OffsetYEnum.Bottom;
         Icon = ConvertIcon(missionItem.Command.Value);
@@ -24,15 +23,12 @@ public class UavFlightMissionAnchor : FlightAnchorBase
         IsVisible = true;
         IsEditable = false;
 
-        _missionItem = missionItem;
         missionItem.Location.Subscribe(_ => Location = _).DisposeItWith(Disposable);
         this.WhenAnyValue(_ => _.Location).Subscribe(missionItem.Location);
         Title = $"{missionItem.Index}";
 
         Disposable.AddAction(() => { });
     }
-
-    public MissionItem MissionItem => _missionItem;
 
     private static MaterialIconKind ConvertIcon(MavCmd missionItemCommand)
     {

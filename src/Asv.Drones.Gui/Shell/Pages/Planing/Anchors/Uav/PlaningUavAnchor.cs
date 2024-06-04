@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Reactive.Linq;
 using Asv.Avalonia.Map;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
 using Asv.Mavlink;
 using Avalonia.Media;
-using DynamicData;
 using MavlinkHelper = Asv.Drones.Gui.Api.MavlinkHelper;
 
 namespace Asv.Drones.Gui
@@ -24,9 +20,11 @@ namespace Asv.Drones.Gui
             _vehicle = vehicle;
             _loc = loc;
             Size = 48;
+            BaseSize = 48;
             OffsetX = OffsetXEnum.Center;
             OffsetY = OffsetYEnum.Center;
             StrokeThickness = 1;
+            BaseStrokeThickness = 1;
             Stroke = Brushes.Honeydew;
             IconBrush = Brushes.Red;
             IsVisible = true;
