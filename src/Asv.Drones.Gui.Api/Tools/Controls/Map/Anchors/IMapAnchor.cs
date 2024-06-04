@@ -14,7 +14,4 @@ public interface IMapAnchor : IMapAnchorViewModel, IViewModel
     /// <param name="map">The map the anchor is associated with.</param>
     /// <returns>The initialized MapAnchor.</returns>
     IMapAnchor Init(IMap map);
-
-    double BaseSize { get; set; }
-    double BaseStrokeThickness { get; set; }
 }

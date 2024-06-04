@@ -2,50 +2,15 @@
 <!-- https://learn.microsoft.com/en-us/dotnet/fundamentals/package-validation/diagnostic-ids -->
 <Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Asv.Drones.Gui.Api.TreeGroupViewModel.#ctor(Asv.Drones.Gui.Api.TreePartMenuItemContainer,System.Action{Asv.Drones.Gui.Api.TreePartMenuItemContainer})</Target>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Asv.Drones.Gui.Api.IAppArgs</Target>
     <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
     <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Asv.Drones.Gui.Api.TreePageExplorerViewModel.get_BreadCrumb</Target>
-    <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
-    <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Asv.Drones.Gui.Api.TreePageExplorerViewModel.get_SelectedMenuItem</Target>
-    <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
-    <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Asv.Drones.Gui.Api.TreePageExplorerViewModel.set_SelectedMenuItem(Asv.Drones.Gui.Api.TreePartMenuItemContainer)</Target>
-    <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
-    <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0006</DiagnosticId>
-    <Target>M:Asv.Drones.Gui.Api.ITreePage.TryClose</Target>
-    <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
-    <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0006</DiagnosticId>
-    <Target>P:Asv.Drones.Gui.Api.IApplicationHost.Shell</Target>
-    <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
-    <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0006</DiagnosticId>
-    <Target>P:Asv.Drones.Gui.Api.ILocalizationService.MAh</Target>
+    <Target>M:Asv.Drones.Gui.Api.IApplicationHost.get_Args</Target>
     <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
     <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>

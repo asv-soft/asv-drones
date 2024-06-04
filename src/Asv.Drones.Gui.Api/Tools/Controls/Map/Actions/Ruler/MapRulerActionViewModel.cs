@@ -82,6 +82,9 @@ public class MapRulerActionViewModel : MapActionBase
     private void DisableRulerOnClick()
     {
         _tokenSource?.Cancel();
+        
+        if (Map == null) return;
+        
         if (_startAnchor != null)
         {
             Map.AdditionalAnchorsSource.Remove(_startAnchor.Id);
