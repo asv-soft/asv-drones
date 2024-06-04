@@ -62,18 +62,28 @@ Embark on a journey of exploration, experimentation, and innovation with Asv.Dro
 </p>
 
 ## 2. Different sets of components
-Combine needed plugins and components to make application for your needs.
-### Combining example:
-#### Asv.Drones + SDR
+Asv.Drones can work with different combinations of it's components
+
+### Example Of Usage With GBS
+
+**Ground Base Station Integration:** Asv.Drones offers seamless integration with ground base stations through our proprietary implementation called Asv.Drones.Gbs, available on GitHub [here](https://github.com/asv-soft/asv-drones-gbs). Built to operate via the MAVLink protocol, Asv.Drones.Gbs allows users to remotely manage and monitor drone operations from a centralized platform. Moreover, any other ground base station software compatible with MAVLink can seamlessly interface with our application, ensuring flexibility and interoperability across different systems (development of additional UI controls may be required). With Asv.Drones.Gbs, users can plan missions, monitor telemetry data, and adjust flight parameters with ease.
+
 <div align="center">
-   ![image](https://github.com/asv-soft/asv-drones/assets/151620493/a241bccd-02bd-483a-8d19-fada6b7eb712)
-   ![image](https://github.com/asv-soft/asv-drones/assets/151620493/b82dada0-f485-4458-a404-3c12cd6982b3)
+   <img src="img/asv-drones-gbs-connections.png" alt="gbs-connections" width="650" />
+   <img src="img/asv-drones-gbs-settings.png" alt="gbs-parameters" width="650" />
+   <img src="img/asv-drones-gbs-widget.png" alt="gbs-widget" width="650" />
+   <img src="img/asv-drones-gbs-packets.png" alt="gbs-packets" width="650" />
 </div>
-#### Asv.Drones + GBS
+
+### Example Of Usage With SDR
+
+**SDR Integration:** Enhance your drone operations with Asv.Drones.Sdr, our custom-built SDR software available on GitHub [here](https://github.com/asv-soft/asv-drones-sdr). Designed to communicate via the MAVLink protocol, Asv.Drones.Sdr expands the capabilities of your drones beyond traditional control. Additionally, our software allows integration with any other SDR software that utilizes MAVLink, enabling a wide range of applications such as spectrum monitoring, signal intelligence, and radio relay (development of additional UI controls may be required). With Asv.Drones.Sdr, users can leverage SDR technology to scan and analyze radio frequency signals, intercept communication signals, and extend communication networks, empowering them to tackle diverse missions effectively.
+
 <div align="center">
-   ![image](https://github.com/asv-soft/asv-drones/assets/151620493/c21adb5f-e927-46b1-b003-1adbdee198f8)
-   ![image](https://github.com/asv-soft/asv-drones/assets/151620493/0e3dcc47-02ac-4a77-ad2c-8ac36b9c1e1c)
-   ![image](https://github.com/asv-soft/asv-drones/assets/151620493/17a86dc3-6fde-45c4-bb6e-0c51fe3b54d0)
+   <img src="img/asv-drones-sdr-connections.png" alt="sdr-connections" width="650" />
+   <img src="img/asv-drones-sdr-settings.png" alt="sdr-parameters" width="650" />
+   <img src="img/asv-drones-sdr-widget.png" alt="sdr-widget" width="650" />
+   <img src="img/asv-drones-sdr-packets.png" alt="sdr-packets" width="650" />
 </div>
 
 ## 3. Getting Started
@@ -82,11 +92,11 @@ Combine needed plugins and components to make application for your needs.
 
 To ensure a smooth development experience, follow the steps below to set up your development environment:
 
-#### 1. **Prerequisites:**
+### 3.1 Prerequisites:
 - **Operating System:** This project is compatible with Windows, macOS, and Linux. Ensure that your development machine runs one of these supported operating systems.
 - **IDE (Integrated Development Environment):** We recommend using [Visual Studio](https://visualstudio.microsoft.com/) or [JetBrains Rider](https://www.jetbrains.com/rider/) as your IDE for C# development. Make sure to install the necessary extensions and plugins for a better development experience.
 
-#### 2. **.NET Installation:**
+### 3.2 .NET Installation:
 - This project is built using [.NET 6.0](https://dotnet.microsoft.com/download/dotnet/6.0) and [.NET 7.0](https://dotnet.microsoft.com/download/dotnet/7.0), the latests version of the .NET platform. We recommend installing .NET 7.0 by following the instructions provided on the official [.NET website](https://dotnet.microsoft.com/download/dotnet/7.0).
 
    ```bash
@@ -94,33 +104,28 @@ To ensure a smooth development experience, follow the steps below to set up your
    dotnet --version
    ```
 
-#### 3. **Version Control:**
+### 3.3 Version Control:
 - If you haven't already, install a version control system such as [Git](https://git-scm.com/) to track changes and collaborate with other developers.
 
-#### 4. **Clone the Repository:**
+### 3.4 Clone the Repository:
 - Clone the project repository to your local machine using the following command:
 
    ```bash
    git clone https://github.com/asv-soft/asv-drones.git
    ```
 
-#### 5. **Restore Dependencies:**
-- Navigate to the project directory and restore the required dependencies using the following command:
+### 3.5 Restore Dependencies:
+- Navigate to the platform project directory and restore the required dependencies. There is 3 possible platform directories to build and debug our app: __Asv.Drones.Gui.Desktop__, __Asv.Drones.Gui.Android__, __Asv.Drones.Gui.iOS__.
+For example we will use __Asv.Drones.Gui.Desktop__ platform, so you have to execute the following command:
 
    ```bash
-   cd asv-drones
-   dotnet restore
+   cd asv-drones/src/Asv.Drones.Gui.Desktop
+   dotnet workload restore
+   dotnet workload repair
    ```
 
-#### 6. **Open in IDE:**
-- Open the project in your preferred IDE. For Visual Studio Code, you can open the project by typing:
-
-   ```bash
-   code .
-   ```
-
-#### 7. **Build and Run:**
-- Build the project to ensure that everything is set up correctly:
+### 3.6 Build and Run:
+- After restore you have to build the project to ensure that everything is set up correctly, and if it's not - try to restore workloads again:
 
    ```bash
    dotnet build
@@ -133,6 +138,67 @@ To ensure a smooth development experience, follow the steps below to set up your
    ```
 
 Congratulations! Your development environment is now set up, and you are ready to start contributing to the project. If you encounter any issues during the setup process, refer to the project's documentation or reach out to the development team for assistance.
+
+### Building for Android
+
+To build applications for Android, additional setup is required for JDK and Android SDK installation. Follow the instructions below based on your operating system.
+
+#### Windows
+
+1. Install the .NET MAUI Check tool to verify your environment is ready for .NET MAUI development:
+   ```
+   dotnet tool install -g Redth.Net.Maui.Check
+   maui-check
+   ```
+2. For Android SDK managing we recommend to install Android Studio.
+3. Using Android Studio's SDK Manager, download Android 13.0 (Tiramisu) and API level 33. It's highly recommended to create an Android Virtual Device (AVD) with these settings, preferably with tablet configurations for better testing experience.
+4. Build the project for Android:
+   ```
+   dotnet build -t:Run -f net7.0-android /p:AndroidSdkDirectory=${AndroidSdkPath}
+   ```
+- The `${AndroidSdkPath}` should be replaced with the actual path to your Android SDK installation.
+
+#### Linux
+
+1. Install Android Studio to manage Android SDKs:
+   ```
+   sudo snap install android-studio --classic
+   ```
+2. Install OpenJDK 11:
+   ```
+   sudo apt install openjdk-11-jdk
+   ```
+3. Using Android Studio's SDK Manager, download Android 13.0 (Tiramisu) and API level 33. It's highly recommended to create an Android Virtual Device (AVD) with these settings, preferably with tablet configurations for better testing experience.
+4. Build the project for Android:
+   ```
+   dotnet build -f net7.0-android /p:AndroidSdkDirectory=${AndroidSdkPath}
+   ```
+- The `${AndroidSdkPath}` should be replaced with the actual path to your Android SDK installation.
+
+#### MacOS
+
+1. Install Android Studio:
+   ```
+   brew install --cask android-studio
+   ```
+2. Install JDK through Homebrew or any preferred method:
+   ```
+   brew install openjdk
+   ```
+3. Using Android Studio's SDK Manager, download Android 13.0 (Tiramisu) and API level 33. It's highly recommended to create an Android Virtual Device (AVD) with these settings, preferably with tablet configurations for better testing experience.
+4. Build the project for Android, specifying the Android SDK directory:
+   ```
+   dotnet build -f net7.0-android /p:AndroidSdkDirectory=${AndroidSdkPath}
+   ```
+- The `${AndroidSdkPath}` should be replaced with the actual path to your Android SDK installation.
+
+### Additional Notes
+
+- If you want to run application after build you should start your previously created AVD and wait until it's startup processes are complete. Then you have to execute following command:
+    ```
+    dotnet run -f net7.0-android /p:AndroidSdkDirectory=${AndroidSdkPath}
+    ```
+- The `${AndroidSdkPath}` should be replaced with the actual path to your Android SDK installation.
 
 ## 4. Code Structure
 
