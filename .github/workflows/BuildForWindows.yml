@@ -32,13 +32,6 @@ jobs:
           dotnet tool install -g dotnet-setversion    
           setversion ${{ steps.version.outputs.version-without-v }} ${{ env.PATH_TO_PROJECTS }}\Asv.Drones.Gui.Desktop\Asv.Drones.Gui.Desktop.csproj      
     
-         
-      - name: Restoring dependencies    
-        run: |    
-          cd src    
-          dotnet restore ./src/Asv.Drones.Gui/Asv.Drones.Gui.csproj
-          dotnet restore ./src/Asv.Drones.Gui.Api/Asv.Drones.Gui.Api.csproj
-  
       - name: Building projects
         run: |    
           cd src    
