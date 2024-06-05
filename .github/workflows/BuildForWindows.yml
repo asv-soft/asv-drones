@@ -36,7 +36,12 @@ jobs:
         run: |    
           cd src    
           dotnet workload restore 
-    
+          
+      - name: Setup NuGet config
+        env:
+            NUGET_USERNAME: ${{ secrets.USER_NAME }}
+            NUGET_PASSWORD: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
+            
       - name: Building projects
         run: |    
           cd ${{ env.PATH_TO_PROJECTS }}\Asv.Drones.Gui.Desktop   
