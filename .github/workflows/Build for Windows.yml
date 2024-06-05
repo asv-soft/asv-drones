@@ -35,8 +35,9 @@ jobs:
          
       - name: Restoring dependencies    
         run: |    
-          cd src       
-          dotnet restore    
+          cd src    
+          dotnet restore ./src/Asv.Drones.Gui/Asv.Drones.Gui.csproj
+          dotnet restore ./src/Asv.Drones.Gui.Api/Asv.Drones.Gui.Api.csproj
   
       - name: Building projects
         run: |    
