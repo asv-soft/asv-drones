@@ -11,5 +11,5 @@ on:
 jobs:
   checkout:
     name: "Build for Windows"
-    uses: "asv-soft/asv-drones/.github/workflows/Build for Windows@v1"
+    uses: "asv-soft/asv-drones/.github/workflows/Build for Windows.yml@v1"
      
