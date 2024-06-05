@@ -31,12 +31,17 @@ jobs:
         run: |    
           dotnet tool install -g dotnet-setversion    
           setversion ${{ steps.version.outputs.version-without-v }} ${{ env.PATH_TO_PROJECTS }}\Asv.Drones.Gui.Desktop\Asv.Drones.Gui.Desktop.csproj      
+   
+      - name: Restore Nuget
+        run: |    
+          cd ${{ env.PATH_TO_PROJECTS }}\Asv.Drones.Gui.Desktop   
+          nuget restore
 
       - name: Restore workloads
         run: |    
-          cd src    
-          dotnet workload restore 
-            
+          cd ${{ env.PATH_TO_PROJECTS }}\Asv.Drones.Gui.Desktop
+          dotnet workload restore  
+
       - name: Building projects
         run: |    
           cd ${{ env.PATH_TO_PROJECTS }}\Asv.Drones.Gui.Desktop   
