@@ -3,10 +3,6 @@ name: Build and Release
 on:
  workflow_call:
 
-permissions:
-  actions: write
-  contents: write
-
 jobs:
   build-and-release:
     runs-on: windows-latest
