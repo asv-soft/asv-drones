@@ -1,6 +1,6 @@
 name: No Test Release Windows
 on:  
-  workflow_dispatch:
+ workflow_call:
 env:
   PATH_TO_PROJECTS: ${{ github.workspace }}\src
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output\
