@@ -36,6 +36,11 @@ jobs:
         run: |    
           cd src    
           dotnet build -c Release
-          files: |
-            *Setup.exe
-            *.zip
+  
+      - name: Publish
+        uses: actions/upload-artifact@v3
+        with:
+         name: release-package-${{ runner.os }}-${{ inputs.build-type }}-${{ inputs.arch != '' && inputs.arch || runner.arch }}
+         path: |
+          ${{ github.workspace }}/out/package/${{ inputs.preset-name }}/*.tar.*
+          ${{ github.workspace }}/out/package/${{ inputs.preset-name }}/*.zip
