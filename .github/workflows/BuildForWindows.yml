@@ -14,10 +14,14 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 8.0.x
-
+     
       # here you must define where your project is stored   
       - name: Install dependencies
-        run: dotnet restore ./src
+        run: dotnet restore ./src/Asv.Drones.Gui
+             dotnet restore ./src/Asv.Drones.Api
+             dotnet restore ./src/Asv.Drones.Desktop
+            
+        
 
       # here you must define path to your .sln
       - name: Build project
