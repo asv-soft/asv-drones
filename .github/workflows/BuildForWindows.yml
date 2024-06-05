@@ -31,16 +31,21 @@ jobs:
         run: |    
           dotnet tool install -g dotnet-setversion    
           setversion ${{ steps.version.outputs.version-without-v }} ${{ env.PATH_TO_PROJECTS }}\Asv.Drones.Gui.Desktop\Asv.Drones.Gui.Desktop.csproj      
+
+      - name: Restore workloads
+        run: |    
+          cd src    
+          dotnet workload restore 
     
       - name: Building projects
         run: |    
-          cd src    
+          cd ${{ env.PATH_TO_PROJECTS }}\Asv.Drones.Gui.Desktop   
           dotnet build -c Release
   
       - name: Publish
         uses: actions/upload-artifact@v3
         with:
-         name: release-package-${{ runner.os }}-${{ inputs.build-type }}-${{ inputs.arch != '' && inputs.arch || runner.arch }}
+         name: release-package-${{ runner.os }}-${{ inputs.build-type }}
          path: |
           ${{ github.workspace }}/out/package/${{ inputs.preset-name }}/*.tar.*
           ${{ github.workspace }}/out/package/${{ inputs.preset-name }}/*.zip
