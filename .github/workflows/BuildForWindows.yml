@@ -34,7 +34,7 @@ jobs:
    
       - name: Restore Nuget
         run: |    
-          cd ${{ env.PATH_TO_PROJECTS }}\Asv.Drones.Gui.Desktop   
+          cd src   
           nuget restore
 
       - name: Restore workloads
