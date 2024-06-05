@@ -27,13 +27,13 @@ jobs:
         run: |
             echo "<configuration>" > nuget.config
             echo "<packageSources>" >> nuget.config
-            echo "<add key=\"nuget.org\" value=\"https://api.nuget.org/v3/index.json\" protocolVersion=\"3\" />" >> nuget.config
-            echo "<add key=\"asv\" value=\"https://nuget.pkg.github.com/asv-soft/index.json\" />" >> nuget.config
+            echo "<add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" />" >> nuget.config
+            echo "<add key="asv" value="https://nuget.pkg.github.com/asv-soft/index.json" />" >> nuget.config
             echo "</packageSources>" >> nuget.config
             echo "<packageSourceCredentials>" >> nuget.config
             echo "<asv>" >> nuget.config
-            echo "<add key=\"Username\" value=\"$NUGET_USERNAME\" />" >> nuget.config
-            echo "<add key=\"ClearTextPassword\" value=\"$NUGET_PASSWORD\" />" >> nuget.config
+            echo "<add key="Username" value="$NUGET_USERNAME" />" >> nuget.config
+            echo "<add key="ClearTextPassword" value="$NUGET_PASSWORD" />" >> nuget.config
             echo "</asv>" >> nuget.config
             echo "</packageSourceCredentials>" >> nuget.config
             echo "</configuration>" >> nuget.config
