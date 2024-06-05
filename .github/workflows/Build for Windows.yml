@@ -1,5 +1,6 @@
 name: No Test Release Windows
-
+on:  
+  workflow_dispatch:
 env:
   PATH_TO_PROJECTS: ${{ github.workspace }}\src
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output\
@@ -37,11 +38,7 @@ jobs:
           cd src       
           dotnet restore    
   
-        steps:
-      - name: Building projects         
- 	      with: 
-            repo_token: "${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}" 
-            prerelease: false
+      - name: Building projects
         run: |    
           cd src    
           dotnet build -c Release
