@@ -1,56 +1,63 @@
-name: No Test Release Windows
-on:  
+name: Build and Release
+
+on:
  workflow_call:
-env:
-  PATH_TO_PROJECTS: ${{ github.workspace }}\src
-  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output\
-  NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
-  GITHUB_PACKAGES_URL: 'https://nuget.pkg.github.com/asv-soft/index.json'
+
+permissions:
+  actions: write
+  contents: write
 
 jobs:
-  deploy:
-    name: 'Deploy'
+  build-and-release:
     runs-on: windows-latest
-    steps:    
-      - name: 'Checkout'    
-        uses: actions/checkout@v3   
-      - name: Setup .Net    
-        uses: actions/setup-dotnet@v3
-        with:   
-          dotnet-version: |   
-            8.x.x   
-            
-      - name: Getting version   
-        id: version   
-        uses: battila7/get-version-action@v2    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Checking version   
-        run: echo ${{ steps.version.outputs.version-without-v }}    
-    
-      - name: Setting the project version   
-        run: |    
-          dotnet tool install -g dotnet-setversion    
-          setversion ${{ steps.version.outputs.version-without-v }} ${{ env.PATH_TO_PROJECTS }}\Asv.Drones.Gui.Desktop\Asv.Drones.Gui.Desktop.csproj      
-   
-      - name: Restore Nuget
-        run: |    
-          cd src   
-          nuget restore
-
-      - name: Restore workloads
-        run: |    
-          cd ${{ env.PATH_TO_PROJECTS }}\Asv.Drones.Gui.Desktop
-          dotnet workload restore  
-
-      - name: Building projects
-        run: |    
-          cd ${{ env.PATH_TO_PROJECTS }}\Asv.Drones.Gui.Desktop   
-          dotnet build -c Release --no-restore
-  
-      - name: Publish
-        uses: actions/upload-artifact@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
         with:
-         name: release-package-${{ runner.os }}-${{ inputs.build-type }}
-         path: |
-          ${{ github.workspace }}/out/package/${{ inputs.preset-name }}/*.tar.*
-          ${{ github.workspace }}/out/package/${{ inputs.preset-name }}/*.zip
+          dotnet-version: 8.0.x
+
+      # here you must define where your project is stored   
+      - name: Install dependencies
+        run: dotnet restore ./src
+
+      # here you must define path to your .sln
+      - name: Build project
+        run: dotnet build ./src/Asv.Drones.Gui.sln --configuration Release --no-restore
+
+      # here you must define path to your .csproj
+      - name: Publish project for installer
+        run: dotnet publish ./src/Asv.Drones.Gui.Desktop/Asv.Drones.Gui.Desktop.csproj -c Release -o ./publish/app
+        
+      - name: Install NSIS
+        run: choco install nsis
+
+      #here you must define path to your .nsi file (it is used for installer setup and creation)
+      - name: Create EXE installer
+        run: makensis ./setup.nsi
+      
+      - name: List output files
+        run: Get-ChildItem -Path ./publish/app -Force
+      
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: ${{ contains(github.ref, 'alpha') }}
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./AvaloniaAppInstaller.exe # path to the installer file
+          asset_name: asv-drones-${{ github.ref_name }}-setup.exe
+          asset_content_type: application/vnd.microsoft.portable-executable
