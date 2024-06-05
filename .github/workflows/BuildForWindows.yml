@@ -19,24 +19,6 @@ jobs:
         with:   
           dotnet-version: |   
             8.x.x   
-
-      - name: Setup NuGet config
-        env:
-            NUGET_USERNAME: ${{ secrets.USER_NAME }}
-            NUGET_PASSWORD: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
-        run: |
-            echo "<configuration>" > nuget.config
-            echo "<packageSources>" >> nuget.config
-            echo "<add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" />" >> nuget.config
-            echo "<add key="asv" value="https://nuget.pkg.github.com/asv-soft/index.json" />" >> nuget.config
-            echo "</packageSources>" >> nuget.config
-            echo "<packageSourceCredentials>" >> nuget.config
-            echo "<asv>" >> nuget.config
-            echo "<add key="Username" value="$NUGET_USERNAME" />" >> nuget.config
-            echo "<add key="ClearTextPassword" value="$NUGET_PASSWORD" />" >> nuget.config
-            echo "</asv>" >> nuget.config
-            echo "</packageSourceCredentials>" >> nuget.config
-            echo "</configuration>" >> nuget.config
             
       - name: Getting version   
         id: version   
@@ -58,7 +40,7 @@ jobs:
       - name: Building projects
         run: |    
           cd ${{ env.PATH_TO_PROJECTS }}\Asv.Drones.Gui.Desktop   
-          dotnet build -c Release
+          dotnet build -c Release --no-restore
   
       - name: Publish
         uses: actions/upload-artifact@v3
