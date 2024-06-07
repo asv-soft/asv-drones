@@ -10,7 +10,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
@@ -19,7 +18,7 @@ jobs:
       - name: Setup NuGet config
         env:
           NUGET_USERNAME: ${{ secrets.USER_NAME }}
-          NUGET_PASSWORD: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
+          NUGET_PASSWORD: ${{ secrets.NUGET_AUTH_TOKEN }}
         run: |
           echo '<configuration>' > nuget.config
           echo '<packageSources>' >> nuget.config
