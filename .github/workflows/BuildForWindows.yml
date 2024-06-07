@@ -14,15 +14,17 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 8.0.x
+      
+      - name: Install Workloads
+        run: |
+          cd src
+          dotnet workload restore
      
       # here you must define where your project is stored   
       - name: Install dependencies
         run: dotnet restore ./src/Asv.Drones.Gui.sln
 
-      - name: Install Workloads
-        run: |
-          cd src
-          dotnet workload restore
+      
         
       # here you must define path to your .sln
       - name: Build project
