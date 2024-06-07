@@ -1,11 +1,11 @@
 name: Build and Release
 
 on:
- workflow_call:
+  workflow_call:
 
 jobs:
   build-and-release:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -18,57 +18,53 @@ jobs:
 
       - name: Setup NuGet config
         env:
-            NUGET_USERNAME: ${{ secrets.USER_NAME }}
-            NUGET_PASSWORD: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
+          NUGET_USERNAME: ${{ secrets.USER_NAME }}
+          NUGET_PASSWORD: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
         run: |
-            echo "<configuration>" > nuget.config
-            echo "<packageSources>" >> nuget.config
-            echo "<add key=\"nuget.org\" value=\"https://api.nuget.org/v3/index.json\" protocolVersion=\"3\" />" >> nuget.config
-            echo "<add key=\"asv\" value=\"https://nuget.pkg.github.com/asv-soft/index.json\" />" >> nuget.config
-            echo "</packageSources>" >> nuget.config
-            echo "<packageSourceCredentials>" >> nuget.config
-            echo "<asv>" >> nuget.config
-            echo "<add key=\"Username\" value=\"$NUGET_USERNAME\" />" >> nuget.config
-            echo "<add key=\"ClearTextPassword\" value=\"$NUGET_PASSWORD\" />" >> nuget.config
-            echo "</asv>" >> nuget.config
-            echo "</packageSourceCredentials>" >> nuget.config
-            echo "</configuration>" >> nuget.config
+          echo "<configuration>" > nuget.config
+          echo "<packageSources>" >> nuget.config
+          echo "<add key=\"nuget.org\" value=\"https://api.nuget.org/v3/index.json\" protocolVersion=\"3\" />" >> nuget.config
+          echo "<add key=\"asv\" value=\"https://nuget.pkg.github.com/asv-soft/index.json\" />" >> nuget.config
+          echo "</packageSources>" >> nuget.config
+          echo "<packageSourceCredentials>" >> nuget.config
+          echo "<asv>" >> nuget.config
+          echo "<add key=\"Username\" value=\"$NUGET_USERNAME\" />" >> nuget.config
+          echo "<add key=\"ClearTextPassword\" value=\"$NUGET_PASSWORD\" />" >> nuget.config
+          echo "</asv>" >> nuget.config
+          echo "</packageSourceCredentials>" >> nuget.config
+          echo "</configuration>" >> nuget.config
 
-      
-      - name: Install Workloads
-        run: |
-          cd src
-          dotnet workload restore
-     
-      # here you must define where your project is stored   
       - name: Install dependencies
-        run: dotnet restore ./src/Asv.Drones.Gui.sln
+        run: |
+          dotnet restore ./src/Asv.Drones.Gui.Api/Asv.Drones.Gui.Api.csproj
+          dotnet restore ./src/Asv.Drones.Gui/Asv.Drones.Gui.csproj
+          dotnet restore ./src/Asv.Drones.Gui.Desktop/Asv.Drones.Gui.Desktop.csproj
 
-      
-        
-      # here you must define path to your .sln
-      - name: Build project
-        run: dotnet build ./src/Asv.Drones.Gui.sln --configuration Release --no-restore
+      - name: Build
+        run: |
+          dotnet restore ./src/Asv.Drones.Gui.Api/Asv.Drones.Gui.Api.csproj --configuration Release --no-restore
+          dotnet restore ./src/Asv.Drones.Gui/Asv.Drones.Gui.csproj --configuration Release --no-restore
+          dotnet restore ./src/Asv.Drones.Gui.Desktop/Asv.Drones.Gui.Desktop.csproj --configuration Release --no-restore
 
       # here you must define path to your .csproj
       - name: Publish project for installer
         run: dotnet publish ./src/Asv.Drones.Gui.Desktop/Asv.Drones.Gui.Desktop.csproj -c Release -o ./publish/app
-        
+
       - name: Install NSIS
         run: choco install nsis
 
       #here you must define path to your .nsi file (it is used for installer setup and creation)
       - name: Create EXE installer
-        run: makensis ./setup.nsi
-      
+        run: makensis ./win-64-install.nsi
+
       - name: List output files
         run: Get-ChildItem -Path ./publish/app -Force
-      
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
@@ -78,9 +74,6 @@ jobs:
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./AvaloniaAppInstaller.exe # path to the installer file
-          asset_name: asv-drones-${{ github.ref_name }}-setup.exe
-          asset_content_type: application/vnd.microsoft.portable-executable
