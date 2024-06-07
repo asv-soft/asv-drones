@@ -20,7 +20,7 @@ jobs:
           NUGET_USERNAME: ${{ secrets.USER_NAME }}
           NUGET_PASSWORD: ${{ secrets.NUGET_AUTH_TOKEN }}
         run: |
-          echo '<configuration>' > nuget.config
+          echo '<configuration>' >> nuget.config
           echo '<packageSources>' >> nuget.config
           echo '<add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" />' >> nuget.config
           echo '<add key="asv" value="https://nuget.pkg.github.com/asv-soft/index.json" />' >> nuget.config
