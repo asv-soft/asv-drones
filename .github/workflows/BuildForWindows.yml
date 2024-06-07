@@ -16,8 +16,11 @@ jobs:
           dotnet-version: 8.0.x
       
       - name: Add NuGet source
+        env:
+            NUGET_USERNAME: ${{ secrets.USER_NAME }}
+            NUGET_PASSWORD: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
         run: |
-          dotnet nuget add source "https://nuget.pkg.github.com/$%7BGITHUB_OWNER%7D/index.json" \--username ${{ secrets.USER_NAME }} \--password ${{ secrets.GITHUB_NUGET_AUTH_TOKEN }} \--store-password-in-clear-text
+          dotnet nuget add source "https://nuget.pkg.github.com/$%7BGITHUB_OWNER%7D/index.json" \--username ${{env.NUGET_USERNAME}} \--password ${{env.GIHUB_NUGET_AUTH_TOKEN}} \--store-password-in-clear-text
 
 
 
