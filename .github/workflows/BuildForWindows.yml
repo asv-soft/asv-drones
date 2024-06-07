@@ -5,7 +5,7 @@ on:
 
 jobs:
   build-and-release:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -17,21 +17,23 @@ jobs:
 
       - name: Setup NuGet config
         env:
-          NUGET_USERNAME: ${{ secrets.USER_NAME }}
-          NUGET_PASSWORD: ${{ secrets.NUGET_AUTH_TOKEN }}
+            NUGET_USERNAME: ${{ secrets.USER_NAME }}
+            NUGET_PASSWORD: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
         run: |
-          echo '<configuration>' >> D:\a\asv-drones\asv-drones\NuGet.Config
-          echo '<packageSources>' >> D:\a\asv-drones\asv-drones\NuGet.Config
-          echo '<add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" />' >> D:\a\asv-drones\asv-drones\NuGet.Config
-          echo '<add key="asv" value="https://nuget.pkg.github.com/asv-soft/index.json" />' >> D:\a\asv-drones\asv-drones\NuGet.Config
-          echo '</packageSources>' >> D:\a\asv-drones\asv-drones\NuGet.Config
-          echo '<packageSourceCredentials>' >> D:\a\asv-drones\asv-drones\NuGet.Config
-          echo '<asv>' >> D:\a\asv-drones\asv-drones\NuGet.Config
-          echo '<add key="Username" value="$NUGET_USERNAME" />' >> D:\a\asv-drones\asv-drones\NuGet.Config
-          echo '<add key="ClearTextPassword" value="$NUGET_PASSWORD" />' >> D:\a\asv-drones\asv-drones\NuGet.Config
-          echo '</asv>' >> D:\a\asv-drones\asv-drones\NuGet.Config
-          echo '</packageSourceCredentials>' >> D:\a\asv-drones\asv-drones\NuGet.Config
-          echo '</configuration>' >> D:\a\asv-drones\asv-drones\NuGet.Config
+            echo "<configuration>" > nuget.config
+            echo "<packageSources>" >> nuget.config
+            echo "<add key=\"nuget.org\" value=\"https://api.nuget.org/v3/index.json\" protocolVersion=\"3\" />" >> nuget.config
+            echo "<add key=\"asv\" value=\"https://nuget.pkg.github.com/asv-soft/index.json\" />" >> nuget.config
+            echo "</packageSources>" >> nuget.config
+            echo "<packageSourceCredentials>" >> nuget.config
+            echo "<asv>" >> nuget.config
+            echo "<add key=\"Username\" value=\"$NUGET_USERNAME\" />" >> nuget.config
+            echo "<add key=\"ClearTextPassword\" value=\"$NUGET_PASSWORD\" />" >> nuget.config
+            echo "</asv>" >> nuget.config
+            echo "</packageSourceCredentials>" >> nuget.config
+            echo "</configuration>" >> nuget.config
+
+
 
       - name: Install dependencies
         run: |
@@ -44,6 +46,22 @@ jobs:
           dotnet restore ./src/Asv.Drones.Gui.Api/Asv.Drones.Gui.Api.csproj --configuration Release --no-restore
           dotnet restore ./src/Asv.Drones.Gui/Asv.Drones.Gui.csproj --configuration Release --no-restore
           dotnet restore ./src/Asv.Drones.Gui.Desktop/Asv.Drones.Gui.Desktop.csproj --configuration Release --no-restore
+
+      - name: Set version variable
+        env:
+          TAG: ${{ github.ref_name }}
+        run: echo "VERSION=${TAG#v}" >> $GITHUB_ENV
+
+      - name: Read version from Directory.Build.props
+        id: read-version
+        run: echo "::set-output name=version::$(grep -oP '<ProductVersion>\K[^<]+' ./src/Directory.Build.props)"
+
+      - name: Compare tag with NuGet package version
+        run: |
+          if [ "${{ steps.read-version.outputs.version }}" != "${{ env.VERSION }}" ]; then
+            echo "Error: Tag does not match NuGet package version"
+            exit 1
+          fi
 
       # here you must define path to your .csproj
       - name: Publish project for installer
