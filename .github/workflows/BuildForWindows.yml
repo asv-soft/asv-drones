@@ -17,12 +17,8 @@ jobs:
      
       # here you must define where your project is stored   
       - name: Install dependencies
-        run: dotnet restore ./src/Asv.Drones.Gui
-             dotnet restore ./src/Asv.Drones.Api
-             dotnet restore ./src/Asv.Drones.Desktop
-            
+        run: dotnet restore ./src/Asv.Drones.Gui.sln
         
-
       # here you must define path to your .sln
       - name: Build project
         run: dotnet build ./src/Asv.Drones.Gui.sln --configuration Release --no-restore
