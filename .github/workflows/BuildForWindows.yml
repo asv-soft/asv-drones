@@ -14,21 +14,10 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 8.0.x
-
-      - name: Setup NuGet config
+      
+      - name: Add NuGet source
         run: |
-            echo "<configuration>" >> nuget.config
-            echo "<packageSources>" >> nuget.config
-            echo "<add key=\"nuget.org\" value=\"https://api.nuget.org/v3/index.json\" protocolVersion=\"3\" />" >> nuget.config
-            echo "<add key=\"asv\" value=\"https://nuget.pkg.github.com/asv-soft/index.json\" />" >> nuget.config
-            echo "</packageSources>" >> nuget.config
-            echo "<packageSourceCredentials>" >> nuget.config
-            echo "<asv>" >> nuget.config
-            echo "<add key=\"Username\" value=\""${{ secrets.USER_NAME }}"\" />" >> nuget.config
-            echo "<add key=\"ClearTextPassword\" value=\""${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}"\" />" >> nuget.config
-            echo "</asv>" >> nuget.config
-            echo "</packageSourceCredentials>" >> nuget.config
-            echo "</configuration>" >> nuget.config
+          dotnet nuget add source "https://nuget.pkg.github.com/$%7BGITHUB_OWNER%7D/index.json" \--username ${{ secrets.USER_NAME }} \--password ${{ secrets.GITHUB_NUGET_AUTH_TOKEN }} \--store-password-in-clear-text
 
 
 
