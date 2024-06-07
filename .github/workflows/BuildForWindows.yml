@@ -20,18 +20,18 @@ jobs:
           NUGET_USERNAME: ${{ secrets.USER_NAME }}
           NUGET_PASSWORD: ${{ secrets.NUGET_AUTH_TOKEN }}
         run: |
-          echo '<configuration>' >> nuget.config
-          echo '<packageSources>' >> nuget.config
-          echo '<add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" />' >> nuget.config
-          echo '<add key="asv" value="https://nuget.pkg.github.com/asv-soft/index.json" />' >> nuget.config
-          echo '</packageSources>' >> nuget.config
-          echo '<packageSourceCredentials>' >> nuget.config
-          echo '<asv>' >> nuget.config
-          echo '<add key="Username" value="$NUGET_USERNAME" />' >> nuget.config
-          echo '<add key="ClearTextPassword" value="$NUGET_PASSWORD" />' >> nuget.config
-          echo '</asv>' >> nuget.config
-          echo '</packageSourceCredentials>' >> nuget.config
-          echo '</configuration>' >> nuget.config
+          echo '<configuration>' >> D:\a\asv-drones\asv-drones\NuGet.Config
+          echo '<packageSources>' >> D:\a\asv-drones\asv-drones\NuGet.Config
+          echo '<add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" />' >> D:\a\asv-drones\asv-drones\NuGet.Config
+          echo '<add key="asv" value="https://nuget.pkg.github.com/asv-soft/index.json" />' >> D:\a\asv-drones\asv-drones\NuGet.Config
+          echo '</packageSources>' >> D:\a\asv-drones\asv-drones\NuGet.Config
+          echo '<packageSourceCredentials>' >> D:\a\asv-drones\asv-drones\NuGet.Config
+          echo '<asv>' >> D:\a\asv-drones\asv-drones\NuGet.Config
+          echo '<add key="Username" value="$NUGET_USERNAME" />' >> D:\a\asv-drones\asv-drones\NuGet.Config
+          echo '<add key="ClearTextPassword" value="$NUGET_PASSWORD" />' >> D:\a\asv-drones\asv-drones\NuGet.Config
+          echo '</asv>' >> D:\a\asv-drones\asv-drones\NuGet.Config
+          echo '</packageSourceCredentials>' >> D:\a\asv-drones\asv-drones\NuGet.Config
+          echo '</configuration>' >> D:\a\asv-drones\asv-drones\NuGet.Config
 
       - name: Install dependencies
         run: |
