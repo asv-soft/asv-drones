@@ -18,9 +18,7 @@ jobs:
       - name: Add NuGet source
       
         run: |
-          dotnet nuget add source "https://nuget.pkg.github.com/asv-soft/index.json" \--username '${secrets.USER_NAME}' \--password '${secrets.GITHUB_NUGET_AUTH_TOKEN}' \--store-password-in-clear-text
-
-
+          dotnet nuget add source "https://nuget.pkg.github.com/asv-soft/index.json" \--username '${{secrets.USER_NAME}}' \--password '${{secrets.GITHUB_NUGET_AUTH_TOKEN}}' \--store-password-in-clear-text
 
       - name: Install dependencies
         run: |
