@@ -26,7 +26,6 @@
         <PackageReference Include="Avalonia.Xaml.Interactions" Version="$(AvaloniaVersion)"/>
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)"/>
-        <PackageReference Include="NLog" Version="$(NLogVersion)"/>
 
         <PackageReference Include="NuGet.Packaging" Version="6.8.0"/>
         <PackageReference Include="NuGet.Packaging.Core" Version="6.8.0"/>
