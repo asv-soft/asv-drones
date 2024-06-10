@@ -87,3 +87,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./AsvDronesGuiInstaller.exe
           asset_name: ${asv-drones-{ github.ref }}-setup.exe
+          asset_content_type: application/vnd.microsoft.portable-executable
