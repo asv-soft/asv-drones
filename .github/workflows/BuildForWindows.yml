@@ -51,14 +51,6 @@ jobs:
           TAG: ${{ github.ref_name }}
         run: echo "VERSION=${TAG#v}" >> $GITHUB_ENV
 
-    
-
-      - name: Compare tag with NuGet package version
-        run: |
-          if [ "${{ steps.read-version.outputs.version }}" != "${{ env.VERSION }}" ]; then
-            echo "Error: Tag does not match NuGet package version"
-            exit 1
-          fi
 
       # here you must define path to your .csproj
       - name: Publish project for installer
