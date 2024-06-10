@@ -19,7 +19,7 @@ jobs:
       
         run: |
           dotnet nuget add source "https://nuget.pkg.github.com/asv-soft/index.json" \--username '${{secrets.USER_NAME}}' \--password '${{secrets.GITHUB_NUGET_AUTH_TOKEN}}' \--store-password-in-clear-text
-
+          git config --list --show-origin
       - name: Install dependencies
         run: |
           dotnet restore ./src/Asv.Drones.Gui.Api/Asv.Drones.Gui.Api.csproj
