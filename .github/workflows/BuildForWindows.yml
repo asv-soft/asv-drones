@@ -28,8 +28,8 @@ jobs:
           echo "</packageSources>" >> nuget.config
           echo "<packageSourceCredentials>" >> nuget.config
           echo "<asv>" >> nuget.config
-          echo "<add key=\"Username\" value=\"$NUGET_USERNAME\" />" >> nuget.config
-          echo "<add key=\"ClearTextPassword\" value=\"$NUGET_PASSWORD\" />" >> nuget.config
+          echo '<add key="Username" value="${NUGET_USERNAME}" />' >> nuget.config
+          echo '<add key="ClearTextPassword" value="${NUGET_PASSWORD}" />' >> nuget.config
           echo "</asv>" >> nuget.config
           echo "</packageSourceCredentials>" >> nuget.config
           echo "</configuration>" >> nuget.config
