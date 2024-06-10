@@ -21,7 +21,7 @@ jobs:
           NUGET_USERNAME: ${{ secrets.USER_NAME }}
           NUGET_PASSWORD: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }} 
         run: |
-          dotnet nuget add source "https://nuget.pkg.github.com/asv-soft/index.json" --username "${NUGET_USERNAME}" --password "${NUGET_PASSWORD}" --store-password-in-clear-text
+          dotnet nuget add source "https://nuget.pkg.github.com/asv-soft/index.json" --username "${$NUGET_USERNAME}" --password "${$NUGET_PASSWORD}" --store-password-in-clear-text
           git config --list --show-origin
           
       - name: Install dependencies
