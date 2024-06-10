@@ -67,7 +67,11 @@ jobs:
         run: dotnet publish ./src/Asv.Drones.Gui.Desktop/Asv.Drones.Gui.Desktop.csproj -c Release -o ./publish/app
 
       - name: Install NSIS
-        run: choco install nsis
+        run: |
+              sudo apt update && sudo apt install -y curl gnupg
+              curl -sSL https://install.choco.sh/ | sh
+              sudo sh -c "echo 'source /usr/local/share/choco/functions/choco' >> ~/.bashrc"
+              choco install nsis
 
       #here you must define path to your .nsi file (it is used for installer setup and creation)
       - name: Create EXE installer
