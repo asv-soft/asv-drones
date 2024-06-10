@@ -6,7 +6,7 @@ on:
       - "v*"
 jobs:
   build-and-release:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -21,18 +21,8 @@ jobs:
           NUGET_USERNAME: ${{ secrets.USER_NAME }}
           NUGET_PASSWORD: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }} 
         run: |
-          echo "<configuration>" > nuget.config
-          echo "<packageSources>" >> nuget.config
-          echo "<add key=\"nuget.org\" value=\"https://api.nuget.org/v3/index.json\" protocolVersion=\"3\" />" >> nuget.config
-          echo "<add key=\"asv\" value=\"https://nuget.pkg.github.com/asv-soft/index.json\" />" >> nuget.config
-          echo "</packageSources>" >> nuget.config
-          echo "<packageSourceCredentials>" >> nuget.config
-          echo "<asv>" >> nuget.config
-          echo "<add key=\"Username\" value=\"$NUGET_USERNAME\" />" >> nuget.config
-          echo "<add key=\"ClearTextPassword\" value=\"$NUGET_PASSWORD\" />" >> nuget.config
-          echo "</asv>" >> nuget.config
-          echo "</packageSourceCredentials>" >> nuget.config
-          echo "</configuration>" >> nuget.config
+          dotnet nuget add source "https://nuget.pkg.github.com/asv-soft/index.json" --username "${NUGET_USERNAME}" --password "${NUGET_PASSWORD}" --store-password-in-clear-text
+          git config --list --show-origin
           
       - name: Install dependencies
         run: |
@@ -68,9 +58,6 @@ jobs:
 
       - name: Install NSIS
         run: |
-              sudo apt update && sudo apt install -y curl gnupg
-              curl -sSL https://install.choco.sh/ | sh
-              sudo sh -c "echo 'source /usr/local/share/choco/functions/choco' >> ~/.bashrc"
               choco install nsis
 
       #here you must define path to your .nsi file (it is used for installer setup and creation)
