@@ -4,7 +4,6 @@ using System.Collections.Immutable;
 using System.Composition;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using Asv.Drones.Gui.Api;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
@@ -47,7 +46,7 @@ public class PlaningMissionSavingBrowserViewModel : HierarchicalStoreViewModel<G
         base.RefreshImpl();
     }
 
-    public IObservable<bool> CanSave => this.WhenPropertyChanged(x => x.FileName)
+    private IObservable<bool> CanSave => this.WhenPropertyChanged(x => x.FileName)
         .Select(x => x.Value != string.Empty);
 
     protected override Guid GenerateNewId() => Guid.NewGuid();
@@ -56,11 +55,11 @@ public class PlaningMissionSavingBrowserViewModel : HierarchicalStoreViewModel<G
     {
         dialog.PrimaryButtonCommand = ReactiveCommand.Create(() =>
         {
-            if (SelectedItem != null) DialogResult = (Guid)SelectedItem.Id;
-        }, CanSave.Do(_ => dialog.IsPrimaryButtonEnabled = _));
+            if (SelectedItem != null)
+            {
+            }
+        }, CanSave.Do(v => dialog.IsPrimaryButtonEnabled = v));
     }
-
-    public Guid DialogResult { get; set; }
 
     protected override IReadOnlyCollection<HierarchicalStoreEntryTagViewModel> InternalGetEntryTags(
         IHierarchicalStoreEntry<Guid> itemValue)
@@ -71,8 +70,7 @@ public class PlaningMissionSavingBrowserViewModel : HierarchicalStoreViewModel<G
                 using (var file = _svc.MissionStore.OpenFile(itemValue.Id))
                 {
                     var item = file.File.Load();
-                    if (item == null) return ArraySegment<HierarchicalStoreEntryTagViewModel>.Empty;
-                    return item.Points.Select(x => x.Type).Distinct().Select(x => ConvertToTag(x)).ToImmutableArray();
+                    return item.Points.Select(x => x.Type).Distinct().Select(ConvertToTag).ToImmutableArray();
                 }
             case FolderStoreEntryType.Folder:
                 return base.InternalGetEntryTags(itemValue);
@@ -91,17 +89,24 @@ public class PlaningMissionSavingBrowserViewModel : HierarchicalStoreViewModel<G
         };
     }
 
-    public void SaveAsImpl(out ICachedFile<Guid,PlaningMissionFile>? file)
+    public void SaveAsImpl(out Guid id)
     {
-        file = null;
         Guid parentId;
-        parentId = SelectedItem != null
-            ? (Guid)(SelectedItem.Type == FolderStoreEntryType.Folder ? SelectedItem.Id : SelectedItem.ParentId)
-            : _svc.MissionStore.RootFolderId;
+        Guid fileId = default;
+        if (SelectedItem != null)
+        {
+            parentId =
+                (Guid)(SelectedItem.Type == FolderStoreEntryType.Folder ? SelectedItem.Id : SelectedItem.ParentId);
+        }
+        else
+        {
+            parentId = _svc.MissionStore.RootFolderId;
+        }
 
         try
         {
-            file = _svc.MissionStore.CreateFile(GenerateNewId(), FileName, parentId);
+            using var file = _svc.MissionStore.CreateFile(GenerateNewId(), FileName, parentId);
+            fileId = file.Id;
         }
         catch (HierarchicalStoreFolderAlreadyExistException)
         {
@@ -116,10 +121,11 @@ public class PlaningMissionSavingBrowserViewModel : HierarchicalStoreViewModel<G
             var result = dialog.ShowAsync();
             if (result.Result == ContentDialogResult.Primary)
             {
-                file = null; //todo
+                id = default;
             }
         }
 
+        id = fileId;
         Refresh.Execute().Subscribe(_ => { });
     }
 }

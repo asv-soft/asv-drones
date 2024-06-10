@@ -2,21 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Composition;
-using System.IO;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
-using Asv.Mavlink;
 using DynamicData;
 using DynamicData.Binding;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using MavlinkHelper = Asv.Mavlink.MavlinkHelper;
 
 namespace Asv.Drones.Gui;
 
@@ -261,13 +258,12 @@ public class PlaningPageViewModel : MapPageViewModel, IPlaningMissionContext
         var result = await dialog.ShowAsync();
         if (result == ContentDialogResult.Primary)
         {
-            viewModel.SaveAsImpl(out var file);
+            viewModel.SaveAsImpl(out var id);
             
             var points = Mission?.Points;
 
-            if (file == null) throw new FileNotFoundException();
             if (points == null) throw new NullReferenceException();
-            OpenMission(file.Id);
+            OpenMission(id);
 
             foreach (var point in points) Mission?.AddOrUpdatePoint(point.Point);
             

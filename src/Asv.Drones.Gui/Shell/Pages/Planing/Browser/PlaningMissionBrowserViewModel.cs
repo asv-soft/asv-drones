@@ -19,7 +19,7 @@ public class PlaningMissionBrowserViewModel : HierarchicalStoreViewModel<Guid, P
 {
     private readonly IPlaningMission _svc;
 
-    public PlaningMissionBrowserViewModel() : base()
+    public PlaningMissionBrowserViewModel()
     {
         DesignTime.ThrowIfNotDesignMode();
     }
@@ -42,7 +42,7 @@ public class PlaningMissionBrowserViewModel : HierarchicalStoreViewModel<Guid, P
         base.RefreshImpl();
     }
 
-    public IObservable<bool> CanOpen => this.WhenValueChanged(x => x.SelectedItem)
+    private IObservable<bool> CanOpen => this.WhenValueChanged(x => x.SelectedItem)
         .Select(item => item is { Type: FolderStoreEntryType.File });
 
     protected override Guid GenerateNewId() => Guid.NewGuid();
@@ -52,10 +52,10 @@ public class PlaningMissionBrowserViewModel : HierarchicalStoreViewModel<Guid, P
         dialog.PrimaryButtonCommand = ReactiveCommand.Create(() =>
         {
             if (SelectedItem != null) DialogResult = (Guid)SelectedItem.Id;
-        }, CanOpen.Do(_ => dialog.IsPrimaryButtonEnabled = _));
+        }, CanOpen.Do(v => dialog.IsPrimaryButtonEnabled = v));
     }
 
-    public Guid DialogResult { get; set; }
+    public Guid DialogResult { get; private set; }
 
     protected override IReadOnlyCollection<HierarchicalStoreEntryTagViewModel> InternalGetEntryTags(
         IHierarchicalStoreEntry<Guid> itemValue)
@@ -66,8 +66,7 @@ public class PlaningMissionBrowserViewModel : HierarchicalStoreViewModel<Guid, P
                 using (var file = _svc.MissionStore.OpenFile(itemValue.Id))
                 {
                     var item = file.File.Load();
-                    if (item == null) return ArraySegment<HierarchicalStoreEntryTagViewModel>.Empty;
-                    return item.Points.Select(x => x.Type).Distinct().Select(x => ConvertToTag(x)).ToImmutableArray();
+                    return item.Points.Select(x => x.Type).Distinct().Select(ConvertToTag).ToImmutableArray();
                 }
             case FolderStoreEntryType.Folder:
                 return base.InternalGetEntryTags(itemValue);
