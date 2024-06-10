@@ -77,6 +77,8 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: ${{ contains(github.ref, 'alpha') }}
+          asset_path: "./src/Asv.Drones.Gui.Desktop/obj/.net8.0/"
+          asset_name: ${{ github.ref }}
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
