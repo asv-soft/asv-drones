@@ -16,6 +16,7 @@ namespace Asv.Drones.Gui
             : base(vehicle, "goto")
         {
             Size = 32;
+            BaseSize = 32;
             OffsetX = OffsetXEnum.Center;
             OffsetY = OffsetYEnum.Center;
             Icon = MaterialIconKind.Target;

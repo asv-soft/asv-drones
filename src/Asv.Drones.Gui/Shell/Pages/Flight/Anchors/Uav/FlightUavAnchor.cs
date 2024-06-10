@@ -26,9 +26,11 @@ namespace Asv.Drones.Gui
             _actionsProviders = actionsProviders;
             _loc = loc;
             Size = 48;
+            BaseSize = 48;
             OffsetX = OffsetXEnum.Center;
             OffsetY = OffsetYEnum.Center;
             StrokeThickness = 1;
+            BaseStrokeThickness = 1;
             Stroke = Brushes.Honeydew;
             IconBrush = Brushes.Red;
             IsVisible = true;

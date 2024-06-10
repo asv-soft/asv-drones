@@ -14,6 +14,7 @@ namespace Asv.Drones.Gui
         public RoiAnchor(IVehicleClient vehicle) : base(vehicle, "roi")
         {
             Size = 32;
+            BaseSize = 32;
             OffsetX = OffsetXEnum.Center;
             OffsetY = OffsetYEnum.Center;
             Icon = MaterialIconKind.ImageFilterCenterFocus;
