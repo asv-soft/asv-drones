@@ -51,9 +51,7 @@ jobs:
           TAG: ${{ github.ref_name }}
         run: echo "VERSION=${TAG#v}" >> $GITHUB_ENV
 
-      - name: Read version from Directory.Build.props
-        id: read-version
-        run: echo "::set-output name=version::$(grep -oP '<ProductVersion>\K[^<]+' ./src/Directory.Build.props)"
+    
 
       - name: Compare tag with NuGet package version
         run: |
