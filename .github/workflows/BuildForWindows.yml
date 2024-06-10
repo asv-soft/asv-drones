@@ -62,7 +62,7 @@ jobs:
 
       #here you must define path to your .nsi file (it is used for installer setup and creation)
       - name: Create EXE installer
-        run: makensis ./publish/app ./win-64-install.nsi
+        run: makensis ./win-64-install.nsi
 
       - name: List output files
         run: Get-ChildItem -Path ./publish/app -Force
