@@ -252,7 +252,7 @@ public class PlaningPageViewModel : MapPageViewModel, IPlaningMissionContext
             SecondaryButtonText = RS.PlanningPageViewModel_MissionSavingBrowserDialog_SecondaryButton
         };
 
-        using var viewModel = new PlaningMissionSavingBrowserViewModel(_svc, _log);
+        using var viewModel = new PlaningMissionSavingBrowserViewModel(_svc, _log, Mission?.Name);
         viewModel.ApplyDialog(dialog);
         dialog.Content = viewModel;
         var result = await dialog.ShowAsync();

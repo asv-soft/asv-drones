@@ -15,7 +15,6 @@
         <api:HierarchicalStoreView MinWidth="450" MinHeight="450" HorizontalAlignment="Stretch" />
         <TextBox 
             Margin="0 8 0 0"
-            Watermark="New File 1"
             Text="{Binding FileName}"
             HorizontalAlignment="Stretch" />
     </StackPanel>

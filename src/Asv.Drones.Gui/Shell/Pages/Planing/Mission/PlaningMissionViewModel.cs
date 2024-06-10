@@ -32,7 +32,7 @@ public class PlaningMissionViewModel : DisposableReactiveObjectWithValidation
         DesignTime.ThrowIfNotDesignMode();
     }
 
-    public PlaningMissionViewModel(Guid id, string name, ILogService log, IPlaningMissionPointFactory pointFactory,
+    public PlaningMissionViewModel(Guid id, string? name, ILogService log, IPlaningMissionPointFactory pointFactory,
         IPlaningMission svc, IPlaningMissionContext context)
     {
         _id = id;
@@ -140,7 +140,7 @@ public class PlaningMissionViewModel : DisposableReactiveObjectWithValidation
     }
 
     public Guid MissionId => _id;
-    [Reactive] public string Name { get; set; }
+    [Reactive] public string? Name { get; set; }
     [Reactive] public bool IsChanged { get; set; }
     [Reactive] public double TotalDistance { get; set; }
     public ReadOnlyObservableCollection<PlaningMissionPointViewModel> Points => _points;

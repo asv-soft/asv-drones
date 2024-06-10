@@ -27,14 +27,15 @@ public class PlaningMissionSavingBrowserViewModel : HierarchicalStoreViewModel<G
     }
 
     [ImportingConstructor]
-    public PlaningMissionSavingBrowserViewModel(IPlaningMission svc, ILogService log) : base(
+    public PlaningMissionSavingBrowserViewModel(IPlaningMission svc, ILogService log, string? name) : base(
         WellKnownUri.ShellPageMapPlaningMissionSavingBrowserUri, svc.MissionStore, log)
     {
         _svc = svc;
+        FileName = name;
         using var a = Refresh.Execute().Subscribe();
     }
     
-    [Reactive] public string FileName { get; set; } = string.Empty;
+    [Reactive] public string? FileName { get; set; } = string.Empty;
 
     protected override void RefreshImpl()
     {
