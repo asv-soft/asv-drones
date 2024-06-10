@@ -1,8 +1,9 @@
 name: Build and Release
 
 on:
-  workflow_call:
-
+  push:
+    tags:
+      - "v*"
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
