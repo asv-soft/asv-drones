@@ -84,12 +84,12 @@ jobs:
         uses: actions/create-release@v1 
         env:
             GITHUB_TOKEN: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
+            RELEASE_BODY: ${{ steps.create-release-notes.outputs.release-notes }}
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: ${{ contains(github.ref, 'alpha') }}
-          body: ${{ steps.create-release-notes.outputs.release-notes }}
         
 
       - name: Upload Release Asset
