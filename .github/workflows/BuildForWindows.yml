@@ -69,7 +69,7 @@ jobs:
         
       - name: Get contributors     
         run: 
-            gh shortlog -sn --no-merges
+            git shortlog -sn --no-merges
 
       - name: Create release notes
         id: create-release-notes
