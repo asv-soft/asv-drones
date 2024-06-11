@@ -67,11 +67,12 @@ jobs:
       - name: List output files
         run: Get-ChildItem -Path ./publish/app -Force
         
-      - name: Get contributors
+      - name: Get contributors     
         run: 
-            git shortlog -sn --no-merges
+            gh shortlog -sn --no-merges
 
       - name: Create release notes
+        id: create-release-notes
         run: 
             echo "## Last 10 commits:"
             git log -n 10 --format="%s (%h) %ad" --date=short
@@ -89,6 +90,14 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           draft: false
+          body: |
+            ## Last 10 commits:
+            gh log -n 10 --format="%s (%h) %ad" --date=short
+            echo ""
+            echo "## Contributors:"
+            gh shortlog -sn --no-merges
+            ## In this version
+            
           prerelease: ${{ contains(github.ref, 'alpha') }}
         
 
