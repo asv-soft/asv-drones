@@ -78,7 +78,7 @@ public class HierarchicalStoreEntryViewModel : DisposableReactiveObject
     [Reactive] public string Description { get; set; }
 
 
-    protected virtual void OnError(HierarchicalStoreEntryAction action, Exception exception)
+    protected virtual void OnError(HierarchicalStoreEntryAction action, Exception? exception)
     {
     }
 
@@ -161,7 +161,7 @@ public class HierarchicalStoreEntryViewModel<TKey, TFile> : HierarchicalStoreEnt
         ParentId = node.Item.ParentId;
     }
 
-    protected override void OnError(HierarchicalStoreEntryAction action, Exception ex)
+    protected override void OnError(HierarchicalStoreEntryAction action, Exception? ex)
     {
         base.OnError(action, ex);
         _log.Error("Store", $"Error to '{action}' entry", ex);

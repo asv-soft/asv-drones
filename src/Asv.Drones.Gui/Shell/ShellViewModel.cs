@@ -217,7 +217,7 @@ public class ShellViewModel : ViewModelBase, IShell
             CurrentPage = viewModel;
             return true;
         }
-        catch (Exception e)
+        catch (Exception? e)
         {
             _log.Error(Title, $"Error to navigate {link}", e);
             return false;

@@ -121,7 +121,7 @@ namespace Asv.Drones.Gui
                         PacketLossChance = PacketLossChance ?? 0,
                     });
                 }
-                catch (Exception e)
+                catch (Exception? e)
                 {
                     _logService.Error("", $"{RS.TcpPortViewModel_LogService_Error}:{e.Message}", e);
                 }

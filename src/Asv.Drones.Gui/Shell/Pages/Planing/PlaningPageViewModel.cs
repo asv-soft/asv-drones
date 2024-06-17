@@ -315,7 +315,7 @@ public class PlaningPageViewModel : MapPageViewModel, IPlaningMissionContext
 
             Mission.IsChanged = false;
         }
-        catch (Exception e)
+        catch (Exception? e)
         {
             _log.Error("Planing", e.Message, e);
         }

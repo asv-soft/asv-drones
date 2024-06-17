@@ -8,13 +8,13 @@ public interface ILogService
     void DeleteLogFile();
 
     public void Fatal(string sender, string message,
-        Exception ex = default)
+        Exception? ex = default)
     {
         SaveMessage(new LogMessage(DateTime.Now, LogMessageType.Fatal, sender, message, ex?.Message));
     }
 
     public void Error(string sender, string message,
-        Exception ex = default)
+        Exception? ex = default)
     {
         SaveMessage(new LogMessage(DateTime.Now, LogMessageType.Error, sender, message, ex?.Message));
     }

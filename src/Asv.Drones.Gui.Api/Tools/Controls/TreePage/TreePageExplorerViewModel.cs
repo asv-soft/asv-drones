@@ -158,7 +158,7 @@ public class TreePageExplorerViewModel : DisposableReactiveObject,ITreePageExplo
             menu.IsSelected = true;
             return true;
         }
-        catch (Exception e)
+        catch (Exception? e)
         {
             _log.Error(Title, $"Can't create page {menu.Base.Name}:{e.Message}", e);
             return false;

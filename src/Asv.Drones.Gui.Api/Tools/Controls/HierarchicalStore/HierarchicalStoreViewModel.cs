@@ -172,7 +172,7 @@ public class HierarchicalStoreViewModel : ViewModelBase
     {
     }
 
-    protected virtual void OnError(HierarchicalStoreAction action, Exception ex)
+    protected virtual void OnError(HierarchicalStoreAction action, Exception? ex)
     {
     }
 
@@ -236,7 +236,7 @@ public abstract class HierarchicalStoreViewModel<TKey, TFile> : HierarchicalStor
             .Subscribe(x => x?.Refresh()).DisposeItWith(Disposable);
     }
 
-    protected override void OnError(HierarchicalStoreAction action, Exception ex)
+    protected override void OnError(HierarchicalStoreAction action, Exception? ex)
     {
         _log.Error(DisplayName, $"Error to '{action:G}'", ex);
     }

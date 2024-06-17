@@ -38,7 +38,7 @@ namespace Asv.Drones.Gui
 
         protected abstract Task ExecuteImpl(CancellationToken cancel);
 
-        protected virtual void OnExecuteError(Exception ex)
+        protected virtual void OnExecuteError(Exception? ex)
         {
             var sender = $"{_vehicle.Name.Value} {Title}";
             _log.Error(Title, $"{sender} error", ex);
