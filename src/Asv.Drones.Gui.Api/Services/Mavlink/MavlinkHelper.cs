@@ -54,7 +54,8 @@ namespace Asv.Drones.Gui.Api
                 DeviceClass.SdrPayload => MaterialIconKind.Radio,
                 DeviceClass.GbsRtk => MaterialIconKind.RouterWireless,
                 DeviceClass.Adsb => MaterialIconKind.Radar,
-                _ => MaterialIconKind.Navigation,
+                DeviceClass.Rfsa => MaterialIconKind.Waveform,
+                _ => MaterialIconKind.HelpNetworkOutline,
             };
         }
     }
