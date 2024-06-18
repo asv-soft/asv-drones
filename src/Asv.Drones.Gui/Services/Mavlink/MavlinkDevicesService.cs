@@ -167,6 +167,7 @@ namespace Asv.Drones.Gui
             AllDevices = Vehicles.Transform(x => (IClientDevice)x)
                 .MergeChangeSets(BaseStations.Transform(x => (IClientDevice)x))
                 .MergeChangeSets(Payloads.Transform(x => (IClientDevice)x))
+                .MergeChangeSets(RfsaDevices.Transform(x => (IClientDevice)x))
                 .MergeChangeSets(AdsbDevices.Transform(x => (IClientDevice)x));
 
             #endregion
