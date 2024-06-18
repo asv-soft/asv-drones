@@ -7,7 +7,7 @@ namespace Asv.Drones.Gui;
 
 [Export(WellKnownUri.ShellPageSettings, typeof(ITreePageMenuItem))]
 [method: ImportingConstructor]
-public class AppearanceTreeMenuItem(IApplicationHost host, ILocalizationService loc, IMapService map)
+public class AppearanceTreeMenuItem(IApplicationHost host, ILocalizationService loc, IMapService map, IPluginManager pluginManager)
     : TreePageMenuItem(WellKnownUri.ShellPageSettingsAppearanceUri)
 {
     public override Uri ParentId => WellKnownUri.UndefinedUri;
@@ -18,6 +18,6 @@ public class AppearanceTreeMenuItem(IApplicationHost host, ILocalizationService 
 
     public override ITreePage? CreatePage(ITreePageContext context)
     {
-        return new AppearanceViewModel((ISettingsPageContext)context, host, loc, map);
+        return new AppearanceViewModel((ISettingsPageContext)context, host, loc, map, pluginManager);
     }
 }

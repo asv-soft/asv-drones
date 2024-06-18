@@ -1,3 +1,5 @@
+using Asv.Common;
+
 namespace Asv.Drones.Gui.Api;
 
 public interface ILocalPluginInfo : IPluginSpecification
@@ -21,6 +23,7 @@ public interface IPluginSearchInfo : IPluginSpecification
 
 public interface IPluginSpecification
 {
+    SemVersion ApiVersion { get; }
     string PackageId { get; }
     string? Title { get; }
     public string? Description { get; }

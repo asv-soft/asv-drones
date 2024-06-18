@@ -15,4 +15,18 @@
     <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0006</DiagnosticId>
+    <Target>P:Asv.Drones.Gui.Api.IPluginManager.ApiVersion</Target>
+    <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
+    <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0006</DiagnosticId>
+    <Target>P:Asv.Drones.Gui.Api.IPluginSpecification.ApiVersion</Target>
+    <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
+    <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
 </Suppressions>

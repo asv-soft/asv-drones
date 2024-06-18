@@ -325,7 +325,7 @@ namespace Asv.Drones.Gui
 
         private IVehicleClient? CreateVehicle(IMavlinkDevice device)
         {
-            if (device.Autopilot == MavAutopilot.MavAutopilotArdupilotmega)
+            //if (device.Autopilot == MavAutopilot.MavAutopilotArdupilotmega)
             {
                 switch (device.Type)
                 {

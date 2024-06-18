@@ -17,6 +17,7 @@ namespace Asv.Drones.Gui;
 
 public static class NugetHelper
 {
+    public const string PluginApiPackageName = "Asv.Drones.Gui.Api";
     public const string NugetPluginName = "Asv.Drones.Gui.Plugin";
 
     public const string NETCoreAppGroup = ".NETCoreApp";

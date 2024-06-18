@@ -5,6 +5,7 @@ using System.Composition.Hosting;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Loader;
 using System.Threading;
 using System.Threading.Tasks;
@@ -61,21 +62,23 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
     private readonly List<SourceRepository> _repositories = new();
 
     public const string PluginSearchTermStartWith = "Asv.Drones.Gui.Plugin.";
+    
 
 
     private const string PluginStateFileName = "__PLUGIN_STATE__";
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private readonly string _sharedPluginFolder;
     private readonly string _nugetFolder;
-    private readonly string _nugetCache;
     private readonly LoggerAdapter _nugetLogger = new(Logger);
     private readonly SourceCacheContext _cache;
-    private List<AssemblyLoadContext> _pluginContexts = new();
+    private readonly List<AssemblyLoadContext> _pluginContexts = new();
 
 
     public PluginManager(ContainerConfiguration containerCfg, string localDirectory, IConfiguration configuration) :
         base(configuration)
     {
+        ApiVersion = SemVersion.Parse(typeof(WellKnownUri).Assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()!.Version);
+        
         #region Servers
 
         var servers = InternalGetConfig(x => x.Servers);
@@ -146,15 +149,15 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
             Logger.Info("Found nuget cache folder {0}", _nugetFolder);
         }
 
-        _nugetCache = Path.Combine(localDirectory, "nuget_cache");
-        if (Directory.Exists(_nugetCache) == false)
+        var nugetCache = Path.Combine(localDirectory, "nuget_cache");
+        if (Directory.Exists(nugetCache) == false)
         {
-            Logger.Info("Create nuget folder {0}", _nugetCache);
-            Directory.CreateDirectory(_nugetCache);
+            Logger.Info("Create nuget folder {0}", nugetCache);
+            Directory.CreateDirectory(nugetCache);
         }
         else
         {
-            Logger.Info("Found nuget cache folder {0}", _nugetCache);
+            Logger.Info("Found nuget cache folder {0}", nugetCache);
         }
 
         #endregion
@@ -168,7 +171,7 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
             MaxAge = DateTimeOffset.MaxValue*/
         };
 
-
+        // load all plugins
         foreach (var dir in Directory.EnumerateDirectories(_sharedPluginFolder, "*", SearchOption.TopDirectoryOnly))
         {
             if (TryGetLocalPluginInfoByFolder(dir, out var info) == false)
@@ -181,14 +184,29 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
             if (info == null) continue;
             if (info.IsUninstalled)
             {
-                Logger.Info("Remove plugin {0} {1} {2}", info.PackageId, info.Version, info.LocalFolder);
+                Logger.Info("Remove deleted plugin {0} {1} {2}", info.PackageId, info.Version, info.LocalFolder);
                 Directory.Delete(info.LocalFolder, true);
                 continue;
             }
 
+            // check API version
+            if (info.ApiVersion.CompareByPrecedence(ApiVersion) != 0)
+            {
+                Logger.Warn("Plugin {0} {1} has different API version {2} than application {3}", info.Id, info.Version,
+                    info.ApiVersion, ApiVersion);
+                SetPluginStateByFolder(info.LocalFolder, x =>
+                {
+                    x.IsLoaded = false;
+                    x.LoadingError = $"Plugin has different API version {info.ApiVersion} than application {ApiVersion}";
+                });
+                continue;
+            }
 
+            
+            
             try
             {
+                
                 Logger.Info("Load plugin {0} {1} {2}", info.PackageId, info.Version, info.LocalFolder);
                 _pluginContexts.Add(new PluginAssemblyLoadContext(info.LocalFolder, containerCfg));
                 SetPluginStateByFolder(info.LocalFolder, x =>
@@ -202,12 +220,14 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
                 Logger.Error(e, "Error load plugin {0} {1} {2}", info.PackageId, info.Version, info.LocalFolder);
                 SetPluginStateByFolder(info.LocalFolder, x =>
                 {
-                    x.IsLoaded = true;
+                    x.IsLoaded = false;
                     x.LoadingError = e.Message;
                 });
             }
         }
     }
+
+    public SemVersion ApiVersion { get; }
 
     #region Servers
 
@@ -355,9 +375,23 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
                     : PluginSearchTermStartWith + query.Name;
                 var packages =
                     await resource.SearchAsync(searchTerm, filter, query.Skip, query.Take, _nugetLogger, cancel);
+                
                 foreach (var package in packages)
                 {
-                    result.Add(new PluginSearchInfo(package, repository));
+                    try
+                    {
+                        var dependencyInfoResource = await repository.GetResourceAsync<DependencyInfoResource>(cancel);
+                        var dependencyInfo = await dependencyInfoResource.ResolvePackage(package.Identity, NugetHelper.DefaultFramework,
+                            _cache, _nugetLogger, cancel);
+                        if (dependencyInfo == null)
+                            continue;
+                        result.Add(new PluginSearchInfo(package, repository,dependencyInfo));
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Warn("Error create plugin search info from {0} {1}", package.Identity.Id, e.Message);
+                        continue;
+                    }
                     if (result.Count >= query.Take) break;
                 }
 

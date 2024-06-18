@@ -1,4 +1,6 @@
-﻿namespace Asv.Drones.Gui.Api;
+﻿using Asv.Common;
+
+namespace Asv.Drones.Gui.Api;
 
 public class NullPluginManager : IPluginManager
 {
@@ -43,4 +45,6 @@ public class NullPluginManager : IPluginManager
         info = null;
         return false;
     }
+
+    public SemVersion ApiVersion { get; } = new(0);
 }

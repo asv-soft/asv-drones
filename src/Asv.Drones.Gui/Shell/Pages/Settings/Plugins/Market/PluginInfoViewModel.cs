@@ -35,10 +35,11 @@ public class PluginInfoViewModel : DisposableReactiveObject
         Author = pluginInfo.Authors;
         Description = pluginInfo.Description;
         SourceName = pluginInfo.Source.Name;
-        LastVersion = pluginInfo.LastVersion;
-        LocalVersion = _localInfo?.Version;
+        LastVersion = $"{pluginInfo.LastVersion} (API: {pluginInfo.ApiVersion})";
+        IsApiCompatible = pluginInfo.ApiVersion == manager.ApiVersion;
+        LocalVersion = (_localInfo != null) ? $"{_localInfo?.Version} (API: {_localInfo?.ApiVersion})" : null;
     }
-
+    public bool IsApiCompatible { get; set; }
     public string Id { get; set; }
     public string? Author { get; set; }
     public string? Name { get; set; }
