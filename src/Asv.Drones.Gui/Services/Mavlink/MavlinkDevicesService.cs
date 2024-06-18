@@ -317,9 +317,9 @@ namespace Asv.Drones.Gui
         }
 
         public IObservable<IChangeSet<IRfsaClientDevice, ushort>> RfsaDevices { get; }
-        public IAdsbClientDevice? GetRfsaByFullId(ushort id)
+        public IRfsaClientDevice? GetRfsaByFullId(ushort id)
         {
-            using var autoDispose =AdsbDevices.BindToObservableList(out var list).Subscribe();
+            using var autoDispose = RfsaDevices.BindToObservableList(out var list).Subscribe();
             return list.Items.FirstOrDefault(d => d.FullId == id);
         }
 

@@ -61,6 +61,6 @@ namespace Asv.Drones.Gui.Api
         IObservable<IChangeSet<IAdsbClientDevice, ushort>> AdsbDevices { get; }
         IAdsbClientDevice? GetAdsbVehicleByFullId(ushort id);
         IObservable<IChangeSet<IRfsaClientDevice, ushort>> RfsaDevices { get; }
-        IAdsbClientDevice? GetRfsaByFullId(ushort id);
+        IRfsaClientDevice? GetRfsaByFullId(ushort id);
     }
 }
