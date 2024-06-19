@@ -1,4 +1,15 @@
+using ReactiveUI;
+
 namespace Asv.Drones.Gui.Api;
+
+public static class LogHelper
+{
+    public static IDisposable CatchToLog<TParam, TResult>(this ReactiveCommand<TParam, TResult> cmd, ILogService log, string sender)
+    {
+        return cmd.ThrownExceptions.Subscribe(ex=>log.Error(sender, ex.Message,ex));
+    }
+}
+    
 
 public interface ILogService
 {
@@ -7,6 +18,11 @@ public interface ILogService
     IEnumerable<LogItemViewModel> LoadItemsFromLogFile();
     void DeleteLogFile();
 
+    public IDisposable CatchToLog<TParam, TResult>( ReactiveCommand<TParam, TResult> cmd, string sender)
+    {
+        return cmd.ThrownExceptions.Subscribe(ex=>Error(sender, ex.Message,ex));
+    }
+    
     public void Fatal(string sender, string message,
         Exception? ex = default)
     {
