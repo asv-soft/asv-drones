@@ -110,4 +110,10 @@
     <ItemGroup>
       <Folder Include="Shell\Pages\Vehicle\QuickParams\Px4\" />
     </ItemGroup>
+
+    <ItemGroup>
+      <None Update="app.args">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
 </Project>
