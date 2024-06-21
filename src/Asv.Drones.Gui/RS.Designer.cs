@@ -1437,7 +1437,7 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Anchors.
+        ///   Looks up a localized string similar to Airport.
         /// </summary>
         public static string HeaderAnchorsMenu_Title {
             get {

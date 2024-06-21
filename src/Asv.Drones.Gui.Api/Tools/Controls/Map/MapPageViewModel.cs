@@ -60,7 +60,7 @@ namespace Asv.Drones.Gui.Api
             #endregion
 
             #region Map anchors
-
+            
             _additionalAnchorsSource = new SourceCache<IMapAnchor, Uri>(x => x.Id).DisposeItWith(Disposable);
             markers.Select(p => p.Items)
                 .Append(_additionalAnchorsSource.Connect())
@@ -71,7 +71,7 @@ namespace Asv.Drones.Gui.Api
                 .Bind(out _markers)
                 .Subscribe()
                 .DisposeItWith(Disposable);
-
+            
             this.WhenValueChanged(x => x.IsInAnchorEditMode)
                 .Subscribe(x =>
                 {
@@ -102,6 +102,9 @@ namespace Asv.Drones.Gui.Api
                     };
                 }
             }).DisposeItWith(Disposable);
+            
+
+            
 
             
             #endregion
