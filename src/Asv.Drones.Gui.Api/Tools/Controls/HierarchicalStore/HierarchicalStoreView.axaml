@@ -74,24 +74,26 @@
                                      Text="{Binding SearchText}" />
                         </Border>
                     </DockPanel>
-                    <TreeView SelectionMode="Toggle" Margin="0,8,0,8" ItemsSource="{Binding Items}"
-                              SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
-                        <TreeView.ItemTemplate>
-                            <TreeDataTemplate ItemsSource="{Binding Items}">
-                                <DockPanel HorizontalAlignment="Stretch" LastChildFill="False">
-                                    <avalonia:MaterialIcon
-                                        Margin="0,0,8,0"
-                                        Classes.folder="{Binding IsFolder}"
-                                        Classes.file="{Binding IsFile}"
-                                        Classes.expanded="{Binding IsExpanded}"
-                                        Classes.selected="{Binding IsSelected}"
-                                        Width="15" Height="15" />
-                                    <TextBlock MinWidth="120" Text="{Binding Name}" />
-                                    <TextBlock DockPanel.Dock="Right" Foreground="Gray" Text="{Binding Description}" />
-                                </DockPanel>
-                            </TreeDataTemplate>
-                        </TreeView.ItemTemplate>
-                    </TreeView>
+                    <ScrollViewer MaxHeight="370" VerticalAlignment="Top">
+                        <TreeView SelectionMode="Toggle" Margin="0,8,0,8" ItemsSource="{Binding Items}"
+                                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                            <TreeView.ItemTemplate>
+                                <TreeDataTemplate ItemsSource="{Binding Items}">
+                                    <DockPanel HorizontalAlignment="Stretch" LastChildFill="False">
+                                        <avalonia:MaterialIcon
+                                            Margin="0,0,8,0"
+                                            Classes.folder="{Binding IsFolder}"
+                                            Classes.file="{Binding IsFile}"
+                                            Classes.expanded="{Binding IsExpanded}"
+                                            Classes.selected="{Binding IsSelected}"
+                                            Width="15" Height="15" />
+                                        <TextBlock MinWidth="120" Text="{Binding Name}" />
+                                        <TextBlock DockPanel.Dock="Right" Foreground="Gray" Text="{Binding Description}" />
+                                    </DockPanel>
+                                </TreeDataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>     
+                    </ScrollViewer>
                 </DockPanel>
             </Border>
 
