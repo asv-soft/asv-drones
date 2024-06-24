@@ -142,9 +142,9 @@
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <buttons:StepSizingButton Classes="MenuButton" StepSizeWidth="100"  HorizontalAlignment="Stretch" Margin="2" Command="{CompiledBinding Command}" >
-                                                <Grid ColumnDefinitions="Auto,*">
+                                                <Grid ColumnDefinitions="Auto, 5, *">
                                                     <avalonia:MaterialIcon Grid.Column="0" Kind="{CompiledBinding Icon}" />
-                                                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="{CompiledBinding Title}"
+                                                    <TextBlock Grid.Column="2" HorizontalAlignment="Center" Text="{CompiledBinding Title}"
                                                                TextTrimming="CharacterEllipsis"  />
                                                 </Grid>
                                             </buttons:StepSizingButton>
@@ -156,7 +156,7 @@
                     </ScrollViewer>
                 </Border>
                 <DropDownButton  Theme="{DynamicResource TransparentButton}" Margin="10">
-                    <avalonia:MaterialIcon Width="18" Height="18" Kind="DotsVertical" />
+                    <avalonia:MaterialIcon Width="18" Height="18" Kind="DotsVertical"/>
                     <DropDownButton.IsVisible>
                         <MultiBinding Converter="{x:Static BoolConverters.And}">
                             <Binding Path="Actions" Converter="{x:Static ObjectConverters.IsNotNull}" />
