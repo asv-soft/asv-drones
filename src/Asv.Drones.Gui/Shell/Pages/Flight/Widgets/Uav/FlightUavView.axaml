@@ -36,6 +36,12 @@
                             </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
+                    <Button ToolTip.Tip="{Binding  CurrentMode.Mode.Description}" Command="{Binding SelectModeCommand}">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <avalonia:MaterialIcon Kind="{Binding CurrentMode.Icon}" />
+                            <TextBlock Grid.Column="1" Margin="5 0 0 0" Text="{Binding CurrentMode.Mode.Name}" />
+                        </Grid>
+                    </Button>
                     <avalonia:MaterialIcon Kind="ArrowAll" IsVisible="{CompiledBinding IsFollowed}">
                         <avalonia:MaterialIcon.Styles>
                             <Style Selector="avalonia|MaterialIcon">
@@ -69,16 +75,10 @@
                 </Button>
             </Grid>
             <StackPanel IsVisible="{CompiledBinding !IsMinimized}">
-                <gui:AttitudeView DataContext="{Binding Attitude}" />
+                <gui:AttitudeView DataContext="{Binding Attitude}" Margin="0 5 0 5"/>
                 <Viewbox>
                     <gui:MissionStatusView DataContext="{Binding MissionStatus}" />
                 </Viewbox>
-                <Button ToolTip.Tip="{Binding  CurrentMode.Mode.Description}" Command="{Binding SelectModeCommand}">
-                    <Grid Margin="5" ColumnDefinitions="*, Auto">
-                        <avalonia:MaterialIcon Kind="{Binding CurrentMode.Icon}" />
-                        <TextBlock Grid.Column="1" Margin="5 0 0 0" Text="{Binding CurrentMode.Mode.Name}" />
-                    </Grid>
-                </Button>
             </StackPanel>
             <ItemsControl ItemsSource="{Binding RttItems}" IsVisible="{CompiledBinding !IsMinimized}">
                 <ItemsControl.ItemsPanel>
