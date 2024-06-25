@@ -11,7 +11,6 @@ using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
 using Asv.Mavlink.Vehicle;
 using DynamicData;
-using DynamicData.Aggregation;
 using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -25,8 +24,7 @@ public class MissionStatusViewModel : ViewModelBase
     private readonly ReadOnlyObservableCollection<MissionItem> _items;
     private double _passedDistance;
     private double _distanceBeforeMission;
-
-    //private ReadOnlyObservableCollection<RoundWayPointItem> _wayPoints;
+    private bool _isOnMission = false;
 
     public MissionStatusViewModel() : base(WellKnownUri.UndefinedUri)
     {
@@ -40,7 +38,29 @@ public class MissionStatusViewModel : ViewModelBase
 
         _log = log;
 
-        Download = ReactiveCommand.CreateFromTask(DownloadImpl)
+        _vehicle.CurrentMode.Subscribe(m =>
+        {
+            if (m == ArdupilotCopterMode.Auto || m == ArdupilotPlaneMode.Auto)
+            {
+                if (_isOnMission)
+                {
+                    return;
+                }
+                
+                Task.Run(async () => await InitiateMissionPoints(new CancellationToken())); // call before anything else
+                _isOnMission = true;
+                return;
+            }
+            
+            if (m == ArdupilotCopterMode.Rtl || m == ArdupilotPlaneMode.Rtl)
+            {
+                _isOnMission = false;
+                ReachedIndex = 0;
+                return;
+            }
+        });
+
+        DownloadMissions = ReactiveCommand.CreateFromTask(DownloadMissionsImpl)
                                   .DisposeItWith(Disposable);
 
         DisableAll = ReactiveCommand.Create(() =>
@@ -57,6 +77,23 @@ public class MissionStatusViewModel : ViewModelBase
         Observable.Timer(TimeSpan.Zero, TimeSpan.FromSeconds(1))
                   .Subscribe(_ => CalculateMissionProgress())
                   .DisposeItWith(Disposable);
+
+        this.WhenAnyValue(p => p.PathProgress).Subscribe(v =>
+        {
+            if (v > 1)
+            {
+                PathProgress = 1;
+                return;
+            }
+
+            if (v < 0)
+            {
+                PathProgress = 0;
+                return;
+            }
+
+            PathProgress = v;
+        });
 
         this.WhenValueChanged(vm => vm.CurrentIndex)
             .Subscribe(index =>
@@ -110,58 +147,63 @@ public class MissionStatusViewModel : ViewModelBase
 
         _vehicle.Missions.Reached.Subscribe(i => ReachedIndex = i)
                 .DisposeItWith(Disposable);
-
-        _vehicle.Missions.MissionItems.Filter(item => item.Command.Value != MavCmd.MavCmdNavReturnToLaunch)
-                .Count()
-                .Subscribe(count => WayPointsCount = count)
-                .DisposeItWith(Disposable);
-
-        //_vehicle.MissionItems
-        //    .Filter(_ => _.Command.Value != MavCmd.MavCmdNavReturnToLaunch)
-        //    .Transform(_ => new RoundWayPointItem(_))
-        //    .Bind(out _wayPoints)
-        //    .DisposeMany()
-        //    .Subscribe()
-        //    .DisposeItWith(Disposable);
     }
 
+    private async Task InitiateMissionPoints(CancellationToken cancel)
+    {
+        await DownloadMissionsImpl(cancel);
+    }
+    
     private void CalculateMissionProgress()
     {
         var toTargetDistance = GeoMath.Distance(_vehicle.Position.Target.Value, _vehicle.Position.Current.Value);
         var missionDistance = _vehicle.Missions.AllMissionsDistance.Value * 1000;
         var distance = Math.Abs(missionDistance - _passedDistance + toTargetDistance);
-        if (_vehicle is ArduVehicle)
-        {
-            if (ReachedIndex >= 1)
-                PathProgress = Math.Abs((missionDistance - distance - _distanceBeforeMission) / (missionDistance - _distanceBeforeMission));
-        }
-        else
-        {
-            PathProgress = Math.Abs((missionDistance - distance) / missionDistance);
-        }
-
         var time = distance / _vehicle.Gnss.Main.GroundVelocity.Value;
+
+        PathProgress = CalculatePathProgressValue(missionDistance, distance);
+        MissionFlightTime = CalculateMissionFlightTime(time);
+    }
+
+    private static string CalculateMissionFlightTime(double time)
+    {
         if (time is double.NaN or double.PositiveInfinity)
         {
-            MissionFlightTime = $"- {RS.MissionStatusViewModel_FlightMissionTime_Minutes}";
-            return;
+            return $"- {RS.MissionStatusViewModel_FlightMissionTime_Minutes}";
         }
         var minute = Math.Round(time / 60);
+        
         if (minute < 1)
         {
-            MissionFlightTime = $"<1 {RS.MissionStatusViewModel_FlightMissionTime_Minutes}";
-            return;
+            return $"<1 {RS.MissionStatusViewModel_FlightMissionTime_Minutes}";
         }
-        MissionFlightTime = $"{minute} {RS.MissionStatusViewModel_FlightMissionTime_Minutes}";
+        
+        return $"{minute} {RS.MissionStatusViewModel_FlightMissionTime_Minutes}";
+    }
+
+    private double CalculatePathProgressValue(double missionDistance, double distance) // TODO: сделать расширение логики для самолетов
+    {
+        switch (_vehicle)
+        {
+            case ArduVehicle:
+                if (_isOnMission && ReachedIndex > 0)
+                {
+                    return Math.Abs((missionDistance - distance - _distanceBeforeMission) / (missionDistance - _distanceBeforeMission));
+                }
+                
+                return 0;
+            default:
+                return Math.Abs((missionDistance - distance) / missionDistance);
+        }
     }
 
     public ReactiveCommand<Unit, Unit> DisableAll { get; set; }
 
     #region Download
 
-    public ReactiveCommand<Unit, Unit> Download { get; set; }
+    public ReactiveCommand<Unit, Unit> DownloadMissions { get; set; }
 
-    private async Task DownloadImpl(CancellationToken cancel)
+    private async Task DownloadMissionsImpl(CancellationToken cancel)
     {
         try
         {
@@ -204,19 +246,17 @@ public class MissionStatusViewModel : ViewModelBase
 
     [Reactive] public bool EnableAnchors { get; set; } = true;
 
-    [Reactive] public double Current { get; set; }
-
     [Reactive] public string MissionDistance { get; set; } = RS.UavRttItem_ValueNotAvailable;
 
     [Reactive] public string TotalDistance { get; set; } = RS.UavRttItem_ValueNotAvailable;
 
+    /// <summary>
+    /// Represents progress of the mission.
+    /// Changes from 0 to 1
+    /// </summary>
     [Reactive] public double PathProgress { get; set; }
-
+    
     [Reactive] public ushort CurrentIndex { get; set; }
 
     [Reactive] public ushort ReachedIndex { get; set; }
-
-    [Reactive] public int WayPointsCount { get; set; }
-
-    //public ReadOnlyObservableCollection<RoundWayPointItem> WayPoints => _wayPoints;
 }
