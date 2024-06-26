@@ -1231,8 +1231,8 @@
     <data name="RebootAutopilotAnchorActionViewModel_LogMessage" xml:space="preserve">
     <value>Пользователь отправил комманду перезагрузки автопилота с параметрами {0} и {1}</value>
   </data>
-    <data name="SelectModeAnchorActionViewModel_Title" xml:space="preserve">
-    <value>Выбор режима БПЛА</value>
+  <data name="SelectModeAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Режимы БПЛА</value>
   </data>
     <data name="SelectModeAnchorActionViewModel_DialogPrimaryButton" xml:space="preserve">
     <value>Ок</value>
@@ -1393,8 +1393,8 @@
     <data name="VehiclesShellMenuItemProvider_ShellMenuItem_Settings" xml:space="preserve">
     <value>Настройки</value>
   </data>
-    <data name="LandAnchorActionViewModel_Title" xml:space="preserve">
-    <value>Немедленно приземлиться</value>
+  <data name="LandAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Приземлиться</value>
   </data>
     <data name="GoToMapAnchorActionViewModel_Title" xml:space="preserve">
     <value>Перейти в точку</value>
@@ -1408,8 +1408,8 @@
     <data name="LandAnchorActionViewModel_ExecuteImpl_LogInfo" xml:space="preserve">
     <value>Пользователь отправил команду приземлиться для {0}</value>
   </data>
-    <data name="RtlAnchorActionViewModel_RTL" xml:space="preserve">
-    <value>Вернуться в точку запуска</value>
+  <data name="RtlAnchorActionViewModel_RTL" xml:space="preserve">
+    <value>Вернуться домой</value>
   </data>
     <data name="RtlAnchorActionViewModel_ExecuteImpl_LogInfo" xml:space="preserve">
     <value>Пользователь отправил команду вернуться в точку запуска для {0}</value>
@@ -1811,7 +1811,7 @@
     <value>мин</value>
   </data>
   <data name="FlightUavViewModel_RtlCommand_Name" xml:space="preserve">
-    <value>Вернуться в точку запуска</value>
+    <value>Вернуться домой</value>
   </data>
   <data name="FlightUavViewModel_StartMissionCommand_Name" xml:space="preserve">
     <value>Начать миссию</value>
