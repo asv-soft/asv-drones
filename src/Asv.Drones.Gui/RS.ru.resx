@@ -1219,8 +1219,8 @@
     <data name="RebootAutopilotView_CompanionReboot_Description" xml:space="preserve">
     <value>Выберите режим перезапуска/отключения бортового компьютера</value>
   </data>
-    <data name="RebootAutopilotAnchorActionViewModel_Title" xml:space="preserve">
-    <value>Перезагрузить/Выключить автопилот</value>
+  <data name="RebootAutopilotAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Перезагрузить/Выключить</value>
   </data>
     <data name="RebootAutopilotAnchorActionViewModel_DialogPrimaryButton" xml:space="preserve">
     <value>Ок</value>
