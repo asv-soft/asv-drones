@@ -80,6 +80,26 @@
                     <gui:MissionStatusView DataContext="{Binding MissionStatus}" />
                 </Viewbox>
             </StackPanel>
+            <Grid DockPanel.Dock="Bottom" DataContext="{Binding MissionStatus}">
+                <UniformGrid Columns="4" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Rows="1">
+                    <Button ToolTip.Tip="{x:Static gui:RS.MissionStatusView_GetMissionButton_ToolTip}" HorizontalAlignment="Stretch" Margin="1.5 0" Height="25"
+                            Command="{Binding Download}">
+                        <avalonia:MaterialIcon Kind="Sync" />
+                    </Button>
+                    <Button ToolTip.Tip="{x:Static gui:RS.MissionStatusView_DisableLayersButton_ToolTip}" HorizontalAlignment="Stretch" Margin="1.5 0" Height="25"
+                            Command="{Binding DisableAll}">
+                        <avalonia:MaterialIcon Kind="LayersClear" />
+                    </Button>
+                    <ToggleButton ToolTip.Tip="{x:Static gui:RS.MissionStatusView_TogglePolygonButton_ToolTip}" HorizontalAlignment="Stretch" Margin="1.5 0" Height="25"
+                                  IsChecked="{CompiledBinding EnablePolygon}">
+                        <avalonia:MaterialIcon Kind="VectorPolygon" />
+                    </ToggleButton>
+                    <ToggleButton ToolTip.Tip="{x:Static gui:RS.MissionStatusView_ToggleWaypointsButton_ToolTip}" HorizontalAlignment="Stretch" Margin="1.5 0" Height="25"
+                                  IsChecked="{CompiledBinding EnableAnchors}">
+                        <avalonia:MaterialIcon Kind="Anchor" />
+                    </ToggleButton>
+                </UniformGrid>
+            </Grid>
             <ItemsControl ItemsSource="{Binding RttItems}" IsVisible="{CompiledBinding !IsMinimized}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
