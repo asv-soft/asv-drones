@@ -39,9 +39,15 @@ public class LogService : DisposableOnceWithCancel, ILogService
                 Layout.FromString("${longdate}|${threadid}|${level}|${logger}|${message} ${exception:format=tostring}");
 #if DEBUG
             builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToDebug(layout: layout);
+            builder.ForLogger().FilterLevels(LogLevel.Trace, LogLevel.Fatal).WriteToFile(
+                fileName: _logFile,
+                lineEnding: LineEndingMode.CRLF,
+                maxArchiveDays: 30,
+                maxArchiveFiles: 30,
+                layout: layout);
 #endif
             builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToColoredConsole(layout: layout);
-            builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToFile(
+            builder.ForLogger().FilterLevels(LogLevel.Trace, LogLevel.Fatal).WriteToFile(
                 fileName: _logFile,
                 lineEnding: LineEndingMode.CRLF,
                 maxArchiveDays: 30,
@@ -71,6 +77,7 @@ public class LogService : DisposableOnceWithCancel, ILogService
     public void SaveMessage(LogMessage logMessage)
     {
         _onMessage.OnNext(logMessage);
+        Logger.Log(LogLevel.FromString(logMessage.Type.ToString()), logMessage.Message );
     }
 
     public void DeleteLogFile()
