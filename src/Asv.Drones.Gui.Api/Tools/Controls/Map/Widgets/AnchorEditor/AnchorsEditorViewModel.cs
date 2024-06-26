@@ -261,7 +261,7 @@ public class AnchorsEditorViewModel : MapWidgetBase
 
                 if (_ != null)
                 {
-                    Actions = _.Actions;
+                    Actions = _.Actions.OrderByDescending(_=>_.Title.Length);
                     _prevAnchor = _;
                     IsVisible = true;
                     IsEditable = _.IsEditable;
