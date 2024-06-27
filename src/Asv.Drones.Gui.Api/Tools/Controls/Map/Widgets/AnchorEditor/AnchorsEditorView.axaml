@@ -91,7 +91,8 @@
                     </Grid>
                 </StackPanel>
             </ScrollViewer>
-            <TextBlock Grid.Row="0" 
+            <TextBlock x:Name="ActionsTextBlock" 
+                       Grid.Row="0"
                        Grid.Column="2" 
                        Margin="5"
                        IsVisible="{CompiledBinding !!Actions}"
@@ -99,7 +100,7 @@
             <Rectangle Grid.Row="0"
                     Grid.Column="1"
                     Grid.RowSpan="2"
-                    Fill="White">
+                    Fill="{Binding Foreground, ElementName=ActionsTextBlock}">
                 <Rectangle.IsVisible>
                     <MultiBinding Converter="{x:Static BoolConverters.And}">
                         <Binding Path="Actions" Converter="{x:Static ObjectConverters.IsNotNull}" />
