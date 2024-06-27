@@ -5,8 +5,9 @@
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:api="clr-namespace:Asv.Drones.Gui.Api"
              xmlns:buttons="clr-namespace:Asv.Avalonia.Toolkit.UI.Controls.Buttons;assembly=Asv.Avalonia.Toolkit"
+             xmlns:map="clr-namespace:Asv.Avalonia.Map;assembly=Asv.Avalonia.Map"
              mc:Ignorable="d"
-             d:DesignWidth="900"
+             d:DesignWidth="700"
              d:DesignHeight="300"
              x:Class="Asv.Drones.Gui.Api.AnchorsEditorView"
              x:DataType="api:AnchorsEditorViewModel"
@@ -14,183 +15,151 @@
     <Design.DataContext>
         <api:AnchorsEditorViewModel />
     </Design.DataContext>
-    <UserControl.Styles>
-        <Style Selector="Button.MenuButton">
-            <Setter Property="Template">
-                <ControlTemplate>
-                    <ContentPresenter Content="{TemplateBinding Content}"/>      
-                </ControlTemplate>
-            </Setter>
-        </Style>
-        <Style Selector="Expander">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Padding" Value="0 0 0 0" />
-        </Style>
-        <Style Selector="Expander /template/ ToggleButton#PART_toggle">
-            <Setter Property="Padding" Value="0 0 0 0" />
-            <Setter Property="BorderThickness" Value="0" />
-        </Style>
-        <Style Selector="Border#ExpandCollapseChevronBorder">
-            <Setter Property="MinHeight" Value="120" />
-            <Setter Property="MaxWidth" Value="20" />
-        </Style>
-    </UserControl.Styles>
-    <Grid ColumnDefinitions="Auto,*" x:Name="PART_Grid"
-          EffectiveViewportChanged="Layoutable_OnEffectiveViewportChanged">
-        <ScrollViewer Grid.Column="0">
-            <StackPanel Margin="10,10,15,0" Spacing="8" Grid.IsSharedSizeScope="True">
-                <StackPanel Margin="0 0 0 10" Orientation="Horizontal" Spacing="8">
-                    <avalonia:MaterialIcon Kind="{CompiledBinding Map.SelectedItem.Icon}" />
-                    <TextBlock Text="{CompiledBinding Map.SelectedItem.Title}" />
+    <Border ClipToBounds="True" Padding="10">
+        <Grid ColumnDefinitions="Auto,10,*" RowDefinitions="20,*" x:Name="PART_Grid"
+              EffectiveViewportChanged="Layoutable_OnEffectiveViewportChanged">
+            <StackPanel Grid.Column="0" Grid.Row="0" Margin="10,10,15,0" Orientation="Horizontal" Spacing="8">
+                <avalonia:MaterialIcon Kind="{CompiledBinding Map.SelectedItem.Icon}" />
+                <TextBlock Text="{CompiledBinding Map.SelectedItem.Title}" />
+            </StackPanel>
+            <ScrollViewer Grid.Row="1" Grid.Column="0">
+                <StackPanel Margin="10,10,15,0" Spacing="8" Grid.IsSharedSizeScope="True">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="Name" />
+                            <ColumnDefinition SharedSizeGroup="Space" Width="15" />
+                            <ColumnDefinition SharedSizeGroup="Value" Width="250" />
+                            <ColumnDefinition SharedSizeGroup="Action" Width="45" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" 
+                                   VerticalAlignment="Center" 
+                                   Text="{x:Static api:RS.AnchorsEditorView_TextBlock_Latitude_Text}"/>
+                        <TextBox Grid.Column="2" IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
+                            <Interaction.Behaviors>
+                                <api:LostFocusUpdateBindingBehavior Text="{CompiledBinding Latitude}" />
+                            </Interaction.Behaviors>
+                            <TextBox.InnerRightContent>
+                                <TextBlock Text="{CompiledBinding LatitudeUnits}" VerticalAlignment="Center"
+                                           Margin="8 4" />
+                            </TextBox.InnerRightContent>
+                        </TextBox>
+                        <Button Margin="5 0 0 0" Height="32" Grid.Column="3" VerticalAlignment="Top"
+                                Command="{CompiledBinding CopyCommand}">
+                            <avalonia:MaterialIcon Kind="ContentCopy" />
+                        </Button>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="Name" />
+                            <ColumnDefinition SharedSizeGroup="Space" />
+                            <ColumnDefinition SharedSizeGroup="Value" />
+                            <ColumnDefinition SharedSizeGroup="Action" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{x:Static api:RS.AnchorsEditorView_TextBlock_Longitude_Text}"
+                                   Grid.Column="0" VerticalAlignment="Center" />
+                        <TextBox Grid.Column="2" IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
+                            <Interaction.Behaviors>
+                                <api:LostFocusUpdateBindingBehavior Text="{CompiledBinding Longitude}" />
+                            </Interaction.Behaviors>
+                            <TextBox.InnerRightContent>
+                                <TextBlock Text="{Binding LongitudeUnits }" VerticalAlignment="Center" Margin="8 4" />
+                            </TextBox.InnerRightContent>
+                        </TextBox>
+                        <Button Grid.Column="3" Margin="5 0 0 0 " Height="32" Command="{CompiledBinding PasteCommand}"
+                                IsVisible="{CompiledBinding IsEditable}">
+                            <avalonia:MaterialIcon Kind="ContentPaste" />
+                        </Button>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="Name" />
+                            <ColumnDefinition SharedSizeGroup="Space" />
+                            <ColumnDefinition SharedSizeGroup="Value" />
+                            <ColumnDefinition SharedSizeGroup="Action" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{x:Static api:RS.AnchorsEditorView_TextBlock_Altitude_Text}"
+                                   Grid.Column="0" VerticalAlignment="Center" />
+                        <TextBox Grid.Column="2" IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
+                            <Interaction.Behaviors>
+                                <api:LostFocusUpdateBindingBehavior Text="{CompiledBinding Altitude}" />
+                            </Interaction.Behaviors>
+                            <TextBox.InnerRightContent>
+                                <TextBlock Text="{CompiledBinding AltitudeUnits}" VerticalAlignment="Center"
+                                           Margin="8 4" />
+                            </TextBox.InnerRightContent>
+                        </TextBox>
+                    </Grid>
                 </StackPanel>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition SharedSizeGroup="Name" />
-                        <ColumnDefinition SharedSizeGroup="Space" Width="15" />
-                        <ColumnDefinition SharedSizeGroup="Value" Width="250" />
-                        <ColumnDefinition SharedSizeGroup="Action" Width="45" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="{x:Static api:RS.AnchorsEditorView_TextBlock_Latitude_Text}"
-                               Grid.Column="0" VerticalAlignment="Center" />
-                    <TextBox Grid.Column="2" IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
-                        <Interaction.Behaviors>
-                            <api:LostFocusUpdateBindingBehavior Text="{CompiledBinding Latitude}" />
-                        </Interaction.Behaviors>
-                        <TextBox.InnerRightContent>
-                            <TextBlock Text="{CompiledBinding LatitudeUnits}" VerticalAlignment="Center" Margin="8 4" />
-                        </TextBox.InnerRightContent>
-                    </TextBox>
-                    <Button Margin="5 0 0 0" Height="32" Grid.Column="3" VerticalAlignment="Top"
-                            Command="{CompiledBinding CopyCommand}">
-                        <avalonia:MaterialIcon Kind="ContentCopy" />
-                    </Button>
-                </Grid>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition SharedSizeGroup="Name" />
-                        <ColumnDefinition SharedSizeGroup="Space" />
-                        <ColumnDefinition SharedSizeGroup="Value" />
-                        <ColumnDefinition SharedSizeGroup="Action" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="{x:Static api:RS.AnchorsEditorView_TextBlock_Longitude_Text}"
-                               Grid.Column="0" VerticalAlignment="Center" />
-                    <TextBox Grid.Column="2" IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
-                        <Interaction.Behaviors>
-                            <api:LostFocusUpdateBindingBehavior Text="{CompiledBinding Longitude}" />
-                        </Interaction.Behaviors>
-                        <TextBox.InnerRightContent>
-                            <TextBlock Text="{Binding LongitudeUnits }" VerticalAlignment="Center" Margin="8 4" />
-                        </TextBox.InnerRightContent>
-                    </TextBox>
-                    <Button Grid.Column="3" Margin="5 0 0 0 " Height="32" Command="{CompiledBinding PasteCommand}"
-                            IsVisible="{CompiledBinding IsEditable}">
-                        <avalonia:MaterialIcon Kind="ContentPaste" />
-                    </Button>
-                </Grid>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition SharedSizeGroup="Name" />
-                        <ColumnDefinition SharedSizeGroup="Space" />
-                        <ColumnDefinition SharedSizeGroup="Value" />
-                        <ColumnDefinition SharedSizeGroup="Action" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="{x:Static api:RS.AnchorsEditorView_TextBlock_Altitude_Text}"
-                               Grid.Column="0" VerticalAlignment="Center" />
-                    <TextBox Grid.Column="2" IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
-                        <Interaction.Behaviors>
-                            <api:LostFocusUpdateBindingBehavior Text="{CompiledBinding Altitude}" />
-                        </Interaction.Behaviors>
-                        <TextBox.InnerRightContent>
-                            <TextBlock Text="{CompiledBinding AltitudeUnits}" VerticalAlignment="Center" Margin="8 4" />
-                        </TextBox.InnerRightContent>
-                    </TextBox>
-                </Grid>
-            </StackPanel>
-        </ScrollViewer>
-        <ScrollViewer Grid.Column="1" IsVisible="{CompiledBinding !!Actions}">
-            <StackPanel x:Name="PART_ActionsPanel"
-                        VerticalAlignment="Top"
-                        HorizontalAlignment="Left">
-                <TextBlock Text="Actions" Margin="5" />
-                <Border IsVisible="{Binding !IsCompactMode}" BorderBrush="White"
-                        Margin="0,10,0,0"
-                        MaxHeight="200"
-                        BorderThickness="2,0,0,0">
-                    <ScrollViewer>
-                        <Grid ColumnDefinitions="*">
-                            <Expander ExpandDirection="Right"
-                                      IsExpanded="True">
-                                <Expander.Resources>
-                                    <Border x:Key="ExpanderChevronMargin" Margin="0 0 0 0" />
-                                    <SolidColorBrush x:Key="ExpanderChevronBorderBrush" Color="Transparent" />
-                                    <SolidColorBrush x:Key="ExpanderHeaderBackground" Color="Transparent" />
-                                    <Thickness x:Key="ExpanderChevronBorderThickness">0,0,0,0</Thickness>
-                                    <Thickness x:Key="ExpanderContentRightBorderThickness">0,0,0,0</Thickness>
-                                </Expander.Resources>
-                                <ItemsControl ItemsSource="{CompiledBinding Actions}">
-                                    <ItemsControl.IsVisible>
-                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                            <Binding Path="Actions" Converter="{x:Static ObjectConverters.IsNotNull}" />
-                                            <Binding Path="!IsCompactMode" />
-                                        </MultiBinding>
-                                    </ItemsControl.IsVisible>
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Stretch" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <buttons:StepSizingButton Classes="MenuButton" StepSizeWidth="100"
-                                                                      HorizontalAlignment="Stretch" Margin="2"
-                                                                      Command="{CompiledBinding Command}">
-                                                <Grid ColumnDefinitions="Auto, 5, *">
-                                                    <avalonia:MaterialIcon Grid.Column="0"
-                                                                           Kind="{CompiledBinding Icon}" />
-                                                    <TextBlock Grid.Column="2" HorizontalAlignment="Center"
-                                                               Text="{CompiledBinding Title}"
-                                                               TextTrimming="CharacterEllipsis" />
-                                                </Grid>
-                                            </buttons:StepSizingButton>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </Expander>
-                        </Grid>
-                    </ScrollViewer>
-                </Border>
-                <DropDownButton Theme="{DynamicResource TransparentButton}" Margin="10">
-                    <avalonia:MaterialIcon Width="18" Height="18" Kind="DotsVertical" />
-                    <DropDownButton.IsVisible>
-                        <MultiBinding Converter="{x:Static BoolConverters.And}">
-                            <Binding Path="Actions" Converter="{x:Static ObjectConverters.IsNotNull}" />
-                            <Binding Path="IsCompactMode" />
-                        </MultiBinding>
-                    </DropDownButton.IsVisible>
-                    <DropDownButton.Flyout>
-                        <MenuFlyout>
-                            <ItemsControl ItemsSource="{CompiledBinding Actions}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Spacing="5"></StackPanel>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Button Classes="MenuButton" HorizontalAlignment="Stretch"
-                                                Command="{CompiledBinding Command}">
-                                            <StackPanel Orientation="Horizontal" Spacing="3">
-                                                <avalonia:MaterialIcon Kind="{CompiledBinding Icon}" />
-                                                <TextBlock Text="{CompiledBinding Title}" />
-                                            </StackPanel>
-                                        </Button>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </MenuFlyout>
-                    </DropDownButton.Flyout>
-                </DropDownButton>
-            </StackPanel>
-        </ScrollViewer>
-    </Grid>
+            </ScrollViewer>
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="Actions" Margin="5" />
+            <Border Grid.Row="0"
+                    Grid.Column="1" 
+                    Grid.RowSpan="2" 
+                    Height="150"
+                    BorderBrush="White"
+                    VerticalAlignment="Top"
+                    Margin="0,10,0,0"
+                    BorderThickness="2,0,0,0"
+                    IsVisible="{Binding !IsCompactMode}"/>
+            <ScrollViewer Grid.Row="1" Grid.Column="2" IsVisible="{CompiledBinding !!Actions}">
+                <StackPanel x:Name="PART_ActionsPanel"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left">
+                    <Grid ColumnDefinitions="*">
+                        <ItemsControl ItemsSource="{CompiledBinding Actions}">
+                            <ItemsControl.IsVisible>
+                                <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                    <Binding Path="Actions" Converter="{x:Static ObjectConverters.IsNotNull}" />
+                                    <Binding Path="!IsCompactMode" />
+                                </MultiBinding>
+                            </ItemsControl.IsVisible>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Margin="5" Orientation="Horizontal"
+                                               HorizontalAlignment="Stretch" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <buttons:StepSizingButton StepSizeWidth="100"
+                                                              HorizontalAlignment="Stretch" Margin="2"
+                                                              Command="{CompiledBinding Command}">
+                                        <Grid ColumnDefinitions="Auto, 5, *">
+                                            <avalonia:MaterialIcon Grid.Column="0"
+                                                                   Kind="{CompiledBinding Icon}" />
+                                            <TextBlock Grid.Column="2" HorizontalAlignment="Center"
+                                                       Text="{CompiledBinding Title}"
+                                                       TextTrimming="CharacterEllipsis" />
+                                        </Grid>
+                                    </buttons:StepSizingButton>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                    <DropDownButton Theme="{DynamicResource TransparentButton}" Margin="10">
+                        <avalonia:MaterialIcon Width="18" Height="18" Kind="DotsVertical" />
+                        <DropDownButton.IsVisible>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="Actions" Converter="{x:Static ObjectConverters.IsNotNull}" />
+                                <Binding Path="IsCompactMode" />
+                            </MultiBinding>
+                        </DropDownButton.IsVisible>
+                        <DropDownButton.Flyout>
+                            <MenuFlyout Placement="Bottom" ItemsSource="{CompiledBinding Actions}">
+                                <MenuFlyout.ItemContainerTheme>
+                                    <ControlTheme TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}"
+                                                  x:DataType="map:MapAnchorActionViewModel">
+                                        <Setter Property="Header" Value="{CompiledBinding Title}" />
+                                        <Setter Property="Icon"
+                                                Value="{CompiledBinding Icon, Converter={x:Static api:MaterialIconConverter.Instance}}" />
+                                        <Setter Property="Command" Value="{CompiledBinding Command}" />
+                                    </ControlTheme>
+                                </MenuFlyout.ItemContainerTheme>
+                            </MenuFlyout>
+                        </DropDownButton.Flyout>
+                    </DropDownButton>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Border>
 </UserControl>
