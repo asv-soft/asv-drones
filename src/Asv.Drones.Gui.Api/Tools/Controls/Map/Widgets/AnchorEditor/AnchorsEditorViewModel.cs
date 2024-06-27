@@ -249,6 +249,7 @@ public class AnchorsEditorViewModel : MapWidgetBase
         context.WhenValueChanged(_ => _.SelectedItem)
             .Subscribe(_ =>
             {
+                Actions = null;
                 if (_prevAnchor != null && _prevAnchor.IsInEditMode)
                 {
                     UpdateLatitude(Latitude);

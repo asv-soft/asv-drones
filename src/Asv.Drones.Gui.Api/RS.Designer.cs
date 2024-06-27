@@ -87,6 +87,15 @@ namespace Asv.Drones.Gui.Api {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Actions.
+        /// </summary>
+        public static string AnchorsEditorView_TextBlock_Actions {
+            get {
+                return ResourceManager.GetString("AnchorsEditorView_TextBlock_Actions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Altitude.
         /// </summary>
         public static string AnchorsEditorView_TextBlock_Altitude_Text {

@@ -16,7 +16,7 @@
         <api:AnchorsEditorViewModel />
     </Design.DataContext>
     <Border ClipToBounds="True" Padding="10">
-        <Grid ColumnDefinitions="Auto,2,*" RowDefinitions="20,*" x:Name="PART_Grid"
+        <Grid ColumnDefinitions="Auto,2,*" RowDefinitions="Auto,*" x:Name="PART_Grid"
               EffectiveViewportChanged="Layoutable_OnEffectiveViewportChanged">
             <StackPanel Grid.Column="0" Grid.Row="0" Margin="10,10,15,0" Orientation="Horizontal" Spacing="8">
                 <avalonia:MaterialIcon Kind="{CompiledBinding Map.SelectedItem.Icon}" />
@@ -91,12 +91,22 @@
                     </Grid>
                 </StackPanel>
             </ScrollViewer>
-            <TextBlock Grid.Row="0" Grid.Column="2" Text="Actions" Margin="5" />
+            <TextBlock Grid.Row="0" 
+                       Grid.Column="2" 
+                       Margin="5"
+                       IsVisible="{CompiledBinding !!Actions}"
+                       Text="{x:Static api:RS.AnchorsEditorView_TextBlock_Actions}" />
             <Rectangle Grid.Row="0"
                     Grid.Column="1"
                     Grid.RowSpan="2"
-                    Fill="White"
-                    IsVisible="{Binding !IsCompactMode}" />
+                    Fill="White">
+                <Rectangle.IsVisible>
+                    <MultiBinding Converter="{x:Static BoolConverters.And}">
+                        <Binding Path="Actions" Converter="{x:Static ObjectConverters.IsNotNull}" />
+                        <Binding Path="!IsCompactMode" />
+                    </MultiBinding>
+                </Rectangle.IsVisible>
+            </Rectangle>
             <ScrollViewer Grid.Row="1" Grid.Column="2" IsVisible="{CompiledBinding !!Actions}">
                 <StackPanel x:Name="PART_ActionsPanel"
                             VerticalAlignment="Top"
