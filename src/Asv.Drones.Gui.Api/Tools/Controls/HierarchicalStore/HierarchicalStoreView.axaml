@@ -74,7 +74,7 @@
                                      Text="{Binding SearchText}" />
                         </Border>
                     </DockPanel>
-                    <ScrollViewer MaxHeight="350" VerticalAlignment="Top">
+                    <ScrollViewer MaxHeight="400" VerticalAlignment="Top">
                         <TreeView SelectionMode="Toggle" Margin="0,8,0,8" ItemsSource="{Binding Items}"
                                   SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                             <TreeView.ItemTemplate>
