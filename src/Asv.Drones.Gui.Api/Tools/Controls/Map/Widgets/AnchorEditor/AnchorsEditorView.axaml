@@ -16,7 +16,7 @@
         <api:AnchorsEditorViewModel />
     </Design.DataContext>
     <Border ClipToBounds="True" Padding="10">
-        <Grid ColumnDefinitions="Auto,10,*" RowDefinitions="20,*" x:Name="PART_Grid"
+        <Grid ColumnDefinitions="Auto,2,*" RowDefinitions="20,*" x:Name="PART_Grid"
               EffectiveViewportChanged="Layoutable_OnEffectiveViewportChanged">
             <StackPanel Grid.Column="0" Grid.Row="0" Margin="10,10,15,0" Orientation="Horizontal" Spacing="8">
                 <avalonia:MaterialIcon Kind="{CompiledBinding Map.SelectedItem.Icon}" />
@@ -31,9 +31,9 @@
                             <ColumnDefinition SharedSizeGroup="Value" Width="250" />
                             <ColumnDefinition SharedSizeGroup="Action" Width="45" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" 
-                                   VerticalAlignment="Center" 
-                                   Text="{x:Static api:RS.AnchorsEditorView_TextBlock_Latitude_Text}"/>
+                        <TextBlock Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   Text="{x:Static api:RS.AnchorsEditorView_TextBlock_Latitude_Text}" />
                         <TextBox Grid.Column="2" IsReadOnly="{CompiledBinding !Map.SelectedItem.IsEditable}">
                             <Interaction.Behaviors>
                                 <api:LostFocusUpdateBindingBehavior Text="{CompiledBinding Latitude}" />
@@ -92,15 +92,11 @@
                 </StackPanel>
             </ScrollViewer>
             <TextBlock Grid.Row="0" Grid.Column="2" Text="Actions" Margin="5" />
-            <Border Grid.Row="0"
-                    Grid.Column="1" 
-                    Grid.RowSpan="2" 
-                    Height="150"
-                    BorderBrush="White"
-                    VerticalAlignment="Top"
-                    Margin="0,10,0,0"
-                    BorderThickness="2,0,0,0"
-                    IsVisible="{Binding !IsCompactMode}"/>
+            <Rectangle Grid.Row="0"
+                    Grid.Column="1"
+                    Grid.RowSpan="2"
+                    Fill="White"
+                    IsVisible="{Binding !IsCompactMode}" />
             <ScrollViewer Grid.Row="1" Grid.Column="2" IsVisible="{CompiledBinding !!Actions}">
                 <StackPanel x:Name="PART_ActionsPanel"
                             VerticalAlignment="Top"
