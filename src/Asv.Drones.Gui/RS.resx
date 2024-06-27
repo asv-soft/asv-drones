@@ -1190,8 +1190,8 @@
     <data name="RebootAutopilotView_CompanionReboot_Description" xml:space="preserve">
     <value>Choose companion reboot/shutdown mode</value>
   </data>
-    <data name="RebootAutopilotAnchorActionViewModel_Title" xml:space="preserve">
-    <value>Reboot/Shutdown Autopilot</value>
+  <data name="RebootAutopilotAnchorActionViewModel_Title" xml:space="preserve">
+    <value>Reboot/Shutdown</value>
   </data>
     <data name="RebootAutopilotAnchorActionViewModel_DialogPrimaryButton" xml:space="preserve">
     <value>Ok</value>

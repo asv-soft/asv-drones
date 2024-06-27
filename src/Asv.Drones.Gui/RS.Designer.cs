@@ -4021,7 +4021,7 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reboot/Shutdown Autopilot.
+        ///   Looks up a localized string similar to Reboot/Shutdown.
         /// </summary>
         public static string RebootAutopilotAnchorActionViewModel_Title {
             get {
