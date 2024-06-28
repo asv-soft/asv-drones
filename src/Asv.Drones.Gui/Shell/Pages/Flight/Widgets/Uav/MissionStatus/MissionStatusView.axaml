@@ -2,7 +2,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:gui="clr-namespace:Asv.Drones.Gui"
              xmlns:indicators="clr-namespace:Asv.Avalonia.Toolkit.UI.Controls.Indicators;assembly=Asv.Avalonia.Toolkit"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="145"
@@ -12,13 +11,11 @@
     <Design.DataContext>
         <gui:MissionStatusViewModel />
     </Design.DataContext>
-    <DockPanel>
-        <StackPanel Margin="0 5 0 0 " DockPanel.Dock="Top">
-            <indicators:RouteIndicator Progress="{Binding PathProgress}" StatusText="{Binding MissionFlightTime}"
-                                       Title="{x:Static gui:RS.MissionStatusView_MissionProgress_ToolTip}"
-                                       SubStatusText="before complete" />
-            <!-- <ProgressBar Value="{CompiledBinding Progress}" ShowProgressText="True"/> -->
-            <!-- <uav:MissionStatusIndicator WayPoints="{CompiledBinding WayPoints, Mode=TwoWay}" CurrentDistance="{CompiledBinding Distance}"/> -->
+    <DockPanel LastChildFill="True">
+        <StackPanel Margin="0 5 0 0" DockPanel.Dock="Top">
+        <indicators:RouteIndicator Progress="{Binding PathProgress}" StatusText="{Binding MissionFlightTime}"  
+                                   Title="{x:Static gui:RS.MissionStatusView_MissionProgress_ToolTip}" 
+                                   SubStatusText="before complete"/>
         </StackPanel>
     </DockPanel>
 </UserControl>
