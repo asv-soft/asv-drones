@@ -33,7 +33,7 @@ public class InstalledPluginInfoViewModel : DisposableReactiveObject
         Author = pluginInfo.Authors;
         Description = pluginInfo.Description;
         SourceName = pluginInfo.SourceUri;
-        LocalVersion = pluginInfo.Version;
+        LocalVersion = $"{pluginInfo.Version} (API: {pluginInfo.ApiVersion})"; 
         IsUninstalled = pluginInfo.IsUninstalled;
         IsLoaded = pluginInfo.IsLoaded;
         LoadingError = pluginInfo.LoadingError;

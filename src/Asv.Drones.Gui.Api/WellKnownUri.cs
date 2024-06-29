@@ -76,7 +76,9 @@ public static class WellKnownUri
     public const string ShellPageMapPlaningActionRuler = $"{ShellPageMapPlaningAction}.ruler";
     public const string ShellPageMapPlaningActionMover = $"{ShellPageMapPlaningAction}.mover";
     public const string ShellPageMapPlaningMissionBrowser = $"{ShellPageMapPlaning}.browser";
+    public const string ShellPageMapPlaningMissionSavingBrowser = $"{ShellPageMapPlaning}.browser";
     public static readonly Uri ShellPageMapPlaningMissionBrowserUri = new(ShellPageMapPlaningMissionBrowser);
+    public static readonly Uri ShellPageMapPlaningMissionSavingBrowserUri = new(ShellPageMapPlaningMissionSavingBrowser);
     public const string ShellPageMapPlaningWidget = $"{ShellPageMapPlaning}.widget";
     public const string ShellPageMapPlaningWidgetAnchorEditor = $"{ShellPageMapPlaningWidget}.editor";
     public const string ShellPageMapPlaningWidgetEditor = $"{ShellPageMapPlaningWidget}.mission-editor";

@@ -33,7 +33,7 @@ namespace Asv.Drones.Gui
             Command = cmd;
         }
 
-        private void OnCommandError(Exception ex)
+        private void OnCommandError(Exception? ex)
         {
             _log.Error("Arm", string.Format(RS.TakeOffAnchorActionViewModel_OnCommandError, Vehicle.Name.Value),
                 ex); // DONE: Localize

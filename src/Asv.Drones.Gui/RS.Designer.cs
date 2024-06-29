@@ -1491,6 +1491,15 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save As....
+        /// </summary>
+        public static string HeaderPlaningFileSaveAsMenuItem_Title {
+            get {
+                return ResourceManager.GetString("HeaderPlaningFileSaveAsMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string HeaderPlaningFileSaveMenuItem_Title {
@@ -3435,6 +3444,61 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A file with the same name already exists. After performing this action, overwriting will occur. Are you sure you want to continue?.
+        /// </summary>
+        public static string PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_ContentText {
+            get {
+                return ResourceManager.GetString("PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_ContentText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rewrite.
+        /// </summary>
+        public static string PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_PrimaryButtonTe" +
+                        "xt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmation.
+        /// </summary>
+        public static string PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_Title {
+            get {
+                return ResourceManager.GetString("PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string PlanningPageViewModel_MissionSavingBrowserDialog_PrimaryButton {
+            get {
+                return ResourceManager.GetString("PlanningPageViewModel_MissionSavingBrowserDialog_PrimaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string PlanningPageViewModel_MissionSavingBrowserDialog_SecondaryButton {
+            get {
+                return ResourceManager.GetString("PlanningPageViewModel_MissionSavingBrowserDialog_SecondaryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chose the file name to save.
+        /// </summary>
+        public static string PlanningPageViewModel_MissionSavingBrowserDialog_Title {
+            get {
+                return ResourceManager.GetString("PlanningPageViewModel_MissionSavingBrowserDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mission uploaded!.
         /// </summary>
         public static string PlanningPageViewModel_MissionUploaded {
@@ -3957,7 +4021,7 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reboot/Shutdown Autopilot.
+        ///   Looks up a localized string similar to Reboot/Shutdown.
         /// </summary>
         public static string RebootAutopilotAnchorActionViewModel_Title {
             get {

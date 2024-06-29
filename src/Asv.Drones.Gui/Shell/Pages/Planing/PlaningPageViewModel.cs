@@ -8,14 +8,12 @@ using System.Threading.Tasks;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
-using Asv.Mavlink;
 using DynamicData;
 using DynamicData.Binding;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using MavlinkHelper = Asv.Mavlink.MavlinkHelper;
 
 namespace Asv.Drones.Gui;
 
@@ -125,6 +123,11 @@ public class PlaningPageViewModel : MapPageViewModel, IPlaningMissionContext
                         Command = ReactiveCommand.Create(() => { Mission.SaveCmd.Execute().Subscribe(); },
                             this.WhenAnyValue(_ => _.Mission).Select(_ => _ != null)).DisposeItWith(Disposable)
                     },
+                    new HeaderPlaningFileSaveAsMenuItem
+                    {
+                        Command = ReactiveCommand.CreateFromTask(OpenSavingBrowserImpl,
+                            this.WhenAnyValue(_ => _.Mission).Select(_ => _ != null)).DisposeItWith(Disposable)
+                    },
                     new HeaderPlaningFileDeleteMenuItem
                     {
                         Command = ReactiveCommand.Create(() =>
@@ -231,6 +234,42 @@ public class PlaningPageViewModel : MapPageViewModel, IPlaningMissionContext
             OpenMission(viewModel.DialogResult);
         }
     }
+    
+    /// <summary>
+    /// Opens the browser dialog for saving a mission.
+    /// </summary>
+    /// <param name="arg">The cancellation token.</param>
+    /// <returns>
+    /// A <see cref="Task"/> representing the asynchronous operation.
+    /// </returns>
+    private async Task OpenSavingBrowserImpl(CancellationToken arg)
+    {
+        var dialog = new ContentDialog
+        {
+            Title = RS.PlanningPageViewModel_MissionSavingBrowserDialog_Title,
+            PrimaryButtonText = RS.PlanningPageViewModel_MissionSavingBrowserDialog_PrimaryButton,
+            IsSecondaryButtonEnabled = true,
+            SecondaryButtonText = RS.PlanningPageViewModel_MissionSavingBrowserDialog_SecondaryButton
+        };
+
+        using var viewModel = new PlaningMissionSavingBrowserViewModel(_svc, _log, Mission?.Name);
+        viewModel.ApplyDialog(dialog);
+        dialog.Content = viewModel;
+        var result = await dialog.ShowAsync();
+        if (result == ContentDialogResult.Primary)
+        {
+            viewModel.SaveAsImpl(out var id);
+            
+            var points = Mission?.Points;
+
+            if (points == null) throw new NullReferenceException();
+            OpenMission(id);
+
+            foreach (var point in points) Mission?.AddOrUpdatePoint(point.Point);
+            
+            Mission?.SaveImpl();
+        }
+    }
 
     /// <summary>
     /// Gets or sets the planning mission for the property.
@@ -276,7 +315,7 @@ public class PlaningPageViewModel : MapPageViewModel, IPlaningMissionContext
 
             Mission.IsChanged = false;
         }
-        catch (Exception e)
+        catch (Exception? e)
         {
             _log.Error("Planing", e.Message, e);
         }

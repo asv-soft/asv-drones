@@ -28,12 +28,13 @@ public class AppearanceViewModel : TreePageWithValidationViewModel
     }
 
     public AppearanceViewModel(ISettingsPageContext context, IApplicationHost host, ILocalizationService loc,
-        IMapService map) : base(WellKnownUri.ShellPageSettingsAppearanceUri)
+        IMapService map, IPluginManager pluginManager) : base(WellKnownUri.ShellPageSettingsAppearanceUri)
     {
         _host = host ?? throw new ArgumentNullException(nameof(host));
         _loc = loc ?? throw new ArgumentNullException(nameof(loc));
         _map = map;
         Info = host.Info;
+        FullVersionString = $"{host.Info.Version} (API: {pluginManager.ApiVersion})" ;
         AvailableAccessMode = new List<MapAccessPair>()
         {
             new() { Mode = AccessMode.ServerOnly, Name = RS.AppearanceViewModel_ServerOnly_AccessMode },
@@ -71,6 +72,8 @@ public class AppearanceViewModel : TreePageWithValidationViewModel
 
         UpdateDescription();
     }
+    
+    public string FullVersionString { get; set; }
 
     private void ClearMapStorage()
     {

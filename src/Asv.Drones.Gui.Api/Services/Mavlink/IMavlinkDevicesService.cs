@@ -54,12 +54,13 @@ namespace Asv.Drones.Gui.Api
         /// <param name="id">Id of searched vehicle</param>
         /// <returns>Vehicle object</returns>
         IVehicleClient? GetVehicleByFullId(ushort id);
-
         IObservable<IChangeSet<IGbsClientDevice, ushort>> BaseStations { get; }
         IGbsClientDevice? GetGbsByFullId(ushort id);
         IObservable<IChangeSet<ISdrClientDevice, ushort>> Payloads { get; }
         ISdrClientDevice? GetPayloadsByFullId(ushort id);
         IObservable<IChangeSet<IAdsbClientDevice, ushort>> AdsbDevices { get; }
         IAdsbClientDevice? GetAdsbVehicleByFullId(ushort id);
+        IObservable<IChangeSet<IRfsaClientDevice, ushort>> RfsaDevices { get; }
+        IRfsaClientDevice? GetRfsaByFullId(ushort id);
     }
 }

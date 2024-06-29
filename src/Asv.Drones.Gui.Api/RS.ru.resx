@@ -186,4 +186,7 @@
   <data name="Anchor_Editor_Action_Paste" xml:space="preserve">
     <value>Вставить</value>
   </data>
+  <data name="AnchorsEditorView_TextBlock_Actions" xml:space="preserve">
+    <value>Действия</value>
+  </data>
 </root>

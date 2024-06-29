@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+using Asv.Common;
 using Asv.Drones.Gui.Api;
 using NuGet.Protocol.Core.Types;
 
@@ -5,7 +8,8 @@ namespace Asv.Drones.Gui;
 
 internal class PluginSearchInfo : IPluginSearchInfo
 {
-    public PluginSearchInfo(IPackageSearchMetadata packageSearchMetadata, SourceRepository repository)
+    public PluginSearchInfo(IPackageSearchMetadata packageSearchMetadata, SourceRepository repository,
+        SourcePackageDependencyInfo dependencyInfo)
     {
         Authors = packageSearchMetadata.Authors;
         Title = packageSearchMetadata.Identity.Id.Replace(PluginManager.PluginSearchTermStartWith, string.Empty);
@@ -15,9 +19,17 @@ internal class PluginSearchInfo : IPluginSearchInfo
         Description = packageSearchMetadata.Description;
         Tags = packageSearchMetadata.Tags;
         DownloadCount = packageSearchMetadata.DownloadCount;
+        
+        var apiPackage = dependencyInfo.Dependencies.FirstOrDefault(x => x.Id == NugetHelper.PluginApiPackageName);
+        if (apiPackage == null)
+        {
+            throw new Exception($"Plugin {packageSearchMetadata.Identity.Id} does not contain API package as dependency");
+        }
+        ApiVersion = apiPackage.VersionRange.MinVersion?.ToNormalizedString() ?? throw new InvalidOperationException("Api version not found in plugin dependencies");
     }
 
     public IPluginServerInfo Source { get; }
+    public SemVersion ApiVersion { get; }
     public string PackageId { get; }
     public string? Title { get; }
     public string? Authors { get; }
@@ -25,23 +37,4 @@ internal class PluginSearchInfo : IPluginSearchInfo
     public string Description { get; }
     public long? DownloadCount { get; }
     public string? Tags { get; }
-}
-
-public class DesginTimePluginSearchInfo : IPluginSearchInfo
-{
-    public IPluginServerInfo Source { get; } = new DesingTimeSourceInfo();
-    public string PackageId { get; set; }
-    public string? Title { get; set; }
-    public string? Authors { get; set; }
-    public string LastVersion { get; set; }
-    public string Description { get; set; }
-    public long? DownloadCount { get; set; }
-    public string? Tags { get; set; }
-}
-
-public class DesingTimeSourceInfo : IPluginServerInfo
-{
-    public string SourceUri { get; set; }
-    public string Name { get; set; }
-    public string? Username { get; set; }
 }

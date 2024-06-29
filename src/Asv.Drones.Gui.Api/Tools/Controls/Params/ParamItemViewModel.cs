@@ -193,12 +193,12 @@ public class ParamItemViewModel : ViewModelBase
             .DisposeItWith(Disposable);
     }
 
-    private void OnWriteError(Exception ex)
+    private void OnWriteError(Exception? ex)
     {
         _log.Error("Params", $"Write {Name} error", ex);
     }
 
-    private void OnReadError(Exception ex)
+    private void OnReadError(Exception? ex)
     {
         _log.Error("Params", $"Read {Name} error", ex);
     }

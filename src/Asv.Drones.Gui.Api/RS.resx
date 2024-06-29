@@ -190,4 +190,7 @@
   <data name="Anchor_Editor_Action_Paste" xml:space="preserve">
     <value>Paste</value>
   </data>
+  <data name="AnchorsEditorView_TextBlock_Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
 </root>

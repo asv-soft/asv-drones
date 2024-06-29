@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using Asv.Common;
 using Asv.Drones.Gui.Api;
 using NuGet.Packaging;
 
@@ -22,9 +24,17 @@ public class LocalPluginInfo : ILocalPluginInfo
         IsUninstalled = state.IsUninstalled;
         IsLoaded = state.IsLoaded;
         LoadingError = state.LoadingError;
+        var apiPackage = reader.GetPackageDependencies()
+            .SelectMany(x => x.Packages).FirstOrDefault(x => x.Id == NugetHelper.PluginApiPackageName);
+        if (apiPackage == null)
+        {
+            throw new Exception($"Plugin {Id} does not contain API package as dependency");
+        }
+        ApiVersion = apiPackage.VersionRange.MinVersion?.ToNormalizedString() ?? throw new InvalidOperationException("Api version not found in plugin dependencies");
     }
 
     public string? SourceUri { get; }
+    public SemVersion ApiVersion { get; }
     public string PackageId { get; }
     public string LocalFolder { get; }
     public string Title { get; }

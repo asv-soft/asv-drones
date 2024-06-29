@@ -115,7 +115,7 @@ namespace Asv.Drones.Gui
                     PacketLossChance = PacketLossChance ?? 0,
                 });
             }
-            catch (Exception e)
+            catch (Exception? e)
             {
                 _logService.Error("", $"Error to create port:{e.Message}", e);
             }

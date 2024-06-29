@@ -25,7 +25,7 @@
                         <TextBlock Text="{Binding Info.Name}"
                                    Classes="TitleTextBlockStyle" />
 
-                        <TextBlock Text="{Binding Info.Version}"
+                        <TextBlock Text="{Binding FullVersionString}"
                                    Classes="BodyTextBlockStyle" />
 
                         <TextBlock Text="{Binding Info.AppLicense}"

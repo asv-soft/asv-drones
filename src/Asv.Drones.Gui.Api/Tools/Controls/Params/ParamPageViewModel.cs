@@ -251,7 +251,7 @@ public class ParamPageViewModel : ShellPage
         return true;
     }
 
-    private void OnRefreshError(Exception ex)
+    private void OnRefreshError(Exception? ex)
     {
         _log.Error("Params view", "Error to read all params items", ex);
     }

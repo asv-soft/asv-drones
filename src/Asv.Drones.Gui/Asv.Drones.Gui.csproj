@@ -26,7 +26,6 @@
         <PackageReference Include="Avalonia.Xaml.Interactions" Version="$(AvaloniaVersion)"/>
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)"/>
-        <PackageReference Include="NLog" Version="$(NLogVersion)"/>
 
         <PackageReference Include="NuGet.Packaging" Version="6.8.0"/>
         <PackageReference Include="NuGet.Packaging.Core" Version="6.8.0"/>
@@ -53,14 +52,15 @@
             <Generator>PublicResXFileCodeGenerator</Generator>
             <LastGenOutput>RS.Designer.cs</LastGenOutput>
         </EmbeddedResource>
-    </ItemGroup>
-
-    <ItemGroup>
         <Compile Update="RS.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
             <DependentUpon>RS.resx</DependentUpon>
         </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        
         <Compile Update="MainWindow.axaml.cs">
             <DependentUpon>MainWindow.axaml</DependentUpon>
             <SubType>Code</SubType>
@@ -93,6 +93,14 @@
           <DependentUpon>ArduCopterQuickParamStandardTreePageView.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
+        <Compile Update="Shell\Pages\Planing\Browser\SavingBrowserView.axaml.cs">
+          <DependentUpon>PlaningMissionSavingBrowserView.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Shell\Pages\Planing\Browser\PlaningMissionSavingBrowserView.axaml.cs">
+          <DependentUpon>PlaningMissionSavingBrowserView.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -102,5 +110,23 @@
 
     <ItemGroup>
       <Folder Include="Shell\Pages\Vehicle\QuickParams\Px4\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="app.args">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Asv.Avalonia.Toolkit">
+        <HintPath>..\..\..\..\Users\Havok\.nuget\packages\asv.avalonia.toolkit\0.1.7\lib\net8.0\Asv.Avalonia.Toolkit.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Asv.Avalonia.Toolkit">
+        <HintPath>..\..\..\..\Users\Havok\.nuget\packages\asv.avalonia.toolkit\0.1.7\lib\net8.0\Asv.Avalonia.Toolkit.dll</HintPath>
+      </Reference>
     </ItemGroup>
 </Project>

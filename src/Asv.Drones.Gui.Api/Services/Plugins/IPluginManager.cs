@@ -1,3 +1,4 @@
+using Asv.Common;
 using DynamicData;
 
 namespace Asv.Drones.Gui.Api;
@@ -31,6 +32,7 @@ public interface IPluginManager
     void CancelUninstall(ILocalPluginInfo pluginInfo);
     IEnumerable<ILocalPluginInfo> Installed { get; }
     bool IsInstalled(string packageId, out ILocalPluginInfo? info);
+    SemVersion ApiVersion { get; }
 }
 
 public class SearchQuery
