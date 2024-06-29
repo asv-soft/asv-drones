@@ -81,4 +81,9 @@
         <AdditionalFiles Include="Tools\Controls\Params\ParamItemView.axaml"/>
         <AdditionalFiles Include="Tools\Controls\Params\ParamPageView.axaml"/>
     </ItemGroup>
+    <ItemGroup>
+      <Reference Include="Asv.Avalonia.Toolkit">
+        <HintPath>..\..\..\..\Users\Havok\.nuget\packages\asv.avalonia.toolkit\0.1.7\lib\net8.0\Asv.Avalonia.Toolkit.dll</HintPath>
+      </Reference>
+    </ItemGroup>
 </Project>

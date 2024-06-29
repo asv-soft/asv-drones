@@ -93,13 +93,6 @@ namespace Asv.Drones.Gui.Api
                         <= 12 and > 10 => marker.BaseSize * MediumSizeFactor,
                         _ => marker.BaseSize * LargeSizeFactor
                     };
-                    
-                    marker.StrokeThickness = x switch
-                    {
-                        <= 5 => marker.BaseStrokeThickness * SmallStrokeFactor,
-                        var zoom and > 5 and <= 10 => CalculateMediumStrokeFactor(marker),
-                        _ => marker.BaseStrokeThickness * LargeStrokeFactor
-                    };
                 }
             }).DisposeItWith(Disposable);
 
@@ -217,10 +210,6 @@ namespace Asv.Drones.Gui.Api
                         mapAnchor.IsSelected = false;
                 }
             });
-        }
-        private double CalculateMediumStrokeFactor(IMapAnchor model)
-        {
-            return model.BaseStrokeThickness * ((2 + ((Zoom - 5) / 5) * (5 - 2)) / 3);
         }
 
         private void SetUpFollow(IMapAnchor? anchor)

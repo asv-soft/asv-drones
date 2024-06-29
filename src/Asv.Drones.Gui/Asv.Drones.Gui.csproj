@@ -114,7 +114,19 @@
 
     <ItemGroup>
       <None Update="app.args">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Asv.Avalonia.Toolkit">
+        <HintPath>..\..\..\..\Users\Havok\.nuget\packages\asv.avalonia.toolkit\0.1.7\lib\net8.0\Asv.Avalonia.Toolkit.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Asv.Avalonia.Toolkit">
+        <HintPath>..\..\..\..\Users\Havok\.nuget\packages\asv.avalonia.toolkit\0.1.7\lib\net8.0\Asv.Avalonia.Toolkit.dll</HintPath>
+      </Reference>
     </ItemGroup>
 </Project>
