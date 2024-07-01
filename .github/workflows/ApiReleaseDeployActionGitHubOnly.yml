@@ -47,7 +47,7 @@ jobs:
           TAG: ${{ github.ref_name }}
         run: |
           newTag=$(echo $TAG | sed 's/dev-api-v//')
-          newTag="${newTag}-dev-api"
+          newTag="${newTag}-dev"
           echo "VERSION=${newTag}" >> $GITHUB_ENV
         
       - name: Read version from Directory.Build.props
@@ -56,7 +56,7 @@ jobs:
 
       - name: Compare tag with NuGet package version
         run: |
-          if [ "${{ steps.read-version.outputs.version }}-dev-api" != "${{ env.VERSION }}" ]; then
+          if [ "${{ steps.read-version.outputs.version }}-dev" != "${{ env.VERSION }}" ]; then
             echo "Error: Tag does not match NuGet package version"
             exit 1
           fi
