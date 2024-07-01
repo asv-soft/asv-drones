@@ -67,5 +67,5 @@ jobs:
       - name: List output files
         run: ls -la
 
-      - name: Push package to GitHub
-        run: dotnet nuget push Asv.Drones.Gui.Api.${VERSION}.nupkg --api-key ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }} --skip-duplicate --source "https://nuget.pkg.github.com/asv-soft/index.json"
+#      - name: Push package to GitHub
+#        run: dotnet nuget push Asv.Drones.Gui.Api.${VERSION}.nupkg --api-key ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }} --skip-duplicate --source "https://nuget.pkg.github.com/asv-soft/index.json"
