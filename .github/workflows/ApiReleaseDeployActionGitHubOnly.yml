@@ -47,7 +47,7 @@ jobs:
           fi
 
       - name: Pack package
-        run: dotnet pack ./src/Asv.Drones.Gui.Api/Asv.Drones.Gui.Api.csproj -c Release /p:Version=${VERSION} --no-build -o .
+        run: dotnet pack ./src/Asv.Drones.Gui.Api/Asv.Drones.Gui.Api.csproj -c Release /p:Version=${VERSION}-dev --no-build -o .
 
       - name: List output files
         run: ls -la
