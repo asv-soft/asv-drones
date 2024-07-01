@@ -47,7 +47,16 @@ jobs:
           fi
 
       - name: Pack package
-        run: dotnet pack ./src/Asv.Drones.Gui.Api/Asv.Drones.Gui.Api.csproj -c Release /p:Version=${VERSION}-dev --no-build -o .
+        run: dotnet pack ./src/Asv.Drones.Gui.Api/Asv.Drones.Gui.Api.csproj -c Release /p:Version=${VERSION} --no-build -o .
+        
+      - name: Check NuGet package file existence
+        run: |
+            if [ -f "Asv.Drones.Gui.Api.${VERSION}.nupkg" ]; then
+              echo "NuGet package file exists in the root directory"
+            else
+              echo "Error: NuGet package file does not exist in the root directory"
+              exit 1
+            fi
 
       - name: List output files
         run: ls -la
