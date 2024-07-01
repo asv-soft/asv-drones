@@ -11,7 +11,7 @@
         <Description>API reference for Asv.Drones GUI application</Description>
         <Copyright>https://github.com/asv-soft</Copyright>
         <EnablePackageValidation>true</EnablePackageValidation>
-        <PackageVersion>$(ApiVersion)</PackageVersion>
+<!--        <PackageVersion>$(ApiVersion)</PackageVersion>-->
         <ApiCompatGenerateSuppressionFile>true</ApiCompatGenerateSuppressionFile>
         <PackageValidationBaselineVersion>$(ApiPrevVersion)</PackageValidationBaselineVersion>
 
