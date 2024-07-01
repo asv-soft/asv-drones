@@ -1,18 +1,14 @@
-name: Build and Publish Api NuGet
+name: Build and Publish Api Github only
 
 on:
   push:
     tags:
-      - "api-v*"
-
-env:
-  NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
-  GITHUB_PACKAGES_URL: 'https://nuget.pkg.github.com/asv-soft/index.json'
+      - "dev-api-v*"
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/api-v')
+    if: startsWith(github.ref, 'refs/tags/dev-api-v')
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -49,7 +45,10 @@ jobs:
       - name: Set version variable
         env:
           TAG: ${{ github.ref_name }}
-        run: echo "VERSION=${TAG#api-v}" >> $GITHUB_ENV
+        run: |
+          newTag=$(echo $TAG | sed 's/dev-api-v//')
+          newTag="${newTag}-dev-api"
+          echo "VERSION=${newTag}" >> $GITHUB_ENV
         
       - name: Read version from Directory.Build.props
         id: read-version
@@ -57,7 +56,7 @@ jobs:
 
       - name: Compare tag with NuGet package version
         run: |
-          if [ "${{ steps.read-version.outputs.version }}" != "${{ env.VERSION }}" ]; then
+          if [ "${{ steps.read-version.outputs.version }}-dev-api" != "${{ env.VERSION }}" ]; then
             echo "Error: Tag does not match NuGet package version"
             exit 1
           fi
@@ -69,7 +68,4 @@ jobs:
         run: ls -la
 
       - name: Push package to GitHub
-        run: dotnet nuget push Asv.Drones.Gui.Api.${VERSION}.nupkg --api-key ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }} --skip-duplicate --source ${{ env.GIHUB_NUGET_AUTH_TOKEN }}
-        
-      - name: Push package to Nuget
-        run: dotnet nuget push Asv.Drones.Gui.Api.${VERSION}.nupkg --api-key ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }} --skip-duplicate --source ${{ env.NUGET_SOURCE_URL }}
+        run: dotnet nuget push Asv.Drones.Gui.Api.${VERSION}.nupkg --api-key ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }} --skip-duplicate --source "https://nuget.pkg.github.com/asv-soft/index.json"
