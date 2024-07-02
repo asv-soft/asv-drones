@@ -42,7 +42,7 @@ jobs:
         
       - name: Read version from Directory.Build.props
         id: read-version
-        run: echo "::set-output name=version::$(grep -oP '<${{PROPS_VERSION_VAR_NAME}}>\K[^<]+' ./src/Directory.Build.props)"
+        run: echo "::set-output name=version::$(grep -oP '<${{env.PROPS_VERSION_VAR_NAME}}>\K[^<]+' ./src/Directory.Build.props)"
 
       - name: Compare tag with NuGet package version
         run: |
