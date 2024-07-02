@@ -53,15 +53,6 @@ jobs:
 
       - name: Pack package
         run: dotnet pack ./src/${{env.PROJECT_NAME}}/${{env.PROJECT_NAME}}.csproj -c Release /p:Version=${VERSION} --no-build -o .
-        
-      - name: Check NuGet package file existence
-        run: |
-            if [ -f "Asv.Drones.Gui.Api.${VERSION}.nupkg" ]; then
-              echo "NuGet package file exists in the root directory"
-            else
-              echo "Error: NuGet package file does not exist in the root directory"
-              exit 1
-            fi
 
       - name: List output files
         run: ls -la
