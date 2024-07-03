@@ -18,22 +18,13 @@
     <data name="FlightShellMenuItem_Name" xml:space="preserve">
 		<value>Режим полета</value>
 	</data>
-    <data name="ThemeService_Themes_Contrast" xml:space="preserve">
-		<value>Контрастная</value>
-	</data>
-    <data name="ThemeService_Themes_Dark" xml:space="preserve">
+  <data name="ThemeService_Themes_Dark" xml:space="preserve">
 		<value>Темная</value>
 	</data>
     <data name="ThemeService_Themes_Light" xml:space="preserve">
 		<value>Светлая</value>
 	</data>
-    <data name="ThemeService_FlowDirections_LeftToRight" xml:space="preserve">
-		<value>СлеваНаПраво</value>
-	</data>
-    <data name="ThemeService_FlowDirections_RightToLeft" xml:space="preserve">
-		<value>СправаНаЛево</value>
-	</data>
-    <data name="SettingsThemeViewModel_CurrentTheme" xml:space="preserve">
+  <data name="SettingsThemeViewModel_CurrentTheme" xml:space="preserve">
 		<value>Тема</value>
 	</data>
     <data name="SettingsThemeViewModel_ChangeThemeDescription" xml:space="preserve">
@@ -45,13 +36,7 @@
     <data name="SettingsThemeViewModel_CurrentLanguageDescription" xml:space="preserve">
 		<value>Измените текущий язык приложения. Изменения будут применены после перезапуска приложения.</value>
 	</data>
-    <data name="SettingsThemeViewModel_FlowDirection" xml:space="preserve">
-		<value>Направление чтения</value>
-	</data>
-    <data name="SettingsThemeViewModel_FlowDirectionDescription" xml:space="preserve">
-		<value>Измените направление чтения.</value>
-	</data>
-    <data name="PlaningShellMenuItem_Name" xml:space="preserve">
+  <data name="PlaningShellMenuItem_Name" xml:space="preserve">
 		<value>Планирование полета</value>
 	</data>
     <data name="ByteSize_BytesUnit" xml:space="preserve">
@@ -118,25 +103,13 @@
     <data name="MeasureUnitsSettingsViewModel_LatitudeLongitudeDescription" xml:space="preserve">
 		<value>Измените текущие единицы измерения широты и долготы.</value>
 	</data>
-    <data name="MeasureUnitsSettingsViewModel_DistanceMeters" xml:space="preserve">
-		<value>Метры</value>
-	</data>
-    <data name="MeasureUnitsSettingsViewModel_DistanceInternationalNauticalMiles" xml:space="preserve">
-		<value>Морские мили</value>
-	</data>
-    <data name="Altitude_Meter_Title" xml:space="preserve">
+  <data name="Altitude_Meter_Title" xml:space="preserve">
 		<value>Метры</value>
 	</data>
     <data name="Altitude_Feet_Title" xml:space="preserve">
 		<value>Футы</value>
 	</data>
-    <data name="MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegrees" xml:space="preserve">
-		<value>Градусы</value>
-	</data>
-    <data name="MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds" xml:space="preserve">
-		<value>Градусы, минуты, секунды</value>
-	</data>
-    <data name="Altitude_Feet_Unit" xml:space="preserve">
+  <data name="Altitude_Feet_Unit" xml:space="preserve">
 		<value>фут</value>
 	</data>
     <data name="Altitude_Meter_Unit" xml:space="preserve">
@@ -176,35 +149,19 @@
     <data name="MeasureUnitsSettingsViewModel_VelocityDescription" xml:space="preserve">
 		<value>Измените текущие единицы измерения скорости.</value>
 	</data>
-    <data name="HeaderToolsMenu_Header" xml:space="preserve">
-	  <value>Инструменты</value>
-  </data>
-    <data name="HeaderCoordinatesCalculatorMenu_Header" xml:space="preserve">
-	  <value>Калькулятор координат</value>
-  </data>
-
-    <data name="SettingsShellMenuProvider_SettingsShellMenuProvider_Settings" xml:space="preserve">
+  <data name="SettingsShellMenuProvider_SettingsShellMenuProvider_Settings" xml:space="preserve">
     <value>Настройки</value>
   </data>
     <data name="FlightShellMenuItem_Name" xml:space="preserve">
     <value>Режим полета</value>
   </data>
-    <data name="ThemeService_Themes_Contrast" xml:space="preserve">
-    <value>Контрастная</value>
-  </data>
-    <data name="ThemeService_Themes_Dark" xml:space="preserve">
+  <data name="ThemeService_Themes_Dark" xml:space="preserve">
     <value>Темная</value>
   </data>
     <data name="ThemeService_Themes_Light" xml:space="preserve">
     <value>Светлая</value>
   </data>
-    <data name="ThemeService_FlowDirections_LeftToRight" xml:space="preserve">
-    <value>СлеваНаПраво</value>
-  </data>
-    <data name="ThemeService_FlowDirections_RightToLeft" xml:space="preserve">
-    <value>СправаНаЛево</value>
-  </data>
-    <data name="SettingsThemeViewModel_CurrentTheme" xml:space="preserve">
+  <data name="SettingsThemeViewModel_CurrentTheme" xml:space="preserve">
     <value>Тема</value>
   </data>
     <data name="SettingsThemeViewModel_ChangeThemeDescription" xml:space="preserve">
@@ -216,13 +173,7 @@
     <data name="SettingsThemeViewModel_CurrentLanguageDescription" xml:space="preserve">
     <value>Измените текущий язык приложения. Изменения будут применены после перезапуска приложения.</value>
   </data>
-    <data name="SettingsThemeViewModel_FlowDirection" xml:space="preserve">
-    <value>Направление чтения</value>
-  </data>
-    <data name="SettingsThemeViewModel_FlowDirectionDescription" xml:space="preserve">
-    <value>Измените направление чтения.</value>
-  </data>
-    <data name="PlaningShellMenuItem_Name" xml:space="preserve">
+  <data name="PlaningShellMenuItem_Name" xml:space="preserve">
     <value>Планирование полета</value>
   </data>
     <data name="MapSettingsView_MapProvider_Description" xml:space="preserve">
@@ -240,49 +191,13 @@
     <data name="MapSettingsView_MapsInfo_Header" xml:space="preserve">
     <value>Хранилище карт</value>
   </data>
-    <data name="MapSettingsViewModel_MapDialogTitle" xml:space="preserve">
-    <value>Карты</value>
-  </data>
-    <data name="Distance_Meters_Title" xml:space="preserve">
+  <data name="Distance_Meters_Title" xml:space="preserve">
 	  <value>Метры</value>
   </data>
-    <data name="GlobalCommands_OpenStoreDialogTitle" xml:space="preserve">
-	  <value>Открыть файл</value>
-  </data>
-    <data name="Distance_NauticalMiles_Title" xml:space="preserve">
+  <data name="Distance_NauticalMiles_Title" xml:space="preserve">
 	  <value>Морские мили</value>
   </data>
-    <data name="LogMessagesShellMenuItem_Name" xml:space="preserve">
-	  <value>Сообщения лога</value>
-  </data>
-    <data name="LogMessagesPageView_By" xml:space="preserve">
-	  <value>по </value>
-  </data>
-    <data name="LogMessagesPageView_SearchWatermark" xml:space="preserve">
-	  <value>Найти</value>
-  </data>
-    <data name="LogMessagesPageView_From" xml:space="preserve">
-	  <value>От {0}</value>
-  </data>
-    <data name="LogMessagesPageView_To" xml:space="preserve">
-	  <value>до {0}</value>
-  </data>
-    <data name="LogMessagesPageView_Filtered" xml:space="preserve">
-	  <value>Фильтрованных: {0}</value>
-  </data>
-    <data name="LogMessagesPageView_Total" xml:space="preserve">
-	  <value>Всего: {0}</value>
-  </data>
-    <data name="LogMessagesPageViewModel_LogName" xml:space="preserve">
-	  <value>СообщенияЛога</value>
-  </data>
-    <data name="LogMessagesPageViewModel_RefreshErrorMessage" xml:space="preserve">
-	  <value>Ошибка при обновлении элементов</value>
-  </data>
-    <data name="LogMessagesPageViewModel_ClearAllMessage" xml:space="preserve">
-	  <value>Очистить все сообщения лога</value>
-  </data>
-    <data name="SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name" xml:space="preserve">
+  <data name="SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name" xml:space="preserve">
     <value>Вы должны указать допустимое имя</value>
   </data>
     <data name="SerialPortViewModel_SerialPortViewModel_ValidSerialPort" xml:space="preserve">
@@ -339,19 +254,10 @@
     <data name="ConnectionsPortsView_Header_Title" xml:space="preserve">
         <value>Порты</value>
     </data>
-    <data name="ConnectionsView_Header_Description" xml:space="preserve">
-    <value>Эта страница позволяет настроить основные параметры сети Mavlink</value>
-  </data>
-    <data name="ConnectionsPortsView_Header_Description" xml:space="preserve">
+  <data name="ConnectionsPortsView_Header_Description" xml:space="preserve">
     <value>Точка входа, позволяющая ему общаться с другими устройствами в сети Mavlink.</value>
   </data>
-    <data name="ConnectionsView_Header_Title" xml:space="preserve">
-    <value>Сеть Mavlink</value>
-  </data>
-    <data name="DeviceBrowserView_Description" xml:space="preserve">
-    <value>В этом разделе можно посмотреть все найденные устройства в сети</value>
-  </data>
-    <data name="DeviceBrowserView_Header" xml:space="preserve">
+  <data name="DeviceBrowserView_Header" xml:space="preserve">
     <value>Список найденных устройств</value>
   </data>
     <data name="ConnectionsIdentificationView_HeartbeatRate_Description" xml:space="preserve">
@@ -454,16 +360,7 @@
     <data name="PacketViewerShellMenuItem_Name" xml:space="preserve">
 	  <value>Просмотр пакетов</value>
   </data>
-    <data name="LogMessageTypeHelper_GetDisplayName_Info" xml:space="preserve">
-	  <value>Информация</value>
-  </data>
-    <data name="LogMessageTypeHelper_GetDisplayName_Warning" xml:space="preserve">
-	  <value>Предупреждение</value>
-  </data>
-    <data name="LogMessageTypeHelper_GetDisplayName_Error" xml:space="preserve">
-	  <value>Ошибка</value>
-  </data>
-    <data name="PacketViewerView_CheckAll" xml:space="preserve">
+  <data name="PacketViewerView_CheckAll" xml:space="preserve">
 	  <value>Показать/Скрыть все</value>
   </data>
     <data name="PacketViewerView_PlayPause" xml:space="preserve">
@@ -496,106 +393,7 @@
     <data name="ConnectionsViewModel_EditDialogPort_Cancel" xml:space="preserve">
 	  <value>Отмена</value>
   </data>
-    <data name="LoggerView_ErrorFilter_Name" xml:space="preserve">
-	  <value>Ошибка</value>
-  </data>
-    <data name="LoggerView_InfoFilter_Name" xml:space="preserve">
-	  <value>Инфо</value>
-  </data>
-    <data name="LoggerView_TraceFilter_Name" xml:space="preserve">
-	  <value>Отладка</value>
-  </data>
-    <data name="LoggerView_WarningFilter_Name" xml:space="preserve">
-	  <value>Предупреждение</value>
-  </data>
-    <data name="LogMessagesPageView_By_ToolTip" xml:space="preserve">
-	  <value>Число элементов на одной странице</value>
-  </data>
-    <data name="LogMessagesPageView_ClearAllButton_ToolTip" xml:space="preserve">
-	  <value>Очистить логи</value>
-  </data>
-    <data name="LogMessagesPageView_PrevButton_ToolTip" xml:space="preserve">
-	  <value>Перейти к предыдущей странице</value>
-  </data>
-    <data name="LogMessagesPageView_NextButton_ToolTip" xml:space="preserve">
-	  <value>Перейти к следующей странице</value>
-  </data>
-    <data name="LogMessagesPageView_RefreshButton_ToolTip" xml:space="preserve">
-	  <value>Обновить все элементы</value>
-  </data>
-    <data name="SavedCoordsView_Header" xml:space="preserve">
-	  <value>Сохраненные координаты</value>
-  </data>
-    <data name="SavedCoordsView_Description" xml:space="preserve">
-	  <value>В этом разделе вы можете просматривать и добавлять новые точки координат для Fixed режима базовой станции</value>
-  </data>
-    <data name="SavedCoordsView_AddNewButton_Name" xml:space="preserve">
-	  <value>Добавить</value>
-  </data>
-    <data name="SavedCoordsView_RemoveButton_Name" xml:space="preserve">
-	  <value>Удалить</value>
-  </data>
-    <data name="SavedCoordsViewModel_AddNewItem_CloseButtonText" xml:space="preserve">
-	  <value>Отмена</value>
-  </data>
-    <data name="SavedCoordsViewModel_AddNewItem_PrimaryButtonText" xml:space="preserve">
-	  <value>Добавить</value>
-  </data>
-    <data name="SavedCoordsViewModel_AddNewItem_Title" xml:space="preserve">
-	  <value>Добавить новую точку на карте</value>
-  </data>
-    <data name="AddNewMapPointView_Accuracy_Name" xml:space="preserve">
-	  <value>Точность</value>
-  </data>
-    <data name="AddNewMapPointView_Altitude_Name" xml:space="preserve">
-	  <value>Высота</value>
-  </data>
-    <data name="AddNewMapPointView_Latitude_Name" xml:space="preserve">
-	  <value>Широта</value>
-  </data>
-    <data name="AddNewMapPointView_Longitude_Name" xml:space="preserve">
-	  <value>Долгота</value>
-  </data>
-    <data name="SavedCoordsViewModel_RemoveItem_Title" xml:space="preserve">
-	  <value>Удалить точку</value>
-  </data>
-    <data name="SavedCoordsViewModel_RemoveItem_CloseButtonText" xml:space="preserve">
-	  <value>Отмена</value>
-  </data>
-    <data name="SavedCoordsViewModel_RemoveItem_PrimaryButtonText" xml:space="preserve">
-	  <value>Удалить</value>
-  </data>
-    <data name="RemoveMapPointView_ConfirmationText" xml:space="preserve">
-	  <value>Уверены что хотите удалить эту точку?</value>
-  </data>
-    <data name="RemoveMapPointView_Accuracy_Name" xml:space="preserve">
-	  <value>Точность</value>
-  </data>
-    <data name="RemoveMapPointView_Altitude_Name" xml:space="preserve">
-	  <value>Высота</value>
-  </data>
-    <data name="RemoveMapPointView_Latitude_Name" xml:space="preserve">
-	  <value>Широта</value>
-  </data>
-    <data name="RemoveMapPointView_Longitude_Name" xml:space="preserve">
-	  <value>Долгота</value>
-  </data>
-    <data name="RemoveMapPointView_Point_Name" xml:space="preserve">
-	  <value>Имя</value>
-  </data>
-    <data name="AddNewMapPointView_Point_Name" xml:space="preserve">
-	  <value>Имя</value>
-  </data>
-    <data name="AddNewMapPointViewModel_Accuracy_ValidValue" xml:space="preserve">
-	  <value>Точность должна быть больше или равна {0}.</value>
-  </data>
-    <data name="AddNewMapPointViewModel_Name_ValidValue" xml:space="preserve">
-	  <value>Имя не может быть пустым</value>
-  </data>
-    <data name="LoggerView_Clear_Name" xml:space="preserve">
-	  <value>Очистить</value>
-  </data>
-    <data name="PacketViewerViewModel_SeparatorDialog_Title" xml:space="preserve">
+  <data name="PacketViewerViewModel_SeparatorDialog_Title" xml:space="preserve">
 	  <value>Выберите разделитель</value>
   </data>
     <data name="PacketViewerViewModel_SeparatorDialog_DialogPrimaryButton" xml:space="preserve">
@@ -613,13 +411,7 @@
     <data name="PacketViewerViewModel_SeparatorDialog_Coma" xml:space="preserve">
 	  <value>Запятая [ , ]</value>
   </data>
-    <data name="MapPageViewModel_RulerStartPoint_Description" xml:space="preserve">
-	  <value>Укажите начальную точку линейки</value>
-  </data>
-    <data name="MapPageViewModel_RulerStopPoint_Description" xml:space="preserve">
-	  <value>Укажите конечную точку линейки</value>
-  </data>
-    <data name="Ddm_InParts_Title" xml:space="preserve">
+  <data name="Ddm_InParts_Title" xml:space="preserve">
 	  <value>В частях</value>
   </data>
     <data name="Ddm_Percent_Title" xml:space="preserve">
@@ -634,13 +426,7 @@
     <data name="Ddm_MicroampRus_Title" xml:space="preserve">
 	  <value>Микроампер (Рус)</value>
   </data>
-    <data name="MeasureUnitsSettingsViewModel_DdmLlz" xml:space="preserve">
-	  <value>РГМ (Курс)</value>
-  </data>
-    <data name="MeasureUnitsSettingsViewModel_DdmLlzDescription" xml:space="preserve">
-	  <value>Измените текущие единицы измерения РГМ (Курс).</value>
-  </data>
-    <data name="Power_Dbm_Title" xml:space="preserve">
+  <data name="Power_Dbm_Title" xml:space="preserve">
 	  <value>Децибел по отношению к 1 милливатт</value>
   </data>
     <data name="Power_Dbm_Unit" xml:space="preserve">
@@ -685,19 +471,7 @@
     <data name="Phase_Radian_Unit" xml:space="preserve">
 	  <value>Рад</value>
   </data>
-    <data name="MapSettingsView_MapSettings_Header" xml:space="preserve">
-    <value>Настройки карты</value>
-  </data>
-    <data name="MapSettingsView_MapSettings_Description" xml:space="preserve">
-    <value>Изменить текущие настройки карты</value>
-  </data>
-    <data name="MeasureUnitsSettingsViewModelDdmGp" xml:space="preserve">
-	  <value>РГМ (Глиссада)</value>
-  </data>
-    <data name="MeasureUnitsSettingsViewModelDdmGpDescription" xml:space="preserve">
-	  <value>Измените текущие единицы измерения РГМ (Глиссада).</value>
-  </data>
-    <data name="BearingDegreeTitle" xml:space="preserve">
+  <data name="BearingDegreeTitle" xml:space="preserve">
 	  <value>Градусы</value>
   </data>
     <data name="Temperature_Celsius_Title" xml:space="preserve">
@@ -715,10 +489,6 @@
     <data name="MeasureUnitsSettingsViewModelTemperatureDescription" xml:space="preserve">
 	  <value>Измените текущие единицы измерения температуры.</value>
   </data>
-
-    <data name="AnchorMoverActionView_Title" xml:space="preserve">
-	  <value>Переместить якоря</value>
-</data>
     <data name="MeasureUnitsSettingsViewModelAngle" xml:space="preserve">
 	  <value>Угол</value>
   </data>
@@ -743,50 +513,7 @@
     <data name="Longitude_Degree_Title" xml:space="preserve">
 	  <value>[Г]°</value>
   </data>
-    <data name="CoordinatesCalculatorDialog_Title" xml:space="preserve">
-	  <value>Калькулятор координат</value>
-  </data>
-    <data name="CoordinatesCalculatorDialog_CloseButton" xml:space="preserve">
-	  <value>Закрыть</value>
-  </data>
-    <data name="CoordinatesCalculatorView_ToStandard" xml:space="preserve">
-    <value>В стандарт</value>
-  </data>
-    <data name="CoordinatesCalculatorView_ToLongitude" xml:space="preserve">
-    <value>В долготу</value>
-  </data>
-    <data name="CoordinatesCalculatorView_ToLatLonUnit" xml:space="preserve">
-    <value>В единицы шир/долг</value>
-  </data>
-    <data name="CoordinatesCalculatorView_ToLatitude" xml:space="preserve">
-    <value>В широту</value>
-  </data>
-    <data name="CoordinatesCalculatorView_ToAltUnit" xml:space="preserve">
-    <value>В единицы высоты</value>
-  </data>
-    <data name="CoordinatesCalculatorView_ToAltitude" xml:space="preserve">
-    <value>В высоту</value>
-  </data>
-    <data name="CoordinatesCalculatorView_FromStandard" xml:space="preserve">
-    <value>Из стандарта</value>
-  </data>
-    <data name="CoordinatesCalculatorView_FromLongitude" xml:space="preserve">
-    <value>Из долготы</value>
-  </data>
-    <data name="CoordinatesCalculatorView_FromLatLonUnit" xml:space="preserve">
-    <value>Из единиц шир/долг</value>
-  </data>
-    <data name="CoordinatesCalculatorView_FromLatitude" xml:space="preserve">
-    <value>Из широты</value>
-  </data>
-    <data name="CoordinatesCalculatorView_FromAltUnit" xml:space="preserve">
-    <value>Из единиц высоты</value>
-  </data>
-    <data name="CoordinatesCalculatorView_FromAltitude" xml:space="preserve">
-    <value>Из высоты</value>
-  </data>
-
-    <data name="Altitude_Description" xml:space="preserve">
+  <data name="Altitude_Description" xml:space="preserve">
 	  <value>Единицы измерения высоты</value>
   </data>
     <data name="Altitude_Title" xml:space="preserve">
@@ -880,115 +607,20 @@
     <data name="Sdm_Description" xml:space="preserve">
 	  <value>Единицы измерения суммы глубины модуляции</value>
   </data>
-    <data name="HeaderTemplaterMenu_Header" xml:space="preserve">
-	  <value>Шаблонизатор</value>
-  </data>
-    <data name="TemplaterDialog_CloseButton" xml:space="preserve">
-	  <value>Закрыть</value>
-  </data>
-    <data name="TemplaterDialog_SaveButton" xml:space="preserve">
-	  <value>Сохранить</value>
-  </data>
-    <data name="TemplaterView_TemplatePath" xml:space="preserve">
-	  <value>Путь к шаблону:</value>
-  </data>
-    <data name="TemplaterView_ResultPath" xml:space="preserve">
-	  <value>Путь к файлу:</value>
-  </data>
-    <data name="TemplaterView_AddNewTag" xml:space="preserve">
-	  <value>Добавить новый тег</value>
-  </data>
-    <data name="TemplaterView_AddImageTag" xml:space="preserve">
-	  <value>Добавить тег картинки</value>
-  </data>
-    <data name="TemplaterView_AddStringTag" xml:space="preserve">
-	  <value>Добавить строковый тег</value>
-  </data>
-    <data name="TemplaterView_ClearTagsList" xml:space="preserve">
-	  <value>Очистить список тегов</value>
-  </data>
     <data name="Sdm_Title" xml:space="preserve">
 	  <value>СГМ</value>
   </data>
     <data name="FieldStrength_Title" xml:space="preserve">
 	  <value>Напряжённость поля</value>
   </data>
-    <data name="FieldStrength_Description" xml:space="preserve">
-	  <value>Единицы измерения напряжённости поля</value>
-  </data>
-    <data name="FieldStrength_MicroVoltsPerMeter_Unit" xml:space="preserve">
+  <data name="FieldStrength_MicroVoltsPerMeter_Unit" xml:space="preserve">
 	  <value>мкВ/м</value>
   </data>
 
     <data name="Degrees_DM_Title" xml:space="preserve">
 	  <value>[Г]°[М]′</value>
   </data>
-    <data name="MeasureUnitsSettingsViewModelBearing" xml:space="preserve">
-	  <value>Азимут</value>
-  </data>
-    <data name="MeasureUnitsSettingsViewModelBearingDescription" xml:space="preserve">
-	  <value>Измените текущие единицы измерения азимута.</value>
-  </data>
-    <data name="HeaderAnchorsMenu_Title" xml:space="preserve">
-	  <value>Якори</value>
-
-  </data>
-    <data name="ParametersEditorParameterView_PinToggleButton_ToolTip" xml:space="preserve">
-    <value>Включить/выключить закрепление этого параметра</value>
-  </data>
-    <data name="ParametersEditorParameterView_UpdateButton_ToolTip" xml:space="preserve">
-    <value>Обновить этот парметр из БПЛА</value>
-  </data>
-    <data name="ParametersEditorParameterView_WriteButton_ToolTip" xml:space="preserve">
-    <value>Записать этот парметр в БПЛА</value>
-  </data>
-    <data name="ParametersEditorParameterView_RebootRequired" xml:space="preserve">
-    <value>Требуется перезагрузка</value>
-  </data>
-    <data name="ParametersEditorParameterView_UpdateButton" xml:space="preserve">
-    <value>Обновить</value>
-  </data>
-    <data name="ParametersEditorParameterView_WriteButton" xml:space="preserve">
-    <value>Записать</value>
-  </data>
-    <data name="ParamPageViewModel_DataLossDialog_CloseButtonText" xml:space="preserve">
-    <value>Отмена</value>
-  </data>
-    <data name="ParamPageViewModel_DataLossDialog_Content" xml:space="preserve">
-    <value>Вы пытаетесь открыть другой пункт меню, но в текущем у вас есть несохраненные изменения. Хотите сохранить их?</value>
-  </data>
-    <data name="ParamPageViewModel_DataLossDialog_PrimaryButtonText" xml:space="preserve">
-    <value>Сохранить</value>
-  </data>
-    <data name="ParamPageViewModel_DataLossDialog_SecondaryButtonText" xml:space="preserve">
-    <value>Не сохранять</value>
-  </data>
-    <data name="ParamPageViewModel_DataLossDialog_Title" xml:space="preserve">
-    <value>Предупреждение о возможной потере данных</value>
-  </data>
-    <data name="ParametersEditorPageView_StarsToggleButton_ToolTip" xml:space="preserve">
-    <value>Показать только избранные параметры</value>
-  </data>
-    <data name="ParametersEditorPageView_UpdateButton_ToolTip" xml:space="preserve">
-    <value>Обновить все параметры</value>
-  </data>
-    <data name="ParametersEditorPageView_PinsOffButton_ToolTip" xml:space="preserve">
-    <value>Убрать все прикреплённые параметры</value>
-  </data>
-
-    <data name="ParametersEditorPageView_StarButton_ToolTip" xml:space="preserve">
-    <value>Добавить параметр в избранные</value>
-  </data>
-    <data name="ParametersEditorPageViewModel_Title" xml:space="preserve">
-    <value>Редактор параметров [{0}]</value>
-  </data>
-    <data name="ParametersEditorPageViewModel_Search" xml:space="preserve">
-    <value>Найти</value>
-  </data>
-    <data name="ParametersEditorPageViewModel_Total" xml:space="preserve">
-    <value>Всего: {0}</value>
-  </data>
-    <data name="MissionEditorView_Points_Title" xml:space="preserve">
+  <data name="MissionEditorView_Points_Title" xml:space="preserve">
 	  <value>Точки миссии</value>
   </data>
     <data name="HeaderPlaningFileMenuItem_Title" xml:space="preserve">
@@ -1027,10 +659,7 @@
     <data name="PlaningMissionViewModel_SelectTargetLocation" xml:space="preserve">
 	  <value>Укажите местоположение точки</value>
   </data>
-    <data name="HierarhicalStoreView_Search_Textbox_Watermark" xml:space="preserve">
-	  <value>Поиск</value>
-  </data>
-    <data name="PacketViewerViewDockPanelText" xml:space="preserve">
+  <data name="PacketViewerViewDockPanelText" xml:space="preserve">
 	  <value>Просмотр пакетов</value>
   </data>
     <data name="PacketViewer_Expander_MessageSources" xml:space="preserve">
@@ -1039,41 +668,16 @@
     <data name="PacketViewer_Expander_MessageTypes" xml:space="preserve">
 	  <value>Типы сообщений</value>
   </data>
-    <data name="HierarchicalStoreView_TextBlock_Text_MoveFolder" xml:space="preserve">
-	  <value>Переместить папку</value>
-  </data>
-    <data name="HierarchicalStoreView_TextBlock_Text_MoveHere" xml:space="preserve">
-	  <value>Переместить сюда</value>
-  </data>
-    <data name="HierarchicalStoreView_TextBlock_Text_Cancel" xml:space="preserve">
-	  <value>Отмена</value>
-  </data>
-    <data name="AnchorsEditorView_TextBlock_Latitude_Text" xml:space="preserve">
-	  <value>Широта</value>
-  </data>
-    <data name="AnchorsEditorView_TextBlock_Altitude_Text" xml:space="preserve">
-	  <value>Высота</value>
-  </data>
-    <data name="AnchorsEditorView_TextBlock_Longitude_Text" xml:space="preserve">
-	  <value>Долгота</value>
-  </data>
-
-    <data name="PlaningMissionEditorViewModel_WaypointMenuItem_Title" xml:space="preserve">
+  <data name="PlaningMissionEditorViewModel_WaypointMenuItem_Title" xml:space="preserve">
 	  <value>Путевая точка</value>
   </data>
     <data name="PlaningMissionEditorViewModel_TakeOffMenuItem_Title" xml:space="preserve">
 	  <value>Взлёт</value>
   </data>
-    <data name="PlaningMissionEditorViewModel_RoiMenuItem_Title" xml:space="preserve">
-	  <value>Регион интересов</value>
-  </data>
-    <data name="PlaningMissionEditorViewModel_DoLandMenuItem_Title" xml:space="preserve">
+  <data name="PlaningMissionEditorViewModel_DoLandMenuItem_Title" xml:space="preserve">
 	  <value>Посадка</value>
   </data>
-    <data name="PlaningMissionEditorViewModel_ReplacePointFlyoutMenuItem" xml:space="preserve">
-	  <value>Заменить</value>
-  </data>
-    <data name="PlaningMissionEditorViewModel_AddPointFlyoutMenuItem_Title" xml:space="preserve">
+  <data name="PlaningMissionEditorViewModel_AddPointFlyoutMenuItem_Title" xml:space="preserve">
 	  <value>Добавить</value>
   </data>
     <data name="PlaningPageViewModel_DataLossDialog_PrimaryButtonText" xml:space="preserve">
@@ -1091,10 +695,7 @@
     <data name="PlaningPageViewModel_DataLossDialog_Content" xml:space="preserve">
 	  <value>Вы пытаетесь открыть другой пункт меню, но в текущем у вас есть несохраненные изменения. Хотите сохранить их?</value>
   </data>
-    <data name="ParametersEditorPageViewModel_Loaded" xml:space="preserve">
-	  <value>Получено: {0}</value>
-  </data>
-    <data name="DeviceBrowserTreeMenuItem_Description" xml:space="preserve">
+  <data name="DeviceBrowserTreeMenuItem_Description" xml:space="preserve">
         <value>Список всех устройств, найденных в сети MAVLink</value>
     </data>
     <data name="ConnectionTreeMenuItem_Description" xml:space="preserve">
@@ -1175,10 +776,7 @@
     <data name="VoltageUavRttItemView_ToolTip" xml:space="preserve">
     <value>Напряжение БПЛА</value>
   </data>
-    <data name="FlightUavView_MoveToButton_ToolTip" xml:space="preserve">
-    <value>Перейти к этому БПЛА на карте</value>
-  </data>
-    <data name="MissionStatusView_GetMissionButton_ToolTip" xml:space="preserve">
+  <data name="MissionStatusView_GetMissionButton_ToolTip" xml:space="preserve">
     <value>Загрузить миссию с БПЛА</value>
   </data>
     <data name="MissionStatusView_DisableLayersButton_ToolTip" xml:space="preserve">
@@ -1193,21 +791,7 @@
     <data name="MissionStatusView_MissionProgress_ToolTip" xml:space="preserve">
     <value>Текущий прогресс миссии</value>
   </data>
-
-
-    <data name="AltitudeIndicator_Vibration_ToolTip" xml:space="preserve">
-    <value>Вибрация и клиппинг БПЛА</value>
-  </data>
-    <data name="AttitudeIndicator_Velocity_ToolTip" xml:space="preserve">
-    <value>Скорость</value>
-  </data>
-    <data name="AttitudeIndicator_Altitude_ToolTip" xml:space="preserve">
-    <value>Высота</value>
-  </data>
-    <data name="AttitudeIndicator_Compass_ToolTip" xml:space="preserve">
-    <value>Компас</value>
-  </data>
-    <data name="FlightUavView_Minimize_ToolTip" xml:space="preserve">
+  <data name="FlightUavView_Minimize_ToolTip" xml:space="preserve">
     <value>Свернуть/Развернуть БПЛА</value>
   </data>
     <data name="FlightUavView_FollowButton_ToolTip" xml:space="preserve">
@@ -1219,7 +803,7 @@
     <data name="RebootAutopilotView_CompanionReboot_Description" xml:space="preserve">
     <value>Выберите режим перезапуска/отключения бортового компьютера</value>
   </data>
-  <data name="RebootAutopilotAnchorActionViewModel_Title" xml:space="preserve">
+    <data name="RebootAutopilotAnchorActionViewModel_Title" xml:space="preserve">
     <value>Перезагрузить/Выключить</value>
   </data>
     <data name="RebootAutopilotAnchorActionViewModel_DialogPrimaryButton" xml:space="preserve">
@@ -1231,7 +815,7 @@
     <data name="RebootAutopilotAnchorActionViewModel_LogMessage" xml:space="preserve">
     <value>Пользователь отправил комманду перезагрузки автопилота с параметрами {0} и {1}</value>
   </data>
-  <data name="SelectModeAnchorActionViewModel_Title" xml:space="preserve">
+    <data name="SelectModeAnchorActionViewModel_Title" xml:space="preserve">
     <value>Режимы БПЛА</value>
   </data>
     <data name="SelectModeAnchorActionViewModel_DialogPrimaryButton" xml:space="preserve">
@@ -1246,154 +830,13 @@
     <data name="SelectModeAnchorActionView_DialogDescription" xml:space="preserve">
     <value>Измените режим БПЛА на режим из списка</value>
   </data>
-    <data name="SpeedsQuickParamView_WPNAV_SPEED_Header" xml:space="preserve">
-    <value>Целевая горизонтальная скорость путевой точки (WPNAV_SPEED)</value>
-  </data>
-    <data name="SpeedsQuickParamView_WPNAV_SPEED_Description" xml:space="preserve">
-    <value>Определяет скорость в см/с, которую дрон будет пытаться поддерживать в горизонтальном положении во время миссии WP. Шаг - 0.5. Диапазон 0.2-20. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
-  </data>
-    <data name="SpeedsQuickParamView_WPNAV_SPEED_DN_Header" xml:space="preserve">
-    <value>Целевая скорость снижения по путевой точке (WPNAV_SPEED_DN)</value>
-  </data>
-    <data name="SpeedsQuickParamView_WPNAV_SPEED_DN_Description" xml:space="preserve">
-    <value>Определяет скорость в см/с, которую дрон будет пытаться поддерживать при снижении во время миссии WP. Шаг - 0.1. Диапазон 0.1-5. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
-  </data>
-    <data name="SpeedsQuickParamView_WPNAV_SPEED_UP_Header" xml:space="preserve">
-    <value>Целевая скорость набора высоты по путевой точке (WPNAV_SPEED_UP)</value>
-  </data>
-    <data name="SpeedsQuickParamView_WPNAV_SPEED_UP_Description" xml:space="preserve">
-    <value>Определяет скорость в см/с, которую дрон будет пытаться поддерживать при наборе высоты во время миссии WP. Шаг - 0.5. Диапазон 0.1-10. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
-  </data>
-    <data name="SpeedsQuickParamView_RTL_SPEED_Header" xml:space="preserve">
-    <value>Скорость RTL (RTL_SPEED)</value>
-  </data>
-    <data name="SpeedsQuickParamView_RTL_SPEED_Description" xml:space="preserve">
-    <value>Определяет скорость в см/с, которую дрон будет поддерживать в горизонтальном положении при полете домой. Если установлено нулевое значение, вместо этого будет использоваться WPNAV_SPEED. Шаг - 50. Диапазон 0-2000. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
-  </data>
-    <data name="SpeedsQuickParamView_LOIT_SPEED_Header" xml:space="preserve">
-    <value>Горизонтальная максимальная скорость в режиме Loiter (LOIT_SPEED)</value>
-  </data>
-    <data name="SpeedsQuickParamView_LOIT_SPEED_Description" xml:space="preserve">
-    <value>Определяет максимальную скорость в см/с, с которой дрон будет двигаться горизонтально в режиме Loiter. Шаг - 0.5. Диапазон 0.2-35. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
-  </data>
-    <data name="SpeedsQuickParamView_LAND_SPEED_Header" xml:space="preserve">
-    <value>Скорость посадки (LAND_SPEED)</value>
-  </data>
-    <data name="SpeedsQuickParamView_LAND_SPEED_Description" xml:space="preserve">
-    <value>Скорость снижения на конечном этапе приземления в см/с. Шаг - 0.1. Диапазон 0.3-2. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
-  </data>
-    <data name="SpeedsQuickParamView_LAND_SPEED_HIGH_Header" xml:space="preserve">
-    <value>Высокая скорость посадки (LAND_SPEED_HIGH)</value>
-  </data>
-    <data name="SpeedsQuickParamView_LAND_SPEED_HIGH_Description" xml:space="preserve">
-    <value>Скорость снижения на первом этапе приземления в см/с. Если это значение равно нулю, используется WPNAV_SPEED_DN. Шаг - 0.1. Диапазон 0-5. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
-  </data>
-    <data name="SpeedsQuickParamView_LAND_ALT_LOW_Header" xml:space="preserve">
-    <value>Низшая высота посадки (LAND_ALT_LOW)</value>
-  </data>
-    <data name="SpeedsQuickParamView_LAND_ALT_LOW_Description" xml:space="preserve">
-    <value>Высота при посадке, на которой транспортное средство замедляется до LAND_SPEED. Шаг - 0.1. Диапазон 1-100. [{0:F2} см] [{1:F2} фт]. Примечание. Этот параметр предназначен для опытных пользователей.</value>
-  </data>
-    <data name="SpeedsQuickParamView_PILOT_SPEED_UP_Header" xml:space="preserve">
-    <value>Максимальная вертикальная скорость пилота при наборе высоты (PILOT_SPEED_UP)</value>
-  </data>
-    <data name="SpeedsQuickParamView_PILOT_SPEED_UP_Description" xml:space="preserve">
-    <value>Максимальная скорость вертикального набора высоты, которую может запросить пилот, в см/с. Шаг - 0.1. Диапазон 0.5-5. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
-  </data>
-    <data name="SpeedsQuickParamView_PILOT_SPEED_DN_Header" xml:space="preserve">
-    <value>Максимальная вертикальная скорость пилота при снижении (PILOT_SPEED_DN)</value>
-  </data>
-    <data name="SpeedsQuickParamView_PILOT_SPEED_DN_Description" xml:space="preserve">
-    <value>Максимальная скорость вертикального снижения, которую может запросить пилот, в см/с. Если используется значение 0, то берётся значение PILOT_SPEED_UP. Шаг - 0.1. Диапазон 0-5. [{0:F2} см/с] [{1:F2} км/ч] [{2:F2} ми/ч].</value>
-  </data>
-    <data name="SpeedsQuickParamView_LAND_ALT_LOW_Units" xml:space="preserve">
-    <value>м</value>
-  </data>
-    <data name="SpeedsQuickParamView_WPNAV_SPEED_UP_Units" xml:space="preserve">
-    <value>м/с</value>
-  </data>
-    <data name="SpeedsQuickParamView_WPNAV_SPEED_Units" xml:space="preserve">
-    <value>м/с</value>
-  </data>
-    <data name="SpeedsQuickParamView_WPNAV_SPEED_DN_Units" xml:space="preserve">
-    <value>м/с</value>
-  </data>
-    <data name="SpeedsQuickParamView_RTL_SPEED_Units" xml:space="preserve">
-    <value>м/с</value>
-  </data>
-    <data name="SpeedsQuickParamView_PILOT_SPEED_UP_Units" xml:space="preserve">
-    <value>м/с</value>
-  </data>
-    <data name="SpeedsQuickParamView_PILOT_SPEED_DN_Units" xml:space="preserve">
-    <value>м/с</value>
-  </data>
-    <data name="SpeedsQuickParamView_LOIT_SPEED_Units" xml:space="preserve">
-    <value>м/с</value>
-  </data>
-    <data name="SpeedsQuickParamView_LAND_SPEED_Units" xml:space="preserve">
-    <value>м/с</value>
-  </data>
-    <data name="SpeedsQuickParamView_LAND_SPEED_HIGH_Units" xml:space="preserve">
-    <value>м/с</value>
-  </data>
-    <data name="ControllerReloadQuickParamView_ReloadButton_Content" xml:space="preserve">
-    <value>Перезагрузить</value>
-  </data>
-    <data name="ControllerReloadQuickParamView_Header" xml:space="preserve">
-    <value>Перезагрузка контроллера</value>
-  </data>
-    <data name="ControllerReloadQuickParamView_Description" xml:space="preserve">
-    <value>Здесь вы можете перезагрузить контроллер</value>
-  </data>
-    <data name="SpeedsQuickParamView_Header" xml:space="preserve">
-    <value>Скорость</value>
-  </data>
-    <data name="SpeedsQuickParamView_Description" xml:space="preserve">
-    <value>Здесь вы можете изменить скорости</value>
-  </data>
-    <data name="IdentityQuickParamView_Header" xml:space="preserve">
-    <value>ID системы</value>
-  </data>
-    <data name="IdentityQuickParamView_Description" xml:space="preserve">
-    <value>Каждая система имеет уникальный для сети идентификатор системы, и каждый компонент имеет уникальный для системы идентификатор компонента, который можно использовать для адресации/маршрутизации.</value>
-  </data>
-    <data name="FailSafeQuickParamView_Header" xml:space="preserve">
-    <value>Параметры FailSafe</value>
-  </data>
-    <data name="FailSafeQuickParamView_Description" xml:space="preserve">
-    <value>Здесь вы можете изменить параметры FailSafe</value>
-  </data>
-    <data name="QuickParamsSetupPageView_WriteRequired_Title" xml:space="preserve">
-    <value>Требуется запись</value>
-  </data>
-    <data name="QuickParamsSetupPageView_WriteRequired_Message" xml:space="preserve">
-    <value>Вы должны нажать кнопку записи, если хотите сохранить и применить изменения.</value>
-  </data>
-    <data name="QuickParamsSetupPageView_AdvancedSetupButton_Text" xml:space="preserve">
-    <value>Расширенная настройка</value>
-  </data>
-    <data name="QuickParamsSetupPageView_ReadAllButton_Text" xml:space="preserve">
-    <value>Прочитать все</value>
-  </data>
-    <data name="QuickParamsSetupPageView_WriteAllButton_Text" xml:space="preserve">
-    <value>Записать все</value>
-  </data>
-    <data name="FlightUavView_UavDropDownControls_Title" xml:space="preserve">
-    <value>Действия с БПЛА</value>
-  </data>
-    <data name="FlightUavView_FindButton_ToolTip" xml:space="preserve">
+  <data name="FlightUavView_FindButton_ToolTip" xml:space="preserve">
     <value>Найти БПЛА</value>
   </data>
-    <data name="MissionStatusView_TotalDistance" xml:space="preserve">
-    <value>Всего: {0}</value>
-  </data>
-    <data name="MissionStatusView_MissionDistance" xml:space="preserve">
-    <value>Миссия: {0}</value>
-  </data>
-    <data name="VehiclesShellMenuItemProvider_ShellMenuItem_Settings" xml:space="preserve">
+  <data name="VehiclesShellMenuItemProvider_ShellMenuItem_Settings" xml:space="preserve">
     <value>Настройки</value>
   </data>
-  <data name="LandAnchorActionViewModel_Title" xml:space="preserve">
+    <data name="LandAnchorActionViewModel_Title" xml:space="preserve">
     <value>Приземлиться</value>
   </data>
     <data name="GoToMapAnchorActionViewModel_Title" xml:space="preserve">
@@ -1408,7 +851,7 @@
     <data name="LandAnchorActionViewModel_ExecuteImpl_LogInfo" xml:space="preserve">
     <value>Пользователь отправил команду приземлиться для {0}</value>
   </data>
-  <data name="RtlAnchorActionViewModel_RTL" xml:space="preserve">
+    <data name="RtlAnchorActionViewModel_RTL" xml:space="preserve">
     <value>Вернуться домой</value>
   </data>
     <data name="RtlAnchorActionViewModel_ExecuteImpl_LogInfo" xml:space="preserve">
@@ -1432,25 +875,13 @@
     <data name="AttitudeViewModel_Vehicle_UpdateStatusText_Disarmed" xml:space="preserve">
     <value>Заблокирован</value>
   </data>
-    <data name="PlaningMissionViewModel_InternalAfterMapInit_Vehicle_Name_Subscribe" xml:space="preserve">
-    <value>Миссия БПЛА -  {0}</value>
-  </data>
-    <data name="StartAutoAnchorActionViewModel_Title" xml:space="preserve">
+  <data name="StartAutoAnchorActionViewModel_Title" xml:space="preserve">
     <value>Начать миссию</value>
   </data>
     <data name="StartAutoAnchorActionViewModel_ExecuteImpl_LogInfo" xml:space="preserve">
     <value>Пользователь отправил команду начать миссию для {0}</value>
   </data>
-    <data name="PlaningMissionViewModel_OnDownloadError_LogInfo" xml:space="preserve">
-    <value>Ошибка при загрузке миссии для {0}</value>
-  </data>
-    <data name="PlaningMissionViewModel_OnUploadError_LogInfo" xml:space="preserve">
-    <value>Ошибка при отправки мисси для {0}</value>
-  </data>
-    <data name="PlaningMissionViewModel_OnClearError_LogInfo" xml:space="preserve">
-    <value>Ошибка при удалении миссии для {0}</value>
-  </data>
-    <data name="PlaningMissionPointViewModel_Param1Title" xml:space="preserve">
+  <data name="PlaningMissionPointViewModel_Param1Title" xml:space="preserve">
 	  <value>Параметр 1</value>
   </data>
     <data name="PlaningMissionPointViewModel_Param2Title" xml:space="preserve">
@@ -1558,28 +989,7 @@
     <data name="LogViewerView_SearchText_Watermark" xml:space="preserve">
     <value>Поиск по сообщениям</value>
   </data>
-    <data name="LogViewerView_StopDateTime_Title" xml:space="preserve">
-    <value>Конечные время и дата:</value>
-  </data>
-    <data name="LogViewerView_StartDateTime_Title" xml:space="preserve">
-    <value>Начальные время и дата:</value>
-  </data>
-    <data name="LogViewerView_DataGrid_Time_Title" xml:space="preserve">
-    <value>Время</value>
-  </data>
-    <data name="LogViewerView_DataGrid_ThreadId_Title" xml:space="preserve">
-    <value>ID Потока</value>
-  </data>
-    <data name="LogViewerView_DataGrid_Level_Title" xml:space="preserve">
-    <value>Уровень</value>
-  </data>
-    <data name="LogViewerView_DataGrid_Class_Title" xml:space="preserve">
-    <value>Класс</value>
-  </data>
-    <data name="LogViewerView_DataGrid_Message_Title" xml:space="preserve">
-    <value>Сообщение</value>
-  </data>
-    <data name="LogViewerView_TextBlock_By_Title" xml:space="preserve">
+  <data name="LogViewerView_TextBlock_By_Title" xml:space="preserve">
     <value>По:</value>
   </data>
     <data name="LogViewerView_TextBlock_TotalItemsCount" xml:space="preserve">
@@ -1621,46 +1031,7 @@
     <data name="MissionStatusViewModel_PointLowerThanHome_Warning" xml:space="preserve">
     <value>У элемента миссии '{0}' высота {1}. Это ниже высоты стартовой точки.</value>
   </data>
-    <data name="PluginsSourcesViewModel_AddNewSourceDialog_Title" xml:space="preserve">
-    <value>Добавить новый репозиторий</value>
-  </data>
-    <data name="PluginsSourcesViewModel_EditSourceDialog_Title" xml:space="preserve">
-    <value>Редактировать репозиторий</value>
-  </data>
-    <data name="PluginsSourcesViewModel_AddNewSourceDialog_CloseButton" xml:space="preserve">
-    <value>Отмена</value>
-  </data>
-    <data name="PluginsSourcesViewModel_AddNewSourceDialog_PrimaryButton" xml:space="preserve">
-    <value>Добавить</value>
-  </data>
-    <data name="PluginsSourcesViewModel_EditSourceDialog_PrimaryButton" xml:space="preserve">
-    <value>Применить</value>
-  </data>
-    <data name="PluginsSourcesViewModel_EditSourceDialog_CloseButton" xml:space="preserve">
-    <value>Отмена</value>
-  </data>
-    <data name="PluginsSourcesView_AddNewSource" xml:space="preserve">
-    <value>Добавить</value>
-  </data>
-    <data name="PluginsSourcesView_EditSource" xml:space="preserve">
-    <value>Редактировать</value>
-  </data>
-    <data name="PluginsSourcesView_RemoveSource" xml:space="preserve">
-    <value>Удалить</value>
-  </data>
-    <data name="PluginsSourcesView_DataGrid_Name" xml:space="preserve">
-    <value>Имя</value>
-  </data>
-    <data name="PluginsSourcesView_DataGrid_URL" xml:space="preserve">
-    <value>Адрес URL</value>
-  </data>
-    <data name="PluginsSourcesView_DataGrid_User" xml:space="preserve">
-    <value>Имя пользователя</value>
-  </data>
-    <data name="PluginsSourcesView_DataGrid_Password" xml:space="preserve">
-    <value>Пароль</value>
-  </data>
-    <data name="SourcesView_Password" xml:space="preserve">
+  <data name="SourcesView_Password" xml:space="preserve">
     <value>Новый пароль</value>
   </data>
     <data name="SourcesView_Username" xml:space="preserve">
@@ -1672,13 +1043,7 @@
     <data name="SourcesView_Name" xml:space="preserve">
     <value>Имя</value>
   </data>
-    <data name="PluginsSourcesTreeMenuItem_Name" xml:space="preserve">
-    <value>Источники</value>
-  </data>
-    <data name="PluginsSourcesTreeMenuItem_Description" xml:space="preserve">
-    <value>Редактирование источников плагинов</value>
-  </data>
-    <data name="PluginsTreeMenuItem_Name_Plugins" xml:space="preserve">
+  <data name="PluginsTreeMenuItem_Name_Plugins" xml:space="preserve">
         <value>Плагины</value>
     </data>
     <data name="PluginsTreeMenuItem_Description" xml:space="preserve">
@@ -1711,10 +1076,7 @@
     <data name="PluginsSourcesViewModel_EditImpl_Title" xml:space="preserve">
     <value>Редактриовать сервер</value>
   </data>
-    <data name="PluginsSourcesView_AddSource" xml:space="preserve">
-    <value>Добавить новый</value>
-  </data>
-    <data name="SourceViewModel_SourceViewModel_Name_is_required" xml:space="preserve">
+  <data name="SourceViewModel_SourceViewModel_Name_is_required" xml:space="preserve">
     <value>Имя не должно быть пустым</value>
   </data>
     <data name="SourceViewModel_SourceViewModel_SourceUri_is_required" xml:space="preserve">
@@ -1768,10 +1130,7 @@
     <data name="SelectUploadVehicleView_SelectVehicle_Placeholder" xml:space="preserve">
     <value>Выберите аппарат для загрузки</value>
   </data>
-    <data name="SelectDownloadVehicleView_CloseOnFinish_Text" xml:space="preserve">
-    <value>Закрыть диалог по завершению скачивания</value>
-  </data>
-    <data name="SelectUploadVehicleView_CloseOnFinish_Text" xml:space="preserve">
+  <data name="SelectUploadVehicleView_CloseOnFinish_Text" xml:space="preserve">
     <value>Закрыть диалог по завершению загрузки</value>
   </data>
     <data name="SelectDownloadVehicleView_VehicleLoadProgress_Text" xml:space="preserve">
@@ -1807,95 +1166,89 @@
     <data name="PlanningPageViewModel_MissionDownloaded" xml:space="preserve">
     <value>Миссия скачана!</value>
   </data>
-  <data name="MissionStatusViewModel_FlightMissionTime_Minutes" xml:space="preserve">
+    <data name="MissionStatusViewModel_FlightMissionTime_Minutes" xml:space="preserve">
     <value>мин</value>
   </data>
-  <data name="FlightUavViewModel_RtlCommand_Name" xml:space="preserve">
+    <data name="FlightUavViewModel_RtlCommand_Name" xml:space="preserve">
     <value>Вернуться домой</value>
   </data>
-  <data name="FlightUavViewModel_StartMissionCommand_Name" xml:space="preserve">
+    <data name="FlightUavViewModel_StartMissionCommand_Name" xml:space="preserve">
     <value>Начать миссию</value>
   </data>
-  <data name="FlightUavViewModel_TakeOffCommand_Name" xml:space="preserve">
+    <data name="FlightUavViewModel_TakeOffCommand_Name" xml:space="preserve">
     <value>Взлёт</value>
   </data>
-  <data name="FlightUavViewModel_RoiCommand_Name" xml:space="preserve">
+    <data name="FlightUavViewModel_RoiCommand_Name" xml:space="preserve">
     <value>Установить ROI</value>
   </data>
-  <data name="ConsumedEnergyMahUavRttView_ToolTip" xml:space="preserve">
+    <data name="ConsumedEnergyMahUavRttView_ToolTip" xml:space="preserve">
     <value>Количество потребленной энергии</value>
   </data>
-  <data name="AddSourceView_Name" xml:space="preserve">
-    <value>Имя</value>
-  </data>
-  <data name="VehiclesShellMenuItemProvider_ShellMenuItem_QuickSettings" xml:space="preserve">
+    <data name="VehiclesShellMenuItemProvider_ShellMenuItem_QuickSettings" xml:space="preserve">
     <value>Быстрые настройки</value>
   </data>
-  <data name="VehicleQuickParamPageViewModel_Title" xml:space="preserve">
+    <data name="VehicleQuickParamPageViewModel_Title" xml:space="preserve">
     <value>Быстрые настройки</value>
   </data>
-  <data name="VehicleQuickParamStandardTreeMenuItem_Name" xml:space="preserve">
+    <data name="VehicleQuickParamStandardTreeMenuItem_Name" xml:space="preserve">
     <value>Стандартные параметры</value>
   </data>
-  <data name="VehicleQuickParamStandardTreeMenuItem_Description" xml:space="preserve">
+    <data name="VehicleQuickParamStandardTreeMenuItem_Description" xml:space="preserve">
     <value>Здесь вы можете настроить некоторые параметры стандартные параметры устройства.</value>
   </data>
-  <data name="VehicleQuickParamSliderViewModel_Range" xml:space="preserve">
+    <data name="VehicleQuickParamSliderViewModel_Range" xml:space="preserve">
     <value>Диапазон: [{0}, {1}]</value>
   </data>
-  <data name="VehicleQuickParamSliderViewModel_Units" xml:space="preserve">
+    <data name="VehicleQuickParamSliderViewModel_Units" xml:space="preserve">
     <value>Единицы измерения: [{0}]</value>
   </data>
-  <data name="VehicleQuickParamsStandardTreePage_Refresh" xml:space="preserve">
+    <data name="VehicleQuickParamsStandardTreePage_Refresh" xml:space="preserve">
     <value>Обновить</value>
   </data>
-  <data name="VehicleQuickParamsStandardTreePage_Write" xml:space="preserve">
+    <data name="VehicleQuickParamsStandardTreePage_Write" xml:space="preserve">
     <value>Записать</value>
   </data>
-  <data name="QuickParametersSliderView_IsDescrete" xml:space="preserve">
+    <data name="QuickParametersSliderView_IsDescrete" xml:space="preserve">
     <value>Дискретные</value>
   </data>
-  <data name="PortViewModel_ValidPacketLossChance" xml:space="preserve">
+    <data name="PortViewModel_ValidPacketLossChance" xml:space="preserve">
     <value>Шанс потери пакетов должен быть между 0 и 100 включительно</value>
   </data>
-  <data name="PortView_PacketLossChance" xml:space="preserve">
+    <data name="PortView_PacketLossChance" xml:space="preserve">
     <value>Шанс потери пакетов</value>
   </data>
-  <data name="Accuracy_Description" xml:space="preserve">
+    <data name="Accuracy_Description" xml:space="preserve">
     <value>Единицы измерения точности</value>
   </data>
-  <data name="Accuracy_Meters_Title" xml:space="preserve">
+    <data name="Accuracy_Meters_Title" xml:space="preserve">
     <value>Метры</value>
   </data>
-  <data name="Accuracy_Meters_Unit" xml:space="preserve">
+    <data name="Accuracy_Meters_Unit" xml:space="preserve">
     <value>м</value>
   </data>
-  <data name="Accuracy_NauticalMiles_Title" xml:space="preserve">
+    <data name="Accuracy_NauticalMiles_Title" xml:space="preserve">
     <value>Морские мили</value>
   </data>
-  <data name="Accuracy_NauticalMiles_Unit" xml:space="preserve">
+    <data name="Accuracy_NauticalMiles_Unit" xml:space="preserve">
     <value>NM</value>
   </data>
-  <data name="Accuracy_Title" xml:space="preserve">
+    <data name="Accuracy_Title" xml:space="preserve">
     <value>Точность</value>
   </data>
-  <data name="HeaderPlaningFileSaveAsMenuItem_Title" xml:space="preserve">
+    <data name="HeaderPlaningFileSaveAsMenuItem_Title" xml:space="preserve">
     <value>Сохранить как...</value>
   </data>
-  <data name="PlanningPageViewModel_MissionSavingBrowserDialog_PrimaryButton" xml:space="preserve">
+    <data name="PlanningPageViewModel_MissionSavingBrowserDialog_PrimaryButton" xml:space="preserve">
     <value>Сохранить</value>
   </data>
-  <data name="PlanningPageViewModel_MissionSavingBrowserDialog_SecondaryButton" xml:space="preserve">
+    <data name="PlanningPageViewModel_MissionSavingBrowserDialog_SecondaryButton" xml:space="preserve">
     <value>Отменить</value>
   </data>
-  <data name="PlanningPageViewModel_MissionSavingBrowserDialog_Title" xml:space="preserve">
+    <data name="PlanningPageViewModel_MissionSavingBrowserDialog_Title" xml:space="preserve">
     <value>Выберите имя файла для сохранения</value>
   </data>
-  <data name="PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_Title" xml:space="preserve">
+    <data name="PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_Title" xml:space="preserve">
     <value>Подтверждение</value>
-  </data>
-  <data name="PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_PrimaryButtonText" xml:space="preserve">
-    <value>Перезаписать</value>
   </data>
   <data name="PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_ContentText" xml:space="preserve">
     <value>Файл с таким именем уже существует. После выполнения данного действия произойдёт перезапись. Вы уверены, что хотите продолжить?</value>

@@ -69,24 +69,6 @@ namespace Asv.Drones.Gui.Api {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copy.
-        /// </summary>
-        public static string Anchor_Editor_Action_Copy {
-            get {
-                return ResourceManager.GetString("Anchor_Editor_Action_Copy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Paste.
-        /// </summary>
-        public static string Anchor_Editor_Action_Paste {
-            get {
-                return ResourceManager.GetString("Anchor_Editor_Action_Paste", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Actions.
         /// </summary>
         public static string AnchorsEditorView_TextBlock_Actions {
@@ -150,29 +132,11 @@ namespace Asv.Drones.Gui.Api {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete.
-        /// </summary>
-        public static string HierarchicalStoreView_Button_DeleteFile {
-            get {
-                return ResourceManager.GetString("HierarchicalStoreView_Button_DeleteFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Rename.
         /// </summary>
         public static string HierarchicalStoreView_Button_EditFileName {
             get {
                 return ResourceManager.GetString("HierarchicalStoreView_Button_EditFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move To Folder.
-        /// </summary>
-        public static string HierarchicalStoreView_Button_MovefileToFolder {
-            get {
-                return ResourceManager.GetString("HierarchicalStoreView_Button_MovefileToFolder", resourceCulture);
             }
         }
         
@@ -209,15 +173,6 @@ namespace Asv.Drones.Gui.Api {
         public static string HierarchicalStoreView_File_Button_DeleteFile {
             get {
                 return ResourceManager.GetString("HierarchicalStoreView_File_Button_DeleteFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rename File.
-        /// </summary>
-        public static string HierarchicalStoreView_File_Button_EditeFileName {
-            get {
-                return ResourceManager.GetString("HierarchicalStoreView_File_Button_EditeFileName", resourceCulture);
             }
         }
         
@@ -443,15 +398,6 @@ namespace Asv.Drones.Gui.Api {
         public static string ParametersEditorPageViewModel_Search {
             get {
                 return ResourceManager.GetString("ParametersEditorPageViewModel_Search", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Parameters editor [{0}].
-        /// </summary>
-        public static string ParametersEditorPageViewModel_Title {
-            get {
-                return ResourceManager.GetString("ParametersEditorPageViewModel_Title", resourceCulture);
             }
         }
         
