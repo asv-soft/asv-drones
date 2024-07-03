@@ -1,11 +1,14 @@
 using System.Collections.ObjectModel;
 using System.Reactive;
+using System.Reactive.Linq;
+using System.Text.RegularExpressions;
 using Asv.Common;
 using Asv.Mavlink;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ReactiveUI.Validation.Extensions;
 
 namespace Asv.Drones.Gui.Api;
 
@@ -15,17 +18,16 @@ public enum HierarchicalStoreEntryAction
     Delete
 }
 
-public class HierarchicalStoreEntryViewModel : DisposableReactiveObject
+public partial class HierarchicalStoreEntryViewModel : DisposableReactiveObjectWithValidation
 {
     public HierarchicalStoreEntryViewModel()
     {
         BeginEditName = ReactiveCommand.Create(() => { IsInEditNameMode = true; }).DisposeItWith(Disposable);
-        ;
         EndEditName = ReactiveCommand.Create(() =>
         {
             IsInEditNameMode = false;
             Rename(Name);
-        }).DisposeItWith(Disposable);
+        }, CanEndEditName).DisposeItWith(Disposable);
         EndEditName.ThrownExceptions
             .Subscribe(ex => OnError(HierarchicalStoreEntryAction.Rename, ex))
             .DisposeItWith(Disposable);
@@ -49,6 +51,9 @@ public class HierarchicalStoreEntryViewModel : DisposableReactiveObject
         this.WhenValueChanged(x => x.IsNotInMoveMode)
             .Subscribe(x => IsInMoveMode = !x)
             .DisposeItWith(Disposable);
+        this.ValidationRule(x => x.Name,
+            s => s != null && FileNameRegex().IsMatch(s),
+            RS.StoreFileName_Validation_ErrorMessage);
     }
 
 
@@ -65,6 +70,11 @@ public class HierarchicalStoreEntryViewModel : DisposableReactiveObject
 
     public virtual ReadOnlyObservableCollection<HierarchicalStoreEntryViewModel> Items { get; set; }
     [Reactive] public bool IsInEditNameMode { get; set; } = false;
+
+    [GeneratedRegex(@"^[A-Za-z][A-Za-z0-9_\- +]{0,28}")]
+    private partial Regex FileNameRegex();
+    private IObservable<bool> CanEndEditName => this.WhenPropertyChanged(x => x.Name)
+        .Select(x => x.Value != null && FileNameRegex().IsMatch(x.Value));
 
     public ReactiveCommand<Unit, Unit> DeleteEntry { get; }
     public ReactiveCommand<Unit, Unit> BeginEditName { get; }

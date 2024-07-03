@@ -12,10 +12,11 @@ using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ReactiveUI.Validation.Helpers;
 
 namespace Asv.Drones.Gui.Api;
 
-public class HierarchicalStoreViewModel : ViewModelBase
+public class HierarchicalStoreViewModel : ViewModelBaseWithValidation
 {
     protected HierarchicalStoreViewModel(Uri id) : base(id)
     {

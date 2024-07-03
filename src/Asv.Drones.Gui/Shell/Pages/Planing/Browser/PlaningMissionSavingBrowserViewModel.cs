@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Composition;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Text.RegularExpressions;
 using Asv.Drones.Gui.Api;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
@@ -14,10 +15,13 @@ using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ReactiveUI.Validation.Abstractions;
+using ReactiveUI.Validation.Contexts;
+using ReactiveUI.Validation.Extensions;
 
 namespace Asv.Drones.Gui;
 
-public class PlaningMissionSavingBrowserViewModel : HierarchicalStoreViewModel<Guid, PlaningMissionFile>
+public partial class PlaningMissionSavingBrowserViewModel : HierarchicalStoreViewModel<Guid, PlaningMissionFile>
 {
     private readonly IPlaningMission _svc;
 
@@ -33,7 +37,13 @@ public class PlaningMissionSavingBrowserViewModel : HierarchicalStoreViewModel<G
         _svc = svc;
         FileName = name;
         using var a = Refresh.Execute().Subscribe();
+        this.ValidationRule(x => x.FileName,
+            s => s != null && FileNameRegex().IsMatch(s),
+            RS.StoreFileName_Validation_ErrorMessage);
     }
+    
+    [GeneratedRegex(@"^[A-Za-z][A-Za-z0-9_\- +]{0,28}")]
+    private partial Regex FileNameRegex();
     
     [Reactive] public string? FileName { get; set; } = string.Empty;
 
@@ -129,4 +139,6 @@ public class PlaningMissionSavingBrowserViewModel : HierarchicalStoreViewModel<G
         id = fileId;
         Refresh.Execute().Subscribe(_ => { });
     }
+
+    
 }

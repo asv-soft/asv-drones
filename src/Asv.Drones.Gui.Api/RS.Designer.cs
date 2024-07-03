@@ -562,5 +562,14 @@ namespace Asv.Drones.Gui.Api {
                 return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not valid name.
+        /// </summary>
+        public static string StoreFileName_Validation_ErrorMessage {
+            get {
+                return ResourceManager.GetString("StoreFileName_Validation_ErrorMessage", resourceCulture);
+            }
+        }
     }
 }

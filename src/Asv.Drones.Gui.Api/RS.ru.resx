@@ -189,4 +189,7 @@
   <data name="AnchorsEditorView_TextBlock_Actions" xml:space="preserve">
     <value>Действия</value>
   </data>
+  <data name="StoreFileName_Validation_ErrorMessage" xml:space="preserve">
+    <value>Неверное имя</value>
+  </data>
 </root>

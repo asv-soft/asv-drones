@@ -4939,6 +4939,15 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not valid name.
+        /// </summary>
+        public static string StoreFileName_Validation_ErrorMessage {
+            get {
+                return ResourceManager.GetString("StoreFileName_Validation_ErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set altitude above ground level (AGL) for takeoff command..
         /// </summary>
         public static string TakeOffAnchorActionViewModel_DialogDescription {

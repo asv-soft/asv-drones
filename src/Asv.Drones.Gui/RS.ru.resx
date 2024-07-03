@@ -1900,4 +1900,10 @@
   <data name="PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_ContentText" xml:space="preserve">
     <value>Файл с таким именем уже существует. После выполнения данного действия произойдёт перезапись. Вы уверены, что хотите продолжить?</value>
   </data>
+  <data name="StoreFileName_ValidationErrorMessage" xml:space="preserve">
+    <value>Неверное имя</value>
+  </data>
+  <data name="StoreFileName_Validation_ErrorMessage" xml:space="preserve">
+    <value>Неверное имя</value>
+  </data>
 </root>
