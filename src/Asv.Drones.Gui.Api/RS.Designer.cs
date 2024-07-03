@@ -105,6 +105,15 @@ namespace Asv.Drones.Gui.Api {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Anchor Editor.
+        /// </summary>
+        public static string AnchorsEditorViewModel_Title {
+            get {
+                return ResourceManager.GetString("AnchorsEditorViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Altitude.
         /// </summary>
         public static string AttitudeIndicator_Altitude_ToolTip {

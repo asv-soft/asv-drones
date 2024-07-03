@@ -43,7 +43,7 @@ public class LoggerViewModel : MapWidgetBase
     {
         Order = 100;
         Location = WidgetLocation.Bottom;
-        Title = "Logger";
+        Title = RS.LoggerViewModel_Title;
         Icon = MaterialIconKind.Text;
         _logSource.LimitSizeTo(MaxLogSize).Subscribe().DisposeItWith(Disposable);
         _filterUpdate.OnNext(FilterByTypePredicate);

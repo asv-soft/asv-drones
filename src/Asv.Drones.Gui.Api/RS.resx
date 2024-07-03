@@ -175,4 +175,7 @@
   <data name="AnchorsEditorView_TextBlock_Actions" xml:space="preserve">
     <value>Actions</value>
   </data>
+  <data name="AnchorsEditorViewModel_Title" xml:space="preserve">
+    <value>Anchor Editor</value>
+  </data>
 </root>

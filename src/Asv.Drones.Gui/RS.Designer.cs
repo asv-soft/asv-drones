@@ -1230,6 +1230,15 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loger.
+        /// </summary>
+        public static string LoggerViewModel_Title {
+            get {
+                return ResourceManager.GetString("LoggerViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log viewer.
         /// </summary>
         public static string LogViewer_Name {
@@ -1640,6 +1649,15 @@ namespace Asv.Drones.Gui {
         public static string MissionStatusView_MissionProgress_ToolTip {
             get {
                 return ResourceManager.GetString("MissionStatusView_MissionProgress_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Before complete.
+        /// </summary>
+        public static string MissionStatusView_SubStatusText {
+            get {
+                return ResourceManager.GetString("MissionStatusView_SubStatusText", resourceCulture);
             }
         }
         

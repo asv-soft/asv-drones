@@ -1239,4 +1239,10 @@
   <data name="PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_ContentText" xml:space="preserve">
     <value>A file with the same name already exists. After performing this action, overwriting will occur. Are you sure you want to continue?</value>
   </data>
+  <data name="LoggerViewModel_Title" xml:space="preserve">
+    <value>Loger</value>
+  </data>
+  <data name="MissionStatusView_SubStatusText" xml:space="preserve">
+    <value>Before complete</value>
+  </data>
 </root>

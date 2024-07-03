@@ -1253,4 +1253,10 @@
   <data name="PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_ContentText" xml:space="preserve">
     <value>Файл с таким именем уже существует. После выполнения данного действия произойдёт перезапись. Вы уверены, что хотите продолжить?</value>
   </data>
+  <data name="LoggerViewModel_Title" xml:space="preserve">
+    <value>Логер</value>
+  </data>
+  <data name="MissionStatusView_SubStatusText" xml:space="preserve">
+    <value>До завершения</value>
+  </data>
 </root>
