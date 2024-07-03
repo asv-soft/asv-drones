@@ -34,6 +34,7 @@ namespace Asv.Drones.Gui
         public AdsbClientDeviceConfig Adsb { get; set; } = new();
         public bool WrapToV2ExtensionEnabled { get; set; } = true;
         public RfsaClientDeviceConfig Rfsa { get; set; } = new();
+        public RfsaClientDeviceConfig Rsga { get; set; } = new();
     }
 
     [Export(typeof(IMavlinkDevicesService))]
@@ -163,11 +164,17 @@ namespace Asv.Drones.Gui
                 .Transform(CreateRfsaDevice)
                 .DisposeMany()
                 .RefCount();
+            RsgaDevices = Devices
+                .Filter(d => d.Type == (MavType)Mavlink.V2.AsvRsga.MavType.MavTypeAsvRsga)
+                .Transform(CreateRsgaDevice)
+                .DisposeMany()
+                .RefCount();
 
             AllDevices = Vehicles.Transform(x => (IClientDevice)x)
                 .MergeChangeSets(BaseStations.Transform(x => (IClientDevice)x))
                 .MergeChangeSets(Payloads.Transform(x => (IClientDevice)x))
                 .MergeChangeSets(RfsaDevices.Transform(x => (IClientDevice)x))
+                .MergeChangeSets(RsgaDevices.Transform(x => (IClientDevice)x))
                 .MergeChangeSets(AdsbDevices.Transform(x => (IClientDevice)x));
 
             #endregion
@@ -191,6 +198,18 @@ namespace Asv.Drones.Gui
             #endregion
         }
 
+        
+
+        private IRsgaClientDevice CreateRsgaDevice(IMavlinkDevice device)
+        {
+            return new RsgaClientDevice(Router, new MavlinkClientIdentity
+            {
+                TargetSystemId = device.SystemId,
+                TargetComponentId = device.ComponentId,
+                SystemId = _systemId.Value,
+                ComponentId = _componentId.Value,
+            }, InternalGetConfig(c => c.Rsga), _sequenceCalculator, RxApp.MainThreadScheduler);
+        }
         private IRfsaClientDevice CreateRfsaDevice(IMavlinkDevice device)
         {
             return new RfsaClientDevice(Router, new MavlinkClientIdentity
@@ -323,7 +342,14 @@ namespace Asv.Drones.Gui
             using var autoDispose = RfsaDevices.BindToObservableList(out var list).Subscribe();
             return list.Items.FirstOrDefault(d => d.FullId == id);
         }
-
+        
+        public IObservable<IChangeSet<IRsgaClientDevice, ushort>> RsgaDevices { get; }
+        public IRsgaClientDevice? GetRsgaByFullId(ushort id)
+        {
+            using var autoDispose = RsgaDevices.BindToObservableList(out var list).Subscribe();
+            return list.Items.FirstOrDefault(d => ((IClientDevice)d).FullId == id);
+        }
+        
         private IVehicleClient? CreateVehicle(IMavlinkDevice device)
         {
             //if (device.Autopilot == MavAutopilot.MavAutopilotArdupilotmega)
