@@ -1259,4 +1259,10 @@
   <data name="MissionStatusView_SubStatusText" xml:space="preserve">
     <value>До завершения</value>
   </data>
+  <data name="PluginsSourcesTreeMenuItem_Name" xml:space="preserve">
+    <value>Сервера</value>
+  </data>
+  <data name="PluginsSourcesTreeMenuItem_Description" xml:space="preserve">
+    <value>Сервера источников плагинов</value>
+  </data>
 </root>

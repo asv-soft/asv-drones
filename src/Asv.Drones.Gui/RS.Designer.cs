@@ -2517,6 +2517,24 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Plugin source servers.
+        /// </summary>
+        public static string PluginsSourcesTreeMenuItem_Description {
+            get {
+                return ResourceManager.GetString("PluginsSourcesTreeMenuItem_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Servers.
+        /// </summary>
+        public static string PluginsSourcesTreeMenuItem_Name {
+            get {
+                return ResourceManager.GetString("PluginsSourcesTreeMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string PluginsSourcesViewModel_AddAction_Label {

@@ -1245,4 +1245,10 @@
   <data name="MissionStatusView_SubStatusText" xml:space="preserve">
     <value>Before complete</value>
   </data>
+  <data name="PluginsSourcesTreeMenuItem_Name" xml:space="preserve">
+    <value>Servers</value>
+  </data>
+  <data name="PluginsSourcesTreeMenuItem_Description" xml:space="preserve">
+    <value>Plugin source servers</value>
+  </data>
 </root>
