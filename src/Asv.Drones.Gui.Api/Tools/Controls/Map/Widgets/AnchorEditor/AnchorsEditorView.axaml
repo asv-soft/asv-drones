@@ -130,6 +130,7 @@
                                 <DataTemplate>
                                     <buttons:StepSizingButton StepSizeWidth="100"
                                                               HorizontalAlignment="Stretch" Margin="2"
+                                                              IsVisible="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsEffectivelyEnabled}"
                                                               Command="{CompiledBinding Command}">
                                         <Grid ColumnDefinitions="Auto, 5, *">
                                             <avalonia:MaterialIcon Grid.Column="0"
@@ -160,6 +161,7 @@
                                         <Setter Property="Icon"
                                                 Value="{CompiledBinding Icon, Converter={x:Static api:MaterialIconConverter.Instance}}" />
                                         <Setter Property="Command" Value="{CompiledBinding Command}" />
+                                        <Setter Property="IsVisible" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsEffectivelyEnabled}"/>
                                     </ControlTheme>
                                 </MenuFlyout.ItemContainerTheme>
                             </MenuFlyout>
