@@ -204,6 +204,24 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Appearance, theme, language, versions, licence....
+        /// </summary>
+        public static string AppearanceTreeMenuItem_Description {
+            get {
+                return ResourceManager.GetString("AppearanceTreeMenuItem_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appearance.
+        /// </summary>
+        public static string AppearanceTreeMenuItem_Name {
+            get {
+                return ResourceManager.GetString("AppearanceTreeMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select current map access mode.
         /// </summary>
         public static string AppearanceView_MapAccess_Description {
@@ -2445,6 +2463,15 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please select plugin.
+        /// </summary>
+        public static string PluginsInstalledView_SelectedPluginIsNull {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_SelectedPluginIsNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Additional info.
         /// </summary>
         public static string PluginsInstalledView_Tab_AdditionalInfo {
@@ -2499,6 +2526,24 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Plugins market.
+        /// </summary>
+        public static string PluginsMarketTreeMenuItem_Description {
+            get {
+                return ResourceManager.GetString("PluginsMarketTreeMenuItem_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Market.
+        /// </summary>
+        public static string PluginsMarketTreeMenuItem_Name {
+            get {
+                return ResourceManager.GetString("PluginsMarketTreeMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string PluginsMarketView_Cancel {
@@ -2513,6 +2558,15 @@ namespace Asv.Drones.Gui {
         public static string PluginsMarketView_Install {
             get {
                 return ResourceManager.GetString("PluginsMarketView_Install", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select plugin.
+        /// </summary>
+        public static string PluginsMarketView_SelectedPluginIsNull {
+            get {
+                return ResourceManager.GetString("PluginsMarketView_SelectedPluginIsNull", resourceCulture);
             }
         }
         

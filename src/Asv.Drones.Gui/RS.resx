@@ -1251,4 +1251,22 @@
   <data name="PluginsSourcesTreeMenuItem_Description" xml:space="preserve">
     <value>Plugin source servers</value>
   </data>
+  <data name="PluginsMarketTreeMenuItem_Name" xml:space="preserve">
+    <value>Market</value>
+  </data>
+  <data name="PluginsMarketTreeMenuItem_Description" xml:space="preserve">
+    <value>Plugins market</value>
+  </data>
+  <data name="PluginsMarketView_SelectedPluginIsNull" xml:space="preserve">
+    <value>Please select plugin</value>
+  </data>
+  <data name="PluginsInstalledView_SelectedPluginIsNull" xml:space="preserve">
+    <value>Please select plugin</value>
+  </data>
+  <data name="AppearanceTreeMenuItem_Name" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="AppearanceTreeMenuItem_Description" xml:space="preserve">
+    <value>Appearance, theme, language, versions, licence...</value>
+  </data>
 </root>
