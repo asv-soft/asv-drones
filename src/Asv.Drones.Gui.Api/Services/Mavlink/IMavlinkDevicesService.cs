@@ -64,6 +64,5 @@ namespace Asv.Drones.Gui.Api
         IRfsaClientDevice? GetRfsaByFullId(ushort id);
         IObservable<IChangeSet<IRsgaClientDevice, ushort>> RsgaDevices { get; }
         IRsgaClientDevice? GetRsgaByFullId(ushort id);
-        
     }
 }

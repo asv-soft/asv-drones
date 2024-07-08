@@ -198,8 +198,6 @@ namespace Asv.Drones.Gui
             #endregion
         }
 
-        
-
         private IRsgaClientDevice CreateRsgaDevice(IMavlinkDevice device)
         {
             return new RsgaClientDevice(Router, new MavlinkClientIdentity
