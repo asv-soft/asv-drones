@@ -1,12 +1,11 @@
-name: Build and Publish Api NuGet
+name: Build and Publish Api Github only
 
 on:
   push:
     tags:
-      - "api-v*"
+      - "dev-api-v*"
 
 env:
-  NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
   GITHUB_PACKAGES_URL: 'https://nuget.pkg.github.com/asv-soft/index.json'
   PROJECT_NAME: 'Asv.Drones.Gui.Api'
   PROPS_VERSION_VAR_NAME: 'ApiVersion'
@@ -14,7 +13,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/api-v')
+    if: startsWith(github.ref, 'refs/tags/dev-api-v')
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -36,17 +35,20 @@ jobs:
       - name: Set version variable
         env:
           TAG: ${{ github.ref_name }}
-        run: echo "VERSION=${TAG#api-v}" >> $GITHUB_ENV
+        run: |
+          newTag=$(echo $TAG | sed 's/dev-api-v//')
+          newTag="${newTag}-dev"
+          echo "VERSION=${newTag}" >> $GITHUB_ENV
         
       - name: Read version from Directory.Build.props
         id: read-version
         run: |
-          version=$(grep -oP '<${{env.PROPS_VERSION_VAR_NAME}}>\K[^<]+' ./src/Directory.Build.props)
-          echo "PropsVersion=${version}" >> $GITHUB_ENV
-          
+            version=$(grep -oP '<${{env.PROPS_VERSION_VAR_NAME}}>\K[^<]+' ./src/Directory.Build.props)
+            echo "PropsVersion=${version}" >> $GITHUB_ENV
+            
       - name: Compare tag with NuGet package version
         run: |
-          if [ "${{ env.PropsVersion }}" != "${{ env.VERSION }}" ]; then
+          if [ "${{ env.PropsVersion }}-dev" != "${{ env.VERSION }}" ]; then
             echo "Error: Tag does not match NuGet package version"
             exit 1
           fi
@@ -59,6 +61,3 @@ jobs:
 
       - name: Push package to GitHub
         run: dotnet nuget push ${{env.PROJECT_NAME}}.${VERSION}.nupkg --api-key ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }} --skip-duplicate --source ${{ env.GITHUB_PACKAGES_URL }}
-
-      - name: Push package to Nuget
-        run: dotnet nuget push ${{env.PROJECT_NAME}}.${VERSION}.nupkg --api-key ${{ secrets.NUGET_AUTH_TOKEN }} --skip-duplicate --source ${{ env.NUGET_SOURCE_URL }}
