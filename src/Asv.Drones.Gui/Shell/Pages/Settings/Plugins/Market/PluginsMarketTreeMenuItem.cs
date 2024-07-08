@@ -11,8 +11,8 @@ public class PluginsMarketTreeMenuItem(IPluginManager mng, ILogService log)
     : TreePageMenuItem($"{WellKnownUri.ShellPageSettingsPluginsUri}.market")
 {
     public override Uri ParentId => WellKnownUri.ShellPageSettingsPluginsUri;
-    public override string? Name => "Market";
-    public override string? Description => "Plugins market";
+    public override string? Name => RS.PluginsMarketTreeMenuItem_Name;
+    public override string? Description => RS.PluginsMarketTreeMenuItem_Description;
     public override MaterialIconKind Icon => MaterialIconKind.StoreSearch;
     public override int Order => 5;
 

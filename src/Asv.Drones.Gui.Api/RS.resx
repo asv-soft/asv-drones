@@ -82,19 +82,10 @@
     <data name="HierarchicalStoreView_File_Button_DeleteFile" xml:space="preserve">
     <value>Delete File</value>
   </data>
-    <data name="HierarchicalStoreView_Button_DeleteFile" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-    <data name="HierarchicalStoreView_Button_EditFileName" xml:space="preserve">
+  <data name="HierarchicalStoreView_Button_EditFileName" xml:space="preserve">
     <value>Rename</value>
   </data>
-    <data name="HierarchicalStoreView_Button_MovefileToFolder" xml:space="preserve">
-    <value>Move To Folder</value>
-  </data>
-    <data name="HierarchicalStoreView_File_Button_EditeFileName" xml:space="preserve">
-    <value>Rename File</value>
-  </data>
-    <data name="HierarchicalStoreView_File_Button_MoveFile" xml:space="preserve">
+  <data name="HierarchicalStoreView_File_Button_MoveFile" xml:space="preserve">
     <value>Move File</value>
   </data>
     <data name="HierarhicalStoreView_Search_Textbox_Watermark" xml:space="preserve">
@@ -151,10 +142,7 @@
     <data name="ParametersEditorPageView_PinsOffButton_ToolTip" xml:space="preserve">
     <value>Remove all pinned parameters</value>
   </data>
-    <data name="ParametersEditorPageViewModel_Title" xml:space="preserve">
-    <value>Parameters editor [{0}]</value>
-  </data>
-    <data name="ParametersEditorPageViewModel_Search" xml:space="preserve">
+  <data name="ParametersEditorPageViewModel_Search" xml:space="preserve">
     <value>Search</value>
   </data>
     <data name="ParametersEditorPageViewModel_Total" xml:space="preserve">
@@ -184,13 +172,10 @@
     <data name="MavlinkHelper_GetTypeName_UnknownType" xml:space="preserve">
     <value>Unknown type</value>
   </data>
-  <data name="Anchor_Editor_Action_Copy" xml:space="preserve">
-    <value>Copy</value>
-  </data>
-  <data name="Anchor_Editor_Action_Paste" xml:space="preserve">
-    <value>Paste</value>
-  </data>
   <data name="AnchorsEditorView_TextBlock_Actions" xml:space="preserve">
     <value>Actions</value>
+  </data>
+  <data name="AnchorsEditorViewModel_Title" xml:space="preserve">
+    <value>Anchor Editor</value>
   </data>
 </root>

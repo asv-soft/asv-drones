@@ -142,7 +142,7 @@
                 <avalonia:MaterialIcon Width="25" Height="25" Kind="ArrowLeft"
                                        Foreground="{DynamicResource ButtonForegroundDisabled}" />
                 <TextBlock Foreground="{DynamicResource ButtonForegroundDisabled}" VerticalAlignment="Center"
-                           FontSize="15" TextWrapping="WrapWithOverflow" MaxWidth="400" Text="Please select plugin" />
+                           FontSize="15" TextWrapping="WrapWithOverflow" MaxWidth="400" Text="{x:Static gui:RS.PluginsInstalledView_SelectedPluginIsNull}" />
             </StackPanel>
 
         </Panel>
