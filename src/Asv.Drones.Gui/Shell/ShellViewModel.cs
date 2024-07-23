@@ -28,7 +28,8 @@ public class ShellViewModel : ViewModelBase, IShell
     private readonly IApplicationHost _host;
     private readonly ILogService _log;
     private readonly ReadOnlyObservableCollection<IShellMenuItem> _menuItems = null!;
-    private readonly ReadOnlyObservableCollection<IShellMenuItem> _footerMenuItems = null!;
+    private readonly ReadOnlyObservableCollection<IShellMenuItem> _topMenuItems = null!;
+    private readonly ReadOnlyObservableCollection<IShellMenuItem> _bottomMenuItems = null!;
     private readonly ReadOnlyObservableCollection<LogMessageViewModel> _messages = null!;
     private readonly ReadOnlyObservableCollection<IShellStatusItem> _statusItems = null!;
     private readonly SourceList<LogMessage> _messageSourceList = new();
@@ -50,7 +51,10 @@ public class ShellViewModel : ViewModelBase, IShell
         _menuItems = new(new(new IShellMenuItem[]
         {
         }));
-        _footerMenuItems = new(new(new IShellMenuItem[]
+        _topMenuItems = new(new(new IShellMenuItem[]
+        {
+        }));
+        _bottomMenuItems = new(new(new IShellMenuItem[]
         {
         }));
 
@@ -134,12 +138,20 @@ public class ShellViewModel : ViewModelBase, IShell
         #region Build main menu
 
         var menuItemsProviders = menuProviders as IViewModelProvider<IShellMenuItem>[] ?? menuProviders.ToArray();
+        // menu items
+        menuItemsProviders.Select(_ => _.Items)
+            .Merge()
+            .SortBy(_ => _.Order)
+            .Bind(out _menuItems)
+            .DisposeMany()
+            .Subscribe()
+            .DisposeItWith(Disposable);
         // filter top menu items
         menuItemsProviders.Select(_ => _.Items)
             .Merge()
             .Filter(_ => _.Position == ShellMenuPosition.Top)
             .SortBy(_ => _.Order)
-            .Bind(out _menuItems)
+            .Bind(out _topMenuItems)
             .DisposeMany()
             .Subscribe()
             .DisposeItWith(Disposable);
@@ -148,7 +160,7 @@ public class ShellViewModel : ViewModelBase, IShell
             .Merge()
             .Filter(_ => _.Position == ShellMenuPosition.Bottom)
             .SortBy(_ => _.Order)
-            .Bind(out _footerMenuItems)
+            .Bind(out _bottomMenuItems)
             .DisposeMany()
             .Subscribe()
             .DisposeItWith(Disposable);
@@ -215,6 +227,10 @@ public class ShellViewModel : ViewModelBase, IShell
             }
 
             CurrentPage = viewModel;
+            if (SelectedMenu?.NavigateTo != CurrentPage.Id)
+            {
+                SelectedMenu = _menuItems.FirstOrDefault(x => x.NavigateTo == CurrentPage.Id);
+            }
             return true;
         }
         catch (Exception? e)
@@ -287,8 +303,8 @@ public class ShellViewModel : ViewModelBase, IShell
 
     [Reactive] public IShellMenuItem? SelectedMenu { get; set; }
     public ReadOnlyObservableCollection<IMenuItem> HeaderMenuItems => _headerMenu;
-    public ReadOnlyObservableCollection<IShellMenuItem> MenuItems => _menuItems;
-    public ReadOnlyObservableCollection<IShellMenuItem> FooterMenuItems => _footerMenuItems;
+    public ReadOnlyObservableCollection<IShellMenuItem> TopMenuItems => _topMenuItems;
+    public ReadOnlyObservableCollection<IShellMenuItem> BottomMenuItems => _bottomMenuItems;
     public ReadOnlyObservableCollection<LogMessageViewModel> Messages => _messages;
     public ReadOnlyObservableCollection<IShellStatusItem> StatusItems => _statusItems;
 
