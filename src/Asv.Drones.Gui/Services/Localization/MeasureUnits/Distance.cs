@@ -1,5 +1,7 @@
-﻿using Asv.Cfg;
+﻿using System.Globalization;
+using Asv.Cfg;
 using Asv.Drones.Gui.Api;
+using Avalonia.Controls.Documents;
 
 namespace Asv.Drones.Gui;
 
@@ -21,4 +23,11 @@ public class Distance : MeasureUnitBase<double, DistanceUnits>
 
     public override string Title => RS.Distance_Title;
     public override string Description => RS.Distance_Description;
+
+    public bool IsValid(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return false;
+        double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var v);
+        return (v > 0);
+    }
 }
