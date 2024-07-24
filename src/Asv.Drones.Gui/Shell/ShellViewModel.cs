@@ -227,9 +227,10 @@ public class ShellViewModel : ViewModelBase, IShell
             }
 
             CurrentPage = viewModel;
-            if (SelectedMenu?.NavigateTo != CurrentPage.Id)
+            var menuItem = _menuItems.FirstOrDefault(x => x.NavigateTo == CurrentPage.Id);
+            if (SelectedMenu?.NavigateTo != CurrentPage.Id && menuItem != null)
             {
-                SelectedMenu = _menuItems.FirstOrDefault(x => x.NavigateTo == CurrentPage.Id);
+                    SelectedMenu = menuItem;
             }
             return true;
         }
