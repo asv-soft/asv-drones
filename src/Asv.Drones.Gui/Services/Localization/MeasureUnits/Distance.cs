@@ -15,6 +15,7 @@ public class Distance : MeasureUnitBase<double, DistanceUnits>
             RS.Distance_Meters_Unit, true, "F0", 1),
         new DoubleMeasureUnitItem<DistanceUnits>(DistanceUnits.NauticalMiles, RS.Distance_NauticalMiles_Title,
             RS.Distance_NauticalMiles_Unit, false, "F4", MetersInInternationalNauticalMile),
+        new DistanceMeasureUnit()
     };
 
     public Distance(IConfiguration cfgSvc, string cfgKey) : base(cfgSvc, cfgKey, _units)
@@ -27,9 +28,9 @@ public class Distance : MeasureUnitBase<double, DistanceUnits>
 
 }
 
-public class DistanceMeters : IMeasureUnitItem<double, DistanceUnits>
+public class DistanceMeasureUnit : IMeasureUnitItem<double, DistanceUnits>
 {
-    public DistanceUnits Id { get; }
+    public DistanceUnits Id => DistanceUnits.Meters;
     public string Title { get; } = RS.Distance_Meters_Title;
     public string Unit { get; } = RS.Distance_Meters_Unit;
     public bool IsSiUnit { get; } = false;
