@@ -24,10 +24,7 @@ public class Distance : MeasureUnitBase<double, DistanceUnits>
 
     public override string Title => RS.Distance_Title;
     public override string Description => RS.Distance_Description;
-
-
 }
-
 public class DistanceMeasureUnit : IMeasureUnitItem<double, DistanceUnits>
 {
     public DistanceUnits Id => DistanceUnits.Meters;
@@ -74,5 +71,4 @@ public class DistanceMeasureUnit : IMeasureUnitItem<double, DistanceUnits>
     {
         return $"{value} {Unit}";
     }
-
 }
