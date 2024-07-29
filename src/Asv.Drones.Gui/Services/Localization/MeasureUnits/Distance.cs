@@ -11,11 +11,11 @@ public class Distance : MeasureUnitBase<double, DistanceUnits>
 
     private static readonly IMeasureUnitItem<double, DistanceUnits>[] _units =
     {
+        new DistanceMeasureUnit(),
         new DoubleMeasureUnitItem<DistanceUnits>(DistanceUnits.Meters, RS.Distance_Meters_Title,
             RS.Distance_Meters_Unit, true, "F0", 1),
         new DoubleMeasureUnitItem<DistanceUnits>(DistanceUnits.NauticalMiles, RS.Distance_NauticalMiles_Title,
-            RS.Distance_NauticalMiles_Unit, false, "F4", MetersInInternationalNauticalMile),
-        new DistanceMeasureUnit()
+            RS.Distance_NauticalMiles_Unit, false, "F4", MetersInInternationalNauticalMile)
     };
 
     public Distance(IConfiguration cfgSvc, string cfgKey) : base(cfgSvc, cfgKey, _units)
@@ -33,7 +33,7 @@ public class DistanceMeasureUnit : IMeasureUnitItem<double, DistanceUnits>
     public DistanceUnits Id => DistanceUnits.Meters;
     public string Title { get; } = RS.Distance_Meters_Title;
     public string Unit { get; } = RS.Distance_Meters_Unit;
-    public bool IsSiUnit { get; } = false;
+    public bool IsSiUnit { get; } = true;
     
     //Not usable
     public double ConvertFromSi(double siValue)
