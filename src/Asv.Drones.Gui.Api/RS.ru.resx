@@ -174,4 +174,13 @@
   <data name="AnchorsEditorViewModel_Title" xml:space="preserve">
     <value>Редактор якорей</value>
   </data>
+  <data name="DistanceMeasureUnit_ErrorMessage_NullOrWhiteSpace" xml:space="preserve">
+    <value>Значение не должно быть пустым или пробелом</value>
+  </data>
+  <data name="DistanceMeasureUnit_ErrorMessage_NotANumber" xml:space="preserve">
+    <value>Значение должно быть числом</value>
+  </data>
+  <data name="DistanceMeasureUnit_ErrorMessage_NotValid" xml:space="preserve">
+    <value>Недопустимое значение</value>
+  </data>
 </root>

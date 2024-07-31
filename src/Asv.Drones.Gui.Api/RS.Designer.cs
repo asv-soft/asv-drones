@@ -141,6 +141,33 @@ namespace Asv.Drones.Gui.Api {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Value must be a number.
+        /// </summary>
+        public static string DistanceMeasureUnit_ErrorMessage_NotANumber {
+            get {
+                return ResourceManager.GetString("DistanceMeasureUnit_ErrorMessage_NotANumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid value.
+        /// </summary>
+        public static string DistanceMeasureUnit_ErrorMessage_NotValid {
+            get {
+                return ResourceManager.GetString("DistanceMeasureUnit_ErrorMessage_NotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value can&apos;t be null or white space.
+        /// </summary>
+        public static string DistanceMeasureUnit_ErrorMessage_NullOrWhiteSpace {
+            get {
+                return ResourceManager.GetString("DistanceMeasureUnit_ErrorMessage_NullOrWhiteSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rename.
         /// </summary>
         public static string HierarchicalStoreView_Button_EditFileName {

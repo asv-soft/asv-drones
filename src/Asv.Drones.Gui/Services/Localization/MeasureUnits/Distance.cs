@@ -1,8 +1,7 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using Asv.Cfg;
+using Asv.Common;
 using Asv.Drones.Gui.Api;
-using Avalonia.Controls.Documents;
 
 namespace Asv.Drones.Gui;
 
@@ -54,7 +53,12 @@ public class DistanceMeasureUnitMeters : IMeasureUnitItem<double, DistanceUnits>
     
     public string? GetErrorMessage(string? value)
     {
-        return null;
+        if (value.IsNullOrWhiteSpace()) return Api.RS.DistanceMeasureUnit_ErrorMessage_NullOrWhiteSpace;
+        if (!IsValid(value)) return Api.RS.DistanceMeasureUnit_ErrorMessage_NotValid;
+        value = value.Replace(',', '.');
+        return double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out _) == false
+            ? Api.RS.DistanceMeasureUnit_ErrorMessage_NotANumber
+            : null;
     }
     
     public string Print(double value)
@@ -100,7 +104,12 @@ public class DistanceMeasureUnitNauticalMiles : IMeasureUnitItem<double, Distanc
     
     public string? GetErrorMessage(string? value)
     {
-        return null;
+        if (value.IsNullOrWhiteSpace()) return Api.RS.DistanceMeasureUnit_ErrorMessage_NullOrWhiteSpace;
+        if (!IsValid(value)) return Api.RS.DistanceMeasureUnit_ErrorMessage_NotValid;
+        value = value.Replace(',', '.');
+        return double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out _) == false
+            ? Api.RS.DistanceMeasureUnit_ErrorMessage_NotANumber
+            : null;
     }
     
     public string Print(double value)
