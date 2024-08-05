@@ -34,7 +34,7 @@ namespace Asv.Drones.Gui
         public AdsbClientDeviceConfig Adsb { get; set; } = new();
         public bool WrapToV2ExtensionEnabled { get; set; } = true;
         public RfsaClientDeviceConfig Rfsa { get; set; } = new();
-        public RfsaClientDeviceConfig Rsga { get; set; } = new();
+        public RsgaClientDeviceConfig Rsga { get; set; } = new();
     }
 
     [Export(typeof(IMavlinkDevicesService))]
