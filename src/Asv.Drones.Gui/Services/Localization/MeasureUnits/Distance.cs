@@ -63,12 +63,12 @@ public class DistanceMeasureUnitMeters : IMeasureUnitItem<double, DistanceUnits>
     
     public string Print(double value)
     {
-        return $"{value:F0}";
+        return value.ToString("F0", CultureInfo.InvariantCulture);
     }
     
     public string PrintWithUnits(double value)
     {
-        return $"{value:F0} {Unit}";
+        return $"{value.ToString("F0", CultureInfo.InvariantCulture)} {Unit}";
     }
 }
 public class DistanceMeasureUnitNauticalMiles : IMeasureUnitItem<double, DistanceUnits>
@@ -114,11 +114,11 @@ public class DistanceMeasureUnitNauticalMiles : IMeasureUnitItem<double, Distanc
     
     public string Print(double value)
     {
-        return $"{value:F4}";
+        return value.ToString("F4", CultureInfo.InvariantCulture);
     }
     
     public string PrintWithUnits(double value)
     {
-        return $"{value:F4} {Unit}";
+        return $"{value.ToString("F4", CultureInfo.InvariantCulture)} {Unit}";
     }
 }
