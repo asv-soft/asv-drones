@@ -1201,7 +1201,7 @@
     <value>Packet Loss Chance should be between 0 and 100 inclusive</value>
   </data>
   <data name="PortView_PacketLossChance" xml:space="preserve">
-    <value>Packet Loss Chance</value>
+    <value>Packet Loss Chance: </value>
   </data>
   <data name="Accuracy_Description" xml:space="preserve">
     <value>Accuracy measure units</value>
@@ -1268,5 +1268,11 @@
   </data>
   <data name="AppearanceTreeMenuItem_Description" xml:space="preserve">
     <value>Appearance, theme, language, versions, licence...</value>
+  </data>
+  <data name="PortView_Expander_Advanced" xml:space="preserve">
+    <value>Advanced settings</value>
+  </data>
+  <data name="PortView_ToolTip" xml:space="preserve">
+    <value>Packet loss chance (for debug)</value>
   </data>
 </root>
