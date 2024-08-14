@@ -2679,7 +2679,16 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Packet Loss Chance.
+        ///   Looks up a localized string similar to Advanced settings.
+        /// </summary>
+        public static string PortView_Expander_Advanced {
+            get {
+                return ResourceManager.GetString("PortView_Expander_Advanced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packet Loss Chance: .
         /// </summary>
         public static string PortView_PacketLossChance {
             get {
@@ -2702,6 +2711,15 @@ namespace Asv.Drones.Gui {
         public static string PortView_ToggleButton_Enabled {
             get {
                 return ResourceManager.GetString("PortView_ToggleButton_Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packet loss chance (for debug).
+        /// </summary>
+        public static string PortView_ToolTip {
+            get {
+                return ResourceManager.GetString("PortView_ToolTip", resourceCulture);
             }
         }
         

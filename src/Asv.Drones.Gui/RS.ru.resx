@@ -1214,8 +1214,8 @@
     <data name="PortViewModel_ValidPacketLossChance" xml:space="preserve">
     <value>Шанс потери пакетов должен быть между 0 и 100 включительно</value>
   </data>
-    <data name="PortView_PacketLossChance" xml:space="preserve">
-    <value>Шанс потери пакетов</value>
+  <data name="PortView_PacketLossChance" xml:space="preserve">
+    <value>Шанс потери пакетов: </value>
   </data>
     <data name="Accuracy_Description" xml:space="preserve">
     <value>Единицы измерения точности</value>
@@ -1282,5 +1282,11 @@
   </data>
   <data name="AppearanceTreeMenuItem_Description" xml:space="preserve">
     <value>Внешний вид, тема, язык, версии, лицензия...</value>
+  </data>
+  <data name="PortView_Expander_Advanced" xml:space="preserve">
+    <value>Расширенные настройки</value>
+  </data>
+  <data name="PortView_ToolTip" xml:space="preserve">
+    <value>Процент потерь пакетов (для отладки)</value>
   </data>
 </root>

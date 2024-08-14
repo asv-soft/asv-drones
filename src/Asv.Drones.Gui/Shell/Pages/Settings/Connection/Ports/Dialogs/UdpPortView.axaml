@@ -18,8 +18,6 @@
             <TextBox Text="{Binding LocalIpAddress} " />
             <TextBlock Text="{x:Static gui:RS.UdpPortView_LocalPortName}" />
             <TextBox Text="{Binding LocalPortString}" />
-            <TextBlock Text="{x:Static gui:RS.PortView_PacketLossChance}" IsVisible="{Binding IsDebugMode}" />
-            <TextBox Text="{CompiledBinding PacketLossChanceString, Mode=TwoWay}" IsVisible="{Binding IsDebugMode}"/>
             <ToggleSwitch OnContent="" OffContent="" Content="{x:Static gui:RS.UdpPortView_ToggleName}"
                           IsChecked="{Binding IsRemote}" />
             <StackPanel IsVisible="{Binding IsRemote}" IsEnabled="{Binding IsRemote}">
@@ -28,6 +26,17 @@
                 <TextBlock Text="{x:Static gui:RS.UdpPortView_RemotePortName}" />
                 <TextBox Text="{Binding RemotePortString}" />
             </StackPanel>
+            <Expander Header="{x:Static gui:RS.PortView_Expander_Advanced}" ExpandDirection="Down" IsVisible="{Binding IsDebugMode}">
+                <StackPanel>
+                    <Grid>
+                        <Grid RowDefinitions="Auto" ColumnDefinitions="Auto, Auto">
+                            <TextBlock Text="{x:Static gui:RS.PortView_PacketLossChance}"/>
+                            <TextBlock Grid.Column="1" Text="{CompiledBinding PacketLossChanceString}"/>
+                        </Grid>
+                    </Grid>
+                    <Slider Value="{Binding PacketLossChance}" ToolTip.Tip="{x:Static gui:RS.PortView_ToolTip}"/>
+                </StackPanel>
+            </Expander>
         </StackPanel>
     </Panel>
 </UserControl>

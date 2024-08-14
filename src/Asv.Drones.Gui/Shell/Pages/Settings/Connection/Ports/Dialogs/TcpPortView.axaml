@@ -19,10 +19,19 @@
             <TextBox Text="{Binding IpAddress}" />
             <TextBlock Text="{x:Static gui:RS.TcpPortView_TcpIpPort}"/>
             <TextBox Text="{CompiledBinding PortString,Mode= TwoWay}" />
-            <TextBlock Text="{x:Static gui:RS.PortView_PacketLossChance}" IsVisible="{Binding IsDebugMode}" />
-            <TextBox Text="{CompiledBinding PacketLossChanceString, Mode= TwoWay}" IsVisible="{Binding IsDebugMode}" />
             <RadioButton IsChecked="{Binding IsTcpIpServer}" Content="TCP\IP server" />
             <RadioButton IsChecked="{Binding !IsTcpIpServer}" Content="TCP\IP client" />
+            <Expander Header="{x:Static gui:RS.PortView_Expander_Advanced}" ExpandDirection="Down" IsVisible="{Binding IsDebugMode}">
+                <StackPanel>
+                    <Grid>
+                        <Grid RowDefinitions="Auto" ColumnDefinitions="Auto, Auto">
+                            <TextBlock Text="{x:Static gui:RS.PortView_PacketLossChance}"/>
+                            <TextBlock Grid.Column="1" Text="{CompiledBinding PacketLossChanceString}"/>
+                        </Grid>
+                    </Grid>
+                    <Slider Value="{Binding PacketLossChance}" ToolTip.Tip="{x:Static gui:RS.PortView_ToolTip}"/>
+                </StackPanel>
+            </Expander>
         </StackPanel>
     </Panel>
 </UserControl>
