@@ -49,14 +49,11 @@ public class MissionStatusViewModel : ViewModelBase
                 
                 Task.Run(async () => await InitiateMissionPoints(new CancellationToken())); // call before anything else
                 _isOnMission = true;
-                return;
             }
-            
-            if (m == ArdupilotCopterMode.Rtl || m == ArdupilotPlaneMode.Rtl)
+            else
             {
                 _isOnMission = false;
                 ReachedIndex = 0;
-                return;
             }
         });
 
@@ -107,7 +104,6 @@ public class MissionStatusViewModel : ViewModelBase
                 }
                 _distanceBeforeMission = GeoMath.Distance(items[0].Location.Value, items[1].Location.Value);
             }).DisposeItWith(Disposable);
-
         _vehicle.Gnss.Main.GroundVelocity
                 .Select(localization.Velocity.ConvertFromSi)
                 .Select(_ => Math.Round(_))
