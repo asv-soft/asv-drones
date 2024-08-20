@@ -7,7 +7,7 @@
         <AsvCommonVersion>2.0.2</AsvCommonVersion>
         <AsvAvaloniaToolkitVersion>1.0.1</AsvAvaloniaToolkitVersion>
         <AsvAvaloniaMapVersion>2.0.6</AsvAvaloniaMapVersion>
-        <AsvMavlinkVersion>3.10.2</AsvMavlinkVersion>
+        <AsvMavlinkVersion>3.10.3</AsvMavlinkVersion>
         <FluentAvaloniaUIVersion>2.0.5</FluentAvaloniaUIVersion>
         <ReactiveUIVersion>19.5.41</ReactiveUIVersion>
         <SystemReactiveVersion>6.0.0</SystemReactiveVersion>
