@@ -262,7 +262,9 @@ public class FlightUavViewModel : MapWidgetBase
         foreach (var anchor in Map.Markers)
         {
             if (anchor is UavFlightMissionPathPolygon polygon && polygon.Vehicle.FullId == _vehicle.FullId)
+            {
                 polygon.IsVisible = needTo;
+            }
         }
     }
 
@@ -271,7 +273,14 @@ public class FlightUavViewModel : MapWidgetBase
         foreach (var anchor in Map.Markers)
         {
             if (anchor is UavFlightMissionAnchor missionAnchor && missionAnchor.Vehicle.FullId == _vehicle.FullId)
+            {
                 missionAnchor.IsVisible = needTo;
+            }
+
+            if (anchor.Id.ToString().Contains(AnchorConstants.AirportAnchorsTagTypeName))
+            {
+                anchor.IsVisible = needTo;
+            }
         }
     }
 
