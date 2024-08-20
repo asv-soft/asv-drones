@@ -3,11 +3,11 @@
         <ProductVersion>1.0.1</ProductVersion>
         <ApiVersion>1.0.1</ApiVersion>
         <ApiPrevVersion>1.0.0</ApiPrevVersion>
-        <AvaloniaVersion>11.0.6</AvaloniaVersion>
+        <AvaloniaVersion>11.1.0</AvaloniaVersion>
         <AsvCommonVersion>2.0.2</AsvCommonVersion>
         <AsvAvaloniaToolkitVersion>1.0.1</AsvAvaloniaToolkitVersion>
-        <AsvAvaloniaMapVersion>2.0.5</AsvAvaloniaMapVersion>
-        <AsvMavlinkVersion>3.10.0</AsvMavlinkVersion>
+        <AsvAvaloniaMapVersion>2.0.6</AsvAvaloniaMapVersion>
+        <AsvMavlinkVersion>3.10.2</AsvMavlinkVersion>
         <FluentAvaloniaUIVersion>2.0.5</FluentAvaloniaUIVersion>
         <ReactiveUIVersion>19.5.41</ReactiveUIVersion>
         <SystemReactiveVersion>6.0.0</SystemReactiveVersion>

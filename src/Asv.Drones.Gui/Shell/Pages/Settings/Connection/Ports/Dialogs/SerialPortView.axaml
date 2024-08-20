@@ -19,9 +19,17 @@
             <TextBlock Text="{x:Static gui:RS.SerialPortView_BaudRate}" />
             <ComboBox SelectedItem="{Binding SelectedBaudRate}"
                              ItemsSource="{Binding BaudRates}" />
-            <TextBlock Text="{x:Static gui:RS.PortView_PacketLossChance}" IsVisible="{Binding IsDebugMode}" />
-            <TextBox Text="{CompiledBinding PacketLossChanceString, Mode=TwoWay}" IsVisible="{Binding IsDebugMode}"/>
+            <Expander Header="{x:Static gui:RS.PortView_Expander_Advanced}" ExpandDirection="Down" IsVisible="{Binding IsDebugMode}">
+                <StackPanel>
+                    <Grid>
+                        <Grid RowDefinitions="Auto" ColumnDefinitions="Auto, Auto">
+                            <TextBlock Text="{x:Static gui:RS.PortView_PacketLossChance}"/>
+                            <TextBlock Grid.Column="1" Text="{CompiledBinding PacketLossChanceString}"/>
+                        </Grid>
+                    </Grid>
+                    <Slider Value="{Binding PacketLossChance}" ToolTip.Tip="{x:Static gui:RS.PortView_ToolTip}"/>
+                </StackPanel>
+            </Expander>
         </StackPanel>
     </Panel>
-
 </UserControl>

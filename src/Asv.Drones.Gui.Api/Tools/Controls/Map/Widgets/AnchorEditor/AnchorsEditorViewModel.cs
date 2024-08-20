@@ -93,7 +93,7 @@ public class AnchorsEditorViewModel : MapWidgetBase
     protected AnchorsEditorViewModel(Uri id, ILocalizationService loc) : base(id)
     {
         _loc = loc;
-        Title = "Anchor Editor";
+        Title = RS.AnchorsEditorViewModel_Title;
         Icon = MaterialIconKind.MapMarker;
         Location = WidgetLocation.Bottom;
         Disposable.AddAction(() => { _locationSubscription?.Dispose(); });
