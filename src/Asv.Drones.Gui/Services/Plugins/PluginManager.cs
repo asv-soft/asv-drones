@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Composition.Hosting;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
@@ -12,7 +13,6 @@ using System.Threading.Tasks;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
-using DynamicData;
 using Newtonsoft.Json;
 using NLog;
 using NuGet.Configuration;
@@ -201,8 +201,6 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
                 });
                 continue;
             }
-
-            
             
             try
             {
@@ -436,6 +434,7 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
 
             var packageFile =
                 Path.Combine(currentPluginFolder, $"{packageIdentity.Id}.{packageIdentity.Version}.nupkg");
+            
             var findPackageByIdResource = await repository.GetResourceAsync<FindPackageByIdResource>(cancel);
             await using (var file = File.OpenWrite(packageFile))
             {
@@ -443,7 +442,9 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
                     _cache, _nugetLogger, cancel);
                 file.Flush(true);
             }
-
+            //TODO: stop here to insert your own nugget package
+            ExtractContentFolder(packageFile, currentPluginFolder);
+            
             using var packageArchiveReader = new PackageArchiveReader(packageFile);
             var platform = NugetHelper.GetPlatform(packageArchiveReader);
             if (platform == null)
@@ -525,6 +526,47 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
                 }
             }
             throw;
+        }
+    }
+    
+    private static void ExtractContentFolder(string nugetPackage, string to)
+    {
+        if (!File.Exists(nugetPackage))
+        {
+            return;
+        }
+        
+        if (!Directory.Exists(to))
+        {
+            return;
+        }
+
+        var archive = ZipFile.OpenRead(nugetPackage);
+
+        foreach (var entry in archive.Entries)
+        {
+            if (!entry.FullName.Trim().StartsWith(@"content", StringComparison.InvariantCultureIgnoreCase))
+            {
+                continue;
+            }
+            
+            var filePath = Path.Combine(to, entry.FullName);
+            var fileDir = Path.GetDirectoryName(filePath);
+
+            if (fileDir is null)
+            {
+                continue;
+            }
+            
+            if (!Directory.Exists(fileDir))
+            {
+                Directory.CreateDirectory(fileDir);
+            }
+
+            if (!File.Exists(filePath))
+            {
+                entry.ExtractToFile(filePath, true);
+            }
         }
     }
 
