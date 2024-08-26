@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui;
 
@@ -38,7 +39,9 @@ public class PluginInfoViewModel : DisposableReactiveObject
         LastVersion = $"{pluginInfo.LastVersion} (API: {pluginInfo.ApiVersion})";
         IsApiCompatible = pluginInfo.ApiVersion == manager.ApiVersion;
         LocalVersion = (_localInfo != null) ? $"{_localInfo?.Version} (API: {_localInfo?.ApiVersion})" : null;
+        if (Author != null) IsUnverified = !Author.Contains("https://github.com/asv-soft");
     }
+    
     public bool IsApiCompatible { get; set; }
     public string Id { get; set; }
     public string? Author { get; set; }
@@ -48,6 +51,8 @@ public class PluginInfoViewModel : DisposableReactiveObject
     public string LastVersion { get; set; }
     public string? LocalVersion { get; set; }
     public bool IsInstalled { get; set; }
+    [Reactive] public bool IsUnverified { get; set; }
+    
 
     private async Task<Unit> UninstallImpl(Unit arg, IProgress<double> progress, CancellationToken cancel)
     {

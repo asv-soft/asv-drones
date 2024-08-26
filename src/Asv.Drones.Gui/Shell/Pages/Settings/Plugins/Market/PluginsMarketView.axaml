@@ -84,6 +84,13 @@
                                        Text="{Binding SourceName}" />
                             <TextBlock VerticalAlignment="Center" Theme="{DynamicResource CaptionTextBlockStyle}"
                                        Foreground="{DynamicResource SystemAccentColorLight2}" Text="]" />
+                            <Border IsVisible="{Binding IsUnverified}"
+                                    CornerRadius="{DynamicResource ControlCornerRadius}" Padding="4,0" Margin="4 0 "
+                                    Background="{DynamicResource SystemFillColorCautionBackgroundBrush}">
+                                <TextBlock FontStyle="Italic" VerticalAlignment="Center"
+                                           Theme="{DynamicResource CaptionTextBlockStyle}"
+                                           Text="{x:Static gui:RS.PluginsInstalledView_IsUnverified}"/>
+                            </Border>
                         </StackPanel>
                         <TextBlock Grid.Row="1" Grid.Column="1" Theme="{DynamicResource CaptionTextBlockStyle}"
                                    Foreground="{DynamicResource AccentTextFillColorDisabledBrush}"

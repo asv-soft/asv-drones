@@ -2445,6 +2445,15 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unverifed.
+        /// </summary>
+        public static string PluginsInstalledView_IsUnverified {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_IsUnverified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading error.
         /// </summary>
         public static string PluginsInstalledView_LoadingError {
