@@ -98,6 +98,10 @@
                     <Grid DockPanel.Dock="Top" RowDefinitions="35,25,50" ColumnDefinitions="120,*">
                         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                                    Theme="{DynamicResource SubtitleTextBlockStyle}" Text="{Binding Name}" />
+                        <ProgressBar Grid.Row="0" Grid.Column="1" 
+                                     IsIndeterminate="{Binding Install.IsExecuting}"
+                                     IsVisible="{Binding Install.IsExecuting}"
+                                     Width="50" Margin="10 0" HorizontalAlignment="Right"/>
                         <StackPanel Orientation="Horizontal" Spacing="8" Grid.Row="1" Grid.Column="0"
                                     Grid.ColumnSpan="2">
                             <TextBlock Foreground="{DynamicResource AccentTextFillColorDisabledBrush}"
@@ -120,7 +124,6 @@
                         <TextBlock Grid.Row="2" Grid.Column="1" IsVisible="{Binding !IsInstalled}"
                                    Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LastVersion}"
                                    VerticalAlignment="Center" />
-
                         <Button Grid.Row="2" Grid.Column="0" Width="100" IsVisible="{Binding IsInstalled}"
                                 Command="{Binding Uninstall.Command}"
                                 Content="{x:Static gui:RS.PluginsInstalledView_Uninstall}" />
