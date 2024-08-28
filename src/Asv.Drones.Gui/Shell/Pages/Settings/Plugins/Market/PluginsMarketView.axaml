@@ -98,10 +98,6 @@
                     <Grid DockPanel.Dock="Top" RowDefinitions="35,25,50" ColumnDefinitions="120,*">
                         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                                    Theme="{DynamicResource SubtitleTextBlockStyle}" Text="{Binding Name}" />
-                        <ProgressBar Grid.Row="0" Grid.Column="1" 
-                                     IsIndeterminate="{Binding Install.IsExecuting}"
-                                     IsVisible="{Binding Install.IsExecuting}"
-                                     Width="50" Margin="10 0" HorizontalAlignment="Right"/>
                         <StackPanel Orientation="Horizontal" Spacing="8" Grid.Row="1" Grid.Column="0"
                                     Grid.ColumnSpan="2">
                             <TextBlock Foreground="{DynamicResource AccentTextFillColorDisabledBrush}"
@@ -120,7 +116,11 @@
                             <Button Classes="accent" Width="100" IsVisible="{Binding Install.IsExecuting}"
                                     Command="{Binding Install.Cancel}"
                                     Content="{x:Static gui:RS.PluginsMarketView_Cancel}" />
+                            <ProgressBar IsIndeterminate="True" 
+                                         Margin="85 40 0 0"
+                                         IsVisible="{Binding Install.IsExecuting}" />
                         </Panel>
+                        
                         <TextBlock Grid.Row="2" Grid.Column="1" IsVisible="{Binding !IsInstalled}"
                                    Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LastVersion}"
                                    VerticalAlignment="Center" />
