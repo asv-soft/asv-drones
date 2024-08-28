@@ -116,11 +116,14 @@
                             <Button Classes="accent" Width="100" IsVisible="{Binding Install.IsExecuting}"
                                     Command="{Binding Install.Cancel}"
                                     Content="{x:Static gui:RS.PluginsMarketView_Cancel}" />
+                            <ProgressBar IsIndeterminate="True" 
+                                         Margin="85 40 0 0"
+                                         IsVisible="{Binding Install.IsExecuting}" />
                         </Panel>
+                        
                         <TextBlock Grid.Row="2" Grid.Column="1" IsVisible="{Binding !IsInstalled}"
                                    Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LastVersion}"
                                    VerticalAlignment="Center" />
-
                         <Button Grid.Row="2" Grid.Column="0" Width="100" IsVisible="{Binding IsInstalled}"
                                 Command="{Binding Uninstall.Command}"
                                 Content="{x:Static gui:RS.PluginsInstalledView_Uninstall}" />
