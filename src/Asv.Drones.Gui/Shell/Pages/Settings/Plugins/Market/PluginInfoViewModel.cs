@@ -40,7 +40,7 @@ public class PluginInfoViewModel : DisposableReactiveObject
         LastVersion = $"{pluginInfo.LastVersion} (API: {pluginInfo.ApiVersion})";
         IsApiCompatible = pluginInfo.ApiVersion == manager.ApiVersion;
         LocalVersion = (_localInfo != null) ? $"{_localInfo?.Version} (API: {_localInfo?.ApiVersion})" : null;
-        if (Author != null) IsUnverified = !Author.Contains("https://github.com/asv-soft") && !SourceUri.Contains("https://nuget.pkg.github.com/asv-soft/index.json");
+        if (Author != null) IsVerified = Author.Contains("https://github.com/asv-soft") && SourceUri.Contains("https://nuget.pkg.github.com/asv-soft/index.json");
     }
     
     public bool IsApiCompatible { get; set; }
@@ -53,7 +53,7 @@ public class PluginInfoViewModel : DisposableReactiveObject
     public string LastVersion { get; set; }
     public string? LocalVersion { get; set; }
     public bool IsInstalled { get; set; }
-    [Reactive] public bool IsUnverified { get; set; }
+    [Reactive] public bool IsVerified { get; set; }
     
 
     private async Task<Unit> UninstallImpl(Unit arg, IProgress<double> progress, CancellationToken cancel)

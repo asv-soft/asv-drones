@@ -2562,6 +2562,24 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Verified.
+        /// </summary>
+        public static string PluginsMarketView_InfoBar_IsVerified {
+            get {
+                return ResourceManager.GetString("PluginsMarketView_InfoBar_IsVerified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This plugin is verified by developers.
+        /// </summary>
+        public static string PluginsMarketView_InfoBar_IsVerified_Message {
+            get {
+                return ResourceManager.GetString("PluginsMarketView_InfoBar_IsVerified_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Install.
         /// </summary>
         public static string PluginsMarketView_Install {

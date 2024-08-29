@@ -37,7 +37,7 @@ public class InstalledPluginInfoViewModel : DisposableReactiveObject
         IsUninstalled = pluginInfo.IsUninstalled;
         IsLoaded = pluginInfo.IsLoaded;
         LoadingError = pluginInfo.LoadingError;
-        if (Author != null) IsUnverified = !Author.Contains("https://github.com/asv-soft");
+        if (Author != null) IsVerified = Author.Contains("https://github.com/asv-soft");
     }
 
 
@@ -72,7 +72,7 @@ public class InstalledPluginInfoViewModel : DisposableReactiveObject
     [Reactive] public string LoadingError { get; set; }
     [Reactive] public bool IsLoaded { get; set; }
     [Reactive] public bool IsUninstalled { get; set; }
-    [Reactive] public bool IsUnverified { get; set; }
+    [Reactive] public bool IsVerified { get; set; }
     public ReactiveCommand<Unit, Unit> Uninstall { get; }
     public ReactiveCommand<Unit, Unit> CancelUninstall { get; }
 }
