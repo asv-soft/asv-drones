@@ -20,6 +20,8 @@ public class PluginsMarketViewModel : TreePageViewModel
     private readonly SourceCache<PluginInfoViewModel, string> _pluginSearchSource;
     private readonly ReadOnlyObservableCollection<PluginInfoViewModel> _plugins;
 
+    private string _previouslySelectedPluginId;
+
     public PluginsMarketViewModel() : base(WellKnownUri.UndefinedUri)
     {
         DesignTime.ThrowIfNotDesignMode();
@@ -56,7 +58,7 @@ public class PluginsMarketViewModel : TreePageViewModel
         _manager = manager ?? throw new ArgumentNullException(nameof(manager));
         _log = log;
 
-        _pluginSearchSource = new SourceCache<PluginInfoViewModel, string>(_ => _.Id).DisposeItWith(Disposable);
+        _pluginSearchSource = new SourceCache<PluginInfoViewModel, string>(info => info.Id).DisposeItWith(Disposable);
         _pluginSearchSource.Connect().Bind(out _plugins).Subscribe().DisposeItWith(Disposable);
         Search = new CancellableCommandWithProgress<Unit, Unit>(SearchImpl, "Search", log, TaskPoolScheduler.Default)
             .DisposeItWith(Disposable);
@@ -65,8 +67,16 @@ public class PluginsMarketViewModel : TreePageViewModel
     private async Task<Unit> SearchImpl(Unit arg, IProgress<double> progress, CancellationToken cancel)
     {
         var items = await _manager.Search(SearchQuery.Empty, cancel);
+
+        if (SelectedPlugin is not null)
+        {
+            _previouslySelectedPluginId = SelectedPlugin.Id;
+        }
+        
+        SelectedPlugin = null;
         _pluginSearchSource.Clear();
-        _pluginSearchSource.AddOrUpdate(items.Select(_ => new PluginInfoViewModel(_, _manager, _log)));
+        _pluginSearchSource.AddOrUpdate(items.Select(info => new PluginInfoViewModel(info, _manager, _log)));
+        SelectedPlugin = _plugins.FirstOrDefault(plugin => plugin.Id == _previouslySelectedPluginId) ?? _plugins.First();
         return Unit.Default;
     }
 
@@ -77,5 +87,5 @@ public class PluginsMarketViewModel : TreePageViewModel
 
     [Reactive] public string SearchString { get; set; }
 
-    [Reactive] public PluginInfoViewModel SelectedPlugin { get; set; }
+    [Reactive] public PluginInfoViewModel? SelectedPlugin { get; set; }
 }
