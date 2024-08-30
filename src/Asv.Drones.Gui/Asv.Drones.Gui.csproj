@@ -39,6 +39,7 @@
         <PackageReference Include="ReactiveUI" Version="$(ReactiveUIVersion)"/>
         <PackageReference Include="ReactiveUI.Fody" Version="$(ReactiveUIVersion)"/>
         <PackageReference Include="ReactiveUI.Validation" Version="$(ReactiveUIValidationVersion)"/>
+        <PackageReference Include="System.IO.Packaging" Version="8.0.0" />
 
 
     </ItemGroup>
