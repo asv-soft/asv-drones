@@ -95,7 +95,7 @@
         <Panel Margin="8" VerticalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
             <Panel IsVisible="{Binding SelectedPlugin, Converter={x:Static ObjectConverters.IsNotNull}}">
                 <DockPanel DataContext="{Binding SelectedPlugin}">
-                    <Grid DockPanel.Dock="Top" RowDefinitions="35,25,50" ColumnDefinitions="120,*">
+                    <Grid DockPanel.Dock="Top" RowDefinitions="35,25,50" ColumnDefinitions="120,120 , *">
                         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                                    Theme="{DynamicResource SubtitleTextBlockStyle}" Text="{Binding Name}" />
                         <StackPanel Orientation="Horizontal" Spacing="8" Grid.Row="1" Grid.Column="0"
@@ -125,13 +125,6 @@
                             <TextBlock IsVisible="{Binding !IsInstalled}"
                                        Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LastVersion}"
                                        VerticalAlignment="Center" />
-                            <ListBox ItemsSource="{Binding Versions}">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Version}"></TextBlock>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
                         </StackPanel>
                         <Button Grid.Row="2" Grid.Column="0" Width="100" IsVisible="{Binding IsInstalled}"
                                 Command="{Binding Uninstall.Command}"
@@ -139,6 +132,15 @@
                         <TextBlock Grid.Row="2" Grid.Column="1" IsVisible="{Binding IsInstalled}"
                                    Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LocalVersion}"
                                    VerticalAlignment="Center" />
+                        <ComboBox Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Versions}"
+                                  PlaceholderText="{x:Static gui:RS.PluginsInstalledView_AllVersions}"
+                                  VerticalAlignment="Center">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Version}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </Grid>
                     <TabControl>
                         <TabItem FontSize="18" Header="{x:Static gui:RS.PluginsInstalledView_Tab_Description}">

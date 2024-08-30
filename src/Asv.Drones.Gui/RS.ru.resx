@@ -1289,4 +1289,7 @@
   <data name="PortView_ToolTip" xml:space="preserve">
     <value>Процент потерь пакетов (для отладки)</value>
   </data>
+  <data name="PluginsInstalledView_AllVersions" xml:space="preserve">
+    <value>Все версии</value>
+  </data>
 </root>
