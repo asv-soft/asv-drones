@@ -69,13 +69,8 @@ public class PluginsMarketViewModel : TreePageViewModel
         _pluginSearchSource.AddOrUpdate(items.Select(_ => new PluginInfoViewModel(_, _manager, _log)));
         return Unit.Default;
     }
-
     public CancellableCommandWithProgress<Unit, Unit> Search { get; }
-
     public ReadOnlyObservableCollection<PluginInfoViewModel> Plugins => _plugins;
-
-
     [Reactive] public string SearchString { get; set; }
-
     [Reactive] public PluginInfoViewModel SelectedPlugin { get; set; }
 }
