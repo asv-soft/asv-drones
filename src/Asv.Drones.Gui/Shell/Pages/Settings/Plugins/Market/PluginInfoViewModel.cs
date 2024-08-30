@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Reactive;
 using System.Threading;
 using System.Threading.Tasks;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
+using NuGet.Protocol.Core.Types;
 using ReactiveUI;
 
 namespace Asv.Drones.Gui;
@@ -36,6 +38,7 @@ public class PluginInfoViewModel : DisposableReactiveObject
         Description = pluginInfo.Description;
         SourceName = pluginInfo.Source.Name;
         LastVersion = $"{pluginInfo.LastVersion} (API: {pluginInfo.ApiVersion})";
+        Versions = pluginInfo.Versions;
         IsApiCompatible = pluginInfo.ApiVersion == manager.ApiVersion;
         LocalVersion = (_localInfo != null) ? $"{_localInfo?.Version} (API: {_localInfo?.ApiVersion})" : null;
     }
@@ -46,6 +49,7 @@ public class PluginInfoViewModel : DisposableReactiveObject
     public string? Description { get; set; }
     public string SourceName { get; set; }
     public string LastVersion { get; set; }
+    public IEnumerable<VersionInfo> Versions { get; set; }
     public string? LocalVersion { get; set; }
     public bool IsInstalled { get; set; }
 

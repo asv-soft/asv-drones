@@ -1,4 +1,5 @@
 using Asv.Common;
+using NuGet.Protocol.Core.Types;
 
 namespace Asv.Drones.Gui.Api;
 
@@ -19,6 +20,7 @@ public interface IPluginSearchInfo : IPluginSpecification
     IPluginServerInfo Source { get; }
     string LastVersion { get; }
     long? DownloadCount { get; }
+    IEnumerable<VersionInfo> Versions { get; }
 }
 
 public interface IPluginSpecification

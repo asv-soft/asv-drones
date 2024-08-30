@@ -121,9 +121,18 @@
                                          IsVisible="{Binding Install.IsExecuting}" />
                         </Panel>
                         
-                        <TextBlock Grid.Row="2" Grid.Column="1" IsVisible="{Binding !IsInstalled}"
-                                   Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LastVersion}"
-                                   VerticalAlignment="Center" />
+                        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                            <TextBlock IsVisible="{Binding !IsInstalled}"
+                                       Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LastVersion}"
+                                       VerticalAlignment="Center" />
+                            <ListBox ItemsSource="{Binding Versions}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Version}"></TextBlock>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
                         <Button Grid.Row="2" Grid.Column="0" Width="100" IsVisible="{Binding IsInstalled}"
                                 Command="{Binding Uninstall.Command}"
                                 Content="{x:Static gui:RS.PluginsInstalledView_Uninstall}" />
