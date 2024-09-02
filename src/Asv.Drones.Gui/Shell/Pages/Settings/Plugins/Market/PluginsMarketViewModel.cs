@@ -79,13 +79,8 @@ public class PluginsMarketViewModel : TreePageViewModel
         SelectedPlugin = _plugins.FirstOrDefault(plugin => plugin.Id == _previouslySelectedPluginId) ?? _plugins.First();
         return Unit.Default;
     }
-
     public CancellableCommandWithProgress<Unit, Unit> Search { get; }
-
     public ReadOnlyObservableCollection<PluginInfoViewModel> Plugins => _plugins;
-
-
     [Reactive] public string SearchString { get; set; }
-
     [Reactive] public PluginInfoViewModel? SelectedPlugin { get; set; }
 }

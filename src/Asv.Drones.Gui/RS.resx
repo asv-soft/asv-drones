@@ -1275,4 +1275,13 @@
   <data name="PortView_ToolTip" xml:space="preserve">
     <value>Packet loss chance (for debug)</value>
   </data>
+  <data name="PluginsInstalledView_IsUnverified" xml:space="preserve">
+    <value>Unverifed</value>
+  </data>
+  <data name="PluginsMarketView_InfoBar_IsVerified" xml:space="preserve">
+    <value>Verified</value>
+  </data>
+    <data name="PluginsMarketView_InfoBar_IsVerified_Message" xml:space="preserve">
+    <value>This plugin is verified by developers</value>
+  </data>
 </root>
