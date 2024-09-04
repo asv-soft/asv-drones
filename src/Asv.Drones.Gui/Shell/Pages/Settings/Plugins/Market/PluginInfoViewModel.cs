@@ -41,6 +41,7 @@ public class PluginInfoViewModel : DisposableReactiveObject
         IsApiCompatible = pluginInfo.ApiVersion == manager.ApiVersion;
         LocalVersion = (_localInfo != null) ? $"{_localInfo?.Version} (API: {_localInfo?.ApiVersion})" : null;
         if (Author != null) IsVerified = Author.Contains("https://github.com/asv-soft") && SourceUri.Contains("https://nuget.pkg.github.com/asv-soft/index.json");
+        Version = pluginInfo.LastVersion;
     }
     
     public bool IsApiCompatible { get; set; }
@@ -51,6 +52,7 @@ public class PluginInfoViewModel : DisposableReactiveObject
     public string? Description { get; set; }
     public string SourceName { get; set; }
     public string LastVersion { get; set; }
+    public string Version { get; set; }
     public string? LocalVersion { get; set; }
     public bool IsInstalled { get; set; }
     [Reactive] public bool IsVerified { get; set; }
