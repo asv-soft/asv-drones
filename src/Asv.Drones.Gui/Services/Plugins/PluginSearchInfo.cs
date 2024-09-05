@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
+using NuGet.Packaging.Core;
 using NuGet.Protocol.Core.Types;
 
 namespace Asv.Drones.Gui;
@@ -19,6 +21,7 @@ internal class PluginSearchInfo : IPluginSearchInfo
         Description = packageSearchMetadata.Description;
         Tags = packageSearchMetadata.Tags;
         DownloadCount = packageSearchMetadata.DownloadCount;
+        Dependencies = dependencyInfo.Dependencies;
         
         var apiPackage = dependencyInfo.Dependencies.FirstOrDefault(x => x.Id == NugetHelper.PluginApiPackageName);
         if (apiPackage == null)
@@ -37,4 +40,5 @@ internal class PluginSearchInfo : IPluginSearchInfo
     public string Description { get; }
     public long? DownloadCount { get; }
     public string? Tags { get; }
+    public  IEnumerable<PackageDependency> Dependencies { get; set; }
 }

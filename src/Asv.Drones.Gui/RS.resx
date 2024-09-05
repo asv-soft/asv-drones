@@ -1284,4 +1284,16 @@
     <data name="PluginsMarketView_InfoBar_IsVerified_Message" xml:space="preserve">
     <value>This plugin is verified by developers</value>
   </data>
+  <data name="PluginsInstalledView_Tab_AdditionalInfo_Author" xml:space="preserve">
+    <value>Author: </value>
+  </data>
+  <data name="PluginsInstalledView_Tab_AdditionalInfo_Tags" xml:space="preserve">
+    <value>Tags: </value>
+  </data>
+  <data name="PluginsInstalledView_Tab_AdditionalInfo_DownloadCount" xml:space="preserve">
+    <value>Downloads: </value>
+  </data>
+  <data name="PluginsInstalledView_Tab_AdditionalInfo_Dependencies" xml:space="preserve">
+    <value>Dependencies: </value>
+  </data>
 </root>
