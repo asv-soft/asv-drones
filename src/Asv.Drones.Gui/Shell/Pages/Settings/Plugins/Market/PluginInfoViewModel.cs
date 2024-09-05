@@ -75,7 +75,6 @@ public class PluginInfoViewModel : DisposableReactiveObject
     public string? DownloadCount { get; set; }
     public string? Tags { get; set; }
     public List<string> Dependencies { get; set; }
-    public bool IsInstalled { get; set; }
     [Reactive]public bool IsInstalled { get; set; }
     [Reactive]public bool IsUninstalled { get; set; }
     [Reactive] public bool IsVerified { get; set; }
