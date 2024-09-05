@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Composition;
+using Asv.Cfg;
 using Asv.Drones.Gui.Api;
 using Material.Icons;
 
@@ -7,7 +8,7 @@ namespace Asv.Drones.Gui;
 
 [Export(WellKnownUri.ShellPageSettings, typeof(ITreePageMenuItem))]
 [method: ImportingConstructor]
-public class PluginsMarketTreeMenuItem(IPluginManager mng, ILogService log)
+public class PluginsMarketTreeMenuItem(IPluginManager mng, ILogService log, IConfiguration configuration)
     : TreePageMenuItem($"{WellKnownUri.ShellPageSettingsPluginsUri}.market")
 {
     public override Uri ParentId => WellKnownUri.ShellPageSettingsPluginsUri;
@@ -18,6 +19,6 @@ public class PluginsMarketTreeMenuItem(IPluginManager mng, ILogService log)
 
     public override ITreePage? CreatePage(ITreePageContext context)
     {
-        return new PluginsMarketViewModel(mng, log);
+        return new PluginsMarketViewModel(mng, log, configuration);
     }
 }

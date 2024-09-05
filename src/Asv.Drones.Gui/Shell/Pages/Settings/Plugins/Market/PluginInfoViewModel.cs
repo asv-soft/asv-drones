@@ -51,6 +51,7 @@ public class PluginInfoViewModel : DisposableReactiveObject
         IsApiCompatible = pluginInfo.ApiVersion == manager.ApiVersion;
         LocalVersion = (_localInfo != null) ? $"{_localInfo?.Version} (API: {_localInfo?.ApiVersion})" : null;
         if (Author != null) IsVerified = Author.Contains("https://github.com/asv-soft") && SourceUri.Contains("https://nuget.pkg.github.com/asv-soft/index.json");
+        Version = pluginInfo.LastVersion;
     }
 
     public bool IsApiCompatible { get; set; }
@@ -61,6 +62,7 @@ public class PluginInfoViewModel : DisposableReactiveObject
     public string? Description { get; set; }
     public string SourceName { get; set; }
     public string LastVersion { get; set; }
+    public string Version { get; set; }
     public string? LocalVersion { get; set; }
     [Reactive]public bool IsInstalled { get; set; }
     [Reactive]public bool IsUninstalled { get; set; }
@@ -94,11 +96,10 @@ public class PluginInfoViewModel : DisposableReactiveObject
     {
         await _manager.Install(_pluginInfo.Source, _pluginInfo.PackageId, _pluginInfo.LastVersion,
             new Progress<ProgressMessage>(
-                _ => { progress.Report(_.Progress); }), cancel);
+                m => { progress.Report(m.Progress); }), cancel);
         IsInstalled = _manager.IsInstalled(_pluginInfo.PackageId, out _localInfo);
         return Unit.Default;
     }
-
 
     public CancellableCommandWithProgress<Unit, Unit> Uninstall { get; }
     public CancellableCommandWithProgress<Unit, Unit> CancelUninstall { get; }

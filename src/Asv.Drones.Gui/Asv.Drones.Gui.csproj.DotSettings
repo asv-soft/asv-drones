@@ -106,6 +106,8 @@
     <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=shell_005Cpages_005Csettings_005Cplugins_005Cinstalled/@EntryIndexedValue">True</s:Boolean>
     <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=shell_005Cpages_005Csettings_005Cplugins_005Clocal/@EntryIndexedValue">True</s:Boolean>
     <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=shell_005Cpages_005Csettings_005Cplugins_005Cmarket/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=shell_005Cpages_005Csettings_005Cplugins_005Cmarket_005Cdialogs/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=shell_005Cpages_005Csettings_005Cplugins_005Cmarket_005Cinstaller/@EntryIndexedValue">True</s:Boolean>
     <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=shell_005Cpages_005Csettings_005Cplugins_005Cremote/@EntryIndexedValue">True</s:Boolean>
     <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=shell_005Cpages_005Csettings_005Cplugins_005Csources/@EntryIndexedValue">True</s:Boolean>
     <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=shell_005Cpages_005Csettings_005Cplugins_005Csources_005Cdialogs/@EntryIndexedValue">True</s:Boolean>
