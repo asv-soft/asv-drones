@@ -38,6 +38,7 @@ public class PluginsMarketViewModel : TreePageViewModel
                     Description = "Example plugin",
                     LastVersion = "1.0.0",
                     IsInstalled = true,
+                    LocalVersion = "3.4.5",
                 },
                 new PluginInfoViewModel
                 {
