@@ -12,11 +12,10 @@ public partial class TakeOffView : ReactiveUserControl<TakeOffViewModel>
     {
         InitializeComponent();
 
-        var textBox = this.FindControl<TextBox>("AltitudeTextBox");
-        if (textBox != null)
+        var control = this.FindControl<NumericUpDown>("AltitudeTextBox");
+        if (control != null)
         {
-            textBox.AttachedToVisualTree += (s, e) => textBox.Focus();
-            textBox.AttachedToVisualTree += (s, e) => textBox.SelectAll();
+            control.AttachedToVisualTree += (s, e) => control.Focus();
         }
     }
 
@@ -27,14 +26,17 @@ public partial class TakeOffView : ReactiveUserControl<TakeOffViewModel>
             case Key.Enter:
                 e.Handled = true;
 
-                var current = TopLevel.GetTopLevel(this).FocusManager.GetFocusedElement();
+                var current = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
                 if (current != null)
                 {
                     var next = KeyboardNavigationHandler.GetNext(current, NavigationDirection.Next);
-                    if (next != null && next.Focusable && next.IsEnabled)
+                    
+                    while (next != null && (next is RepeatButton || !next.Focusable || !next.IsEnabled))
                     {
-                        next.Focus();
+                        next = KeyboardNavigationHandler.GetNext(current, NavigationDirection.Next);
+                        next?.Focus();
                     }
+
                 }
 
                 break;
