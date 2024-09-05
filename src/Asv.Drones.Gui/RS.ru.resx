@@ -1310,4 +1310,16 @@
   <data name="PluginsInstalledView_Tab_AdditionalInfo_Tags" xml:space="preserve">
     <value>Теги: </value>
   </data>
+  <data name="PluginInstallerViewModel_InstallPluginAsync_Success" xml:space="preserve">
+    <value>Плагин успешно установлен</value>
+  </data>
+  <data name="PluginInstallerViewModel_InstallDialog_Title" xml:space="preserve">
+    <value>Установщик плагинов</value>
+  </data>
+  <data name="PluginInstallerViewModel_InstallDialog_SecondaryButtonText" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="PluginInstallerViewModel_InstallDialog_PrimaryButtonText" xml:space="preserve">
+    <value>Установить</value>
+  </data>
 </root>

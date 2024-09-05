@@ -18,6 +18,13 @@
         <DockPanel>
             <Button
                 DockPanel.Dock="Right"
+                IsVisible="True"
+                Theme="{DynamicResource TransparentButton}"
+                Command="{Binding InstallManually}">
+                <avalonia:MaterialIcon Kind="Add" />
+            </Button>
+            <Button
+                DockPanel.Dock="Right"
                 IsVisible="{Binding !Search.IsExecuting}"
                 Theme="{DynamicResource TransparentButton}"
                 Command="{Binding Search.Command}">
@@ -124,17 +131,27 @@
                                          Margin="85 40 0 0"
                                          IsVisible="{Binding Install.IsExecuting}" />
                         </Panel>
-                        
+
                         <TextBlock Grid.Row="2" Grid.Column="1" IsVisible="{Binding !IsInstalled}"
                                    Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LastVersion}"
                                    VerticalAlignment="Center" />
-                        <Button Grid.Row="2" Grid.Column="0" Width="100" IsVisible="{Binding IsInstalled}"
+                        <Button Grid.Row="2" Grid.Column="0" Width="100" IsVisible="{Binding IsInstalled}" IsEnabled="{Binding !IsUninstalled}"
                                 Command="{Binding Uninstall.Command}"
                                 Content="{x:Static gui:RS.PluginsInstalledView_Uninstall}" />
                         <TextBlock Grid.Row="2" Grid.Column="1" IsVisible="{Binding IsInstalled}"
                                    Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LocalVersion}"
                                    VerticalAlignment="Center" />
+                        
                     </Grid>
+                    <controls:InfoBar IsVisible="{Binding IsUninstalled}" DockPanel.Dock="Top"
+                                      Title="{x:Static gui:RS.PluginsInstalledView_UninstalledMessageTitle}"
+                                      IsOpen="True" IsIconVisible="True" Severity="Warning" IsClosable="False"
+                                      Message="{x:Static gui:RS.PluginsInstalledView_UninstalledMessage}">
+                        <controls:InfoBar.ActionButton>
+                            <Button Command="{Binding CancelUninstall.Command}"
+                                    Content="{x:Static gui:RS.PluginsInstalledView_CancelUninstall}" />
+                        </controls:InfoBar.ActionButton>
+                    </controls:InfoBar>
                     <controls:InfoBar
                         IsVisible="{Binding IsVerified}"
                         DockPanel.Dock="Top" Title="{x:Static gui:RS.PluginsMarketView_InfoBar_IsVerified}" IsOpen="True" IsIconVisible="True" Severity="Success"

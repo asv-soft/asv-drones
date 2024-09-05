@@ -2418,6 +2418,42 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Install.
+        /// </summary>
+        public static string PluginInstallerViewModel_InstallDialog_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("PluginInstallerViewModel_InstallDialog_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string PluginInstallerViewModel_InstallDialog_SecondaryButtonText {
+            get {
+                return ResourceManager.GetString("PluginInstallerViewModel_InstallDialog_SecondaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin Installer.
+        /// </summary>
+        public static string PluginInstallerViewModel_InstallDialog_Title {
+            get {
+                return ResourceManager.GetString("PluginInstallerViewModel_InstallDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin installed successfully.
+        /// </summary>
+        public static string PluginInstallerViewModel_InstallPluginAsync_Success {
+            get {
+                return ResourceManager.GetString("PluginInstallerViewModel_InstallPluginAsync_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Information about installed plugins.
         /// </summary>
         public static string PluginsInstalledTreeMenuItem_Description {
