@@ -50,6 +50,14 @@ public class PluginInfoViewModel : DisposableReactiveObject
         LastVersion = $"{pluginInfo.LastVersion} (API: {pluginInfo.ApiVersion})";
         IsApiCompatible = pluginInfo.ApiVersion == manager.ApiVersion;
         LocalVersion = (_localInfo != null) ? $"{_localInfo?.Version} (API: {_localInfo?.ApiVersion})" : null;
+        DownloadCount = pluginInfo.DownloadCount.ToString();
+        Tags = pluginInfo.Tags;
+        Dependencies = new List<string>();
+        foreach (var dependency in pluginInfo.Dependencies)
+        {
+            if (dependency.VersionRange.MinVersion != null)
+                Dependencies.Add($"{dependency.Id} ( \u2265 {dependency.VersionRange.MinVersion.ToString()})");
+        }
         if (Author != null) IsVerified = Author.Contains("https://github.com/asv-soft") && SourceUri.Contains("https://nuget.pkg.github.com/asv-soft/index.json");
         Version = pluginInfo.LastVersion;
     }
@@ -64,6 +72,10 @@ public class PluginInfoViewModel : DisposableReactiveObject
     public string LastVersion { get; set; }
     public string Version { get; set; }
     public string? LocalVersion { get; set; }
+    public string? DownloadCount { get; set; }
+    public string? Tags { get; set; }
+    public List<string> Dependencies { get; set; }
+    public bool IsInstalled { get; set; }
     [Reactive]public bool IsInstalled { get; set; }
     [Reactive]public bool IsUninstalled { get; set; }
     [Reactive] public bool IsVerified { get; set; }

@@ -2526,6 +2526,42 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Author: .
+        /// </summary>
+        public static string PluginsInstalledView_Tab_AdditionalInfo_Author {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo_Author", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dependencies: .
+        /// </summary>
+        public static string PluginsInstalledView_Tab_AdditionalInfo_Dependencies {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo_Dependencies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloads: .
+        /// </summary>
+        public static string PluginsInstalledView_Tab_AdditionalInfo_DownloadCount {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo_DownloadCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags: .
+        /// </summary>
+        public static string PluginsInstalledView_Tab_AdditionalInfo_Tags {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo_Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string PluginsInstalledView_Tab_Description {

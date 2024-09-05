@@ -1298,6 +1298,18 @@
   <data name="PluginsMarketView_InfoBar_IsVerified_Message" xml:space="preserve">
     <value>Этот плагин проверен разработчиками</value>
   </data>
+  <data name="PluginsInstalledView_Tab_AdditionalInfo_Author" xml:space="preserve">
+    <value>Автор: </value>
+  </data>
+  <data name="PluginsInstalledView_Tab_AdditionalInfo_Dependencies" xml:space="preserve">
+    <value>Зависимости: </value>
+  </data>
+  <data name="PluginsInstalledView_Tab_AdditionalInfo_DownloadCount" xml:space="preserve">
+    <value>Загрузки: </value>
+  </data>
+  <data name="PluginsInstalledView_Tab_AdditionalInfo_Tags" xml:space="preserve">
+    <value>Теги: </value>
+  </data>
   <data name="PluginInstallerViewModel_InstallPluginAsync_Success" xml:space="preserve">
     <value>Плагин успешно установлен</value>
   </data>
