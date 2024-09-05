@@ -131,9 +131,11 @@
                                          Margin="85 40 0 0"
                                          IsVisible="{Binding Install.IsExecuting}" />
                         </Panel>
-                        
 
-                        <Button Grid.Row="2" Grid.Column="0" Width="100" IsVisible="{Binding IsInstalled}"
+                        <TextBlock Grid.Row="2" Grid.Column="1" IsVisible="{Binding !IsInstalled}"
+                                   Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LastVersion}"
+                                   VerticalAlignment="Center" />
+                        <Button Grid.Row="2" Grid.Column="0" Width="100" IsVisible="{Binding IsInstalled}" IsEnabled="{Binding !IsUninstalled}"
                                 Command="{Binding Uninstall.Command}"
                                 Content="{x:Static gui:RS.PluginsInstalledView_Uninstall}" />
                         <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Versions}"
@@ -150,6 +152,15 @@
                                        VerticalAlignment="Center" />
                         
                     </Grid>
+                    <controls:InfoBar IsVisible="{Binding IsUninstalled}" DockPanel.Dock="Top"
+                                      Title="{x:Static gui:RS.PluginsInstalledView_UninstalledMessageTitle}"
+                                      IsOpen="True" IsIconVisible="True" Severity="Warning" IsClosable="False"
+                                      Message="{x:Static gui:RS.PluginsInstalledView_UninstalledMessage}">
+                        <controls:InfoBar.ActionButton>
+                            <Button Command="{Binding CancelUninstall.Command}"
+                                    Content="{x:Static gui:RS.PluginsInstalledView_CancelUninstall}" />
+                        </controls:InfoBar.ActionButton>
+                    </controls:InfoBar>
                     <controls:InfoBar
                         IsVisible="{Binding IsVerified}"
                         DockPanel.Dock="Top" Title="{x:Static gui:RS.PluginsMarketView_InfoBar_IsVerified}" IsOpen="True" IsIconVisible="True" Severity="Success"
