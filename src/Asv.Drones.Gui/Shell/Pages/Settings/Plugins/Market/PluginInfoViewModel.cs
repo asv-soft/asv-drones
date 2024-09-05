@@ -71,10 +71,9 @@ public class PluginInfoViewModel : DisposableReactiveObject
     {
         await _manager.Install(_pluginInfo.Source, _pluginInfo.PackageId, _pluginInfo.LastVersion,
             new Progress<ProgressMessage>(
-                _ => { progress.Report(_.Progress); }), cancel);
+                m => { progress.Report(m.Progress); }), cancel);
         return Unit.Default;
     }
-
 
     public CancellableCommandWithProgress<Unit, Unit> Uninstall { get; }
     public CancellableCommandWithProgress<Unit, Unit> Install { get; }

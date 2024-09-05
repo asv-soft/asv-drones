@@ -5,6 +5,7 @@ using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Threading;
 using System.Threading.Tasks;
+using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
 using DynamicData;
@@ -19,9 +20,9 @@ public class PluginsMarketViewModel : TreePageViewModel
     private readonly ILogService _log;
     private readonly SourceCache<PluginInfoViewModel, string> _pluginSearchSource;
     private readonly ReadOnlyObservableCollection<PluginInfoViewModel> _plugins;
-
+    private readonly IConfiguration _cfg;
     private string _previouslySelectedPluginId;
-
+    
     public PluginsMarketViewModel() : base(WellKnownUri.UndefinedUri)
     {
         DesignTime.ThrowIfNotDesignMode();
@@ -51,23 +52,26 @@ public class PluginsMarketViewModel : TreePageViewModel
         SelectedPlugin = _plugins.First();
     }
 
-    public PluginsMarketViewModel(IPluginManager manager, ILogService log) : base(WellKnownUri
+    public PluginsMarketViewModel(IPluginManager manager, ILogService log, IConfiguration cfg) : base(WellKnownUri
         .ShellPageSettingsPluginsMarketUri)
     {
         ArgumentNullException.ThrowIfNull(log);
         _manager = manager ?? throw new ArgumentNullException(nameof(manager));
         _log = log;
+        _cfg = cfg;
 
-        _pluginSearchSource = new SourceCache<PluginInfoViewModel, string>(info => info.Id).DisposeItWith(Disposable);
+        _pluginSearchSource = new SourceCache<PluginInfoViewModel, string>(_ => _.Id).DisposeItWith(Disposable);
         _pluginSearchSource.Connect().Bind(out _plugins).Subscribe().DisposeItWith(Disposable);
         Search = new CancellableCommandWithProgress<Unit, Unit>(SearchImpl, "Search", log, TaskPoolScheduler.Default)
+            .DisposeItWith(Disposable);
+        InstallManually = ReactiveCommand.CreateFromTask<IProgress<double>, Unit>(InstallManuallyImpl)
             .DisposeItWith(Disposable);
     }
 
     private async Task<Unit> SearchImpl(Unit arg, IProgress<double> progress, CancellationToken cancel)
     {
         var items = await _manager.Search(SearchQuery.Empty, cancel);
-
+        
         if (SelectedPlugin is not null)
         {
             _previouslySelectedPluginId = SelectedPlugin.Id;
@@ -75,11 +79,21 @@ public class PluginsMarketViewModel : TreePageViewModel
         
         SelectedPlugin = null;
         _pluginSearchSource.Clear();
-        _pluginSearchSource.AddOrUpdate(items.Select(info => new PluginInfoViewModel(info, _manager, _log)));
+        _pluginSearchSource.AddOrUpdate(items.Select(_ => new PluginInfoViewModel(_, _manager, _log)));
         SelectedPlugin = _plugins.FirstOrDefault(plugin => plugin.Id == _previouslySelectedPluginId) ?? _plugins.First();
         return Unit.Default;
     }
+    
+    private async Task<Unit> InstallManuallyImpl(IProgress<double> progress, CancellationToken cancel)
+    {
+        var installer = new PluginInstaller(_cfg, _log, _manager);
+        await installer.ShowInstallDialog();
+        
+        return Unit.Default;
+    }
+    
     public CancellableCommandWithProgress<Unit, Unit> Search { get; }
+    public ReactiveCommand<IProgress<double>, Unit> InstallManually { get; }
     public ReadOnlyObservableCollection<PluginInfoViewModel> Plugins => _plugins;
     [Reactive] public string SearchString { get; set; }
     [Reactive] public PluginInfoViewModel? SelectedPlugin { get; set; }

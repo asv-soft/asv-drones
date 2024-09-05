@@ -18,6 +18,13 @@
         <DockPanel>
             <Button
                 DockPanel.Dock="Right"
+                IsVisible="True"
+                Theme="{DynamicResource TransparentButton}"
+                Command="{Binding InstallManually}">
+                <avalonia:MaterialIcon Kind="Add" />
+            </Button>
+            <Button
+                DockPanel.Dock="Right"
                 IsVisible="{Binding !Search.IsExecuting}"
                 Theme="{DynamicResource TransparentButton}"
                 Command="{Binding Search.Command}">

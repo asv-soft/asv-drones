@@ -1284,4 +1284,16 @@
     <data name="PluginsMarketView_InfoBar_IsVerified_Message" xml:space="preserve">
     <value>This plugin is verified by developers</value>
   </data>
+  <data name="PluginInstallerViewModel_InstallPluginAsync_Success" xml:space="preserve">
+    <value>Plugin installed successfully</value>
+  </data>
+  <data name="PluginInstallerViewModel_InstallDialog_Title" xml:space="preserve">
+    <value>Plugin Installer</value>
+  </data>
+  <data name="PluginInstallerViewModel_InstallDialog_SecondaryButtonText" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="PluginInstallerViewModel_InstallDialog_PrimaryButtonText" xml:space="preserve">
+    <value>Install</value>
+  </data>
 </root>
