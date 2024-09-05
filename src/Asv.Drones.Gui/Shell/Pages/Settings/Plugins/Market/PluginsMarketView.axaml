@@ -132,15 +132,23 @@
                                          IsVisible="{Binding Install.IsExecuting}" />
                         </Panel>
                         
-                        <TextBlock Grid.Row="2" Grid.Column="1" IsVisible="{Binding !IsInstalled}"
-                                   Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LastVersion}"
-                                   VerticalAlignment="Center" />
+
                         <Button Grid.Row="2" Grid.Column="0" Width="100" IsVisible="{Binding IsInstalled}"
                                 Command="{Binding Uninstall.Command}"
                                 Content="{x:Static gui:RS.PluginsInstalledView_Uninstall}" />
-                        <TextBlock Grid.Row="2" Grid.Column="1" IsVisible="{Binding IsInstalled}"
-                                   Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LocalVersion}"
-                                   VerticalAlignment="Center" />
+                        <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Versions}"
+                                  PlaceholderText="{Binding Version}"
+                                  VerticalAlignment="Center">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Version}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                            <TextBlock Grid.Row="2" Grid.Column="2" IsVisible="{Binding IsInstalled}"
+                                       Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LocalVersion}"
+                                       VerticalAlignment="Center" />
+                        
                     </Grid>
                     <controls:InfoBar
                         IsVisible="{Binding IsVerified}"
