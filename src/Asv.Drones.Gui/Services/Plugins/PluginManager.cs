@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
-using DynamicData;
 using Newtonsoft.Json;
 using NLog;
 using NuGet.Configuration;
@@ -396,6 +395,39 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
                 }
 
                 if (result.Count >= query.Take) break;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, "Error search in {0}", repository.PackageSource.Source);
+            }
+        }
+
+        return result;
+    }
+
+    public async Task<IReadOnlyList<string>> ListPluginVersions(SearchQuery query, string pluginId, CancellationToken cancel)
+    {
+        _repositoriesLock.EnterReadLock();
+        var repositories = query.Sources.Count == 0
+            ? _repositories.ToArray()
+            : _repositories.Where(_ => query.Sources.Contains(_.PackageSource.Source)).ToArray();
+        _repositoriesLock.ExitReadLock();
+
+        var result = new List<string>();
+
+        foreach (var repository in repositories)
+        {
+            try
+            {
+                var resource = await repository.GetResourceAsync<FindPackageByIdResource>(cancel);
+
+                var packages = await resource.GetAllVersionsAsync(
+                    pluginId,
+                    new SourceCacheContext(),
+                    new LoggerAdapter(Logger),
+                    cancel);
+
+                result.AddRange(packages.Select(package => package.Version.ToString()));
             }
             catch (Exception e)
             {

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
@@ -15,7 +14,6 @@ internal class PluginSearchInfo : IPluginSearchInfo
         Authors = packageSearchMetadata.Authors;
         Title = packageSearchMetadata.Identity.Id.Replace(PluginManager.PluginSearchTermStartWith, string.Empty);
         LastVersion = packageSearchMetadata.Identity.Version.ToString();
-        Versions = packageSearchMetadata.GetVersionsAsync().Result;
         Source = new SourceInfo(repository);
         PackageId = packageSearchMetadata.Identity.Id;
         Description = packageSearchMetadata.Description;
@@ -36,7 +34,6 @@ internal class PluginSearchInfo : IPluginSearchInfo
     public string? Title { get; }
     public string? Authors { get; }
     public string LastVersion { get; }
-    public IEnumerable<VersionInfo> Versions { get; set; } 
     public string Description { get; }
     public long? DownloadCount { get; }
     public string? Tags { get; }

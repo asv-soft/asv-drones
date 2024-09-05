@@ -26,6 +26,7 @@
         <PackageReference Include="Avalonia.Xaml.Behaviors" Version="$(AvaloniaVersion)"/>
         <PackageReference Include="Avalonia.Xaml.Interactions" Version="$(AvaloniaVersion)"/>
         <PackageReference Include="Material.Icons.Avalonia" Version="$(MaterialIconsAvaloniaVersion)"/>
+        <PackageReference Include="NuGet.Protocol" Version="6.8.0" />
         <PackageReference Include="ReactiveUI" Version="$(ReactiveUIVersion)"/>
         <PackageReference Include="ReactiveUI.Fody" Version="$(ReactiveUIVersion)"/>
         <PackageReference Include="ReactiveUI.Validation" Version="$(ReactiveUIValidationVersion)"/>

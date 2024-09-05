@@ -132,12 +132,13 @@
                         <TextBlock Grid.Row="2" Grid.Column="1" IsVisible="{Binding IsInstalled}"
                                    Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LocalVersion}"
                                    VerticalAlignment="Center" />
-                        <ComboBox Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Versions}"
+                        <ComboBox Grid.Row="2" Grid.Column="2" ItemsSource="{Binding PluginVersions}"
                                   PlaceholderText="{x:Static gui:RS.PluginsInstalledView_AllVersions}"
-                                  VerticalAlignment="Center">
+                                  VerticalAlignment="Center"
+                                  SelectedItem="{Binding SelectedVersion}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Version}"/>
+                                    <TextBlock Text="{Binding }"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>

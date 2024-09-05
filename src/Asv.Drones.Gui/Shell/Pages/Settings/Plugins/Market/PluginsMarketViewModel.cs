@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
 using DynamicData;
-using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui;
@@ -56,11 +55,13 @@ public class PluginsMarketViewModel : TreePageViewModel
         _manager = manager ?? throw new ArgumentNullException(nameof(manager));
         _log = log;
 
-        _pluginSearchSource = new SourceCache<PluginInfoViewModel, string>(_ => _.Id).DisposeItWith(Disposable);
+        _pluginSearchSource = new SourceCache<PluginInfoViewModel, string>(v => v.Id).DisposeItWith(Disposable);
         _pluginSearchSource.Connect().Bind(out _plugins).Subscribe().DisposeItWith(Disposable);
         Search = new CancellableCommandWithProgress<Unit, Unit>(SearchImpl, "Search", log, TaskPoolScheduler.Default)
             .DisposeItWith(Disposable);
     }
+
+
 
     private async Task<Unit> SearchImpl(Unit arg, IProgress<double> progress, CancellationToken cancel)
     {
@@ -73,7 +74,6 @@ public class PluginsMarketViewModel : TreePageViewModel
     public CancellableCommandWithProgress<Unit, Unit> Search { get; }
 
     public ReadOnlyObservableCollection<PluginInfoViewModel> Plugins => _plugins;
-
 
     [Reactive] public string SearchString { get; set; }
 
