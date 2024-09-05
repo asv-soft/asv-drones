@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Reactive;
 using System.Threading;
 using System.Threading.Tasks;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
+using DynamicData.Binding;
+using NuGet.Protocol.Core.Types;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -20,6 +23,7 @@ public class PluginInfoViewModel : DisposableReactiveObject
         DesignTime.ThrowIfNotDesignMode();
         Install = CoreDesignTime.CancellableCommand<Unit, Unit>();
         Uninstall = CoreDesignTime.CancellableCommand<Unit, Unit>();
+        CancelUninstall = CoreDesignTime.CancellableCommand<Unit, Unit>();
     }
 
     public PluginInfoViewModel(IPluginSearchInfo pluginInfo, IPluginManager manager, ILogService log)
@@ -31,7 +35,13 @@ public class PluginInfoViewModel : DisposableReactiveObject
             .DisposeItWith(Disposable);
         Uninstall = new CancellableCommandWithProgress<Unit, Unit>(UninstallImpl, "Uninstall", log,
             RxApp.TaskpoolScheduler).DisposeItWith(Disposable);
+        CancelUninstall = new CancellableCommandWithProgress<Unit, Unit>(CancelUninstallImpl, "CancelUniistal", log,
+                RxApp.TaskpoolScheduler).DisposeItWith(Disposable);
         IsInstalled = _manager.IsInstalled(pluginInfo.PackageId, out _localInfo);
+        if (_localInfo !=null)
+        {
+            IsUninstalled = _localInfo.IsUninstalled;
+        }
         Name = pluginInfo.Title;
         Author = pluginInfo.Authors;
         Description = pluginInfo.Description;
@@ -42,7 +52,7 @@ public class PluginInfoViewModel : DisposableReactiveObject
         LocalVersion = (_localInfo != null) ? $"{_localInfo?.Version} (API: {_localInfo?.ApiVersion})" : null;
         if (Author != null) IsVerified = Author.Contains("https://github.com/asv-soft") && SourceUri.Contains("https://nuget.pkg.github.com/asv-soft/index.json");
     }
-    
+
     public bool IsApiCompatible { get; set; }
     public string Id { get; set; }
     public string? Author { get; set; }
@@ -52,7 +62,8 @@ public class PluginInfoViewModel : DisposableReactiveObject
     public string SourceName { get; set; }
     public string LastVersion { get; set; }
     public string? LocalVersion { get; set; }
-    public bool IsInstalled { get; set; }
+    [Reactive]public bool IsInstalled { get; set; }
+    [Reactive]public bool IsUninstalled { get; set; }
     [Reactive] public bool IsVerified { get; set; }
     
 
@@ -64,6 +75,18 @@ public class PluginInfoViewModel : DisposableReactiveObject
         }
 
         _manager.Uninstall(_localInfo);
+        IsUninstalled = true;
+        return Unit.Default;
+    }
+    private async Task<Unit> CancelUninstallImpl(Unit arg, IProgress<double> progress, CancellationToken cancel)
+    {
+        if (_localInfo == null)
+        {
+            throw new Exception("Plugin not installed");
+        }
+
+        _manager.CancelUninstall(_localInfo);
+        IsUninstalled = false;
         return Unit.Default;
     }
 
@@ -72,10 +95,12 @@ public class PluginInfoViewModel : DisposableReactiveObject
         await _manager.Install(_pluginInfo.Source, _pluginInfo.PackageId, _pluginInfo.LastVersion,
             new Progress<ProgressMessage>(
                 _ => { progress.Report(_.Progress); }), cancel);
+        IsInstalled = _manager.IsInstalled(_pluginInfo.PackageId, out _localInfo);
         return Unit.Default;
     }
 
 
     public CancellableCommandWithProgress<Unit, Unit> Uninstall { get; }
+    public CancellableCommandWithProgress<Unit, Unit> CancelUninstall { get; }
     public CancellableCommandWithProgress<Unit, Unit> Install { get; }
 }
