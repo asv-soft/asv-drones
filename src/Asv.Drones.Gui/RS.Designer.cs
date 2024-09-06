@@ -2418,6 +2418,42 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Install.
+        /// </summary>
+        public static string PluginInstallerViewModel_InstallDialog_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("PluginInstallerViewModel_InstallDialog_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string PluginInstallerViewModel_InstallDialog_SecondaryButtonText {
+            get {
+                return ResourceManager.GetString("PluginInstallerViewModel_InstallDialog_SecondaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin Installer.
+        /// </summary>
+        public static string PluginInstallerViewModel_InstallDialog_Title {
+            get {
+                return ResourceManager.GetString("PluginInstallerViewModel_InstallDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin installed successfully.
+        /// </summary>
+        public static string PluginInstallerViewModel_InstallPluginAsync_Success {
+            get {
+                return ResourceManager.GetString("PluginInstallerViewModel_InstallPluginAsync_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Information about installed plugins.
         /// </summary>
         public static string PluginsInstalledTreeMenuItem_Description {
@@ -2454,6 +2490,15 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unverifed.
+        /// </summary>
+        public static string PluginsInstalledView_IsUnverified {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_IsUnverified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading error.
         /// </summary>
         public static string PluginsInstalledView_LoadingError {
@@ -2486,6 +2531,42 @@ namespace Asv.Drones.Gui {
         public static string PluginsInstalledView_Tab_AdditionalInfo {
             get {
                 return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Author: .
+        /// </summary>
+        public static string PluginsInstalledView_Tab_AdditionalInfo_Author {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo_Author", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dependencies: .
+        /// </summary>
+        public static string PluginsInstalledView_Tab_AdditionalInfo_Dependencies {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo_Dependencies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloads: .
+        /// </summary>
+        public static string PluginsInstalledView_Tab_AdditionalInfo_DownloadCount {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo_DownloadCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags: .
+        /// </summary>
+        public static string PluginsInstalledView_Tab_AdditionalInfo_Tags {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo_Tags", resourceCulture);
             }
         }
         
@@ -2558,6 +2639,24 @@ namespace Asv.Drones.Gui {
         public static string PluginsMarketView_Cancel {
             get {
                 return ResourceManager.GetString("PluginsMarketView_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verified.
+        /// </summary>
+        public static string PluginsMarketView_InfoBar_IsVerified {
+            get {
+                return ResourceManager.GetString("PluginsMarketView_InfoBar_IsVerified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This plugin is verified by developers.
+        /// </summary>
+        public static string PluginsMarketView_InfoBar_IsVerified_Message {
+            get {
+                return ResourceManager.GetString("PluginsMarketView_InfoBar_IsVerified_Message", resourceCulture);
             }
         }
         

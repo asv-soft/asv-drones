@@ -34,6 +34,11 @@ public class NullPluginManager : IPluginManager
         return Task.CompletedTask;
     }
 
+    public Task InstallManually(string from, IProgress<ProgressMessage>? progress, CancellationToken cancel)
+    {
+        return Task.CompletedTask;
+    }
+
     public void Uninstall(ILocalPluginInfo plugin)
     {
     }

@@ -28,6 +28,9 @@ public interface IPluginManager
 
     Task Install(IPluginServerInfo source, string packageId, string version, IProgress<ProgressMessage>? progress,
         CancellationToken cancel);
+    
+    Task InstallManually(string from, IProgress<ProgressMessage>? progress,
+        CancellationToken cancel);
 
     void Uninstall(ILocalPluginInfo plugin);
     void CancelUninstall(ILocalPluginInfo pluginInfo);
