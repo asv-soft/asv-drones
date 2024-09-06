@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Composition;
 using System.Reactive.Linq;
-using System.Security.Cryptography;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
@@ -23,7 +22,6 @@ public class TakeOffViewModel : DisposableReactiveObjectWithValidation
     private readonly ILocalizationService _loc;
 
     private readonly TakeOffViewModelConfig _config;
-
     public const double MinimumAltitudeMeter = 1;
 
     [ImportingConstructor]
@@ -34,7 +32,9 @@ public class TakeOffViewModel : DisposableReactiveObjectWithValidation
         _config = cfg.Get<TakeOffViewModelConfig>();
         Altitude = _loc.Altitude.FromSiToString(_config.TakeOffAltitudeMeter);
 
-        this.ValidationRule(x => x.Altitude, _ => _loc.Altitude.IsValid(_), _ => _loc.Altitude.GetErrorMessage(_))
+        this.ValidationRule(x => x.Altitude, 
+            _ => _loc.Altitude.IsValid(_), 
+            _ => _loc.Altitude.GetErrorMessage(_))
             .DisposeItWith(Disposable);
 
         this.ValidationRule(x => x.Altitude,
@@ -51,7 +51,7 @@ public class TakeOffViewModel : DisposableReactiveObjectWithValidation
 
     public void ApplyDialog(ContentDialog dialog)
     {
-        if (dialog == null) throw new ArgumentNullException(nameof(dialog));
+        ArgumentNullException.ThrowIfNull(dialog);
 
         dialog.PrimaryButtonCommand =
             ReactiveCommand.Create(() =>
@@ -59,7 +59,8 @@ public class TakeOffViewModel : DisposableReactiveObjectWithValidation
                     _config.TakeOffAltitudeMeter = _loc.Altitude.ConvertToSi(Altitude);
                     _cfg.Set(_config);
                 },
-                this.IsValid().Do(_ => dialog.IsPrimaryButtonEnabled = _)).DisposeItWith(Disposable);
+                this.IsValid().Do(_ => dialog.IsPrimaryButtonEnabled = _))
+                .DisposeItWith(Disposable);
     }
 
     [Reactive] public string Altitude { get; set; }

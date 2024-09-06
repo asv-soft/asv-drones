@@ -45,7 +45,7 @@ namespace Asv.Drones.Gui
 
             Map.SelectedItem = null;
 
-            var dialog = new ContentDialog()
+            var dialog = new ContentDialog
             {
                 Title = RS.TakeOffAnchorActionViewModel_Title,
                 PrimaryButtonText = RS.TakeOffAnchorActionViewModel_DialogPrimaryButton,
