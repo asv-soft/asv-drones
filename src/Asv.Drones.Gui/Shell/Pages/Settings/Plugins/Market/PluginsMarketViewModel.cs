@@ -61,7 +61,7 @@ public class PluginsMarketViewModel : TreePageViewModel
         _log = log;
         _cfg = cfg;
 
-        _pluginSearchSource = new SourceCache<PluginInfoViewModel, string>(_ => _.Id).DisposeItWith(Disposable);
+        _pluginSearchSource = new SourceCache<PluginInfoViewModel, string>(v => v.Id).DisposeItWith(Disposable);
         _pluginSearchSource.Connect().Bind(out _plugins).Subscribe().DisposeItWith(Disposable);
         Search = new CancellableCommandWithProgress<Unit, Unit>(SearchImpl, "Search", log, TaskPoolScheduler.Default)
             .DisposeItWith(Disposable);
@@ -96,6 +96,8 @@ public class PluginsMarketViewModel : TreePageViewModel
     public CancellableCommandWithProgress<Unit, Unit> Search { get; }
     public ReactiveCommand<IProgress<double>, Unit> InstallManually { get; }
     public ReadOnlyObservableCollection<PluginInfoViewModel> Plugins => _plugins;
+
+
     [Reactive] public string SearchString { get; set; }
     [Reactive] public PluginInfoViewModel? SelectedPlugin { get; set; }
 }

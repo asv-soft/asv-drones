@@ -26,6 +26,7 @@
         <PackageReference Include="Avalonia.Xaml.Behaviors" Version="$(AvaloniaVersion)"/>
         <PackageReference Include="Avalonia.Xaml.Interactions" Version="$(AvaloniaVersion)"/>
         <PackageReference Include="Material.Icons.Avalonia" Version="$(MaterialIconsAvaloniaVersion)"/>
+        <PackageReference Include="NuGet.Protocol" Version="6.8.0" />
         <PackageReference Include="NuGet.Packaging" Version="6.8.0" />
         <PackageReference Include="ReactiveUI" Version="$(ReactiveUIVersion)"/>
         <PackageReference Include="ReactiveUI.Fody" Version="$(ReactiveUIVersion)"/>
@@ -84,6 +85,9 @@
     <ItemGroup>
       <Reference Include="Asv.Avalonia.Toolkit">
         <HintPath>..\..\..\..\Users\Havok\.nuget\packages\asv.avalonia.toolkit\0.1.7\lib\net8.0\Asv.Avalonia.Toolkit.dll</HintPath>
+      </Reference>
+      <Reference Include="NuGet.Protocol">
+        <HintPath>..\..\..\..\.nuget\packages\nuget.protocol\6.8.0\lib\net5.0\NuGet.Protocol.dll</HintPath>
       </Reference>
     </ItemGroup>
 </Project>

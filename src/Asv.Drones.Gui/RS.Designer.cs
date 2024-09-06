@@ -2472,6 +2472,15 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All versions.
+        /// </summary>
+        public static string PluginsInstalledView_AllVersions {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_AllVersions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string PluginsInstalledView_CancelUninstall {

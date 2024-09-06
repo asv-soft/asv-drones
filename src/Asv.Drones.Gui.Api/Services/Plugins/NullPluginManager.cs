@@ -23,6 +23,10 @@ public class NullPluginManager : IPluginManager
     {
         return Task.FromResult((IReadOnlyList<IPluginSearchInfo>)new List<IPluginSearchInfo>());
     }
+    public Task<IReadOnlyList<string>> ListPluginVersions(SearchQuery query, string pluginId, CancellationToken cancel)
+    {
+        return Task.FromResult((IReadOnlyList<string>)new List<string>());
+    }
 
     public Task Install(IPluginServerInfo source, string packageId, string version,
         IProgress<ProgressMessage>? progress, CancellationToken cancel)

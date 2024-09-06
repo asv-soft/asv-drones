@@ -24,6 +24,7 @@ public interface IPluginManager
     void AddServer(PluginServer server);
     void RemoveServer(IPluginServerInfo server);
     Task<IReadOnlyList<IPluginSearchInfo>> Search(SearchQuery query, CancellationToken cancel);
+    Task<IReadOnlyList<string>> ListPluginVersions(SearchQuery query, string pluginId, CancellationToken cancel);
 
     Task Install(IPluginServerInfo source, string packageId, string version, IProgress<ProgressMessage>? progress,
         CancellationToken cancel);
