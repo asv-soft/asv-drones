@@ -16,7 +16,7 @@ namespace Asv.Drones.Gui;
 
 public class TakeOffViewModelConfig
 {
-    public double TakeOffAltitudeAglMeter { get; set; } = 30;
+    public double TakeOffAltitudeMeter { get; set; } = 30;
 }
 
 public class TakeOffViewModel : DisposableReactiveObjectWithValidation
@@ -25,6 +25,7 @@ public class TakeOffViewModel : DisposableReactiveObjectWithValidation
     private readonly ILocalizationService _loc;
 
     private readonly TakeOffViewModelConfig _config;
+
     public const double MinimumAltitudeMeter = 1;
     private bool _isUpdating;
 
@@ -34,7 +35,7 @@ public class TakeOffViewModel : DisposableReactiveObjectWithValidation
         _cfg = cfg;
         _loc = loc;
         _config = cfg.Get<TakeOffViewModelConfig>();
-        AltitudeAgl = _loc.Altitude.FromSiToString(_config.TakeOffAltitudeAglMeter);
+        AltitudeAgl = _loc.Altitude.FromSiToString(_config.TakeOffAltitudeMeter);
         AltitudeGnss = _loc.Altitude.FromSiToString(vehicle.Position.Current.Value.Altitude);
         CurrentAgl = _loc.Altitude.FromSiToStringWithUnits(vehicle.Position.AltitudeAboveHome.Value);
 
@@ -106,7 +107,7 @@ public class TakeOffViewModel : DisposableReactiveObjectWithValidation
         dialog.PrimaryButtonCommand =
             ReactiveCommand.Create(() =>
                 {
-                    _config.TakeOffAltitudeAglMeter = _loc.Altitude.ConvertToSi(AltitudeAgl);
+                    _config.TakeOffAltitudeMeter = _loc.Altitude.ConvertToSi(AltitudeAgl);
                     _cfg.Set(_config);
                 },
                 this.IsValid().Do(_ => dialog.IsPrimaryButtonEnabled = _))

@@ -2418,6 +2418,42 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Install.
+        /// </summary>
+        public static string PluginInstallerViewModel_InstallDialog_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("PluginInstallerViewModel_InstallDialog_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string PluginInstallerViewModel_InstallDialog_SecondaryButtonText {
+            get {
+                return ResourceManager.GetString("PluginInstallerViewModel_InstallDialog_SecondaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin Installer.
+        /// </summary>
+        public static string PluginInstallerViewModel_InstallDialog_Title {
+            get {
+                return ResourceManager.GetString("PluginInstallerViewModel_InstallDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin installed successfully.
+        /// </summary>
+        public static string PluginInstallerViewModel_InstallPluginAsync_Success {
+            get {
+                return ResourceManager.GetString("PluginInstallerViewModel_InstallPluginAsync_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Information about installed plugins.
         /// </summary>
         public static string PluginsInstalledTreeMenuItem_Description {
@@ -2432,6 +2468,15 @@ namespace Asv.Drones.Gui {
         public static string PluginsInstalledTreeMenuItem_Name {
             get {
                 return ResourceManager.GetString("PluginsInstalledTreeMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All versions.
+        /// </summary>
+        public static string PluginsInstalledView_AllVersions {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_AllVersions", resourceCulture);
             }
         }
         
@@ -2486,6 +2531,42 @@ namespace Asv.Drones.Gui {
         public static string PluginsInstalledView_Tab_AdditionalInfo {
             get {
                 return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Author: .
+        /// </summary>
+        public static string PluginsInstalledView_Tab_AdditionalInfo_Author {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo_Author", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dependencies: .
+        /// </summary>
+        public static string PluginsInstalledView_Tab_AdditionalInfo_Dependencies {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo_Dependencies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloads: .
+        /// </summary>
+        public static string PluginsInstalledView_Tab_AdditionalInfo_DownloadCount {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo_DownloadCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags: .
+        /// </summary>
+        public static string PluginsInstalledView_Tab_AdditionalInfo_Tags {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo_Tags", resourceCulture);
             }
         }
         

@@ -18,6 +18,13 @@
         <DockPanel>
             <Button
                 DockPanel.Dock="Right"
+                IsVisible="True"
+                Theme="{DynamicResource TransparentButton}"
+                Command="{Binding InstallManually}">
+                <avalonia:MaterialIcon Kind="Add" />
+            </Button>
+            <Button
+                DockPanel.Dock="Right"
                 IsVisible="{Binding !Search.IsExecuting}"
                 Theme="{DynamicResource TransparentButton}"
                 Command="{Binding Search.Command}">
@@ -99,7 +106,7 @@
         <Panel Margin="8" VerticalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
             <Panel IsVisible="{Binding SelectedPlugin, Converter={x:Static ObjectConverters.IsNotNull}}">
                 <DockPanel DataContext="{Binding SelectedPlugin}">
-                    <Grid DockPanel.Dock="Top" RowDefinitions="35,25,50" ColumnDefinitions="120,*">
+                    <Grid DockPanel.Dock="Top" RowDefinitions="35,25,50" ColumnDefinitions="120,120,*">
                         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                                    Theme="{DynamicResource SubtitleTextBlockStyle}" Text="{Binding Name}" />
                         <StackPanel Orientation="Horizontal" Spacing="8" Grid.Row="1" Grid.Column="0"
@@ -125,16 +132,38 @@
                                          IsVisible="{Binding Install.IsExecuting}" />
                         </Panel>
                         
-                        <TextBlock Grid.Row="2" Grid.Column="1" IsVisible="{Binding !IsInstalled}"
-                                   Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LastVersion}"
-                                   VerticalAlignment="Center" />
-                        <Button Grid.Row="2" Grid.Column="0" Width="100" IsVisible="{Binding IsInstalled}"
+                        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                            <TextBlock IsVisible="{Binding !IsInstalled}"
+                                       Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LastVersion}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                        <Button Grid.Row="2" Grid.Column="0" Width="100" IsVisible="{Binding IsInstalled}" IsEnabled="{Binding !IsUninstalled}"
                                 Command="{Binding Uninstall.Command}"
                                 Content="{x:Static gui:RS.PluginsInstalledView_Uninstall}" />
                         <TextBlock Grid.Row="2" Grid.Column="1" IsVisible="{Binding IsInstalled}"
                                    Theme="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding LocalVersion}"
                                    VerticalAlignment="Center" />
+                        
+                        <ComboBox Grid.Row="2" Grid.Column="2" ItemsSource="{Binding PluginVersions}"
+                                  PlaceholderText="{x:Static gui:RS.PluginsInstalledView_AllVersions}"
+                                  VerticalAlignment="Center"
+                                  SelectedItem="{Binding SelectedVersion}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding }"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </Grid>
+                    <controls:InfoBar IsVisible="{Binding IsUninstalled}" DockPanel.Dock="Top"
+                                      Title="{x:Static gui:RS.PluginsInstalledView_UninstalledMessageTitle}"
+                                      IsOpen="True" IsIconVisible="True" Severity="Warning" IsClosable="False"
+                                      Message="{x:Static gui:RS.PluginsInstalledView_UninstalledMessage}">
+                        <controls:InfoBar.ActionButton>
+                            <Button Command="{Binding CancelUninstall.Command}"
+                                    Content="{x:Static gui:RS.PluginsInstalledView_CancelUninstall}" />
+                        </controls:InfoBar.ActionButton>
+                    </controls:InfoBar>
                     <controls:InfoBar
                         IsVisible="{Binding IsVerified}"
                         DockPanel.Dock="Top" Title="{x:Static gui:RS.PluginsMarketView_InfoBar_IsVerified}" IsOpen="True" IsIconVisible="True" Severity="Success"
@@ -144,7 +173,27 @@
                         <TabItem FontSize="18" Header="{x:Static gui:RS.PluginsInstalledView_Tab_Description}">
                             <TextBlock Text="{Binding Description}" TextWrapping="WrapWithOverflow" />
                         </TabItem>
-                        <TabItem FontSize="18" Header="{x:Static gui:RS.PluginsInstalledView_Tab_AdditionalInfo}" />
+                        <TabItem FontSize="18" Header="{x:Static gui:RS.PluginsInstalledView_Tab_AdditionalInfo}">
+                            <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                                <TextBlock TextWrapping="WrapWithOverflow" Text="{x:Static gui:RS.PluginsInstalledView_Tab_AdditionalInfo_Author}"/>
+                                <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Author}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                                <TextBlock TextWrapping="WrapWithOverflow" Text="{x:Static gui:RS.PluginsInstalledView_Tab_AdditionalInfo_DownloadCount}"/>
+                                <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding DownloadCount}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                                <TextBlock TextWrapping="WrapWithOverflow" Text="{x:Static gui:RS.PluginsInstalledView_Tab_AdditionalInfo_Tags}"/>
+                                <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Tags}"/>
+                            </StackPanel>
+                                <Expander Header="{x:Static gui:RS.PluginsInstalledView_Tab_AdditionalInfo_Dependencies}"
+                                          ExpandDirection="Down" HorizontalAlignment="Left"
+                                          Margin="0 0 0 5">
+                                    <ListBox ItemsSource="{Binding Dependencies}"/>
+                                </Expander>
+                            </StackPanel>
+                        </TabItem>
                     </TabControl>
                 </DockPanel>
             </Panel>
