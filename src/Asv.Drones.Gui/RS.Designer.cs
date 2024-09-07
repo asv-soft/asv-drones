@@ -3624,7 +3624,7 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AGL AltitudeAGL: {0}.
+        ///   Looks up a localized string similar to AGL Altitude: {0}.
         /// </summary>
         public static string UavAnchor_AGL_Altitude {
             get {
@@ -3633,7 +3633,7 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GNSS AltitudeAGL: {0}.
+        ///   Looks up a localized string similar to GNSS Altitude: {0}.
         /// </summary>
         public static string UavAnchor_GNSS_Altitude {
             get {
