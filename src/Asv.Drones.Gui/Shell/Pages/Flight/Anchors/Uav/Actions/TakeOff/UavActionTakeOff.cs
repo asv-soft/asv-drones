@@ -14,6 +14,7 @@ namespace Asv.Drones.Gui
 {
     public class UavActionTakeOff : UavActionBase
     {
+        private readonly IVehicleClient _vehicle;
         private readonly ILogService _log;
         private readonly IConfiguration _cfg;
         private readonly ILocalizationService _loc;
@@ -21,6 +22,7 @@ namespace Asv.Drones.Gui
         public UavActionTakeOff(IVehicleClient vehicle, IMap map, ILogService log, IConfiguration cfg,
             ILocalizationService loc) : base(vehicle, map, log)
         {
+            _vehicle = vehicle;
             _log = log;
             _cfg = cfg;
             _loc = loc;
@@ -53,7 +55,7 @@ namespace Asv.Drones.Gui
                 SecondaryButtonText = RS.TakeOffAnchorActionViewModel_DialogSecondaryButton
             };
 
-            using var viewModel = new TakeOffViewModel(_cfg, _loc);
+            using var viewModel = new TakeOffViewModel(_cfg, _loc, _vehicle);
             viewModel.ApplyDialog(dialog);
             dialog.Content = viewModel;
 
@@ -61,7 +63,7 @@ namespace Asv.Drones.Gui
 
             if (result == ContentDialogResult.Primary)
             {
-                var altInMeters = _loc.Altitude.ConvertToSi(viewModel.Altitude);
+                var altInMeters = _loc.Altitude.ConvertToSi(viewModel.AltitudeAgl);
                 _log.Info(LogName,
                     string.Format(RS.TakeOffAnchorActionViewModel_LogMessage,
                         _loc.Altitude.FromSiToStringWithUnits(altInMeters), Vehicle.Name.Value));

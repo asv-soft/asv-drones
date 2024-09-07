@@ -17,18 +17,49 @@
     <Panel>
         <StackPanel Spacing="10" Margin="10">
             <TextBlock Text="{x:Static gui:RS.TakeOffAnchorActionViewModel_DialogDescription}" />
-            <Grid ColumnDefinitions="*, Auto">
-                <NumericUpDown Grid.Column="0" 
+            <Grid ColumnDefinitions="Auto, *, Auto" 
+                  RowDefinitions="*, *, Auto">
+                <TextBlock Grid.Column="0" 
+                           Grid.Row="0" 
+                           VerticalAlignment="Center" 
+                           Margin="8 8"
+                           Text="{x:Static gui:RS.TakeOffAnchorActionViewModel_AltitudeAgl_Title}"/>
+                <NumericUpDown Grid.Column="1" 
+                               Grid.Row="0" 
                                Focusable="True" 
                                Name="AltitudeTextBox" 
                                FormatString="0.00"
                                Increment="1"
-                               Value="{Binding Altitude, Converter={StaticResource AltitudeConverter}}"
+                               Margin="8 8"
+                               Value="{Binding AltitudeAgl, Converter={StaticResource AltitudeConverter}}"
+                               KeyDown="Altitude_OnKeyDown" />
+                <TextBlock Grid.Column="0" 
+                           Grid.Row="1" 
+                           VerticalAlignment="Center" 
+                           Margin="8 8"
+                           Text="{x:Static gui:RS.TakeOffAnchorActionViewModel_AltitudeGnss_Title}"/>
+                <NumericUpDown Grid.Column="1" 
+                               Grid.Row="1" 
+                               Focusable="True"
+                               FormatString="0.00"
+                               Increment="1"
+                               Margin="8 8"
+                               Value="{Binding AltitudeGnss, Converter={StaticResource AltitudeConverter}}"
                                KeyDown="Altitude_OnKeyDown" />
                 <TextBlock VerticalAlignment="Center" 
-                           Margin="8 0" 
-                           Grid.Column="1" 
+                           Margin="8 8"
+                           Grid.Row="0"
+                           Grid.Column="2" 
                            Text="{Binding Units}" />
+                <TextBlock VerticalAlignment="Center" 
+                           Margin="8 8"
+                           Grid.Row="1"
+                           Grid.Column="2" 
+                           Text="{Binding Units}" />
+                <TextBlock Grid.Row="2"
+                           Grid.Column="1"
+                           Margin="8 8"
+                           Text="{Binding CurrentAgl}"/>
             </Grid>
         </StackPanel>
     </Panel>

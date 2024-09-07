@@ -114,7 +114,7 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Altitude measure units.
+        ///   Looks up a localized string similar to AltitudeAGL measure units.
         /// </summary>
         public static string Altitude_Description {
             get {
@@ -159,7 +159,7 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Altitude.
+        ///   Looks up a localized string similar to AltitudeAGL.
         /// </summary>
         public static string Altitude_Title {
             get {
@@ -1500,7 +1500,7 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Altitude.
+        ///   Looks up a localized string similar to AltitudeAGL.
         /// </summary>
         public static string MeasureUnitsSettingsViewModel_Altitude {
             get {
@@ -3300,7 +3300,34 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set altitude above ground level (AGL) for takeoff command..
+        ///   Looks up a localized string similar to AGL (rel.):.
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_AltitudeAgl_Title {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_AltitudeAgl_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GNSS (abs.):.
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_AltitudeGnss_Title {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_AltitudeGnss_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current altitude AGL: {0}.
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_CurrentAgl_Format {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_CurrentAgl_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set altitude for takeoff command..
         /// </summary>
         public static string TakeOffAnchorActionViewModel_DialogDescription {
             get {
@@ -3354,7 +3381,7 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Altitude must be greater or equal {0}..
+        ///   Looks up a localized string similar to AltitudeAGL must be greater or equal {0}..
         /// </summary>
         public static string TakeOffAnchorActionViewModel_ValidValue {
             get {
@@ -3516,7 +3543,7 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AGL Altitude: {0}.
+        ///   Looks up a localized string similar to AGL AltitudeAGL: {0}.
         /// </summary>
         public static string UavAnchor_AGL_Altitude {
             get {
@@ -3525,7 +3552,7 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GNSS Altitude: {0}.
+        ///   Looks up a localized string similar to GNSS AltitudeAGL: {0}.
         /// </summary>
         public static string UavAnchor_GNSS_Altitude {
             get {
