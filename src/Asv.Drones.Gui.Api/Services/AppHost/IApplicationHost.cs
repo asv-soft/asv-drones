@@ -1,4 +1,3 @@
-using System.Collections.Specialized;
 using System.Composition.Hosting;
 using Asv.Cfg;
 using Asv.Common;
@@ -67,8 +66,12 @@ public interface IApplicationHost
     /// </summary>
     IShell? Shell { get; }
     /// <summary>
+    /// Base class for all user dialogs
+    /// </summary>
+    IDialogService? Dialogs { get; }
+    
+    /// <summary>
     /// Try to restart application
     /// </summary>
     void RestartApplication();
-   
 }

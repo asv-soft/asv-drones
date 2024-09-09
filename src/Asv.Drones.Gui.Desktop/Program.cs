@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.ReactiveUI;
 using NLog;
 
@@ -44,7 +46,7 @@ sealed class Program
             // Windows
             .With(new Win32PlatformOptions { OverlayPopups = true })
             // Unix/Linux
-            .With(new X11PlatformOptions { OverlayPopups = true })
+            .With(new X11PlatformOptions { OverlayPopups = true, UseDBusFilePicker = false})
             // Mac
             .With(new AvaloniaNativePlatformOptions { OverlayPopups = true })
             .WithInterFont()
