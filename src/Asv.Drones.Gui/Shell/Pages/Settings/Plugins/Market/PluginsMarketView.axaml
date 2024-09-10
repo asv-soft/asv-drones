@@ -176,22 +176,25 @@
                         <TabItem FontSize="18" Header="{x:Static gui:RS.PluginsInstalledView_Tab_AdditionalInfo}">
                             <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
-                                <TextBlock TextWrapping="WrapWithOverflow" Text="{x:Static gui:RS.PluginsInstalledView_Tab_AdditionalInfo_Author}"/>
+                                <TextBlock TextWrapping="WrapWithOverflow" Text="{x:Static gui:RS.PluginsInstalledView_Tab_AdditionalInfo_Author}"
+                                           FontWeight="Bold"/>
                                 <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Author}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
-                                <TextBlock TextWrapping="WrapWithOverflow" Text="{x:Static gui:RS.PluginsInstalledView_Tab_AdditionalInfo_DownloadCount}"/>
+                                <TextBlock TextWrapping="WrapWithOverflow" Text="{x:Static gui:RS.PluginsInstalledView_Tab_AdditionalInfo_DownloadCount}"
+                                           FontWeight="Bold"/>
                                 <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding DownloadCount}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
-                                <TextBlock TextWrapping="WrapWithOverflow" Text="{x:Static gui:RS.PluginsInstalledView_Tab_AdditionalInfo_Tags}"/>
+                                <TextBlock TextWrapping="WrapWithOverflow" Text="{x:Static gui:RS.PluginsInstalledView_Tab_AdditionalInfo_Tags}"
+                                           FontWeight="Bold"/>
                                 <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Tags}"/>
                             </StackPanel>
-                                <Expander Header="{x:Static gui:RS.PluginsInstalledView_Tab_AdditionalInfo_Dependencies}"
-                                          ExpandDirection="Down" HorizontalAlignment="Left"
-                                          Margin="0 0 0 5">
-                                    <ListBox ItemsSource="{Binding Dependencies}"/>
-                                </Expander>
+                                <StackPanel>
+                                    <TextBlock Text="{x:Static gui:RS.PluginsInstalledView_Tab_AdditionalInfo_Dependencies}"
+                                               FontWeight="Bold"/>
+                                    <ItemsControl ItemsSource="{Binding Dependencies}" Margin="10 0 0 0"/>
+                                </StackPanel>
                             </StackPanel>
                         </TabItem>
                     </TabControl>
