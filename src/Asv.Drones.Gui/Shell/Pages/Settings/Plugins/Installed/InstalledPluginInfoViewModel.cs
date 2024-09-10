@@ -1,9 +1,8 @@
 using System;
 using System.Reactive;
-using System.Threading;
-using System.Threading.Tasks;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
+using Avalonia.Media.Imaging;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -33,13 +32,14 @@ public class InstalledPluginInfoViewModel : DisposableReactiveObject
         Author = pluginInfo.Authors;
         Description = pluginInfo.Description;
         SourceName = pluginInfo.SourceUri;
-        LocalVersion = $"{pluginInfo.Version} (API: {pluginInfo.ApiVersion})"; 
+        LocalVersion = $"{pluginInfo.Version} (API: {pluginInfo.ApiVersion})";
         IsUninstalled = pluginInfo.IsUninstalled;
         IsLoaded = pluginInfo.IsLoaded;
         LoadingError = pluginInfo.LoadingError;
+        Icon = pluginInfo.Icon;
+        IsContainsIcon = Icon != null;
         if (Author != null) IsVerified = Author.Contains("https://github.com/asv-soft");
     }
-
 
     private void CancelUninstallImpl()
     {
@@ -73,6 +73,8 @@ public class InstalledPluginInfoViewModel : DisposableReactiveObject
     [Reactive] public bool IsLoaded { get; set; }
     [Reactive] public bool IsUninstalled { get; set; }
     [Reactive] public bool IsVerified { get; set; }
+    public bool IsContainsIcon { get; set; }
+    public Bitmap? Icon { get; set; }
     public ReactiveCommand<Unit, Unit> Uninstall { get; }
     public ReactiveCommand<Unit, Unit> CancelUninstall { get; }
 }

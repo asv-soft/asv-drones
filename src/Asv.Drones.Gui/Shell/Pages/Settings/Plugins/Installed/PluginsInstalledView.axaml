@@ -69,7 +69,9 @@
                 <DataTemplate>
                     <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="*,*">
                         <avalonia:MaterialIcon Margin="4" HorizontalAlignment="Left" Grid.RowSpan="2" Width="35"
-                                               Height="35" Kind="Package" />
+                                               Height="35" Kind="Package" IsVisible="{Binding !IsContainsIcon}" />
+                        <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="{Binding Icon}" Height="35" Width="35"
+                               Stretch="Uniform" Margin="10 5" IsVisible="{Binding IsContainsIcon}" />
                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
                             <TextBlock VerticalAlignment="Center" Theme="{DynamicResource BodyStrongTextBlockStyle}"
                                        Margin="0,0,4,0" Text="{Binding Name}" />
@@ -134,12 +136,13 @@
                         Message="{Binding LoadingError}" />
                     <controls:InfoBar
                         IsVisible="{Binding IsVerified}"
-                        DockPanel.Dock="Top" Title="{x:Static gui:RS.PluginsMarketView_InfoBar_IsVerified}" IsOpen="True" IsIconVisible="True" Severity="Success"
+                        DockPanel.Dock="Top" Title="{x:Static gui:RS.PluginsMarketView_InfoBar_IsVerified}"
+                        IsOpen="True" IsIconVisible="True" Severity="Success"
                         IsClosable="False"
-                        Message="{x:Static gui:RS.PluginsMarketView_InfoBar_IsVerified_Message}"/>
+                        Message="{x:Static gui:RS.PluginsMarketView_InfoBar_IsVerified_Message}" />
                     <TabControl>
                         <TabItem FontSize="18" Header="{x:Static gui:RS.PluginsInstalledView_Tab_Description}">
-                            <TextBlock Text="{Binding Description}" TextWrapping="WrapWithOverflow" />
+                                <TextBlock Text="{Binding Description}" TextWrapping="WrapWithOverflow" />
                         </TabItem>
                         <TabItem FontSize="18" Header="{x:Static gui:RS.PluginsInstalledView_Tab_AdditionalInfo}" />
                     </TabControl>
@@ -150,7 +153,8 @@
                 <avalonia:MaterialIcon Width="25" Height="25" Kind="ArrowLeft"
                                        Foreground="{DynamicResource ButtonForegroundDisabled}" />
                 <TextBlock Foreground="{DynamicResource ButtonForegroundDisabled}" VerticalAlignment="Center"
-                           FontSize="15" TextWrapping="WrapWithOverflow" MaxWidth="400" Text="{x:Static gui:RS.PluginsInstalledView_SelectedPluginIsNull}" />
+                           FontSize="15" TextWrapping="WrapWithOverflow" MaxWidth="400"
+                           Text="{x:Static gui:RS.PluginsInstalledView_SelectedPluginIsNull}" />
             </StackPanel>
 
         </Panel>

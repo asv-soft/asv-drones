@@ -1,4 +1,5 @@
 using Asv.Common;
+using Avalonia.Media.Imaging;
 using NuGet.Packaging.Core;
 
 namespace Asv.Drones.Gui.Api;
@@ -12,6 +13,7 @@ public interface ILocalPluginInfo : IPluginSpecification
     bool IsUninstalled { get; }
     bool IsLoaded { get; }
     string LoadingError { get; }
+    Bitmap? Icon {get;}
 }
 
 public interface IPluginSearchInfo : IPluginSpecification
