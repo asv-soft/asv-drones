@@ -1334,4 +1334,7 @@
   <data name="PluginsInstalledView_AllVersions" xml:space="preserve">
     <value>Все версии</value>
   </data>
+  <data name="PluginsMarketView_ToggleSwitch_OnlyVerified" xml:space="preserve">
+    <value>Только проверенные</value>
+  </data>
 </root>

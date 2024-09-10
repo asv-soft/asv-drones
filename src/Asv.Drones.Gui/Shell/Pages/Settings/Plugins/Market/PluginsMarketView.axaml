@@ -16,6 +16,13 @@
         ColumnDefinitions="2*,5,3*"
         RowDefinitions="Auto,5,*">
         <DockPanel>
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="5 0">
+                <ToggleSwitch IsChecked="{Binding OnlyVerified}"
+                              Command="{Binding Search.Command}"
+                              OnContent=""
+                              OffContent=""/>
+                <TextBlock Text="{x:Static gui:RS.PluginsMarketView_ToggleSwitch_OnlyVerified}" VerticalAlignment="Center"/>
+            </StackPanel>
             <Button
                 DockPanel.Dock="Right"
                 IsVisible="True"
