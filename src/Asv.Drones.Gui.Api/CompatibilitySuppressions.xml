@@ -206,6 +206,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0006</DiagnosticId>
+    <Target>P:Asv.Drones.Gui.Api.ILocalPluginInfo.Icon</Target>
+    <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
+    <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0006</DiagnosticId>
     <Target>P:Asv.Drones.Gui.Api.IMavlinkDevicesService.RsgaDevices</Target>
     <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
     <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
