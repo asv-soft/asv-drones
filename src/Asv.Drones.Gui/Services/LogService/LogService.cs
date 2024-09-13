@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using ReactiveUI;
 using ZLogger;
 
@@ -15,14 +16,16 @@ namespace Asv.Drones.Gui;
 
 public class LogService : DisposableOnceWithCancel, ILogService, ILoggerFactory
 {
-    
+    private readonly string _logsFolder;
+
     private readonly Subject<LogMessage> _onMessage;
-    private readonly string _logFile;
+    
     private readonly ILogger<LogService> _logger;
     private readonly ILoggerFactory _factory;
 
     public LogService(string logsFolder)
     {
+        _logsFolder = logsFolder;
         ArgumentNullException.ThrowIfNull(logsFolder);
         _factory = LoggerFactory.Create(builder =>
         {
@@ -32,9 +35,9 @@ public class LogService : DisposableOnceWithCancel, ILogService, ILoggerFactory
             {
                 options.FilePathSelector = (dt, index) => $"{logsFolder}/{dt:yyyy-MM-dd}_{index}.logs";
                 options.UseJsonFormatter();
+                options.RollingSizeKB = 1024 * 10;
             });
         }).DisposeItWith(Disposable);
-        _logFile = Path.Combine(logsFolder, "log.log");
         _logger = _factory.CreateLogger<LogService>();
         
         if (!Directory.Exists(logsFolder))
@@ -93,11 +96,28 @@ public class LogService : DisposableOnceWithCancel, ILogService, ILoggerFactory
 
     public void DeleteLogFile()
     {
-        if (File.Exists(_logFile)) File.Delete(_logFile);
+        foreach (var logFilePath in Directory.EnumerateFiles(_logsFolder,"*.logs"))
+        {
+            File.Delete(logFilePath);
+        }
     }
 
     public IEnumerable<LogItemViewModel> LoadItemsFromLogFile()
     {
+        
+        foreach (var logFilePath in Directory.EnumerateFiles(_logsFolder,"*.logs"))
+        {
+            using var rdr = new JsonTextReader(new StreamReader(logFilePath));
+            while (rdr.Read())
+            {
+                if (rdr.TokenType == JsonToken.StartObject)
+                {
+                    var item = JsonSerializer.Create().Deserialize<LogMessage>(rdr);
+                    yield return new LogItemViewModel(item);
+                }
+            }
+        }
+        
         var logsFilePath = _logFile;
 
         if (File.Exists(logsFilePath))
