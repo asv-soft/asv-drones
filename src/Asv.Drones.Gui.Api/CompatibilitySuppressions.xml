@@ -2,6 +2,69 @@
 <!-- https://learn.microsoft.com/en-us/dotnet/fundamentals/package-validation/diagnostic-ids -->
 <Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Asv.Drones.Gui.Api.LogMessageType</Target>
+    <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
+    <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Asv.Drones.Gui.Api.LogItemViewModel.#ctor(System.Int32,System.String,Asv.Drones.Gui.Api.LogMessageType,System.DateTime,System.String,System.String)</Target>
+    <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
+    <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Asv.Drones.Gui.Api.LogItemViewModel.get_Level</Target>
+    <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
+    <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Asv.Drones.Gui.Api.LogItemViewModel.get_ThreadId</Target>
+    <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
+    <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Asv.Drones.Gui.Api.LogItemViewModel.set_Message(System.String)</Target>
+    <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
+    <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Asv.Drones.Gui.Api.LogMessage.#ctor(System.DateTime,Asv.Drones.Gui.Api.LogMessageType,System.String,System.String,System.String)</Target>
+    <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
+    <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Asv.Drones.Gui.Api.LogMessage.get_DateTime</Target>
+    <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
+    <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Asv.Drones.Gui.Api.LogMessage.get_Source</Target>
+    <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
+    <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Asv.Drones.Gui.Api.LogMessage.get_Type</Target>
+    <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>
+    <Right>lib/net8.0/Asv.Drones.Gui.Api.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
     <DiagnosticId>CP0006</DiagnosticId>
     <Target>M:Asv.Drones.Gui.Api.IMavlinkDevicesService.GetRsgaByFullId(System.UInt16)</Target>
     <Left>lib/net8.0/Asv.Drones.Gui.Api.dll</Left>

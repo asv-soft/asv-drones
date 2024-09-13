@@ -4,6 +4,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
+using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -15,7 +16,7 @@ public class TextMessageStatusViewModel : ShellStatusItem
     public TextMessageStatusViewModel() : base(WellKnownUri.UndefinedUri)
     {
         DesignTime.ThrowIfNotDesignMode();
-        Message = new RemoteLogMessageProxy(new LogMessage(DateTime.Now, LogMessageType.Error, "Test message", "Test message", "Test message"));
+        Message = new RemoteLogMessageProxy(new LogMessage(DateTime.Now, LogLevel.Error, "Test message", "Test message", "Test message"));
     }
 
     [ImportingConstructor]

@@ -16,6 +16,7 @@ using DynamicData.Binding;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using Material.Icons.Avalonia;
+using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -32,12 +33,13 @@ public class LogViewerViewModel : ShellPage
     private readonly IApplicationHost _app;
     private readonly ILogService _log;
 
-    private HashSet<LogMessageType> _logLevels;
+    private HashSet<LogLevel> _logLevels;
     private HashSet<string> _logClasses;
     private HashSet<string> _logThreadIds;
 
     protected LogViewerViewModel() : base(WellKnownUri.Undefined)
     {
+        DesignTime.ThrowIfNotDesignMode();
     }
 
     [ImportingConstructor]
@@ -60,13 +62,12 @@ public class LogViewerViewModel : ShellPage
 
         PageSize = PageSizes.First();
 
-        _logLevels = new HashSet<LogMessageType>();
+        _logLevels = new HashSet<LogLevel>();
         _logClasses = new HashSet<string>();
         _logThreadIds = new HashSet<string>();
 
         _logSource.AddOrUpdate(_log.LoadItemsFromLogFile());
 
-        _logSource.Items.Select(_ => _.ThreadId).ForEach(tread => _logThreadIds.Add(tread));
         _logSource.Items.Select(_ => _.Level).ForEach(level => _logLevels.Add(level));
         _logSource.Items.Select(_ => _.Class).ForEach(logClass => _logClasses.Add(logClass));
 
@@ -130,9 +131,8 @@ public class LogViewerViewModel : ShellPage
                               item.Message.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase);
         var containsLevel = SelectedLevels.Contains(item.Level);
         var containsClass = SelectedClasses.Contains(item.Class);
-        var containsThreadId = SelectedThreadIds.Contains(item.ThreadId);
 
-        return containsMessage && containsLevel && containsClass && containsThreadId;
+        return containsMessage && containsLevel && containsClass ;
     }
 
     private void MoveToPreviousPage()
@@ -210,7 +210,7 @@ public class LogViewerViewModel : ShellPage
 
     public List<double> PageSizes => [25, 50, 100, 200];
 
-    public IEnumerable<LogMessageType> AvailableLevels => _logLevels;
+    public IEnumerable<LogLevel> AvailableLevels => _logLevels;
     public IEnumerable<string> AvailableClasses => _logClasses;
     public IEnumerable<string> AvailableThreadIds => _logThreadIds;
     [Reactive] public ObservableCollection<LogItemViewModel> LogItems { get; set; } = [];
@@ -223,7 +223,7 @@ public class LogViewerViewModel : ShellPage
     [Reactive] public int TotalPagesCount { get; set; }
     [Reactive] public double PageSize { get; set; }
 
-    [Reactive] public ObservableCollection<LogMessageType> SelectedLevels { get; set; } = [];
+    [Reactive] public ObservableCollection<LogLevel> SelectedLevels { get; set; } = [];
     [Reactive] public ObservableCollection<string> SelectedClasses { get; set; } = [];
     [Reactive] public ObservableCollection<string> SelectedThreadIds { get; set; } = [];
 

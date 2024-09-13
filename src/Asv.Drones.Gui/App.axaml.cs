@@ -42,7 +42,9 @@ public partial class App : Application, IApplicationHost
         // order of init members is important !!!
         Paths = InitApplicationPaths();
         Info = InitApplicationInfo();
-        Logs = new LogService(Args["logs-folder", Path.Combine(Paths.AppDataFolder, "logs")]);
+        var minLogLevelString = Args["log-level", LogLevel.Trace.ToString("G")];
+        Enum.TryParse(minLogLevelString, true, out LogLevel logLevel);
+        Logs = new LogService(Args["logs-folder", Path.Combine(Paths.AppDataFolder, "logs")],logLevel);
         _logger = Logs.CreateLogger<App>();
         Configuration = new JsonOneFileConfiguration(Args["config-file",Path.Combine(Paths.AppDataFolder, "config.json")], true,
                                                      TimeSpan.FromMilliseconds(100));

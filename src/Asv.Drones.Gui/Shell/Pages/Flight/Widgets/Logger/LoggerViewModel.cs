@@ -9,6 +9,7 @@ using Asv.Drones.Gui.Api;
 using DynamicData;
 using DynamicData.Binding;
 using Material.Icons;
+using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -30,10 +31,10 @@ public class LoggerViewModel : MapWidgetBase
         _logs = new ReadOnlyObservableCollection<FlightLogMessageViewModel>(
             new ObservableCollection<FlightLogMessageViewModel>(new[]
             {
-                new FlightLogMessageViewModel(MaterialIconKind.Error, "ERROR", LogMessageType.Error),
-                new FlightLogMessageViewModel(MaterialIconKind.InfoCircle, "INFO", LogMessageType.Info),
-                new FlightLogMessageViewModel(MaterialIconKind.Warning, "WARNING", LogMessageType.Warning),
-                new FlightLogMessageViewModel(MaterialIconKind.Abacus, "TRACE", LogMessageType.Trace)
+                new FlightLogMessageViewModel(MaterialIconKind.Error, "ERROR", LogLevel.Error),
+                new FlightLogMessageViewModel(MaterialIconKind.InfoCircle, "INFO", LogLevel.Information),
+                new FlightLogMessageViewModel(MaterialIconKind.Warning, "WARNING", LogLevel.Warning),
+                new FlightLogMessageViewModel(MaterialIconKind.Abacus, "TRACE", LogLevel.Trace)
             }));
     }
 
@@ -91,17 +92,17 @@ public class LoggerViewModel : MapWidgetBase
 
     private static FlightLogMessageViewModel ConvertLogToMessage(LogMessage logMessage)
     {
-        return logMessage.Type switch
+        return logMessage.LogLevel switch
         {
-            LogMessageType.Info => new FlightLogMessageViewModel(MaterialIconKind.InfoCircle, logMessage.Message,
-                LogMessageType.Info),
-            LogMessageType.Error => new FlightLogMessageViewModel(MaterialIconKind.Error, logMessage.Message,
-                LogMessageType.Error),
-            LogMessageType.Warning => new FlightLogMessageViewModel(MaterialIconKind.Warning, logMessage.Message,
-                LogMessageType.Warning),
-            LogMessageType.Trace => new FlightLogMessageViewModel(MaterialIconKind.Abacus, logMessage.Message,
-                LogMessageType.Trace),
-            _ => new FlightLogMessageViewModel(MaterialIconKind.InfoCircle, logMessage.Message, LogMessageType.Info)
+            LogLevel.Information => new FlightLogMessageViewModel(MaterialIconKind.InfoCircle, logMessage.Message,
+                LogLevel.Information),
+            LogLevel.Error => new FlightLogMessageViewModel(MaterialIconKind.Error, logMessage.Message,
+                LogLevel.Error),
+            LogLevel.Warning => new FlightLogMessageViewModel(MaterialIconKind.Warning, logMessage.Message,
+                LogLevel.Warning),
+            LogLevel.Trace => new FlightLogMessageViewModel(MaterialIconKind.Abacus, logMessage.Message,
+                LogLevel.Trace),
+            _ => new FlightLogMessageViewModel(MaterialIconKind.InfoCircle, logMessage.Message, LogLevel.Information)
         };
     }
 
@@ -109,10 +110,10 @@ public class LoggerViewModel : MapWidgetBase
     {
         return vm.Type switch
         {
-            LogMessageType.Error => IsErrorSelected,
-            LogMessageType.Info => IsInfoSelected,
-            LogMessageType.Warning => IsWarningSelected,
-            LogMessageType.Trace => IsTraceSelected,
+            LogLevel.Error => IsErrorSelected,
+            LogLevel.Information => IsInfoSelected,
+            LogLevel.Warning => IsWarningSelected,
+            LogLevel.Trace => IsTraceSelected,
             _ => false
         };
     }

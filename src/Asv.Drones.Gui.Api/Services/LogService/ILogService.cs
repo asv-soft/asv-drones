@@ -27,65 +27,48 @@ public interface ILogService: ILoggerFactory
     public void Fatal(string sender, string message,
         Exception? ex = default)
     {
-        SaveMessage(new LogMessage(DateTime.Now, LogMessageType.Fatal, sender, message, ex?.Message));
+        SaveMessage(new LogMessage(DateTime.Now, LogLevel.Critical, sender, message, ex?.Message));
     }
 
     public void Error(string sender, string message,
         Exception? ex = default)
     {
-        SaveMessage(new LogMessage(DateTime.Now, LogMessageType.Error, sender, message, ex?.Message));
+        SaveMessage(new LogMessage(DateTime.Now, LogLevel.Error, sender, message, ex?.Message));
     }
 
     public void Info(string sender, string message)
     {
-        SaveMessage(new LogMessage(DateTime.Now, LogMessageType.Info, sender, message, default));
+        SaveMessage(new LogMessage(DateTime.Now, LogLevel.Information, sender, message, default));
     }
 
     public void Warning(string sender, string message)
     {
-        SaveMessage(new LogMessage(DateTime.Now, LogMessageType.Warning, sender, message, default));
+        SaveMessage(new LogMessage(DateTime.Now, LogLevel.Warning, sender, message, default));
     }
 
     public void Trace(string sender, string message)
     {
-        SaveMessage(new LogMessage(DateTime.Now, LogMessageType.Trace, sender, message, default));
+        SaveMessage(new LogMessage(DateTime.Now, LogLevel.Trace, sender, message, default));
     }
 
     public void Debug(string sender, string message)
     {
-        SaveMessage(new LogMessage(DateTime.Now, LogMessageType.Debug, sender, message, default));
+        SaveMessage(new LogMessage(DateTime.Now, LogLevel.Debug, sender, message, default));
     }
 }
 
-public enum LogMessageType
-{
-    Trace,
-    Debug,
-    Info,
-    Warning,
-    Error,
-    Fatal
-}
 
-public class LogMessage
-{
-    public LogMessage(DateTime dateTime, LogMessageType type, string source, string message, string? description)
-    {
-        Type = type;
-        Source = source;
-        Message = message;
-        Description = description;
-        DateTime = dateTime;
-    }
 
-    public DateTime DateTime { get; }
-    public LogMessageType Type { get; }
-    public string Source { get; internal set; }
-    public string Message { get; }
-    public string? Description { get; }
+public class LogMessage(DateTime timestamp, LogLevel logLevel, string category, string message, string? description)
+{
+    public DateTime Timestamp { get; } = timestamp;
+    public LogLevel LogLevel { get; } = logLevel;
+    public string Category { get; internal set; } = category;
+    public string Message { get; } = message;
+    public string? Description { get; } = description;
 
     public override string ToString()
     {
-        return $"{Type} {Message}";
+        return $"{Category} {Message}";
     }
 }

@@ -20,7 +20,7 @@
         <PackageReference Include="Asv.Avalonia.Toolkit" Version="$(AsvAvaloniaToolkitVersion)"/>
         <PackageReference Include="Asv.Avalonia.Map" Version="$(AsvAvaloniaMapVersion)"/>
 
-        <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)"/>
         <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)"/>
         <PackageReference Include="Avalonia.Xaml.Behaviors" Version="$(AvaloniaVersion)"/>

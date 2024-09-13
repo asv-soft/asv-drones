@@ -14,6 +14,7 @@ using Avalonia.Controls;
 using DynamicData;
 using DynamicData.Binding;
 using Material.Icons;
+using Microsoft.Extensions.Logging;
 using ReactiveUI.Fody.Helpers;
 using MenuItem = Asv.Drones.Gui.Api.MenuItem;
 
@@ -61,13 +62,13 @@ public class ShellViewModel : ViewModelBase, IShell
         _messages = new ReadOnlyObservableCollection<LogMessageViewModel>(
             new ObservableCollection<LogMessageViewModel>(new LogMessageViewModel[]
             {
-                new(new LogMessage(DateTime.Now, LogMessageType.Error, "Application",
+                new(new LogMessage(DateTime.Now, LogLevel.Error, "Application",
                     "Lorep ipsum asdasd asd a sdasdasd asd ",
                     "asdasdasd a sd asd asd asd a sd a sd asd a sd a sda sd a sdasd")),
-                new(new LogMessage(DateTime.Now, LogMessageType.Info, "Application",
+                new(new LogMessage(DateTime.Now, LogLevel.Information, "Application",
                     "Lorep ipsum asdasd asd a sdasdasd asd ",
                     "asdasdasd a sd asd asd asd a sd a sd asd a sd a sda sd a sdasd")),
-                new(new LogMessage(DateTime.Now, LogMessageType.Trace, "Application",
+                new(new LogMessage(DateTime.Now, LogLevel.Trace, "Application",
                     "Lorep ipsum asdasd asd a sdasdasd asd ",
                     "asdasdasd a sd asd asd asd a sd a sd asd a sd a sda sd a sdasd")),
             }));
@@ -124,7 +125,7 @@ public class ShellViewModel : ViewModelBase, IShell
         // they will automatically be deleted after a timeout or if the user closes them
         log
             .OnMessage
-            .Where(_ => _.Type != LogMessageType.Trace)
+            .Where(_ => _.LogLevel != LogLevel.Trace)
             .Subscribe(_ => _messageSourceList.Add(_))
             .DisposeItWith(Disposable);
 
