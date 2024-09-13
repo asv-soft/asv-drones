@@ -114,79 +114,7 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Accuracy.
-        /// </summary>
-        public static string AddNewMapPointView_Accuracy_Name {
-            get {
-                return ResourceManager.GetString("AddNewMapPointView_Accuracy_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Altitude.
-        /// </summary>
-        public static string AddNewMapPointView_Altitude_Name {
-            get {
-                return ResourceManager.GetString("AddNewMapPointView_Altitude_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Latitude.
-        /// </summary>
-        public static string AddNewMapPointView_Latitude_Name {
-            get {
-                return ResourceManager.GetString("AddNewMapPointView_Latitude_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Longitude.
-        /// </summary>
-        public static string AddNewMapPointView_Longitude_Name {
-            get {
-                return ResourceManager.GetString("AddNewMapPointView_Longitude_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        public static string AddNewMapPointView_Point_Name {
-            get {
-                return ResourceManager.GetString("AddNewMapPointView_Point_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Accuracy must be greater or equal {0}..
-        /// </summary>
-        public static string AddNewMapPointViewModel_Accuracy_ValidValue {
-            get {
-                return ResourceManager.GetString("AddNewMapPointViewModel_Accuracy_ValidValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name can not be empty.
-        /// </summary>
-        public static string AddNewMapPointViewModel_Name_ValidValue {
-            get {
-                return ResourceManager.GetString("AddNewMapPointViewModel_Name_ValidValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        public static string AddSourceView_Name {
-            get {
-                return ResourceManager.GetString("AddSourceView_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Altitude measure units.
+        ///   Looks up a localized string similar to AltitudeAGL measure units.
         /// </summary>
         public static string Altitude_Description {
             get {
@@ -231,20 +159,11 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Altitude.
+        ///   Looks up a localized string similar to AltitudeAGL.
         /// </summary>
         public static string Altitude_Title {
             get {
                 return ResourceManager.GetString("Altitude_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Vibration and clipping of UAV.
-        /// </summary>
-        public static string AltitudeIndicator_Vibration_ToolTip {
-            get {
-                return ResourceManager.GetString("AltitudeIndicator_Vibration_ToolTip", resourceCulture);
             }
         }
         
@@ -285,38 +204,20 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move anchors.
+        ///   Looks up a localized string similar to Appearance, theme, language, versions, licence....
         /// </summary>
-        public static string AnchorMoverActionView_Title {
+        public static string AppearanceTreeMenuItem_Description {
             get {
-                return ResourceManager.GetString("AnchorMoverActionView_Title", resourceCulture);
+                return ResourceManager.GetString("AppearanceTreeMenuItem_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Altitude.
+        ///   Looks up a localized string similar to Appearance.
         /// </summary>
-        public static string AnchorsEditorView_TextBlock_Altitude_Text {
+        public static string AppearanceTreeMenuItem_Name {
             get {
-                return ResourceManager.GetString("AnchorsEditorView_TextBlock_Altitude_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Latitude.
-        /// </summary>
-        public static string AnchorsEditorView_TextBlock_Latitude_Text {
-            get {
-                return ResourceManager.GetString("AnchorsEditorView_TextBlock_Latitude_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Longitude.
-        /// </summary>
-        public static string AnchorsEditorView_TextBlock_Longitude_Text {
-            get {
-                return ResourceManager.GetString("AnchorsEditorView_TextBlock_Longitude_Text", resourceCulture);
+                return ResourceManager.GetString("AppearanceTreeMenuItem_Name", resourceCulture);
             }
         }
         
@@ -362,33 +263,6 @@ namespace Asv.Drones.Gui {
         public static string AppearanceViewModel_ServerOnly_AccessMode {
             get {
                 return ResourceManager.GetString("AppearanceViewModel_ServerOnly_AccessMode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Altitude.
-        /// </summary>
-        public static string AttitudeIndicator_Altitude_ToolTip {
-            get {
-                return ResourceManager.GetString("AttitudeIndicator_Altitude_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Compass.
-        /// </summary>
-        public static string AttitudeIndicator_Compass_ToolTip {
-            get {
-                return ResourceManager.GetString("AttitudeIndicator_Compass_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Velocity.
-        /// </summary>
-        public static string AttitudeIndicator_Velocity_ToolTip {
-            get {
-                return ResourceManager.GetString("AttitudeIndicator_Velocity_ToolTip", resourceCulture);
             }
         }
         
@@ -654,24 +528,6 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This page allows you to configure the basic settings on the Mavlink network.
-        /// </summary>
-        public static string ConnectionsView_Header_Description {
-            get {
-                return ResourceManager.GetString("ConnectionsView_Header_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mavlink network.
-        /// </summary>
-        public static string ConnectionsView_Header_Title {
-            get {
-                return ResourceManager.GetString("ConnectionsView_Header_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string ConnectionsViewModel_AddDialogPort_Add {
@@ -776,159 +632,6 @@ namespace Asv.Drones.Gui {
         public static string ConsumedEnergyMahUavRttView_ToolTip {
             get {
                 return ResourceManager.GetString("ConsumedEnergyMahUavRttView_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Here you can reload controller.
-        /// </summary>
-        public static string ControllerReloadQuickParamView_Description {
-            get {
-                return ResourceManager.GetString("ControllerReloadQuickParamView_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Controller reload.
-        /// </summary>
-        public static string ControllerReloadQuickParamView_Header {
-            get {
-                return ResourceManager.GetString("ControllerReloadQuickParamView_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reload.
-        /// </summary>
-        public static string ControllerReloadQuickParamView_ReloadButton_Content {
-            get {
-                return ResourceManager.GetString("ControllerReloadQuickParamView_ReloadButton_Content", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Close.
-        /// </summary>
-        public static string CoordinatesCalculatorDialog_CloseButton {
-            get {
-                return ResourceManager.GetString("CoordinatesCalculatorDialog_CloseButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Coordinates calculator.
-        /// </summary>
-        public static string CoordinatesCalculatorDialog_Title {
-            get {
-                return ResourceManager.GetString("CoordinatesCalculatorDialog_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to From altitude.
-        /// </summary>
-        public static string CoordinatesCalculatorView_FromAltitude {
-            get {
-                return ResourceManager.GetString("CoordinatesCalculatorView_FromAltitude", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to From altitude units.
-        /// </summary>
-        public static string CoordinatesCalculatorView_FromAltUnit {
-            get {
-                return ResourceManager.GetString("CoordinatesCalculatorView_FromAltUnit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to From latitude.
-        /// </summary>
-        public static string CoordinatesCalculatorView_FromLatitude {
-            get {
-                return ResourceManager.GetString("CoordinatesCalculatorView_FromLatitude", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to From lat/long units.
-        /// </summary>
-        public static string CoordinatesCalculatorView_FromLatLonUnit {
-            get {
-                return ResourceManager.GetString("CoordinatesCalculatorView_FromLatLonUnit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to From longitude.
-        /// </summary>
-        public static string CoordinatesCalculatorView_FromLongitude {
-            get {
-                return ResourceManager.GetString("CoordinatesCalculatorView_FromLongitude", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to From standard.
-        /// </summary>
-        public static string CoordinatesCalculatorView_FromStandard {
-            get {
-                return ResourceManager.GetString("CoordinatesCalculatorView_FromStandard", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To altitude.
-        /// </summary>
-        public static string CoordinatesCalculatorView_ToAltitude {
-            get {
-                return ResourceManager.GetString("CoordinatesCalculatorView_ToAltitude", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To altitude units.
-        /// </summary>
-        public static string CoordinatesCalculatorView_ToAltUnit {
-            get {
-                return ResourceManager.GetString("CoordinatesCalculatorView_ToAltUnit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To latitude.
-        /// </summary>
-        public static string CoordinatesCalculatorView_ToLatitude {
-            get {
-                return ResourceManager.GetString("CoordinatesCalculatorView_ToLatitude", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To lat/long units.
-        /// </summary>
-        public static string CoordinatesCalculatorView_ToLatLonUnit {
-            get {
-                return ResourceManager.GetString("CoordinatesCalculatorView_ToLatLonUnit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To longitude.
-        /// </summary>
-        public static string CoordinatesCalculatorView_ToLongitude {
-            get {
-                return ResourceManager.GetString("CoordinatesCalculatorView_ToLongitude", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To standard.
-        /// </summary>
-        public static string CoordinatesCalculatorView_ToStandard {
-            get {
-                return ResourceManager.GetString("CoordinatesCalculatorView_ToStandard", resourceCulture);
             }
         }
         
@@ -1086,15 +789,6 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In this section you can see all found devices on the network.
-        /// </summary>
-        public static string DeviceBrowserView_Description {
-            get {
-                return ResourceManager.GetString("DeviceBrowserView_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The device list is empty. Try adding ports or checking connections..
         /// </summary>
         public static string DeviceBrowserView_EmptyText {
@@ -1167,33 +861,6 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Here you can change FailSafe parameters.
-        /// </summary>
-        public static string FailSafeQuickParamView_Description {
-            get {
-                return ResourceManager.GetString("FailSafeQuickParamView_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to FailSafe parameters.
-        /// </summary>
-        public static string FailSafeQuickParamView_Header {
-            get {
-                return ResourceManager.GetString("FailSafeQuickParamView_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Field strength measure units.
-        /// </summary>
-        public static string FieldStrength_Description {
-            get {
-                return ResourceManager.GetString("FieldStrength_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to µV/m.
         /// </summary>
         public static string FieldStrength_MicroVoltsPerMeter_Unit {
@@ -1253,24 +920,6 @@ namespace Asv.Drones.Gui {
         public static string FlightUavView_Minimize_ToolTip {
             get {
                 return ResourceManager.GetString("FlightUavView_Minimize_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move to this UAV on map.
-        /// </summary>
-        public static string FlightUavView_MoveToButton_ToolTip {
-            get {
-                return ResourceManager.GetString("FlightUavView_MoveToButton_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Uav actions.
-        /// </summary>
-        public static string FlightUavView_UavDropDownControls_Title {
-            get {
-                return ResourceManager.GetString("FlightUavView_UavDropDownControls_Title", resourceCulture);
             }
         }
         
@@ -1401,15 +1050,6 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open store file.
-        /// </summary>
-        public static string GlobalCommands_OpenStoreDialogTitle {
-            get {
-                return ResourceManager.GetString("GlobalCommands_OpenStoreDialogTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to User send GoTo &apos;{0}&apos; for {0}.
         /// </summary>
         public static string GoToMapAnchorActionViewModel_ExecuteImpl_LogInfo_Value {
@@ -1433,24 +1073,6 @@ namespace Asv.Drones.Gui {
         public static string GoToMapAnchorActionViewModel_Title {
             get {
                 return ResourceManager.GetString("GoToMapAnchorActionViewModel_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Anchors.
-        /// </summary>
-        public static string HeaderAnchorsMenu_Title {
-            get {
-                return ResourceManager.GetString("HeaderAnchorsMenu_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Coordinates calculator.
-        /// </summary>
-        public static string HeaderCoordinatesCalculatorMenu_Header {
-            get {
-                return ResourceManager.GetString("HeaderCoordinatesCalculatorMenu_Header", resourceCulture);
             }
         }
         
@@ -1518,83 +1140,11 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Templater.
-        /// </summary>
-        public static string HeaderTemplaterMenu_Header {
-            get {
-                return ResourceManager.GetString("HeaderTemplaterMenu_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tools.
-        /// </summary>
-        public static string HeaderToolsMenu_Header {
-            get {
-                return ResourceManager.GetString("HeaderToolsMenu_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cancel.
-        /// </summary>
-        public static string HierarchicalStoreView_TextBlock_Text_Cancel {
-            get {
-                return ResourceManager.GetString("HierarchicalStoreView_TextBlock_Text_Cancel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move Folder.
-        /// </summary>
-        public static string HierarchicalStoreView_TextBlock_Text_MoveFolder {
-            get {
-                return ResourceManager.GetString("HierarchicalStoreView_TextBlock_Text_MoveFolder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move Here.
-        /// </summary>
-        public static string HierarchicalStoreView_TextBlock_Text_MoveHere {
-            get {
-                return ResourceManager.GetString("HierarchicalStoreView_TextBlock_Text_MoveHere", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search.
-        /// </summary>
-        public static string HierarhicalStoreView_Search_Textbox_Watermark {
-            get {
-                return ResourceManager.GetString("HierarhicalStoreView_Search_Textbox_Watermark", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Distance from UAV to home.
         /// </summary>
         public static string HomeDistanceUavRttView_ToolTip {
             get {
                 return ResourceManager.GetString("HomeDistanceUavRttView_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Each system has a network-unique system id, and each component has a system-unique component id that can be used for addressing/routing.
-        /// </summary>
-        public static string IdentityQuickParamView_Description {
-            get {
-                return ResourceManager.GetString("IdentityQuickParamView_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to System ID.
-        /// </summary>
-        public static string IdentityQuickParamView_Header {
-            get {
-                return ResourceManager.GetString("IdentityQuickParamView_Header", resourceCulture);
             }
         }
         
@@ -1698,209 +1248,11 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clear.
+        ///   Looks up a localized string similar to Loger.
         /// </summary>
-        public static string LoggerView_Clear_Name {
+        public static string LoggerViewModel_Title {
             get {
-                return ResourceManager.GetString("LoggerView_Clear_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error.
-        /// </summary>
-        public static string LoggerView_ErrorFilter_Name {
-            get {
-                return ResourceManager.GetString("LoggerView_ErrorFilter_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Info.
-        /// </summary>
-        public static string LoggerView_InfoFilter_Name {
-            get {
-                return ResourceManager.GetString("LoggerView_InfoFilter_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Trace.
-        /// </summary>
-        public static string LoggerView_TraceFilter_Name {
-            get {
-                return ResourceManager.GetString("LoggerView_TraceFilter_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Warning.
-        /// </summary>
-        public static string LoggerView_WarningFilter_Name {
-            get {
-                return ResourceManager.GetString("LoggerView_WarningFilter_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to by .
-        /// </summary>
-        public static string LogMessagesPageView_By {
-            get {
-                return ResourceManager.GetString("LogMessagesPageView_By", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Number of elements on one page .
-        /// </summary>
-        public static string LogMessagesPageView_By_ToolTip {
-            get {
-                return ResourceManager.GetString("LogMessagesPageView_By_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Clear all logs.
-        /// </summary>
-        public static string LogMessagesPageView_ClearAllButton_ToolTip {
-            get {
-                return ResourceManager.GetString("LogMessagesPageView_ClearAllButton_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Filtered: {0}.
-        /// </summary>
-        public static string LogMessagesPageView_Filtered {
-            get {
-                return ResourceManager.GetString("LogMessagesPageView_Filtered", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to From {0}.
-        /// </summary>
-        public static string LogMessagesPageView_From {
-            get {
-                return ResourceManager.GetString("LogMessagesPageView_From", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move to next page.
-        /// </summary>
-        public static string LogMessagesPageView_NextButton_ToolTip {
-            get {
-                return ResourceManager.GetString("LogMessagesPageView_NextButton_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move to previous page.
-        /// </summary>
-        public static string LogMessagesPageView_PrevButton_ToolTip {
-            get {
-                return ResourceManager.GetString("LogMessagesPageView_PrevButton_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Refresh all elements.
-        /// </summary>
-        public static string LogMessagesPageView_RefreshButton_ToolTip {
-            get {
-                return ResourceManager.GetString("LogMessagesPageView_RefreshButton_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search.
-        /// </summary>
-        public static string LogMessagesPageView_SearchWatermark {
-            get {
-                return ResourceManager.GetString("LogMessagesPageView_SearchWatermark", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to to {0}.
-        /// </summary>
-        public static string LogMessagesPageView_To {
-            get {
-                return ResourceManager.GetString("LogMessagesPageView_To", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Total: {0}.
-        /// </summary>
-        public static string LogMessagesPageView_Total {
-            get {
-                return ResourceManager.GetString("LogMessagesPageView_Total", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Clear all log messages.
-        /// </summary>
-        public static string LogMessagesPageViewModel_ClearAllMessage {
-            get {
-                return ResourceManager.GetString("LogMessagesPageViewModel_ClearAllMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to LogMessages.
-        /// </summary>
-        public static string LogMessagesPageViewModel_LogName {
-            get {
-                return ResourceManager.GetString("LogMessagesPageViewModel_LogName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error to refresh items.
-        /// </summary>
-        public static string LogMessagesPageViewModel_RefreshErrorMessage {
-            get {
-                return ResourceManager.GetString("LogMessagesPageViewModel_RefreshErrorMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Log messages.
-        /// </summary>
-        public static string LogMessagesShellMenuItem_Name {
-            get {
-                return ResourceManager.GetString("LogMessagesShellMenuItem_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error.
-        /// </summary>
-        public static string LogMessageTypeHelper_GetDisplayName_Error {
-            get {
-                return ResourceManager.GetString("LogMessageTypeHelper_GetDisplayName_Error", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Info.
-        /// </summary>
-        public static string LogMessageTypeHelper_GetDisplayName_Info {
-            get {
-                return ResourceManager.GetString("LogMessageTypeHelper_GetDisplayName_Info", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Warning.
-        /// </summary>
-        public static string LogMessageTypeHelper_GetDisplayName_Warning {
-            get {
-                return ResourceManager.GetString("LogMessageTypeHelper_GetDisplayName_Warning", resourceCulture);
+                return ResourceManager.GetString("LoggerViewModel_Title", resourceCulture);
             }
         }
         
@@ -1923,51 +1275,6 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Class.
-        /// </summary>
-        public static string LogViewerView_DataGrid_Class_Title {
-            get {
-                return ResourceManager.GetString("LogViewerView_DataGrid_Class_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Level.
-        /// </summary>
-        public static string LogViewerView_DataGrid_Level_Title {
-            get {
-                return ResourceManager.GetString("LogViewerView_DataGrid_Level_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Message.
-        /// </summary>
-        public static string LogViewerView_DataGrid_Message_Title {
-            get {
-                return ResourceManager.GetString("LogViewerView_DataGrid_Message_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Thread ID.
-        /// </summary>
-        public static string LogViewerView_DataGrid_ThreadId_Title {
-            get {
-                return ResourceManager.GetString("LogViewerView_DataGrid_ThreadId_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Time.
-        /// </summary>
-        public static string LogViewerView_DataGrid_Time_Title {
-            get {
-                return ResourceManager.GetString("LogViewerView_DataGrid_Time_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Levels.
         /// </summary>
         public static string LogViewerView_Levels {
@@ -1982,24 +1289,6 @@ namespace Asv.Drones.Gui {
         public static string LogViewerView_SearchText_Watermark {
             get {
                 return ResourceManager.GetString("LogViewerView_SearchText_Watermark", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Start date time:.
-        /// </summary>
-        public static string LogViewerView_StartDateTime_Title {
-            get {
-                return ResourceManager.GetString("LogViewerView_StartDateTime_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Stop date time:.
-        /// </summary>
-        public static string LogViewerView_StopDateTime_Title {
-            get {
-                return ResourceManager.GetString("LogViewerView_StopDateTime_Title", resourceCulture);
             }
         }
         
@@ -2121,24 +1410,6 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select ruler starting point.
-        /// </summary>
-        public static string MapPageViewModel_RulerStartPoint_Description {
-            get {
-                return ResourceManager.GetString("MapPageViewModel_RulerStartPoint_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select ruler end point.
-        /// </summary>
-        public static string MapPageViewModel_RulerStopPoint_Description {
-            get {
-                return ResourceManager.GetString("MapPageViewModel_RulerStopPoint_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Select current map provider.
         /// </summary>
         public static string MapSettingsView_MapProvider_Description {
@@ -2153,24 +1424,6 @@ namespace Asv.Drones.Gui {
         public static string MapSettingsView_MapProvider_Header {
             get {
                 return ResourceManager.GetString("MapSettingsView_MapProvider_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change current map settings.
-        /// </summary>
-        public static string MapSettingsView_MapSettings_Description {
-            get {
-                return ResourceManager.GetString("MapSettingsView_MapSettings_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Map settings.
-        /// </summary>
-        public static string MapSettingsView_MapSettings_Header {
-            get {
-                return ResourceManager.GetString("MapSettingsView_MapSettings_Header", resourceCulture);
             }
         }
         
@@ -2198,15 +1451,6 @@ namespace Asv.Drones.Gui {
         public static string MapSettingsView_MapsInfo_Header {
             get {
                 return ResourceManager.GetString("MapSettingsView_MapsInfo_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Maps.
-        /// </summary>
-        public static string MapSettingsViewModel_MapDialogTitle {
-            get {
-                return ResourceManager.GetString("MapSettingsViewModel_MapDialogTitle", resourceCulture);
             }
         }
         
@@ -2256,7 +1500,7 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Altitude.
+        ///   Looks up a localized string similar to AltitudeAGL.
         /// </summary>
         public static string MeasureUnitsSettingsViewModel_Altitude {
             get {
@@ -2270,24 +1514,6 @@ namespace Asv.Drones.Gui {
         public static string MeasureUnitsSettingsViewModel_AltitudeDescription {
             get {
                 return ResourceManager.GetString("MeasureUnitsSettingsViewModel_AltitudeDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to DDM Llz.
-        /// </summary>
-        public static string MeasureUnitsSettingsViewModel_DdmLlz {
-            get {
-                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_DdmLlz", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change the current measure units of DDM Llz..
-        /// </summary>
-        public static string MeasureUnitsSettingsViewModel_DdmLlzDescription {
-            get {
-                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_DdmLlzDescription", resourceCulture);
             }
         }
         
@@ -2310,24 +1536,6 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nautical miles.
-        /// </summary>
-        public static string MeasureUnitsSettingsViewModel_DistanceInternationalNauticalMiles {
-            get {
-                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_DistanceInternationalNauticalMiles", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Meters.
-        /// </summary>
-        public static string MeasureUnitsSettingsViewModel_DistanceMeters {
-            get {
-                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_DistanceMeters", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Latitude.
         /// </summary>
         public static string MeasureUnitsSettingsViewModel_Latitude {
@@ -2342,24 +1550,6 @@ namespace Asv.Drones.Gui {
         public static string MeasureUnitsSettingsViewModel_LatitudeLongitudeDescription {
             get {
                 return ResourceManager.GetString("MeasureUnitsSettingsViewModel_LatitudeLongitudeDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Degrees.
-        /// </summary>
-        public static string MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegrees {
-            get {
-                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegrees", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Degrees, minutes, seconds.
-        /// </summary>
-        public static string MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds {
-            get {
-                return ResourceManager.GetString("MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds", resourceCulture);
             }
         }
         
@@ -2427,42 +1617,6 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bearing.
-        /// </summary>
-        public static string MeasureUnitsSettingsViewModelBearing {
-            get {
-                return ResourceManager.GetString("MeasureUnitsSettingsViewModelBearing", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change the current measure units of bearing..
-        /// </summary>
-        public static string MeasureUnitsSettingsViewModelBearingDescription {
-            get {
-                return ResourceManager.GetString("MeasureUnitsSettingsViewModelBearingDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to DDM GP.
-        /// </summary>
-        public static string MeasureUnitsSettingsViewModelDdmGp {
-            get {
-                return ResourceManager.GetString("MeasureUnitsSettingsViewModelDdmGp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change the current measure units of DDM GP.
-        /// </summary>
-        public static string MeasureUnitsSettingsViewModelDdmGpDescription {
-            get {
-                return ResourceManager.GetString("MeasureUnitsSettingsViewModelDdmGpDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Temperature.
         /// </summary>
         public static string MeasureUnitsSettingsViewModelTemperature {
@@ -2508,20 +1662,20 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mission: {0}.
-        /// </summary>
-        public static string MissionStatusView_MissionDistance {
-            get {
-                return ResourceManager.GetString("MissionStatusView_MissionDistance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Current mission progress.
         /// </summary>
         public static string MissionStatusView_MissionProgress_ToolTip {
             get {
                 return ResourceManager.GetString("MissionStatusView_MissionProgress_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Before complete.
+        /// </summary>
+        public static string MissionStatusView_SubStatusText {
+            get {
+                return ResourceManager.GetString("MissionStatusView_SubStatusText", resourceCulture);
             }
         }
         
@@ -2540,15 +1694,6 @@ namespace Asv.Drones.Gui {
         public static string MissionStatusView_ToggleWaypointsButton_ToolTip {
             get {
                 return ResourceManager.GetString("MissionStatusView_ToggleWaypointsButton_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Total: {0}.
-        /// </summary>
-        public static string MissionStatusView_TotalDistance {
-            get {
-                return ResourceManager.GetString("MissionStatusView_TotalDistance", resourceCulture);
             }
         }
         
@@ -2693,177 +1838,6 @@ namespace Asv.Drones.Gui {
         public static string PacketViewerViewModel_SeparatorDialog_Title {
             get {
                 return ResourceManager.GetString("PacketViewerViewModel_SeparatorDialog_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove all pinned parameters.
-        /// </summary>
-        public static string ParametersEditorPageView_PinsOffButton_ToolTip {
-            get {
-                return ResourceManager.GetString("ParametersEditorPageView_PinsOffButton_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Star this parameter.
-        /// </summary>
-        public static string ParametersEditorPageView_StarButton_ToolTip {
-            get {
-                return ResourceManager.GetString("ParametersEditorPageView_StarButton_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show only starred parameters.
-        /// </summary>
-        public static string ParametersEditorPageView_StarsToggleButton_ToolTip {
-            get {
-                return ResourceManager.GetString("ParametersEditorPageView_StarsToggleButton_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Update all parameters.
-        /// </summary>
-        public static string ParametersEditorPageView_UpdateButton_ToolTip {
-            get {
-                return ResourceManager.GetString("ParametersEditorPageView_UpdateButton_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Loaded: {0}.
-        /// </summary>
-        public static string ParametersEditorPageViewModel_Loaded {
-            get {
-                return ResourceManager.GetString("ParametersEditorPageViewModel_Loaded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search.
-        /// </summary>
-        public static string ParametersEditorPageViewModel_Search {
-            get {
-                return ResourceManager.GetString("ParametersEditorPageViewModel_Search", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Parameters editor [{0}].
-        /// </summary>
-        public static string ParametersEditorPageViewModel_Title {
-            get {
-                return ResourceManager.GetString("ParametersEditorPageViewModel_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Total: {0}.
-        /// </summary>
-        public static string ParametersEditorPageViewModel_Total {
-            get {
-                return ResourceManager.GetString("ParametersEditorPageViewModel_Total", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to On/off pin for this parameter.
-        /// </summary>
-        public static string ParametersEditorParameterView_PinToggleButton_ToolTip {
-            get {
-                return ResourceManager.GetString("ParametersEditorParameterView_PinToggleButton_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reboot required.
-        /// </summary>
-        public static string ParametersEditorParameterView_RebootRequired {
-            get {
-                return ResourceManager.GetString("ParametersEditorParameterView_RebootRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Update.
-        /// </summary>
-        public static string ParametersEditorParameterView_UpdateButton {
-            get {
-                return ResourceManager.GetString("ParametersEditorParameterView_UpdateButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Update this parameter from UAV.
-        /// </summary>
-        public static string ParametersEditorParameterView_UpdateButton_ToolTip {
-            get {
-                return ResourceManager.GetString("ParametersEditorParameterView_UpdateButton_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Write.
-        /// </summary>
-        public static string ParametersEditorParameterView_WriteButton {
-            get {
-                return ResourceManager.GetString("ParametersEditorParameterView_WriteButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Write this parameter to UAV.
-        /// </summary>
-        public static string ParametersEditorParameterView_WriteButton_ToolTip {
-            get {
-                return ResourceManager.GetString("ParametersEditorParameterView_WriteButton_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cancel.
-        /// </summary>
-        public static string ParamPageViewModel_DataLossDialog_CloseButtonText {
-            get {
-                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_CloseButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You&apos;re trying to open another menu folder, but you have unsaved changes in the current one. Do you want to save them?.
-        /// </summary>
-        public static string ParamPageViewModel_DataLossDialog_Content {
-            get {
-                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_Content", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save.
-        /// </summary>
-        public static string ParamPageViewModel_DataLossDialog_PrimaryButtonText {
-            get {
-                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_PrimaryButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Don&apos;t save.
-        /// </summary>
-        public static string ParamPageViewModel_DataLossDialog_SecondaryButtonText {
-            get {
-                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_SecondaryButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Potential data loss warning.
-        /// </summary>
-        public static string ParamPageViewModel_DataLossDialog_Title {
-            get {
-                return ResourceManager.GetString("ParamPageViewModel_DataLossDialog_Title", resourceCulture);
             }
         }
         
@@ -3053,24 +2027,6 @@ namespace Asv.Drones.Gui {
         public static string PlaningMissionEditorViewModel_NavSplineWaypointMenuItem_Title {
             get {
                 return ResourceManager.GetString("PlaningMissionEditorViewModel_NavSplineWaypointMenuItem_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Replace.
-        /// </summary>
-        public static string PlaningMissionEditorViewModel_ReplacePointFlyoutMenuItem {
-            get {
-                return ResourceManager.GetString("PlaningMissionEditorViewModel_ReplacePointFlyoutMenuItem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ROI.
-        /// </summary>
-        public static string PlaningMissionEditorViewModel_RoiMenuItem_Title {
-            get {
-                return ResourceManager.GetString("PlaningMissionEditorViewModel_RoiMenuItem_Title", resourceCulture);
             }
         }
         
@@ -3300,47 +2256,11 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} mission.
-        /// </summary>
-        public static string PlaningMissionViewModel_InternalAfterMapInit_Vehicle_Name_Subscribe {
-            get {
-                return ResourceManager.GetString("PlaningMissionViewModel_InternalAfterMapInit_Vehicle_Name_Subscribe", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Name must be not empty.
         /// </summary>
         public static string PlaningMissionViewModel_NameMustBeNotEmpty {
             get {
                 return ResourceManager.GetString("PlaningMissionViewModel_NameMustBeNotEmpty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Clear mission error {0}.
-        /// </summary>
-        public static string PlaningMissionViewModel_OnClearError_LogInfo {
-            get {
-                return ResourceManager.GetString("PlaningMissionViewModel_OnClearError_LogInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download mission error {0}.
-        /// </summary>
-        public static string PlaningMissionViewModel_OnDownloadError_LogInfo {
-            get {
-                return ResourceManager.GetString("PlaningMissionViewModel_OnDownloadError_LogInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Upload mission error {0}.
-        /// </summary>
-        public static string PlaningMissionViewModel_OnUploadError_LogInfo {
-            get {
-                return ResourceManager.GetString("PlaningMissionViewModel_OnUploadError_LogInfo", resourceCulture);
             }
         }
         
@@ -3453,16 +2373,6 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rewrite.
-        /// </summary>
-        public static string PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_PrimaryButtonText {
-            get {
-                return ResourceManager.GetString("PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_PrimaryButtonTe" +
-                        "xt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Confirmation.
         /// </summary>
         public static string PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_Title {
@@ -3508,6 +2418,42 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Install.
+        /// </summary>
+        public static string PluginInstallerViewModel_InstallDialog_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("PluginInstallerViewModel_InstallDialog_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string PluginInstallerViewModel_InstallDialog_SecondaryButtonText {
+            get {
+                return ResourceManager.GetString("PluginInstallerViewModel_InstallDialog_SecondaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin Installer.
+        /// </summary>
+        public static string PluginInstallerViewModel_InstallDialog_Title {
+            get {
+                return ResourceManager.GetString("PluginInstallerViewModel_InstallDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin installed successfully.
+        /// </summary>
+        public static string PluginInstallerViewModel_InstallPluginAsync_Success {
+            get {
+                return ResourceManager.GetString("PluginInstallerViewModel_InstallPluginAsync_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Information about installed plugins.
         /// </summary>
         public static string PluginsInstalledTreeMenuItem_Description {
@@ -3526,11 +2472,29 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All versions.
+        /// </summary>
+        public static string PluginsInstalledView_AllVersions {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_AllVersions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string PluginsInstalledView_CancelUninstall {
             get {
                 return ResourceManager.GetString("PluginsInstalledView_CancelUninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unverifed.
+        /// </summary>
+        public static string PluginsInstalledView_IsUnverified {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_IsUnverified", resourceCulture);
             }
         }
         
@@ -3553,11 +2517,56 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please select plugin.
+        /// </summary>
+        public static string PluginsInstalledView_SelectedPluginIsNull {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_SelectedPluginIsNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Additional info.
         /// </summary>
         public static string PluginsInstalledView_Tab_AdditionalInfo {
             get {
                 return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Author: .
+        /// </summary>
+        public static string PluginsInstalledView_Tab_AdditionalInfo_Author {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo_Author", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dependencies: .
+        /// </summary>
+        public static string PluginsInstalledView_Tab_AdditionalInfo_Dependencies {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo_Dependencies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloads: .
+        /// </summary>
+        public static string PluginsInstalledView_Tab_AdditionalInfo_DownloadCount {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo_DownloadCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags: .
+        /// </summary>
+        public static string PluginsInstalledView_Tab_AdditionalInfo_Tags {
+            get {
+                return ResourceManager.GetString("PluginsInstalledView_Tab_AdditionalInfo_Tags", resourceCulture);
             }
         }
         
@@ -3607,11 +2616,47 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Plugins market.
+        /// </summary>
+        public static string PluginsMarketTreeMenuItem_Description {
+            get {
+                return ResourceManager.GetString("PluginsMarketTreeMenuItem_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Market.
+        /// </summary>
+        public static string PluginsMarketTreeMenuItem_Name {
+            get {
+                return ResourceManager.GetString("PluginsMarketTreeMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string PluginsMarketView_Cancel {
             get {
                 return ResourceManager.GetString("PluginsMarketView_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verified.
+        /// </summary>
+        public static string PluginsMarketView_InfoBar_IsVerified {
+            get {
+                return ResourceManager.GetString("PluginsMarketView_InfoBar_IsVerified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This plugin is verified by developers.
+        /// </summary>
+        public static string PluginsMarketView_InfoBar_IsVerified_Message {
+            get {
+                return ResourceManager.GetString("PluginsMarketView_InfoBar_IsVerified_Message", resourceCulture);
             }
         }
         
@@ -3625,7 +2670,16 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit plugins sources .
+        ///   Looks up a localized string similar to Please select plugin.
+        /// </summary>
+        public static string PluginsMarketView_SelectedPluginIsNull {
+            get {
+                return ResourceManager.GetString("PluginsMarketView_SelectedPluginIsNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin source servers.
         /// </summary>
         public static string PluginsSourcesTreeMenuItem_Description {
             get {
@@ -3634,83 +2688,11 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sources.
+        ///   Looks up a localized string similar to Servers.
         /// </summary>
         public static string PluginsSourcesTreeMenuItem_Name {
             get {
                 return ResourceManager.GetString("PluginsSourcesTreeMenuItem_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add.
-        /// </summary>
-        public static string PluginsSourcesView_AddNewSource {
-            get {
-                return ResourceManager.GetString("PluginsSourcesView_AddNewSource", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add new source.
-        /// </summary>
-        public static string PluginsSourcesView_AddSource {
-            get {
-                return ResourceManager.GetString("PluginsSourcesView_AddSource", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        public static string PluginsSourcesView_DataGrid_Name {
-            get {
-                return ResourceManager.GetString("PluginsSourcesView_DataGrid_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Password.
-        /// </summary>
-        public static string PluginsSourcesView_DataGrid_Password {
-            get {
-                return ResourceManager.GetString("PluginsSourcesView_DataGrid_Password", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to URL Address.
-        /// </summary>
-        public static string PluginsSourcesView_DataGrid_URL {
-            get {
-                return ResourceManager.GetString("PluginsSourcesView_DataGrid_URL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Username.
-        /// </summary>
-        public static string PluginsSourcesView_DataGrid_User {
-            get {
-                return ResourceManager.GetString("PluginsSourcesView_DataGrid_User", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit.
-        /// </summary>
-        public static string PluginsSourcesView_EditSource {
-            get {
-                return ResourceManager.GetString("PluginsSourcesView_EditSource", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete.
-        /// </summary>
-        public static string PluginsSourcesView_RemoveSource {
-            get {
-                return ResourceManager.GetString("PluginsSourcesView_RemoveSource", resourceCulture);
             }
         }
         
@@ -3751,33 +2733,6 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel.
-        /// </summary>
-        public static string PluginsSourcesViewModel_AddNewSourceDialog_CloseButton {
-            get {
-                return ResourceManager.GetString("PluginsSourcesViewModel_AddNewSourceDialog_CloseButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add.
-        /// </summary>
-        public static string PluginsSourcesViewModel_AddNewSourceDialog_PrimaryButton {
-            get {
-                return ResourceManager.GetString("PluginsSourcesViewModel_AddNewSourceDialog_PrimaryButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add new repository.
-        /// </summary>
-        public static string PluginsSourcesViewModel_AddNewSourceDialog_Title {
-            get {
-                return ResourceManager.GetString("PluginsSourcesViewModel_AddNewSourceDialog_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string PluginsSourcesViewModel_EditImpl_Save {
@@ -3792,33 +2747,6 @@ namespace Asv.Drones.Gui {
         public static string PluginsSourcesViewModel_EditImpl_Title {
             get {
                 return ResourceManager.GetString("PluginsSourcesViewModel_EditImpl_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cancel.
-        /// </summary>
-        public static string PluginsSourcesViewModel_EditSourceDialog_CloseButton {
-            get {
-                return ResourceManager.GetString("PluginsSourcesViewModel_EditSourceDialog_CloseButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Apply.
-        /// </summary>
-        public static string PluginsSourcesViewModel_EditSourceDialog_PrimaryButton {
-            get {
-                return ResourceManager.GetString("PluginsSourcesViewModel_EditSourceDialog_PrimaryButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit repository.
-        /// </summary>
-        public static string PluginsSourcesViewModel_EditSourceDialog_Title {
-            get {
-                return ResourceManager.GetString("PluginsSourcesViewModel_EditSourceDialog_Title", resourceCulture);
             }
         }
         
@@ -3859,7 +2787,16 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Packet Loss Chance.
+        ///   Looks up a localized string similar to Advanced settings.
+        /// </summary>
+        public static string PortView_Expander_Advanced {
+            get {
+                return ResourceManager.GetString("PortView_Expander_Advanced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packet Loss Chance: .
         /// </summary>
         public static string PortView_PacketLossChance {
             get {
@@ -3882,6 +2819,15 @@ namespace Asv.Drones.Gui {
         public static string PortView_ToggleButton_Enabled {
             get {
                 return ResourceManager.GetString("PortView_ToggleButton_Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packet loss chance (for debug).
+        /// </summary>
+        public static string PortView_ToolTip {
+            get {
+                return ResourceManager.GetString("PortView_ToolTip", resourceCulture);
             }
         }
         
@@ -3945,51 +2891,6 @@ namespace Asv.Drones.Gui {
         public static string QuickParametersSliderView_IsDescrete {
             get {
                 return ResourceManager.GetString("QuickParametersSliderView_IsDescrete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Advanced setup.
-        /// </summary>
-        public static string QuickParamsSetupPageView_AdvancedSetupButton_Text {
-            get {
-                return ResourceManager.GetString("QuickParamsSetupPageView_AdvancedSetupButton_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Read all.
-        /// </summary>
-        public static string QuickParamsSetupPageView_ReadAllButton_Text {
-            get {
-                return ResourceManager.GetString("QuickParamsSetupPageView_ReadAllButton_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Write all.
-        /// </summary>
-        public static string QuickParamsSetupPageView_WriteAllButton_Text {
-            get {
-                return ResourceManager.GetString("QuickParamsSetupPageView_WriteAllButton_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You must click the write button if you want to save and apply the changes..
-        /// </summary>
-        public static string QuickParamsSetupPageView_WriteRequired_Message {
-            get {
-                return ResourceManager.GetString("QuickParamsSetupPageView_WriteRequired_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Write required.
-        /// </summary>
-        public static string QuickParamsSetupPageView_WriteRequired_Title {
-            get {
-                return ResourceManager.GetString("QuickParamsSetupPageView_WriteRequired_Title", resourceCulture);
             }
         }
         
@@ -4066,60 +2967,6 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Accuracy.
-        /// </summary>
-        public static string RemoveMapPointView_Accuracy_Name {
-            get {
-                return ResourceManager.GetString("RemoveMapPointView_Accuracy_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Altitude.
-        /// </summary>
-        public static string RemoveMapPointView_Altitude_Name {
-            get {
-                return ResourceManager.GetString("RemoveMapPointView_Altitude_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete this map point?.
-        /// </summary>
-        public static string RemoveMapPointView_ConfirmationText {
-            get {
-                return ResourceManager.GetString("RemoveMapPointView_ConfirmationText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Latitude.
-        /// </summary>
-        public static string RemoveMapPointView_Latitude_Name {
-            get {
-                return ResourceManager.GetString("RemoveMapPointView_Latitude_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Longitude.
-        /// </summary>
-        public static string RemoveMapPointView_Longitude_Name {
-            get {
-                return ResourceManager.GetString("RemoveMapPointView_Longitude_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        public static string RemoveMapPointView_Point_Name {
-            get {
-                return ResourceManager.GetString("RemoveMapPointView_Point_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ROI of.
         /// </summary>
         public static string RoiAnchor_Vehicle_Name {
@@ -4192,96 +3039,6 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New.
-        /// </summary>
-        public static string SavedCoordsView_AddNewButton_Name {
-            get {
-                return ResourceManager.GetString("SavedCoordsView_AddNewButton_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to in this section you can view and save new map coordinates for GBS Fixed Mode.
-        /// </summary>
-        public static string SavedCoordsView_Description {
-            get {
-                return ResourceManager.GetString("SavedCoordsView_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Saved Coordinates.
-        /// </summary>
-        public static string SavedCoordsView_Header {
-            get {
-                return ResourceManager.GetString("SavedCoordsView_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove.
-        /// </summary>
-        public static string SavedCoordsView_RemoveButton_Name {
-            get {
-                return ResourceManager.GetString("SavedCoordsView_RemoveButton_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cancel.
-        /// </summary>
-        public static string SavedCoordsViewModel_AddNewItem_CloseButtonText {
-            get {
-                return ResourceManager.GetString("SavedCoordsViewModel_AddNewItem_CloseButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add.
-        /// </summary>
-        public static string SavedCoordsViewModel_AddNewItem_PrimaryButtonText {
-            get {
-                return ResourceManager.GetString("SavedCoordsViewModel_AddNewItem_PrimaryButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add new map coordinate.
-        /// </summary>
-        public static string SavedCoordsViewModel_AddNewItem_Title {
-            get {
-                return ResourceManager.GetString("SavedCoordsViewModel_AddNewItem_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cancel.
-        /// </summary>
-        public static string SavedCoordsViewModel_RemoveItem_CloseButtonText {
-            get {
-                return ResourceManager.GetString("SavedCoordsViewModel_RemoveItem_CloseButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove.
-        /// </summary>
-        public static string SavedCoordsViewModel_RemoveItem_PrimaryButtonText {
-            get {
-                return ResourceManager.GetString("SavedCoordsViewModel_RemoveItem_PrimaryButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove Map Point.
-        /// </summary>
-        public static string SavedCoordsViewModel_RemoveItem_Title {
-            get {
-                return ResourceManager.GetString("SavedCoordsViewModel_RemoveItem_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Sum depth of modulation measure units.
         /// </summary>
         public static string Sdm_Description {
@@ -4296,15 +3053,6 @@ namespace Asv.Drones.Gui {
         public static string Sdm_Title {
             get {
                 return ResourceManager.GetString("Sdm_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Close dialog when download finish.
-        /// </summary>
-        public static string SelectDownloadVehicleView_CloseOnFinish_Text {
-            get {
-                return ResourceManager.GetString("SelectDownloadVehicleView_CloseOnFinish_Text", resourceCulture);
             }
         }
         
@@ -4543,24 +3291,6 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Flow direction.
-        /// </summary>
-        public static string SettingsThemeViewModel_FlowDirection {
-            get {
-                return ResourceManager.GetString("SettingsThemeViewModel_FlowDirection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change the current application flow direction..
-        /// </summary>
-        public static string SettingsThemeViewModel_FlowDirectionDescription {
-            get {
-                return ResourceManager.GetString("SettingsThemeViewModel_FlowDirectionDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to You must reload the program to apply the changes..
         /// </summary>
         public static string SettingsView_RebootRequiredDescription {
@@ -4633,294 +3363,6 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Here you can change the speeds.
-        /// </summary>
-        public static string SpeedsQuickParamView_Description {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Speeds.
-        /// </summary>
-        public static string SpeedsQuickParamView_Header {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Altitude during Landing at which vehicle slows to LAND_SPEED. Increment - 0.1. Range 1-100. [{0:F2} cm] [{1:F2} ft]. Note: This parameter is for advanced users..
-        /// </summary>
-        public static string SpeedsQuickParamView_LAND_ALT_LOW_Description {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_LAND_ALT_LOW_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Land altitude low (LAND_ALT_LOW).
-        /// </summary>
-        public static string SpeedsQuickParamView_LAND_ALT_LOW_Header {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_LAND_ALT_LOW_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to m.
-        /// </summary>
-        public static string SpeedsQuickParamView_LAND_ALT_LOW_Units {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_LAND_ALT_LOW_Units", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The descent speed for the final stage of landing in cm/s. Increment - 0.1. Range 0.3-2. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
-        /// </summary>
-        public static string SpeedsQuickParamView_LAND_SPEED_Description {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Land speed (LAND_SPEED).
-        /// </summary>
-        public static string SpeedsQuickParamView_LAND_SPEED_Header {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The descent speed for the first stage of landing in cm/s. If this is zero then WPNAV_SPEED_DN is used. Increment - 0.1. Range 0-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
-        /// </summary>
-        public static string SpeedsQuickParamView_LAND_SPEED_HIGH_Description {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_HIGH_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Land speed high (LAND_SPEED_HIGH).
-        /// </summary>
-        public static string SpeedsQuickParamView_LAND_SPEED_HIGH_Header {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_HIGH_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to m/s.
-        /// </summary>
-        public static string SpeedsQuickParamView_LAND_SPEED_HIGH_Units {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_HIGH_Units", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to m/s.
-        /// </summary>
-        public static string SpeedsQuickParamView_LAND_SPEED_Units {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_LAND_SPEED_Units", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Defines the maximum speed in cm/s which the aircraft will travel horizontally while in loiter mode. Increment - 0.5. Range 0.2-35. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
-        /// </summary>
-        public static string SpeedsQuickParamView_LOIT_SPEED_Description {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_LOIT_SPEED_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Loiter Horizontal Maximum Speed (LOIT_SPEED).
-        /// </summary>
-        public static string SpeedsQuickParamView_LOIT_SPEED_Header {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_LOIT_SPEED_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to m/s.
-        /// </summary>
-        public static string SpeedsQuickParamView_LOIT_SPEED_Units {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_LOIT_SPEED_Units", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The maximum vertical descending velocity the pilot may request in cm/s. If 0 PILOT_SPEED_UP value is used. Increment - 0.1. Range 0-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
-        /// </summary>
-        public static string SpeedsQuickParamView_PILOT_SPEED_DN_Description {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_DN_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pilot maximum vertical speed descending (PILOT_SPEED_DN).
-        /// </summary>
-        public static string SpeedsQuickParamView_PILOT_SPEED_DN_Header {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_DN_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to m/s.
-        /// </summary>
-        public static string SpeedsQuickParamView_PILOT_SPEED_DN_Units {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_DN_Units", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The maximum vertical ascending velocity the pilot may request in cm/s. Increment - 0.1. Range 0.5-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
-        /// </summary>
-        public static string SpeedsQuickParamView_PILOT_SPEED_UP_Description {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_UP_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pilot maximum vertical speed ascending (PILOT_SPEED_UP).
-        /// </summary>
-        public static string SpeedsQuickParamView_PILOT_SPEED_UP_Header {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_UP_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to m/s.
-        /// </summary>
-        public static string SpeedsQuickParamView_PILOT_SPEED_UP_Units {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_PILOT_SPEED_UP_Units", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain horizontally while flying home. If this is set to zero, WPNAV_SPEED will be used instead. Increment - 50. Range 0-2000. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
-        /// </summary>
-        public static string SpeedsQuickParamView_RTL_SPEED_Description {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_RTL_SPEED_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to RTL speed (RTL_SPEED).
-        /// </summary>
-        public static string SpeedsQuickParamView_RTL_SPEED_Header {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_RTL_SPEED_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to m/s.
-        /// </summary>
-        public static string SpeedsQuickParamView_RTL_SPEED_Units {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_RTL_SPEED_Units", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain horizontally during a WP mission. Increment - 0.5. Range 0.2-20. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
-        /// </summary>
-        public static string SpeedsQuickParamView_WPNAV_SPEED_Description {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain while descending during a WP mission. Increment - 0.1. Range 0.1-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
-        /// </summary>
-        public static string SpeedsQuickParamView_WPNAV_SPEED_DN_Description {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_DN_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Waypoint Descent Speed Target (WPNAV_SPEED_DN).
-        /// </summary>
-        public static string SpeedsQuickParamView_WPNAV_SPEED_DN_Header {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_DN_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to m/s.
-        /// </summary>
-        public static string SpeedsQuickParamView_WPNAV_SPEED_DN_Units {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_DN_Units", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Waypoint Horizontal Speed Target (WPNAV_SPEED).
-        /// </summary>
-        public static string SpeedsQuickParamView_WPNAV_SPEED_Header {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to m/s.
-        /// </summary>
-        public static string SpeedsQuickParamView_WPNAV_SPEED_Units {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_Units", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Defines the speed in cm/s which the aircraft will attempt to maintain while climbing during a WP mission. Increment - 0.5. Range 0.1-10. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h]..
-        /// </summary>
-        public static string SpeedsQuickParamView_WPNAV_SPEED_UP_Description {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_UP_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Waypoint Climb Speed Target (WPNAV_SPEED_UP).
-        /// </summary>
-        public static string SpeedsQuickParamView_WPNAV_SPEED_UP_Header {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_UP_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to m/s.
-        /// </summary>
-        public static string SpeedsQuickParamView_WPNAV_SPEED_UP_Units {
-            get {
-                return ResourceManager.GetString("SpeedsQuickParamView_WPNAV_SPEED_UP_Units", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to User send Start mission for {0}.
         /// </summary>
         public static string StartAutoAnchorActionViewModel_ExecuteImpl_LogInfo {
@@ -4939,7 +3381,34 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set altitude above ground level (AGL) for takeoff command..
+        ///   Looks up a localized string similar to AGL (rel.):.
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_AltitudeAgl_Title {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_AltitudeAgl_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GNSS (abs.):.
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_AltitudeGnss_Title {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_AltitudeGnss_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current altitude AGL: {0}.
+        /// </summary>
+        public static string TakeOffAnchorActionViewModel_CurrentAgl_Format {
+            get {
+                return ResourceManager.GetString("TakeOffAnchorActionViewModel_CurrentAgl_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set altitude for takeoff command..
         /// </summary>
         public static string TakeOffAnchorActionViewModel_DialogDescription {
             get {
@@ -4993,7 +3462,7 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Altitude must be greater or equal {0}..
+        ///   Looks up a localized string similar to AltitudeAGL must be greater or equal {0}..
         /// </summary>
         public static string TakeOffAnchorActionViewModel_ValidValue {
             get {
@@ -5133,105 +3602,6 @@ namespace Asv.Drones.Gui {
         public static string TemperatureFarenheit_ErrorMessage_NullOrWhiteSpace {
             get {
                 return ResourceManager.GetString("TemperatureFarenheit_ErrorMessage_NullOrWhiteSpace", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Close.
-        /// </summary>
-        public static string TemplaterDialog_CloseButton {
-            get {
-                return ResourceManager.GetString("TemplaterDialog_CloseButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save.
-        /// </summary>
-        public static string TemplaterDialog_SaveButton {
-            get {
-                return ResourceManager.GetString("TemplaterDialog_SaveButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add image tag.
-        /// </summary>
-        public static string TemplaterView_AddImageTag {
-            get {
-                return ResourceManager.GetString("TemplaterView_AddImageTag", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add new tag.
-        /// </summary>
-        public static string TemplaterView_AddNewTag {
-            get {
-                return ResourceManager.GetString("TemplaterView_AddNewTag", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add string tag.
-        /// </summary>
-        public static string TemplaterView_AddStringTag {
-            get {
-                return ResourceManager.GetString("TemplaterView_AddStringTag", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Clear tags list.
-        /// </summary>
-        public static string TemplaterView_ClearTagsList {
-            get {
-                return ResourceManager.GetString("TemplaterView_ClearTagsList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File path:.
-        /// </summary>
-        public static string TemplaterView_ResultPath {
-            get {
-                return ResourceManager.GetString("TemplaterView_ResultPath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Template path:.
-        /// </summary>
-        public static string TemplaterView_TemplatePath {
-            get {
-                return ResourceManager.GetString("TemplaterView_TemplatePath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to LeftToRight.
-        /// </summary>
-        public static string ThemeService_FlowDirections_LeftToRight {
-            get {
-                return ResourceManager.GetString("ThemeService_FlowDirections_LeftToRight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to RightToLeft.
-        /// </summary>
-        public static string ThemeService_FlowDirections_RightToLeft {
-            get {
-                return ResourceManager.GetString("ThemeService_FlowDirections_RightToLeft", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Contrast.
-        /// </summary>
-        public static string ThemeService_Themes_Contrast {
-            get {
-                return ResourceManager.GetString("ThemeService_Themes_Contrast", resourceCulture);
             }
         }
         

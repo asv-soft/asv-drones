@@ -15,7 +15,7 @@ namespace Asv.Drones.Gui.Api
         public TValue ConvertToSi(TValue value);
         public TValue Parse(string? value);
         bool IsValid(string? value);
-        string? GetErrorMessage(string? value);
+        string GetErrorMessage(string? value);
         string Print(TValue value);
         string PrintWithUnits(TValue value);
 
@@ -81,6 +81,8 @@ namespace Asv.Drones.Gui.Api
 
     public static class MeasureUnitExtensions
     {
+        private const string DefaultErrorMessage = "Something went wrong";
+        
         public static bool IsValid<TEnum>(this IMeasureUnit<double, TEnum> src, double minSiValue, double maxSiValue,
             string value)
         {
@@ -90,12 +92,12 @@ namespace Asv.Drones.Gui.Api
             return true;
         }
 
-        public static string? GetErrorMessage<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, string? value)
+        public static string GetErrorMessage<TValue, TEnum>(this IMeasureUnit<TValue, TEnum> src, string? value)
         {
             return src.CurrentUnit.Value.GetErrorMessage(value);
         }
 
-        public static string? GetErrorMessage<TEnum>(this IMeasureUnit<double, TEnum> src, double minSiValue,
+        public static string GetErrorMessage<TEnum>(this IMeasureUnit<double, TEnum> src, double minSiValue,
             double maxSiValue, string? value)
         {
             var msg = src.CurrentUnit.Value.GetErrorMessage(value);
@@ -109,7 +111,7 @@ namespace Asv.Drones.Gui.Api
                 return string.Format(RS.MeasureUnitExtensions_ErrorMessage_LesserValue,
                     src.CurrentUnit.Value.FromSiToStringWithUnits(minSiValue),
                     src.SiUnit.FromSiToStringWithUnits(siValue));
-            return null;
+            return DefaultErrorMessage;
         }
     }
 

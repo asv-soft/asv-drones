@@ -12,15 +12,15 @@ using System.Threading.Tasks;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
-using Microsoft.Extensions.Logging;
+using DynamicData;
 using Newtonsoft.Json;
+using NLog;
 using NuGet.Configuration;
 using NuGet.Packaging;
 using NuGet.Packaging.Core;
 using NuGet.Protocol;
 using NuGet.Protocol.Core.Types;
 using NuGet.Versioning;
-using ZLogger;
 
 
 namespace Asv.Drones.Gui;
@@ -409,6 +409,39 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
         return result;
     }
 
+    public async Task<IReadOnlyList<string>> ListPluginVersions(SearchQuery query, string pluginId, CancellationToken cancel)
+    {
+        _repositoriesLock.EnterReadLock();
+        var repositories = query.Sources.Count == 0
+            ? _repositories.ToArray()
+            : _repositories.Where(_ => query.Sources.Contains(_.PackageSource.Source)).ToArray();
+        _repositoriesLock.ExitReadLock();
+
+        var result = new List<string>();
+
+        foreach (var repository in repositories)
+        {
+            try
+            {
+                var resource = await repository.GetResourceAsync<FindPackageByIdResource>(cancel);
+
+                var packages = await resource.GetAllVersionsAsync(
+                    pluginId,
+                    new SourceCacheContext(),
+                    new LoggerAdapter(Logger),
+                    cancel);
+
+                result.AddRange(packages.Select(package => package.Version.ToString()));
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, "Error search in {0}", repository.PackageSource.Source);
+            }
+        }
+
+        return result;
+    }
+
     public async Task Install(IPluginServerInfo source, string packageId, string version,
         IProgress<ProgressMessage>? progress, CancellationToken cancel)
     {
@@ -531,6 +564,228 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
         }
     }
 
+    public async Task InstallManually(string from, IProgress<ProgressMessage>? progress, CancellationToken cancel)
+    {
+        ArgumentNullException.ThrowIfNull(from);
+        if (!File.Exists(from))
+        {
+            throw new FileNotFoundException($"File {from} not found");
+        }
+
+        await using var nugetFile = File.OpenRead(from);
+        var packageReader = new PackageArchiveReader(nugetFile);
+        var packageIdentity = await packageReader.GetIdentityAsync(cancel);
+        
+        progress = progress ?? new Progress<ProgressMessage>();
+        if (TryGetLocalPluginInfoById(packageIdentity.Id, out var info))
+        {
+            Debug.Assert(info != null, nameof(info) + " != null");
+            var localVersion = NuGetVersion.Parse(info.Version);
+            throw new Exception($"Local version {localVersion} of {packageIdentity.Id} exists. Remove it first.");
+        }
+
+        var currentPluginFolder = Path.Combine(_sharedPluginFolder, packageIdentity.Id);
+        
+        try
+        {
+            Directory.CreateDirectory(currentPluginFolder);
+            
+            var plugin = Path.Combine(currentPluginFolder, Path.GetFileName(from));
+            if (!File.Exists(plugin))
+            {
+                File.Copy(from, plugin);
+            }
+            
+            ExtractContentFolder(plugin,  currentPluginFolder);
+            
+            var platform = NugetHelper.GetPlatform(packageReader);
+            if (platform == null)
+            {
+                throw new Exception($"Not found {NugetHelper.NETCoreAppGroup} platform in package");
+            }
+
+            foreach (var file in platform.Items)
+            {
+                packageReader.ExtractFile(file, Path.Combine(currentPluginFolder, Path.GetFileName(file)),
+                    _nugetLogger);
+            }
+
+            var nuspecReader = packageReader.NuspecReader;
+            // now we need to load all dependencies
+            var dependencyInfoResource = nuspecReader.GetDependencyGroups();
+            
+            _repositoriesLock.EnterReadLock();
+            var repositories = _repositories.ToArray();
+            _repositoriesLock.ExitReadLock();
+            
+            var dependencies = await ListAllPackageDependencies(dependencyInfoResource, repositories, cancel);
+            foreach (var identity in dependencies)
+            {
+                // if base application contains this package we don't need to download it
+                // TODO: There is a potential problem with the version of NuGet packages in the base application
+                if (NugetHelper.IncludedPackages.Contains(identity.Id)) continue;
+                // if self package we don't need to download it
+                if (identity.Equals(packageIdentity)) continue;
+
+                var dependencyPackageFile = Path.Combine(_nugetFolder, $"{identity.Id}.{identity.Version}.nupkg");
+                // if we already have this package we don't need to download it
+                if (File.Exists(dependencyPackageFile) == false)
+                {
+                    var dependencyFindPackageByIdResource =
+                        await identity.Source.GetResourceAsync<FindPackageByIdResource>(cancel);
+                    await using var file = File.OpenWrite(dependencyPackageFile);
+                    await dependencyFindPackageByIdResource.CopyNupkgToStreamAsync(identity.Id, identity.Version, file,
+                        _cache, _nugetLogger, cancel);
+                }
+
+                using var dependencyPackageArchiveReader = new PackageArchiveReader(dependencyPackageFile);
+                var dependencyPlatform = NugetHelper.GetPlatform(dependencyPackageArchiveReader);
+                if (dependencyPlatform == null)
+                {
+                    Logger.Warn($"Not found  {NugetHelper.NETCoreAppGroup} platform in package " + identity.Id);
+                    continue;
+                }
+
+                foreach (var file in dependencyPlatform.Items)
+                {
+                    dependencyPackageArchiveReader.ExtractFile(file,
+                        Path.Combine(currentPluginFolder, Path.GetFileName(file)), _nugetLogger);
+                }
+            }
+
+            SetPluginStateById(packageIdentity.Id, x =>
+            {
+                x.IsLoaded = false;
+                x.IsUninstalled = false;
+                x.LoadingError = null;
+                x.InstalledFromSourceUri = "N/A";
+            });
+        }
+        catch (Exception)
+        {
+            if (Directory.Exists(currentPluginFolder))
+            {
+                try
+                {
+                    Directory.Delete(currentPluginFolder, true);
+                }
+                catch
+                {
+                    // ignore
+                }
+            }
+
+            throw;
+        }
+    }
+    
+    private static void ExtractContentFolder(string nugetPackage, string to)
+    {
+        if (!File.Exists(nugetPackage))
+        {
+            return;
+        }
+        
+        if (!Directory.Exists(to))
+        {
+            return;
+        }
+
+        var archive = ZipFile.OpenRead(nugetPackage);
+
+        foreach (var entry in archive.Entries)
+        {
+            if (!entry.FullName.Trim().StartsWith(@"content", StringComparison.InvariantCultureIgnoreCase))
+            {
+                continue;
+            }
+            
+            var filePath = Path.Combine(to, entry.FullName);
+            var fileDir = Path.GetDirectoryName(filePath);
+
+            if (fileDir is null)
+            {
+                continue;
+            }
+            
+            if (!Directory.Exists(fileDir))
+            {
+                Directory.CreateDirectory(fileDir);
+            }
+
+            if (!File.Exists(filePath))
+            {
+                entry.ExtractToFile(filePath, true);
+            }
+        }
+    }
+    
+    private async Task<ISet<SourcePackageDependencyInfo>> ListAllPackageDependencies(
+        IEnumerable<PackageDependencyGroup> dependencyGroups,
+        SourceRepository[] repositories,
+        CancellationToken cancellationToken)
+    {
+        var dependencies = new HashSet<SourcePackageDependencyInfo>(PackageIdentityComparer.Default);
+        var packages = await ConvertToSourcePackageDependencyInfo(dependencyGroups, repositories, cancellationToken);
+        
+        foreach (var package in packages)
+        {
+            await ListAllPackageDependencies(package, repositories, dependencies, cancellationToken);
+        }
+
+        return dependencies;
+    }
+    
+    private async Task<ISet<SourcePackageDependencyInfo>> ConvertToSourcePackageDependencyInfo(
+        IEnumerable<PackageDependencyGroup> dependencyGroups,
+        SourceRepository[] repositories,
+        CancellationToken cancel
+        )
+    {
+        var dependenciesSet = new HashSet<SourcePackageDependencyInfo>(PackageIdentityComparer.Default);
+        var packageDependencyGroups = dependencyGroups.ToList();
+
+        foreach (var repository in repositories)
+        {
+            foreach (var group in packageDependencyGroups)
+            {
+                foreach (var package in group.Packages)
+                {
+                    var version = package.VersionRange.MinVersion;
+                    if (version is null)
+                    {
+                        continue;
+                    }
+                    var packageByIdSearcher = await repository.GetResourceAsync<FindPackageByIdResource>(cancel);
+                    var isPackage = await packageByIdSearcher.DoesPackageExistAsync(package.Id, version,
+                        _cache, _nugetLogger, cancel);
+
+                    if (!isPackage)
+                    {
+                        continue;
+                    }
+
+                    var dependencyInfo = new SourcePackageDependencyInfo(package.Id, version,
+                        [], true, repository);
+
+                    if (dependenciesSet.Contains(dependencyInfo))
+                    {
+                        continue;
+                    }
+                    
+                    if (NugetHelper.IncludedPackages.Contains(dependencyInfo.Id))
+                    {
+                        continue;
+                    }
+                    
+                    dependenciesSet.Add(dependencyInfo);
+                }
+            }
+        }
+
+        return dependenciesSet;
+    }
+    
     private async Task ListAllPackageDependencies(
         SourcePackageDependencyInfo package,
         SourceRepository[] repositories,

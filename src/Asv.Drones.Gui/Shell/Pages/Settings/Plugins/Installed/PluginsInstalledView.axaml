@@ -69,17 +69,22 @@
                 <DataTemplate>
                     <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="*,*">
                         <avalonia:MaterialIcon Margin="4" HorizontalAlignment="Left" Grid.RowSpan="2" Width="35"
-                                               Height="35" Kind="Package" />
+                                               Height="35" Kind="Package" IsVisible="{Binding !IsContainsIcon}" />
+                        <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="{Binding Icon}" Height="35" Width="35"
+                               Stretch="Uniform" Margin="10 5" IsVisible="{Binding IsContainsIcon}" />
                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
                             <TextBlock VerticalAlignment="Center" Theme="{DynamicResource BodyStrongTextBlockStyle}"
                                        Margin="0,0,4,0" Text="{Binding Name}" />
                             <Border IsVisible="{Binding IsUninstalled}"
-                                    CornerRadius="{DynamicResource ControlCornerRadius}" Padding="4,0"
+                                    CornerRadius="{DynamicResource ControlCornerRadius}" Padding="4,0" Margin="4 0 "
                                     Background="{DynamicResource SystemFillColorCautionBackgroundBrush}">
                                 <TextBlock FontStyle="Italic" VerticalAlignment="Center"
                                            Theme="{DynamicResource CaptionTextBlockStyle}"
                                            Text="{x:Static gui:RS.PluginsInstalledView_Uninstalled}" />
                             </Border>
+                            <avalonia:MaterialIcon Height="15" Kind="Verified" Margin="5 0"
+                                                   IsVisible="{Binding IsVerified}"
+                                                   Foreground="{DynamicResource SystemAccentColorLight1}" />
                             <Border IsVisible="{Binding LoadingError, Converter={x:Static ObjectConverters.IsNotNull}}"
                                     CornerRadius="{DynamicResource ControlCornerRadius}" Padding="4,0"
                                     Background="{DynamicResource SystemFillColorCriticalBackgroundBrush}">
@@ -129,9 +134,15 @@
                         DockPanel.Dock="Top" Title="Loading error" IsOpen="True" IsIconVisible="True" Severity="Error"
                         IsClosable="False"
                         Message="{Binding LoadingError}" />
+                    <controls:InfoBar
+                        IsVisible="{Binding IsVerified}"
+                        DockPanel.Dock="Top" Title="{x:Static gui:RS.PluginsMarketView_InfoBar_IsVerified}"
+                        IsOpen="True" IsIconVisible="True" Severity="Success"
+                        IsClosable="False"
+                        Message="{x:Static gui:RS.PluginsMarketView_InfoBar_IsVerified_Message}" />
                     <TabControl>
                         <TabItem FontSize="18" Header="{x:Static gui:RS.PluginsInstalledView_Tab_Description}">
-                            <TextBlock Text="{Binding Description}" TextWrapping="WrapWithOverflow" />
+                                <TextBlock Text="{Binding Description}" TextWrapping="WrapWithOverflow" />
                         </TabItem>
                         <TabItem FontSize="18" Header="{x:Static gui:RS.PluginsInstalledView_Tab_AdditionalInfo}" />
                     </TabControl>
@@ -142,7 +153,8 @@
                 <avalonia:MaterialIcon Width="25" Height="25" Kind="ArrowLeft"
                                        Foreground="{DynamicResource ButtonForegroundDisabled}" />
                 <TextBlock Foreground="{DynamicResource ButtonForegroundDisabled}" VerticalAlignment="Center"
-                           FontSize="15" TextWrapping="WrapWithOverflow" MaxWidth="400" Text="Please select plugin" />
+                           FontSize="15" TextWrapping="WrapWithOverflow" MaxWidth="400"
+                           Text="{x:Static gui:RS.PluginsInstalledView_SelectedPluginIsNull}" />
             </StackPanel>
 
         </Panel>

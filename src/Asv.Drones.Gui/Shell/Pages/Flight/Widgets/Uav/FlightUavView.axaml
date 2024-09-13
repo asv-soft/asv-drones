@@ -80,8 +80,8 @@
                     <gui:MissionStatusView DataContext="{Binding MissionStatus}" />
                 </Viewbox>
             </StackPanel>
-            <Grid DockPanel.Dock="Bottom" DataContext="{Binding MissionStatus}">
-                <UniformGrid Columns="4" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Rows="1">
+            <Grid DockPanel.Dock="Bottom"  IsVisible="{CompiledBinding !IsMinimized}">
+                <UniformGrid Columns="4" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Rows="1" DataContext="{Binding MissionStatus}">
                     <Button ToolTip.Tip="{x:Static gui:RS.MissionStatusView_GetMissionButton_ToolTip}" HorizontalAlignment="Stretch" Margin="1.5 0" Height="25"
                             Command="{Binding DownloadMissions}">
                         <avalonia:MaterialIcon Kind="Sync" />

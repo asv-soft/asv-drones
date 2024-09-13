@@ -1,7 +1,9 @@
 using System;
+using System.IO;
 using System.Linq;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
+using Avalonia.Media.Imaging;
 using NuGet.Packaging;
 
 namespace Asv.Drones.Gui;
@@ -24,6 +26,15 @@ public class LocalPluginInfo : ILocalPluginInfo
         IsUninstalled = state.IsUninstalled;
         IsLoaded = state.IsLoaded;
         LoadingError = state.LoadingError;
+        
+        var icon = nuspec.GetIcon();
+        if (icon != null)
+        {
+            var pathToContentFolder = Path.Combine(pluginFolder, "content");
+            var iconPath = Path.Combine(pathToContentFolder, icon);
+            Icon = new Bitmap(iconPath);
+        }
+        
         var apiPackage = reader.GetPackageDependencies()
             .SelectMany(x => x.Packages).FirstOrDefault(x => x.Id == NugetHelper.PluginApiPackageName);
         if (apiPackage == null)
@@ -33,6 +44,7 @@ public class LocalPluginInfo : ILocalPluginInfo
         ApiVersion = apiPackage.VersionRange.MinVersion?.ToNormalizedString() ?? throw new InvalidOperationException("Api version not found in plugin dependencies");
     }
 
+    public Bitmap? Icon { get; set; }
     public string? SourceUri { get; }
     public SemVersion ApiVersion { get; }
     public string PackageId { get; }

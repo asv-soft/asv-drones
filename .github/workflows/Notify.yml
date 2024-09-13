@@ -1,0 +1,24 @@
+name: Notify on Releases
+on:
+   release:
+         types: 
+         - published
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Send Telegram Notification
+      env:
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_INFOBOT_ID }}
+        TAG_NAME: ${{ github.event.release.tag_name }}
+        RELEASE_DESC: ${{github.event.release.body}}
+      run: |
+        curl -X POST https://api.telegram.org/bot${{ env.TELEGRAM_BOT_TOKEN }}/sendMessage \
+        -d chat_id=${{ env.TELEGRAM_CHAT_ID }} \
+        -d parse_mode="Markdown" \
+        --data-urlencode text="
+        🚀 *Релиз Asv.Drones версии $TAG_NAME!*
+        $RELEASE_DESC ${{ github.event.release.name }} 
+        [Watch Release](${{ github.event.release.html_url }}) "

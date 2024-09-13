@@ -65,7 +65,6 @@ public class PluginsInstalledViewModel : TreePageViewModel
 
     private void SearchImpl()
     {
-        _pluginSearchSource.Clear();
         _pluginSearchSource.AddOrUpdate(_manager.Installed);
     }
 

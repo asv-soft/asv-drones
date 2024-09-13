@@ -103,8 +103,8 @@
             Name="NavView"
             IsSettingsVisible="False"
             SelectedItem="{Binding SelectedMenu, Mode=TwoWay}"
-            MenuItemsSource="{Binding MenuItems}"
-            FooterMenuItemsSource="{Binding FooterMenuItems}"
+            MenuItemsSource="{Binding TopMenuItems}"
+            FooterMenuItemsSource="{Binding BottomMenuItems}"
             MenuItemTemplateSelector="{x:Static gui:MenuItemTemplateSelector.Instance}">
 
             <Panel>

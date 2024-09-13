@@ -29,22 +29,13 @@
     <data name="FlightShellMenuItem_Name" xml:space="preserve">
     <value>Flight mode</value>
   </data>
-    <data name="ThemeService_Themes_Contrast" xml:space="preserve">
-    <value>Contrast</value>
-  </data>
-    <data name="ThemeService_Themes_Light" xml:space="preserve">
+  <data name="ThemeService_Themes_Light" xml:space="preserve">
     <value>Light</value>
   </data>
     <data name="ThemeService_Themes_Dark" xml:space="preserve">
     <value>Dark</value>
   </data>
-    <data name="ThemeService_FlowDirections_LeftToRight" xml:space="preserve">
-    <value>LeftToRight</value>
-  </data>
-    <data name="ThemeService_FlowDirections_RightToLeft" xml:space="preserve">
-    <value>RightToLeft</value>
-  </data>
-    <data name="SettingsThemeViewModel_CurrentTheme" xml:space="preserve">
+  <data name="SettingsThemeViewModel_CurrentTheme" xml:space="preserve">
     <value>Theme</value>
   </data>
     <data name="SettingsThemeViewModel_ChangeThemeDescription" xml:space="preserve">
@@ -56,13 +47,7 @@
     <data name="SettingsThemeViewModel_CurrentLanguageDescription" xml:space="preserve">
     <value>Change the current application language. The changes will be applied after a restart.</value>
   </data>
-    <data name="SettingsThemeViewModel_FlowDirection" xml:space="preserve">
-    <value>Flow direction</value>
-  </data>
-    <data name="SettingsThemeViewModel_FlowDirectionDescription" xml:space="preserve">
-    <value>Change the current application flow direction.</value>
-  </data>
-    <data name="PlaningShellMenuItem_Name" xml:space="preserve">
+  <data name="PlaningShellMenuItem_Name" xml:space="preserve">
     <value>Mission planing</value>
   </data>
     <data name="ByteSize_BytesUnit" xml:space="preserve">
@@ -118,7 +103,7 @@
     <value>Change the current measure units of distance.</value>
   </data>
     <data name="MeasureUnitsSettingsViewModel_Altitude" xml:space="preserve">
-    <value>Altitude</value>
+    <value>AltitudeAGL</value>
   </data>
     <data name="MeasureUnitsSettingsViewModel_AltitudeDescription" xml:space="preserve">
     <value>Change the current measure units of altitude.</value>
@@ -132,25 +117,13 @@
     <data name="MeasureUnitsSettingsViewModel_LatitudeLongitudeDescription" xml:space="preserve">
     <value>Change the current measure units of latitude &amp; longitude.</value>
   </data>
-    <data name="MeasureUnitsSettingsViewModel_DistanceMeters" xml:space="preserve">
-    <value>Meters</value>
-  </data>
-    <data name="MeasureUnitsSettingsViewModel_DistanceInternationalNauticalMiles" xml:space="preserve">
-    <value>Nautical miles</value>
-  </data>
-    <data name="Altitude_Meter_Title" xml:space="preserve">
+  <data name="Altitude_Meter_Title" xml:space="preserve">
     <value>Meters</value>
   </data>
     <data name="Altitude_Feet_Title" xml:space="preserve">
     <value>Feets</value>
   </data>
-    <data name="MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegrees" xml:space="preserve">
-    <value>Degrees</value>
-  </data>
-    <data name="MeasureUnitsSettingsViewModel_LatitudeLongtitudeDegreesMinutesSeconds" xml:space="preserve">
-    <value>Degrees, minutes, seconds</value>
-  </data>
-    <data name="Altitude_Feet_Unit" xml:space="preserve">
+  <data name="Altitude_Feet_Unit" xml:space="preserve">
     <value>ft</value>
   </data>
     <data name="Altitude_Meter_Unit" xml:space="preserve">
@@ -190,16 +163,7 @@
     <data name="MeasureUnitsSettingsViewModel_VelocityDescription" xml:space="preserve">
     <value>Change the current measure units of velocity.</value>
   </data>
-    <data name="HeaderToolsMenu_Header" xml:space="preserve">
-    <value>Tools</value>
-  </data>
-    <data name="HeaderCoordinatesCalculatorMenu_Header" xml:space="preserve">
-    <value>Coordinates calculator</value>
-  </data>
-    <data name="GlobalCommands_OpenStoreDialogTitle" xml:space="preserve">
-    <value>Open store file</value>
-  </data>
-    <data name="MapSettingsView_MapProvider_Description" xml:space="preserve">
+  <data name="MapSettingsView_MapProvider_Description" xml:space="preserve">
     <value>Select current map provider</value>
   </data>
     <data name="MapSettingsView_MapProvider_Header" xml:space="preserve">
@@ -214,46 +178,13 @@
     <data name="MapSettingsView_MapsInfo_Header" xml:space="preserve">
     <value>Map storage</value>
   </data>
-    <data name="MapSettingsViewModel_MapDialogTitle" xml:space="preserve">
-    <value>Maps</value>
-  </data>
-    <data name="Distance_Meters_Title" xml:space="preserve">
+  <data name="Distance_Meters_Title" xml:space="preserve">
     <value>Meters</value>
   </data>
     <data name="Distance_NauticalMiles_Title" xml:space="preserve">
     <value>Nautical miles</value>
   </data>
-    <data name="LogMessagesShellMenuItem_Name" xml:space="preserve">
-    <value>Log messages</value>
-  </data>
-    <data name="LogMessagesPageView_By" xml:space="preserve">
-    <value>by </value>
-  </data>
-    <data name="LogMessagesPageView_SearchWatermark" xml:space="preserve">
-    <value>Search</value>
-  </data>
-    <data name="LogMessagesPageView_From" xml:space="preserve">
-    <value>From {0}</value>
-  </data>
-    <data name="LogMessagesPageView_To" xml:space="preserve">
-    <value>to {0}</value>
-  </data>
-    <data name="LogMessagesPageView_Filtered" xml:space="preserve">
-    <value>Filtered: {0}</value>
-  </data>
-    <data name="LogMessagesPageView_Total" xml:space="preserve">
-    <value>Total: {0}</value>
-  </data>
-    <data name="LogMessagesPageViewModel_LogName" xml:space="preserve">
-    <value>LogMessages</value>
-  </data>
-    <data name="LogMessagesPageViewModel_RefreshErrorMessage" xml:space="preserve">
-    <value>Error to refresh items</value>
-  </data>
-    <data name="LogMessagesPageViewModel_ClearAllMessage" xml:space="preserve">
-    <value>Clear all log messages</value>
-  </data>
-    <data name="SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name" xml:space="preserve">
+  <data name="SerialPortViewModel_SerialPortViewModel_You_must_specify_a_valid_name" xml:space="preserve">
     <value>You must specify a valid name</value>
   </data>
     <data name="SerialPortViewModel_SerialPortViewModel_ValidSerialPort" xml:space="preserve">
@@ -310,19 +241,10 @@
     <data name="ConnectionsPortsView_Header_Title" xml:space="preserve">
     <value>Ports</value>
   </data>
-    <data name="ConnectionsView_Header_Description" xml:space="preserve">
-    <value>This page allows you to configure the basic settings on the Mavlink network</value>
-  </data>
-    <data name="ConnectionsView_Header_Title" xml:space="preserve">
-    <value>Mavlink network</value>
-  </data>
-    <data name="ConnectionsPortsView_Header_Description" xml:space="preserve">
+  <data name="ConnectionsPortsView_Header_Description" xml:space="preserve">
     <value>Point of entry that allows it to communicate with other devices in Mavlink network.</value>
   </data>
-    <data name="DeviceBrowserView_Description" xml:space="preserve">
-    <value>In this section you can see all found devices on the network</value>
-  </data>
-    <data name="DeviceBrowserView_Header" xml:space="preserve">
+  <data name="DeviceBrowserView_Header" xml:space="preserve">
     <value>Device list</value>
   </data>
     <data name="ConnectionsIdentificationView_HeartbeatRate_Description" xml:space="preserve">
@@ -425,16 +347,7 @@
     <data name="PacketViewerShellMenuItem_Name" xml:space="preserve">
     <value>Packet Viewer</value>
   </data>
-    <data name="LogMessageTypeHelper_GetDisplayName_Info" xml:space="preserve">
-    <value>Info</value>
-  </data>
-    <data name="LogMessageTypeHelper_GetDisplayName_Warning" xml:space="preserve">
-    <value>Warning</value>
-  </data>
-    <data name="LogMessageTypeHelper_GetDisplayName_Error" xml:space="preserve">
-    <value>Error</value>
-  </data>
-    <data name="PacketViewerView_CheckAll" xml:space="preserve">
+  <data name="PacketViewerView_CheckAll" xml:space="preserve">
     <value>Check/Uncheck All</value>
   </data>
     <data name="PacketViewerView_PlayPause" xml:space="preserve">
@@ -464,106 +377,7 @@
     <data name="ConnectionsViewModel_EditDialogPort_Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
-    <data name="LogMessagesPageView_By_ToolTip" xml:space="preserve">
-    <value>Number of elements on one page </value>
-  </data>
-    <data name="LogMessagesPageView_ClearAllButton_ToolTip" xml:space="preserve">
-    <value>Clear all logs</value>
-  </data>
-    <data name="LogMessagesPageView_PrevButton_ToolTip" xml:space="preserve">
-    <value>Move to previous page</value>
-  </data>
-    <data name="LogMessagesPageView_NextButton_ToolTip" xml:space="preserve">
-    <value>Move to next page</value>
-  </data>
-    <data name="LogMessagesPageView_RefreshButton_ToolTip" xml:space="preserve">
-    <value>Refresh all elements</value>
-  </data>
-    <data name="LoggerView_ErrorFilter_Name" xml:space="preserve">
-    <value>Error</value>
-  </data>
-    <data name="LoggerView_InfoFilter_Name" xml:space="preserve">
-    <value>Info</value>
-  </data>
-    <data name="LoggerView_WarningFilter_Name" xml:space="preserve">
-    <value>Warning</value>
-  </data>
-    <data name="LoggerView_TraceFilter_Name" xml:space="preserve">
-    <value>Trace</value>
-  </data>
-    <data name="SavedCoordsView_Header" xml:space="preserve">
-    <value>Saved Coordinates</value>
-  </data>
-    <data name="SavedCoordsView_Description" xml:space="preserve">
-    <value>in this section you can view and save new map coordinates for GBS Fixed Mode</value>
-  </data>
-    <data name="SavedCoordsView_AddNewButton_Name" xml:space="preserve">
-    <value>Add New</value>
-  </data>
-    <data name="SavedCoordsView_RemoveButton_Name" xml:space="preserve">
-    <value>Remove</value>
-  </data>
-    <data name="SavedCoordsViewModel_AddNewItem_Title" xml:space="preserve">
-    <value>Add new map coordinate</value>
-  </data>
-    <data name="SavedCoordsViewModel_AddNewItem_PrimaryButtonText" xml:space="preserve">
-    <value>Add</value>
-  </data>
-    <data name="SavedCoordsViewModel_AddNewItem_CloseButtonText" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-    <data name="AddNewMapPointView_Latitude_Name" xml:space="preserve">
-    <value>Latitude</value>
-  </data>
-    <data name="AddNewMapPointView_Longitude_Name" xml:space="preserve">
-    <value>Longitude</value>
-  </data>
-    <data name="AddNewMapPointView_Altitude_Name" xml:space="preserve">
-    <value>Altitude</value>
-  </data>
-    <data name="AddNewMapPointView_Accuracy_Name" xml:space="preserve">
-    <value>Accuracy</value>
-  </data>
-    <data name="SavedCoordsViewModel_RemoveItem_Title" xml:space="preserve">
-    <value>Remove Map Point</value>
-  </data>
-    <data name="SavedCoordsViewModel_RemoveItem_PrimaryButtonText" xml:space="preserve">
-    <value>Remove</value>
-  </data>
-    <data name="SavedCoordsViewModel_RemoveItem_CloseButtonText" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-    <data name="RemoveMapPointView_ConfirmationText" xml:space="preserve">
-    <value>Are you sure you want to delete this map point?</value>
-  </data>
-    <data name="RemoveMapPointView_Point_Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-    <data name="RemoveMapPointView_Latitude_Name" xml:space="preserve">
-    <value>Latitude</value>
-  </data>
-    <data name="RemoveMapPointView_Longitude_Name" xml:space="preserve">
-    <value>Longitude</value>
-  </data>
-    <data name="RemoveMapPointView_Altitude_Name" xml:space="preserve">
-    <value>Altitude</value>
-  </data>
-    <data name="RemoveMapPointView_Accuracy_Name" xml:space="preserve">
-    <value>Accuracy</value>
-  </data>
-    <data name="AddNewMapPointView_Point_Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-    <data name="AddNewMapPointViewModel_Accuracy_ValidValue" xml:space="preserve">
-    <value>Accuracy must be greater or equal {0}.</value>
-  </data>
-    <data name="AddNewMapPointViewModel_Name_ValidValue" xml:space="preserve">
-    <value>Name can not be empty</value>
-  </data>
-    <data name="LoggerView_Clear_Name" xml:space="preserve">
-    <value>Clear</value>
-  </data>
-    <data name="PacketViewerViewModel_SeparatorDialog_Title" xml:space="preserve">
+  <data name="PacketViewerViewModel_SeparatorDialog_Title" xml:space="preserve">
     <value>Select the separator</value>
   </data>
     <data name="PacketViewerViewModel_SeparatorDialog_DialogPrimaryButton" xml:space="preserve">
@@ -581,13 +395,7 @@
     <data name="PacketViewerViewModel_SeparatorDialog_Tab" xml:space="preserve">
     <value>Horizontal tabulation [ Tab ]</value>
   </data>
-    <data name="MapPageViewModel_RulerStartPoint_Description" xml:space="preserve">
-    <value>Select ruler starting point</value>
-  </data>
-    <data name="MapPageViewModel_RulerStopPoint_Description" xml:space="preserve">
-    <value>Select ruler end point</value>
-  </data>
-    <data name="Ddm_InParts_Title" xml:space="preserve">
+  <data name="Ddm_InParts_Title" xml:space="preserve">
     <value>In parts</value>
   </data>
     <data name="Ddm_Percent_Title" xml:space="preserve">
@@ -602,13 +410,7 @@
     <data name="Ddm_MicroampRus_Title" xml:space="preserve">
     <value>Microamp (Rus)</value>
   </data>
-    <data name="MeasureUnitsSettingsViewModel_DdmLlz" xml:space="preserve">
-    <value>DDM Llz</value>
-  </data>
-    <data name="MeasureUnitsSettingsViewModel_DdmLlzDescription" xml:space="preserve">
-    <value>Change the current measure units of DDM Llz.</value>
-  </data>
-    <data name="Power_Dbm_Title" xml:space="preserve">
+  <data name="Power_Dbm_Title" xml:space="preserve">
     <value>Decibel to 1 milliwatt</value>
   </data>
     <data name="Power_Dbm_Unit" xml:space="preserve">
@@ -653,19 +455,7 @@
     <data name="Phase_Radian_Unit" xml:space="preserve">
     <value>Rad</value>
   </data>
-    <data name="MapSettingsView_MapSettings_Header" xml:space="preserve">
-    <value>Map settings</value>
-  </data>
-    <data name="MapSettingsView_MapSettings_Description" xml:space="preserve">
-    <value>Change current map settings</value>
-  </data>
-    <data name="MeasureUnitsSettingsViewModelDdmGp" xml:space="preserve">
-    <value>DDM GP</value>
-  </data>
-    <data name="MeasureUnitsSettingsViewModelDdmGpDescription" xml:space="preserve">
-    <value>Change the current measure units of DDM GP</value>
-  </data>
-    <data name="BearingDegreeTitle" xml:space="preserve">
+  <data name="BearingDegreeTitle" xml:space="preserve">
     <value>Degrees</value>
   </data>
     <data name="Temperature_Celsius_Title" xml:space="preserve">
@@ -683,11 +473,7 @@
     <data name="MeasureUnitsSettingsViewModelTemperatureDescription" xml:space="preserve">
     <value>Change the current measure units of temperature.</value>
   </data>
-
-    <data name="AnchorMoverActionView_Title" xml:space="preserve">
-    <value>Move anchors</value>
-</data>
-    <data name="MeasureUnitsSettingsViewModelAngle" xml:space="preserve">
+  <data name="MeasureUnitsSettingsViewModelAngle" xml:space="preserve">
     <value>Angle</value>
   </data>
     <data name="MeasureUnitsSettingsViewModelAngleDescription" xml:space="preserve">
@@ -711,54 +497,11 @@
     <data name="Longitude_DMS_Title" xml:space="preserve">
     <value>[D]°[M]′[S]′′</value>
   </data>
-    <data name="CoordinatesCalculatorDialog_Title" xml:space="preserve">
-    <value>Coordinates calculator</value>
-  </data>
-    <data name="CoordinatesCalculatorDialog_CloseButton" xml:space="preserve">
-    <value>Close</value>
-  </data>
-    <data name="CoordinatesCalculatorView_ToStandard" xml:space="preserve">
-    <value>To standard</value>
-  </data>
-    <data name="CoordinatesCalculatorView_ToLongitude" xml:space="preserve">
-    <value>To longitude</value>
-  </data>
-    <data name="CoordinatesCalculatorView_ToLatLonUnit" xml:space="preserve">
-    <value>To lat/long units</value>
-  </data>
-    <data name="CoordinatesCalculatorView_ToLatitude" xml:space="preserve">
-    <value>To latitude</value>
-  </data>
-    <data name="CoordinatesCalculatorView_ToAltUnit" xml:space="preserve">
-    <value>To altitude units</value>
-  </data>
-    <data name="CoordinatesCalculatorView_ToAltitude" xml:space="preserve">
-    <value>To altitude</value>
-  </data>
-    <data name="CoordinatesCalculatorView_FromStandard" xml:space="preserve">
-    <value>From standard</value>
-  </data>
-    <data name="CoordinatesCalculatorView_FromLongitude" xml:space="preserve">
-    <value>From longitude</value>
-  </data>
-    <data name="CoordinatesCalculatorView_FromLatLonUnit" xml:space="preserve">
-    <value>From lat/long units</value>
-  </data>
-    <data name="CoordinatesCalculatorView_FromLatitude" xml:space="preserve">
-    <value>From latitude</value>
-  </data>
-    <data name="CoordinatesCalculatorView_FromAltUnit" xml:space="preserve">
-    <value>From altitude units</value>
-  </data>
-    <data name="CoordinatesCalculatorView_FromAltitude" xml:space="preserve">
-    <value>From altitude</value>
-  </data>
-
-    <data name="Altitude_Title" xml:space="preserve">
-    <value>Altitude</value>
+  <data name="Altitude_Title" xml:space="preserve">
+    <value>AltitudeAGL</value>
   </data>
     <data name="Altitude_Description" xml:space="preserve">
-    <value>Altitude measure units</value>
+    <value>AltitudeAGL measure units</value>
   </data>
     <data name="AmplitudeModulation_Title" xml:space="preserve">
     <value>AM</value>
@@ -852,108 +595,17 @@
     <data name="Sdm_Description" xml:space="preserve">
     <value>Sum depth of modulation measure units</value>
   </data>
-    <data name="HeaderTemplaterMenu_Header" xml:space="preserve">
-    <value>Templater</value>
-  </data>
-    <data name="TemplaterDialog_CloseButton" xml:space="preserve">
-    <value>Close</value>
-  </data>
-    <data name="TemplaterDialog_SaveButton" xml:space="preserve">
-    <value>Save</value>
-  </data>
-    <data name="TemplaterView_TemplatePath" xml:space="preserve">
-    <value>Template path:</value>
-  </data>
-    <data name="TemplaterView_ResultPath" xml:space="preserve">
-    <value>File path:</value>
-  </data>
-    <data name="TemplaterView_AddNewTag" xml:space="preserve">
-    <value>Add new tag</value>
-  </data>
-    <data name="TemplaterView_AddStringTag" xml:space="preserve">
-    <value>Add string tag</value>
-  </data>
-    <data name="TemplaterView_AddImageTag" xml:space="preserve">
-    <value>Add image tag</value>
-  </data>
-    <data name="TemplaterView_ClearTagsList" xml:space="preserve">
-    <value>Clear tags list</value>
-  </data>
     <data name="FieldStrength_Title" xml:space="preserve">
     <value>Field strength</value>
   </data>
-    <data name="FieldStrength_Description" xml:space="preserve">
-    <value>Field strength measure units</value>
-  </data>
-    <data name="FieldStrength_MicroVoltsPerMeter_Unit" xml:space="preserve">
+  <data name="FieldStrength_MicroVoltsPerMeter_Unit" xml:space="preserve">
     <value>µV/m</value>
   </data>
 
     <data name="Degrees_DM_Title" xml:space="preserve">
     <value>[D]°[M]′</value>
   </data>
-    <data name="MeasureUnitsSettingsViewModelBearing" xml:space="preserve">
-    <value>Bearing</value>
-  </data>
-    <data name="MeasureUnitsSettingsViewModelBearingDescription" xml:space="preserve">
-    <value>Change the current measure units of bearing.</value>
-
-  </data>
-    <data name="ParametersEditorParameterView_PinToggleButton_ToolTip" xml:space="preserve">
-    <value>On/off pin for this parameter</value>
-  </data>
-    <data name="ParametersEditorParameterView_UpdateButton_ToolTip" xml:space="preserve">
-    <value>Update this parameter from UAV</value>
-  </data>
-    <data name="ParametersEditorParameterView_WriteButton_ToolTip" xml:space="preserve">
-    <value>Write this parameter to UAV</value>
-  </data>
-    <data name="ParametersEditorParameterView_RebootRequired" xml:space="preserve">
-    <value>Reboot required</value>
-  </data>
-    <data name="ParametersEditorParameterView_UpdateButton" xml:space="preserve">
-    <value>Update</value>
-  </data>
-    <data name="ParametersEditorParameterView_WriteButton" xml:space="preserve">
-    <value>Write</value>
-  </data>
-    <data name="ParamPageViewModel_DataLossDialog_Title" xml:space="preserve">
-    <value>Potential data loss warning</value>
-  </data>
-    <data name="ParamPageViewModel_DataLossDialog_Content" xml:space="preserve">
-    <value>You're trying to open another menu folder, but you have unsaved changes in the current one. Do you want to save them?</value>
-  </data>
-    <data name="ParamPageViewModel_DataLossDialog_PrimaryButtonText" xml:space="preserve">
-    <value>Save</value>
-  </data>
-    <data name="ParamPageViewModel_DataLossDialog_SecondaryButtonText" xml:space="preserve">
-    <value>Don't save</value>
-  </data>
-    <data name="ParamPageViewModel_DataLossDialog_CloseButtonText" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-    <data name="ParametersEditorPageView_StarsToggleButton_ToolTip" xml:space="preserve">
-    <value>Show only starred parameters</value>
-  </data>
-    <data name="ParametersEditorPageView_UpdateButton_ToolTip" xml:space="preserve">
-    <value>Update all parameters</value>
-  </data>
-    <data name="ParametersEditorPageView_PinsOffButton_ToolTip" xml:space="preserve">
-    <value>Remove all pinned parameters</value>
-  </data>
-    <data name="ParametersEditorPageViewModel_Title" xml:space="preserve">
-    <value>Parameters editor [{0}]</value>
-  </data>
-    <data name="ParametersEditorPageViewModel_Search" xml:space="preserve">
-    <value>Search</value>
-  </data>
-    <data name="ParametersEditorPageViewModel_Total" xml:space="preserve">
-    <value>Total: {0}</value>
-  </data>
-    <data name="ParametersEditorPageView_StarButton_ToolTip" xml:space="preserve">
-    <value>Star this parameter</value>
-  </data>
-    <data name="MissionEditorView_Points_Title" xml:space="preserve">
+  <data name="MissionEditorView_Points_Title" xml:space="preserve">
     <value>Mission points</value>
   </data>
     <data name="HeaderPlaningFileMenuItem_Title" xml:space="preserve">
@@ -992,13 +644,7 @@
     <data name="PlaningMissionViewModel_SelectTargetLocation" xml:space="preserve">
     <value>Select target point location</value>
   </data>
-    <data name="HeaderAnchorsMenu_Title" xml:space="preserve">
-    <value>Anchors</value>
-  </data>
-    <data name="HierarhicalStoreView_Search_Textbox_Watermark" xml:space="preserve">
-    <value>Search</value>
-  </data>
-    <data name="PacketViewerViewDockPanelText" xml:space="preserve">
+  <data name="PacketViewerViewDockPanelText" xml:space="preserve">
     <value>Packet Viewer</value>
   </data>
     <data name="PacketViewer_Expander_MessageSources" xml:space="preserve">
@@ -1007,26 +653,7 @@
     <data name="PacketViewer_Expander_MessageTypes" xml:space="preserve">
     <value>Message types</value>
   </data>
-    <data name="HierarchicalStoreView_TextBlock_Text_MoveFolder" xml:space="preserve">
-    <value>Move Folder</value>
-  </data>
-    <data name="HierarchicalStoreView_TextBlock_Text_MoveHere" xml:space="preserve">
-    <value>Move Here</value>
-  </data>
-    <data name="HierarchicalStoreView_TextBlock_Text_Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-    <data name="AnchorsEditorView_TextBlock_Latitude_Text" xml:space="preserve">
-    <value>Latitude</value>
-  </data>
-    <data name="AnchorsEditorView_TextBlock_Altitude_Text" xml:space="preserve">
-    <value>Altitude</value>
-  </data>
-    <data name="AnchorsEditorView_TextBlock_Longitude_Text" xml:space="preserve">
-    <value>Longitude</value>
-  </data>
-
-    <data name="PlaningMissionEditorViewModel_TakeOffMenuItem_Title" xml:space="preserve">
+  <data name="PlaningMissionEditorViewModel_TakeOffMenuItem_Title" xml:space="preserve">
     <value>Take off</value>
   </data>
     <data name="PlaningMissionEditorViewModel_DoLandMenuItem_Title" xml:space="preserve">
@@ -1035,13 +662,7 @@
     <data name="PlaningMissionEditorViewModel_WaypointMenuItem_Title" xml:space="preserve">
     <value>Waypoint</value>
   </data>
-    <data name="PlaningMissionEditorViewModel_RoiMenuItem_Title" xml:space="preserve">
-    <value>ROI</value>
-  </data>
-    <data name="PlaningMissionEditorViewModel_ReplacePointFlyoutMenuItem" xml:space="preserve">
-    <value>Replace</value>
-  </data>
-    <data name="PlaningMissionEditorViewModel_AddPointFlyoutMenuItem_Title" xml:space="preserve">
+  <data name="PlaningMissionEditorViewModel_AddPointFlyoutMenuItem_Title" xml:space="preserve">
     <value>Add</value>
   </data>
     <data name="PlaningPageViewModel_DataLossDialog_Title" xml:space="preserve">
@@ -1059,10 +680,7 @@
     <data name="PlaningPageViewModel_DataLossDialog_CloseButtonText" xml:space="preserve">
     <value>Cancel</value>
   </data>
-    <data name="ParametersEditorPageViewModel_Loaded" xml:space="preserve">
-    <value>Loaded: {0}</value>
-  </data>
-    <data name="DeviceBrowserTreeMenuItem_Description" xml:space="preserve">
+  <data name="DeviceBrowserTreeMenuItem_Description" xml:space="preserve">
     <value>List of all devices found on the MAVLink network</value>
   </data>
     <data name="ConnectionTreeMenuItem_Description" xml:space="preserve">
@@ -1084,7 +702,7 @@
     <value>Take off</value>
   </data>
     <data name="TakeOffAnchorActionViewModel_DialogDescription" xml:space="preserve">
-    <value>Set altitude above ground level (AGL) for takeoff command.</value>
+    <value>Set altitude for takeoff command.</value>
   </data>
     <data name="TakeOffAnchorActionViewModel_DialogPrimaryButton" xml:space="preserve">
     <value>Take off</value>
@@ -1093,7 +711,7 @@
     <value>Cancel</value>
   </data>
     <data name="TakeOffAnchorActionViewModel_ValidValue" xml:space="preserve">
-    <value>Altitude must be greater or equal {0}.</value>
+    <value>AltitudeAGL must be greater or equal {0}.</value>
   </data>
     <data name="TakeOffAnchorActionViewModel_LogMessage" xml:space="preserve">
     <value>User send TakeOff at {0} altitude for {1}</value>
@@ -1143,10 +761,7 @@
     <data name="VoltageUavRttItemView_ToolTip" xml:space="preserve">
     <value>UAV voltage</value>
   </data>
-    <data name="FlightUavView_MoveToButton_ToolTip" xml:space="preserve">
-    <value>Move to this UAV on map</value>
-  </data>
-    <data name="MissionStatusView_GetMissionButton_ToolTip" xml:space="preserve">
+  <data name="MissionStatusView_GetMissionButton_ToolTip" xml:space="preserve">
     <value>Load mission from UAV</value>
   </data>
     <data name="MissionStatusView_DisableLayersButton_ToolTip" xml:space="preserve">
@@ -1158,27 +773,10 @@
     <data name="MissionStatusView_ToggleWaypointsButton_ToolTip" xml:space="preserve">
     <value>On/off mission way points visibility</value>
   </data>
-    <data name="MissionStatusView_MissionDistance" xml:space="preserve">
-    <value>Mission: {0}</value>
-  </data>
-    <data name="MissionStatusView_MissionProgress_ToolTip" xml:space="preserve">
+  <data name="MissionStatusView_MissionProgress_ToolTip" xml:space="preserve">
     <value>Current mission progress</value>
   </data>
-
-
-    <data name="AltitudeIndicator_Vibration_ToolTip" xml:space="preserve">
-    <value>Vibration and clipping of UAV</value>
-  </data>
-    <data name="AttitudeIndicator_Velocity_ToolTip" xml:space="preserve">
-    <value>Velocity</value>
-  </data>
-    <data name="AttitudeIndicator_Altitude_ToolTip" xml:space="preserve">
-    <value>Altitude</value>
-  </data>
-    <data name="AttitudeIndicator_Compass_ToolTip" xml:space="preserve">
-    <value>Compass</value>
-  </data>
-    <data name="FlightUavView_Minimize_ToolTip" xml:space="preserve">
+  <data name="FlightUavView_Minimize_ToolTip" xml:space="preserve">
     <value>Minimize/Maximize UAV</value>
   </data>
     <data name="FlightUavView_FollowButton_ToolTip" xml:space="preserve">
@@ -1217,148 +815,11 @@
     <data name="SelectModeAnchorActionView_DialogDescription" xml:space="preserve">
     <value>Change UAV mode from list</value>
   </data>
-    <data name="SpeedsQuickParamView_WPNAV_SPEED_Header" xml:space="preserve">
-    <value>Waypoint Horizontal Speed Target (WPNAV_SPEED)</value>
-  </data>
-    <data name="SpeedsQuickParamView_WPNAV_SPEED_Description" xml:space="preserve">
-    <value>Defines the speed in cm/s which the aircraft will attempt to maintain horizontally during a WP mission. Increment - 0.5. Range 0.2-20. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h].</value>
-  </data>
-    <data name="SpeedsQuickParamView_WPNAV_SPEED_DN_Header" xml:space="preserve">
-    <value>Waypoint Descent Speed Target (WPNAV_SPEED_DN)</value>
-  </data>
-    <data name="SpeedsQuickParamView_WPNAV_SPEED_DN_Description" xml:space="preserve">
-    <value>Defines the speed in cm/s which the aircraft will attempt to maintain while descending during a WP mission. Increment - 0.1. Range 0.1-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h].</value>
-  </data>
-    <data name="SpeedsQuickParamView_WPNAV_SPEED_UP_Header" xml:space="preserve">
-    <value>Waypoint Climb Speed Target (WPNAV_SPEED_UP)</value>
-  </data>
-    <data name="SpeedsQuickParamView_WPNAV_SPEED_UP_Description" xml:space="preserve">
-    <value>Defines the speed in cm/s which the aircraft will attempt to maintain while climbing during a WP mission. Increment - 0.5. Range 0.1-10. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h].</value>
-  </data>
-    <data name="SpeedsQuickParamView_RTL_SPEED_Header" xml:space="preserve">
-    <value>RTL speed (RTL_SPEED)</value>
-  </data>
-    <data name="SpeedsQuickParamView_RTL_SPEED_Description" xml:space="preserve">
-    <value>Defines the speed in cm/s which the aircraft will attempt to maintain horizontally while flying home. If this is set to zero, WPNAV_SPEED will be used instead. Increment - 50. Range 0-2000. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h].</value>
-  </data>
-    <data name="SpeedsQuickParamView_LOIT_SPEED_Header" xml:space="preserve">
-    <value>Loiter Horizontal Maximum Speed (LOIT_SPEED)</value>
-  </data>
-    <data name="SpeedsQuickParamView_LOIT_SPEED_Description" xml:space="preserve">
-    <value>Defines the maximum speed in cm/s which the aircraft will travel horizontally while in loiter mode. Increment - 0.5. Range 0.2-35. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h].</value>
-  </data>
-    <data name="SpeedsQuickParamView_LAND_SPEED_Header" xml:space="preserve">
-    <value>Land speed (LAND_SPEED)</value>
-  </data>
-    <data name="SpeedsQuickParamView_LAND_SPEED_Description" xml:space="preserve">
-    <value>The descent speed for the final stage of landing in cm/s. Increment - 0.1. Range 0.3-2. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h].</value>
-  </data>
-    <data name="SpeedsQuickParamView_LAND_SPEED_HIGH_Header" xml:space="preserve">
-    <value>Land speed high (LAND_SPEED_HIGH)</value>
-  </data>
-    <data name="SpeedsQuickParamView_LAND_SPEED_HIGH_Description" xml:space="preserve">
-    <value>The descent speed for the first stage of landing in cm/s. If this is zero then WPNAV_SPEED_DN is used. Increment - 0.1. Range 0-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h].</value>
-  </data>
-    <data name="SpeedsQuickParamView_LAND_ALT_LOW_Header" xml:space="preserve">
-    <value>Land altitude low (LAND_ALT_LOW)</value>
-  </data>
-    <data name="SpeedsQuickParamView_LAND_ALT_LOW_Description" xml:space="preserve">
-    <value>Altitude during Landing at which vehicle slows to LAND_SPEED. Increment - 0.1. Range 1-100. [{0:F2} cm] [{1:F2} ft]. Note: This parameter is for advanced users.</value>
-  </data>
-    <data name="SpeedsQuickParamView_PILOT_SPEED_UP_Header" xml:space="preserve">
-    <value>Pilot maximum vertical speed ascending (PILOT_SPEED_UP)</value>
-  </data>
-    <data name="SpeedsQuickParamView_PILOT_SPEED_UP_Description" xml:space="preserve">
-    <value>The maximum vertical ascending velocity the pilot may request in cm/s. Increment - 0.1. Range 0.5-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h].</value>
-  </data>
-    <data name="SpeedsQuickParamView_PILOT_SPEED_DN_Header" xml:space="preserve">
-    <value>Pilot maximum vertical speed descending (PILOT_SPEED_DN)</value>
-  </data>
-    <data name="SpeedsQuickParamView_PILOT_SPEED_DN_Description" xml:space="preserve">
-    <value>The maximum vertical descending velocity the pilot may request in cm/s. If 0 PILOT_SPEED_UP value is used. Increment - 0.1. Range 0-5. [{0:F2} cm/s] [{1:F2} km/h] [{2:F2} mi/h].</value>
-  </data>
-    <data name="SpeedsQuickParamView_LAND_ALT_LOW_Units" xml:space="preserve">
-    <value>m</value>
-  </data>
-    <data name="SpeedsQuickParamView_LAND_SPEED_Units" xml:space="preserve">
-    <value>m/s</value>
-  </data>
-    <data name="SpeedsQuickParamView_LAND_SPEED_HIGH_Units" xml:space="preserve">
-    <value>m/s</value>
-  </data>
-    <data name="SpeedsQuickParamView_LOIT_SPEED_Units" xml:space="preserve">
-    <value>m/s</value>
-  </data>
-    <data name="SpeedsQuickParamView_PILOT_SPEED_DN_Units" xml:space="preserve">
-    <value>m/s</value>
-  </data>
-    <data name="SpeedsQuickParamView_PILOT_SPEED_UP_Units" xml:space="preserve">
-    <value>m/s</value>
-  </data>
-    <data name="SpeedsQuickParamView_RTL_SPEED_Units" xml:space="preserve">
-    <value>m/s</value>
-  </data>
-    <data name="SpeedsQuickParamView_WPNAV_SPEED_DN_Units" xml:space="preserve">
-    <value>m/s</value>
-  </data>
-    <data name="SpeedsQuickParamView_WPNAV_SPEED_Units" xml:space="preserve">
-    <value>m/s</value>
-  </data>
-    <data name="SpeedsQuickParamView_WPNAV_SPEED_UP_Units" xml:space="preserve">
-    <value>m/s</value>
-  </data>
-    <data name="ControllerReloadQuickParamView_ReloadButton_Content" xml:space="preserve">
-    <value>Reload</value>
-  </data>
-    <data name="ControllerReloadQuickParamView_Header" xml:space="preserve">
-    <value>Controller reload</value>
-  </data>
-    <data name="ControllerReloadQuickParamView_Description" xml:space="preserve">
-    <value>Here you can reload controller</value>
-  </data>
-    <data name="SpeedsQuickParamView_Header" xml:space="preserve">
-    <value>Speeds</value>
-  </data>
-    <data name="SpeedsQuickParamView_Description" xml:space="preserve">
-    <value>Here you can change the speeds</value>
-  </data>
-    <data name="IdentityQuickParamView_Header" xml:space="preserve">
-    <value>System ID</value>
-  </data>
-    <data name="IdentityQuickParamView_Description" xml:space="preserve">
-    <value>Each system has a network-unique system id, and each component has a system-unique component id that can be used for addressing/routing</value>
-  </data>
-    <data name="FailSafeQuickParamView_Header" xml:space="preserve">
-    <value>FailSafe parameters</value>
-  </data>
-    <data name="FailSafeQuickParamView_Description" xml:space="preserve">
-    <value>Here you can change FailSafe parameters</value>
-  </data>
-    <data name="QuickParamsSetupPageView_WriteRequired_Title" xml:space="preserve">
-    <value>Write required</value>
-  </data>
-    <data name="QuickParamsSetupPageView_WriteRequired_Message" xml:space="preserve">
-    <value>You must click the write button if you want to save and apply the changes.</value>
-  </data>
-    <data name="QuickParamsSetupPageView_AdvancedSetupButton_Text" xml:space="preserve">
-    <value>Advanced setup</value>
-  </data>
-    <data name="QuickParamsSetupPageView_WriteAllButton_Text" xml:space="preserve">
-    <value>Write all</value>
-  </data>
-    <data name="QuickParamsSetupPageView_ReadAllButton_Text" xml:space="preserve">
-    <value>Read all</value>
-  </data>
-    <data name="FlightUavView_UavDropDownControls_Title" xml:space="preserve">
-    <value>Uav actions</value>
-  </data>
-    <data name="FlightUavView_FindButton_ToolTip" xml:space="preserve">
+    
+  <data name="FlightUavView_FindButton_ToolTip" xml:space="preserve">
     <value>Find UAV</value>
   </data>
-    <data name="MissionStatusView_TotalDistance" xml:space="preserve">
-    <value>Total: {0}</value>
-  </data>
-    <data name="VehiclesShellMenuItemProvider_ShellMenuItem_Settings" xml:space="preserve">
+  <data name="VehiclesShellMenuItemProvider_ShellMenuItem_Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
     <data name="LandAnchorActionViewModel_Title" xml:space="preserve">
@@ -1400,25 +861,13 @@
     <data name="AttitudeViewModel_Vehicle_UpdateStatusText_Disarmed" xml:space="preserve">
     <value>Disarmed</value>
   </data>
-    <data name="PlaningMissionViewModel_InternalAfterMapInit_Vehicle_Name_Subscribe" xml:space="preserve">
-    <value>{0} mission</value>
-  </data>
-    <data name="StartAutoAnchorActionViewModel_Title" xml:space="preserve">
+  <data name="StartAutoAnchorActionViewModel_Title" xml:space="preserve">
     <value>Start mission</value>
   </data>
     <data name="StartAutoAnchorActionViewModel_ExecuteImpl_LogInfo" xml:space="preserve">
     <value>User send Start mission for {0}</value>
   </data>
-    <data name="PlaningMissionViewModel_OnDownloadError_LogInfo" xml:space="preserve">
-    <value>Download mission error {0}</value>
-  </data>
-    <data name="PlaningMissionViewModel_OnUploadError_LogInfo" xml:space="preserve">
-    <value>Upload mission error {0}</value>
-  </data>
-    <data name="PlaningMissionViewModel_OnClearError_LogInfo" xml:space="preserve">
-    <value>Clear mission error {0}</value>
-  </data>
-    <data name="PlaningMissionPointViewModel_Param1Title" xml:space="preserve">
+  <data name="PlaningMissionPointViewModel_Param1Title" xml:space="preserve">
     <value>Parameter 1</value>
   </data>
     <data name="PlaningMissionPointViewModel_Param2Title" xml:space="preserve">
@@ -1526,28 +975,7 @@
     <data name="LogViewerView_SearchText_Watermark" xml:space="preserve">
     <value>Search in messages</value>
   </data>
-    <data name="LogViewerView_StopDateTime_Title" xml:space="preserve">
-    <value>Stop date time:</value>
-  </data>
-    <data name="LogViewerView_StartDateTime_Title" xml:space="preserve">
-    <value>Start date time:</value>
-  </data>
-    <data name="LogViewerView_DataGrid_Time_Title" xml:space="preserve">
-    <value>Time</value>
-  </data>
-    <data name="LogViewerView_DataGrid_ThreadId_Title" xml:space="preserve">
-    <value>Thread ID</value>
-  </data>
-    <data name="LogViewerView_DataGrid_Level_Title" xml:space="preserve">
-    <value>Level</value>
-  </data>
-    <data name="LogViewerView_DataGrid_Class_Title" xml:space="preserve">
-    <value>Class</value>
-  </data>
-    <data name="LogViewerView_DataGrid_Message_Title" xml:space="preserve">
-    <value>Message</value>
-  </data>
-    <data name="LogViewerView_TextBlock_By_Title" xml:space="preserve">
+  <data name="LogViewerView_TextBlock_By_Title" xml:space="preserve">
     <value>By:</value>
   </data>
     <data name="LogViewerView_TextBlock_TotalItemsCount" xml:space="preserve">
@@ -1589,46 +1017,7 @@
     <data name="MissionStatusViewModel_PointLowerThanHome_Warning" xml:space="preserve">
     <value>Mission item '{0}' altitude is {1}. It is lower than Home altitude.</value>
   </data>
-    <data name="PluginsSourcesViewModel_AddNewSourceDialog_Title" xml:space="preserve">
-    <value>Add new repository</value>
-  </data>
-    <data name="PluginsSourcesViewModel_EditSourceDialog_Title" xml:space="preserve">
-    <value>Edit repository</value>
-  </data>
-    <data name="PluginsSourcesViewModel_AddNewSourceDialog_PrimaryButton" xml:space="preserve">
-    <value>Add</value>
-  </data>
-    <data name="PluginsSourcesViewModel_AddNewSourceDialog_CloseButton" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-    <data name="PluginsSourcesViewModel_EditSourceDialog_PrimaryButton" xml:space="preserve">
-    <value>Apply</value>
-  </data>
-    <data name="PluginsSourcesViewModel_EditSourceDialog_CloseButton" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-    <data name="PluginsSourcesView_AddNewSource" xml:space="preserve">
-    <value>Add</value>
-  </data>
-    <data name="PluginsSourcesView_EditSource" xml:space="preserve">
-    <value>Edit</value>
-  </data>
-    <data name="PluginsSourcesView_RemoveSource" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-    <data name="PluginsSourcesView_DataGrid_Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-    <data name="PluginsSourcesView_DataGrid_URL" xml:space="preserve">
-    <value>URL Address</value>
-  </data>
-    <data name="PluginsSourcesView_DataGrid_User" xml:space="preserve">
-    <value>Username</value>
-  </data>
-    <data name="PluginsSourcesView_DataGrid_Password" xml:space="preserve">
-    <value>Password</value>
-  </data>
-    <data name="SourcesView_Password" xml:space="preserve">
+  <data name="SourcesView_Password" xml:space="preserve">
     <value>New password</value>
   </data>
     <data name="SourcesView_Username" xml:space="preserve">
@@ -1640,13 +1029,7 @@
     <data name="SourcesView_Name" xml:space="preserve">
     <value>Name</value>
   </data>
-    <data name="PluginsSourcesTreeMenuItem_Name" xml:space="preserve">
-    <value>Sources</value>
-  </data>
-    <data name="PluginsSourcesTreeMenuItem_Description" xml:space="preserve">
-    <value>Edit plugins sources </value>
-  </data>
-    <data name="PluginsTreeMenuItem_Name_Plugins" xml:space="preserve">
+  <data name="PluginsTreeMenuItem_Name_Plugins" xml:space="preserve">
     <value>Plugins</value>
   </data>
     <data name="PluginsTreeMenuItem_Description" xml:space="preserve">
@@ -1679,13 +1062,7 @@
     <data name="PluginsSourcesViewModel_EditImpl_Title" xml:space="preserve">
     <value>Edit plugin source</value>
   </data>
-    <data name="PluginsSourcesView_AddSource" xml:space="preserve">
-    <value>Add new source</value>
-  </data>
-    <data name="AddSourceView_Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-    <data name="SourceViewModel_SourceViewModel_Name_is_required" xml:space="preserve">
+  <data name="SourceViewModel_SourceViewModel_Name_is_required" xml:space="preserve">
     <value>Name is required</value>
   </data>
     <data name="SourceViewModel_SourceViewModel_SourceUri_is_required" xml:space="preserve">
@@ -1739,10 +1116,7 @@
     <data name="SelectUploadVehicleView_CloseOnFinish_Text" xml:space="preserve">
     <value>Close dialog when upload finish</value>
   </data>
-    <data name="SelectDownloadVehicleView_CloseOnFinish_Text" xml:space="preserve">
-    <value>Close dialog when download finish</value>
-  </data>
-    <data name="SelectDownloadVehicleView_SelectVehicle_Placeholder" xml:space="preserve">
+  <data name="SelectDownloadVehicleView_SelectVehicle_Placeholder" xml:space="preserve">
     <value>Select vehicle to download</value>
   </data>
     <data name="SelectDownloadVehicleView_SelectVehicle_Title" xml:space="preserve">
@@ -1827,7 +1201,7 @@
     <value>Packet Loss Chance should be between 0 and 100 inclusive</value>
   </data>
   <data name="PortView_PacketLossChance" xml:space="preserve">
-    <value>Packet Loss Chance</value>
+    <value>Packet Loss Chance: </value>
   </data>
   <data name="Accuracy_Description" xml:space="preserve">
     <value>Accuracy measure units</value>
@@ -1862,10 +1236,88 @@
   <data name="PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_Title" xml:space="preserve">
     <value>Confirmation</value>
   </data>
-  <data name="PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_PrimaryButtonText" xml:space="preserve">
-    <value>Rewrite</value>
-  </data>
   <data name="PlanningPageViewModel_MissionSavingBrowserDialog_ConfirmationText_ContentText" xml:space="preserve">
     <value>A file with the same name already exists. After performing this action, overwriting will occur. Are you sure you want to continue?</value>
+  </data>
+  <data name="LoggerViewModel_Title" xml:space="preserve">
+    <value>Loger</value>
+  </data>
+  <data name="MissionStatusView_SubStatusText" xml:space="preserve">
+    <value>Before complete</value>
+  </data>
+  <data name="PluginsSourcesTreeMenuItem_Name" xml:space="preserve">
+    <value>Servers</value>
+  </data>
+  <data name="PluginsSourcesTreeMenuItem_Description" xml:space="preserve">
+    <value>Plugin source servers</value>
+  </data>
+  <data name="PluginsMarketTreeMenuItem_Name" xml:space="preserve">
+    <value>Market</value>
+  </data>
+  <data name="PluginsMarketTreeMenuItem_Description" xml:space="preserve">
+    <value>Plugins market</value>
+  </data>
+  <data name="PluginsMarketView_SelectedPluginIsNull" xml:space="preserve">
+    <value>Please select plugin</value>
+  </data>
+  <data name="PluginsInstalledView_SelectedPluginIsNull" xml:space="preserve">
+    <value>Please select plugin</value>
+  </data>
+  <data name="AppearanceTreeMenuItem_Name" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="AppearanceTreeMenuItem_Description" xml:space="preserve">
+    <value>Appearance, theme, language, versions, licence...</value>
+  </data>
+  <data name="PortView_Expander_Advanced" xml:space="preserve">
+    <value>Advanced settings</value>
+  </data>
+  <data name="PortView_ToolTip" xml:space="preserve">
+    <value>Packet loss chance (for debug)</value>
+  </data>
+  <data name="PluginsInstalledView_IsUnverified" xml:space="preserve">
+    <value>Unverifed</value>
+  </data>
+  <data name="PluginsMarketView_InfoBar_IsVerified" xml:space="preserve">
+    <value>Verified</value>
+  </data>
+    <data name="PluginsMarketView_InfoBar_IsVerified_Message" xml:space="preserve">
+    <value>This plugin is verified by developers</value>
+  </data>
+  <data name="TakeOffAnchorActionViewModel_AltitudeAgl_Title" xml:space="preserve">
+    <value>AGL (rel.):</value>
+  </data>
+  <data name="TakeOffAnchorActionViewModel_AltitudeGnss_Title" xml:space="preserve">
+    <value>GNSS (abs.):</value>
+  </data>
+  <data name="TakeOffAnchorActionViewModel_CurrentAgl_Format" xml:space="preserve">
+    <value>Current altitude AGL: {0}</value>
+  </data>
+  <data name="PluginsInstalledView_Tab_AdditionalInfo_Author" xml:space="preserve">
+    <value>Author: </value>
+  </data>
+  <data name="PluginsInstalledView_Tab_AdditionalInfo_Tags" xml:space="preserve">
+    <value>Tags: </value>
+  </data>
+  <data name="PluginsInstalledView_Tab_AdditionalInfo_DownloadCount" xml:space="preserve">
+    <value>Downloads: </value>
+  </data>
+  <data name="PluginsInstalledView_Tab_AdditionalInfo_Dependencies" xml:space="preserve">
+    <value>Dependencies: </value>
+  </data>
+  <data name="PluginInstallerViewModel_InstallPluginAsync_Success" xml:space="preserve">
+    <value>Plugin installed successfully</value>
+  </data>
+  <data name="PluginInstallerViewModel_InstallDialog_Title" xml:space="preserve">
+    <value>Plugin Installer</value>
+  </data>
+  <data name="PluginInstallerViewModel_InstallDialog_SecondaryButtonText" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="PluginInstallerViewModel_InstallDialog_PrimaryButtonText" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="PluginsInstalledView_AllVersions" xml:space="preserve">
+    <value>All versions</value>
   </data>
 </root>

@@ -198,8 +198,6 @@ namespace Asv.Drones.Gui
             #endregion
         }
 
-        
-
         private IRsgaClientDevice CreateRsgaDevice(IMavlinkDevice device)
         {
             RsgaClientDeviceConfig cfg = InternalGetConfig<RsgaClientDeviceConfig>(c => c.Rsga);

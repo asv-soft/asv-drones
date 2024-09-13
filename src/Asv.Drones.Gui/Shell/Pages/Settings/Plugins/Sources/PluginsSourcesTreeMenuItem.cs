@@ -11,8 +11,8 @@ public class PluginsSourcesTreeMenuItem(IPluginManager mng, ILogService log)
     : TreePageMenuItem(WellKnownUri.ShellPageSettingsPluginsSourceUri)
 {
     public override Uri ParentId => WellKnownUri.ShellPageSettingsPluginsUri;
-    public override string? Name => "Servers";
-    public override string? Description => "Plugin source servers";
+    public override string? Name => RS.PluginsSourcesTreeMenuItem_Name;
+    public override string? Description => RS.PluginsSourcesTreeMenuItem_Description;
     public override MaterialIconKind Icon => MaterialIconKind.Web;
     public override int Order => 10;
 

@@ -166,7 +166,7 @@ public class FlightUavViewModel : MapWidgetBase
                 SecondaryButtonText = RS.TakeOffAnchorActionViewModel_DialogSecondaryButton
             };
 
-            using var viewModel = new TakeOffViewModel(_cfg, _loc);
+            using var viewModel = new TakeOffViewModel(_cfg, _loc, _vehicle);
             viewModel.ApplyDialog(dialog);
             dialog.Content = viewModel;
 
@@ -174,7 +174,7 @@ public class FlightUavViewModel : MapWidgetBase
 
             if (result == ContentDialogResult.Primary)
             {
-                var altInMeters = _loc.Altitude.ConvertToSi(viewModel.Altitude);
+                var altInMeters = _loc.Altitude.ConvertToSi(viewModel.AltitudeAgl);
                 _log.Info(LogName,
                           string.Format(RS.TakeOffAnchorActionViewModel_LogMessage,
                                         _loc.Altitude.FromSiToStringWithUnits(altInMeters), _vehicle.Name.Value));
@@ -262,7 +262,9 @@ public class FlightUavViewModel : MapWidgetBase
         foreach (var anchor in Map.Markers)
         {
             if (anchor is UavFlightMissionPathPolygon polygon && polygon.Vehicle.FullId == _vehicle.FullId)
+            {
                 polygon.IsVisible = needTo;
+            }
         }
     }
 
@@ -271,7 +273,14 @@ public class FlightUavViewModel : MapWidgetBase
         foreach (var anchor in Map.Markers)
         {
             if (anchor is UavFlightMissionAnchor missionAnchor && missionAnchor.Vehicle.FullId == _vehicle.FullId)
+            {
                 missionAnchor.IsVisible = needTo;
+            }
+
+            if (anchor.Id.ToString().Contains(AnchorConstants.AirportAnchorsTagTypeName))
+            {
+                anchor.IsVisible = needTo;
+            }
         }
     }
 

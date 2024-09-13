@@ -11,8 +11,8 @@ public class AppearanceTreeMenuItem(IApplicationHost host, ILocalizationService 
     : TreePageMenuItem(WellKnownUri.ShellPageSettingsAppearanceUri)
 {
     public override Uri ParentId => WellKnownUri.UndefinedUri;
-    public override string? Name => "Appearance";
-    public override string? Description => "Appearance e.g. theme, language, versions, licence...";
+    public override string? Name => RS.AppearanceTreeMenuItem_Name;
+    public override string? Description => RS.AppearanceTreeMenuItem_Description;
     public override MaterialIconKind Icon => MaterialIconKind.Information;
     public override int Order => 100;
 
