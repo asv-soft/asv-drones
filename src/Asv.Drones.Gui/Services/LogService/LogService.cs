@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reactive.Subjects;
-using System.Text;
 using System.Threading.Tasks;
 using Asv.Common;
 using Asv.Drones.Gui.Api;

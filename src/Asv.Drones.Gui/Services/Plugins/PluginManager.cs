@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Composition.Hosting;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
@@ -12,15 +13,15 @@ using System.Threading.Tasks;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
-using DynamicData;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using NLog;
 using NuGet.Configuration;
 using NuGet.Packaging;
 using NuGet.Packaging.Core;
 using NuGet.Protocol;
 using NuGet.Protocol.Core.Types;
 using NuGet.Versioning;
+using ZLogger;
 
 
 namespace Asv.Drones.Gui;
@@ -428,14 +429,14 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
                 var packages = await resource.GetAllVersionsAsync(
                     pluginId,
                     new SourceCacheContext(),
-                    new LoggerAdapter(Logger),
+                    new LoggerAdapter(_logger),
                     cancel);
 
                 result.AddRange(packages.Select(package => package.Version.ToString()));
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Error search in {0}", repository.PackageSource.Source);
+                _logger.ZLogError(e,$"Error search in {repository.PackageSource.Source}");
             }
         }
 
@@ -642,7 +643,7 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
                 var dependencyPlatform = NugetHelper.GetPlatform(dependencyPackageArchiveReader);
                 if (dependencyPlatform == null)
                 {
-                    Logger.Warn($"Not found  {NugetHelper.NETCoreAppGroup} platform in package " + identity.Id);
+                    _logger.ZLogWarning($"Not found  {NugetHelper.NETCoreAppGroup} platform in package {identity.Id}");
                     continue;
                 }
 

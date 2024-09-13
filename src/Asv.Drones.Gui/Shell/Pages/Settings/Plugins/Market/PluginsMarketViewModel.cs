@@ -9,6 +9,7 @@ using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
 using DynamicData;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui;

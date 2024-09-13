@@ -1,5 +1,4 @@
 using System;
-using Asv.Drones.Gui.Api;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 

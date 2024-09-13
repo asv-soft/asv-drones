@@ -9,7 +9,6 @@ using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ZLogger;
