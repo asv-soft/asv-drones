@@ -4,7 +4,9 @@
         <ApiVersion>1.0.1</ApiVersion>
         <ApiPrevVersion>1.0.0</ApiPrevVersion>
         <AvaloniaVersion>11.0.6</AvaloniaVersion>
-        <AsvCommonVersion>2.0.2</AsvCommonVersion>
+        
+        <AsvCommonVersion>3.0.0-dev.2</AsvCommonVersion>
+        <ZLoggerVersion>2.5.5</ZLoggerVersion>
         <AsvAvaloniaToolkitVersion>1.0.1</AsvAvaloniaToolkitVersion>
         <AsvAvaloniaMapVersion>2.0.5</AsvAvaloniaMapVersion>
         <AsvMavlinkVersion>3.10.0</AsvMavlinkVersion>
@@ -14,5 +16,6 @@
         <MaterialIconsAvaloniaVersion>2.0.1</MaterialIconsAvaloniaVersion>
         <ReactiveUIValidationVersion>3.1.7</ReactiveUIValidationVersion>
         <CompositionVersion>8.0.0</CompositionVersion>
+        
     </PropertyGroup>
 </Project>

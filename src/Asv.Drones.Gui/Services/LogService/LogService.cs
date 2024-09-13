@@ -1,64 +1,52 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
-using DynamicData;
-using NLog;
-using NLog.Layouts;
-using NLog.Targets;
+using Microsoft.Extensions.Logging;
 using ReactiveUI;
+using ZLogger;
 
 namespace Asv.Drones.Gui;
 
-public class LogService : DisposableOnceWithCancel, ILogService
+public class LogService : DisposableOnceWithCancel, ILogService, ILoggerFactory
 {
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    
     private readonly Subject<LogMessage> _onMessage;
     private readonly string _logFile;
+    private readonly ILogger<LogService> _logger;
+    private readonly ILoggerFactory _factory;
 
     public LogService(string logsFolder)
     {
-        _logFile = Path.Combine(logsFolder, "log.log");
         ArgumentNullException.ThrowIfNull(logsFolder);
+        _factory = LoggerFactory.Create(builder =>
+        {
+            builder.ClearProviders();
+            builder.SetMinimumLevel(LogLevel.Trace);
+            builder.AddZLoggerRollingFile(options =>
+            {
+                options.FilePathSelector = (dt, index) => $"{logsFolder}/{dt:yyyy-MM-dd}_{index}.logs";
+                options.UseJsonFormatter();
+            });
+        }).DisposeItWith(Disposable);
+        _logFile = Path.Combine(logsFolder, "log.log");
+        _logger = _factory.CreateLogger<LogService>();
+        
         if (!Directory.Exists(logsFolder))
         {
             Directory.CreateDirectory(logsFolder);
         }
 
-        LogManager.Setup().LoadConfiguration(builder =>
-        {
-            var layout =
-                Layout.FromString("${longdate}|${threadid}|${level}|${logger}|${message} ${exception:format=tostring}");
-#if DEBUG
-            builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToDebug(layout: layout);
-            builder.ForLogger().FilterLevels(LogLevel.Trace, LogLevel.Fatal).WriteToFile(
-                fileName: _logFile,
-                lineEnding: LineEndingMode.CRLF,
-                maxArchiveDays: 30,
-                maxArchiveFiles: 30,
-                layout: layout);
-#endif
-            builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToColoredConsole(layout: layout);
-            builder.ForLogger().FilterLevels(LogLevel.Trace, LogLevel.Fatal).WriteToFile(
-                fileName: _logFile,
-                lineEnding: LineEndingMode.CRLF,
-                maxArchiveDays: 30,
-                maxArchiveFiles: 30,
-                layout: layout);
-        });
 
         var errorHandler = new Subject<Exception>().DisposeItWith(Disposable);
         errorHandler.Subscribe(err =>
         {
-            Logger.Fatal(err, "Unhandled exception in RxApp.");
+            _logger.LogError(err, "Unhandled exception in RxApp.");
             if (Debugger.IsAttached) Debugger.Break();
             SaveMessage(new LogMessage(DateTime.Now, LogMessageType.Error, "Core", err.Message, err.ToString()));
             //RxApp.MainThreadScheduler.Schedule(() => throw err);
@@ -77,7 +65,30 @@ public class LogService : DisposableOnceWithCancel, ILogService
     public void SaveMessage(LogMessage logMessage)
     {
         _onMessage.OnNext(logMessage);
-        Logger.Log(LogLevel.FromString(logMessage.Type.ToString()), logMessage.Message );
+        switch (logMessage.Type)
+        {
+            case LogMessageType.Trace:
+                _logger.LogTrace(logMessage.Message);
+                break;
+            case LogMessageType.Debug:
+                _logger.LogDebug(logMessage.Message);
+                break;
+            case LogMessageType.Info:
+                _logger.LogInformation(logMessage.Message);
+                break;
+            case LogMessageType.Warning:
+                _logger.LogWarning(logMessage.Message);
+                break;
+            case LogMessageType.Error:
+                _logger.LogError(logMessage.Message);
+                break;
+            case LogMessageType.Fatal:
+                _logger.LogCritical(logMessage.Message);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
     }
 
     public void DeleteLogFile()
@@ -127,5 +138,15 @@ public class LogService : DisposableOnceWithCancel, ILogService
                 index++;
             }
         }
+    }
+
+    public ILogger CreateLogger(string categoryName)
+    {
+        return _factory.CreateLogger(categoryName);
+    }
+
+    public void AddProvider(ILoggerProvider provider)
+    {
+        _factory.AddProvider(provider);
     }
 }

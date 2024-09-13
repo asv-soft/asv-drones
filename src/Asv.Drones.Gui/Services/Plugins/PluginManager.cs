@@ -12,15 +12,15 @@ using System.Threading.Tasks;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
-using DynamicData;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using NLog;
 using NuGet.Configuration;
 using NuGet.Packaging;
 using NuGet.Packaging.Core;
 using NuGet.Protocol;
 using NuGet.Protocol.Core.Types;
 using NuGet.Versioning;
+using ZLogger;
 
 
 namespace Asv.Drones.Gui;
@@ -57,27 +57,32 @@ public class PluginServerConfig
 
 public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPluginManager
 {
+    private readonly ILoggerFactory _loggerFactory;
     private const string Salt = "Asv.Drones.Gui";
     private readonly ReaderWriterLockSlim _repositoriesLock = new();
     private readonly List<SourceRepository> _repositories = new();
 
     public const string PluginSearchTermStartWith = "Asv.Drones.Gui.Plugin.";
-    
 
 
+    private readonly LoggerAdapter _nugetLogger;
     private const string PluginStateFileName = "__PLUGIN_STATE__";
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    
     private readonly string _sharedPluginFolder;
     private readonly string _nugetFolder;
-    private readonly LoggerAdapter _nugetLogger = new(Logger);
     private readonly SourceCacheContext _cache;
     private readonly List<AssemblyLoadContext> _pluginContexts = new();
+    private readonly ILogger<PluginManager> _logger;
 
 
-    public PluginManager(ContainerConfiguration containerCfg, string localDirectory, IConfiguration configuration) :
+    public PluginManager(ContainerConfiguration containerCfg, string localDirectory, IConfiguration configuration, ILoggerFactory loggerFactory) :
         base(configuration)
     {
+        _loggerFactory = loggerFactory;
         ApiVersion = SemVersion.Parse(typeof(WellKnownUri).Assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()!.Version);
+        
+        _logger = loggerFactory.CreateLogger<PluginManager>();
+        _nugetLogger = new LoggerAdapter(_logger);
         
         #region Servers
 
@@ -102,7 +107,7 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
         {
             if (string.IsNullOrWhiteSpace(server.Password) && string.IsNullOrWhiteSpace(server.PasswordHash)) continue;
             if (string.IsNullOrWhiteSpace(server.Password)) continue;
-            Logger.Info("Replace clear text password for server {0}", server.Name);
+            _logger.ZLogInformation($"Replace clear text password for server {server.Name}");
             server.PasswordHash = server.Password.EncryptAES(Salt);
             server.Password = null;
             needToSave = true;
@@ -119,7 +124,7 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
                     new PluginServer(server.Name, server.SourceUri, server.Username,
                         server.PasswordHash?.DecryptAES(Salt)), false, false) == false)
             {
-                Logger.Warn("Error add plugin source server {0}", server.Name);
+                _logger.ZLogWarning($"Error add plugin source server {server.Name}");
             }
         }
 
@@ -130,34 +135,34 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
         _sharedPluginFolder = Path.Combine(localDirectory, "plugins");
         if (Directory.Exists(_sharedPluginFolder) == false)
         {
-            Logger.Info("Create plugin folder {0}", _sharedPluginFolder);
+            _logger.ZLogInformation($"Create plugin folder {_sharedPluginFolder}");
             Directory.CreateDirectory(_sharedPluginFolder);
         }
         else
         {
-            Logger.Info("Found plugin folder {0}", _sharedPluginFolder);
+            _logger.ZLogInformation($"Found plugin folder {_sharedPluginFolder}");
         }
 
         _nugetFolder = Path.Combine(localDirectory, "nuget");
         if (Directory.Exists(_nugetFolder) == false)
         {
-            Logger.Info("Create nuget folder {0}", _nugetFolder);
+            _logger.ZLogInformation($"Create nuget folder {_nugetFolder}");
             Directory.CreateDirectory(_nugetFolder);
         }
         else
         {
-            Logger.Info("Found nuget cache folder {0}", _nugetFolder);
+            _logger.ZLogInformation($"Found nuget cache folder {_nugetFolder}");
         }
 
         var nugetCache = Path.Combine(localDirectory, "nuget_cache");
         if (Directory.Exists(nugetCache) == false)
         {
-            Logger.Info("Create nuget folder {0}", nugetCache);
+            _logger.ZLogInformation($"Create nuget folder {nugetCache}");
             Directory.CreateDirectory(nugetCache);
         }
         else
         {
-            Logger.Info("Found nuget cache folder {0}", nugetCache);
+            _logger.ZLogInformation($"Found nuget cache folder {nugetCache}");
         }
 
         #endregion
@@ -176,7 +181,7 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
         {
             if (TryGetLocalPluginInfoByFolder(dir, out var info) == false)
             {
-                Logger.Warn("Error read plugin info from {0}. Delete it", dir);
+                _logger.ZLogWarning($"Error read plugin info from {dir}. Delete it");
                 Directory.Delete(dir, true);
                 continue;
             }
@@ -184,7 +189,7 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
             if (info == null) continue;
             if (info.IsUninstalled)
             {
-                Logger.Info("Remove deleted plugin {0} {1} {2}", info.PackageId, info.Version, info.LocalFolder);
+                _logger.ZLogInformation($"Plugin {info.PackageId} is marked as uninstalled. Delete it");
                 Directory.Delete(info.LocalFolder, true);
                 continue;
             }
@@ -192,8 +197,7 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
             // check API version
             if (info.ApiVersion.CompareByPrecedence(ApiVersion) != 0)
             {
-                Logger.Warn("Plugin {0} {1} has different API version {2} than application {3}", info.Id, info.Version,
-                    info.ApiVersion, ApiVersion);
+                _logger.ZLogWarning($"Plugin {info.PackageId} {info.Version} has different API version {info.ApiVersion} than application {ApiVersion}");
                 SetPluginStateByFolder(info.LocalFolder, x =>
                 {
                     x.IsLoaded = false;
@@ -206,9 +210,8 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
             
             try
             {
-                
-                Logger.Info("Load plugin {0} {1} {2}", info.PackageId, info.Version, info.LocalFolder);
-                _pluginContexts.Add(new PluginAssemblyLoadContext(info.LocalFolder, containerCfg));
+                _logger.ZLogInformation($"Load plugin {info.PackageId} {info.Version} {info.LocalFolder}");
+                _pluginContexts.Add(new PluginAssemblyLoadContext(info.LocalFolder, containerCfg, _loggerFactory));
                 SetPluginStateByFolder(info.LocalFolder, x =>
                 {
                     x.IsLoaded = true;
@@ -217,7 +220,7 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Error load plugin {0} {1} {2}", info.PackageId, info.Version, info.LocalFolder);
+                _logger.ZLogError(e,$"Error load plugin {info.PackageId} {info.Version} {info.LocalFolder}");
                 SetPluginStateByFolder(info.LocalFolder, x =>
                 {
                     x.IsLoaded = false;
@@ -270,7 +273,7 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
 
             if (_repositories.Any(_ => _.PackageSource.Source == server.SourceUri))
             {
-                Logger.Warn("Server source {0} already exists", server.SourceUri);
+                _logger.ZLogWarning($"Server source {server.SourceUri} already exists");
                 return false;
             }
 
@@ -278,11 +281,11 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
             if (string.IsNullOrWhiteSpace(server.Username))
             {
                 repo = Repository.Factory.GetCoreV3(new PackageSource(server.SourceUri, server.Name));
-                Logger.Info("Add plugin server source {0}", server.SourceUri);
+                _logger.ZLogInformation($"Add plugin server source {server.SourceUri}");
             }
             else
             {
-                Logger.Info("Add plugin server source {0} with credentials", server.SourceUri);
+                _logger.ZLogInformation($"Add plugin server source {server.SourceUri} with credentials");
                 repo = Repository.Factory.GetCoreV3(new PackageSource(server.SourceUri, server.Name)
                 {
                     Credentials =
@@ -293,9 +296,9 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
             _repositories.Add(repo);
             if (saveToConfig)
             {
-                InternalSaveConfig(_ =>
+                InternalSaveConfig(c =>
                 {
-                    _.Servers = _repositories.Select(x => new PluginServerConfig
+                    c.Servers = _repositories.Select(x => new PluginServerConfig
                     {
                         Name = x.PackageSource.Name,
                         SourceUri = x.PackageSource.Source,
@@ -327,7 +330,7 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
             var repository = _repositories.FirstOrDefault(_ => _.PackageSource.Source == info.SourceUri);
             if (repository == null)
             {
-                Logger.Warn("Server source {0} not found", info.SourceUri);
+                _logger.ZLogWarning($"Server source {info.SourceUri} not found");
                 return;
             }
 
@@ -389,7 +392,7 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
                     }
                     catch (Exception e)
                     {
-                        Logger.Warn("Error create plugin search info from {0} {1}", package.Identity.Id, e.Message);
+                        _logger.ZLogWarning($"Error create plugin search info from {package.Identity.Id} {e.Message}");
                         continue;
                     }
                     if (result.Count >= query.Take) break;
@@ -399,7 +402,7 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Error search in {0}", repository.PackageSource.Source);
+                _logger.ZLogError(e,$"Error search in {repository.PackageSource.Source}");
             }
         }
 
@@ -492,7 +495,7 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
                 var dependencyPlatform = NugetHelper.GetPlatform(dependencyPackageArchiveReader);
                 if (dependencyPlatform == null)
                 {
-                    Logger.Warn($"Not found  {NugetHelper.NETCoreAppGroup} platform in package " + identity.Id);
+                    _logger.ZLogWarning($"Not found  {NugetHelper.NETCoreAppGroup} platform in package {identity.Id}");
                     continue;
                 }
 
@@ -603,7 +606,7 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
 
         if (package.Length > 1)
         {
-            Logger.Warn("Find more than one package in folder {0}", pluginFolder);
+            _logger.ZLogWarning($"Find more than one package in folder {pluginFolder}");
         }
 
         if (TryGetPluginStateByFolder(pluginFolder, out var state) == false)
@@ -626,7 +629,7 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
         }
         catch (Exception e)
         {
-            Logger.Error(e, "Error read nuspec from {0}", package[0]);
+            _logger.ZLogError(e, $"Error read nuspec from {package[0]}");
             return false;
         }
 
@@ -672,7 +675,7 @@ public class PluginManager : ServiceWithConfigBase<PluginManagerConfig>, IPlugin
         }
         catch (Exception e)
         {
-            Logger.Error(e, $"Error to write plugin {pluginFolder} state file");
+            _logger.ZLogError(e, $"Error to write plugin {pluginFolder} state file");
             return false;
         }
     }

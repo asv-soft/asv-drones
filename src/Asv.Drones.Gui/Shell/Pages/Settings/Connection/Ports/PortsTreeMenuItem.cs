@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Composition;
-using System.Reactive.Linq;
-using Asv.Common;
 using Asv.Drones.Gui.Api;
 using Material.Icons;
 

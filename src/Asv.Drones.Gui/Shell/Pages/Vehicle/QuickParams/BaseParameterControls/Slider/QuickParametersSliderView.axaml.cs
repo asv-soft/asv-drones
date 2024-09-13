@@ -1,11 +1,6 @@
 ﻿using Asv.Drones.Gui.Api;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.ReactiveUI;
-using System;
-using Avalonia.Controls.Primitives;
-using Avalonia.Input;
-using Avalonia.Interactivity;
 
 namespace Asv.Drones.Gui;
 

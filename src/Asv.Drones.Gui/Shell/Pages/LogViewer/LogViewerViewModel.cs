@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Composition;
-using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
 using Avalonia.Controls;
@@ -18,8 +16,6 @@ using DynamicData.Binding;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using Material.Icons.Avalonia;
-using NLog.Fluent;
-using NuGet.Common;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 

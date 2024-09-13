@@ -34,7 +34,7 @@ namespace Asv.Drones.Gui
         public AdsbClientDeviceConfig Adsb { get; set; } = new();
         public bool WrapToV2ExtensionEnabled { get; set; } = true;
         public RfsaClientDeviceConfig Rfsa { get; set; } = new();
-        public RfsaClientDeviceConfig Rsga { get; set; } = new();
+        public RsgaClientDeviceConfig Rsga { get; set; } = new();
     }
 
     [Export(typeof(IMavlinkDevicesService))]
@@ -202,13 +202,14 @@ namespace Asv.Drones.Gui
 
         private IRsgaClientDevice CreateRsgaDevice(IMavlinkDevice device)
         {
+            RsgaClientDeviceConfig cfg = InternalGetConfig<RsgaClientDeviceConfig>(c => c.Rsga);
             return new RsgaClientDevice(Router, new MavlinkClientIdentity
             {
                 TargetSystemId = device.SystemId,
                 TargetComponentId = device.ComponentId,
                 SystemId = _systemId.Value,
                 ComponentId = _componentId.Value,
-            }, InternalGetConfig(c => c.Rsga), _sequenceCalculator, RxApp.MainThreadScheduler);
+            },cfg , _sequenceCalculator, RxApp.MainThreadScheduler);
         }
         private IRfsaClientDevice CreateRfsaDevice(IMavlinkDevice device)
         {

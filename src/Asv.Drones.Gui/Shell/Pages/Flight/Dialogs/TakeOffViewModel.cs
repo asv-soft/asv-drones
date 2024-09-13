@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Composition;
 using System.Reactive.Linq;
-using System.Security.Cryptography;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Api;

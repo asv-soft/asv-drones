@@ -6,7 +6,6 @@ using System.Reactive.Subjects;
 using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
-using Avalonia.Controls;
 using DynamicData;
 using DynamicData.Binding;
 using Material.Icons;

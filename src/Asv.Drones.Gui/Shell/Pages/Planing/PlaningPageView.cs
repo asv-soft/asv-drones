@@ -26,7 +26,7 @@ namespace Asv.Drones.Gui
         {
             base.OnLoaded(e);
 
-            if (_configuration.Exist<MapPageViewConfig>(nameof(PlaningPageView)))
+            if (_configuration.Exist(nameof(PlaningPageView)))
             {
                 var mapPageViewConfig = _configuration.Get<MapPageViewConfig>(nameof(PlaningPageView));
 

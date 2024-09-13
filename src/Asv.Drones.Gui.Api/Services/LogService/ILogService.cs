@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using ReactiveUI;
 
 namespace Asv.Drones.Gui.Api;
@@ -11,7 +12,7 @@ public static class LogHelper
 }
     
 
-public interface ILogService
+public interface ILogService: ILoggerFactory
 {
     IObservable<LogMessage> OnMessage { get; }
     void SaveMessage(LogMessage logMessage);

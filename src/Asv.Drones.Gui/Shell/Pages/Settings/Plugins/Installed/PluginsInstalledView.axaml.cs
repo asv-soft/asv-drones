@@ -1,5 +1,4 @@
 using Asv.Drones.Gui.Api;
-using Avalonia.Controls;
 using Avalonia.ReactiveUI;
 
 namespace Asv.Drones.Gui;

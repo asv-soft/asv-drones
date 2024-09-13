@@ -1,15 +1,16 @@
 using System;
 using System.Threading.Tasks;
-using NLog;
+using Microsoft.Extensions.Logging;
 using NuGet.Common;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Asv.Drones.Gui;
 
 public class LoggerAdapter : LoggerBase
 {
-    private readonly Logger _logger;
+    private readonly ILogger _logger;
 
-    public LoggerAdapter(Logger logger)
+    public LoggerAdapter(ILogger logger)
     {
         _logger = logger;
     }
@@ -19,16 +20,16 @@ public class LoggerAdapter : LoggerBase
         switch (message.WarningLevel)
         {
             case WarningLevel.Severe:
-                _logger.Error(message.Message);
+                _logger.LogError(message.Message);
                 break;
             case WarningLevel.Important:
-                _logger.Warn(message.Message);
+                _logger.LogWarning(message.Message);
                 break;
             case WarningLevel.Minimal:
-                _logger.Info(message.Message);
+                _logger.LogDebug(message.Message);
                 break;
             case WarningLevel.Default:
-                _logger.Debug(message.Message);
+                _logger.LogInformation(message.Message);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

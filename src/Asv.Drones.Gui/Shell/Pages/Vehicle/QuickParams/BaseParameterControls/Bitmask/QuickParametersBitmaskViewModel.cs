@@ -9,7 +9,6 @@ using Asv.Common;
 using Asv.Drones.Gui.Api;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
-using Avalonia.Controls;
 using DynamicData;
 using ReactiveUI.Fody.Helpers;
 
