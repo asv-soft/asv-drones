@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reactive.Linq;
-using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
 using FluentAvalonia.UI.Controls;

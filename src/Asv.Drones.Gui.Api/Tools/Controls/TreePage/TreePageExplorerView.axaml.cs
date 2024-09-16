@@ -1,10 +1,7 @@
-﻿using System.Diagnostics;
-using Avalonia.Controls;
-using Avalonia.Input;
+﻿using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.ReactiveUI;
 using DynamicData.Binding;
-using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui.Api;
 

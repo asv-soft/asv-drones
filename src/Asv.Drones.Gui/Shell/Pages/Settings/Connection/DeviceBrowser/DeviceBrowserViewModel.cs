@@ -5,7 +5,6 @@ using System.Composition;
 using System.Reactive.Linq;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
-using Avalonia.Controls;
 using DynamicData;
 
 namespace Asv.Drones.Gui

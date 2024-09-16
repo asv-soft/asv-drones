@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
 using Asv.Drones.Gui.Api;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.Ardupilotmega;
-using Avalonia.Controls;
 using Material.Icons;
 using ReactiveUI.Fody.Helpers;
 

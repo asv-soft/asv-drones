@@ -1,5 +1,3 @@
-using Avalonia.Controls;
-
 namespace Asv.Drones.Gui.Api;
 
 public static class WellKnownUri

@@ -4,7 +4,6 @@ using System.Reactive;
 using System.Reactive.Linq;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
-using Avalonia.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 

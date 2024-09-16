@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Asv.Drones.Gui.Api;
 using Asv.Mavlink;
-using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui;

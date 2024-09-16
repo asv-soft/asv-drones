@@ -1,7 +1,6 @@
 using System.Composition;
 using Asv.Drones.Gui.Api;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.ReactiveUI;
 
 namespace Asv.Drones.Gui;

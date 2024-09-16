@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reactive.Linq;
-using System.Windows.Input;
-using Asv.Avalonia.Map;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
 using DynamicData.Binding;
 using Material.Icons;
-using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui;

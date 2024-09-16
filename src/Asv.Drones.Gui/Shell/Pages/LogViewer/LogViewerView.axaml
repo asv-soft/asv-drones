@@ -98,7 +98,12 @@
             </DockPanel>
             <DockPanel Grid.Row="2">
                 <ScrollViewer>
-                    <ItemsControl ItemsSource="{CompiledBinding LogItems}" Grid.IsSharedSizeScope="True">
+                    <ListBox ItemsSource="{CompiledBinding LogItems}" Grid.IsSharedSizeScope="True">
+                        <ListBox.Styles>
+                            <Style Selector="ListBoxItem">
+                                <Setter Property="MinHeight" Value="15" />
+                            </Style>
+                        </ListBox.Styles>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="0 4">
@@ -152,6 +157,7 @@
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Name="Icon" Margin="4 0" Grid.Column="0" Spacing="8"
                                                 Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Index,StringFormat=000}"/>
                                         <avalonia:MaterialIcon VerticalAlignment="Top"
                                                                Classes.Debug="{Binding IsDebug}"
                                                                Classes.Trace="{Binding IsTrace}"
@@ -161,14 +167,7 @@
                                                                Classes.Fatal="{Binding IsFatal}"
                                                                HorizontalAlignment="Center"
                                                                Kind="{CompiledBinding Kind}" />
-                                        <TextBlock VerticalAlignment="Top" Classes.Debug="{Binding IsDebug}"
-                                                   Classes.Trace="{Binding IsTrace}"
-                                                   Classes.Information="{Binding IsInfo}"
-                                                   Classes.Warning="{Binding IsWarning}"
-                                                   Classes.Error="{Binding IsError}"
-                                                   Classes.Fatal="{Binding IsFatal}"
-                                                   HorizontalAlignment="Center"
-                                                   Text="{CompiledBinding ThreadId}" TextWrapping="Wrap" />
+                                        
                                     </StackPanel>
                                     <TextBlock Classes.Debug="{Binding IsDebug}"
                                                Classes.Trace="{Binding IsTrace}"
@@ -186,7 +185,7 @@
                                                Classes.Error="{Binding IsError}"
                                                Classes.Fatal="{Binding IsFatal}"
                                                Name="Class" Grid.Column="2" Margin="4 0" VerticalAlignment="Top"
-                                               HorizontalAlignment="Right"
+                                               HorizontalAlignment="Left"
                                                Text="{CompiledBinding Class}" TextWrapping="Wrap" />
                                     <TextBlock Classes.Debug="{Binding IsDebug}"
                                                Classes.Trace="{Binding IsTrace}"
@@ -199,7 +198,7 @@
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                    </ListBox>
                 </ScrollViewer>
             </DockPanel>
 

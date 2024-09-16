@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Composition;
-using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
 using Asv.Mavlink;

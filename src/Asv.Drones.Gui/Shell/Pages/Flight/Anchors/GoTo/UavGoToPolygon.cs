@@ -6,7 +6,6 @@ using Asv.Mavlink;
 using Avalonia.Collections;
 using Avalonia.Media;
 using DynamicData;
-using ReactiveUI;
 
 namespace Asv.Drones.Gui
 {

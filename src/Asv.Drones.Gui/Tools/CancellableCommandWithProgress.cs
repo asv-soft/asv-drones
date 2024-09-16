@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
-using NLog;
+using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ZLogger;
 
 namespace Asv.Drones.Gui;
 
@@ -28,15 +29,16 @@ public class CancellableCommandWithProgress<TArg, TResult> : DisposableReactiveO
     private readonly CommandExecuteDelegate<TArg, TResult> _execute;
     private readonly ILogService _log;
     private readonly IScheduler _scheduler;
-    private readonly Logger _logger = LogManager.GetCurrentClassLogger();
     private double _progress;
     private bool _canExecute = true;
     private readonly ReactiveCommand<Unit, Unit> _cancelCommand;
     private readonly ReactiveCommand<TArg, TResult> _command;
+    private readonly ILogger<CancellableCommandWithProgress<TArg,TResult>> _logger;
 
     public CancellableCommandWithProgress(CommandExecuteDelegate<TArg, TResult> execute, string name, ILogService log,
         IScheduler? scheduler = null)
     {
+        _logger = log.CreateLogger<CancellableCommandWithProgress<TArg, TResult>>();
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Value cannot be null or whitespace.", nameof(name));
         Title = name;
@@ -59,27 +61,27 @@ public class CancellableCommandWithProgress<TArg, TResult> : DisposableReactiveO
 
     private void InternalError(Exception exception)
     {
-        _logger.Error(exception, $"Error to execute command {Title}:{exception.Message}");
+        _logger.ZLogError(exception,$"Error to execute command {Title}:{exception.Message}");
         _log.Error(Title, exception.Message);
     }
 
     private void InternalCancel()
     {
-        _logger.Warn($"Command '{Title}' was cancelled");
+        _logger.ZLogWarning($"Command '{Title}' was cancelled");
     }
 
     private async Task<TResult> InternalExecute(TArg arg, CancellationToken ct)
     {
         var lastState = CanExecute;
         _scheduler.Schedule(() => CanExecute = false);
-        _logger.Info($"Start command '{Title}' with args {arg}");
+        _logger.ZLogInformation($"Start command '{Title}' with args {arg}");
         using var cancel = CancellationTokenSource.CreateLinkedTokenSource(DisposeCancel, ct);
         try
         {
             _scheduler.Schedule(() => Progress = 0);
             var result = await _execute(arg, this, cancel.Token);
             _scheduler.Schedule(() => Progress = 0);
-            _logger.Info($"Command '{Title}' with args {arg} completed with result {result}");
+            _logger.ZLogInformation($"Command '{Title}' with args {arg} completed with result {result}");
             return result;
         }
         finally

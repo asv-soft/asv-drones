@@ -1,66 +1,69 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Text;
 using System.Threading.Tasks;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
-using DynamicData;
-using NLog;
-using NLog.Layouts;
-using NLog.Targets;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using ReactiveUI;
+using ZLogger;
 
 namespace Asv.Drones.Gui;
 
-public class LogService : DisposableOnceWithCancel, ILogService
+public class LogService : DisposableOnceWithCancel, ILogService, ILoggerFactory
 {
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    private readonly Subject<LogMessage> _onMessage;
-    private readonly string _logFile;
+    private readonly string _logsFolder;
 
-    public LogService(string logsFolder)
+    private readonly Subject<LogMessage> _onMessage;
+    
+    private readonly ILogger<LogService> _logger;
+    private readonly ILoggerFactory _factory;
+
+    public LogService(string logsFolder,LogLevel minLevel)
     {
-        _logFile = Path.Combine(logsFolder, "log.log");
+        _logsFolder = logsFolder;
         ArgumentNullException.ThrowIfNull(logsFolder);
+        _factory = LoggerFactory.Create(builder =>
+        {
+            builder.ClearProviders();
+            builder.SetMinimumLevel(minLevel);
+#if DEBUG
+            builder.AddZLoggerConsole(options =>
+            {
+                options.IncludeScopes = true;
+                options.OutputEncodingToUtf8 = false;
+                options.UsePlainTextFormatter(formatter =>
+                {
+                    formatter.SetPrefixFormatter($"{0:HH:mm:ss.fff} | ={1:short}= | {2,-40} ", (in MessageTemplate template, in LogInfo info) => template.Format(info.Timestamp, info.LogLevel,info.Category));
+                    //formatter.SetExceptionFormatter((writer, ex) => Utf8StringInterpolation.Utf8String.Format(writer, $"{ex.Message}"));
+                });
+            });
+#endif
+            builder.AddZLoggerRollingFile(options =>
+            {
+                options.FilePathSelector = (dt, index) => $"{logsFolder}/{dt:yyyy-MM-dd}_{index}.logs";
+                options.UseJsonFormatter();
+                options.RollingSizeKB = 1024 * 10;
+            });
+        }).DisposeItWith(Disposable);
+
+        _logger = _factory.CreateLogger<LogService>();
+        
         if (!Directory.Exists(logsFolder))
         {
             Directory.CreateDirectory(logsFolder);
         }
 
-        LogManager.Setup().LoadConfiguration(builder =>
-        {
-            var layout =
-                Layout.FromString("${longdate}|${threadid}|${level}|${logger}|${message} ${exception:format=tostring}");
-#if DEBUG
-            builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToDebug(layout: layout);
-            builder.ForLogger().FilterLevels(LogLevel.Trace, LogLevel.Fatal).WriteToFile(
-                fileName: _logFile,
-                lineEnding: LineEndingMode.CRLF,
-                maxArchiveDays: 30,
-                maxArchiveFiles: 30,
-                layout: layout);
-#endif
-            builder.ForLogger().FilterMinLevel(LogLevel.Trace).WriteToColoredConsole(layout: layout);
-            builder.ForLogger().FilterLevels(LogLevel.Trace, LogLevel.Fatal).WriteToFile(
-                fileName: _logFile,
-                lineEnding: LineEndingMode.CRLF,
-                maxArchiveDays: 30,
-                maxArchiveFiles: 30,
-                layout: layout);
-        });
 
         var errorHandler = new Subject<Exception>().DisposeItWith(Disposable);
         errorHandler.Subscribe(err =>
         {
-            Logger.Fatal(err, "Unhandled exception in RxApp.");
+            _logger.LogError(err, "Unhandled exception in RxApp.");
             if (Debugger.IsAttached) Debugger.Break();
-            SaveMessage(new LogMessage(DateTime.Now, LogMessageType.Error, "Core", err.Message, err.ToString()));
+            SaveMessage(new LogMessage(DateTime.Now, LogLevel.Error, "Core", err.Message, err.ToString()));
             //RxApp.MainThreadScheduler.Schedule(() => throw err);
         });
         RxApp.DefaultExceptionHandler = errorHandler;
@@ -77,55 +80,77 @@ public class LogService : DisposableOnceWithCancel, ILogService
     public void SaveMessage(LogMessage logMessage)
     {
         _onMessage.OnNext(logMessage);
-        Logger.Log(LogLevel.FromString(logMessage.Type.ToString()), logMessage.Message );
+        switch (logMessage.LogLevel)
+        {
+            case LogLevel.Trace:
+                _logger.LogTrace(logMessage.Message);
+                break;
+            case LogLevel.Debug:
+                _logger.LogDebug(logMessage.Message);
+                break;
+            case LogLevel.Information:
+                _logger.LogInformation(logMessage.Message);
+                break;
+            case LogLevel.Warning:
+                _logger.LogWarning(logMessage.Message);
+                break;
+            case LogLevel.Error:
+                _logger.LogError(logMessage.Message);
+                break;
+            case LogLevel.Critical:
+                _logger.LogCritical(logMessage.Message);
+                break;
+            case LogLevel.None:
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
     }
 
     public void DeleteLogFile()
     {
-        if (File.Exists(_logFile)) File.Delete(_logFile);
+        foreach (var logFilePath in Directory.EnumerateFiles(_logsFolder,"*.logs"))
+        {
+            File.Delete(logFilePath);
+        }
     }
 
     public IEnumerable<LogItemViewModel> LoadItemsFromLogFile()
     {
-        var logsFilePath = _logFile;
-
-        if (File.Exists(logsFilePath))
-        {
+        
             var index = 0;
-            using var fs = new FileStream(logsFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            using var sr = new StreamReader(fs);
-            LogItemViewModel currentItem = null;
-            var messageBuilder = new StringBuilder();
-            while (!sr.EndOfStream)
+            foreach (var logFilePath in Directory.EnumerateFiles(_logsFolder,"*.logs"))
             {
-                var line = sr.ReadLine();
-                if (line == null) continue;
-
-                var parts = line.Split('|');
-                if (parts.Length < 4)
+                using var fs = new FileStream(logFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                var rdr = new JsonTextReader(new StreamReader(fs))
                 {
-                    if (currentItem != null)
+                    SupportMultipleContent = true,
+                };
+                var serializer = new JsonSerializer();
+                
+                while (rdr.Read())
+                {
+                    if (rdr.TokenType == JsonToken.StartObject)
                     {
-                        messageBuilder.Append(line);
-                        currentItem.Message = messageBuilder.ToString();
+                        var item = serializer.Deserialize<LogMessage>(rdr);
+                        if (item != null) yield return new LogItemViewModel(index, item);
                     }
-
-                    continue;
+                    index++;
                 }
-
-                messageBuilder.Clear();
-
-                var timestamp = DateTime.TryParse(parts[0], out var ts) ? ts : default;
-                var thread = parts[1];
-                var level = Enum.TryParse<LogMessageType>(parts[2], out var lvl) ? lvl : default;
-                var itemClass = parts[3];
-                messageBuilder.Append(parts[4]);
-
-                currentItem =
-                    new LogItemViewModel(index, thread, level, timestamp, itemClass, messageBuilder.ToString());
-                yield return currentItem;
-                index++;
             }
-        }
+
     }
+
+
+    public ILogger CreateLogger(string categoryName)
+    {
+        return _factory.CreateLogger(categoryName);
+    }
+
+    public void AddProvider(ILoggerProvider provider)
+    {
+        _factory.AddProvider(provider);
+    }
+    
+   
 }

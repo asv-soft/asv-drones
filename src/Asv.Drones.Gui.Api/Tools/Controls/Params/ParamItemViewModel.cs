@@ -3,7 +3,6 @@ using System.Reactive;
 using Asv.Common;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
-using Avalonia.Controls;
 using Material.Icons;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;

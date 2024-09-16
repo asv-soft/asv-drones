@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.Composition;
 using System.Reactive;
-using System.Threading;
 using System.Threading.Tasks;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
-using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
-using DynamicData;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using ReactiveUI;
