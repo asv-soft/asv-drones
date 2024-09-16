@@ -1,12 +1,10 @@
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Asv.Common;
 using Asv.Mavlink;
-using Avalonia.Controls;
 using Avalonia.Media;
 using DynamicData;
 using DynamicData.Binding;

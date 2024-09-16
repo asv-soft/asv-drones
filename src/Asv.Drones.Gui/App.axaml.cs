@@ -18,7 +18,8 @@ using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Styling;
 using FluentAvalonia.Styling;
-using NLog;
+using Microsoft.Extensions.Logging;
+using ZLogger;
 
 namespace Asv.Drones.Gui;
 
@@ -29,19 +30,22 @@ public class AppHostConfig
 
 public partial class App : Application, IApplicationHost
 {
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     private ThemeItem[] _themes;
 
     private bool _initThemeFirst;
     private readonly Stack<KeyValuePair<IPluginMetadata, IPluginEntryPoint>> _plugins = [];
+    private readonly ILogger<App> _logger;
 
     public App()
     {
         // order of init members is important !!!
         Paths = InitApplicationPaths();
         Info = InitApplicationInfo();
-        Logs = new LogService(Args["logs-folder", Path.Combine(Paths.AppDataFolder, "logs")]);
+        var minLogLevelString = Args["log-level", LogLevel.Trace.ToString("G")];
+        Enum.TryParse(minLogLevelString, true, out LogLevel logLevel);
+        Logs = new LogService(Args["logs-folder", Path.Combine(Paths.AppDataFolder, "logs")],logLevel);
+        _logger = Logs.CreateLogger<App>();
         Configuration = new JsonOneFileConfiguration(Args["config-file",Path.Combine(Paths.AppDataFolder, "config.json")], true,
                                                      TimeSpan.FromMilliseconds(100));
         Localization = new LocalizationServiceBase(Configuration);
@@ -53,12 +57,13 @@ public partial class App : Application, IApplicationHost
                            .WithExport(typeof(IDataTemplateHost), this)
                            .WithExport(typeof(IConfiguration), Configuration)
                            .WithExport(typeof(ILogService), Logs)
+                           .WithExport(typeof(ILoggerFactory), Logs)
                            .WithExport(typeof(ILocalizationService), Localization)
                            .WithDefaultConventions(conventions);
 
         PluginManager = Design.IsDesignMode
                             ? NullPluginManager.Instance
-                            : new PluginManager(containerCfg, Args["plugin-folder", Paths.AppDataFolder], Configuration);
+                            : new PluginManager(containerCfg, Args["plugin-folder", Paths.AppDataFolder], Configuration, Logs);
         containerCfg = containerCfg
                        .WithExport(typeof(IPluginManager), PluginManager)
                        .WithAssemblies(DefaultAssemblies.Distinct()); // load dependencies from default assemblies        
@@ -167,7 +172,7 @@ public partial class App : Application, IApplicationHost
         {
             if (info is not ThemeItem item)
             {
-                Logger.Error("Invalid theme item");
+                _logger.ZLogError($"Invalid theme item");
                 return;
             }
 
@@ -201,22 +206,21 @@ public partial class App : Application, IApplicationHost
 
         var plugins = Container.GetExports<Lazy<IPluginEntryPoint, PluginMetadata>>().ToImmutableArray();
         var sort = plugins.ToDictionary(_ => _.Metadata.Name, x => x.Metadata.Dependency);
-        Logger.Info($"Begin loading plugins [{plugins.Length} items]");
+        _logger.ZLogError($" Begin loading plugins [{plugins.Length} items]");
         // we need to sort plugins by dependency
         foreach (var name in DepthFirstSearch.Sort(sort))
         {
             try
             {
-                Logger.Trace($"Init plugin {name}");
+                _logger.ZLogTrace($"Init plugin {name}");
                 var plugin = plugins.First(_ => _.Metadata.Name == name);
                 var item = new KeyValuePair<IPluginMetadata, IPluginEntryPoint>(plugin.Metadata, plugin.Value);
                 _plugins.Push(item);
-                Logger.Debug(
-                    $"Load plugin entry point '{plugin.Metadata.Name}' depended on [{string.Join(",", plugin.Metadata.Dependency)}]");
+                _logger.ZLogTrace($"Load plugin entry point '{plugin.Metadata.Name}' depended on [{string.Join(",", plugin.Metadata.Dependency)}]");
             }
             catch (Exception e)
             {
-                Logger.Error(e, $"Error to load plugin entry point: {name}:{e.Message}");
+                _logger.ZLogError(e, $"Error to load plugin entry point: {name}:{e.Message}");
                 if (Debugger.IsAttached)
                 {
                     Debugger.Break();
@@ -237,12 +241,12 @@ public partial class App : Application, IApplicationHost
         {
             try
             {
-                Logger.Trace($"Initialize plugin stage '{plugin.Key.Name}'");
+                _logger.ZLogTrace($"Initialize plugin stage '{plugin.Key.Name}'");
                 plugin.Value.Initialize();
             }
             catch (Exception e)
             {
-                Logger.Error(e, $"Error to initialize plugin entry point: {plugin.Key.Name}:{e.Message}");
+                _logger.ZLogError(e, $"Error to initialize plugin entry point: {plugin.Key.Name}:{e.Message}");
                 if (Debugger.IsAttached)
                 {
                     Debugger.Break();
@@ -282,12 +286,12 @@ public partial class App : Application, IApplicationHost
             try
             {
                 plugin.Value.OnFrameworkInitializationCompleted();
-                Logger.Trace($"Call OnFrameworkInitializationCompleted for plugin entry point '{plugin.Key.Name}'");
+                _logger.ZLogTrace($"Call OnFrameworkInitializationCompleted for plugin entry point '{plugin.Key.Name}'");
             }
             catch (Exception e)
             {
-                Logger.Error(e,
-                             $"Error to call OnFrameworkInitializationCompleted for plugin entry point: {plugin.Key.Name}:{e.Message}");
+                _logger.ZLogError(e,
+                                 $"Error to call OnFrameworkInitializationCompleted for plugin entry point: {plugin.Key.Name}:{e.Message}");
                 if (Debugger.IsAttached)
                 {
                     Debugger.Break();

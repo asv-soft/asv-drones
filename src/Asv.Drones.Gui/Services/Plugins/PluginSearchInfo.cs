@@ -29,8 +29,11 @@ internal class PluginSearchInfo : IPluginSearchInfo
             throw new Exception($"Plugin {packageSearchMetadata.Identity.Id} does not contain API package as dependency");
         }
         ApiVersion = apiPackage.VersionRange.MinVersion?.ToNormalizedString() ?? throw new InvalidOperationException("Api version not found in plugin dependencies");
+        IsVerified = Authors.Contains("https://github.com/asv-soft") && Source.SourceUri.Contains("https://nuget.pkg.github.com/asv-soft/index.json");
+
     }
 
+    public bool IsVerified { get; set; }
     public IPluginServerInfo Source { get; }
     public SemVersion ApiVersion { get; }
     public string PackageId { get; }

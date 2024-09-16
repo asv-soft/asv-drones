@@ -5,6 +5,7 @@
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:gui="clr-namespace:Asv.Drones.Gui"
              xmlns:api="clr-namespace:Asv.Drones.Gui.Api;assembly=Asv.Drones.Gui.Api"
+             xmlns:logging="clr-namespace:Microsoft.Extensions.Logging;assembly=Microsoft.Extensions.Logging.Abstractions"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
              x:CompileBindings="True"
              x:DataType="gui:LoggerViewModel"
@@ -56,10 +57,10 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                             <Grid
-                                Classes.Error="{Binding Type, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static api:LogMessageType.Error}}"
-                                Classes.Info="{Binding Type, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static api:LogMessageType.Info}}"
-                                Classes.Warning="{Binding Type, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static api:LogMessageType.Warning}}"
-                                Classes.Trace="{Binding Type, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static api:LogMessageType.Trace}}">
+                                Classes.Error="{Binding Type, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static logging:LogLevel.Error}}"
+                                Classes.Info="{Binding Type, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static logging:LogLevel.Information}}"
+                                Classes.Warning="{Binding Type, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static logging:LogLevel.Warning}}"
+                                Classes.Trace="{Binding Type, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static logging:LogLevel.Trace}}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="Icon" />
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="Message" />

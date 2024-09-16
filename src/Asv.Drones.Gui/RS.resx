@@ -1320,4 +1320,7 @@
   <data name="PluginsInstalledView_AllVersions" xml:space="preserve">
     <value>All versions</value>
   </data>
+  <data name="PluginsMarketView_ToggleSwitch_OnlyVerified" xml:space="preserve">
+    <value>Only verified</value>
+  </data>
 </root>

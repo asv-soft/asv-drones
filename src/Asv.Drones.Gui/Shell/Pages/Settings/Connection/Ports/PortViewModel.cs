@@ -6,7 +6,6 @@ using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
 using Asv.IO;
-using Avalonia.Controls;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
 using ReactiveUI;

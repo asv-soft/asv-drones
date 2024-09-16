@@ -39,6 +39,7 @@ public class PluginsMarketViewModel : TreePageViewModel
                     LastVersion = "1.0.0",
                     IsInstalled = true,
                     LocalVersion = "3.4.5",
+                    IsVerified = true,
                 },
                 new PluginInfoViewModel
                 {
@@ -80,7 +81,10 @@ public class PluginsMarketViewModel : TreePageViewModel
         
         SelectedPlugin = null;
         _pluginSearchSource.Clear();
-        _pluginSearchSource.AddOrUpdate(items.Select(_ => new PluginInfoViewModel(_, _manager, _log)));
+        var filteredItems = OnlyVerified 
+            ? items.Where(item => item.IsVerified) 
+            : items;
+        _pluginSearchSource.AddOrUpdate(filteredItems.Select(item => new PluginInfoViewModel(item, _manager, _log)));
         SelectedPlugin = _plugins.FirstOrDefault(plugin => plugin.Id == _previouslySelectedPluginId) ?? _plugins.First();
         return Unit.Default;
     }
@@ -96,8 +100,7 @@ public class PluginsMarketViewModel : TreePageViewModel
     public CancellableCommandWithProgress<Unit, Unit> Search { get; }
     public ReactiveCommand<IProgress<double>, Unit> InstallManually { get; }
     public ReadOnlyObservableCollection<PluginInfoViewModel> Plugins => _plugins;
-
-
+    [Reactive] public bool OnlyVerified { get; set; } = true;
     [Reactive] public string SearchString { get; set; }
     [Reactive] public PluginInfoViewModel? SelectedPlugin { get; set; }
 }

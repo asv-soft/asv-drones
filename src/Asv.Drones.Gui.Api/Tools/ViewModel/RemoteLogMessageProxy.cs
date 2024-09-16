@@ -1,4 +1,5 @@
 using Material.Icons;
+using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones.Gui.Api;
 
@@ -6,31 +7,31 @@ public class RemoteLogMessageProxy
 {
     public RemoteLogMessageProxy(LogMessage textMessage)
     {
-        switch (textMessage.Type)
+        switch (textMessage.LogLevel)
         {
-            case LogMessageType.Info:
+            case LogLevel.Information:
                 IsInfo = true;
                 Icon = MaterialIconKind.InformationCircle;
                 break;
 
-            case LogMessageType.Warning:
+            case LogLevel.Warning:
                 IsWarning = true;
                 Icon = MaterialIconKind.Warning;
                 break;
 
-            case LogMessageType.Error:
+            case LogLevel.Error:
                 IsError = true;
                 Icon = MaterialIconKind.Warning;
                 break;
 
-            case LogMessageType.Trace:
+            case LogLevel.Trace:
                 IsTrace = true;
                 Icon = MaterialIconKind.Exclamation;
                 break;
         }
 
-        DateTime = textMessage.DateTime;
-        Sender = textMessage.Source;
+        DateTime = textMessage.Timestamp;
+        Sender = textMessage.Category;
         Message = textMessage.Message;
     }
 

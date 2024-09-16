@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Composition;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
 using DynamicData;

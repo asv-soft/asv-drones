@@ -4,18 +4,19 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
-using NLog;
+using Microsoft.Extensions.Logging;
+using ZLogger;
 
 namespace Asv.Drones.Gui;
 
 public class PluginAssemblyLoadContext : AssemblyLoadContext
 {
-    private readonly Logger Logger;
+    private readonly ILogger Logger;
     private readonly string _pluginFolder;
 
-    public PluginAssemblyLoadContext(string pluginPath, ContainerConfiguration containerCfg)
+    public PluginAssemblyLoadContext(string pluginPath, ContainerConfiguration containerCfg, ILoggerFactory loggerFactory)
     {
-        Logger = LogManager.GetLogger(Path.GetFileNameWithoutExtension(pluginPath));
+        Logger = loggerFactory.CreateLogger(Path.GetFileNameWithoutExtension(pluginPath));
         _pluginFolder = Path.GetFullPath(pluginPath);
         foreach (var file in Directory.EnumerateFiles(pluginPath, NugetHelper.NugetPluginName + "*.dll",
                      SearchOption.AllDirectories))
@@ -27,7 +28,7 @@ public class PluginAssemblyLoadContext : AssemblyLoadContext
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Error load plugin assembly {0}", fullPath);
+                Logger.ZLogError(e, $"Error load plugin assembly {fullPath}");
             }
         }
     }
@@ -47,14 +48,14 @@ public class PluginAssemblyLoadContext : AssemblyLoadContext
         }
         catch (Exception e)
         {
-            Logger.Warn("Assembly {0} not found at main context", assemblyName.Name);
+            Logger.ZLogWarning(e, $"Assembly {assemblyName.Name} not found at main context");
         }
 
         // if we here, it's mean that assembly not found at main context => try to load from plugin folder
         foreach (var file in Directory.GetFiles(_pluginFolder, assemblyName.Name + ".dll", SearchOption.AllDirectories))
         {
             var fullPath = Path.GetFullPath(file);
-            Logger.Info("Load assembly {0} from plugin folder {1}", assemblyName, fullPath);
+            Logger.ZLogInformation($"Load assembly {assemblyName} from plugin folder {fullPath}");
             return LoadFromAssemblyPath(fullPath);
         }
 

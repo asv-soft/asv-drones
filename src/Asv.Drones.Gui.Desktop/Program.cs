@@ -4,13 +4,11 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.ReactiveUI;
-using NLog;
 
 namespace Asv.Drones.Gui.Desktop;
 
 sealed class Program
 {
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     // Initialization code. Don't use any Avalonia, third-party APIs or any
     // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
@@ -29,13 +27,11 @@ sealed class Program
         }
         catch (Exception e)
         {
-            Logger.Fatal(e, "Unhandled exception in Main loop of desktop application. Exiting.");
             if (Debugger.IsAttached) Debugger.Break();
         }
         finally
         {
             // Ensure the logs are flushed and archived before exiting the application
-            LogManager.Shutdown();
         }
     }
 

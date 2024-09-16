@@ -1,15 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Net.Mime;
+﻿using System.Globalization;
 using System.Reactive;
-using System.Windows;
 using Asv.Avalonia.Map;
 using Asv.Common;
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Input.Platform;
-using Avalonia.Threading;
 using DynamicData.Binding;
 using Material.Icons;
 using ReactiveUI;

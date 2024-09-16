@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
-using Avalonia.Controls;
 using Material.Icons;
-using NLog;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ZLogger;
 
 namespace Asv.Drones.Gui;
 
@@ -24,7 +25,7 @@ public class SettingsPageViewModelConfig
 public class SettingsPageViewModel : ShellPage, ISettingsPageContext
 {
     private const string UriArgNameEmpty = "empty";
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    private static ILogger<SettingsPageViewModel> _logger;
     private readonly IConfiguration _cfg;
 
     public static Uri GenerateUri(bool loadEmpty)
@@ -32,8 +33,8 @@ public class SettingsPageViewModel : ShellPage, ISettingsPageContext
         return new Uri($"{WellKnownUri.ShellPageSettings}?{UriArgNameEmpty}={loadEmpty}");
     }
     
-    public SettingsPageViewModel() : this(TreePageExplorerDesignTime.Instances, new InMemoryConfiguration(), NullLogService.Instance,
-        AppInfo.DesignTimeInstance)
+    public SettingsPageViewModel() : this(TreePageExplorerDesignTime.Instances, new InMemoryConfiguration(), NullLogService.Instance, 
+        AppInfo.DesignTimeInstance,NullLoggerFactory.Instance)
     {
         DesignTime.ThrowIfNotDesignMode();
 
@@ -48,8 +49,9 @@ public class SettingsPageViewModel : ShellPage, ISettingsPageContext
         [ImportMany(WellKnownUri.ShellPageSettings)]
         IEnumerable<IViewModelProvider<ITreePageMenuItem>> items,
         IConfiguration cfg,
-        ILogService log, IAppInfo info, IApplicationHost? host = null) : base(WellKnownUri.ShellPageSettings)
+        ILogService log, IAppInfo info, ILoggerFactory loggerFactory, IApplicationHost? host = null) : base(WellKnownUri.ShellPageSettings)
     {
+        _logger = loggerFactory.CreateLogger<SettingsPageViewModel>();
         _cfg = cfg;
         Title = RS.SettingsShellMenuProvider_SettingsShellMenuProvider_Settings;
         Icon = MaterialIconKind.Settings;
@@ -75,12 +77,12 @@ public class SettingsPageViewModel : ShellPage, ISettingsPageContext
         if (lastPage == null) return;
         try
         {
-            Logger.Debug($"Load last settings page:{lastPage}");
+            _logger.ZLogDebug($"Load last settings page:{lastPage}");   
             await Settings.GoTo(new Uri(lastPage));
         }
         catch (Exception e)
         {
-            Logger.Error(e,$"Error to load last settings page:{e.Message}");
+            _logger.ZLogError(e,$"Error to load last settings page:{e.Message}");
         }
     }
 

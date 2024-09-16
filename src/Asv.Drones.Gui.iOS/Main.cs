@@ -1,13 +1,11 @@
 using System;
 using System.Diagnostics;
-using NLog;
 using UIKit;
 
 namespace Asv.Drones.Gui.iOS;
 
 public class Application
 {
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     // This is the main entry point of the application.
     static void Main(string[] args)
@@ -24,13 +22,11 @@ public class Application
         }
         catch (Exception e)
         {
-            Logger.Fatal(e, "Unhandled exception at Application.Main in iOS application. Exiting.");
             if (Debugger.IsAttached) Debugger.Break();
         }
         finally
         {
             // Ensure the logs are flushed and archived before exiting the application
-            LogManager.Shutdown();
         }
     }
 }
