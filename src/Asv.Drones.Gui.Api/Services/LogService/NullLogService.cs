@@ -1,4 +1,6 @@
 using System.Reactive.Subjects;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Asv.Drones.Gui.Api;
 
@@ -24,5 +26,20 @@ public class NullLogService : ILogService
 
     public void DeleteLogFile()
     {
+    }
+
+    public void Dispose()
+    {
+        
+    }
+
+    public ILogger CreateLogger(string categoryName)
+    {
+        return NullLoggerFactory.Instance.CreateLogger(categoryName);
+    }
+
+    public void AddProvider(ILoggerProvider provider)
+    {
+        
     }
 }

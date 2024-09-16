@@ -7,12 +7,9 @@ using System.Threading.Tasks;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
 using Asv.Mavlink;
-using Asv.Mavlink.V2.Common;
 using DynamicData;
-using DynamicData.Binding;
 using Material.Icons;
 using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui;
 

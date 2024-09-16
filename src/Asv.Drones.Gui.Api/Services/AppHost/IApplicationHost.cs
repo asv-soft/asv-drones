@@ -1,4 +1,3 @@
-using System.Collections.Specialized;
 using System.Composition.Hosting;
 using Asv.Cfg;
 using Asv.Common;

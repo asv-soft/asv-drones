@@ -1,9 +1,4 @@
-﻿using System;
-using Asv.Common;
-using Asv.Drones.Gui.Api;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
+﻿using Asv.Drones.Gui.Api;
 using Avalonia.ReactiveUI;
 
 namespace Asv.Drones.Gui;

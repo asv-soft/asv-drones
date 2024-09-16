@@ -1,5 +1,4 @@
-﻿using System;
-using System.Composition;
+﻿using System.Composition;
 using Asv.Drones.Gui.Api;
 using Asv.Mavlink;
 using Material.Icons;

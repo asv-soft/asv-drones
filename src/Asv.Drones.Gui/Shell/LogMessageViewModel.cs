@@ -4,6 +4,7 @@ using Asv.Common;
 using Asv.Drones.Gui.Api;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
+using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -40,19 +41,19 @@ namespace Asv.Drones.Gui
             _sourceList?.Remove(_message);
         }
 
-        public string Title => _message.Source;
+        public string Title => _message.Category;
         [Reactive] public bool IsOpen { get; set; }
 
         public InfoBarSeverity Severity
         {
             get
             {
-                return _message.Type switch
+                return _message.LogLevel switch
                 {
-                    LogMessageType.Info => InfoBarSeverity.Success,
-                    LogMessageType.Error => InfoBarSeverity.Error,
-                    LogMessageType.Warning => InfoBarSeverity.Warning,
-                    LogMessageType.Trace => InfoBarSeverity.Informational,
+                    LogLevel.Information => InfoBarSeverity.Success,
+                    LogLevel.Error => InfoBarSeverity.Error,
+                    LogLevel.Warning => InfoBarSeverity.Warning,
+                    LogLevel.Trace => InfoBarSeverity.Informational,
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }

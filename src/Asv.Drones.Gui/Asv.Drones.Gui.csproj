@@ -16,10 +16,11 @@
     <ItemGroup>
         <PackageReference Include="Asv.Cfg" Version="$(AsvCommonVersion)"/>
         <PackageReference Include="Asv.Common" Version="$(AsvCommonVersion)"/>
+        <PackageReference Include="ZLogger" Version="$(ZLoggerVersion)" />
         <PackageReference Include="Asv.Avalonia.Toolkit" Version="$(AsvAvaloniaToolkitVersion)"/>
         <PackageReference Include="Asv.Avalonia.Map" Version="$(AsvAvaloniaMapVersion)"/>
 
-        <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)"/>
         <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)"/>
         <PackageReference Include="Avalonia.Xaml.Behaviors" Version="$(AvaloniaVersion)"/>
@@ -119,15 +120,4 @@
       </None>
     </ItemGroup>
 
-    <ItemGroup>
-      <Reference Include="Asv.Avalonia.Toolkit">
-        <HintPath>..\..\..\..\Users\Havok\.nuget\packages\asv.avalonia.toolkit\0.1.7\lib\net8.0\Asv.Avalonia.Toolkit.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Reference Include="Asv.Avalonia.Toolkit">
-        <HintPath>..\..\..\..\Users\Havok\.nuget\packages\asv.avalonia.toolkit\0.1.7\lib\net8.0\Asv.Avalonia.Toolkit.dll</HintPath>
-      </Reference>
-    </ItemGroup>
 </Project>

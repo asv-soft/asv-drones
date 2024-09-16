@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,7 +6,6 @@ using Asv.Common;
 using Asv.Drones.Gui.Api;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
-using Avalonia.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 

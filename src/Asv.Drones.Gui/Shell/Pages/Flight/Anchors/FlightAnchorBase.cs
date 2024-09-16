@@ -1,5 +1,3 @@
-using System;
-using Asv.Common;
 using Asv.Drones.Gui.Api;
 using Asv.Mavlink;
 
