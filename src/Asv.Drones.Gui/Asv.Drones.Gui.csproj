@@ -14,39 +14,22 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Asv.Cfg" Version="$(AsvCommonVersion)"/>
-        <PackageReference Include="Asv.Common" Version="$(AsvCommonVersion)"/>
+        <PackageReference Include="Asv.Drones.Gui.Api" Version="$(ApiVersion)"/>
         <PackageReference Include="ZLogger" Version="$(ZLoggerVersion)" />
-        <PackageReference Include="Asv.Avalonia.Toolkit" Version="$(AsvAvaloniaToolkitVersion)"/>
-        <PackageReference Include="Asv.Avalonia.Map" Version="$(AsvAvaloniaMapVersion)"/>
 
-        <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
-        <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)"/>
-        <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)"/>
-        <PackageReference Include="Avalonia.Xaml.Behaviors" Version="$(AvaloniaVersion)"/>
-        <PackageReference Include="Avalonia.Xaml.Interactions" Version="$(AvaloniaVersion)"/>
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)"/>
 
-        <PackageReference Include="NuGet.Packaging" Version="6.8.0"/>
-        <PackageReference Include="NuGet.Packaging.Core" Version="6.8.0"/>
-        <PackageReference Include="NuGet.Resolver" Version="6.8.0"/>
-        <PackageReference Include="NuGet.Protocol" Version="6.8.0"/>
+        <PackageReference Include="NuGet.Packaging" Version="$(NugetVersion)"/>
+        <PackageReference Include="NuGet.Packaging.Core" Version="$(NugetVersion)"/>
+        <PackageReference Include="NuGet.Resolver" Version="$(NugetVersion)"/>
+        <PackageReference Include="NuGet.Protocol" Version="$(NugetVersion)"/>
 
-        <PackageReference Include="System.Composition" Version="$(CompositionVersion)"/>
         <PackageReference Include="FluentAvaloniaUI" Version="$(FluentAvaloniaUIVersion)"/>
-        <PackageReference Include="Material.Icons.Avalonia" Version="$(MaterialIconsAvaloniaVersion)"/>
-
-        <PackageReference Include="ReactiveUI" Version="$(ReactiveUIVersion)"/>
         <PackageReference Include="ReactiveUI.Fody" Version="$(ReactiveUIVersion)"/>
-        <PackageReference Include="ReactiveUI.Validation" Version="$(ReactiveUIValidationVersion)"/>
         <PackageReference Include="System.IO.Packaging" Version="8.0.0" />
 
 
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\Asv.Drones.Gui.Api\Asv.Drones.Gui.Api.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

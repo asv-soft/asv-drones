@@ -140,12 +140,14 @@
                         DockPanel.Dock="Top" Title="Loading error" IsOpen="True" IsIconVisible="True" Severity="Error"
                         IsClosable="False"
                         Message="{Binding LoadingError}" />
-                    <controls:InfoBar
-                        IsVisible="{Binding IsVerified}"
-                        DockPanel.Dock="Top" Title="{x:Static gui:RS.PluginsMarketView_InfoBar_IsVerified}"
-                        IsOpen="True" IsIconVisible="True" Severity="Success"
-                        IsClosable="False"
-                        Message="{x:Static gui:RS.PluginsMarketView_InfoBar_IsVerified_Message}" />
+                    <Border IsVisible="{Binding IsVerified}" DockPanel.Dock="Top" Padding="0,10,0,10">
+                        <StackPanel Orientation="Horizontal">
+                            <avalonia:MaterialIcon VerticalAlignment="Center" Height="15" Kind="Verified" Margin="5 0"
+                                                   IsVisible="{Binding IsVerified}"
+                                                   Foreground="{DynamicResource SystemAccentColorLight1}" />
+                            <TextBlock VerticalAlignment="Center" Theme="{DynamicResource BodyTextBlockStyle}" Text="{x:Static gui:RS.PluginsMarketView_InfoBar_IsVerified_Message}"/>
+                        </StackPanel>    
+                    </Border>
                     <TabControl>
                         <TabItem FontSize="18" Header="{x:Static gui:RS.PluginsInstalledView_Tab_Description}">
                                 <TextBlock Text="{Binding Description}" TextWrapping="WrapWithOverflow" />

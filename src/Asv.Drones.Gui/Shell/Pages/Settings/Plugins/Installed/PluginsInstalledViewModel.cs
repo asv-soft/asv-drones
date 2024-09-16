@@ -42,6 +42,16 @@ public class PluginsInstalledViewModel : TreePageViewModel
                         Name = "Example2",
                         Description = "Example plugin",
                         LocalVersion = "0.1.0",
+                    },
+                    new InstalledPluginInfoViewModel
+                    {
+                        Id = "#3",
+                        Author = "Asv Soft 1",
+                        SourceName = "Github",
+                        Name = "Example2",
+                        IsVerified = true,
+                        Description = "Example plugin",
+                        LocalVersion = "0.1.0",
                     }
                 }));
         SelectedPlugin = _plugins.First();
