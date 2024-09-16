@@ -66,8 +66,13 @@ public interface IApplicationHost
     /// </summary>
     IShell? Shell { get; }
     /// <summary>
+    /// Base class for all user dialogs
+    /// Can be NULL! before main activity is loading
+    /// </summary>
+    IDialogService? Dialogs { get; }
+    
+    /// <summary>
     /// Try to restart application
     /// </summary>
     void RestartApplication();
-   
 }

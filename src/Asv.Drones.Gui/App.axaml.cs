@@ -102,6 +102,7 @@ public partial class App : Application, IApplicationHost
         Environment.Exit(0);
     }
 
+    public IDialogService? Dialogs { get; private set; }
 
     #endregion
 
@@ -263,6 +264,7 @@ public partial class App : Application, IApplicationHost
             {
                 DataContext = Shell = Container.GetExport<IShell>()
             };
+            Dialogs = new DesktopDialogService(desktop.MainWindow);
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
@@ -270,6 +272,7 @@ public partial class App : Application, IApplicationHost
             {
                 DataContext = Shell = Container.GetExport<IShell>()
             };
+            Dialogs = new NullDialogService();
         }
 
         #endregion
@@ -298,8 +301,5 @@ public partial class App : Application, IApplicationHost
 
         #endregion
     }
-
-    
-
     #endregion
 }
