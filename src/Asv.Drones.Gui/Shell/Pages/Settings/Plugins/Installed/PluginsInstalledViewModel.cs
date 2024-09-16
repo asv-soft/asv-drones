@@ -65,13 +65,13 @@ public class PluginsInstalledViewModel : TreePageViewModel
 
     private void SearchImpl()
     {
-        _pluginSearchSource.AddOrUpdate(_manager.Installed);
+        _pluginSearchSource.AddOrUpdate(OnlyVerified
+            ? _manager.Installed.Where(item => item.IsVerified)
+            : _manager.Installed);
     }
 
-
     public ReadOnlyObservableCollection<InstalledPluginInfoViewModel> Plugins => _plugins;
-
+    [Reactive] public bool OnlyVerified { get; set; } = true;
     [Reactive] public string SearchString { get; set; }
-
     [Reactive] public InstalledPluginInfoViewModel SelectedPlugin { get; set; }
 }

@@ -2679,6 +2679,15 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only verified.
+        /// </summary>
+        public static string PluginsMarketView_ToggleSwitch_OnlyVerified {
+            get {
+                return ResourceManager.GetString("PluginsMarketView_ToggleSwitch_OnlyVerified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plugin source servers.
         /// </summary>
         public static string PluginsSourcesTreeMenuItem_Description {

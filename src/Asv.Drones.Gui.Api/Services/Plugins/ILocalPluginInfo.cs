@@ -33,4 +33,6 @@ public interface IPluginSpecification
     public string? Description { get; }
     string? Authors { get; }
     string? Tags { get; }
+    bool IsVerified { get; }
+
 }

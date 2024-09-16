@@ -42,6 +42,7 @@ public class LocalPluginInfo : ILocalPluginInfo
             throw new Exception($"Plugin {Id} does not contain API package as dependency");
         }
         ApiVersion = apiPackage.VersionRange.MinVersion?.ToNormalizedString() ?? throw new InvalidOperationException("Api version not found in plugin dependencies");
+        if (SourceUri != null) IsVerified = Authors.Contains("https://github.com/asv-soft") && SourceUri.Contains("https://nuget.pkg.github.com/asv-soft/index.json");
     }
 
     public Bitmap? Icon { get; set; }
@@ -55,7 +56,8 @@ public class LocalPluginInfo : ILocalPluginInfo
     public string? Tags { get; }
     public string Id { get; }
     public string Version { get; }
-    public bool IsUninstalled { get; }
     public bool IsLoaded { get; }
     public string? LoadingError { get; }
+    public bool IsUninstalled { get; }
+    public bool IsVerified { get; set; }
 }
