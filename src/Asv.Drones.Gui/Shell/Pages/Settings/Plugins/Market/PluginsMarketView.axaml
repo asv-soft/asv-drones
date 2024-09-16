@@ -124,8 +124,9 @@
                                        Theme="{DynamicResource BodyTextBlockStyle}" Text="|" />
                             <TextBlock Foreground="{DynamicResource AccentTextFillColorDisabledBrush}"
                                        Theme="{DynamicResource BodyTextBlockStyle}" Text="{Binding Author}" />
+                            
                         </StackPanel>
-
+                       
 
                         <Panel Grid.Row="2" Grid.Column="0" IsVisible="{Binding !IsInstalled}">
                             <Button Classes="accent" Width="100" IsVisible="{Binding !Install.IsExecuting}"
@@ -162,6 +163,7 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                     </Grid>
+                    
                     <controls:InfoBar IsVisible="{Binding IsUninstalled}" DockPanel.Dock="Top"
                                       Title="{x:Static gui:RS.PluginsInstalledView_UninstalledMessageTitle}"
                                       IsOpen="True" IsIconVisible="True" Severity="Warning" IsClosable="False"
@@ -171,11 +173,15 @@
                                     Content="{x:Static gui:RS.PluginsInstalledView_CancelUninstall}" />
                         </controls:InfoBar.ActionButton>
                     </controls:InfoBar>
-                    <controls:InfoBar
-                        IsVisible="{Binding IsVerified}"
-                        DockPanel.Dock="Top" Title="{x:Static gui:RS.PluginsMarketView_InfoBar_IsVerified}" IsOpen="True" IsIconVisible="True" Severity="Success"
-                        IsClosable="False"
-                        Message="{x:Static gui:RS.PluginsMarketView_InfoBar_IsVerified_Message}"/>
+                    <Border IsVisible="{Binding IsVerified}" DockPanel.Dock="Top" Padding="0,10,0,10">
+                        <StackPanel Orientation="Horizontal">
+                            <avalonia:MaterialIcon VerticalAlignment="Center" Height="15" Kind="Verified" Margin="5 0"
+                                                   IsVisible="{Binding IsVerified}"
+                                                   Foreground="{DynamicResource SystemAccentColorLight1}" />
+                            <TextBlock VerticalAlignment="Center" Theme="{DynamicResource BodyTextBlockStyle}" Text="{x:Static gui:RS.PluginsMarketView_InfoBar_IsVerified_Message}"/>
+                        </StackPanel>    
+                    </Border>
+                    
                     <TabControl>
                         <TabItem FontSize="18" Header="{x:Static gui:RS.PluginsInstalledView_Tab_Description}">
                             <TextBlock Text="{Binding Description}" TextWrapping="WrapWithOverflow" />
