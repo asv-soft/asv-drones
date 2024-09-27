@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 
 namespace Asv.Drones.Gui;
 
+/*
 [Export(typeof(IPacketConverter))]
 public class FtpPacketConverter:IPacketConverter
 {
@@ -32,4 +33,4 @@ public class FtpPacketConverter:IPacketConverter
     }
 
     public int Order => int.MaxValue/2;
-}
+}*/
