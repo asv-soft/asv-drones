@@ -61,6 +61,10 @@ public class LogService : DisposableOnceWithCancel, ILogService, ILoggerFactory
         var errorHandler = new Subject<Exception>().DisposeItWith(Disposable);
         errorHandler.Subscribe(err =>
         {
+            if (err is AggregateException && err.InnerException != null)
+            {
+                err = err.InnerException;
+            }
             _logger.LogError(err, "Unhandled exception in RxApp.");
             if (Debugger.IsAttached) Debugger.Break();
             SaveMessage(new LogMessage(DateTime.Now, LogLevel.Error, "Core", err.Message, err.ToString()));

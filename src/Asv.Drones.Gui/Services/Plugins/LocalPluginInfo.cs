@@ -32,7 +32,15 @@ public class LocalPluginInfo : ILocalPluginInfo
         {
             var pathToContentFolder = Path.Combine(pluginFolder, "content");
             var iconPath = Path.Combine(pathToContentFolder, icon);
-            Icon = new Bitmap(iconPath);
+            try
+            {
+                Icon = new Bitmap(iconPath);
+            }
+            catch (Exception e)
+            {
+                // ignore load icon
+            }
+            
         }
         
         var apiPackage = reader.GetPackageDependencies()
