@@ -3831,6 +3831,87 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compare selected items.
+        /// </summary>
+        public static string VehicleFileBrowserView_CompareSelectedItems_Button_Tooltip {
+            get {
+                return ResourceManager.GetString("VehicleFileBrowserView_CompareSelectedItems_Button_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string VehicleFileBrowserView_Delete_Button_Tooltip {
+            get {
+                return ResourceManager.GetString("VehicleFileBrowserView_Delete_Button_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download file.
+        /// </summary>
+        public static string VehicleFileBrowserView_Download_button_Tooltip {
+            get {
+                return ResourceManager.GetString("VehicleFileBrowserView_Download_button_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for the file.
+        /// </summary>
+        public static string VehicleFileBrowserView_FindFile_Button_Tooltip {
+            get {
+                return ResourceManager.GetString("VehicleFileBrowserView_FindFile_Button_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New folder.
+        /// </summary>
+        public static string VehicleFileBrowserView_NewFolder_Button_Tooltip {
+            get {
+                return ResourceManager.GetString("VehicleFileBrowserView_NewFolder_Button_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        public static string VehicleFileBrowserView_Refresh_Button_Tooltip {
+            get {
+                return ResourceManager.GetString("VehicleFileBrowserView_Refresh_Button_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename.
+        /// </summary>
+        public static string VehicleFileBrowserView_Rename_Button_Tooltip {
+            get {
+                return ResourceManager.GetString("VehicleFileBrowserView_Rename_Button_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string VehicleFileBrowserView_Search_Watermark {
+            get {
+                return ResourceManager.GetString("VehicleFileBrowserView_Search_Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload file.
+        /// </summary>
+        public static string VehicleFileBrowserView_Upload_button_Tooltip {
+            get {
+                return ResourceManager.GetString("VehicleFileBrowserView_Upload_button_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quick settings.
         /// </summary>
         public static string VehicleQuickParamPageViewModel_Title {

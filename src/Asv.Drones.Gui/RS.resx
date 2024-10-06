@@ -1341,4 +1341,31 @@
   <data name="Unit_Terabyte_Abbreviation" xml:space="preserve">
     <value>TB</value>
   </data>
+  <data name="VehicleFileBrowserView_NewFolder_Button_Tooltip" xml:space="preserve">
+    <value>New folder</value>
+  </data>
+  <data name="VehicleFileBrowserView_Rename_Button_Tooltip" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="VehicleFileBrowserView_Delete_Button_Tooltip" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="VehicleFileBrowserView_Search_Watermark" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="VehicleFileBrowserView_FindFile_Button_Tooltip" xml:space="preserve">
+    <value>Search for the file</value>
+  </data>
+  <data name="VehicleFileBrowserView_CompareSelectedItems_Button_Tooltip" xml:space="preserve">
+    <value>Compare selected items</value>
+  </data>
+  <data name="VehicleFileBrowserView_Download_button_Tooltip" xml:space="preserve">
+    <value>Download file</value>
+  </data>
+  <data name="VehicleFileBrowserView_Upload_button_Tooltip" xml:space="preserve">
+    <value>Upload file</value>
+  </data>
+  <data name="VehicleFileBrowserView_Refresh_Button_Tooltip" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
 </root>

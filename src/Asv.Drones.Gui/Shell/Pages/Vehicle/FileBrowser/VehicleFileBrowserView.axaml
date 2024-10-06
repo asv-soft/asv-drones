@@ -46,28 +46,31 @@
         </Style>
     </UserControl.Styles>
     <Panel>
-        <Grid ColumnDefinitions="*, 30, *">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="300"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="*" MinWidth="300"/>
+            </Grid.ColumnDefinitions>
+            
             <Border Grid.Column="0"
                     Padding="8">
                 <DockPanel>
-                    
-                    <!-- TODO: edit tips, watermarks and texts -->
-                    
                     <StackPanel DockPanel.Dock="Top" 
                                 Spacing="4">
                         <StackPanel Spacing="4"
                                     Orientation="Horizontal">
-                            <Button ToolTip.Tip="tooltip">
+                            <Button ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_NewFolder_Button_Tooltip}">
                                 <avalonia:MaterialIcon Kind="FolderPlusOutline" Foreground="{StaticResource FolderBrush}" />
                             </Button>
-                            <Button ToolTip.Tip="tooltip">
+                            <Button ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_Rename_Button_Tooltip}">
                                 <avalonia:MaterialIcon Kind="Pencil" Foreground="{StaticResource FileBrush}" />
                             </Button>
-                            <Button ToolTip.Tip="tooltip">
+                            <Button ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_Delete_Button_Tooltip}">
                                 <avalonia:MaterialIcon Kind="Trash" Foreground="{StaticResource DeleteBrush}" />
                             </Button>
                         </StackPanel>
-                        <TextBox Watermark="Search" Margin="0 0 0 4"/>
+                        <TextBox Watermark="{x:Static gui:RS.VehicleFileBrowserView_Search_Watermark}" Margin="0 0 0 4"/>
                     </StackPanel>
                     <ScrollViewer VerticalAlignment="Top">
                         <TreeView DockPanel.Dock="Bottom" 
@@ -108,40 +111,43 @@
                         Margin="2"
                         Spacing="8">
                 <Button Height="50" 
-                        Content="{avalonia:MaterialIconExt Kind=TransferLeft}" 
-                        Theme="{DynamicResource TransparentButton}"/>
-                <Button Height="50" 
+                        ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_Upload_button_Tooltip}"
                         Content="{avalonia:MaterialIconExt Kind=TransferRight}" 
-                        Theme="{DynamicResource TransparentButton}"/>
+                        Theme="{DynamicResource TransparentButton}"
+                        Command="{Binding UploadCommand}"/>
+                <Button Height="50" 
+                        ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_Download_button_Tooltip}"
+                        Content="{avalonia:MaterialIconExt Kind=TransferLeft}" 
+                        Theme="{DynamicResource TransparentButton}"
+                        Command="{Binding DownloadCommand}"/>
+                
             </StackPanel>
         
             <Border Grid.Column="2"
                     Padding="8">
                 <DockPanel>
-                    
-                    <!-- TODO: edit tips, watermarks and texts -->
-                    
                     <StackPanel DockPanel.Dock="Top" 
                                 Spacing="4">
                         <StackPanel Spacing="4"
                                     Orientation="Horizontal">
-                            <Button ToolTip.Tip="tooltip">
+                            <Button ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_NewFolder_Button_Tooltip}">
                                 <avalonia:MaterialIcon Kind="FolderPlusOutline" Foreground="{StaticResource FolderBrush}" />
                             </Button>
-                            <Button ToolTip.Tip="Сравнить выделенные каталоги/файлы">
+                            <Button ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_CompareSelectedItems_Button_Tooltip}">
                                 <avalonia:MaterialIcon Kind="SwapHorizontalCircleOutline" Foreground="{StaticResource ActionBrush}" />
                             </Button>
-                            <Button ToolTip.Tip="Найти файл слева по выделенному файлу справа">
+                            <Button ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_FindFile_Button_Tooltip}">
                                 <avalonia:MaterialIcon Kind="FileFindOutline" Foreground="{StaticResource ActionBrush}" />
                             </Button>
                         </StackPanel>
                         <Grid ColumnDefinitions="*, Auto" Margin="0 0 0 4">
                             <TextBox Grid.Column="0" 
-                                     Watermark="Search" 
+                                     Watermark="{x:Static gui:RS.VehicleFileBrowserView_Search_Watermark}" 
                                      Margin="0 0 8 0"/>
                             <Button Grid.Column="1" 
                                     VerticalAlignment="Center"
-                                    HorizontalAlignment="Center">
+                                    HorizontalAlignment="Center"
+                                    ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_Refresh_Button_Tooltip}">
                                 <avalonia:MaterialIcon Kind="Refresh" Foreground="{StaticResource FileBrush}" />
                             </Button>
                         </Grid>

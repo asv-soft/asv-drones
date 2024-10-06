@@ -1355,4 +1355,31 @@
   <data name="Unit_Terabyte_Abbreviation" xml:space="preserve">
     <value>ТБ</value>
   </data>
+  <data name="VehicleFileBrowserView_NewFolder_Button_Tooltip" xml:space="preserve">
+    <value>Новая папка</value>
+  </data>
+  <data name="VehicleFileBrowserView_Rename_Button_Tooltip" xml:space="preserve">
+    <value>Переименовать</value>
+  </data>
+  <data name="VehicleFileBrowserView_Delete_Button_Tooltip" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="VehicleFileBrowserView_Search_Watermark" xml:space="preserve">
+    <value>Найти</value>
+  </data>
+  <data name="VehicleFileBrowserView_FindFile_Button_Tooltip" xml:space="preserve">
+    <value>Поиск файла</value>
+  </data>
+  <data name="VehicleFileBrowserView_CompareSelectedItems_Button_Tooltip" xml:space="preserve">
+    <value>Сравнить выделенные элементы</value>
+  </data>
+  <data name="VehicleFileBrowserView_Download_button_Tooltip" xml:space="preserve">
+    <value>Скачать файл</value>
+  </data>
+  <data name="VehicleFileBrowserView_Upload_button_Tooltip" xml:space="preserve">
+    <value>Поместить файл</value>
+  </data>
+  <data name="VehicleFileBrowserView_Refresh_Button_Tooltip" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
 </root>

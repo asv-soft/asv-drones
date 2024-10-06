@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Composition;
 using System.IO;
+using System.Reactive;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -236,9 +237,9 @@ public class VehicleFileBrowserViewModel : ShellPage
         return $"{len:0.##} {sizes[order]}";
     }
     
-    public ICommand UploadRightCommand { get; set; }
-    public ICommand DownloadLeftCommand { get; set; }
-
+    public ReactiveCommand<Unit, Unit> UploadCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> DownloadCommand { get; set; }
+    
     [Reactive] public FileSystemItemViewModel? LeftSelectedItem { get; set; }
     [Reactive] public FileSystemItemViewModel? RightSelectedItem { get; set; }
     public ObservableCollection<FileSystemItemViewModel> Device { get; set; }
