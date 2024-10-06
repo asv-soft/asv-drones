@@ -1,0 +1,182 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:api="clr-namespace:Asv.Drones.Gui.Api;assembly=Asv.Drones.Gui.Api"
+             xmlns:gui="clr-namespace:Asv.Drones.Gui"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:CompileBindings="True"
+             x:Class="Asv.Drones.Gui.VehicleFileBrowserView"
+             x:DataType="gui:VehicleFileBrowserViewModel">
+    <Design.DataContext>
+        <gui:VehicleFileBrowserViewModel />
+    </Design.DataContext>
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="FolderBrush" Color="#FBC02D" />
+        <SolidColorBrush x:Key="FileBrush" Color="#40B5E0" />
+        <SolidColorBrush x:Key="DeleteBrush" Color="#D84315" />
+        <SolidColorBrush x:Key="ActionBrush" Color="#34a33e" />
+        <x:Double x:Key="IconSize">15</x:Double>
+    </UserControl.Resources>
+    <UserControl.Styles>
+        <Style Selector="TreeViewItem" x:DataType="gui:FileSystemItemViewModel">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+        </Style>
+        <Style Selector="avalonia|MaterialIcon.folder">
+            <Setter Property="Kind" Value="FolderOutline" />
+            <Setter Property="Foreground" Value="{StaticResource FolderBrush}" />
+        </Style>
+        <Style Selector="avalonia|MaterialIcon.folder.selected">
+            <Setter Property="Kind" Value="Folder" />
+            <Setter Property="Foreground" Value="{StaticResource FolderBrush}" />
+        </Style>
+        <Style Selector="avalonia|MaterialIcon.folder.expanded">
+            <Setter Property="Kind" Value="FolderOpenOutline" />
+            <Setter Property="Foreground" Value="{StaticResource FolderBrush}" />
+        </Style>
+        <Style Selector="avalonia|MaterialIcon.file">
+            <Setter Property="Kind" Value="FileMarkerOutline" />
+            <Setter Property="Foreground" Value="{StaticResource FileBrush}" />
+        </Style>
+        <Style Selector="avalonia|MaterialIcon.file.selected" x:DataType="gui:FileSystemItemViewModel">
+            <Setter Property="Kind" Value="FileMarker" />
+        </Style>
+    </UserControl.Styles>
+    <Panel>
+        <Grid ColumnDefinitions="*, 30, *">
+            <Border Grid.Column="0"
+                    Padding="8">
+                <DockPanel>
+                    
+                    <!-- TODO: edit tips, watermarks and texts -->
+                    
+                    <StackPanel DockPanel.Dock="Top" 
+                                Spacing="4">
+                        <StackPanel Spacing="4"
+                                    Orientation="Horizontal">
+                            <Button ToolTip.Tip="tooltip">
+                                <avalonia:MaterialIcon Kind="FolderPlusOutline" Foreground="{StaticResource FolderBrush}" />
+                            </Button>
+                            <Button ToolTip.Tip="tooltip">
+                                <avalonia:MaterialIcon Kind="Pencil" Foreground="{StaticResource FileBrush}" />
+                            </Button>
+                            <Button ToolTip.Tip="tooltip">
+                                <avalonia:MaterialIcon Kind="Trash" Foreground="{StaticResource DeleteBrush}" />
+                            </Button>
+                        </StackPanel>
+                        <TextBox Watermark="Search" Margin="0 0 0 4"/>
+                    </StackPanel>
+                    <ScrollViewer VerticalAlignment="Top">
+                        <TreeView DockPanel.Dock="Bottom" 
+                                  SelectionMode="Toggle" 
+                                  SelectedItem="{Binding LeftSelectedItem, Mode=TwoWay}"
+                                  ItemsSource="{Binding Store}" >
+                            <TreeView.ItemTemplate>
+                                <TreeDataTemplate ItemsSource="{Binding Children}">
+                                    <Grid ColumnDefinitions="Auto, 8*, *">
+                                        <avalonia:MaterialIcon Grid.Column="0"
+                                            Margin="0,0,8,0"
+                                            Classes.folder="{Binding IsDirectory}"
+                                            Classes.file="{Binding IsFile}"
+                                            Classes.expanded="{Binding IsExpanded}"
+                                            Classes.selected="{Binding IsSelected}"
+                                            Width="{StaticResource IconSize}" 
+                                            Height="{StaticResource IconSize}" />
+                                        <TextBlock Grid.Column="1"
+                                                   VerticalAlignment="Center"
+                                                   Text="{Binding Name}" />
+                                        <TextBlock Grid.Column="2" 
+                                                   Padding="8"
+                                                   HorizontalAlignment="Right"
+                                                   IsVisible="{Binding !IsDirectory}" 
+                                                   Text="{Binding Size}"/>
+                                    </Grid>
+                                </TreeDataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
+            <GridSplitter Grid.Column="1"/>
+        
+            <StackPanel HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center" 
+                        Grid.Column="1"
+                        Margin="2"
+                        Spacing="8">
+                <Button Height="50" 
+                        Content="{avalonia:MaterialIconExt Kind=TransferLeft}" 
+                        Theme="{DynamicResource TransparentButton}"/>
+                <Button Height="50" 
+                        Content="{avalonia:MaterialIconExt Kind=TransferRight}" 
+                        Theme="{DynamicResource TransparentButton}"/>
+            </StackPanel>
+        
+            <Border Grid.Column="2"
+                    Padding="8">
+                <DockPanel>
+                    
+                    <!-- TODO: edit tips, watermarks and texts -->
+                    
+                    <StackPanel DockPanel.Dock="Top" 
+                                Spacing="4">
+                        <StackPanel Spacing="4"
+                                    Orientation="Horizontal">
+                            <Button ToolTip.Tip="tooltip">
+                                <avalonia:MaterialIcon Kind="FolderPlusOutline" Foreground="{StaticResource FolderBrush}" />
+                            </Button>
+                            <Button ToolTip.Tip="Сравнить выделенные каталоги/файлы">
+                                <avalonia:MaterialIcon Kind="SwapHorizontalCircleOutline" Foreground="{StaticResource ActionBrush}" />
+                            </Button>
+                            <Button ToolTip.Tip="Найти файл слева по выделенному файлу справа">
+                                <avalonia:MaterialIcon Kind="FileFindOutline" Foreground="{StaticResource ActionBrush}" />
+                            </Button>
+                        </StackPanel>
+                        <Grid ColumnDefinitions="*, Auto" Margin="0 0 0 4">
+                            <TextBox Grid.Column="0" 
+                                     Watermark="Search" 
+                                     Margin="0 0 8 0"/>
+                            <Button Grid.Column="1" 
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center">
+                                <avalonia:MaterialIcon Kind="Refresh" Foreground="{StaticResource FileBrush}" />
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                    <ScrollViewer VerticalAlignment="Top">
+                        <TreeView DockPanel.Dock="Bottom"
+                                  SelectionMode="Toggle"
+                                  SelectedItem="{Binding RightSelectedItem, Mode=TwoWay}"
+                                  ItemsSource="{Binding Device}">
+                            <TreeView.ItemTemplate>
+                                <TreeDataTemplate ItemsSource="{Binding Children}">
+                                    <Grid ColumnDefinitions="Auto, 8*, *">
+                                        <avalonia:MaterialIcon Grid.Column="0"
+                                            Margin="0,0,8,0"
+                                            Classes.folder="{Binding IsDirectory}"
+                                            Classes.file="{Binding IsFile}"
+                                            Classes.expanded="{Binding IsExpanded}"
+                                            Classes.selected="{Binding IsSelected}"
+                                            Width="{StaticResource IconSize}" 
+                                            Height="{StaticResource IconSize}" />
+                                        <TextBlock Grid.Column="1"
+                                                   VerticalAlignment="Center"
+                                                   Text="{Binding Name}" />
+                                        <TextBlock Grid.Column="2" 
+                                                   Padding="8"
+                                                   HorizontalAlignment="Right"
+                                                   IsVisible="{Binding !IsDirectory}" 
+                                                   Text="{Binding Size}"/>
+                                    </Grid>
+                                </TreeDataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
+        </Grid>
+    </Panel>
+</UserControl>

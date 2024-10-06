@@ -3786,6 +3786,51 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to B.
+        /// </summary>
+        public static string Unit_Byte_Abbreviation {
+            get {
+                return ResourceManager.GetString("Unit_Byte_Abbreviation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GB.
+        /// </summary>
+        public static string Unit_Gigabyte_Abbreviation {
+            get {
+                return ResourceManager.GetString("Unit_Gigabyte_Abbreviation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KB.
+        /// </summary>
+        public static string Unit_Kilobyte_Abbreviation {
+            get {
+                return ResourceManager.GetString("Unit_Kilobyte_Abbreviation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MB.
+        /// </summary>
+        public static string Unit_Megabyte_Abbreviation {
+            get {
+                return ResourceManager.GetString("Unit_Megabyte_Abbreviation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TB.
+        /// </summary>
+        public static string Unit_Terabyte_Abbreviation {
+            get {
+                return ResourceManager.GetString("Unit_Terabyte_Abbreviation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quick settings.
         /// </summary>
         public static string VehicleQuickParamPageViewModel_Title {
@@ -3845,6 +3890,15 @@ namespace Asv.Drones.Gui {
         public static string VehicleQuickParamStandardTreeMenuItem_Name {
             get {
                 return ResourceManager.GetString("VehicleQuickParamStandardTreeMenuItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse files.
+        /// </summary>
+        public static string VehiclesShellMenuItemProvider_ShellMenuItem_FileBrowser {
+            get {
+                return ResourceManager.GetString("VehiclesShellMenuItemProvider_ShellMenuItem_FileBrowser", resourceCulture);
             }
         }
         

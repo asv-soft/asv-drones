@@ -1323,4 +1323,22 @@
   <data name="PluginsMarketView_ToggleSwitch_OnlyVerified" xml:space="preserve">
     <value>Only verified</value>
   </data>
+  <data name="VehiclesShellMenuItemProvider_ShellMenuItem_FileBrowser" xml:space="preserve">
+    <value>Browse files</value>
+  </data>
+  <data name="Unit_Byte_Abbreviation" xml:space="preserve">
+    <value>B</value>
+  </data>
+  <data name="Unit_Kilobyte_Abbreviation" xml:space="preserve">
+    <value>KB</value>
+  </data>
+  <data name="Unit_Megabyte_Abbreviation" xml:space="preserve">
+    <value>MB</value>
+  </data>
+  <data name="Unit_Gigabyte_Abbreviation" xml:space="preserve">
+    <value>GB</value>
+  </data>
+  <data name="Unit_Terabyte_Abbreviation" xml:space="preserve">
+    <value>TB</value>
+  </data>
 </root>
