@@ -79,6 +79,7 @@ public class PluginsMarketViewModel : TreePageViewModel
             _previouslySelectedPluginId = SelectedPlugin.Id;
         }
         
+        
         SelectedPlugin = null;
         _pluginSearchSource.Clear();
         var filteredItems = OnlyVerified 

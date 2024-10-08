@@ -12,15 +12,17 @@ using Asv.Mavlink.V2.Common;
 using Asv.Mavlink.Vehicle;
 using DynamicData;
 using DynamicData.Binding;
+using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ZLogger;
 
 namespace Asv.Drones.Gui;
 
 public class MissionStatusViewModel : ViewModelBase
 {
     private readonly IVehicleClient _vehicle;
-    private readonly ILogService _log;
+    private readonly ILogger _log;
     private readonly ReadOnlyObservableCollection<MissionItem> _items;
     private double _passedDistance;
     private double _distanceBeforeMission;
@@ -31,12 +33,12 @@ public class MissionStatusViewModel : ViewModelBase
         DesignTime.ThrowIfNotDesignMode();
     }
 
-    public MissionStatusViewModel(IVehicleClient vehicle, ILogService log, Uri id, ILocalizationService localization) :
+    public MissionStatusViewModel(IVehicleClient vehicle, ILoggerFactory log, Uri id, ILocalizationService localization) :
         base(id)
     {
         _vehicle = vehicle;
 
-        _log = log;
+        _log = log.CreateLogger<MissionStatusViewModel>();
 
         _vehicle.CurrentMode.Subscribe(m =>
         {
@@ -220,15 +222,14 @@ public class MissionStatusViewModel : ViewModelBase
 
                 if (item.Command.Value == MavCmd.MavCmdNavWaypoint && item.Location.Value.Altitude <= homeAlt)
                 {
-                    _log.Warning("MissionStatus",
-                                 string.Format(RS.MissionStatusViewModel_PointLowerThanHome_Warning, i,
-                                               item.Location.Value.Altitude));
+                    _log.ZLogWarning($"MissionStatus {string.Format(RS.MissionStatusViewModel_PointLowerThanHome_Warning, i,
+                        item.Location.Value.Altitude)}");
                 }
             }
         }
         catch (Exception e)
         {
-            _log.Error("MissionStatus", e.Message);
+            _log.ZLogError($"MissionStatus {e.Message}");
         }
     }
 
