@@ -63,7 +63,7 @@ public class PacketViewerViewModel : ShellPage
     private PacketPrinter _printer;
     [ImportingConstructor]
     public PacketViewerViewModel(IMavlinkDevicesService mavlinkDevicesService, IApplicationHost app,
-        IConfiguration cfg, ILocalizationService localizationService, ILogService log)
+        IConfiguration cfg, ILocalizationService localizationService, ILogService log,[ImportMany] IEnumerable<IPacketPrinterHandler> handlers)
         : base(WellKnownUri.ShellPagePacketViewer)
     {
         _localization = localizationService;
@@ -74,14 +74,7 @@ public class PacketViewerViewModel : ShellPage
         Icon = MaterialIconKind.Package;
         ExportToCsv = ReactiveCommand.CreateFromTask(Export, this.WhenValueChanged(_ => _.IsPause));
         ClearAll = ReactiveCommand.Create(() => _packetsSource.Clear());
-        _printer = new PacketPrinter(new List<IPacketPrinterHandler>()
-        {
-            new DefaultPacketHandler(),
-            new FtpPacketHandler(),
-            new StatusTextHandler(),
-            new ParamSetPacketHandler(),
-            new ParamValuePacketHandler()
-        });
+        _printer = new PacketPrinter(handlers);
         
         _packetsSource = new SourceList<PacketMessageViewModel>();
         _packetsSource.LimitSizeTo(MaxPacketSize).Subscribe().DisposeItWith(Disposable);
