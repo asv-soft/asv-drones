@@ -30,12 +30,12 @@ public class PacketMessageViewModel : AvaloniaObject
         DesignTime.ThrowIfNotDesignMode();
     }
 
-    public PacketMessageViewModel(IPacketV2<IPayload> packet, IPacketConverter converter)
+    public PacketMessageViewModel(IPacketV2<IPayload> packet, string packetMsg, string packetDescription )
     {
         DateTime = DateTime.Now;
         Source = $"[{packet.SystemId},{packet.ComponentId}]";
-        Message = $"[{packet.Sequence:000}] {converter.Convert(packet)}";
-        Description = converter.Convert(packet, PacketFormatting.Indented);
+        Message = $"[{packet.Sequence:000}] {packetMsg}";
+        Description = packetDescription;
         Type = packet.Name;
         Id = Guid.NewGuid();
         Size = packet.GetByteSize();
