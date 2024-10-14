@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:gui="clr-namespace:Asv.Drones.Gui"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d"
+             x:Class="Asv.Drones.Gui.DownloadFileDialogView"
+             x:DataType="gui:DownloadFileDialogViewModel"
+             Width="400">
+    <Design.DataContext>
+        <gui:DownloadFileDialogViewModel/>
+    </Design.DataContext>
+    <StackPanel Spacing="8" HorizontalAlignment="Stretch">
+        <TextBlock Text="{x:Static gui:RS.UploadFileDialogView_FileLoadProgress_Text}"
+                   HorizontalAlignment="Stretch" />
+        <DockPanel>
+            <avalonia:MaterialIcon Margin="0 0 8 0" Kind="ProgressDownload" DockPanel.Dock="Left" />
+            <TextBlock Text="{CompiledBinding DownloadProgress, StringFormat='{}{0:P1}'}"
+                       DockPanel.Dock="Right" Margin="8 0 0 0" />
+            <ProgressBar Foreground="#40b5e0" Value="{CompiledBinding DownloadProgress}" Maximum="1" />
+        </DockPanel>  
+    </StackPanel>
+</UserControl>

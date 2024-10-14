@@ -3831,6 +3831,24 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File download progress.
+        /// </summary>
+        public static string UploadFileDialogView_FileLoadProgress_Text {
+            get {
+                return ResourceManager.GetString("UploadFileDialogView_FileLoadProgress_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string VehicleFileBrowserView_CommitRename_Button_Tooltip {
+            get {
+                return ResourceManager.GetString("VehicleFileBrowserView_CommitRename_Button_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Compare selected items.
         /// </summary>
         public static string VehicleFileBrowserView_CompareSelectedItems_Button_Tooltip {
@@ -3908,6 +3926,24 @@ namespace Asv.Drones.Gui {
         public static string VehicleFileBrowserView_Upload_button_Tooltip {
             get {
                 return ResourceManager.GetString("VehicleFileBrowserView_Upload_button_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string VehicleFileBrowserViewModel_DownloadDialog_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("VehicleFileBrowserViewModel_DownloadDialog_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        public static string VehicleFileBrowserViewModel_DownloadDialog_Title {
+            get {
+                return ResourceManager.GetString("VehicleFileBrowserViewModel_DownloadDialog_Title", resourceCulture);
             }
         }
         

@@ -2,6 +2,7 @@ using System;
 using Asv.Drones.Gui.Api;
 using Asv.Mavlink;
 using Avalonia;
+using PacketFormatting = Asv.Drones.Gui.Api.PacketFormatting;
 
 namespace Asv.Drones.Gui;
 

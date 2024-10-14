@@ -15,7 +15,7 @@
 
     <ItemGroup>
         <PackageReference Include="Asv.Drones.Gui.Api" Version="2.0.0-dev.5" />
-        <PackageReference Include="Asv.Mavlink" Version="3.10.4-dev.5" />
+        <PackageReference Include="Asv.Mavlink" Version="3.10.4-dev.6" />
         <PackageReference Include="ZLogger" Version="$(ZLoggerVersion)" />
 
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->

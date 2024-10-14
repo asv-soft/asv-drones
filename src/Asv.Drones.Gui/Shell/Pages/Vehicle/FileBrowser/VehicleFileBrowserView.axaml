@@ -16,7 +16,6 @@
         <SolidColorBrush x:Key="FolderBrush" Color="#FBC02D" />
         <SolidColorBrush x:Key="FileBrush" Color="#40B5E0" />
         <SolidColorBrush x:Key="DeleteBrush" Color="#D84315" />
-        <SolidColorBrush x:Key="ActionBrush" Color="#34a33e" />
         <x:Double x:Key="IconSize">15</x:Double>
     </UserControl.Resources>
     <UserControl.Styles>
@@ -60,26 +59,40 @@
                                 Spacing="4">
                         <StackPanel Spacing="4"
                                     Orientation="Horizontal">
-                            <Button ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_NewFolder_Button_Tooltip}">
+                            <Button Command="{Binding CreateLocalFolderCommand}"
+                                    ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_NewFolder_Button_Tooltip}">
                                 <avalonia:MaterialIcon Kind="FolderPlusOutline" Foreground="{StaticResource FolderBrush}" />
                             </Button>
-                            <Button ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_Rename_Button_Tooltip}">
+                            <Button Command="{Binding SetInEditModeCommand}"
+                                    ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_Rename_Button_Tooltip}">
                                 <avalonia:MaterialIcon Kind="Pencil" Foreground="{StaticResource FileBrush}" />
                             </Button>
-                            <Button ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_Delete_Button_Tooltip}">
+                            <Button Command="{Binding RemoveLocalItemCommand}"
+                                    ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_Delete_Button_Tooltip}">
                                 <avalonia:MaterialIcon Kind="Trash" Foreground="{StaticResource DeleteBrush}" />
                             </Button>
                         </StackPanel>
-                        <TextBox Watermark="{x:Static gui:RS.VehicleFileBrowserView_Search_Watermark}" Margin="0 0 0 4"/>
+                        <Grid ColumnDefinitions="*, Auto" Margin="0 0 0 4">
+                            <TextBox Grid.Column="0" 
+                                     Watermark="{x:Static gui:RS.VehicleFileBrowserView_Search_Watermark}" 
+                                     Margin="0 0 8 0"/>
+                            <Button Grid.Column="1"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Center"
+                                    Command="{Binding RefreshLocalCommand}"
+                                    ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_Refresh_Button_Tooltip}">
+                                <avalonia:MaterialIcon Kind="Refresh" Foreground="{StaticResource FileBrush}" />
+                            </Button>
+                        </Grid>
                     </StackPanel>
                     <ScrollViewer VerticalAlignment="Top">
                         <TreeView DockPanel.Dock="Bottom" 
                                   SelectionMode="Toggle" 
-                                  SelectedItem="{Binding LeftSelectedItem, Mode=TwoWay}"
+                                  SelectedItem="{Binding LocalSelectedItem, Mode=TwoWay}"
                                   ItemsSource="{Binding Store}" >
                             <TreeView.ItemTemplate>
                                 <TreeDataTemplate ItemsSource="{Binding Children}">
-                                    <Grid ColumnDefinitions="Auto, 8*, *">
+                                    <Grid ColumnDefinitions="Auto, Auto, *">
                                         <avalonia:MaterialIcon Grid.Column="0"
                                             Margin="0,0,8,0"
                                             Classes.folder="{Binding IsDirectory}"
@@ -90,7 +103,22 @@
                                             Height="{StaticResource IconSize}" />
                                         <TextBlock Grid.Column="1"
                                                    VerticalAlignment="Center"
-                                                   Text="{Binding Name}" />
+                                                   IsVisible="{Binding !IsInEditMode}"
+                                                   Text="{Binding Name}"/>
+                                        <Grid Grid.Column="1" ColumnDefinitions="*, Auto">
+                                            <TextBox Grid.Column="0"
+                                                     VerticalAlignment="Center"
+                                                     IsVisible="{Binding IsInEditMode}"
+                                                     Text="{Binding EditedName}" />
+                                            <Button Grid.Column="1"
+                                                    VerticalAlignment="Stretch"
+                                                    HorizontalAlignment="Center"
+                                                    IsVisible="{Binding IsInEditMode}"
+                                                    Command="{Binding EndEditCommand}"
+                                                    ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_CommitRename_Button_Tooltip}">
+                                                <avalonia:MaterialIcon Kind="ContentSave" Foreground="{StaticResource FileBrush}" />
+                                            </Button>
+                                        </Grid>
                                         <TextBlock Grid.Column="2" 
                                                    Padding="8"
                                                    HorizontalAlignment="Right"
@@ -130,22 +158,28 @@
                                 Spacing="4">
                         <StackPanel Spacing="4"
                                     Orientation="Horizontal">
-                            <Button ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_NewFolder_Button_Tooltip}">
+                            <Button Command="{Binding CreateRemoteFolderCommand}"
+                                    ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_NewFolder_Button_Tooltip}">
                                 <avalonia:MaterialIcon Kind="FolderPlusOutline" Foreground="{StaticResource FolderBrush}" />
                             </Button>
                             <Button ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_CompareSelectedItems_Button_Tooltip}">
-                                <avalonia:MaterialIcon Kind="SwapHorizontalCircleOutline" Foreground="{StaticResource ActionBrush}" />
+                                <avalonia:MaterialIcon Kind="SwapHorizontalCircleOutline" />
                             </Button>
                             <Button ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_FindFile_Button_Tooltip}">
-                                <avalonia:MaterialIcon Kind="FileFindOutline" Foreground="{StaticResource ActionBrush}" />
+                                <avalonia:MaterialIcon Kind="FileFindOutline" />
+                            </Button>
+                            <Button Command="{Binding RemoveRemoteItemCommand}"
+                                    ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_Delete_Button_Tooltip}">
+                                <avalonia:MaterialIcon Kind="Trash" Foreground="{StaticResource DeleteBrush}" />
                             </Button>
                         </StackPanel>
                         <Grid ColumnDefinitions="*, Auto" Margin="0 0 0 4">
                             <TextBox Grid.Column="0" 
                                      Watermark="{x:Static gui:RS.VehicleFileBrowserView_Search_Watermark}" 
                                      Margin="0 0 8 0"/>
-                            <Button Grid.Column="1" 
-                                    VerticalAlignment="Center"
+                            <Button Grid.Column="1"
+                                    Command="{Binding RefreshRemoteCommand}"
+                                    VerticalAlignment="Stretch"
                                     HorizontalAlignment="Center"
                                     ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_Refresh_Button_Tooltip}">
                                 <avalonia:MaterialIcon Kind="Refresh" Foreground="{StaticResource FileBrush}" />
@@ -155,7 +189,7 @@
                     <ScrollViewer VerticalAlignment="Top">
                         <TreeView DockPanel.Dock="Bottom"
                                   SelectionMode="Toggle"
-                                  SelectedItem="{Binding RightSelectedItem, Mode=TwoWay}"
+                                  SelectedItem="{Binding RemoteSelectedItem, Mode=TwoWay}"
                                   ItemsSource="{Binding Device}">
                             <TreeView.ItemTemplate>
                                 <TreeDataTemplate ItemsSource="{Binding Children}">

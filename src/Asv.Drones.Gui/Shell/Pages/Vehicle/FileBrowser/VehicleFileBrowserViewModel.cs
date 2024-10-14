@@ -1,19 +1,20 @@
 using System;
-using System.Buffers;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Composition;
 using System.IO;
+using System.Linq;
 using System.Reactive;
-using System.Runtime.InteropServices;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Asv.Drones.Gui.Api;
 using Asv.Mavlink;
+using DynamicData;
+using DynamicData.Binding;
+using FluentAvalonia.UI.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using MavlinkHelper = Asv.Mavlink.MavlinkHelper;
+using MavlinkHelper = Asv.Drones.Gui.Api.MavlinkHelper;
 
 namespace Asv.Drones.Gui;
 
@@ -22,84 +23,11 @@ public class VehicleFileBrowserViewModel : ShellPage
 {
     private readonly ILogService _log;
     private readonly IMavlinkDevicesService _svc;
-    
+    private readonly string _localRootPath;
+
     public VehicleFileBrowserViewModel() : base(WellKnownUri.UndefinedUri)
     {
         DesignTime.ThrowIfNotDesignMode();
-        Store =
-        [
-            new FileSystemItemViewModel
-            {
-                Name = "Folder1",
-                Path = @"C:\path\to\file",
-                IsDirectory = true,
-                Children =
-                [
-                    new FileSystemItemViewModel
-                    {
-                        Name = "Folder1_File1",
-                        Path = @"C:\path\to\another\file",
-                        IsFile = true,
-                        Size = "123,4 KB"
-                    }
-                ]
-            },
-            new FileSystemItemViewModel
-            {
-                Name = "File1",
-                Path = @"C:\path\to\file1",
-                IsFile = true,
-                Size = "12 GB"
-            },
-            new FileSystemItemViewModel
-            {
-                Name = "File2",
-                Path = @"C:\path\to\file2",       
-                IsFile = true,
-                Size = "123456 TB"
-            }
-        ];
-        
-        Device = 
-        [
-            new FileSystemItemViewModel
-            {
-                Name = "RemoteFolder1",
-                Path = @"C:\path\to\Remote_file",
-                IsDirectory = true,
-                Children =
-                [
-                    new FileSystemItemViewModel
-                    {
-                        Name = "RemoteFolder1_RemoteFile1",
-                        Path = @"C:\path\to\another\Remote_file",
-                        IsFile = true,
-                        Size = "1234 KB"
-                    }
-                ]
-            },
-            new FileSystemItemViewModel
-            {
-                Name = "RemoteFile1",
-                Path = @"C:\path\to\Remote_file1",
-                IsFile = true,
-                Size = "1,3 GB"
-            },
-            new FileSystemItemViewModel
-            {
-                Name = "RemoteFile2",
-                Path = @"C:\path\to\Remote_file2",       
-                IsFile = true,
-                Size = "654321 TB"
-            },
-            new FileSystemItemViewModel
-            {
-                Name = "RemoteFile3",
-                Path = @"C:\path\to\Remote_file3",       
-                IsFile = true,
-                Size = "2 B"
-            }
-        ];
     }
     
     [ImportingConstructor]
@@ -108,115 +36,228 @@ public class VehicleFileBrowserViewModel : ShellPage
     {
         _log = log;
         _svc = svc;
-
-        Store = LoadLocalFiles(appService.Paths.AppDataFolder);
-        Device = LoadLocalFiles(appService.Paths.AppDataFolder);
+        _localRootPath = appService.Paths.AppDataFolder;
+        
+        Store = LoadLocalItems(_localRootPath);
     }
-
-    public override async void SetArgs(NameValueCollection args)
+    
+    public ReactiveCommand<Unit, Unit> UploadCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> DownloadCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> CreateRemoteFolderCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> CreateLocalFolderCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> RefreshRemoteCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> RefreshLocalCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> RemoveLocalItemCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> RemoveRemoteItemCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> SetInEditModeCommand { get; set; }
+    
+    private IObservable<bool> CanUpload => 
+        this.WhenValueChanged(x => LocalSelectedItem)
+            .Select(x => x is { IsDirectory: false });
+    private IObservable<bool> CanDownload => 
+        this.WhenValueChanged(x => RemoteSelectedItem)
+            .Select(x => x is { IsDirectory: false });
+    private IObservable<bool> CanEdit => 
+        this.WhenValueChanged(x => LocalSelectedItem)
+            .Select(x => x is { IsInEditMode: false });
+    
+    [Reactive] public FileSystemItemViewModel? LocalSelectedItem { get; set; }
+    [Reactive] public FileSystemItemViewModel? RemoteSelectedItem { get; set; }
+    [Reactive] public ReadOnlyObservableCollection<FileSystemItemViewModel> Device { get; set; }
+    [Reactive] public ReadOnlyObservableCollection<FileSystemItemViewModel> Store { get; set; }
+    
+    public override void SetArgs(NameValueCollection args)
     {
         base.SetArgs(args);
-        
         if (ushort.TryParse(args["id"], out var id) == false) return;
         if (Enum.TryParse<DeviceClass>(args["class"], true, out var deviceClass) == false) return;
-        
-        Icon = Api.MavlinkHelper.GetIcon(deviceClass);
+        Icon = MavlinkHelper.GetIcon(deviceClass);
         
         var vehicle = _svc.GetVehicleByFullId(id);
-        if (vehicle == null) return;
-
+        if (vehicle == null) return; 
         
         Title = $"{vehicle.Class}: {vehicle.Name.Value}";
         
-        var ftpClient = vehicle.Ftp;
-        //Device = await LoadRemoteFiles(ftpClient, "/");
+        var ftpClientEx = new FtpClientEx(vehicle.Ftp, TimeProvider.System);
         
+        UploadCommand = ReactiveCommand.CreateFromTask(_ => UploadImpl(ftpClientEx), CanUpload);
+        DownloadCommand = ReactiveCommand.CreateFromTask(_ => DownloadImpl(ftpClientEx), CanDownload);
+        CreateRemoteFolderCommand = ReactiveCommand.CreateFromTask(_ => CreateRemoteFolderImpl(ftpClientEx));
+        CreateLocalFolderCommand = ReactiveCommand.CreateFromTask(CreateLocalFolderImpl);
+        RefreshRemoteCommand = ReactiveCommand.CreateFromTask(_ => RefreshRemoteImpl(ftpClientEx));
+        RefreshLocalCommand = ReactiveCommand.CreateFromTask(RefreshLocalImpl);
+        RemoveLocalItemCommand = ReactiveCommand.CreateFromTask(RemoveLocalItemImpl);
+        RemoveRemoteItemCommand = ReactiveCommand.CreateFromTask(_ => RemoveRemoteItemImpl(ftpClientEx));
+        SetInEditModeCommand = ReactiveCommand.CreateFromTask(_ => SetInEditModeImpl(LocalSelectedItem!), CanEdit);
+        
+        Task.Run(() => RefreshRemoteImpl(ftpClientEx));
+        Device = LoadRemoteItems(ftpClientEx);
+    }
+    
+    private async Task UploadImpl(FtpClientEx ftpClientEx)
+    {
+        
+    }
+
+    private async Task DownloadImpl(FtpClientEx ftpClientEx)
+    {
+        var dialog = new ContentDialog
+        {
+            Title = RS.VehicleFileBrowserViewModel_DownloadDialog_Title,
+            PrimaryButtonText = RS.VehicleFileBrowserViewModel_DownloadDialog_PrimaryButtonText
+        };
+
+        using var viewModel = new DownloadFileDialogViewModel(ftpClientEx, _localRootPath, RemoteSelectedItem!, LocalSelectedItem);
+        dialog.Content = viewModel;
+        viewModel.ApplyDialog(dialog);
+        await dialog.ShowAsync();
+        
+        await RefreshLocalImpl();
+        _log.Info(nameof(VehicleFileBrowserViewModel), $"File downloaded successfully: {RemoteSelectedItem!.Name}");
+    }
+
+    private async Task RemoveLocalItemImpl()
+    {
+        if (LocalSelectedItem is { IsDirectory: true }) Directory.Delete(LocalSelectedItem.Path, true);
+        if (LocalSelectedItem is { IsFile: true }) File.Delete(LocalSelectedItem.Path);
+        await RefreshLocalImpl();
+    }
+    
+    private async Task RemoveRemoteItemImpl(FtpClientEx ftpClientEx)
+    {
+        if (RemoteSelectedItem is { IsDirectory: true }) await ftpClientEx.Base.RemoveDirectory(RemoteSelectedItem.Path);
+        if (RemoteSelectedItem is { IsFile: true }) await ftpClientEx.Base.RemoveFile(RemoteSelectedItem.Path);
+        await RefreshRemoteImpl(ftpClientEx);
+    }
+
+    private async Task SetInEditModeImpl(FileSystemItemViewModel item)
+    {
+        item.IsInEditMode = true;
+        item.EditedName = item.Name;
+        await CommitEdit(item);
+    }
+
+    private async Task CommitEdit(FileSystemItemViewModel item)
+    {
+        await Task.Run(() => { while (item.IsInEditMode) { } });
+        if (!item.IsEditingSuccess) return;
+        
+        var oldPath = item.Path;
+        var directoryPath = Path.GetDirectoryName(oldPath);
+        ArgumentException.ThrowIfNullOrWhiteSpace(directoryPath);
+        var newPath = Path.Combine(directoryPath, item.EditedName);
+        
+        if (oldPath == newPath)
+        {
+            item.IsInEditMode = false;
+            item.IsEditingSuccess = false;
+        }
+        
+        try
+        {
+            if (item.IsFile) File.Move(oldPath, newPath);
+            if (item.IsDirectory) Directory.Move(oldPath, newPath);
+
+            item.Name = item.EditedName;
+            item.Path = newPath;
+
+            await RefreshLocalImpl();
+            _log.Info(nameof(VehicleFileBrowserViewModel), $"File renamed from {oldPath} to {newPath}");
+
+            item.IsInEditMode = false;
+            item.IsEditingSuccess = false;
+        }
+        catch (Exception ex)
+        {
+            _log.Error(nameof(VehicleFileBrowserViewModel), $"Failed to rename file from {oldPath} to {newPath}", ex);
+        }
+    }
+
+    private async Task CreateRemoteFolderImpl(FtpClientEx ftpClientEx)
+    {
+        var dir = "/Folder1/sub1";
+        await ftpClientEx.Base.CreateDirectory(dir);
+        await RefreshRemoteImpl(ftpClientEx);
+    }
+
+    private Task CreateLocalFolderImpl()
+    {
+        CreateFolder(1);
+        RefreshLocalImpl();
+        return Task.CompletedTask;
+
+        void CreateFolder(int n)
+        {
+            while (true)
+            {
+                var name = $"Folder{n}";
+                if (LocalSelectedItem != null)
+                {
+                    Directory.CreateDirectory(LocalSelectedItem.IsDirectory
+                        ? Path.Combine(LocalSelectedItem.Path, name)
+                        : Path.Combine(LocalSelectedItem.Path[..LocalSelectedItem.Path.LastIndexOf('\\')], name));
+                }
+                else
+                {
+                    var path = Path.Combine(_localRootPath, name);
+                    if (Directory.Exists(path))
+                    {
+                        n += 1;
+                        continue;
+                    }
+
+                    Directory.CreateDirectory(path);
+                }
+                break;
+            }
+        }
+    }
+
+    private async Task RefreshRemoteImpl(FtpClientEx ftpClientEx)
+    {
+        await ftpClientEx.Refresh("/");
+        await ftpClientEx.Refresh("@SYS");
+        Device = LoadRemoteItems(ftpClientEx);
+    }
+
+    private Task RefreshLocalImpl()
+    {
+        Store = LoadLocalItems(_localRootPath);
+        return Task.CompletedTask;
     }
 
     public static Uri GenerateUri(string baseUri, ushort deviceFullId, DeviceClass @class) =>
         new($"{baseUri}?id={deviceFullId}&class={@class:G}");
+    
+    #region Load items
 
-    private static ObservableCollection<FileSystemItemViewModel> LoadLocalFiles(string path)
+    public static ReadOnlyObservableCollection<FileSystemItemViewModel> LoadLocalItems(string path)
     {
         var items = new ObservableCollection<FileSystemItemViewModel>();
     
         foreach (var directory in Directory.GetDirectories(path))
-        {
-            items.Add(new FileSystemItemViewModel
-            {
-                Name = Path.GetFileName(directory),
-                Path = directory,
-                IsDirectory = true,
-                Children = LoadLocalFiles(directory)
-            });
-        }
-
+            items.Add(new FileSystemItemViewModel(directory, true));
+        
         foreach (var file in Directory.GetFiles(path))
-        {
-            items.Add(new FileSystemItemViewModel
-            {
-                Name = Path.GetFileName(file),
-                Path = file,
-                IsFile = true,
-                Size = ConvertBytesToReadableSize(new FileInfo(file).Length)
-            });
-        }
-
-        return items;
+            items.Add(new FileSystemItemViewModel(file, false));
+        
+        return new ReadOnlyObservableCollection<FileSystemItemViewModel>(items);
     }
 
-    /*private static async Task<ObservableCollection<FileSystemItemViewModel>> LoadRemoteFiles(IFtpClient ftpClient, string path)
-    {
-        var items = new ObservableCollection<FileSystemItemViewModel>();
-        var offset = 0u;
-    
-        // Чтение данных о директории до тех пор, пока не придет пакет с концом данных (EOF)
-        while (true)
-        {
-            // Получаем следующий пакет данных
-            var result = await ftpClient.ListDirectory(path, offset);
+    private static ReadOnlyObservableCollection<FileSystemItemViewModel> LoadRemoteItems(FtpClientEx ftpClientEx)
+    { 
+        ftpClientEx.Entries
+            .TransformToTree(e => e.ParentPath)
+            .Transform(x => new FileSystemItemViewModel(x))
+            .DisposeMany()
+            .Bind(out var tree)
+            .Subscribe();
         
-            // Получаем данные из пакета
-            var data = result.ReadDataAsString();
-            
-            // Используем SequenceReader для чтения записей о файлах/папках
-            var reader = new SequenceReader<char>(new ReadOnlySequence<char>(data.AsMemory()));
-        
-            // Разбираем каждую запись в директории
-            while (MavlinkFtpHelper.ParseFtpEntry(ref reader, path, out var entry))
-            {
-                switch (entry)
-                {
-                    case FtpDirectory directory:
-                        items.Add(new FileSystemItemViewModel
-                        {
-                            Name = directory.Name,
-                            Path = directory.Path,
-                            IsDirectory = true
-                        });
-                        break;
-                    case FtpFile file:
-                        items.Add(new FileSystemItemViewModel
-                        {
-                            Name = file.Name,
-                            Path = file.Path,
-                            IsDirectory = false
-                        });
-                        break;
-                }
-            }
-        
-            // Проверяем, достигнут ли конец файла (EOF)
-            if (result.ReadOpcode() == FtpOpcode.Nak && result.ReadBurstComplete())
-            {
-                break;
-            }
-        }
+        var rootEntries = new ObservableCollection<FileSystemItemViewModel>(tree.Where(e => e.Depth == 0));
+        return new ReadOnlyObservableCollection<FileSystemItemViewModel>(rootEntries);
+    }
 
-        return items;
-    }*/
-    
-    private static string ConvertBytesToReadableSize(long fileSizeInBytes)
+    public static string ConvertBytesToReadableSize(long fileSizeInBytes)
     {
         string[] sizes = [
             RS.Unit_Byte_Abbreviation, 
@@ -227,33 +268,91 @@ public class VehicleFileBrowserViewModel : ShellPage
         ];
         double len = fileSizeInBytes;
         var order = 0;
-
         while (len >= 1024 && order < sizes.Length - 1)
         {
             order++;
             len /= 1024;
         }
-
         return $"{len:0.##} {sizes[order]}";
     }
-    
-    public ReactiveCommand<Unit, Unit> UploadCommand { get; set; }
-    public ReactiveCommand<Unit, Unit> DownloadCommand { get; set; }
-    
-    [Reactive] public FileSystemItemViewModel? LeftSelectedItem { get; set; }
-    [Reactive] public FileSystemItemViewModel? RightSelectedItem { get; set; }
-    public ObservableCollection<FileSystemItemViewModel> Device { get; set; }
-    public ObservableCollection<FileSystemItemViewModel> Store { get; set; }
+
+    #endregion
 }
 
 public class FileSystemItemViewModel : DisposableReactiveObject
 {
-    public required string Name { get; set; }
-    public required string Path { get; set; }
+    private readonly ReadOnlyObservableCollection<FileSystemItemViewModel> _children;
+    
+    public FileSystemItemViewModel(string entry, bool isDirectory)
+    {
+        if (isDirectory)
+        {
+            _children = VehicleFileBrowserViewModel.LoadLocalItems(entry);
+            IsDirectory = true;
+        }
+        else
+        {
+            _children = new ReadOnlyObservableCollection<FileSystemItemViewModel>([]);
+            IsFile = true;
+            Size = VehicleFileBrowserViewModel.ConvertBytesToReadableSize(new FileInfo(entry).Length);
+        }
+        
+        Name = System.IO.Path.GetFileName(entry);
+        EditedName = Name;
+        Path = entry;
+
+        SetRules();
+    }
+    
+    public FileSystemItemViewModel(Node<IFtpEntry, string> node)
+    {
+        node.Children
+            .Connect()
+            .Transform(c => new FileSystemItemViewModel(c))
+            .Bind(out _children)
+            .Subscribe();
+        Name = node.Item.Name;
+        EditedName = Name;
+        Path = node.Item.Path;
+        IsDirectory = node.Item.Type is FtpEntryType.Directory;
+        IsFile = node.Item.Type is FtpEntryType.File;
+        Depth = node.Depth;
+
+        if (IsFile) Size = VehicleFileBrowserViewModel.ConvertBytesToReadableSize(((FtpFile)node.Item).Size);
+        
+        SetRules();
+    }
+
+    public ReactiveCommand<Unit, Unit> EndEditCommand { get; set; } = null!;
+
+    private void SetRules()
+    {
+        this.WhenValueChanged(x => x.IsSelected)
+            .Subscribe(b =>
+            {
+                if (b) return;
+                IsInEditMode = false;
+            });
+        EndEditCommand = ReactiveCommand.CreateFromTask(EndEditImpl);
+    }
+    
+    private Task EndEditImpl()
+    {
+        IsInEditMode = false;
+        if (Name != EditedName) IsEditingSuccess = true;
+        return Task.CompletedTask;
+    }
+    
+    public ReadOnlyObservableCollection<FileSystemItemViewModel> Children => _children;
+    public string Name { get; set; }
+    public string Path { get; set; }
     public bool IsDirectory { get; set; }
     public bool IsFile { get; set; }
-    public ObservableCollection<FileSystemItemViewModel> Children { get; set; } = [];
     public string? Size { get; set; }
+    public int Depth { get; set; }
+    public bool IsEditingSuccess { get; set; }
     [Reactive] public bool IsExpanded { get; set; }
-    [Reactive] public bool IsSelected { get; set; }
+    [Reactive] public bool IsSelected { get; set; } 
+    [Reactive] public bool IsInEditMode { get; set; }
+    [Reactive] public string EditedName { get; set; }
 }

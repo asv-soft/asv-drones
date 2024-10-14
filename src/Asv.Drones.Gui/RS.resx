@@ -1368,4 +1368,16 @@
   <data name="VehicleFileBrowserView_Refresh_Button_Tooltip" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="VehicleFileBrowserView_CommitRename_Button_Tooltip" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="UploadFileDialogView_FileLoadProgress_Text" xml:space="preserve">
+    <value>File download progress</value>
+  </data>
+  <data name="VehicleFileBrowserViewModel_DownloadDialog_PrimaryButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="VehicleFileBrowserViewModel_DownloadDialog_Title" xml:space="preserve">
+    <value>Download</value>
+  </data>
 </root>

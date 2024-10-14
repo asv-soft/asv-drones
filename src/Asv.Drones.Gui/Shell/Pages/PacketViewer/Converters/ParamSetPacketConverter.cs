@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Asv.Drones.Gui.Api;
 using Asv.Mavlink;
 using Asv.Mavlink.V2.Common;
+using PacketFormatting = Asv.Drones.Gui.Api.PacketFormatting;
 
 namespace Asv.Drones.Gui;
 

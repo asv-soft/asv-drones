@@ -83,7 +83,7 @@ public class SelectUploadVehicleViewModel : ViewModelBaseWithValidation
     {
         if (args.Result is not ContentDialogResult.Primary)
         {
-            if (_cts != null) await _cts.CancelAsync();
+            await _cts.CancelAsync();
             return;
         }
 
