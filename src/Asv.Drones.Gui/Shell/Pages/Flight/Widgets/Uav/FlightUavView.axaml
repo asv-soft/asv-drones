@@ -20,12 +20,12 @@
                     <DropDownButton>
                         <DropDownButton.Content>
                             <StackPanel Spacing="3" Orientation="Horizontal">
-                                <avalonia:MaterialIcon Kind="{Binding Icon}" Foreground="Red" />
-                                <TextBlock Text="{Binding Title}" />
+                                <avalonia:MaterialIcon Kind="{CompiledBinding Icon}" Foreground="Red" />
+                                <TextBlock Text="{CompiledBinding Title}" />
                             </StackPanel>
                         </DropDownButton.Content>
                         <DropDownButton.Flyout>
-                            <MenuFlyout Placement="Bottom" ItemsSource="{Binding UavActions}">
+                            <MenuFlyout Placement="Bottom" ItemsSource="{CompiledBinding UavActions}">
                                 <MenuFlyout.ItemContainerTheme>
                                     <ControlTheme TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}"
                                                   x:DataType="gui:UavAction">

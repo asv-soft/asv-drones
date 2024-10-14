@@ -1,13 +1,13 @@
 <Project>
     <PropertyGroup>
         <ProductVersion>1.0.2</ProductVersion>
-        <ApiVersion>2.0.0-dev.5</ApiVersion>
+        <ApiVersion>2.0.0-dev.6</ApiVersion>
         <AsvCommonVersion>3.0.0-dev.4</AsvCommonVersion>
         <ZLoggerVersion>2.5.5</ZLoggerVersion>
         <AvaloniaVersion>11.1.0</AvaloniaVersion>
         <AsvAvaloniaToolkitVersion>1.0.1</AsvAvaloniaToolkitVersion>
         <AsvAvaloniaMapVersion>2.0.6</AsvAvaloniaMapVersion>
-        <AsvMavlinkVersion>3.10.4-dev.4</AsvMavlinkVersion>
+        <AsvMavlinkVersion>3.10.4-dev.6</AsvMavlinkVersion>
         <FluentAvaloniaUIVersion>2.0.5</FluentAvaloniaUIVersion>
         <NugetVersion>6.11.1</NugetVersion>
         <ReactiveUIVersion>19.5.41</ReactiveUIVersion>

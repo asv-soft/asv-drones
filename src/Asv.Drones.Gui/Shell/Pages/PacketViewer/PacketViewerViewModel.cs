@@ -29,7 +29,8 @@ public class PacketViewerViewModel : ShellPage
     private readonly ILocalizationService _localization;
     private readonly ILogService _log;
     public const int MaxPacketSize = 1000;
-
+    
+    
     private readonly Subject<Func<PacketMessageViewModel, bool>> _sourceFilterUpdate = new();
     private readonly Subject<Func<PacketMessageViewModel, bool>> _typeFilterUpdate = new();
     private readonly Subject<Func<PacketMessageViewModel, bool>> _searchUpdate = new();
@@ -41,7 +42,6 @@ public class PacketViewerViewModel : ShellPage
 
     private readonly SourceList<PacketMessageViewModel> _packetsSource;
     private readonly ReadOnlyObservableCollection<PacketMessageViewModel> _packets;
-    private readonly IEnumerable<IPacketConverter> _converters;
 
     public PacketViewerViewModel() : base(WellKnownUri.UndefinedUri)
     {
@@ -60,11 +60,10 @@ public class PacketViewerViewModel : ShellPage
                     { DateTime = DateTime.Now, Source = "[1,1]", Type = "HEARTBEAT", Message = "asdasdasdasdas" },
             }));
     }
-
+    private PacketPrinter _printer;
     [ImportingConstructor]
     public PacketViewerViewModel(IMavlinkDevicesService mavlinkDevicesService, IApplicationHost app,
-        IConfiguration cfg, ILocalizationService localizationService, ILogService log,
-        [ImportMany] IEnumerable<IPacketConverter> converters)
+        IConfiguration cfg, ILocalizationService localizationService, ILogService log,[ImportMany] IEnumerable<IPacketPrinterHandler> handlers)
         : base(WellKnownUri.ShellPagePacketViewer)
     {
         _localization = localizationService;
@@ -75,9 +74,8 @@ public class PacketViewerViewModel : ShellPage
         Icon = MaterialIconKind.Package;
         ExportToCsv = ReactiveCommand.CreateFromTask(Export, this.WhenValueChanged(_ => _.IsPause));
         ClearAll = ReactiveCommand.Create(() => _packetsSource.Clear());
-
-        _converters = converters.OrderBy(_ => _.Order);
-
+        _printer = new PacketPrinter(handlers);
+        
         _packetsSource = new SourceList<PacketMessageViewModel>();
         _packetsSource.LimitSizeTo(MaxPacketSize).Subscribe().DisposeItWith(Disposable);
         _filtersSource = new SourceCache<PacketFilterViewModel, string>(_ => _.Source);
@@ -160,15 +158,15 @@ public class PacketViewerViewModel : ShellPage
             })
             .DisposeItWith(Disposable);
     }
-
+    
     private IList<PacketMessageViewModel> ConvertPacketToMessagesAndUpdateFilters(IList<IPacketV2<IPayload>> items)
     {
         var result = new List<PacketMessageViewModel>(items.Count);
         foreach (var packet in items)
         {
-            var converter = _converters.FirstOrDefault(_ => _.CanConvert(packet), new DefaultPacketConverter());
-
-            var obj = new PacketMessageViewModel(packet, converter);
+           var message =  _printer.Print(packet);
+           var description = _printer.Print(packet, PacketFormatting.Indented);
+            var obj = new PacketMessageViewModel(packet, message, description);
 
             result.Add(obj);
             var sourceExists = _filtersSource.Lookup(obj.Source);
@@ -256,8 +254,7 @@ public class PacketViewerViewModel : ShellPage
             {
                 separator = "\t";
             }
-
-
+            
             var fileName = Path.Join(_app.Paths.AppDataFolder, $"packets{DateTime.Now:yyyy-M-d h-mm-ss}.csv");
 
             try

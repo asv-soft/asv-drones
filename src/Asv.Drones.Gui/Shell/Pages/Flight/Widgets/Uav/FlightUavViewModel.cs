@@ -13,8 +13,10 @@ using DynamicData;
 using DynamicData.Binding;
 using FluentAvalonia.UI.Controls;
 using Material.Icons;
+using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ZLogger;
 using MavlinkHelper = Asv.Drones.Gui.Api.MavlinkHelper;
 
 namespace Asv.Drones.Gui;
@@ -24,7 +26,7 @@ public class FlightUavViewModel : MapWidgetBase
     private readonly IVehicleClient _vehicle;
     private readonly IConfiguration _cfg;
     private readonly ILocalizationService _loc;
-    private readonly ILogService _log;
+    private readonly ILogger _log;
     private readonly ReadOnlyObservableCollection<IUavRttItem> _rttItems;
 
     public FlightUavViewModel() : base(WellKnownUri.UndefinedUri)
@@ -52,23 +54,21 @@ public class FlightUavViewModel : MapWidgetBase
         };
     }
 
-    public FlightUavViewModel(IVehicleClient vehicle, ILogService log, ILocalizationService loc,
+    public FlightUavViewModel(IVehicleClient vehicle, ILoggerFactory log, ILocalizationService loc,
         IConfiguration cfg, IEnumerable<IUavRttItemProvider> rttItems) : base(
         $"{WellKnownUri.ShellPageMapFlightWidgetUav}#{vehicle.FullId}")
     {
         _vehicle = vehicle;
         _cfg = cfg;
         _loc = loc;
-        _log = log;
+        _log = log.CreateLogger<FlightUavViewModel>();
         vehicle.Name.Subscribe(x => Title = x)
             .DisposeItWith(Disposable);
         Icon = MavlinkHelper.GetIcon(vehicle.Class);
-
         Attitude = new AttitudeViewModel(vehicle, new Uri(Id, "/attitude"), loc)
             .DisposeItWith(Disposable);
         MissionStatus = new MissionStatusViewModel(vehicle, log, new Uri(Id, "/mission"), loc)
             .DisposeItWith(Disposable);
-
         rttItems
             .SelectMany(_ => _.Create(vehicle))
             .OrderBy(_ => _.Order)
@@ -85,7 +85,7 @@ public class FlightUavViewModel : MapWidgetBase
         {
             if (s == LinkState.Disconnected)
             {
-                log.Info(Title, $"Last known position: {LastKnownPosition}");
+                _log.ZLogInformation($"{Title} Last known position: {LastKnownPosition}" );
             }
         }).DisposeItWith(Disposable);
         MinimizedRttItems = _rttItems.Where(_ => _.IsMinimizedVisible).ToList();
@@ -107,9 +107,8 @@ public class FlightUavViewModel : MapWidgetBase
 
             if (result == ContentDialogResult.Primary)
             {
-                log.Info(Title,
-                    string.Format(RS.SelectModeAnchorActionViewModel_LogMessage, CurrentMode.Mode.Name,
-                        viewModel.SelectedMode.Mode.Name));
+                _log.ZLogInformation($"{Title} {string.Format(RS.SelectModeAnchorActionViewModel_LogMessage, CurrentMode.Mode.Name,
+                    viewModel.SelectedMode.Mode.Name)}");
                 await vehicle.SetVehicleMode(viewModel.SelectedMode.Mode, CancellationToken.None);
             }
         }).DisposeItWith(Disposable);
@@ -175,9 +174,8 @@ public class FlightUavViewModel : MapWidgetBase
             if (result == ContentDialogResult.Primary)
             {
                 var altInMeters = _loc.Altitude.ConvertToSi(viewModel.AltitudeAgl);
-                _log.Info(LogName,
-                          string.Format(RS.TakeOffAnchorActionViewModel_LogMessage,
-                                        _loc.Altitude.FromSiToStringWithUnits(altInMeters), _vehicle.Name.Value));
+                _log.ZLogInformation($"{LogName} { string.Format(RS.TakeOffAnchorActionViewModel_LogMessage,
+                    _loc.Altitude.FromSiToStringWithUnits(altInMeters), _vehicle.Name.Value)}");
                 await _vehicle.TakeOff(altInMeters);
             }
         }).DisposeItWith(Disposable);
@@ -189,20 +187,18 @@ public class FlightUavViewModel : MapWidgetBase
             {
                 var point = new GeoPoint(target.Latitude, target.Longitude,
                                          (double)_vehicle.Position.Current.Value.Altitude);
-                _log.Info(LogName,
-                          string.Format(RS.RoiAnchorActionViewModel_ExecuteImpl_LogInfo, point, _vehicle.Name.Value));
+                _log.ZLogInformation($"{LogName} { string.Format(RS.RoiAnchorActionViewModel_ExecuteImpl_LogInfo, point, _vehicle.Name.Value)}");
                 await _vehicle.Position.SetRoi(point, CancellationToken.None);
             }
         }).DisposeItWith(Disposable);
         RtlCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            _log.Info(LogName, string.Format(RS.RtlAnchorActionViewModel_ExecuteImpl_LogInfo, _vehicle.Name.Value));
+            _log.ZLogInformation($"{LogName} {string.Format(RS.RtlAnchorActionViewModel_ExecuteImpl_LogInfo, _vehicle.Name.Value)}");
             await _vehicle.DoRtl();
         }).DisposeItWith(Disposable);
         StartMissionCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            _log.Info(LogName,
-                      string.Format(RS.StartAutoAnchorActionViewModel_ExecuteImpl_LogInfo, _vehicle.Name.Value));
+            _log.ZLogInformation($"{LogName} { string.Format(RS.StartAutoAnchorActionViewModel_ExecuteImpl_LogInfo, _vehicle.Name.Value)}");
             await _vehicle.SetAutoMode();
             await _vehicle.Missions.Base.MissionSetCurrent(0);
         }).DisposeItWith(Disposable);
