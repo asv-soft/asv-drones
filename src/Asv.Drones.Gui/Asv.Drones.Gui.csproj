@@ -20,14 +20,13 @@
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)"/>
 
-        <PackageReference Include="NuGet.Packaging" Version="$(NugetVersion)"/>
-        <PackageReference Include="NuGet.Packaging.Core" Version="$(NugetVersion)"/>
+        <PackageReference Include="NuGet.Packaging" Version="$(NugetVersion)" />
         <PackageReference Include="NuGet.Resolver" Version="$(NugetVersion)"/>
         <PackageReference Include="NuGet.Protocol" Version="$(NugetVersion)"/>
 
         <PackageReference Include="FluentAvaloniaUI" Version="$(FluentAvaloniaUIVersion)"/>
         <PackageReference Include="ReactiveUI.Fody" Version="$(ReactiveUIVersion)"/>
-        <PackageReference Include="System.IO.Packaging" Version="8.0.0" />
+        <PackageReference Include="System.IO.Packaging" Version="8.0.1" />
 
 
     </ItemGroup>
