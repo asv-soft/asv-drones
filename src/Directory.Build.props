@@ -9,7 +9,7 @@
         <AsvAvaloniaMapVersion>2.0.6</AsvAvaloniaMapVersion>
         <AsvMavlinkVersion>3.10.4-dev.6</AsvMavlinkVersion>
         <FluentAvaloniaUIVersion>2.0.5</FluentAvaloniaUIVersion>
-        <NugetVersion>6.8.0</NugetVersion>
+        <NugetVersion>6.11.1</NugetVersion>
         <ReactiveUIVersion>19.5.41</ReactiveUIVersion>
         <SystemReactiveVersion>6.0.0</SystemReactiveVersion>
         <MaterialIconsAvaloniaVersion>2.0.1</MaterialIconsAvaloniaVersion>
