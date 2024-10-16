@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Composition;
@@ -6,9 +7,12 @@ using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Threading.Tasks;
+using Asv.Common;
 using Asv.Drones.Gui.Api;
 using Asv.Mavlink;
+using Avalonia.Threading;
 using DynamicData;
 using DynamicData.Binding;
 using FluentAvalonia.UI.Controls;
@@ -25,6 +29,12 @@ public class VehicleFileBrowserViewModel : ShellPage
     private readonly IMavlinkDevicesService _svc;
     private readonly string _localRootPath;
 
+    private readonly SourceCache<FileSystemItemViewModel, string> _localSource; 
+    private readonly SourceCache<FileSystemItemViewModel, string> _remoteSource;
+    
+    private readonly ReadOnlyObservableCollection<FileSystemItemViewModel> _filteredLocalItems;
+    private readonly ReadOnlyObservableCollection<FileSystemItemViewModel> _filteredRemoteItems;
+
     public VehicleFileBrowserViewModel() : base(WellKnownUri.UndefinedUri)
     {
         DesignTime.ThrowIfNotDesignMode();
@@ -37,8 +47,68 @@ public class VehicleFileBrowserViewModel : ShellPage
         _log = log;
         _svc = svc;
         _localRootPath = appService.Paths.AppDataFolder;
+
+        _localSource = new SourceCache<FileSystemItemViewModel, string>(x => x.Path)
+            .DisposeItWith(Disposable);
+        _remoteSource = new SourceCache<FileSystemItemViewModel, string>(x => x.Path)
+            .DisposeItWith(Disposable);
         
-        Store = LoadLocalItems(_localRootPath);
+        var localFilterPipe = new Subject<Func<FileSystemItemViewModel, bool>>()
+            .DisposeItWith(Disposable);
+        localFilterPipe.OnNext(_ => true);
+        this.WhenValueChanged(x => x.LocalSearchText)
+            .Throttle(TimeSpan.FromMilliseconds(500), RxApp.MainThreadScheduler)
+            .Subscribe(search =>
+            {
+                localFilterPipe.OnNext(item => MatchesSearch(item, search));
+                var match = FindFirstMatchingItem(_localSource.Items, search);
+                if (match == null) return;
+                ExpandParents(match);
+                LocalSelectedItem = match;
+            })
+            .DisposeItWith(Disposable);
+        _localSource.Connect()
+            .Filter(localFilterPipe)
+            .SortBy(x => !x.IsDirectory)
+            .Bind(out _filteredLocalItems)
+            .Subscribe();
+        
+        var remoteFilterPipe = new Subject<Func<FileSystemItemViewModel, bool>>()
+            .DisposeItWith(Disposable);
+        remoteFilterPipe.OnNext(_ => true);
+        this.WhenValueChanged(x => x.RemoteSearchText)
+            .Throttle(TimeSpan.FromMilliseconds(500), RxApp.MainThreadScheduler)
+            .Subscribe(search =>
+            {
+                remoteFilterPipe.OnNext(item => MatchesSearch(item, search));
+                var match = FindFirstMatchingItem(_remoteSource.Items, search);
+                if (match == null) return;
+                ExpandParents(match);
+                RemoteSelectedItem = match;
+            })
+            .DisposeItWith(Disposable);
+        _remoteSource.Connect()
+            .Filter(remoteFilterPipe)
+            .SortBy(x => !x.IsDirectory)
+            .Bind(out _filteredRemoteItems)
+            .Subscribe();
+        
+        _localSource.Connect()
+            .AutoRefreshOnObservable(x => x.WhenAnyValue(item => item.IsSelected))
+            .Subscribe(_ =>
+            {
+                var selectedItem = _localSource.Items.FirstOrDefault(item => item.IsSelected);
+                if (selectedItem != null && LocalSelectedItem != selectedItem) LocalSelectedItem = selectedItem;
+            })
+            .DisposeItWith(Disposable);
+        _remoteSource.Connect()
+            .AutoRefreshOnObservable(x => x.WhenAnyValue(item => item.IsSelected))
+            .Subscribe(_ =>
+            {
+                var selectedItem = _remoteSource.Items.FirstOrDefault(item => item.IsSelected);
+                if (selectedItem != null && RemoteSelectedItem != selectedItem) RemoteSelectedItem = selectedItem;
+            })
+            .DisposeItWith(Disposable);
     }
     
     public ReactiveCommand<Unit, Unit> UploadCommand { get; set; }
@@ -50,6 +120,8 @@ public class VehicleFileBrowserViewModel : ShellPage
     public ReactiveCommand<Unit, Unit> RemoveLocalItemCommand { get; set; }
     public ReactiveCommand<Unit, Unit> RemoveRemoteItemCommand { get; set; }
     public ReactiveCommand<Unit, Unit> SetInEditModeCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> ClearLocalSearchBoxCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> ClearRemoteSearchBoxCommand { get; set; }
     
     private IObservable<bool> CanUpload => 
         this.WhenValueChanged(x => LocalSelectedItem)
@@ -60,11 +132,13 @@ public class VehicleFileBrowserViewModel : ShellPage
     private IObservable<bool> CanEdit => 
         this.WhenValueChanged(x => LocalSelectedItem)
             .Select(x => x is { IsInEditMode: false });
-    
+
+    public ReadOnlyObservableCollection<FileSystemItemViewModel> FilteredLocalItems => _filteredLocalItems;
+    public ReadOnlyObservableCollection<FileSystemItemViewModel> FilteredRemoteItems => _filteredRemoteItems;
     [Reactive] public FileSystemItemViewModel? LocalSelectedItem { get; set; }
     [Reactive] public FileSystemItemViewModel? RemoteSelectedItem { get; set; }
-    [Reactive] public ReadOnlyObservableCollection<FileSystemItemViewModel> Device { get; set; }
-    [Reactive] public ReadOnlyObservableCollection<FileSystemItemViewModel> Store { get; set; }
+    [Reactive] public string LocalSearchText { get; set; }
+    [Reactive] public string RemoteSearchText { get; set; }
     
     public override void SetArgs(NameValueCollection args)
     {
@@ -89,9 +163,16 @@ public class VehicleFileBrowserViewModel : ShellPage
         RemoveLocalItemCommand = ReactiveCommand.CreateFromTask(RemoveLocalItemImpl);
         RemoveRemoteItemCommand = ReactiveCommand.CreateFromTask(_ => RemoveRemoteItemImpl(ftpClientEx));
         SetInEditModeCommand = ReactiveCommand.CreateFromTask(_ => SetInEditModeImpl(LocalSelectedItem!), CanEdit);
+        ClearLocalSearchBoxCommand = ReactiveCommand.Create(ClearLocalSearchBoxImpl);
+        ClearRemoteSearchBoxCommand = ReactiveCommand.Create(ClearRemoteSearchBoxImpl);
+            
+        Task.Run(async () =>
+        {
+            await RefreshRemoteImpl(ftpClientEx);
+        });
         
-        Task.Run(() => RefreshRemoteImpl(ftpClientEx));
-        Device = LoadRemoteItems(ftpClientEx);
+        LoadLocalItems(_localRootPath);
+        LoadRemoteItems(ftpClientEx);
     }
     
     private async Task UploadImpl(FtpClientEx ftpClientEx)
@@ -107,15 +188,18 @@ public class VehicleFileBrowserViewModel : ShellPage
             PrimaryButtonText = RS.VehicleFileBrowserViewModel_DownloadDialog_PrimaryButtonText
         };
 
-        using var viewModel = new DownloadFileDialogViewModel(ftpClientEx, _localRootPath, RemoteSelectedItem!, LocalSelectedItem);
+        using var viewModel = new DownloadFileDialogViewModel(_log, ftpClientEx, _localRootPath, RemoteSelectedItem!, LocalSelectedItem);
         dialog.Content = viewModel;
         viewModel.ApplyDialog(dialog);
         await dialog.ShowAsync();
         
         await RefreshLocalImpl();
-        _log.Info(nameof(VehicleFileBrowserViewModel), $"File downloaded successfully: {RemoteSelectedItem!.Name}");
     }
 
+    private void ClearLocalSearchBoxImpl() => LocalSearchText = string.Empty;
+    
+    private void ClearRemoteSearchBoxImpl() => RemoteSearchText = string.Empty;
+    
     private async Task RemoveLocalItemImpl()
     {
         if (LocalSelectedItem is { IsDirectory: true }) Directory.Delete(LocalSelectedItem.Path, true);
@@ -143,6 +227,7 @@ public class VehicleFileBrowserViewModel : ShellPage
         if (!item.IsEditingSuccess) return;
         
         var oldPath = item.Path;
+        var oldName = item.Name;
         var directoryPath = Path.GetDirectoryName(oldPath);
         ArgumentException.ThrowIfNullOrWhiteSpace(directoryPath);
         var newPath = Path.Combine(directoryPath, item.EditedName);
@@ -162,7 +247,7 @@ public class VehicleFileBrowserViewModel : ShellPage
             item.Path = newPath;
 
             await RefreshLocalImpl();
-            _log.Info(nameof(VehicleFileBrowserViewModel), $"File renamed from {oldPath} to {newPath}");
+            _log.Info(nameof(VehicleFileBrowserViewModel), $"File renamed from {oldName} to {item.Name}");
 
             item.IsInEditMode = false;
             item.IsEditingSuccess = false;
@@ -215,14 +300,18 @@ public class VehicleFileBrowserViewModel : ShellPage
 
     private async Task RefreshRemoteImpl(FtpClientEx ftpClientEx)
     {
-        await ftpClientEx.Refresh("/");
+        if (RemoteSelectedItem == null)
+            await ftpClientEx.Refresh("/");
+        else
+            await ftpClientEx.Refresh(RemoteSelectedItem.Path);
+
         await ftpClientEx.Refresh("@SYS");
-        Device = LoadRemoteItems(ftpClientEx);
+        LoadRemoteItems(ftpClientEx);
     }
 
     private Task RefreshLocalImpl()
     {
-        Store = LoadLocalItems(_localRootPath);
+        LoadLocalItems(_localRootPath);
         return Task.CompletedTask;
     }
 
@@ -231,7 +320,7 @@ public class VehicleFileBrowserViewModel : ShellPage
     
     #region Load items
 
-    public static ReadOnlyObservableCollection<FileSystemItemViewModel> LoadLocalItems(string path)
+    private void LoadLocalItems(string path)
     {
         var items = new ObservableCollection<FileSystemItemViewModel>();
     
@@ -241,10 +330,14 @@ public class VehicleFileBrowserViewModel : ShellPage
         foreach (var file in Directory.GetFiles(path))
             items.Add(new FileSystemItemViewModel(file, false));
         
-        return new ReadOnlyObservableCollection<FileSystemItemViewModel>(items);
+        _localSource.Edit(updater =>
+        {
+            updater.Clear();
+            updater.AddOrUpdate(items);
+        });
     }
 
-    private static ReadOnlyObservableCollection<FileSystemItemViewModel> LoadRemoteItems(FtpClientEx ftpClientEx)
+    private void LoadRemoteItems(FtpClientEx ftpClientEx)
     { 
         ftpClientEx.Entries
             .TransformToTree(e => e.ParentPath)
@@ -253,8 +346,44 @@ public class VehicleFileBrowserViewModel : ShellPage
             .Bind(out var tree)
             .Subscribe();
         
-        var rootEntries = new ObservableCollection<FileSystemItemViewModel>(tree.Where(e => e.Depth == 0));
-        return new ReadOnlyObservableCollection<FileSystemItemViewModel>(rootEntries);
+        _remoteSource.Edit(updater =>
+        {
+            updater.Clear();
+            updater.AddOrUpdate(tree);
+        });
+    }
+
+    private static void ExpandParents(FileSystemItemViewModel item)
+    {
+        var parent = item.Parent;
+        while (parent != null)
+        {
+            parent.IsExpanded = true;
+            parent = parent.Parent;
+        }
+    }
+    
+    private static bool MatchesSearch(FileSystemItemViewModel item, string? search)
+    {
+        if (search == null) return true;
+        return item.Name.Contains(search, StringComparison.OrdinalIgnoreCase) 
+               || item.Children.Any(child => MatchesSearch(child, search));
+    }
+
+    private static FileSystemItemViewModel? FindFirstMatchingItem(IEnumerable<FileSystemItemViewModel> items, string? search)
+    {
+        if (search == null) return null;
+        
+        foreach (var item in items)
+        {
+            if (item.Name.Contains(search, StringComparison.OrdinalIgnoreCase))
+                return item;
+
+            var match = FindFirstMatchingItem(item.Children, search);
+            if (match != null)
+                return match;
+        }
+        return null;
     }
 
     public static string ConvertBytesToReadableSize(long fileSizeInBytes)
@@ -283,11 +412,14 @@ public class FileSystemItemViewModel : DisposableReactiveObject
 {
     private readonly ReadOnlyObservableCollection<FileSystemItemViewModel> _children;
     
-    public FileSystemItemViewModel(string entry, bool isDirectory)
+    public FileSystemItemViewModel(string entry, bool isDirectory,
+        FileSystemItemViewModel? parent = null)
     {
+        Parent = parent;
+        
         if (isDirectory)
         {
-            _children = VehicleFileBrowserViewModel.LoadLocalItems(entry);
+            _children = LoadItems(entry, this);
             IsDirectory = true;
         }
         else
@@ -301,14 +433,16 @@ public class FileSystemItemViewModel : DisposableReactiveObject
         EditedName = Name;
         Path = entry;
 
-        SetRules();
+        Init();
     }
     
-    public FileSystemItemViewModel(Node<IFtpEntry, string> node)
+    public FileSystemItemViewModel(Node<IFtpEntry, string> node,
+        FileSystemItemViewModel? parent = null)
     {
+        Parent = parent;
         node.Children
             .Connect()
-            .Transform(c => new FileSystemItemViewModel(c))
+            .Transform(c => new FileSystemItemViewModel(c, this))
             .Bind(out _children)
             .Subscribe();
         Name = node.Item.Name;
@@ -316,16 +450,14 @@ public class FileSystemItemViewModel : DisposableReactiveObject
         Path = node.Item.Path;
         IsDirectory = node.Item.Type is FtpEntryType.Directory;
         IsFile = node.Item.Type is FtpEntryType.File;
-        Depth = node.Depth;
 
         if (IsFile) Size = VehicleFileBrowserViewModel.ConvertBytesToReadableSize(((FtpFile)node.Item).Size);
         
-        SetRules();
+        Init();
     }
 
-    public ReactiveCommand<Unit, Unit> EndEditCommand { get; set; } = null!;
 
-    private void SetRules()
+    private void Init()
     {
         this.WhenValueChanged(x => x.IsSelected)
             .Subscribe(b =>
@@ -333,7 +465,28 @@ public class FileSystemItemViewModel : DisposableReactiveObject
                 if (b) return;
                 IsInEditMode = false;
             });
+        this.WhenAnyValue(x => x.IsExpanded)
+            .Where(expanded => expanded)
+            .Subscribe(_ => OnExpanded());
         EndEditCommand = ReactiveCommand.CreateFromTask(EndEditImpl);
+    }
+    
+    private void OnExpanded()
+    {
+        IsSelected = true;
+    }
+
+    private static ReadOnlyObservableCollection<FileSystemItemViewModel> LoadItems(string path, FileSystemItemViewModel? parent)
+    {
+        var items = new ObservableCollection<FileSystemItemViewModel>();
+    
+        foreach (var directory in Directory.GetDirectories(path))
+            items.Add(new FileSystemItemViewModel(directory, true, parent));
+        
+        foreach (var file in Directory.GetFiles(path))
+            items.Add(new FileSystemItemViewModel(file, false, parent));
+
+        return new ReadOnlyObservableCollection<FileSystemItemViewModel>(items);
     }
     
     private Task EndEditImpl()
@@ -343,13 +496,14 @@ public class FileSystemItemViewModel : DisposableReactiveObject
         return Task.CompletedTask;
     }
     
+    public ReactiveCommand<Unit, Unit> EndEditCommand { get; set; } = null!;
     public ReadOnlyObservableCollection<FileSystemItemViewModel> Children => _children;
+    public FileSystemItemViewModel? Parent { get; }
     public string Name { get; set; }
     public string Path { get; set; }
     public bool IsDirectory { get; set; }
     public bool IsFile { get; set; }
     public string? Size { get; set; }
-    public int Depth { get; set; }
     public bool IsEditingSuccess { get; set; }
     [Reactive] public bool IsExpanded { get; set; }
     [Reactive] public bool IsSelected { get; set; } 

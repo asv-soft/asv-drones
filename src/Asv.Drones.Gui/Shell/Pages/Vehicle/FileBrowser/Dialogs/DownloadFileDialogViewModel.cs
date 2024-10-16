@@ -2,6 +2,7 @@ using System;
 using System.Buffers;
 using System.Composition;
 using System.IO;
+using System.Threading;
 using Asv.Drones.Gui.Api;
 using Asv.Mavlink;
 using FluentAvalonia.UI.Controls;
@@ -11,10 +12,12 @@ namespace Asv.Drones.Gui;
 
 public class DownloadFileDialogViewModel : ViewModelBaseWithValidation
 {
+    private readonly ILogService _log;
     private readonly FtpClientEx _ftpClientEx;
-    private readonly string _localRootPath;
     private readonly FileSystemItemViewModel _remote;
-    private readonly FileSystemItemViewModel? _local;
+    private readonly string _path;
+    private readonly MemoryStream _stream = new();
+    private CancellationTokenSource _cts;
 
     public DownloadFileDialogViewModel() : base(WellKnownUri.UndefinedUri)
     {
@@ -22,47 +25,63 @@ public class DownloadFileDialogViewModel : ViewModelBaseWithValidation
     }
 
     [ImportingConstructor]
-    public DownloadFileDialogViewModel( 
+    public DownloadFileDialogViewModel(
+        ILogService log,
         FtpClientEx ftpClientEx, 
         string localRootPath, 
         FileSystemItemViewModel remote, 
         FileSystemItemViewModel? local) 
         : base($"{WellKnownUri.ShellPageVehicleFileBrowser}.upload-file")
     {
+        _log = log;
         _ftpClientEx = ftpClientEx;
-        _localRootPath = localRootPath;
         _remote = remote;
-        _local = local;
+
+        _path = localRootPath;
+        if (local != null)
+        {
+            _path = Path.Combine(local.IsDirectory ? 
+                    local.Path :
+                    local.Path[..local.Path.LastIndexOf('\\')], 
+                _remote.Name);
+        }
     }
     
     public void ApplyDialog(ContentDialog dialog)
     {
         dialog.Opened += OnDialogOpened;
+        dialog.Closed += OnDialogClosed;
+    }
+
+    private async void OnDialogClosed(ContentDialog sender, ContentDialogClosedEventArgs args)
+    {
+        await _cts.CancelAsync();
+        if (args.Result != ContentDialogResult.Primary) return;
+        if (_stream.Length > 0)
+            await File.WriteAllBytesAsync(_path, _stream.ToArray());
     }
 
     private async void OnDialogOpened(ContentDialog sender, EventArgs args)
     {
-        var buffer = new ArrayBufferWriter<byte>();
+        _cts = new CancellationTokenSource();
         var progress = new Progress<double>();
 
-        progress.ProgressChanged += (_, value) =>
-        {
-            DownloadProgress = value;
-        };
-        
-        await _ftpClientEx.DownloadFile(_remote.Path, buffer, progress);
+        progress.ProgressChanged += (_, value) => { DownloadProgress = value; };
 
-        var path = _localRootPath;
-        if (_local != null)
+        try
         {
-            path = Path.Combine(_local.IsDirectory ? 
-                    _local.Path :
-                    _local.Path[.._local.Path.LastIndexOf('\\')], 
-                _remote.Name);
+            await _ftpClientEx.DownloadFile(_remote.Path, _stream, progress, _cts.Token);
+            await File.WriteAllBytesAsync(_path, _stream.GetBuffer());
+            _log.Info(nameof(VehicleFileBrowserViewModel), $"File downloaded successfully: {_remote.Name}");
         }
-        
-        await File.WriteAllBytesAsync(path, buffer.WrittenSpan.ToArray());
-        Dispose();
+        catch (OperationCanceledException)
+        {
+            _log.Warning(nameof(VehicleFileBrowserViewModel), $"File downloading was canceled: {_remote.Name}");
+        }
+        finally
+        {
+            sender.Hide();
+        }
     }
     
     [Reactive] public double DownloadProgress { get; set; }
