@@ -1,5 +1,5 @@
 #!/bin/bash
-APP_NAME="./publish/Asv.Drones.Gui.app"
+APP_NAME="./publish/Asv Drones Gui.app"
 PUBLISH_OUTPUT_DIRECTORY="./publish/app/."
 # PUBLISH_OUTPUT_DIRECTORY should point to the output directory of your dotnet publish command.
 # One example is /path/to/your/csproj/bin/Release/netcoreapp3.1/osx-x64/publish/.

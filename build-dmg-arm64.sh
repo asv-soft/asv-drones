@@ -19,13 +19,12 @@ dotnet publish -c Release -r osx-arm64 ./src/Asv.Drones.Gui.Desktop/Asv.Drones.G
 echo "Creating app bundle for macOS"
 ./bundle-mac-app.sh
 
-
 echo "Creationg temporary files for DMG..."
 mkdir -p ./dmg_temp/MyApp
-cp -R ./publish/Asv.Drones.Gui.app ./dmg_temp/MyApp/
+cp -R "./publish/Asv Drones Gui.app" ./dmg_temp/MyApp/
 ln -s /Applications ./dmg_temp/MyApp/Applications
 
 echo "Creating DMG..."
-hdiutil create -volname "Asv.Drones.Gui" -srcfolder ./dmg_temp/MyApp -ov -format UDZO Asv.Drones.Gui.arm64.dmg
+hdiutil create -volname "Asv Drones Gui" -srcfolder ./dmg_temp/MyApp -ov -format UDZO AsvDronesGui-arm64.dmg
 
 echo "DMG was successfully created!"
