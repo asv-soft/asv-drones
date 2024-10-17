@@ -31,8 +31,8 @@ jobs:
       
       - name: Install dependencies
         run: |
-          dotnet restore ./src/${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj
-          dotnet restore ./src/${{ env.PROJECT_NAME_DESKTOP }}/${{ env.PROJECT_NAME_DESKTOP }}.csproj
+          dotnet restore -r osx-arm64 ./src/${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj
+          dotnet restore -r osx-arm64 ./src/${{ env.PROJECT_NAME_DESKTOP }}/${{ env.PROJECT_NAME_DESKTOP }}.csproj
 
       - name: Build
         run: |
@@ -45,7 +45,7 @@ jobs:
         run: echo "VERSION=${TAG#v}" >> $GITHUB_ENV
 
       - name: Publish project
-        run: dotnet publish --no-build --no-restore -c Release -r osx-arm64 ./src/${{ env.PROJECT_NAME_DESKTOP }}/${{ env.PROJECT_NAME_DESKTOP }}.csproj -p:UseAppHost=true --self-contained -o ./publish/app
+        run: dotnet publish --no-build --no-restore -c Release ./src/${{ env.PROJECT_NAME_DESKTOP }}/${{ env.PROJECT_NAME_DESKTOP }}.csproj -p:UseAppHost=true --self-contained -o ./publish/app
 
       - name: Create App Bundle
         run: |
