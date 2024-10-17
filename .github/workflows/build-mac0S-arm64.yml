@@ -86,9 +86,6 @@ jobs:
   
           echo "DMG was successfully created!"
 
-      - name: Create installer
-        run: 
-
       - name: List output files
         run: ls -la
         
