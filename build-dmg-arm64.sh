@@ -3,7 +3,6 @@
 # Stop the script when an error happens
 set -e
 
-# Функция для очистки временных файлов
 cleanup() {
     echo "Clearing temp files..."
     rm -rf ./dmg_temp
