@@ -11,7 +11,7 @@ env:
   PROJECT_NAME: 'Asv.Drones.Gui'
   PROJECT_NAME_DESKTOP: 'Asv.Drones.Gui.Desktop'
   DMG_NAME: 'AsvDronesGui-arm64'
-  VOLNAME: 'Asv Drones Gui'
+  VOLNAME: 'Asv\ Drones\ Gui'
   PROPS_VERSION_VAR_NAME: 'ProductVersion'
   
 jobs:
@@ -45,7 +45,7 @@ jobs:
         run: echo "VERSION=${TAG#v}" >> $GITHUB_ENV
 
       - name: Publish project
-        run: dotnet publish -c Release -r osx-arm64 ./src/${{ env.PROJECT_NAME_DESKTOP }}/${{ env.PROJECT_NAME_DESKTOP }}.csproj -p:UseAppHost=true --self-contained -o ./publish/app
+        run: dotnet publish --no-build --no-restore -c Release -r osx-arm64 ./src/${{ env.PROJECT_NAME_DESKTOP }}/${{ env.PROJECT_NAME_DESKTOP }}.csproj -p:UseAppHost=true --self-contained -o ./publish/app
 
       - name: Create App Bundle
         run: |
