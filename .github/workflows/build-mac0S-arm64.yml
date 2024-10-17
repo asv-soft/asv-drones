@@ -38,8 +38,8 @@ jobs:
       - name: Read version from Directory.Build.props
         id: read-version
         run: |
-          version=$(sed -n 's/.*<${PROPS_VERSION_VAR_NAME}>\([^<]*\)<\/${PROPS_VERSION_VAR_NAME}>.*/\1/p' ./src/Directory.Build.props)
-          echo "PropsVersion=${version}" >> $GITHUB_ENV
+          versionProps=$(sed -n 's/.*<${{ env.PROPS_VERSION_VAR_NAME }}>\([^<]*\)<\/${{ env.PROPS_VERSION_VAR_NAME }}>.*/\1/p' ./src/Directory.Build.props)
+          echo "PropsVersion=${versionProps}" >> $GITHUB_ENV
 
       - name: Compare tag with NuGet package version
         run: |
