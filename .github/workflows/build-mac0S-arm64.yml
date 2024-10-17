@@ -29,15 +29,15 @@ jobs:
       - name: Add NuGet source
         run: dotnet nuget add source ${{ env.GITHUB_PACKAGES_URL }} \--username '${{secrets.USER_NAME}}' \--password '${{secrets.GIHUB_NUGET_AUTH_TOKEN}}' \--store-password-in-clear-text
       
-      - name: Install dependencies
-        run: |
-          dotnet restore -r osx-arm64 ./src/${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj
-          dotnet restore -r osx-arm64 ./src/${{ env.PROJECT_NAME_DESKTOP }}/${{ env.PROJECT_NAME_DESKTOP }}.csproj
-
-      - name: Build
-        run: |
-          dotnet build ./src/${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj --configuration Release --no-restore
-          dotnet build ./src/${{ env.PROJECT_NAME_DESKTOP }}/${{ env.PROJECT_NAME_DESKTOP }}.csproj --configuration Release --no-restore
+#      - name: Install dependencies
+#        run: |
+#          dotnet restore -r osx-arm64 ./src/${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj
+#          dotnet restore -r osx-arm64 ./src/${{ env.PROJECT_NAME_DESKTOP }}/${{ env.PROJECT_NAME_DESKTOP }}.csproj
+#
+#      - name: Build
+#        run: |
+#          dotnet build ./src/${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj --configuration Release --no-restore
+#          dotnet build ./src/${{ env.PROJECT_NAME_DESKTOP }}/${{ env.PROJECT_NAME_DESKTOP }}.csproj --configuration Release --no-restore
 
       - name: Set version variable
         env:
@@ -45,7 +45,7 @@ jobs:
         run: echo "VERSION=${TAG#v}" >> $GITHUB_ENV
 
       - name: Publish project
-        run: dotnet publish --no-build --no-restore -c Release ./src/${{ env.PROJECT_NAME_DESKTOP }}/${{ env.PROJECT_NAME_DESKTOP }}.csproj -p:UseAppHost=true --self-contained -o ./publish/app
+        run: dotnet publish -c Release -r osx-arm64 ./src/${{ env.PROJECT_NAME_DESKTOP }}/${{ env.PROJECT_NAME_DESKTOP }}.csproj -p:UseAppHost=true --self-contained -o ./publish/app
 
       - name: Create App Bundle
         run: |
