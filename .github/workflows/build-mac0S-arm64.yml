@@ -50,8 +50,8 @@ jobs:
       - name: Read version from Info.plist
         id: read-info-version
         run: |
-          versionShort=$(defaults read "./src/${{ env.PROJECT_NAME_DESKTOP }}/Info.plist" CFBundleShortVersionString)
-          version=$(defaults read "./src/${{ env.PROJECT_NAME_DESKTOP }}/Info.plist" CFBundleVersion)
+          versionShort=$(plutil -extract CFBundleShortVersionString xml1 -o - ./src/Asv.Drones.Gui.Desktop/Info.plist | grep -o '<string>.*</string>' | sed 's/<[^>]*>//g')
+          version=$(plutil -extract CFBundleVersion xml1 -o - ./src/Asv.Drones.Gui.Desktop/Info.plist | grep -o '<string>.*</string>' | sed 's/<[^>]*>//g')
           if [ ${version} != ${versionShort} ]; then
             echo "Error: Info.plist version does not match short version"
             exit 1
