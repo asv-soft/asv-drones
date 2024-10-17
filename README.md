@@ -685,3 +685,41 @@ If you discover a security vulnerability or have concerns about the security of 
 For general inquiries or if you prefer email communication, you can reach us at [me@asv.me](mailto:me@asv.me).
 
 We value your feedback and contributions, and we look forward to hearing from you!
+
+## 13. Installing the App for macOS
+
+### 13.1 How to install
+
+1. Go to our [release page](https://github.com/asv-soft/asv-drones/releases) on GitHub.
+2. Find ```.dmg``` package in the Assets section.
+3. Download it and double click it using your primary mouse button or touchpad.
+4. Drag and drop **Asv Drones Gui** into the Application folder.
+5. You've successfully installed our application! Congratulations!
+
+*Note: Our application is unsigned, so your system may prevent you from running it.*
+
+### 13.2 How to run the Application
+
+<span style="color: yellow;">
+<i>
+To run our application you'll need to disable the Gatekeeper. 
+This security feature protects your device from unsigned applications (like ours).
+While we assure you that our software is virus-free, you should proceed at your own risk.
+If you are concerned about potential data loss, you may want to stop here and try installing our app on another system (like Windows).
+</i>
+</span>
+
+1. Open the terminal and write enter the following command:
+````bash
+sudo spctl --master-disable
+````
+*The system may prompt you to enter a password. Use the password for your root user*
+2. Go to **System Settings** and find **Security & Privacy** options.
+   There, look for a setting that says something like "Allow applications downloaded from:". Select "Anywhere". If this option isn’t available, repeat the first step or try another method to disable Gatekeeper.
+3. If the previous step doesn't work, try another command in the terminal:
+````bash
+sudo xattr -rd com.apple.quarantine /Applications/Asv\ Drones\ Gui.app
+````
+This command removes the app from the quarantine
+4. The application should now work. If this guide didn’t help, please contact us. We’d be happy to assist you!
+

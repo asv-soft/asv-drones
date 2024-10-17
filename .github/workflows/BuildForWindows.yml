@@ -1,39 +1,72 @@
-name: Build and Release
+name: Build and Release for Windows
 
 on:
-  push:
-    tags:
-      - "v*"
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: "The release ID to upload assets to"
+        required: true
+      upload_url:
+        description: "The URL to upload release assets"
+        required: true
+      tag:
+        description: "The git tag to use"
+        required: true
+    
+env:
+  NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
+  GITHUB_PACKAGES_URL: 'https://nuget.pkg.github.com/asv-soft/index.json'
+  PROJECT_NAME: 'Asv.Drones.Gui'
+  PROJECT_NAME_DESKTOP: 'Asv.Drones.Gui.Desktop'
+  PROPS_VERSION_VAR_NAME: 'ProductVersion'
+  
 jobs:
   build-and-release:
     runs-on: windows-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-      
-      - name: Add NuGet source
-        env:
-          NUGET_USERNAME: ${{ secrets.USER_NAME }}
-          NUGET_PASSWORD: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }} 
-        run: |
-          echo "<configuration>" > nuget.config
-          echo "<packageSources>" >> nuget.config
-          echo '<add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" />' >> nuget.config
-          echo '<add key="asv" value="https://nuget.pkg.github.com/asv-soft/index.json" />' >> nuget.config
-          echo "</packageSources>" >> nuget.config
-          echo "<packageSourceCredentials>" >> nuget.config
-          echo "<asv>" >> nuget.config
-          echo '<add key="Username" value="'${{ secrets.USER_NAME }}'" />' >> nuget.config
-          echo '<add key="ClearTextPassword" value="'${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}'" />' >> nuget.config
-          echo "</asv>" >> nuget.config
-          echo "</packageSourceCredentials>" >> nuget.config
-          echo "</configuration>" >> nuget.config
           
+      - name: Display inputs
+        run: |
+          echo "Release ID: ${{ github.event.inputs.release_id }}"
+          echo "Upload URL: ${{ github.event.inputs.upload_url }}"
+          echo "Tag: ${{ github.event.inputs.tag }}"
+          
+      - name: Set version variable
+        env:
+          TAG: ${{ github.event.inputs.tag }}
+        shell: pwsh
+        run: |
+          $newTag = $env:TAG
+          $newTag = $newTag.TrimStart("v")
+          echo "VERSION=$newTag" | Out-File -FilePath $env:GITHUB_ENV -Append
+          
+      - name: Read version from Directory.Build.props
+        shell: pwsh
+        run: |
+          $propsVersionVarName = '${{ env.PROPS_VERSION_VAR_NAME }}'
+          $directoryBuildPropsPath = './src/Directory.Build.props'
+          $versionRegex = "<$propsVersionVarName>([^<]+)"
+          $versionMatch = Select-String -Path $directoryBuildPropsPath -Pattern $versionRegex | ForEach-Object { $_.Matches[0].Groups[1].Value }
+          Add-Content -Path $env:GITHUB_ENV -Value "PropsVersion=$versionMatch"
+
+      - name: Compare tag with NuGet package version
+        shell: pwsh
+        run: |
+          if ("${{ env.PropsVersion }}" -ne "${{ env.VERSION }}") {
+            Write-Host "Error: Tag does not match product version"
+            exit 1
+          }
+
+      - name: Add NuGet source
+        run: dotnet nuget add source ${{ env.GITHUB_PACKAGES_URL }} --username '${{secrets.USER_NAME}}' --password '${{secrets.GIHUB_NUGET_AUTH_TOKEN}}' --store-password-in-clear-text
+
       - name: Install dependencies
         run: |
           dotnet restore ./src/Asv.Drones.Gui.Api/Asv.Drones.Gui.Api.csproj
@@ -45,12 +78,6 @@ jobs:
           dotnet build ./src/Asv.Drones.Gui.Api/Asv.Drones.Gui.Api.csproj --configuration Release --no-restore
           dotnet build ./src/Asv.Drones.Gui/Asv.Drones.Gui.csproj --configuration Release --no-restore
           dotnet build ./src/Asv.Drones.Gui.Desktop/Asv.Drones.Gui.Desktop.csproj --configuration Release --no-restore
-
-      - name: Set version variable
-        env:
-          TAG: ${{ github.ref_name }}
-        run: echo "VERSION=${TAG#v}" >> $GITHUB_ENV
-
 
       # here you must define path to your .csproj
       - name: Publish project for installer
@@ -66,26 +93,13 @@ jobs:
 
       - name: List output files
         run: Get-ChildItem -Path ./publish/app -Force
-        
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1 
-        env:
-            GITHUB_TOKEN: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
-            RELEASE_BODY: ${{ steps.create-release-notes.outputs.release-notes }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: ${{ contains(github.ref, 'alpha') }}
-        
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ github.event.inputs.upload_url }}
           asset_path: ./AsvDronesGuiInstaller.exe
-          asset_name: asv-drones-${{ github.ref_name }}-setup-windows-64.exe
+          asset_name: asv-drones-${{ env.VERSION }}-setup-windows-64.exe
           asset_content_type: application/vnd.microsoft.portable-executable

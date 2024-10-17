@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <AssemblyVersion>$(ProductVersion)</AssemblyVersion>
         <FileVersion>$(ProductVersion)</FileVersion>
         <Version>$(ProductVersion)</Version>
         <!--If you are willing to use Windows/MacOS native APIs you will need to create 3 projects.
@@ -10,6 +9,7 @@
         <Nullable>enable</Nullable>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
+        <UseAppHost>true</UseAppHost>
     </PropertyGroup>
 
     <PropertyGroup>

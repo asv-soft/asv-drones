@@ -1,0 +1,140 @@
+name: Build and Release for MacOS Arm64
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: "The release ID to upload assets to"
+        required: true
+      upload_url:
+        description: "The URL to upload release assets"
+        required: true
+      tag:
+        description: "The git tag to use"
+        required: true
+
+env:
+  NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
+  GITHUB_PACKAGES_URL: 'https://nuget.pkg.github.com/asv-soft/index.json'
+  PROJECT_NAME: 'Asv.Drones.Gui'
+  PROJECT_NAME_DESKTOP: 'Asv.Drones.Gui.Desktop'
+  DMG_NAME: 'AsvDronesGui-arm64'
+  VOLNAME: 'Asv\ Drones\ Gui'
+  PROPS_VERSION_VAR_NAME: 'ProductVersion'
+  TARGET_ARCHITECTURE: 'arm64'
+  
+jobs:
+  build-and-release:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Display inputs
+        run: |
+            echo "Release ID: ${{ github.event.inputs.release_id }}"
+            echo "Upload URL: ${{ github.event.inputs.upload_url }}"
+            echo "Tag: ${{ github.event.inputs.tag }}"
+
+      - name: Add NuGet source
+        run: dotnet nuget add source ${{ env.GITHUB_PACKAGES_URL }} \--username '${{secrets.USER_NAME}}' \--password '${{secrets.GIHUB_NUGET_AUTH_TOKEN}}' \--store-password-in-clear-text
+      
+      - name: Set version variable
+        env:
+          TAG: ${{ github.event.inputs.tag }}
+        run: echo "VERSION=${TAG#v}" >> $GITHUB_ENV
+        
+      - name: Read version from Directory.Build.props
+        id: read-version
+        run: |
+          versionProps=$(sed -n 's/.*<${{ env.PROPS_VERSION_VAR_NAME }}>\([^<]*\)<\/${{ env.PROPS_VERSION_VAR_NAME }}>.*/\1/p' ./src/Directory.Build.props)
+          echo "PropsVersion=${versionProps}" >> $GITHUB_ENV
+
+      - name: Compare tag with NuGet package version
+        run: |
+          if [ "${{ env.PropsVersion }}" != "${{ env.VERSION }}" ]; then
+            echo "Error: Tag does not match product version"
+            exit 1
+          fi
+          
+      - name: Read version from Info.plist
+        id: read-info-version
+        run: |
+          versionShort=$(plutil -extract CFBundleShortVersionString xml1 -o - ./src/Asv.Drones.Gui.Desktop/Info.plist | grep -o '<string>.*</string>' | sed 's/<[^>]*>//g')
+          version=$(plutil -extract CFBundleVersion xml1 -o - ./src/Asv.Drones.Gui.Desktop/Info.plist | grep -o '<string>.*</string>' | sed 's/<[^>]*>//g')
+          if [ ${version} != ${versionShort} ]; then
+            echo "Error: Info.plist version does not match short version"
+            exit 1
+          fi
+          echo "InfoPlistVersion=${version}" >> $GITHUB_ENV
+          echo "InfoPlistVersionShort=${versionShort}" >> $GITHUB_ENV
+
+      - name: Compare Info.plist version with environment variable
+        run: |
+          if [ "${{ env.InfoPlistVersion }}" != "${{ env.VERSION }}" ]; then
+            echo "Error: Info.plist version does not match the environment variable version"
+            exit 1
+          fi
+
+      - name: Publish project
+        run: dotnet publish -c Release -r osx-${{ env.TARGET_ARCHITECTURE }} ./src/${{ env.PROJECT_NAME_DESKTOP }}/${{ env.PROJECT_NAME_DESKTOP }}.csproj -p:UseAppHost=true --self-contained -o ./publish/app
+
+      - name: Create App Bundle
+        run: |
+          APP_NAME="./publish/Asv Drones Gui.app"
+          PUBLISH_OUTPUT_DIRECTORY="./publish/app/."
+          INFO_PLIST="./src/${{ env.PROJECT_NAME_DESKTOP }}/Info.plist"
+          ICON_FILE="./src/${{ env.PROJECT_NAME_DESKTOP }}/Assets/icon.ico"
+
+          if [ -d "$APP_NAME" ]
+          then
+              rm -rf "$APP_NAME"
+          fi
+  
+          mkdir "$APP_NAME"
+  
+          mkdir "$APP_NAME/Contents"
+          mkdir "$APP_NAME/Contents/MacOS"
+          mkdir "$APP_NAME/Contents/Resources"
+  
+          cp "$INFO_PLIST" "$APP_NAME/Contents/Info.plist"
+          cp "$ICON_FILE" "$APP_NAME/Contents/Resources/icon.ico"
+          cp -a "$PUBLISH_OUTPUT_DIRECTORY" "$APP_NAME/Contents/MacOS"
+          
+      - name: Set executable permissions
+        run: chmod +x ./publish/Asv\ Drones\ Gui.app/Contents/MacOS/*
+      
+      - name: Create DMG
+        run: |
+          echo "Creationg temporary files for DMG..."
+          mkdir -p ./dmg_temp/MyApp
+          cp -R "./publish/Asv Drones Gui.app" ./dmg_temp/MyApp/
+          ln -s /Applications ./dmg_temp/MyApp/Applications
+  
+          echo "Creating DMG..."
+          hdiutil create -volname ${{ env.VOLNAME }} -srcfolder ./dmg_temp/MyApp -ov -format UDZO ${{ env.DMG_NAME }}.dmg
+          
+          echo "Clearing temp files..."
+          rm -rf ./dmg_temp
+          rm -rf ./publish/app
+          rm -rf ./publish
+  
+          echo "DMG was successfully created!"
+
+      - name: List output files
+        run: ls -la
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
+        with:
+          upload_url: ${{ github.event.inputs.upload_url }}
+          asset_path: ./AsvDronesGui-arm64.dmg
+          asset_name: asv-drones-${{ env.VERSION }}-setup-osx-arm64.dmg
+          asset_content_type: application/x-apple-diskimage
