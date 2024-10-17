@@ -5,9 +5,9 @@
 	<key>CFBundleExecutable</key>
 	<string>Asv.Drones.Gui.Desktop</string>
 	<key>CFBundleName</key>
-	<string>Asv.Drones.Gui</string>
+	<string>Asv Drones Gui</string>
 	<key>CFBundleDisplayName</key>
-	<string>Asv.Drones.Gui</string>
+	<string>Asv Drones Gui</string>
 	<key>CFBundleIdentifier</key>
 	<string>asvsoft.asv.drones.gui</string>
 	<key>CFBundleIconFile</key>
