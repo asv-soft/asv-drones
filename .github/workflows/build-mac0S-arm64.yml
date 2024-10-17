@@ -50,8 +50,14 @@ jobs:
       - name: Read version from Info.plist
         id: read-info-version
         run: |
-          version=$(defaults read "$APP_NAME/Contents/Info.plist" CFBundleShortVersionString)
+          versionShort=$(defaults read "./src/${{ env.PROJECT_NAME_DESKTOP }}/Info.plist" CFBundleShortVersionString)
+          version=$(defaults read "./src/${{ env.PROJECT_NAME_DESKTOP }}/Info.plist" CFBundleVersion)
+          if [ ${version} != ${versionShort} ]; then
+            echo "Error: Info.plist version does not match short version"
+            exit 1
+          fi
           echo "InfoPlistVersion=${version}" >> $GITHUB_ENV
+          echo "InfoPlistVersionShort=${versionShort}" >> $GITHUB_ENV
 
       - name: Compare Info.plist version with environment variable
         run: |
