@@ -13,6 +13,7 @@ env:
   DMG_NAME: 'AsvDronesGui-arm64'
   VOLNAME: 'Asv\ Drones\ Gui'
   PROPS_VERSION_VAR_NAME: 'ProductVersion'
+  TARGET_ARCHITECTURE: 'arm64'
   
 jobs:
   build-and-release:
@@ -67,7 +68,7 @@ jobs:
           fi
 
       - name: Publish project
-        run: dotnet publish -c Release -r osx-arm64 ./src/${{ env.PROJECT_NAME_DESKTOP }}/${{ env.PROJECT_NAME_DESKTOP }}.csproj -p:UseAppHost=true --self-contained -o ./publish/app
+        run: dotnet publish -c Release -r osx-${{ env.TARGET_ARCHITECTURE }} ./src/${{ env.PROJECT_NAME_DESKTOP }}/${{ env.PROJECT_NAME_DESKTOP }}.csproj -p:UseAppHost=true --self-contained -o ./publish/app
 
       - name: Create App Bundle
         run: |
