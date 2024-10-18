@@ -33,4 +33,4 @@ jobs:
       
       - name: Check release_id and upload_url
         run: |
-          echo '{"release_id": "'${{ steps.create_release.outputs.id }}'", "upload_url": "'${{ steps.create_release.outputs.upload_url }}"}' > release.json
+          echo "{\"release_id\": \"${{ steps.create_release.outputs.id }}\", \"upload_url\": \"${{ steps.create_release.outputs.upload_url }}\"}" > release.json
