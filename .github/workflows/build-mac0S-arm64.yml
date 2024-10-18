@@ -3,6 +3,7 @@ name: Build and Release for MacOS Arm64
 on:
   push:
     tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
       - 'v[0-9]+.[0-9]+.[0-9]+-alpha'
 
 env:
@@ -112,25 +113,37 @@ jobs:
       - name: List output files
         run: ls -la
         
+      - name: Get Release by Tag
+        id: get_release
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const release = await github.repos.getReleaseByTag({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag: github.ref
+            }).catch(() => null);
+            return release ? { id: release.data.id, upload_url: release.data.upload_url } : {};
+
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1 
+        if: steps.get_release.outputs.id == ''
+        uses: actions/create-release@v1
         env:
-            GITHUB_TOKEN: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
-            RELEASE_BODY: ${{ steps.create-release-notes.outputs.release-notes }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
+          body: ${{ steps.create-release-notes.outputs.release-notes }}
           draft: false
           prerelease: ${{ contains(github.ref, 'alpha') }}
-
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.get_release.outputs.upload_url || steps.create_release.outputs.upload_url }}
           asset_path: ./AsvDronesGui-arm64.dmg
           asset_name: asv-drones-${{ github.ref_name }}-setup-osx-arm64.dmg
           asset_content_type: application/x-apple-diskimage

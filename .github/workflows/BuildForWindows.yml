@@ -3,7 +3,8 @@ name: Build and Release
 on:
   push:
     tags:
-      - "v*"
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-alpha'
 jobs:
   build-and-release:
     runs-on: windows-latest
@@ -66,9 +67,22 @@ jobs:
 
       - name: List output files
         run: Get-ChildItem -Path ./publish/app -Force
+
+      - name: Get Release by Tag
+        id: get_release
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const release = await github.repos.getReleaseByTag({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag: github.ref
+            }).catch(() => null);
+            return release ? { id: release.data.id, upload_url: release.data.upload_url } : {};
         
       - name: Create Release
         id: create_release
+        if: steps.get_release.outputs.id == ''
         uses: actions/create-release@v1 
         env:
             GITHUB_TOKEN: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
@@ -85,7 +99,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.get_release.outputs.upload_url || steps.create_release.outputs.upload_url }}
           asset_path: ./AsvDronesGuiInstaller.exe
           asset_name: asv-drones-${{ github.ref_name }}-setup-windows-64.exe
           asset_content_type: application/vnd.microsoft.portable-executable
