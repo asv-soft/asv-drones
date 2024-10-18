@@ -2,7 +2,7 @@ name: Build and Release
 
 on:
   workflow_run:
-    workflows: ["Create Release"]
+    workflows: ["create-release"]
     types:
       - completed
     branches:
