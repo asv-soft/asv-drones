@@ -47,7 +47,7 @@ jobs:
       
       - name: Set version variable
         env:
-          TAG: ${{ github.ref_name }}
+          TAG: ${{ github.event.workflow_run.head_ref }}
         run: echo "VERSION=${TAG#v}" >> $GITHUB_ENV
         
       - name: Read version from Directory.Build.props
@@ -134,5 +134,5 @@ jobs:
         with:
           upload_url: ${{ steps.parse_release.outputs.upload_url }}
           asset_path: ./AsvDronesGui-arm64.dmg
-          asset_name: asv-drones-${{ github.ref_name }}-setup-osx-arm64.dmg
+          asset_name: asv-drones-${{ github.event.workflow_run.head_ref }}-setup-osx-arm64.dmg
           asset_content_type: application/x-apple-diskimage
