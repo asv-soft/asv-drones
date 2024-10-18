@@ -5,6 +5,9 @@ on:
     workflows: ["Create Release"]
     types:
       - completed
+    branches:
+      - 'feat/**'
+      - 'main'
     
 jobs:
   build-and-release:
