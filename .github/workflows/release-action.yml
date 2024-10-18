@@ -26,12 +26,20 @@ jobs:
           body: ${{ steps.create-release-notes.outputs.release-notes }}
           draft: false
           prerelease: ${{ contains(github.ref, 'alpha') }}
+          
+      - name: Check files in the directory
+        run: ls -al
 
-      - name: Save Release Info as Artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: release-info
-          path: release.json
+          path: $GITHUB_WORKSPACE/release.json  # Указываем абсолютный путь
+          if-no-files-found: warn
+          include-hidden-files: false
+          
+      - name: Check files in the directory
+        run: ls -al
       
       - name: Check release_id and upload_url
         run: |
