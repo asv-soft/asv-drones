@@ -1,13 +1,9 @@
 name: Build and Release
 
 on:
-  workflow_run:
-    workflows: ["Create Release"]
+  release:
     types:
-      - completed
-    branches:
-      - 'feat/**'
-      - 'main'
+      - published
     
 jobs:
   build-and-release:
