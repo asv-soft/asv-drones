@@ -64,7 +64,11 @@ jobs:
       - name: Set version variable
         env:
           TAG: ${{ github.event.inputs.tag }}
-        run: echo "VERSION=${TAG#v}" >> $GITHUB_ENV
+        shell: pwsh
+        run: |
+          $newTag = $env:TAG
+          $newTag = $newTag.TrimStart("v")
+          echo "VERSION=$newTag" | Out-File -FilePath $env:GITHUB_ENV -Append
 
 
       # here you must define path to your .csproj
@@ -89,5 +93,5 @@ jobs:
         with:
           upload_url: ${{ github.event.inputs.upload_url }}
           asset_path: ./AsvDronesGuiInstaller.exe
-          asset_name: asv-drones-${{ github.event.workflow_run.head_ref }}}-setup-windows-64.exe
+          asset_name: asv-drones-${{ env.VERSION }}}-setup-windows-64.exe
           asset_content_type: application/vnd.microsoft.portable-executable
