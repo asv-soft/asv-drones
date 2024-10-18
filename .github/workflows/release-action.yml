@@ -27,18 +27,27 @@ jobs:
           draft: false
           prerelease: ${{ contains(github.ref, 'alpha') }}
           
-      - name: Create release.json
-        run: |
-          echo "{"release_id": "${{ steps.create_release.outputs.id }}", "upload_url": "${{ steps.create_release.outputs.upload_url }}"}" > release.json
-
-      - name: Check files in the directory
-        run: ls -al
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+      - name: Trigger MacOS workflow
+        uses: actions/github-script@v6
         with:
-          name: release-info
-          path: ./release.json
-          if-no-files-found: warn
-          include-hidden-files: false
+          script: |
+              const response = await github.actions.createWorkflowDispatch({
+                owner: '${{ secrets.USER_NAME }}',
+                repo: 'asv-drones',
+                workflow_id: 'build-macos-arm64.yml', // имя файла workflow
+                ref: 'feat/mac-os-arm64-deployment',
+              })
+              console.log(response)
+
+      - name: Trigger Windows workflow
+        uses: actions/github-script@v6
+        with:
+          script: |
+              const response = await github.actions.createWorkflowDispatch({
+                owner: '${{ secrets.USER_NAME }}',
+                repo: 'asv-drones',
+                workflow_id: 'BuildForWindows.yml',
+                ref: 'feat/mac-os-arm64-deployment',
+              })
+              console.log(response)
           
