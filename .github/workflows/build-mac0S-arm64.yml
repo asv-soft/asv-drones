@@ -1,9 +1,13 @@
 name: Build and Release for MacOS Arm64
 
 on:
-  release:
+  workflow_run:
+    workflows: ["Create Release"]
     types:
-      - published
+      - completed
+    branches:
+      - 'feat/**'
+      - 'main'
 
 env:
   NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
