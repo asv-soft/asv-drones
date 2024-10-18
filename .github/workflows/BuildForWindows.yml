@@ -2,6 +2,16 @@ name: Build and Release
 
 on:
   workflow_dispatch:
+    inputs:
+      release_id:
+        description: "The release ID to upload assets to"
+        required: true
+      upload_url:
+        description: "The URL to upload release assets"
+        required: true
+      tag:
+        description: "The git tag to use"
+        required: true
     
 jobs:
   build-and-release:
@@ -9,25 +19,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
-      - name: Download Release Info
-        uses: actions/download-artifact@v4
-        with:
-          name: release-info
-          path: ./release
-
-      - name: Parse Release Info
-        id: parse_release
-        run: |
-          RELEASE_ID=$(cat ./release/release.json | jq -r '.release_id')
-          UPLOAD_URL=$(cat ./release/release.json | jq -r '.upload_url')
-          echo "::set-output name=release_id::$RELEASE_ID"
-          echo "::set-output name=upload_url::$UPLOAD_URL"
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 8.0.x
+          
+      - name: Display inputs
+        run: |
+          echo "Release ID: ${{ github.event.inputs.release_id }}"
+          echo "Upload URL: ${{ github.event.inputs.upload_url }}"
+          echo "Tag: ${{ github.event.inputs.tag }}"
       
       - name: Add NuGet source
         env:
@@ -61,7 +63,7 @@ jobs:
 
       - name: Set version variable
         env:
-          TAG: ${{ github.event.workflow_run.head_ref }}
+          TAG: ${{ github.event.inputs.tag }}
         run: echo "VERSION=${TAG#v}" >> $GITHUB_ENV
 
 
@@ -85,7 +87,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
         with:
-          upload_url: ${{ steps.parse_release.outputs.upload_url }}
+          upload_url: ${{ github.event.inputs.upload_url }}
           asset_path: ./AsvDronesGuiInstaller.exe
           asset_name: asv-drones-${{ github.event.workflow_run.head_ref }}}-setup-windows-64.exe
           asset_content_type: application/vnd.microsoft.portable-executable
