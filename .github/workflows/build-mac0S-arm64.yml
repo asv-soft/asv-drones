@@ -22,6 +22,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        
+      - name: Download Release Info
+        uses: actions/download-artifact@v3
+        with:
+          name: release-info
+          path: ./release
+
+      - name: Parse Release Info
+        id: parse_release
+        run: |
+          RELEASE_ID=$(cat ./release/release.json | jq -r '.release_id')
+          UPLOAD_URL=$(cat ./release/release.json | jq -r '.upload_url')
+          echo "::set-output name=release_id::$RELEASE_ID"
+          echo "::set-output name=upload_url::$UPLOAD_URL"
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -112,43 +126,13 @@ jobs:
 
       - name: List output files
         run: ls -la
-        
-      - name: Get Release by Tag
-        id: get_release
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const tag = context.ref.replace('refs/tags/', '');
-            const releases = await github.rest.repos.listReleases({
-            owner: context.repo.owner,
-            repo: context.repo.repo
-            });
-            const release = releases.data.find(r => r.tag_name === tag);
-            if (release) {
-            return { id: release.id, upload_url: release.upload_url };
-            } else {
-            return {};
-            }
-              
-      - name: Create Release
-        id: create_release
-        if: steps.get_release.outputs.id == ''
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: ${{ steps.create-release-notes.outputs.release-notes }}
-          draft: false
-          prerelease: ${{ contains(github.ref, 'alpha') }}
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
         with:
-          upload_url: ${{ steps.get_release.outputs.upload_url || steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.parse_release.outputs.upload_url }}
           asset_path: ./AsvDronesGui-arm64.dmg
           asset_name: asv-drones-${{ github.ref_name }}-setup-osx-arm64.dmg
           asset_content_type: application/x-apple-diskimage
