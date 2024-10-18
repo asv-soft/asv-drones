@@ -73,12 +73,12 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const release = await github.repos.getReleaseByTag({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              tag: github.ref
-            }).catch(() => null);
-            return release ? { id: release.data.id, upload_url: release.data.upload_url } : {};
+              const releases = await github.repos.listReleases({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+              });
+              const release = releases.data.find(r => r.tag_name === github.ref.replace('refs/tags/', ''));
+              return release ? { id: release.id, upload_url: release.upload_url } : {};
         
       - name: Create Release
         id: create_release
