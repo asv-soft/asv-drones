@@ -3,7 +3,7 @@ name: Build and Release for MacOS Arm64
 on:
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+-rc'
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 
 env:
   NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
@@ -112,25 +112,25 @@ jobs:
       - name: List output files
         run: ls -la
         
-#      - name: Create Release
-#        id: create_release
-#        uses: actions/create-release@v1 
-#        env:
-#            GITHUB_TOKEN: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
-#            RELEASE_BODY: ${{ steps.create-release-notes.outputs.release-notes }}
-#        with:
-#          tag_name: ${{ github.ref }}
-#          release_name: Release ${{ github.ref }}
-#          draft: false
-#          prerelease: ${{ contains(github.ref, 'alpha') }}
-#        
-#
-#      - name: Upload Release Asset
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
-#        with:
-#          upload_url: ${{ steps.create_release.outputs.upload_url }}
-#          asset_path: ./AsvDronesGui-arm64.dmg
-#          asset_name: asv-drones-${{ github.ref_name }}-setup-windows-64.exe
-#          asset_content_type: application/vnd.microsoft.portable-executable
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1 
+        env:
+            GITHUB_TOKEN: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
+            RELEASE_BODY: ${{ steps.create-release-notes.outputs.release-notes }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: ${{ contains(github.ref, 'alpha') }}
+
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./AsvDronesGui-arm64.dmg
+          asset_name: asv-drones-${{ github.ref_name }}-setup-osx-arm64.dmg
+          asset_content_type: application/x-apple-diskimage
