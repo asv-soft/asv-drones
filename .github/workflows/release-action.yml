@@ -1,0 +1,34 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-alpha'
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: ${{ steps.create-release-notes.outputs.release-notes }}
+          draft: false
+          prerelease: ${{ contains(github.ref, 'alpha') }}
+
+      - name: Save Release Info as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-info
+          path: release.json
+        run: |
+          echo '{"release_id": "'${{ steps.create_release.outputs.id }}'", "upload_url": "'${{ steps.create_release.outputs.upload_url }}"}' > release.json
