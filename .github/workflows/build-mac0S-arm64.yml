@@ -117,14 +117,19 @@ jobs:
         id: get_release
         uses: actions/github-script@v6
         with:
-           script: |
-              const releases = await github.repos.listReleases({
+          script: |
+              const tag = github.ref.replace('refs/tags/', '');
+              const releases = await github.rest.repos.listReleases({
                 owner: context.repo.owner,
-                repo: context.repo.repo,
+                repo: context.repo.repo
               });
-              const release = releases.data.find(r => r.tag_name === github.ref.replace('refs/tags/', ''));
-              return release ? { id: release.id, upload_url: release.upload_url } : {};
-
+              const release = releases.data.find(r => r.tag_name === tag);
+              if (release) {
+                return { id: release.id, upload_url: release.upload_url };
+              } else {
+                return {};
+              }
+              
       - name: Create Release
         id: create_release
         if: steps.get_release.outputs.id == ''
