@@ -24,7 +24,7 @@ jobs:
           draft: false
           prerelease: ${{ contains(github.ref, 'alpha') }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
          
       - name: Trigger MacOS Workflow
         run: |
