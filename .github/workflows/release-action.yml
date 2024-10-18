@@ -26,28 +26,20 @@ jobs:
           body: ${{ steps.create-release-notes.outputs.release-notes }}
           draft: false
           prerelease: ${{ contains(github.ref, 'alpha') }}
-          
-      - name: Trigger MacOS workflow
-        uses: actions/github-script@v6
-        with:
-          script: |
-              const response = await github.actions.createWorkflowDispatch({
-                owner: '${{ secrets.USER_NAME }}',
-                repo: 'asv-drones',
-                workflow_id: 'build-macos-arm64.yml', // имя файла workflow
-                ref: 'feat/mac-os-arm64-deployment',
-              })
-              console.log(response)
+         
+      - name: Trigger MacOS Workflow
+        run: |
+          curl -X POST \
+          -H "Authorization: token ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+           https://api.github.com/repos/${{ secrets.USER_NAME }}/asv-drones/actions/workflows/macos.yml/dispatches \
+          -d '{"ref":"${{ github.ref }}"}'
 
-      - name: Trigger Windows workflow
-        uses: actions/github-script@v6
-        with:
-          script: |
-              const response = await github.actions.createWorkflowDispatch({
-                owner: '${{ secrets.USER_NAME }}',
-                repo: 'asv-drones',
-                workflow_id: 'BuildForWindows.yml',
-                ref: 'feat/mac-os-arm64-deployment',
-              })
-              console.log(response)
+      - name: Trigger Windows Workflow
+        run: |
+          curl -X POST \
+          -H "Authorization: token ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+           https://api.github.com/repos/${{ secrets.USER_NAME }}/asv-drones/actions/workflows/windows.yml/dispatches \
+          -d '{"ref":"${{ github.ref }}"}'
           
