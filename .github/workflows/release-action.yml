@@ -27,6 +27,10 @@ jobs:
           draft: false
           prerelease: ${{ contains(github.ref, 'alpha') }}
           
+      - name: Create release.json
+        run: |
+          echo "{"release_id": "${{ steps.create_release.outputs.id }}", "upload_url": "${{ steps.create_release.outputs.upload_url }}"}" > release.json
+
       - name: Check files in the directory
         run: ls -al
 
@@ -34,13 +38,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: release-info
-          path: $GITHUB_WORKSPACE/release.json  # Указываем абсолютный путь
+          path: ${{ GITHUB_WORKSPACE }}/release.json  # Указываем абсолютный путь
           if-no-files-found: warn
           include-hidden-files: false
           
-      - name: Check files in the directory
-        run: ls -al
-      
-      - name: Check release_id and upload_url
-        run: |
-          echo "{"release_id": "${{ steps.create_release.outputs.id }}", "upload_url": "${{ steps.create_release.outputs.upload_url }}"}" > release.json
