@@ -38,7 +38,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: release-info
-          path: ${{ GITHUB_WORKSPACE }}/release.json  # Указываем абсолютный путь
+          path: ./release.json
           if-no-files-found: warn
           include-hidden-files: false
           
