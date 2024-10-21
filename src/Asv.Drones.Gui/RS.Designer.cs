@@ -861,6 +861,15 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File download progress.
+        /// </summary>
+        public static string DownloadFileDialogView_FileLoadProgress_Text {
+            get {
+                return ResourceManager.GetString("DownloadFileDialogView_FileLoadProgress_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to µV/m.
         /// </summary>
         public static string FieldStrength_MicroVoltsPerMeter_Unit {
@@ -3831,7 +3840,7 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File download progress.
+        ///   Looks up a localized string similar to File upload progress.
         /// </summary>
         public static string UploadFileDialogView_FileLoadProgress_Text {
             get {
@@ -3944,6 +3953,24 @@ namespace Asv.Drones.Gui {
         public static string VehicleFileBrowserViewModel_DownloadDialog_Title {
             get {
                 return ResourceManager.GetString("VehicleFileBrowserViewModel_DownloadDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string VehicleFileBrowserViewModel_UploadDialog_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("VehicleFileBrowserViewModel_UploadDialog_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        public static string VehicleFileBrowserViewModel_UploadDialog_Title {
+            get {
+                return ResourceManager.GetString("VehicleFileBrowserViewModel_UploadDialog_Title", resourceCulture);
             }
         }
         
