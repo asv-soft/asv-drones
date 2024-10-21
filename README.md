@@ -1,4 +1,7 @@
-![linkedin](https://github.com/user-attachments/assets/4fa5221e-7ae5-4b6b-98a8-1c1e39b49afb)
+
+<div align="center">
+<img src="https://github.com/asv-soft/asv-drones-gui-afis/assets/151620493/932425b6-547e-4d35-bf90-6430265c8e97" width="300px" margin-left="200px">  
+</div>
 
 
 
