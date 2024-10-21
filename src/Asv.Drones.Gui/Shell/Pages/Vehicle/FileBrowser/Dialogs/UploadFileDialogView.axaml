@@ -5,20 +5,20 @@
              xmlns:gui="clr-namespace:Asv.Drones.Gui"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              mc:Ignorable="d"
-             x:Class="Asv.Drones.Gui.DownloadFileDialogView"
-             x:DataType="gui:DownloadFileDialogViewModel"
+             x:Class="Asv.Drones.Gui.UploadFileDialogView"
+             x:DataType="gui:UploadFileDialogViewModel"
              Width="400">
     <Design.DataContext>
-        <gui:DownloadFileDialogViewModel/>
+        <gui:UploadFileDialogViewModel/>
     </Design.DataContext>
     <StackPanel Spacing="8" HorizontalAlignment="Stretch">
-        <TextBlock Text="{x:Static gui:RS.DownloadFileDialogView_FileLoadProgress_Text}"
+        <TextBlock Text="{x:Static gui:RS.UploadFileDialogView_FileLoadProgress_Text}"
                    HorizontalAlignment="Stretch" />
         <DockPanel>
             <avalonia:MaterialIcon Margin="0 0 8 0" Kind="ProgressDownload" DockPanel.Dock="Left" />
-            <TextBlock Text="{CompiledBinding DownloadProgress, StringFormat='{}{0:P1}'}"
+            <TextBlock Text="{CompiledBinding UploadProgress, StringFormat='{}{0:P1}'}"
                        DockPanel.Dock="Right" Margin="8 0 0 0" />
-            <ProgressBar Foreground="#40b5e0" Value="{CompiledBinding DownloadProgress}" Maximum="1" />
+            <ProgressBar Foreground="#40b5e0" Value="{CompiledBinding UploadProgress}" Maximum="1" />
         </DockPanel>  
     </StackPanel>
 </UserControl>

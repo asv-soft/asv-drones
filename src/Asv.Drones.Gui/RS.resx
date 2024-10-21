@@ -1372,12 +1372,21 @@
     <value>Save</value>
   </data>
   <data name="UploadFileDialogView_FileLoadProgress_Text" xml:space="preserve">
-    <value>File download progress</value>
+    <value>File upload progress</value>
   </data>
   <data name="VehicleFileBrowserViewModel_DownloadDialog_PrimaryButtonText" xml:space="preserve">
     <value>Cancel</value>
   </data>
   <data name="VehicleFileBrowserViewModel_DownloadDialog_Title" xml:space="preserve">
     <value>Download</value>
+  </data>
+  <data name="DownloadFileDialogView_FileLoadProgress_Text" xml:space="preserve">
+    <value>File download progress</value>
+  </data>
+  <data name="VehicleFileBrowserViewModel_UploadDialog_Title" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="VehicleFileBrowserViewModel_UploadDialog_PrimaryButtonText" xml:space="preserve">
+    <value>Cancel</value>
   </data>
 </root>

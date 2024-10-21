@@ -10,14 +10,14 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Asv.Drones.Gui;
 
-public class DownloadFileDialogViewModel : ViewModelBaseWithValidation
+public class DownloadFileDialogViewModel : ViewModelBase
 {
     private readonly ILogService _log;
     private readonly FtpClientEx _ftpClientEx;
     private readonly FileSystemItemViewModel _remote;
     private readonly string _path;
     private readonly MemoryStream _stream = new();
-    private CancellationTokenSource _cts;
+    private readonly CancellationTokenSource _cts = new();
 
     public DownloadFileDialogViewModel() : base(WellKnownUri.UndefinedUri)
     {
@@ -31,7 +31,7 @@ public class DownloadFileDialogViewModel : ViewModelBaseWithValidation
         string localRootPath, 
         FileSystemItemViewModel remote, 
         FileSystemItemViewModel? local) 
-        : base($"{WellKnownUri.ShellPageVehicleFileBrowser}.upload-file")
+        : base($"{WellKnownUri.ShellPageVehicleFileBrowser}.download-file")
     {
         _log = log;
         _ftpClientEx = ftpClientEx;
@@ -46,6 +46,8 @@ public class DownloadFileDialogViewModel : ViewModelBaseWithValidation
                 _remote.Name);
         }
     }
+    
+    [Reactive] public double DownloadProgress { get; set; }
     
     public void ApplyDialog(ContentDialog dialog)
     {
@@ -63,7 +65,6 @@ public class DownloadFileDialogViewModel : ViewModelBaseWithValidation
 
     private async void OnDialogOpened(ContentDialog sender, EventArgs args)
     {
-        _cts = new CancellationTokenSource();
         var progress = new Progress<double>();
 
         progress.ProgressChanged += (_, value) => { DownloadProgress = value; };
@@ -83,6 +84,4 @@ public class DownloadFileDialogViewModel : ViewModelBaseWithValidation
             sender.Hide();
         }
     }
-    
-    [Reactive] public double DownloadProgress { get; set; }
 }

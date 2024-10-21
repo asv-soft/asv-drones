@@ -177,7 +177,18 @@ public class VehicleFileBrowserViewModel : ShellPage
     
     private async Task UploadImpl(FtpClientEx ftpClientEx)
     {
-        
+        var dialog = new ContentDialog
+        {
+            Title = RS.VehicleFileBrowserViewModel_UploadDialog_Title,
+            PrimaryButtonText = RS.VehicleFileBrowserViewModel_UploadDialog_PrimaryButtonText
+        };
+
+        using var viewModel = new UploadFileDialogViewModel(_log, ftpClientEx, RemoteSelectedItem!, LocalSelectedItem);
+        dialog.Content = viewModel;
+        viewModel.ApplyDialog(dialog);
+        await dialog.ShowAsync();
+
+        await RefreshRemoteImpl(ftpClientEx);
     }
 
     private async Task DownloadImpl(FtpClientEx ftpClientEx)
