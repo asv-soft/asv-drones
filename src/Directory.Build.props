@@ -2,6 +2,9 @@
     <PropertyGroup>
         <ProductVersion>1.0.2</ProductVersion>
         <ApiVersion>2.0.0-dev.4</ApiVersion>
+        <ApiPrevVersion>1.0.0</ApiPrevVersion>
+        <AvaloniaVersion>11.0.6</AvaloniaVersion>
+        <AsvCommonVersion>2.0.2</AsvCommonVersion>
         <AsvCommonVersion>3.0.0-dev.4</AsvCommonVersion>
         <ZLoggerVersion>2.5.5</ZLoggerVersion>
         <AvaloniaVersion>11.1.0</AvaloniaVersion>

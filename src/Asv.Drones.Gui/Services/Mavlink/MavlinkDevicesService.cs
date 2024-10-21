@@ -200,14 +200,13 @@ namespace Asv.Drones.Gui
 
         private IRsgaClientDevice CreateRsgaDevice(IMavlinkDevice device)
         {
-            RsgaClientDeviceConfig cfg = InternalGetConfig<RsgaClientDeviceConfig>(c => c.Rsga);
             return new RsgaClientDevice(Router, new MavlinkClientIdentity
             {
                 TargetSystemId = device.SystemId,
                 TargetComponentId = device.ComponentId,
                 SystemId = _systemId.Value,
                 ComponentId = _componentId.Value,
-            },cfg , _sequenceCalculator, RxApp.MainThreadScheduler);
+            }, InternalGetConfig<RsgaClientDeviceConfig>(c => c.Rsga), _sequenceCalculator, RxApp.MainThreadScheduler);
         }
         private IRfsaClientDevice CreateRfsaDevice(IMavlinkDevice device)
         {
