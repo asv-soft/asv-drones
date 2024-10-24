@@ -19,10 +19,11 @@ public partial class VehicleFileBrowserView : ReactiveUserControl<VehicleFileBro
     {
         InitializeComponent();
     }
-    
+
     private void TreeView_GotFocus(object? sender, GotFocusEventArgs e)
     {
-        if (sender is not TreeView treeView) return;
+        if (sender is not TreeView treeView)
+            return;
         if (treeView.SelectedItem == null && treeView.Items.Count > 0)
         {
             treeView.SelectedItem = treeView.Items[0];
@@ -32,8 +33,10 @@ public partial class VehicleFileBrowserView : ReactiveUserControl<VehicleFileBro
 
 public class EnterKeyBehavior : Behavior<TextBox>
 {
-    public static readonly StyledProperty<ICommand?> CommandProperty =
-        AvaloniaProperty.Register<EnterKeyBehavior, ICommand?>(nameof(Command));
+    public static readonly StyledProperty<ICommand?> CommandProperty = AvaloniaProperty.Register<
+        EnterKeyBehavior,
+        ICommand?
+    >(nameof(Command));
 
     public ICommand? Command
     {
@@ -44,18 +47,21 @@ public class EnterKeyBehavior : Behavior<TextBox>
     protected override void OnAttached()
     {
         base.OnAttached();
-        if (AssociatedObject != null) AssociatedObject.KeyDown += OnKeyDown;
+        if (AssociatedObject != null)
+            AssociatedObject.KeyDown += OnKeyDown;
     }
 
     protected override void OnDetaching()
     {
         base.OnDetaching();
-        if (AssociatedObject != null) AssociatedObject.KeyDown -= OnKeyDown;
+        if (AssociatedObject != null)
+            AssociatedObject.KeyDown -= OnKeyDown;
     }
 
     private void OnKeyDown(object? sender, KeyEventArgs e)
     {
-        if (e.Key != Key.Enter || Command?.CanExecute(null) != true) return;
+        if (e.Key != Key.Enter || Command?.CanExecute(null) != true)
+            return;
         Command.Execute(null);
         e.Handled = true;
     }

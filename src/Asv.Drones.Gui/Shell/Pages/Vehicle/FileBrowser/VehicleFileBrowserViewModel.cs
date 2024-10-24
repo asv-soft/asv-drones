@@ -12,7 +12,9 @@ using System.Threading.Tasks;
 using Asv.Common;
 using Asv.Drones.Gui.Api;
 using Asv.Mavlink;
-using Avalonia.Threading;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Media;
 using DynamicData;
 using DynamicData.Binding;
 using FluentAvalonia.UI.Controls;
@@ -38,6 +40,108 @@ public class VehicleFileBrowserViewModel : ShellPage
     public VehicleFileBrowserViewModel() : base(WellKnownUri.UndefinedUri)
     {
         DesignTime.ThrowIfNotDesignMode();
+        
+        // Инициализация коллекций для DesignTime
+        _localSource = new SourceCache<FileSystemItemViewModel, string>(x => x.Path)
+            .DisposeItWith(Disposable);
+        _remoteSource = new SourceCache<FileSystemItemViewModel, string>(x => x.Path)
+            .DisposeItWith(Disposable);
+
+        // Создание объектов вручную с явным присвоением свойств
+        var localFile1 = new FileSystemItemViewModel
+        {
+            Name = "LocalFile1.txt",
+            Path = @"C:\TestFolder\LocalFile1.txt",
+            IsDirectory = false,
+            IsFile = true,
+            Size = "1 MB"
+        };
+
+        var localFile2 = new FileSystemItemViewModel
+        {
+            Name = "LocalFile2.txt",
+            Path = @"C:\TestFolder\LocalFile2.txt",
+            IsDirectory = false,
+            IsFile = true,
+            Size = "2 MB",
+            Crc32Hex = "#039a9678"
+        };
+
+        var localFolder = new FileSystemItemViewModel
+        {
+            Name = "LocalFolder",
+            Path = @"C:\TestFolder\LocalFolder",
+            IsDirectory = true,
+            IsFile = false
+        };
+
+        var remoteFile1 = new FileSystemItemViewModel
+        {
+            Name = "RemoteFile1.txt",
+            Path = @"/RemoteFolder/RemoteFile1.txt",
+            IsDirectory = false,
+            IsFile = true,
+            Size = "1.5 MB",
+            Crc32Hex = "#02363ba4"
+        };
+
+        var remoteFile2 = new FileSystemItemViewModel
+        {
+            Name = "RemoteFile2.txt",
+            Path = @"/RemoteFolder/RemoteFile2.txt",
+            IsDirectory = false,
+            IsFile = true,
+            Size = "3 MB",
+            Crc32Hex = "#059b6379"
+        };
+
+        var remoteFolder = new FileSystemItemViewModel
+        {
+            Name = "RemoteFolder",
+            Path = @"/RemoteFolder",
+            IsDirectory = true,
+            IsFile = false
+        };
+
+        // Пример тестовых данных для локальных файлов
+        var localTestData = new List<FileSystemItemViewModel>
+        {
+            localFile1, localFile2, localFolder
+        };
+
+        // Пример тестовых данных для удалённых файлов
+        var remoteTestData = new List<FileSystemItemViewModel>
+        {
+            remoteFile1, remoteFile2, remoteFolder
+        };
+
+        // Добавление тестовых данных в SourceCache
+        _localSource.Edit(updater =>
+        {
+            updater.Clear();
+            updater.AddOrUpdate(localTestData);
+        });
+
+        _remoteSource.Edit(updater =>
+        {
+            updater.Clear();
+            updater.AddOrUpdate(remoteTestData);
+        });
+
+        // Подключение для отображения тестовых данных
+        _localSource.Connect()
+            .SortBy(x => !x.IsDirectory)
+            .Bind(out _filteredLocalItems)
+            .Subscribe();
+
+        _remoteSource.Connect()
+            .SortBy(x => !x.IsDirectory)
+            .Bind(out _filteredRemoteItems)
+            .Subscribe();
+
+        // Установка выделенного элемента для демонстрации
+        LocalSelectedItem = localTestData.First();
+        RemoteSelectedItem = remoteTestData.First();
     }
     
     [ImportingConstructor]
@@ -56,16 +160,10 @@ public class VehicleFileBrowserViewModel : ShellPage
         var localFilterPipe = new Subject<Func<FileSystemItemViewModel, bool>>()
             .DisposeItWith(Disposable);
         localFilterPipe.OnNext(_ => true);
+
         this.WhenValueChanged(x => x.LocalSearchText)
             .Throttle(TimeSpan.FromMilliseconds(500), RxApp.MainThreadScheduler)
-            .Subscribe(search =>
-            {
-                localFilterPipe.OnNext(item => MatchesSearch(item, search));
-                var match = FindFirstMatchingItem(_localSource.Items, search);
-                if (match == null) return;
-                ExpandParents(match);
-                LocalSelectedItem = match;
-            })
+            .Subscribe(OnNextLocal)
             .DisposeItWith(Disposable);
         _localSource.Connect()
             .Filter(localFilterPipe)
@@ -76,16 +174,10 @@ public class VehicleFileBrowserViewModel : ShellPage
         var remoteFilterPipe = new Subject<Func<FileSystemItemViewModel, bool>>()
             .DisposeItWith(Disposable);
         remoteFilterPipe.OnNext(_ => true);
+
         this.WhenValueChanged(x => x.RemoteSearchText)
             .Throttle(TimeSpan.FromMilliseconds(500), RxApp.MainThreadScheduler)
-            .Subscribe(search =>
-            {
-                remoteFilterPipe.OnNext(item => MatchesSearch(item, search));
-                var match = FindFirstMatchingItem(_remoteSource.Items, search);
-                if (match == null) return;
-                ExpandParents(match);
-                RemoteSelectedItem = match;
-            })
+            .Subscribe(OnNextRemote)
             .DisposeItWith(Disposable);
         _remoteSource.Connect()
             .Filter(remoteFilterPipe)
@@ -109,6 +201,27 @@ public class VehicleFileBrowserViewModel : ShellPage
                 if (selectedItem != null && RemoteSelectedItem != selectedItem) RemoteSelectedItem = selectedItem;
             })
             .DisposeItWith(Disposable);
+        return;
+
+        async void OnNextLocal(string? search)
+        {
+            localFilterPipe.OnNext(item => MatchesSearch(item, search));
+            var match = FindFirstMatchingItem(_localSource.Items, search);
+            if (match == null) return;
+            await ExpandParents(match);
+            await Task.Delay(200);
+            LocalSelectedItem = match;
+        }
+        
+        async void OnNextRemote(string? search)
+        {
+            remoteFilterPipe.OnNext(item => MatchesSearch(item, search));
+            var match = FindFirstMatchingItem(_remoteSource.Items, search);
+            if (match == null) return;
+            await ExpandParents(match);
+            await Task.Delay(200);
+            RemoteSelectedItem = match;
+        }
     }
     
     public ReactiveCommand<Unit, Unit> UploadCommand { get; set; }
@@ -122,6 +235,10 @@ public class VehicleFileBrowserViewModel : ShellPage
     public ReactiveCommand<Unit, Unit> SetInEditModeCommand { get; set; }
     public ReactiveCommand<Unit, Unit> ClearLocalSearchBoxCommand { get; set; }
     public ReactiveCommand<Unit, Unit> ClearRemoteSearchBoxCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> CompareSelectedItemsCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> FindFileOnLocalCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> CalculateLocalCrc32Command { get; set; }
+    public ReactiveCommand<Unit, Unit> CalculateRemoteCrc32Command { get; set; }
     
     private IObservable<bool> CanUpload => 
         this.WhenValueChanged(x => LocalSelectedItem)
@@ -132,6 +249,21 @@ public class VehicleFileBrowserViewModel : ShellPage
     private IObservable<bool> CanEdit => 
         this.WhenValueChanged(x => LocalSelectedItem)
             .Select(x => x is { IsInEditMode: false });
+    private IObservable<bool> CanFindFileOnLocal =>
+        this.WhenValueChanged(x => RemoteSelectedItem)
+            .Select(x => x is { IsInEditMode: false });
+    private IObservable<bool> CanCompareSelectedItems =>
+        this.WhenAnyValue(x => x.LocalSelectedItem, 
+                x => x.RemoteSelectedItem)
+            .Select(x => 
+                x is { Item1.IsInEditMode: false, Item1.IsFile: true, Item2.IsInEditMode: false, Item2.IsFile: true });
+    private IObservable<bool> CanCalculateRemoteCrc32 => 
+        this.WhenValueChanged(x => x.RemoteSelectedItem)
+            .Select(x => x is { IsInEditMode: false, IsFile: true  });
+    private IObservable<bool> CanCalculateLocalCrc32 => 
+        this.WhenValueChanged(x => x.LocalSelectedItem)
+            .Select(x => x is { IsInEditMode: false, IsFile: true });
+    
 
     public ReadOnlyObservableCollection<FileSystemItemViewModel> FilteredLocalItems => _filteredLocalItems;
     public ReadOnlyObservableCollection<FileSystemItemViewModel> FilteredRemoteItems => _filteredRemoteItems;
@@ -152,8 +284,12 @@ public class VehicleFileBrowserViewModel : ShellPage
         
         Title = $"{vehicle.Class}: {vehicle.Name.Value}";
         
+        Init(vehicle);
+    }
+
+    private void Init(IVehicleClient vehicle)
+    {
         var ftpClientEx = new FtpClientEx(vehicle.Ftp, TimeProvider.System);
-        
         UploadCommand = ReactiveCommand.CreateFromTask(_ => UploadImpl(ftpClientEx), CanUpload);
         DownloadCommand = ReactiveCommand.CreateFromTask(_ => DownloadImpl(ftpClientEx), CanDownload);
         CreateRemoteFolderCommand = ReactiveCommand.CreateFromTask(_ => CreateRemoteFolderImpl(ftpClientEx));
@@ -165,15 +301,16 @@ public class VehicleFileBrowserViewModel : ShellPage
         SetInEditModeCommand = ReactiveCommand.CreateFromTask(_ => SetInEditModeImpl(LocalSelectedItem!), CanEdit);
         ClearLocalSearchBoxCommand = ReactiveCommand.Create(ClearLocalSearchBoxImpl);
         ClearRemoteSearchBoxCommand = ReactiveCommand.Create(ClearRemoteSearchBoxImpl);
-            
-        Task.Run(async () =>
-        {
-            await RefreshRemoteImpl(ftpClientEx);
-        });
+        FindFileOnLocalCommand = ReactiveCommand.CreateFromTask(FindFileOnLocalImpl, CanFindFileOnLocal);
+        CompareSelectedItemsCommand = ReactiveCommand.CreateFromTask(_ => CompareSelectedItemsImpl(ftpClientEx), CanCompareSelectedItems);
+        CalculateLocalCrc32Command = ReactiveCommand.CreateFromTask(CalculateLocalCrc32Impl, CanCalculateLocalCrc32);
+        CalculateRemoteCrc32Command = ReactiveCommand.CreateFromTask(_ => CalculateRemoteCrc32Impl(ftpClientEx), CanCalculateRemoteCrc32);
+        
+        Task.Run(async () => { await RefreshRemoteImpl(ftpClientEx); });
         
         LoadLocalItems(_localRootPath);
         LoadRemoteItems(ftpClientEx);
-    }
+    } 
     
     private async Task UploadImpl(FtpClientEx ftpClientEx)
     {
@@ -183,7 +320,7 @@ public class VehicleFileBrowserViewModel : ShellPage
             PrimaryButtonText = RS.VehicleFileBrowserViewModel_UploadDialog_PrimaryButtonText
         };
 
-        using var viewModel = new UploadFileDialogViewModel(_log, ftpClientEx, RemoteSelectedItem!, LocalSelectedItem);
+        using var viewModel = new UploadFileDialogViewModel(_log, ftpClientEx, RemoteSelectedItem, LocalSelectedItem!);
         dialog.Content = viewModel;
         viewModel.ApplyDialog(dialog);
         await dialog.ShowAsync();
@@ -205,6 +342,57 @@ public class VehicleFileBrowserViewModel : ShellPage
         await dialog.ShowAsync();
         
         await RefreshLocalImpl();
+    }
+
+    private async Task CalculateLocalCrc32Impl()
+    {
+        var path = await File.ReadAllBytesAsync(LocalSelectedItem!.Path);
+        var crc32 = Crc32Mavlink.Accumulate(path);
+        var hexCrc32 = GetHexFromCrc32(crc32);
+        LocalSelectedItem.Crc32Hex = hexCrc32;
+        
+        LocalSelectedItem.Crc32Color = hexCrc32 == "00000000" 
+            ? FileSystemItemViewModel.BadCrcColor 
+            : FileSystemItemViewModel.DefaultColor;
+    }
+
+    private async Task CalculateRemoteCrc32Impl(FtpClientEx ftpClientEx)
+    {
+        var crc32 = await ftpClientEx.Base.CalcFileCrc32(RemoteSelectedItem!.Path);
+        var hexCrc32 = GetHexFromCrc32(crc32);
+        RemoteSelectedItem.Crc32Hex = hexCrc32;
+        
+        RemoteSelectedItem.Crc32Hex = hexCrc32;
+        
+        RemoteSelectedItem.Crc32Color = hexCrc32 == "00000000"
+            ? FileSystemItemViewModel.BadCrcColor 
+            : FileSystemItemViewModel.DefaultColor;
+    }
+
+    private async Task CompareSelectedItemsImpl(FtpClientEx ftpClientEx)
+    {
+        var localFileCrc32 = Crc32Mavlink.Accumulate(await File.ReadAllBytesAsync(LocalSelectedItem!.Path));
+        var remoteFileCrc32 = await ftpClientEx.Base.CalcFileCrc32(RemoteSelectedItem!.Path);
+
+        if (localFileCrc32 == remoteFileCrc32 && (localFileCrc32 == 0 || remoteFileCrc32 == 0))
+        {
+            LocalSelectedItem.Crc32Color = FileSystemItemViewModel.GoodCrcColor;
+            RemoteSelectedItem.Crc32Color = FileSystemItemViewModel.GoodCrcColor;
+        }
+        else
+        {
+            LocalSelectedItem.Crc32Color = FileSystemItemViewModel.BadCrcColor;
+            RemoteSelectedItem.Crc32Color = FileSystemItemViewModel.BadCrcColor;
+        }
+    }
+
+    private async Task FindFileOnLocalImpl()
+    {
+        var file = FindFirstMatchingItem(_localSource.Items, RemoteSelectedItem!.Name);
+        if (file == null) return;
+        await ExpandParents(file);
+        await Task.Delay(200);
+        LocalSelectedItem = file;
     }
 
     private void ClearLocalSearchBoxImpl() => LocalSearchText = string.Empty;
@@ -271,9 +459,43 @@ public class VehicleFileBrowserViewModel : ShellPage
 
     private async Task CreateRemoteFolderImpl(FtpClientEx ftpClientEx)
     {
-        var dir = "/Folder1/sub1";
-        await ftpClientEx.Base.CreateDirectory(dir);
+        CreateFolder(1);
         await RefreshRemoteImpl(ftpClientEx);
+        return;
+
+        async void CreateFolder(int n)
+        {
+            ftpClientEx.Entries
+                .TransformToTree(e => e.ParentPath)
+                .Transform(x => new FileSystemItemViewModel(x))
+                .DisposeMany()
+                .Bind(out var tree)
+                .Subscribe();
+            while (true)
+            {
+                var name = $"Folder{n}";
+                if (RemoteSelectedItem != null)
+                {
+                    var path = RemoteSelectedItem.IsDirectory
+                        ? Path.Combine(RemoteSelectedItem.Path, name)
+                        : Path.Combine(RemoteSelectedItem.Path[..RemoteSelectedItem.Path.LastIndexOf('/')], name);
+                    
+                    await ftpClientEx.Base.CreateDirectory(path);
+                }
+                else
+                {
+                    var path = Path.Combine("/", name);
+                    if (tree.FirstOrDefault(x => x.Path == path) != null)
+                    {
+                        n += 1;
+                        continue;
+                    }
+
+                    await ftpClientEx.Base.CreateDirectory(path);
+                }
+                break;
+            }
+        }
     }
 
     private Task CreateLocalFolderImpl()
@@ -316,7 +538,6 @@ public class VehicleFileBrowserViewModel : ShellPage
         else
             await ftpClientEx.Refresh(RemoteSelectedItem.Path);
 
-        await ftpClientEx.Refresh("@SYS");
         LoadRemoteItems(ftpClientEx);
     }
 
@@ -325,6 +546,8 @@ public class VehicleFileBrowserViewModel : ShellPage
         LoadLocalItems(_localRootPath);
         return Task.CompletedTask;
     }
+
+    private static string GetHexFromCrc32(uint crc32) => crc32.ToString("X8");
 
     public static Uri GenerateUri(string baseUri, ushort deviceFullId, DeviceClass @class) =>
         new($"{baseUri}?id={deviceFullId}&class={@class:G}");
@@ -364,7 +587,7 @@ public class VehicleFileBrowserViewModel : ShellPage
         });
     }
 
-    private static void ExpandParents(FileSystemItemViewModel item)
+    private static Task ExpandParents(FileSystemItemViewModel item)
     {
         var parent = item.Parent;
         while (parent != null)
@@ -372,6 +595,7 @@ public class VehicleFileBrowserViewModel : ShellPage
             parent.IsExpanded = true;
             parent = parent.Parent;
         }
+        return Task.CompletedTask;
     }
     
     private static bool MatchesSearch(FileSystemItemViewModel item, string? search)
@@ -423,6 +647,11 @@ public class FileSystemItemViewModel : DisposableReactiveObject
 {
     private readonly ReadOnlyObservableCollection<FileSystemItemViewModel> _children;
     
+    public FileSystemItemViewModel()
+    {
+        DesignTime.ThrowIfNotDesignMode();
+    }
+    
     public FileSystemItemViewModel(string entry, bool isDirectory,
         FileSystemItemViewModel? parent = null)
     {
@@ -466,8 +695,7 @@ public class FileSystemItemViewModel : DisposableReactiveObject
         
         Init();
     }
-
-
+    
     private void Init()
     {
         this.WhenValueChanged(x => x.IsSelected)
@@ -480,6 +708,8 @@ public class FileSystemItemViewModel : DisposableReactiveObject
             .Where(expanded => expanded)
             .Subscribe(_ => OnExpanded());
         EndEditCommand = ReactiveCommand.CreateFromTask(EndEditImpl);
+
+        Crc32Color = DefaultColor;
     }
     
     private void OnExpanded()
@@ -520,4 +750,12 @@ public class FileSystemItemViewModel : DisposableReactiveObject
     [Reactive] public bool IsSelected { get; set; } 
     [Reactive] public bool IsInEditMode { get; set; }
     [Reactive] public string EditedName { get; set; }
+    [Reactive] public string? Crc32Hex { get; set; }
+    [Reactive] public SolidColorBrush Crc32Color { get; set; }
+    
+    public static SolidColorBrush DefaultColor => 
+        Application.Current?.FindResource("TextControlBackgroundPointerOver") as SolidColorBrush 
+        ?? SolidColorBrush.Parse("#7E8C7E");
+    public static SolidColorBrush BadCrcColor => SolidColorBrush.Parse("#8B0000");
+    public static SolidColorBrush GoodCrcColor => SolidColorBrush.Parse("#006400");
 }

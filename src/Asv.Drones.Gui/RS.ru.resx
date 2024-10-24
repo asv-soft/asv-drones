@@ -1403,4 +1403,7 @@
   <data name="VehicleFileBrowserViewModel_UploadDialog_PrimaryButtonText" xml:space="preserve">
     <value>Отменить</value>
   </data>
+  <data name="VehicleFileBrowserView_CRC32_Button_Tooltip" xml:space="preserve">
+    <value>Вычислить CRC32</value>
+  </data>
 </root>

@@ -3867,6 +3867,15 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Calculate CRC32.
+        /// </summary>
+        public static string VehicleFileBrowserView_CRC32_Button_Tooltip {
+            get {
+                return ResourceManager.GetString("VehicleFileBrowserView_CRC32_Button_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string VehicleFileBrowserView_Delete_Button_Tooltip {

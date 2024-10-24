@@ -69,6 +69,10 @@
                                     ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_Rename_Button_Tooltip}">
                                 <avalonia:MaterialIcon Kind="Pencil" Foreground="{StaticResource SystemAccentColorLight2}" />
                             </Button>
+                            <Button Command="{Binding CalculateLocalCrc32Command}"
+                                    ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_CRC32_Button_Tooltip}">
+                                <avalonia:MaterialIcon Kind="KeyOutline" Foreground="{StaticResource SystemAccentColorLight2}"/>
+                            </Button>
                             <Button Command="{Binding RemoveLocalItemCommand}"
                                     ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_Delete_Button_Tooltip}">
                                 <avalonia:MaterialIcon Kind="Trash" Foreground="{StaticResource DeleteBrush}" />
@@ -105,7 +109,7 @@
                                   ItemsSource="{Binding FilteredLocalItems}" >
                             <TreeView.ItemTemplate>
                                 <TreeDataTemplate ItemsSource="{Binding Children}">
-                                    <Grid ColumnDefinitions="Auto, Auto, *">
+                                    <Grid ColumnDefinitions="Auto, *, Auto">
                                         <avalonia:MaterialIcon Grid.Column="0"
                                             Margin="0,0,8,0"
                                             Classes.folder="{Binding IsDirectory}"
@@ -137,11 +141,17 @@
                                                 <avalonia:MaterialIcon Kind="ContentSave" Foreground="{StaticResource SystemAccentColorLight2}" />
                                             </Button>
                                         </Grid>
-                                        <TextBlock Grid.Column="2" 
-                                                   Padding="8"
-                                                   HorizontalAlignment="Right"
-                                                   IsVisible="{Binding !IsDirectory}" 
-                                                   Text="{Binding Size}"/>
+                                        <UniformGrid Grid.Column="2" Columns="2" HorizontalAlignment="Right" Margin="0 0 8 0">
+                                            <TextBlock VerticalAlignment="Center"
+                                                       Text="{Binding Crc32Hex}"
+                                                       Foreground="{Binding Crc32Color}"
+                                                       HorizontalAlignment="Right" 
+                                                       Padding="0 0 8 0"/>
+                                            <TextBlock VerticalAlignment="Center"
+                                                       Text="{Binding Size}"
+                                                       IsVisible="{Binding !IsDirectory}"
+                                                       HorizontalAlignment="Right"/>
+                                        </UniformGrid>
                                     </Grid>
                                 </TreeDataTemplate>
                             </TreeView.ItemTemplate>
@@ -185,11 +195,17 @@
                                     ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_NewFolder_Button_Tooltip}">
                                 <avalonia:MaterialIcon Kind="FolderPlusOutline" Foreground="{StaticResource FolderBrush}" />
                             </Button>
-                            <Button ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_CompareSelectedItems_Button_Tooltip}">
+                            <Button Command="{Binding CompareSelectedItemsCommand}"
+                                    ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_CompareSelectedItems_Button_Tooltip}">
                                 <avalonia:MaterialIcon Kind="SwapHorizontalCircleOutline" Foreground="{StaticResource SystemAccentColorLight2}"/>
                             </Button>
-                            <Button ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_FindFile_Button_Tooltip}">
+                            <Button Command="{Binding FindFileOnLocalCommand}"
+                                    ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_FindFile_Button_Tooltip}">
                                 <avalonia:MaterialIcon Kind="FileFindOutline" Foreground="{StaticResource SystemAccentColorLight2}"/>
+                            </Button>
+                            <Button Command="{Binding CalculateRemoteCrc32Command}"
+                                    ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_CRC32_Button_Tooltip}">
+                                <avalonia:MaterialIcon Kind="KeyOutline" Foreground="{StaticResource SystemAccentColorLight2}"/>
                             </Button>
                             <Button Command="{Binding RemoveRemoteItemCommand}"
                                     ToolTip.Tip="{x:Static gui:RS.VehicleFileBrowserView_Delete_Button_Tooltip}">
@@ -202,7 +218,9 @@
                                      Watermark="{x:Static gui:RS.VehicleFileBrowserView_Search_Watermark}" 
                                      Margin="0 0 8 0">
                                 <TextBox.InnerRightContent>
-                                    <Button Command="{Binding ClearRemoteSearchBoxCommand}">
+                                    <Button Command="{Binding ClearRemoteSearchBoxCommand}"
+                                            Background="Transparent"
+                                            BorderBrush="Transparent">
                                         <avalonia:MaterialIcon Kind="Close"
                                                                Foreground="{StaticResource DeleteBrush}"/>
                                     </Button>
@@ -227,23 +245,30 @@
                                   ItemsSource="{Binding FilteredRemoteItems}">
                             <TreeView.ItemTemplate>
                                 <TreeDataTemplate ItemsSource="{Binding Children}">
-                                    <Grid ColumnDefinitions="Auto, 8*, *">
+                                    <Grid ColumnDefinitions="Auto, *, Auto">
                                         <avalonia:MaterialIcon Grid.Column="0"
-                                            Margin="0,0,8,0"
-                                            Classes.folder="{Binding IsDirectory}"
-                                            Classes.file="{Binding IsFile}"
-                                            Classes.expanded="{Binding IsExpanded}"
-                                            Classes.selected="{Binding IsSelected}"
-                                            Width="{StaticResource IconSize}" 
-                                            Height="{StaticResource IconSize}" />
+                                                               Margin="0,0,8,0"
+                                                               Classes.folder="{Binding IsDirectory}"
+                                                               Classes.file="{Binding IsFile}"
+                                                               Classes.expanded="{Binding IsExpanded}"
+                                                               Classes.selected="{Binding IsSelected}"
+                                                               Width="{StaticResource IconSize}" 
+                                                               Height="{StaticResource IconSize}" />
                                         <TextBlock Grid.Column="1"
                                                    VerticalAlignment="Center"
-                                                   Text="{Binding Name}" />
-                                        <TextBlock Grid.Column="2" 
-                                                   Padding="8"
-                                                   HorizontalAlignment="Right"
-                                                   IsVisible="{Binding !IsDirectory}" 
-                                                   Text="{Binding Size}"/>
+                                                   Text="{Binding Name}"
+                                                   Margin="0,0,8,0" />
+                                        <UniformGrid Grid.Column="2" Columns="2" HorizontalAlignment="Right" Margin="0 0 8 0">
+                                            <TextBlock VerticalAlignment="Center"
+                                                       Text="{Binding Crc32Hex}"
+                                                       Foreground="{Binding Crc32Color}"
+                                                       HorizontalAlignment="Right" 
+                                                       Padding="0 0 8 0"/>
+                                            <TextBlock VerticalAlignment="Center"
+                                                       Text="{Binding Size}"
+                                                       IsVisible="{Binding !IsDirectory}"
+                                                       HorizontalAlignment="Right"/>
+                                        </UniformGrid>
                                     </Grid>
                                 </TreeDataTemplate>
                             </TreeView.ItemTemplate>

@@ -16,17 +16,17 @@ public class UploadFileDialogViewModel : ViewModelBase
     private readonly FileSystemItemViewModel _local;
     private readonly CancellationTokenSource _cts = new();
     private readonly string _newFileRemotePath;
-    
-    public UploadFileDialogViewModel() : base(WellKnownUri.UndefinedUri)
-    {
-    }
+
+    public UploadFileDialogViewModel()
+        : base(WellKnownUri.UndefinedUri) { }
 
     [ImportingConstructor]
     public UploadFileDialogViewModel(
         ILogService log,
-        FtpClientEx ftpClientEx, 
+        FtpClientEx ftpClientEx,
         FileSystemItemViewModel? remote,
-        FileSystemItemViewModel local) 
+        FileSystemItemViewModel local
+    )
         : base($"{WellKnownUri.ShellPageVehicleFileBrowser}.upload-file")
     {
         _log = log;
@@ -43,12 +43,15 @@ public class UploadFileDialogViewModel : ViewModelBase
         }
         else if (remote.IsFile)
         {
-            _newFileRemotePath = Path.Combine(remote.Path[..remote.Path.LastIndexOf('\\')], local.Name);
+            _newFileRemotePath = Path.Combine(
+                remote.Path[..remote.Path.LastIndexOf('\\')],
+                local.Name
+            );
         }
     }
-    
+
     [Reactive] public double UploadProgress { get; set; }
-    
+
     public void ApplyDialog(ContentDialog dialog)
     {
         dialog.Opened += OnDialogOpened;
@@ -64,16 +67,27 @@ public class UploadFileDialogViewModel : ViewModelBase
     {
         var progress = new Progress<double>();
 
-        progress.ProgressChanged += (_, value) => { UploadProgress = value; };
+        progress.ProgressChanged += (_, value) =>
+        {
+            UploadProgress = value;
+        };
 
         try
         {
-            var stream = new FileStream(_local.Path, FileMode.Open, FileAccess.Read, FileShare.Read);
+            var stream = new FileStream(
+                _local.Path,
+                FileMode.Open,
+                FileAccess.Read,
+                FileShare.Read
+            );
             await _ftpClientEx.UploadFile(_newFileRemotePath, stream, progress, _cts.Token);
         }
         catch (OperationCanceledException)
         {
-            _log.Warning(nameof(VehicleFileBrowserViewModel), $"File uploading was canceled: {_local.Name}");
+            _log.Warning(
+                nameof(VehicleFileBrowserViewModel),
+                $"File uploading was canceled: {_local.Name}"
+            );
         }
         finally
         {

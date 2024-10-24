@@ -9,7 +9,8 @@ namespace Asv.Drones.Gui;
 [Export(nameof(DeviceClass.Copter), typeof(IShellMenuItem<IClientDevice>))]
 public class VehicleFileBrowserMenuItem : ShellMenuItem, IShellMenuItem<IClientDevice>
 {
-    public VehicleFileBrowserMenuItem() : base(WellKnownUri.ShellMenuVehicleFileBrowser)
+    public VehicleFileBrowserMenuItem()
+        : base(WellKnownUri.ShellMenuVehicleFileBrowser)
     {
         Icon = MaterialIconDataProvider.GetData(MaterialIconKind.FolderEyeOutline);
         Position = ShellMenuPosition.Top;
@@ -20,7 +21,11 @@ public class VehicleFileBrowserMenuItem : ShellMenuItem, IShellMenuItem<IClientD
 
     public IShellMenuItem Init(IClientDevice target)
     {
-        NavigateTo = VehicleFileBrowserViewModel.GenerateUri(WellKnownUri.ShellPageVehicleFileBrowser, target.FullId, target.Class);
+        NavigateTo = VehicleFileBrowserViewModel.GenerateUri(
+            WellKnownUri.ShellPageVehicleFileBrowser,
+            target.FullId,
+            target.Class
+        );
         return this;
     }
 }
