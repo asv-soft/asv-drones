@@ -1,0 +1,44 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-alpha'
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    outputs:
+      release_tag: ${{ github.ref }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref }}
+          name: "Release ${{ github.ref_name }}"
+          draft: false
+          prerelease: ${{ contains(github.ref, 'alpha') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}
+         
+      - name: Trigger MacOS Workflow
+        run: |
+          curl -X POST \
+          -H "Authorization: token ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+           https://api.github.com/repos/asv-soft/asv-drones/actions/workflows/build-macOS-arm64.yml/dispatches \
+          -d '{"ref":"${{ github.ref }}", "inputs": {"release_id": "${{ steps.create_release.outputs.id }}", "upload_url": "${{ steps.create_release.outputs.upload_url }}", "tag": "${{ github.ref_name }}"}}'
+
+      - name: Trigger Windows Workflow
+        run: |
+          curl -X POST \
+          -H "Authorization: token ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+           https://api.github.com/repos/asv-soft/asv-drones/actions/workflows/BuildForWindows.yml/dispatches \
+          -d '{"ref":"${{ github.ref }}", "inputs": {"release_id": "${{ steps.create_release.outputs.id }}", "upload_url": "${{ steps.create_release.outputs.upload_url }}", "tag": "${{ github.ref_name }}"}}'
+          
