@@ -333,7 +333,9 @@ public class VehicleFileBrowserViewModel : ShellPage
         var dialog = new ContentDialog
         {
             Title = RS.VehicleFileBrowserViewModel_DownloadDialog_Title,
-            PrimaryButtonText = RS.VehicleFileBrowserViewModel_DownloadDialog_PrimaryButtonText
+            PrimaryButtonText = RS.VehicleFileBrowserViewModel_DownloadDialog_SecondaryButtonText,
+            IsSecondaryButtonEnabled = true,
+            SecondaryButtonText = RS.VehicleFileBrowserViewModel_DownloadDialog_PrimaryButtonText
         };
 
         using var viewModel = new DownloadFileDialogViewModel(_log, ftpClientEx, _localRootPath, RemoteSelectedItem!, LocalSelectedItem);

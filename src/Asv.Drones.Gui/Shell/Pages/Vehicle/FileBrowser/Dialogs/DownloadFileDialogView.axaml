@@ -20,5 +20,31 @@
                        DockPanel.Dock="Right" Margin="8 0 0 0" />
             <ProgressBar Foreground="#40b5e0" Value="{CompiledBinding DownloadProgress}" Maximum="1" />
         </DockPanel>  
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Spacing="8" Margin="8">
+            <RadioButton Content="{x:Static gui:RS.DownloadFileDialogView_Download_RadioButton_Content}"
+                         IsChecked="{CompiledBinding IsDownloadSelected}" 
+                         GroupName="DownloadMode"/>
+            <StackPanel Spacing="8" Orientation="Horizontal">
+                <RadioButton Content="{x:Static gui:RS.DownloadFileDialogView_BurstDownload_RadioButton_Content}"
+                             IsChecked="{CompiledBinding IsBurstDownloadSelected}" 
+                             GroupName="DownloadMode"/>
+                <TextBox Text="{Binding BurstDownloadSize}" 
+                         IsEnabled="{Binding IsSizeEnteringEnabled}"
+                         VerticalContentAlignment="Center"
+                         MinWidth="90"
+                         MaxWidth="100">
+                    <TextBox.InnerRightContent>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderBrush="{StaticResource ButtonBackgroundDisabled}"
+                                    BorderThickness="1"
+                                    Margin="0 4"/>
+                            <TextBlock Text="Bytes"
+                                       VerticalAlignment="Center" 
+                                       Padding="8"/>
+                        </StackPanel>
+                    </TextBox.InnerRightContent>
+                </TextBox>
+            </StackPanel>
+        </StackPanel>
     </StackPanel>
 </UserControl>

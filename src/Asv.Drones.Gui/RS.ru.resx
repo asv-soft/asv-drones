@@ -1406,4 +1406,16 @@
   <data name="VehicleFileBrowserView_CRC32_Button_Tooltip" xml:space="preserve">
     <value>Вычислить CRC32</value>
   </data>
+  <data name="DownloadFileDialogView_Download_RadioButton_Content" xml:space="preserve">
+    <value>Загрузка</value>
+  </data>
+  <data name="DownloadFileDialogView_BurstDownload_RadioButton_Content" xml:space="preserve">
+    <value>Загрузка пакетами</value>
+  </data>
+  <data name="DownloadFileDialogViewModel_BurstDownloadSize_ValidationError" xml:space="preserve">
+    <value>Неверное значение</value>
+  </data>
+  <data name="VehicleFileBrowserViewModel_DownloadDialog_SecondaryButtonText" xml:space="preserve">
+    <value>Скачать</value>
+  </data>
 </root>

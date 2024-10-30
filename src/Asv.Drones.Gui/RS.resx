@@ -1392,4 +1392,16 @@
   <data name="VehicleFileBrowserView_CRC32_Button_Tooltip" xml:space="preserve">
     <value>Calculate CRC32</value>
   </data>
+  <data name="DownloadFileDialogView_Download_RadioButton_Content" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="DownloadFileDialogView_BurstDownload_RadioButton_Content" xml:space="preserve">
+    <value>Burst download</value>
+  </data>
+  <data name="DownloadFileDialogViewModel_BurstDownloadSize_ValidationError" xml:space="preserve">
+    <value>Wrong value</value>
+  </data>
+  <data name="VehicleFileBrowserViewModel_DownloadDialog_SecondaryButtonText" xml:space="preserve">
+    <value>Download</value>
+  </data>
 </root>

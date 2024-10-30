@@ -861,11 +861,38 @@ namespace Asv.Drones.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Burst download.
+        /// </summary>
+        public static string DownloadFileDialogView_BurstDownload_RadioButton_Content {
+            get {
+                return ResourceManager.GetString("DownloadFileDialogView_BurstDownload_RadioButton_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        public static string DownloadFileDialogView_Download_RadioButton_Content {
+            get {
+                return ResourceManager.GetString("DownloadFileDialogView_Download_RadioButton_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File download progress.
         /// </summary>
         public static string DownloadFileDialogView_FileLoadProgress_Text {
             get {
                 return ResourceManager.GetString("DownloadFileDialogView_FileLoadProgress_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wrong value.
+        /// </summary>
+        public static string DownloadFileDialogViewModel_BurstDownloadSize_ValidationError {
+            get {
+                return ResourceManager.GetString("DownloadFileDialogViewModel_BurstDownloadSize_ValidationError", resourceCulture);
             }
         }
         
@@ -3953,6 +3980,15 @@ namespace Asv.Drones.Gui {
         public static string VehicleFileBrowserViewModel_DownloadDialog_PrimaryButtonText {
             get {
                 return ResourceManager.GetString("VehicleFileBrowserViewModel_DownloadDialog_PrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        public static string VehicleFileBrowserViewModel_DownloadDialog_SecondaryButtonText {
+            get {
+                return ResourceManager.GetString("VehicleFileBrowserViewModel_DownloadDialog_SecondaryButtonText", resourceCulture);
             }
         }
         
