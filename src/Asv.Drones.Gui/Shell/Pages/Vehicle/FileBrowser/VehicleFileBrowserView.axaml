@@ -84,7 +84,9 @@
                                      Watermark="{x:Static gui:RS.VehicleFileBrowserView_Search_Watermark}" 
                                      Margin="0 0 8 0">
                                 <TextBox.InnerRightContent>
-                                    <Button Command="{Binding ClearLocalSearchBoxCommand}">
+                                    <Button Command="{Binding ClearLocalSearchBoxCommand}"
+                                            Background="Transparent"
+                                            BorderBrush="Transparent">
                                         <avalonia:MaterialIcon Kind="Close"
                                                                Foreground="{StaticResource DeleteBrush}"/>
                                     </Button>
