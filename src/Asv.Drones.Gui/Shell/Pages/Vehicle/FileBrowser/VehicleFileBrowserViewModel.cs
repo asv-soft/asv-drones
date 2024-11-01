@@ -349,8 +349,8 @@ public class VehicleFileBrowserViewModel : ShellPage
     private async Task CalculateLocalCrc32Impl()
     {
         var path = await File.ReadAllBytesAsync(LocalSelectedItem!.Path);
-        var crc32 = Crc32Mavlink.Accumulate(path);
-        var hexCrc32 = GetHexFromCrc32(crc32);
+        var crc32 =  Crc32Mavlink.Accumulate(path);
+        var hexCrc32 = Crc32ToHex(crc32);
         LocalSelectedItem.Crc32Hex = hexCrc32;
         
         LocalSelectedItem.Crc32Color = hexCrc32 == "00000000" 
@@ -361,7 +361,7 @@ public class VehicleFileBrowserViewModel : ShellPage
     private async Task CalculateRemoteCrc32Impl(FtpClientEx ftpClientEx)
     {
         var crc32 = await ftpClientEx.Base.CalcFileCrc32(RemoteSelectedItem!.Path);
-        var hexCrc32 = GetHexFromCrc32(crc32);
+        var hexCrc32 = Crc32ToHex(crc32);
         RemoteSelectedItem.Crc32Hex = hexCrc32;
         
         RemoteSelectedItem.Crc32Hex = hexCrc32;
@@ -375,8 +375,11 @@ public class VehicleFileBrowserViewModel : ShellPage
     {
         var localFileCrc32 = Crc32Mavlink.Accumulate(await File.ReadAllBytesAsync(LocalSelectedItem!.Path));
         var remoteFileCrc32 = await ftpClientEx.Base.CalcFileCrc32(RemoteSelectedItem!.Path);
-
-        if (localFileCrc32 == remoteFileCrc32 && (localFileCrc32 == 0 || remoteFileCrc32 == 0))
+        
+        LocalSelectedItem.Crc32Hex = Crc32ToHex(localFileCrc32);
+        RemoteSelectedItem.Crc32Hex = Crc32ToHex(remoteFileCrc32);
+        
+        if (localFileCrc32 == remoteFileCrc32 && (localFileCrc32 != 0 || remoteFileCrc32 != 0))
         {
             LocalSelectedItem.Crc32Color = FileSystemItemViewModel.GoodCrcColor;
             RemoteSelectedItem.Crc32Color = FileSystemItemViewModel.GoodCrcColor;
@@ -549,7 +552,7 @@ public class VehicleFileBrowserViewModel : ShellPage
         return Task.CompletedTask;
     }
 
-    private static string GetHexFromCrc32(uint crc32) => crc32.ToString("X8");
+    private static string Crc32ToHex(uint crc32) => crc32.ToString("X8");
 
     public static Uri GenerateUri(string baseUri, ushort deviceFullId, DeviceClass @class) =>
         new($"{baseUri}?id={deviceFullId}&class={@class:G}");
@@ -758,6 +761,10 @@ public class FileSystemItemViewModel : DisposableReactiveObject
     public static SolidColorBrush DefaultColor => 
         Application.Current?.FindResource("TextControlBackgroundPointerOver") as SolidColorBrush 
         ?? SolidColorBrush.Parse("#7E8C7E");
-    public static SolidColorBrush BadCrcColor => SolidColorBrush.Parse("#8B0000");
-    public static SolidColorBrush GoodCrcColor => SolidColorBrush.Parse("#006400");
+    public static SolidColorBrush BadCrcColor => 
+        Application.Current?.FindResource("SystemAccentColorDark3") as SolidColorBrush 
+        ?? SolidColorBrush.Parse("#8B0000");
+    public static SolidColorBrush GoodCrcColor => 
+        Application.Current?.FindResource("SystemAccentColorLight1") as SolidColorBrush 
+        ?? SolidColorBrush.Parse("#006400");
 }
