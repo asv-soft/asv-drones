@@ -48,14 +48,15 @@ public class PluginAssemblyLoadContext : AssemblyLoadContext
         }
         catch (Exception e)
         {
-            Logger.ZLogWarning(e, $"Assembly {assemblyName.Name} not found at main context");
+            // if we here, it's mean that assembly not found at main context => try load from plugin folder
+            /*Logger.ZLogWarning(e, $"Assembly {assemblyName.Name} not found at main context");*/
         }
 
         // if we here, it's mean that assembly not found at main context => try to load from plugin folder
         foreach (var file in Directory.GetFiles(_pluginFolder, assemblyName.Name + ".dll", SearchOption.AllDirectories))
         {
             var fullPath = Path.GetFullPath(file);
-            Logger.ZLogInformation($"Load assembly {assemblyName} from plugin folder {fullPath}");
+            Logger.ZLogInformation($"Load assembly '{assemblyName.Name}' from plugin folder {fullPath}");
             return LoadFromAssemblyPath(fullPath);
         }
 
