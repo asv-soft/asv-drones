@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\asv-avalonia\src\Asv.Avalonia.Map\Asv.Avalonia.Map.csproj" />
+      <ProjectReference Include="..\..\..\asv-avalonia\src\Asv.Avalonia\Asv.Avalonia.csproj" />
+      <ProjectReference Include="..\..\..\asv-common\src\Asv.IO\Asv.IO.csproj" />
+      <ProjectReference Include="..\..\..\asv-mavlink\src\Asv.Mavlink\Asv.Mavlink.csproj" />
+    </ItemGroup>
+
+</Project>

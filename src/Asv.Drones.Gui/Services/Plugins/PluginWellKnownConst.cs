@@ -1,2 +1,0 @@
-namespace Asv.Drones.Gui;
-
