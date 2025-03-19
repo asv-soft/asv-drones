@@ -1,6 +1,8 @@
 ﻿using System;
 using Asv.Avalonia;
 using Asv.Avalonia.Map;
+using Asv.Avalonia.Plugins;
+using Asv.Drones.Api;
 using Avalonia;
 using Avalonia.Controls;
 using Microsoft.Extensions.Hosting;
@@ -32,8 +34,8 @@ sealed class Program
             .UseAsvMap()
             .UsePluginManager(options =>
             {
-                options.WithApiPackage("Asv.Drones.Gui.Api", "1.0.1");
-                options.WithPluginPrefix("Asv.Drones.Gui.Plugin.");
+                options.WithApiPackage(typeof(IFlightMode).Assembly);
+                options.WithPluginPrefix("Asv.Drones.Plugin.");
             });
         using var host = builder.Build();
         

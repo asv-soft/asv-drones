@@ -5,9 +5,16 @@
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Title>Asv.Drones.Api</Title>
+        <Copyright>Asv Soft</Copyright>
+        <PackageProjectUrl>https://github.com/asv-soft/asv-drones</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/asv-soft/asv-drones/blob/main/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/asv-soft/asv-drones</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\asv-avalonia\src\Asv.Avalonia.IO\Asv.Avalonia.IO.csproj" />
       <ProjectReference Include="..\..\..\asv-avalonia\src\Asv.Avalonia.Map\Asv.Avalonia.Map.csproj" />
       <ProjectReference Include="..\..\..\asv-avalonia\src\Asv.Avalonia\Asv.Avalonia.csproj" />
       <ProjectReference Include="..\..\..\asv-common\src\Asv.IO\Asv.IO.csproj" />

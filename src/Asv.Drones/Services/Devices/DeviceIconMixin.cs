@@ -1,43 +1,21 @@
 using Asv.Avalonia.Map;
 using Asv.IO;
 using Asv.Mavlink;
-using Avalonia.Media;
-using Avalonia.Media.Immutable;
 using Material.Icons;
 
-namespace Asv.Drones.Api;
+namespace Asv.Drones;
 
 public static class DeviceIconMixin
 {
-    public static readonly ImmutableSolidColorBrush[] DeviceColors =
-    [
-        new(Color.Parse("#AA00FF")),
-        new(Color.Parse("#6200EA")),
-        new(Color.Parse("#304FFE")),
-        new(Color.Parse("#2962FF")),
-        new(Color.Parse("#0091EA")),
-        new(Color.Parse("#00B8D4")),
-        new(Color.Parse("#00BFA5"))
-    ];
-
-    public static MaterialIconKind GetIcon(DeviceId deviceId)
+    public static MaterialIconKind? GetIcon(DeviceId deviceId)
     {
-        switch (deviceId.DeviceClass)
+        return deviceId.DeviceClass switch
         {
-            case Vehicles.PlaneDeviceClass:
-                return MaterialIconKind.Plane;
-            case Vehicles.CopterDeviceClass:
-                return MaterialIconKind.Navigation;
-            case GbsClientDevice.DeviceClass:
-                return MaterialIconKind.RouterWireless;
-            default:
-                return MaterialIconKind.Memory;
-        }
-    }
-
-    public static IBrush GetIconBrush(DeviceId deviceId)
-    {
-        return DeviceColors[Math.Abs(deviceId.GetHashCode()) % DeviceColors.Length];
+            Vehicles.PlaneDeviceClass => MaterialIconKind.Plane,
+            Vehicles.CopterDeviceClass => MaterialIconKind.Navigation,
+            GbsClientDevice.DeviceClass => MaterialIconKind.RouterWireless,
+            _ => null
+        };
     }
 
     public static HorizontalOffset GetIconCenterX(DeviceId deviceId)

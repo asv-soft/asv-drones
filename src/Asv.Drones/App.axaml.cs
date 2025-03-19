@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Composition.Convention;
 using System.Composition.Hosting;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reflection;
 using Asv.Avalonia;
+using Asv.Avalonia.IO;
+using Asv.Avalonia.Map;
+using Asv.Avalonia.Plugins;
 using Asv.Cfg;
+using Asv.Common;
+using Asv.Drones.Api;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -40,6 +46,8 @@ public partial class App : Application, IContainerHost, IShellHost
                 .WithExport(NullAppInfo.Instance)
                 .WithExport<IDataTemplateHost>(this)
                 .WithExport<IShellHost>(this)
+                .WithExport<IMeterFactory>(new DefaultMeterFactory())
+                .WithExport(TimeProvider.System)
                 .WithDefaultConventions(conventions);
         }
         else
@@ -51,10 +59,12 @@ public partial class App : Application, IContainerHost, IShellHost
                 .WithExport(AppHost.Instance.GetService<ILoggerFactory>())
                 .WithExport(AppHost.Instance.GetService<IAppPath>())
                 .WithExport(AppHost.Instance.GetService<IAppInfo>())
+                .WithExport(AppHost.Instance.GetService<IMeterFactory>())
                 .WithExport(pluginManager)
                 .WithAssemblies(pluginManager.PluginsAssemblies)
                 .WithExport<IDataTemplateHost>(this)
                 .WithExport<IShellHost>(this)
+                .WithExport(TimeProvider.System)
                 .WithDefaultConventions(conventions);
         }
 
@@ -69,8 +79,11 @@ public partial class App : Application, IContainerHost, IShellHost
     {
         get
         {
-            yield return GetType().Assembly;
-            yield return typeof(AppHost).Assembly;
+            yield return GetType().Assembly;                // Asv.Drones
+            yield return typeof(IFlightMode).Assembly;      // Asv.Drones.Api
+            yield return typeof(AppHost).Assembly;          // Asv.Avalonia
+            yield return typeof(DeviceManager).Assembly;    // Asv.Avalonia.IO
+            yield return typeof(ITileCache).Assembly;       // Asv.Avalonia.Map
         }
     }
     
