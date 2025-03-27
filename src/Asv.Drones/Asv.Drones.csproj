@@ -24,5 +24,9 @@
       <ProjectReference Include="..\..\..\asv-avalonia\src\Asv.Avalonia\Asv.Avalonia.csproj" />
       <ProjectReference Include="..\Asv.Drones.Api\Asv.Drones.Api.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Pages\Settings\" />
+    </ItemGroup>
     
 </Project>
