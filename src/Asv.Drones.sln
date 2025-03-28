@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asv.Avalonia.IO", "..\..\as
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asv.Avalonia.Plugins", "..\..\asv-avalonia\src\Asv.Avalonia.Plugins\Asv.Avalonia.Plugins.csproj", "{2D872E12-6CB8-470D-9381-672604AAB9E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asv.Common", "..\..\asv-common\src\Asv.Common\Asv.Common.csproj", "{B8A28A18-679A-4A27-A6FE-C0C93B559A77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +86,10 @@ Global
 		{2D872E12-6CB8-470D-9381-672604AAB9E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D872E12-6CB8-470D-9381-672604AAB9E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D872E12-6CB8-470D-9381-672604AAB9E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8A28A18-679A-4A27-A6FE-C0C93B559A77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8A28A18-679A-4A27-A6FE-C0C93B559A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8A28A18-679A-4A27-A6FE-C0C93B559A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8A28A18-679A-4A27-A6FE-C0C93B559A77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -101,5 +107,6 @@ Global
 		{9AE61AF0-E748-4432-8B2F-108F48905440} = {BF18FC1D-828D-460A-A014-B43350781BF4}
 		{CE87D241-2A44-4D3F-9C8D-F0052031B904} = {BF18FC1D-828D-460A-A014-B43350781BF4}
 		{2D872E12-6CB8-470D-9381-672604AAB9E6} = {BF18FC1D-828D-460A-A014-B43350781BF4}
+		{B8A28A18-679A-4A27-A6FE-C0C93B559A77} = {BF18FC1D-828D-460A-A014-B43350781BF4}
 	EndGlobalSection
 EndGlobal
