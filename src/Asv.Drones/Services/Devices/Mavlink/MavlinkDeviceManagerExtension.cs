@@ -6,7 +6,7 @@ using Asv.Mavlink;
 using Avalonia.Media;
 using Material.Icons;
 
-namespace Asv.Drones.Api;
+namespace Asv.Drones;
 
 public class MavlinkDeviceManagerExtensionConfig
 {

@@ -21,4 +21,12 @@
       <ProjectReference Include="..\..\..\asv-mavlink\src\Asv.Mavlink\Asv.Mavlink.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Asv.Gnss" Version="2.0.0-dev.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Services\" />
+    </ItemGroup>
+
 </Project>
