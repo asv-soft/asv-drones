@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "husky": "cd ../ & dotnet husky install",
+    "husky-unix": "cd .. && dotnet husky install"
+  }
+}

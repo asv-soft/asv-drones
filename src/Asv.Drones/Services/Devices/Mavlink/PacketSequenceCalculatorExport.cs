@@ -5,7 +5,4 @@ namespace Asv.Drones.Api;
 
 [Export(typeof(IPacketSequenceCalculator))]
 [Shared]
-public class PacketSequenceCalculatorExport : PacketSequenceCalculator
-{
-    
-}
+public class PacketSequenceCalculatorExport : PacketSequenceCalculator { }

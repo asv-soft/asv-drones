@@ -10,8 +10,8 @@ public class HomePageFlightExtension : IExtensionFor<IHomePage>
 {
     public void Extend(IHomePage context, CompositeDisposable contextDispose)
     {
-        /*context.Tools.Add(
+        context.Tools.Add(
             OpenFlightModeCommand.StaticInfo.CreateAction().DisposeItWith(contextDispose)
-        );*/
+        );
     }
 }
