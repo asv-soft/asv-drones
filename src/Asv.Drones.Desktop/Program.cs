@@ -5,9 +5,6 @@ using Asv.Avalonia.Plugins;
 using Asv.Drones.Api;
 using Avalonia;
 using Avalonia.Controls;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using ZLogger;
 
 namespace Asv.Drones.Desktop;
 
@@ -38,9 +35,8 @@ sealed class Program
                 options.WithPluginPrefix("Asv.Drones.Plugin.");
             });
         using var host = builder.Build();
-        
+
         host.StartWithClassicDesktopLifetime(args, ShutdownMode.OnMainWindowClose);
-        
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.

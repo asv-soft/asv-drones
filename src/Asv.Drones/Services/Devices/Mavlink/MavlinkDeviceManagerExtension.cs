@@ -29,7 +29,7 @@ public class MavlinkDeviceManagerExtension : IDeviceManagerExtension
         _seq = seq;
         _cfg = cfgSvc.Get<MavlinkDeviceManagerExtensionConfig>();
     }
-    
+
     public void Configure(IProtocolBuilder builder)
     {
         builder.Features.RegisterMavlinkV2WrapFeature();
@@ -38,7 +38,11 @@ public class MavlinkDeviceManagerExtension : IDeviceManagerExtension
 
     public void Configure(IDeviceExplorerBuilder builder)
     {
-        builder.Factories.RegisterDefaultDevices(new MavlinkIdentity(_cfg.SystemId, _cfg.ComponentId),_seq, _cfgSvc);
+        builder.Factories.RegisterDefaultDevices(
+            new MavlinkIdentity(_cfg.SystemId, _cfg.ComponentId),
+            _seq,
+            _cfgSvc
+        );
     }
 
     public bool TryGetIcon(DeviceId id, out MaterialIconKind? icon)
