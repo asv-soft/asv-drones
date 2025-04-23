@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Asv.Avalonia;
+using Asv.Common;
 using R3;
 
 namespace Asv.Drones;
@@ -9,20 +9,27 @@ namespace Asv.Drones;
 public class SetAltitudeDialogViewModel : DialogViewModelBase
 {
     public const string DialogId = "dialog.altitude";
-    private readonly INavigationService _navigation;
 
     public SetAltitudeDialogViewModel()
-        : this(NullNavigationService.Instance, NullUnitService.Instance) { }
-
-    public SetAltitudeDialogViewModel(INavigationService navigation, IUnitService unitService)
         : base(DialogId)
     {
-        AltitudeUnit.Value = unitService.Units[AltitudeBase.Id];
-        _navigation = navigation;
+        DesignTime.ThrowIfNotDesignMode();
+    }
+
+    public SetAltitudeDialogViewModel(in IUnit unit)
+        : base(DialogId)
+    {
+        AltitudeUnit =
+            unit as AltitudeBase
+            ?? throw new InvalidCastException($"Unit must be an {nameof(AltitudeBase)}");
+        AltitudeUnitSymbol = AltitudeUnit
+            .CurrentUnitItem.Select(item => item.Symbol)
+            .ToBindableReactiveProperty<string>()
+            .DisposeItWith(Disposable);
         _sub1 = Altitude.EnableValidation(
             s =>
             {
-                var valid = AltitudeUnit.Value.CurrentUnitItem.Value.ValidateValue(s);
+                var valid = AltitudeUnit.CurrentUnitItem.Value.ValidateValue(s);
                 return valid;
             },
             this,
@@ -30,31 +37,14 @@ public class SetAltitudeDialogViewModel : DialogViewModelBase
         );
     }
 
-    public async Task<ContentDialogResult> ApplyDialog()
+    public void ApplyDialog(ContentDialog dialog)
     {
-        var dialog = new ContentDialog(_navigation)
-        {
-            PrimaryButtonText = RS.SetAltitudeDialogViewModel_ApplyDialog_PrimaryButton_TakeOff,
-            SecondaryButtonText = RS.SetAltitudeDialogViewModel_ApplyDialog_SecondaryButton_Cancel,
-            IsPrimaryButtonEnabled = IsValid.CurrentValue,
-            IsSecondaryButtonEnabled = true,
-            Content = this,
-        };
         _sub2 = IsValid.Subscribe(enabled => dialog.IsPrimaryButtonEnabled = enabled);
-        var result = await dialog.ShowAsync();
-        if (result == ContentDialogResult.Primary)
-        {
-            AltitudeResult.Value = AltitudeUnit.Value.CurrentUnitItem.Value.ParseToSi(
-                Altitude.Value
-            );
-        }
-
-        return result;
     }
 
-    public BindableReactiveProperty<IUnit> AltitudeUnit { get; } = new();
+    public AltitudeBase AltitudeUnit { get; }
     public BindableReactiveProperty<string> Altitude { get; } = new();
-    public ReactiveProperty<double> AltitudeResult { get; } = new();
+    public BindableReactiveProperty<string> AltitudeUnitSymbol { get; }
 
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
@@ -73,8 +63,6 @@ public class SetAltitudeDialogViewModel : DialogViewModelBase
             _sub1.Dispose();
             _sub2.Dispose();
             Altitude.Dispose();
-            AltitudeUnit.Dispose();
-            AltitudeResult.Dispose();
         }
 
         base.Dispose(disposing);

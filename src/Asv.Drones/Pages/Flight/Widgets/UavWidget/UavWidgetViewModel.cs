@@ -8,6 +8,7 @@ using Asv.IO;
 using Asv.Mavlink;
 using Avalonia.Media;
 using Avalonia.Threading;
+using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
 using Observable = R3.Observable;
@@ -16,11 +17,19 @@ namespace Asv.Drones;
 
 public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>, IUavFlightWidget
 {
+    private const string WidgetId = "widget-uav";
     private WorkspaceDock _position;
 
+    private readonly IUnit _velocityUnit;
+    private readonly IUnit _altitudeUnit;
+    private readonly IUnit _bearingUnit;
+    private readonly IUnit _angleUnit;
+    private readonly IUnit _capacityUnit;
+    private readonly IUnit _amperageUnit;
+    private readonly IUnit _voltageUnit;
+    private readonly IUnit _progressUnit;
     private readonly ILogger _log;
     private readonly GnssClientEx? _gnssClient;
-    private const string WidgetId = "widget-uav";
     private const int CriticalAltitude = 40;
     private const int DangerHighSpeed = 10;
     private const int DangerSatelliteCount = 10;
@@ -32,7 +41,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
     private static readonly Color YellowColor = Color.Parse("#dfc34a");
 
     public UavWidgetViewModel()
-        : base(SystemModule.Name)
+        : base(WidgetId)
     {
         DesignTime.ThrowIfNotDesignMode();
         InitArgs("1");
@@ -41,19 +50,158 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         GnssStatusBrush.Color = OrangeColor;
         SatelliteCount.Value = 10;
         RtkMode.Value = "RTK Fixed";
-        CurrentFlightMode.Value = "Auto";
-        LinkState.Value = "Connected";
         LinkQualityStatusBrush.Color = GreenColor;
         GnssStatusBrush.Color = GreenColor;
-        MissionProgress.Value = new MissionProgressViewModel();
-        MissionProgress.Value.PathProgress.Value = 0.7;
-        MissionProgress.Value.IsDownloaded.Value = true;
-        MissionProgress.Value.MissionDistance.Value = "1000m";
-        MissionProgress.Value.MissionFlightTime.Value = "15 min";
-        MissionProgress.Value.TotalDistance.Value = "1200m";
-        MissionProgress.Value.TargetDistance.Value = "300m";
-        MissionProgress.Value.HomeDistance.Value = "100m";
-        MissionProgress.Value.PathProgress.Value = 0.7;
+        MissionProgress = new MissionProgressViewModel();
+
+        var unitService = NullUnitService.Instance;
+
+        Icon = MaterialIconKind.AccountFile;
+        IconBrush = Brush.Parse("Blue");
+        var unitItem = unitService.Units[NullUnitBase.Id];
+        _altitudeUnit = unitService.Units[NullUnitBase.Id];
+        _velocityUnit = unitService.Units[NullUnitBase.Id];
+        _angleUnit = unitService.Units[NullUnitBase.Id];
+        _bearingUnit = unitService.Units[NullUnitBase.Id];
+        _capacityUnit = unitService.Units[NullUnitBase.Id];
+        _amperageUnit = unitService.Units[NullUnitBase.Id];
+        _voltageUnit = unitService.Units[NullUnitBase.Id];
+        _progressUnit = unitService.Units[NullUnitBase.Id];
+
+        var linkQuality = new ReactiveProperty<double>(100).DisposeItWith(Disposable);
+        var altitudeAgl = new ReactiveProperty<double>(10).DisposeItWith(Disposable);
+        var altitudeMsl = new ReactiveProperty<double>(14).DisposeItWith(Disposable);
+        var heading = new ReactiveProperty<double>(29).DisposeItWith(Disposable);
+        var azimuth = new ReactiveProperty<double>(39).DisposeItWith(Disposable);
+        var homeAzimuth = new ReactiveProperty<double>(30).DisposeItWith(Disposable);
+        var velocity = new ReactiveProperty<double>(199).DisposeItWith(Disposable);
+        var batteryAmperage = new ReactiveProperty<double>(39).DisposeItWith(Disposable);
+        var batteryVoltage = new ReactiveProperty<double>(34).DisposeItWith(Disposable);
+        var batteryCharge = new ReactiveProperty<double>(123).DisposeItWith(Disposable);
+        var batteryConsumed = new ReactiveProperty<double>(39).DisposeItWith(Disposable);
+
+        LinkQuality = new HistoricalUnitProperty(
+            $"{WidgetId}.{nameof(LinkQuality)}",
+            linkQuality,
+            unitItem
+        )
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
+        AltitudeAgl = new HistoricalUnitProperty(
+            $"{WidgetId}.{nameof(AltitudeAgl)}",
+            altitudeAgl,
+            unitItem
+        )
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
+        AltitudeMsl = new HistoricalUnitProperty(
+            $"{WidgetId}.{nameof(AltitudeMsl)}",
+            altitudeMsl,
+            unitItem
+        )
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
+        Azimuth = new HistoricalUnitProperty($"{WidgetId}.{nameof(Azimuth)}", azimuth, unitItem)
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
+        Heading = new HistoricalUnitProperty($"{WidgetId}.{nameof(Heading)}", heading, unitItem)
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
+        HomeAzimuth = new HistoricalUnitProperty(
+            $"{WidgetId}.{nameof(HomeAzimuth)}",
+            homeAzimuth,
+            unitItem
+        )
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
+        Velocity = new HistoricalUnitProperty($"{WidgetId}.{nameof(Velocity)}", velocity, unitItem)
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
+        BatteryAmperage = new HistoricalUnitProperty(
+            $"{WidgetId}.{nameof(BatteryAmperage)}",
+            batteryAmperage,
+            unitItem,
+            "N2"
+        )
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
+        BatteryVoltage = new HistoricalUnitProperty(
+            $"{WidgetId}.{nameof(BatteryVoltage)}",
+            batteryVoltage,
+            unitItem,
+            "N2"
+        )
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
+        BatteryCharge = new HistoricalUnitProperty(
+            $"{WidgetId}.{nameof(BatteryCharge)}",
+            batteryCharge,
+            unitItem
+        )
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
+        BatteryConsumed = new HistoricalUnitProperty(
+            $"{WidgetId}.{nameof(BatteryConsumed)}",
+            batteryConsumed,
+            unitItem
+        )
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
+
+        LinkState = new BindableReactiveProperty<string>("Connected");
+        CurrentFlightMode = new BindableReactiveProperty<string>("Auto");
+        Roll = new BindableReactiveProperty<double>();
+        Pitch = new BindableReactiveProperty<double>();
+        VdopCount = new BindableReactiveProperty<string>();
+        HdopCount = new BindableReactiveProperty<string>();
+        SatelliteCount = new BindableReactiveProperty<int>();
+        RtkMode = new BindableReactiveProperty<string>();
+        IsArmed = new BindableReactiveProperty<bool>();
+        StatusText = new BindableReactiveProperty<string>();
+
+        BatteryConsumedSymbol = BatteryConsumed
+            .Unit.CurrentUnitItem.Select(item => item.Symbol)
+            .ToBindableReactiveProperty<string>()
+            .DisposeItWith(Disposable);
+        BatteryAmperageSymbol = BatteryAmperage
+            .Unit.CurrentUnitItem.Select(item => item.Symbol)
+            .ToBindableReactiveProperty<string>()
+            .DisposeItWith(Disposable);
+        BatteryChargeSymbol = BatteryCharge
+            .Unit.CurrentUnitItem.Select(item => item.Symbol)
+            .ToBindableReactiveProperty<string>()
+            .DisposeItWith(Disposable);
+        BatteryVoltageSymbol = BatteryVoltage
+            .Unit.CurrentUnitItem.Select(item => item.Symbol)
+            .ToBindableReactiveProperty<string>()
+            .DisposeItWith(Disposable);
+        LinkQualitySymbol = LinkQuality
+            .Unit.CurrentUnitItem.Select(item => item.Symbol)
+            .ToBindableReactiveProperty<string>()
+            .DisposeItWith(Disposable);
+        VelocitySymbol = Velocity
+            .Unit.CurrentUnitItem.Select(item => item.Symbol)
+            .ToBindableReactiveProperty<string>()
+            .DisposeItWith(Disposable);
+        AltitudeSymbol = _altitudeUnit
+            .CurrentUnitItem.Select(item => item.Symbol)
+            .ToBindableReactiveProperty<string>()
+            .DisposeItWith(Disposable);
+        AzimuthSymbol = Azimuth
+            .Unit.CurrentUnitItem.Select(item => item.Symbol)
+            .ToBindableReactiveProperty<string>()
+            .DisposeItWith(Disposable);
     }
 
     public UavWidgetViewModel(
@@ -74,22 +222,17 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         Position = WorkspaceDock.Left;
         Icon = DeviceIconMixin.GetIcon(device.Id);
         IconBrush = DeviceIconMixin.GetIconBrush(device.Id);
-        AltitudeUnit = unitService.Units[AltitudeBase.Id];
-        VelocityUnit = unitService.Units[VelocityBase.Id];
-        AngleUnit = unitService.Units[AngleBase.Id];
-        BearingUnit = unitService.Units[BearingBase.Id];
-        CapacityUnit = unitService.Units[CapacityBase.Id];
-        AmperageUnit = unitService.Units[AmperageBase.Id];
-        VoltageUnit = unitService.Units[VoltageBase.Id];
-        ProgressUnit = unitService.Units[ProgressBase.Id];
+        _altitudeUnit = unitService.Units[AltitudeBase.Id];
+        _velocityUnit = unitService.Units[VelocityBase.Id];
+        _angleUnit = unitService.Units[AngleBase.Id];
+        _bearingUnit = unitService.Units[BearingBase.Id];
+        _capacityUnit = unitService.Units[CapacityBase.Id];
+        _amperageUnit = unitService.Units[AmperageBase.Id];
+        _voltageUnit = unitService.Units[VoltageBase.Id];
+        _progressUnit = unitService.Units[ProgressBase.Id];
         device.Name.Subscribe(x => Header = x).DisposeItWith(Disposable);
         InitArgs(device.Id.AsString());
-        MissionProgress.Value = new MissionProgressViewModel(
-            WidgetId,
-            device,
-            unitService,
-            loggerFactory
-        )
+        MissionProgress = new MissionProgressViewModel(device, unitService, loggerFactory, this)
         {
             Parent = this,
         };
@@ -127,13 +270,26 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         TakeOff = new ReactiveCommand(
             async (_, _) =>
             {
-                using var dialog = new SetAltitudeDialogViewModel(navigation, unitService);
-                var result = await dialog.ApplyDialog();
+                using var vm = new SetAltitudeDialogViewModel(_altitudeUnit);
+                var dialog = new ContentDialog(navigation)
+                {
+                    Content = vm,
+                    PrimaryButtonText =
+                        RS.SetAltitudeDialogViewModel_ApplyDialog_PrimaryButton_TakeOff,
+                    SecondaryButtonText =
+                        RS.SetAltitudeDialogViewModel_ApplyDialog_SecondaryButton_Cancel,
+                    IsSecondaryButtonEnabled = true,
+                };
+
+                var result = await dialog.ShowAsync();
+
                 if (result == ContentDialogResult.Primary)
                 {
                     await this.ExecuteCommand(
                         TakeOffCommand.Id,
-                        new DoubleCommandArg(dialog.AltitudeResult.Value)
+                        new DoubleCommandArg(
+                            _altitudeUnit.CurrentUnitItem.Value.ParseToSi(vm.Altitude.Value)
+                        )
                     );
                 }
             }
@@ -224,7 +380,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         LinkQuality = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(LinkQuality)}",
             linkQuality,
-            ProgressUnit
+            _progressUnit
         )
         {
             Parent = this,
@@ -232,7 +388,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         AltitudeAgl = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(AltitudeAgl)}",
             altitudeAgl,
-            AltitudeUnit
+            _altitudeUnit
         )
         {
             Parent = this,
@@ -240,23 +396,23 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         AltitudeMsl = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(AltitudeMsl)}",
             altitudeMsl,
-            AltitudeUnit
+            _altitudeUnit
         )
         {
             Parent = this,
         }.DisposeItWith(Disposable);
-        Azimuth = new HistoricalUnitProperty($"{WidgetId}.{nameof(Azimuth)}", azimuth, AngleUnit)
+        Azimuth = new HistoricalUnitProperty($"{WidgetId}.{nameof(Azimuth)}", azimuth, _angleUnit)
         {
             Parent = this,
         }.DisposeItWith(Disposable);
-        Heading = new HistoricalUnitProperty($"{WidgetId}.{nameof(Heading)}", heading, AngleUnit)
+        Heading = new HistoricalUnitProperty($"{WidgetId}.{nameof(Heading)}", heading, _angleUnit)
         {
             Parent = this,
         }.DisposeItWith(Disposable);
         HomeAzimuth = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(HomeAzimuth)}",
             homeAzimuth,
-            AngleUnit
+            _angleUnit
         )
         {
             Parent = this,
@@ -264,7 +420,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         Velocity = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(Velocity)}",
             velocity,
-            VelocityUnit
+            _velocityUnit
         )
         {
             Parent = this,
@@ -272,7 +428,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         BatteryAmperage = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(BatteryAmperage)}",
             batteryAmperage,
-            AmperageUnit,
+            _amperageUnit,
             "N2"
         )
         {
@@ -281,7 +437,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         BatteryVoltage = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(BatteryVoltage)}",
             batteryVoltage,
-            VoltageUnit,
+            _voltageUnit,
             "N2"
         )
         {
@@ -290,7 +446,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         BatteryCharge = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(BatteryCharge)}",
             batteryCharge,
-            ProgressUnit
+            _progressUnit
         )
         {
             Parent = this,
@@ -298,7 +454,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         BatteryConsumed = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(BatteryConsumed)}",
             batteryConsumed,
-            CapacityUnit
+            _capacityUnit
         )
         {
             Parent = this,
@@ -328,20 +484,8 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             .Unit.CurrentUnitItem.Select(item => item.Symbol)
             .ToBindableReactiveProperty<string>()
             .DisposeItWith(Disposable);
-        AltitudeMslSymbol = AltitudeMsl
-            .Unit.CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        AltitudeAglSymbol = AltitudeAgl
-            .Unit.CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        HeadingSymbol = Heading
-            .Unit.CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        HomeAzimuthSymbol = HomeAzimuth
-            .Unit.CurrentUnitItem.Select(item => item.Symbol)
+        AltitudeSymbol = _altitudeUnit
+            .CurrentUnitItem.Select(item => item.Symbol)
             .ToBindableReactiveProperty<string>()
             .DisposeItWith(Disposable);
         AzimuthSymbol = Azimuth
@@ -494,7 +638,18 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
 
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
-        yield return MissionProgress.Value;
+        yield return LinkQuality;
+        yield return AltitudeAgl;
+        yield return AltitudeMsl;
+        yield return Azimuth;
+        yield return Heading;
+        yield return HomeAzimuth;
+        yield return Velocity;
+        yield return BatteryAmperage;
+        yield return BatteryVoltage;
+        yield return BatteryCharge;
+        yield return BatteryConsumed;
+        yield return MissionProgress;
     }
 
     protected override void AfterLoadExtensions()
@@ -509,7 +664,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
     public BindableAsyncCommand Guided { get; }
     public BindableAsyncCommand StartMission { get; }
 
-    public BindableReactiveProperty<MissionProgressViewModel> MissionProgress { get; } = new();
+    public MissionProgressViewModel MissionProgress { get; }
 
     #region BatteryRtt
 
@@ -546,7 +701,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
     }
     #endregion
 
-    public BindableReactiveProperty<string> LinkState { get; } = new();
+    public BindableReactiveProperty<string> LinkState { get; }
     public HistoricalUnitProperty LinkQuality { get; }
     public BindableReactiveProperty<string> LinkQualitySymbol { get; }
 
@@ -564,15 +719,15 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         set => SetField(ref _linkQualityStatusBrush, value);
     }
 
-    public BindableReactiveProperty<string> CurrentFlightMode { get; } = new();
+    public BindableReactiveProperty<string> CurrentFlightMode { get; }
     public BindableReactiveProperty<float> VibrationX { get; } = new();
     public BindableReactiveProperty<float> VibrationY { get; } = new();
     public BindableReactiveProperty<float> VibrationZ { get; } = new();
     public BindableReactiveProperty<uint> Clipping0 { get; } = new();
     public BindableReactiveProperty<uint> Clipping1 { get; } = new();
     public BindableReactiveProperty<uint> Clipping2 { get; } = new();
-    public BindableReactiveProperty<double> Roll { get; } = new();
-    public BindableReactiveProperty<double> Pitch { get; } = new();
+    public BindableReactiveProperty<double> Roll { get; }
+    public BindableReactiveProperty<double> Pitch { get; }
     public HistoricalUnitProperty Velocity { get; }
     public HistoricalUnitProperty AltitudeAgl { get; }
     public HistoricalUnitProperty AltitudeMsl { get; }
@@ -580,22 +735,11 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
     public HistoricalUnitProperty HomeAzimuth { get; }
     public HistoricalUnitProperty Azimuth { get; }
     public BindableReactiveProperty<string> VelocitySymbol { get; }
-    public BindableReactiveProperty<string> AltitudeAglSymbol { get; }
-    public BindableReactiveProperty<string> AltitudeMslSymbol { get; }
-    public BindableReactiveProperty<string> HeadingSymbol { get; }
-    public BindableReactiveProperty<string> HomeAzimuthSymbol { get; }
+    public BindableReactiveProperty<string> AltitudeSymbol { get; }
     public BindableReactiveProperty<string> AzimuthSymbol { get; }
-    public BindableReactiveProperty<string> StatusText { get; } = new();
-    public BindableReactiveProperty<bool> IsArmed { get; } = new();
+    public BindableReactiveProperty<string> StatusText { get; }
+    public BindableReactiveProperty<bool> IsArmed { get; }
     public BindableReactiveProperty<TimeSpan> ArmedTime { get; } = new();
-    public IUnit VelocityUnit { get; }
-    public IUnit AltitudeUnit { get; }
-    public IUnit BearingUnit { get; }
-    public IUnit AngleUnit { get; }
-    public IUnit CapacityUnit { get; }
-    public IUnit AmperageUnit { get; }
-    public IUnit VoltageUnit { get; }
-    public IUnit ProgressUnit { get; }
 
     public IClientDevice Device { get; }
 
@@ -615,7 +759,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             Pitch.Dispose();
             IsArmed.Dispose();
             RtkMode.Dispose();
-            AngleUnit.Dispose();
+            _angleUnit.Dispose();
             LinkState.Dispose();
             VdopCount.Dispose();
             HdopCount.Dispose();
@@ -627,10 +771,10 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             VibrationZ.Dispose();
             VibrationX.Dispose();
             StatusText.Dispose();
-            BearingUnit.Dispose();
-            VelocityUnit.Dispose();
-            AltitudeUnit.Dispose();
-            CapacityUnit.Dispose();
+            _bearingUnit.Dispose();
+            _velocityUnit.Dispose();
+            _altitudeUnit.Dispose();
+            _capacityUnit.Dispose();
             SatelliteCount.Dispose();
             MissionProgress.Dispose();
             CurrentFlightMode.Dispose();
