@@ -128,7 +128,7 @@
     <data name="MavParamsPageViewModel_DeviceName_Unknown" xml:space="preserve">
         <value>Unknown</value>
     </data>
-    <data name="Not_Available" xml:space="preserve">
+    <data name="NotANumber" xml:space="preserve">
         <value>N/A</value>
     </data>
     <data name="MissionProgressView_Title" xml:space="preserve">

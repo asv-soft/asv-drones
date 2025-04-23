@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Avalonia;
 using Avalonia.Collections;
@@ -208,10 +207,6 @@ public partial class AttitudeIndicator : TemplatedControl
         {
             UpdateHomeAzimuthPosition(change.Sender);
         }
-        else if (change.Property == HomeAzimuthProperty)
-        {
-            UpdateHomeAzimuthPosition(change.Sender);
-        }
     }
 
     private static void UpdateColorX(AvaloniaObject source)
@@ -225,7 +220,7 @@ public partial class AttitudeIndicator : TemplatedControl
         {
             indicator.BrushVibrationX = Colors.Red;
         }
-        else if (indicator.VibrationX > 30 & indicator.VibrationX < 60)
+        else if (indicator.VibrationX is > 30 and < 60)
         {
             indicator.BrushVibrationX = Colors.Yellow;
         }
@@ -314,7 +309,17 @@ public partial class AttitudeIndicator : TemplatedControl
             return;
         }
 
-        var velocity = indicator.Velocity;
+        double velocity;
+        if (indicator.Velocity is null)
+        {
+            velocity = double.NaN;
+        }
+        else
+        {
+            var isParsed = double.TryParse(indicator.Velocity, out velocity);
+            velocity = !isParsed ? double.NaN : velocity;
+        }
+
         foreach (var item in indicator.VelocityItems)
         {
             item.UpdateValue(velocity);
@@ -328,7 +333,17 @@ public partial class AttitudeIndicator : TemplatedControl
             return;
         }
 
-        var altitude = indicator.Altitude;
+        double altitude;
+        if (indicator.Altitude is null)
+        {
+            altitude = double.NaN;
+        }
+        else
+        {
+            var isParsed = double.TryParse(indicator.Altitude, out altitude);
+            altitude = !isParsed ? double.NaN : altitude;
+        }
+
         foreach (var item in indicator.AltitudeItems)
         {
             item.UpdateValue(altitude);
@@ -342,16 +357,25 @@ public partial class AttitudeIndicator : TemplatedControl
             return;
         }
 
-        var heading = indicator.Heading;
+        double heading;
+        if (indicator.Heading is null)
+        {
+            heading = double.NaN;
+        }
+        else
+        {
+            var isParsed = double.TryParse(indicator.Heading, out heading);
+            heading = !isParsed ? double.NaN : heading;
+        }
+
+        double.TryParse(indicator.HomeAzimuth, out var homeAzimuth);
+
         foreach (var item in indicator.HeadingItems)
         {
             item.UpdateValue(heading);
         }
 
-        indicator.HomeAzimuthPosition = GetHomeAzimuthPosition(
-            indicator.HomeAzimuth,
-            indicator.Heading
-        );
+        indicator.HomeAzimuthPosition = GetHomeAzimuthPosition(homeAzimuth, heading);
     }
 
     private static void UpdateHomeAzimuthPosition(AvaloniaObject source)
@@ -361,10 +385,25 @@ public partial class AttitudeIndicator : TemplatedControl
             return;
         }
 
-        indicator.HomeAzimuthPosition = GetHomeAzimuthPosition(
-            indicator.HomeAzimuth,
-            indicator.Heading
-        );
+        double heading;
+        if (indicator.Heading is null)
+        {
+            heading = double.NaN;
+        }
+        else
+        {
+            var isParsed = double.TryParse(indicator.Heading, out heading);
+            heading = !isParsed ? double.NaN : heading;
+        }
+
+        double.TryParse(indicator.HomeAzimuth, out var homeAzimuth);
+
+        foreach (var item in indicator.HeadingItems)
+        {
+            item.UpdateValue(heading);
+        }
+
+        indicator.HomeAzimuthPosition = GetHomeAzimuthPosition(homeAzimuth, heading);
     }
 
     private static double GetHomeAzimuthPosition(double? value, double headingValue)
@@ -385,314 +424,5 @@ public partial class AttitudeIndicator : TemplatedControl
         }
 
         return _headingCenterPosition + (distance * _headingPositionStep);
-    }
-}
-
-public class ScaleItem : AvaloniaObject
-{
-    private readonly double _valueRange;
-    private readonly bool _showNegative;
-    private readonly double _startPosition;
-    private readonly double _positionStep;
-    private readonly double _valueOffset;
-    private readonly bool _isFixedTitle;
-    private string? _title;
-    private double _value;
-    private double _position;
-    private bool _isVisible;
-
-    public ScaleItem(
-        double value,
-        double valueRange,
-        int index,
-        int itemCount,
-        double fullLength,
-        double length,
-        bool isInverse = false,
-        bool showNegative = true,
-        string? fixedTitle = null
-    )
-    {
-        _valueRange = valueRange;
-        _showNegative = showNegative;
-        _isFixedTitle = fixedTitle != null;
-        var step = fullLength / (itemCount % 2 != 0 ? itemCount - 1 : itemCount);
-        _positionStep = step / valueRange;
-
-        if (!isInverse)
-        {
-            _startPosition = ((length - fullLength) / 2.0) + (step * index);
-        }
-        else
-        {
-            _startPosition = ((length - fullLength) / 2.0) + (step * (itemCount - index));
-            _positionStep *= -1;
-        }
-
-        var centerIndex = itemCount % 2 == 0 ? itemCount / 2 : (itemCount / 2) + 1;
-
-        var indexOffset = index - centerIndex;
-        _valueOffset = -1 * valueRange * indexOffset;
-
-        if (_isFixedTitle)
-        {
-            Title = fixedTitle;
-        }
-
-        UpdateValue(value);
-    }
-
-    public void UpdateValue(double value)
-    {
-        Value = GetValue(value);
-        Position = GetPosition(value);
-        if (!_isFixedTitle)
-        {
-            Title = GetTitle(Value);
-        }
-
-        IsVisible = _showNegative || Value >= 0;
-    }
-
-    protected virtual string? GetTitle(double value)
-    {
-        return Math.Round(value).ToString("F0");
-    }
-
-    private double GetValue(double value)
-    {
-        return Math.Round(value) - (Math.Round(value) % _valueRange) + _valueOffset;
-    }
-
-    private double GetPosition(double value)
-    {
-        return _startPosition + (_positionStep * (Math.Round(value) % _valueRange));
-    }
-
-    public static readonly DirectProperty<ScaleItem, bool> IsVisibleProperty =
-        AvaloniaProperty.RegisterDirect<ScaleItem, bool>(
-            nameof(IsVisible),
-            _ => _.IsVisible,
-            (_, value) => _.IsVisible = value
-        );
-
-    public bool IsVisible
-    {
-        get => _isVisible;
-        set => SetAndRaise(IsVisibleProperty, ref _isVisible, value);
-    }
-
-    public static readonly DirectProperty<ScaleItem, string> TitleProperty =
-        AvaloniaProperty.RegisterDirect<ScaleItem, string>(
-            nameof(Title),
-            _ => _.Title!,
-            (_, value) => _.Title = value
-        );
-
-    public string? Title
-    {
-        get => _title;
-        set => SetAndRaise(TitleProperty, ref _title, value);
-    }
-
-    public static readonly DirectProperty<ScaleItem, double> ValueProperty =
-        AvaloniaProperty.RegisterDirect<ScaleItem, double>(
-            nameof(Value),
-            _ => _.Value,
-            (_, value) => _.Value = value
-        );
-
-    public double Value
-    {
-        get => _value;
-        set => SetAndRaise(ValueProperty, ref _value, value);
-    }
-
-    public static readonly DirectProperty<ScaleItem, double> PositionProperty =
-        AvaloniaProperty.RegisterDirect<ScaleItem, double>(
-            nameof(Position),
-            _ => _.Position,
-            (_, value) => _.Position = value
-        );
-
-    public double Position
-    {
-        get => _position;
-        set => SetAndRaise(PositionProperty, ref _position, value);
-    }
-}
-
-public class HeadingScaleItem : ScaleItem
-{
-    public HeadingScaleItem(
-        double value,
-        double valueRange,
-        int index,
-        int itemCount,
-        double fullLength,
-        double length
-    )
-        : base(value, valueRange, index, itemCount, fullLength, length, true) { }
-
-    protected override string? GetTitle(double value)
-    {
-        var v = value < 0 ? ((int)Math.Round(value) % 360) + 360 : (int)Math.Round(value) % 360;
-        return v switch
-        {
-            0 => "N",
-            45 => "NE",
-            90 => "E",
-            135 => "SE",
-            180 => "S",
-            225 => "SW",
-            270 => "W",
-            315 => "NW",
-            360 => "N",
-            _ => v.ToString("F0"),
-        };
-    }
-}
-
-public class RollItem : AvaloniaObject
-{
-    public RollItem(int angle)
-    {
-        Value = angle;
-        Title =
-            Math.Abs(angle) > 180 ? (360 - Math.Abs(angle)).ToString() : Math.Abs(angle).ToString();
-    }
-
-    public static readonly DirectProperty<RollItem, string> TitleProperty =
-        AvaloniaProperty.RegisterDirect<RollItem, string>(
-            nameof(Title),
-            _ => _.Title,
-            (_, value) => _.Title = value
-        );
-
-    private string _title;
-    private double _value;
-
-    public string Title
-    {
-        get => _title;
-        set => SetAndRaise(TitleProperty, ref _title, value);
-    }
-
-    public static readonly DirectProperty<RollItem, double> ValueProperty =
-        AvaloniaProperty.RegisterDirect<RollItem, double>(
-            nameof(Value),
-            _ => _.Value,
-            (_, value) => _.Value = value
-        );
-
-    public double Value
-    {
-        get => _value;
-        set => SetAndRaise(ValueProperty, ref _value, value);
-    }
-}
-
-public class PitchItem : AvaloniaObject
-{
-    private readonly int _pitch;
-    private string _title;
-    private double _value;
-    private Point _startLine;
-    private Point _stopLine;
-    private bool _isVisible;
-
-    public PitchItem(
-        int pitch,
-        double scale,
-        bool titleIsVisible = true,
-        double controlHeight = 284
-    )
-    {
-        _pitch = pitch;
-        Value = ((controlHeight / 2) - pitch) * scale;
-        if (titleIsVisible)
-        {
-            Title = pitch.ToString();
-            StartLine = new Point(0 * scale, 0 * scale);
-            StopLine = new Point(20 * scale, 0 * scale);
-        }
-        else
-        {
-            Title = string.Empty;
-            StartLine = new Point(4 * scale, 0 * scale);
-            StopLine = new Point(16 * scale, 0 * scale);
-        }
-
-        IsVisible = Math.Abs(pitch) <= 20;
-    }
-
-    public static readonly DirectProperty<PitchItem, string> TitleProperty =
-        AvaloniaProperty.RegisterDirect<PitchItem, string>(
-            nameof(Title),
-            _ => _.Title,
-            (_, value) => _.Title = value
-        );
-
-    public string Title
-    {
-        get => _title;
-        set => SetAndRaise(TitleProperty, ref _title, value);
-    }
-
-    public static readonly DirectProperty<PitchItem, double> ValueProperty =
-        AvaloniaProperty.RegisterDirect<PitchItem, double>(
-            nameof(Value),
-            _ => _.Value,
-            (_, value) => _.Value = value
-        );
-
-    public double Value
-    {
-        get => _value;
-        set => SetAndRaise(ValueProperty, ref _value, value);
-    }
-
-    public static readonly DirectProperty<PitchItem, bool> IsVisibleProperty =
-        AvaloniaProperty.RegisterDirect<PitchItem, bool>(
-            nameof(IsVisible),
-            _ => _.IsVisible,
-            (_, value) => _.IsVisible = value
-        );
-
-    public bool IsVisible
-    {
-        get => _isVisible;
-        set => SetAndRaise(IsVisibleProperty, ref _isVisible, value);
-    }
-
-    public static readonly DirectProperty<PitchItem, Point> StartLineProperty =
-        AvaloniaProperty.RegisterDirect<PitchItem, Point>(
-            nameof(StartLine),
-            _ => _.StartLine,
-            (_, value) => _.StartLine = value
-        );
-
-    public Point StartLine
-    {
-        get => _startLine;
-        set => SetAndRaise(StartLineProperty, ref _startLine, value);
-    }
-
-    public static readonly DirectProperty<PitchItem, Point> StopLineProperty =
-        AvaloniaProperty.RegisterDirect<PitchItem, Point>(
-            nameof(StopLine),
-            _ => _.StopLine,
-            (_, value) => _.StopLine = value
-        );
-
-    public Point StopLine
-    {
-        get => _stopLine;
-        set => SetAndRaise(StopLineProperty, ref _stopLine, value);
-    }
-
-    public void UpdateVisibility(double pitch)
-    {
-        IsVisible = pitch >= _pitch - 20 && pitch <= _pitch + 20;
     }
 }

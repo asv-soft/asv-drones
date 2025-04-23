@@ -255,9 +255,9 @@ namespace Asv.Drones {
             }
         }
         
-        public static string Not_Available {
+        public static string NotANumber {
             get {
-                return ResourceManager.GetString("Not_Available", resourceCulture);
+                return ResourceManager.GetString("NotANumber", resourceCulture);
             }
         }
         
