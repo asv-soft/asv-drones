@@ -14,7 +14,7 @@
             <TextBlock Text="Altitude" />
             <Grid ColumnDefinitions="*, Auto">
                 <TextBox Grid.Column="0" Focusable="True" Name="AltitudeTextBox" Text="{Binding Altitude.Value}"/>
-                <TextBlock VerticalAlignment="Center" Margin="8 0" Grid.Column="1" Text="{Binding AltitudeUnit.Value.Current.Value.Symbol}" />
+                <TextBlock VerticalAlignment="Center" Margin="8 0" Grid.Column="1" Text="{Binding AltitudeUnit.Value.CurrentUnitItem.Value.Symbol}" />
             </Grid>
         </StackPanel>
     </Panel>

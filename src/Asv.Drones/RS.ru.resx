@@ -128,7 +128,7 @@
     <data name="FileBrowserView_Button_BurstDownload_Content" xml:space="preserve">
         <value>Загрузить (пакетами)</value>
     </data>
-    <data name="Not_Available" xml:space="preserve">
+    <data name="NotANumber" xml:space="preserve">
         <value>Н/Д</value>
     </data>
     <data name="MissionProgressView_HomeDistance" xml:space="preserve">

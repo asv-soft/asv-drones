@@ -12,7 +12,6 @@
         <drones:MissionProgressViewModel />
     </Design.DataContext>
     <DockPanel LastChildFill="True" HorizontalAlignment="Left">
-      
             <Button DockPanel.Dock="Top" Command="{Binding UpdateMission}">
                 <avalonia1:MaterialIcon Kind="Reload"/>
             </Button>      
@@ -24,12 +23,12 @@
         <StackPanel Margin="0 5 0 0" DockPanel.Dock="Top" IsVisible="{Binding  IsDownloaded.Value}">
             <Viewbox MaxWidth="400"  HorizontalAlignment="Left">
                 <drones:RouteIndicator Progress="{Binding PathProgress.Value}"
-                                       StatusText="{Binding MissionFlightTime.Value}"
-                                       Title="{x:Static drones:RS.MissionProgressView_Title}"
-                                       FontSize="24"
-                                       Width="470"
+                                        StatusText="{Binding MissionFlightTime.Value}"
+                                        Title="{x:Static drones:RS.MissionProgressView_Title}"
+                                        FontSize="24"
+                                        Width="470"
                                        
-                                       SubStatusText="{x:Static drones:RS.MissionProgressView_SubStatusText}" />     
+                                        SubStatusText="{x:Static drones:RS.MissionProgressView_SubStatusText}" />     
             </Viewbox>
             <WrapPanel HorizontalAlignment="Left" Orientation="Horizontal">
                 <Viewbox Width="100">
@@ -40,7 +39,7 @@
                         MainBrush="{DynamicResource NavyMainBrush}"
                         SecondaryBrush="{DynamicResource NavySecondaryBrush}"
                         Title="{x:Static drones:RS.MissionProgressView_MissionDistanceRTT}"
-                        Units="{Binding DistanceUnitItem.Value.Current.Value.Symbol}"
+                        Units="{Binding DistanceUnitItem.Value.CurrentUnitItem.Value.Symbol}"
                         IsBusy="False"
                         Icon="MapMarkerDistance"
                         CornerRadius="4">
@@ -59,7 +58,7 @@
                         MainBrush="{DynamicResource NavyMainBrush}"
                         SecondaryBrush="{DynamicResource NavySecondaryBrush}"
                         Title="{x:Static drones:RS.MissionProgressView_TotalDistanceRTT}"
-                        Units="{Binding DistanceUnitItem.Value.Current.Value.Symbol}"
+                        Units="{Binding DistanceUnitItem.Value.CurrentUnitItem.Value.Symbol}"
                         IsBusy="False"
                         Icon="LocationDistance"
                         CornerRadius="4">
@@ -78,7 +77,7 @@
                         MainBrush="{DynamicResource NavyMainBrush}"
                         SecondaryBrush="{DynamicResource NavySecondaryBrush}"
                         Title="{x:Static drones:RS.MissionProgressView_HomeDistance}"
-                        Units="{Binding DistanceUnitItem.Value.Current.Value.Symbol}"
+                        Units="{Binding DistanceUnitItem.Value.CurrentUnitItem.Value.Symbol}"
                         IsBusy="False"
                         Icon="Home"
                         CornerRadius="4">
@@ -97,7 +96,7 @@
                         MainBrush="{DynamicResource NavyMainBrush}"
                         SecondaryBrush="{DynamicResource NavySecondaryBrush}"
                         Title="{x:Static drones:RS.MissionProgressView_TargetDistance}"
-                        Units="{Binding DistanceUnitItem.Value.Current.Value.Symbol}"
+                        Units="{Binding DistanceUnitItem.Value.CurrentUnitItem.Value.Symbol}"
                         IsBusy="False"
                         Icon="Target"
                         CornerRadius="4">
@@ -109,7 +108,6 @@
                     </avalonia:TelemBox>
                 </Viewbox>
             </WrapPanel>
-
         </StackPanel>
     </DockPanel>
 </UserControl>
