@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:drones="clr-namespace:Asv.Drones"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="100"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="100"
              x:Class="Asv.Drones.SetAltitudeDialog"
              x:DataType="drones:SetAltitudeDialogViewModel">
     <Design.DataContext>
@@ -14,7 +14,7 @@
             <TextBlock Text="Altitude" />
             <Grid ColumnDefinitions="*, Auto">
                 <TextBox Grid.Column="0" Focusable="True" Name="AltitudeTextBox" Text="{Binding Altitude.Value}"/>
-                <TextBlock VerticalAlignment="Center" Margin="8 0" Grid.Column="1" Text="{Binding AltitudeUnit.Value.CurrentUnitItem.Value.Symbol}" />
+                <TextBlock VerticalAlignment="Center" Margin="8 0" Grid.Column="1" Text="{Binding AltitudeUnitSymbol.Value}" />
             </Grid>
         </StackPanel>
     </Panel>

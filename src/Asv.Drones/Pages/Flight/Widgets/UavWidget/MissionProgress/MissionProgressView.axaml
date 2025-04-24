@@ -39,14 +39,14 @@
                         MainBrush="{DynamicResource NavyMainBrush}"
                         SecondaryBrush="{DynamicResource NavySecondaryBrush}"
                         Title="{x:Static drones:RS.MissionProgressView_MissionDistanceRTT}"
-                        Units="{Binding DistanceUnitItem.Value.CurrentUnitItem.Value.Symbol}"
+                        Units="{Binding DistanceUnitSymbol.Value}"
                         IsBusy="False"
                         Icon="MapMarkerDistance"
                         CornerRadius="4">
                         <avalonia:TelemBox.CustomContent>
                             <TextBlock VerticalAlignment="Center" TextAlignment="Center"
                                        FontSize="30"
-                                       Text="{Binding MissionDistance.Value}" />
+                                       Text="{Binding MissionDistance.ViewValue.Value}" />
                         </avalonia:TelemBox.CustomContent>
                     </avalonia:TelemBox>
                 </Viewbox>
@@ -58,14 +58,14 @@
                         MainBrush="{DynamicResource NavyMainBrush}"
                         SecondaryBrush="{DynamicResource NavySecondaryBrush}"
                         Title="{x:Static drones:RS.MissionProgressView_TotalDistanceRTT}"
-                        Units="{Binding DistanceUnitItem.Value.CurrentUnitItem.Value.Symbol}"
+                        Units="{Binding DistanceUnitSymbol.Value}"
                         IsBusy="False"
                         Icon="LocationDistance"
                         CornerRadius="4">
                         <avalonia:TelemBox.CustomContent>
                             <TextBlock VerticalAlignment="Center" TextAlignment="Center"
                                        FontSize="30"
-                                       Text="{Binding TotalDistance.Value}" />
+                                       Text="{Binding TotalDistance.ViewValue.Value}" />
                         </avalonia:TelemBox.CustomContent>
                     </avalonia:TelemBox>
                 </Viewbox>
@@ -77,14 +77,14 @@
                         MainBrush="{DynamicResource NavyMainBrush}"
                         SecondaryBrush="{DynamicResource NavySecondaryBrush}"
                         Title="{x:Static drones:RS.MissionProgressView_HomeDistance}"
-                        Units="{Binding DistanceUnitItem.Value.CurrentUnitItem.Value.Symbol}"
+                        Units="{Binding DistanceUnitSymbol.Value}"
                         IsBusy="False"
                         Icon="Home"
                         CornerRadius="4">
                         <avalonia:TelemBox.CustomContent>
                             <TextBlock VerticalAlignment="Center" TextAlignment="Center"
                                        FontSize="30"
-                                       Text="{Binding HomeDistance.Value}" />
+                                       Text="{Binding HomeDistance.ViewValue.Value}" />
                         </avalonia:TelemBox.CustomContent>
                     </avalonia:TelemBox>
                 </Viewbox>
@@ -96,14 +96,14 @@
                         MainBrush="{DynamicResource NavyMainBrush}"
                         SecondaryBrush="{DynamicResource NavySecondaryBrush}"
                         Title="{x:Static drones:RS.MissionProgressView_TargetDistance}"
-                        Units="{Binding DistanceUnitItem.Value.CurrentUnitItem.Value.Symbol}"
+                        Units="{Binding DistanceUnitSymbol.Value}"
                         IsBusy="False"
                         Icon="Target"
                         CornerRadius="4">
                         <avalonia:TelemBox.CustomContent>
                             <TextBlock VerticalAlignment="Center" TextAlignment="Center"
                                        FontSize="30"
-                                       Text="{Binding TargetDistance.Value}" />
+                                       Text="{Binding TargetDistance.ViewValue.Value}" />
                         </avalonia:TelemBox.CustomContent>
                     </avalonia:TelemBox>
                 </Viewbox>

@@ -10,6 +10,7 @@ using Asv.IO;
 using Asv.Mavlink;
 using Asv.Mavlink.Common;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using ObservableCollections;
 using R3;
 
@@ -17,48 +18,87 @@ namespace Asv.Drones;
 
 public class MissionProgressViewModel : RoutableViewModel
 {
+    private readonly ILogger _log;
     private readonly IClientDevice _device;
     private readonly PositionClientEx _positionClient;
     private readonly MissionClientEx _missionClient;
     private readonly GnssClientEx _gnssClientEx;
     private readonly CancellationTokenSource _cts = new();
-    private ReactiveProperty<ushort> CurrentIndex { get; } = new();
-    private ReactiveProperty<ushort> ReachedIndex { get; } = new();
-    private double _totalMissionDistance;
+    private readonly ReactiveProperty<ushort> _currentIndex = new();
+    private readonly ReactiveProperty<ushort> _reachedIndex = new();
     private double _passedDistance;
-    private double _distanceBeforeMission;
     private bool _isOnMission;
 
     public MissionProgressViewModel()
-        : base(SystemModule.Name)
+        : base("mission.progress")
     {
+        DesignTime.ThrowIfNotDesignMode();
+        _log = NullLoggerFactory.Instance.CreateLogger<MissionProgressViewModel>();
+        var missionDistance = new ReactiveProperty<double>(1000).DisposeItWith(Disposable);
+        var targetDistance = new ReactiveProperty<double>(100).DisposeItWith(Disposable);
+        var totalDistance = new ReactiveProperty<double>(1100).DisposeItWith(Disposable);
+        var homeDistance = new ReactiveProperty<double>(100).DisposeItWith(Disposable);
+
+        var unitService = NullUnitService.Instance;
+        var nullUnit = unitService.Units[NullUnitBase.Id];
+
+        MissionDistance = new HistoricalUnitProperty(
+            $"{Id}.{nameof(MissionDistance)}",
+            missionDistance,
+            nullUnit,
+            "N2"
+        )
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
+        HomeDistance = new HistoricalUnitProperty(
+            $"{Id}.{nameof(HomeDistance)}",
+            homeDistance,
+            nullUnit,
+            "N2"
+        )
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
+        TargetDistance = new HistoricalUnitProperty(
+            $"{Id}.{nameof(TargetDistance)}",
+            targetDistance,
+            nullUnit,
+            "N2"
+        )
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
+        TotalDistance = new HistoricalUnitProperty(
+            $"{Id}.{nameof(TotalDistance)}",
+            totalDistance,
+            nullUnit,
+            "N2"
+        )
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
+
         IsDownloaded.Value = true;
-        MissionDistance.Value = "1000";
         MissionFlightTime.Value = "15 min";
-        TotalDistance.Value = "1200";
-        TargetDistance.Value = "300";
-        HomeDistance.Value = "100";
         PathProgress.Value = 0.7;
     }
 
     [ImportingConstructor]
     public MissionProgressViewModel(
-        string id,
         IClientDevice device,
         IUnitService unitService,
-        ILoggerFactory loggerFactory
+        ILoggerFactory loggerFactory,
+        IRoutable parent
     )
-        : base($"{id}.mission.progress")
+        : base($"{parent.Id}.mission.progress")
     {
         ArgumentNullException.ThrowIfNull(device);
         ArgumentNullException.ThrowIfNull(unitService);
         ArgumentNullException.ThrowIfNull(loggerFactory);
-
-        ILogger log = loggerFactory.CreateLogger<MissionProgressViewModel>();
+        _log = loggerFactory.CreateLogger<MissionProgressViewModel>();
         _device = device;
-        DistanceUnitItem.Value = unitService.Units.Values.First(unit =>
-            unit.UnitId == DistanceBase.Id
-        );
+        DistanceUnit = unitService.Units[DistanceBase.Id];
         _missionClient =
             device.GetMicroservice<MissionClientEx>()
             ?? throw new Exception($"Unable to load {nameof(MissionClientEx)} from {device.Id}");
@@ -71,7 +111,108 @@ public class MissionProgressViewModel : RoutableViewModel
         var mode =
             device.GetMicroservice<ModeClient>()
             ?? throw new Exception($"Unable to load {nameof(ModeClient)} from {device.Id}");
+
         UpdateMission = new BindableAsyncCommand(UpdateMissionCommand.Id, this);
+
+        var missionDistance = new ReactiveProperty<double>().DisposeItWith(Disposable);
+        var targetDistance = new ReactiveProperty<double>().DisposeItWith(Disposable);
+        var totalDistance = new ReactiveProperty<double>().DisposeItWith(Disposable);
+        var homeDistance = new ReactiveProperty<double>().DisposeItWith(Disposable);
+
+        _missionClient
+            .AllMissionsDistance.Subscribe(d =>
+            {
+                missionDistance.Value = d * 1000;
+                var start = _missionClient.MissionItems.FirstOrDefault();
+                var stop = _missionClient.MissionItems.LastOrDefault(missionItem =>
+                    missionItem.Command.Value != MavCmd.MavCmdNavReturnToLaunch
+                );
+                if (start != null && stop != null)
+                {
+                    missionDistance.Value += GeoMath.Distance(
+                        start.Location.Value,
+                        _positionClient.Home.CurrentValue
+                    );
+                    missionDistance.Value += GeoMath.Distance(
+                        stop.Location.Value,
+                        _positionClient.Home.CurrentValue
+                    );
+                }
+
+                if (missionDistance.Value < 1)
+                {
+                    missionDistance.Value = d * 1000;
+                }
+            })
+            .DisposeItWith(Disposable);
+        _positionClient
+            .HomeDistance.Subscribe(d => homeDistance.Value = d)
+            .DisposeItWith(Disposable);
+        _positionClient
+            .TargetDistance.Subscribe(d => targetDistance.Value = d)
+            .DisposeItWith(Disposable);
+
+        _missionClient
+            .AllMissionsDistance.Select(v => v * 1000)
+            .Subscribe(v =>
+            {
+                var distanceBeforeMission =
+                    _missionClient.MissionItems.Count == 0
+                        ? 0
+                        : GeoMath.Distance(
+                            _positionClient.Current.CurrentValue,
+                            _missionClient.MissionItems[0].Location.Value
+                        );
+
+                var rtl = _missionClient.MissionItems.FirstOrDefault(_ =>
+                    _.Command.Value == MavCmd.MavCmdNavReturnToLaunch
+                );
+                if (rtl is not null)
+                {
+                    totalDistance.Value = v + (distanceBeforeMission * 2000);
+                    return;
+                }
+
+                totalDistance.Value = v + (distanceBeforeMission * 1000);
+            })
+            .DisposeItWith(Disposable);
+
+        MissionDistance = new HistoricalUnitProperty(
+            $"{Id}.{nameof(MissionDistance)}",
+            missionDistance,
+            DistanceUnit,
+            "N2"
+        )
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
+        HomeDistance = new HistoricalUnitProperty(
+            $"{Id}.{nameof(HomeDistance)}",
+            homeDistance,
+            DistanceUnit,
+            "N2"
+        )
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
+        TargetDistance = new HistoricalUnitProperty(
+            $"{Id}.{nameof(TargetDistance)}",
+            targetDistance,
+            DistanceUnit,
+            "N2"
+        )
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
+        TotalDistance = new HistoricalUnitProperty(
+            $"{Id}.{nameof(TotalDistance)}",
+            totalDistance,
+            DistanceUnit,
+            "N2"
+        )
+        {
+            Parent = this,
+        }.DisposeItWith(Disposable);
 
         mode.CurrentMode.Subscribe(m =>
             {
@@ -89,7 +230,7 @@ public class MissionProgressViewModel : RoutableViewModel
                 if (m == ArduCopterMode.Rtl || m == ArduPlaneMode.Rtl)
                 {
                     _isOnMission = false;
-                    ReachedIndex.Value = 0;
+                    _reachedIndex.Value = 0;
                     PathProgress.Value = 0;
                 }
             })
@@ -111,68 +252,8 @@ public class MissionProgressViewModel : RoutableViewModel
                 }
             })
             .DisposeItWith(Disposable);
-        _positionClient
-            .Current.Subscribe(_ =>
-            {
-                if (_missionClient.MissionItems.Count == 0)
-                {
-                    return;
-                }
 
-                _totalMissionDistance = _missionClient.AllMissionsDistance.CurrentValue * 1000;
-            })
-            .DisposeItWith(Disposable);
-        _positionClient
-            .HomeDistance.Subscribe(d =>
-                HomeDistance.Value = DistanceUnitItem.Value.CurrentUnitItem.Value.Print(d, "N2")
-            )
-            .DisposeItWith(Disposable);
-        _positionClient
-            .TargetDistance.Subscribe(d =>
-            {
-                TargetDistance.Value = d is double.NaN
-                    ? RS.NotANumber
-                    : DistanceUnitItem.Value.CurrentUnitItem.Value.Print(d, "N2");
-            })
-            .DisposeItWith(Disposable);
-        _missionClient
-            .AllMissionsDistance.Subscribe(d =>
-            {
-                var missionDistance = d * 1000;
-                var totalDistance = missionDistance;
-                MissionDistance.Value = DistanceUnitItem.Value.CurrentUnitItem.Value.Print(
-                    totalDistance,
-                    "N2"
-                );
-                var start = _missionClient.MissionItems.FirstOrDefault();
-                var stop = _missionClient.MissionItems.LastOrDefault(missionItem =>
-                    missionItem.Command.Value != MavCmd.MavCmdNavReturnToLaunch
-                );
-                if (start != null && stop != null)
-                {
-                    totalDistance += GeoMath.Distance(
-                        start.Location.Value,
-                        _positionClient.Home.CurrentValue
-                    );
-                    totalDistance += GeoMath.Distance(
-                        stop.Location.Value,
-                        _positionClient.Home.CurrentValue
-                    );
-                }
-
-                if (totalDistance < 1)
-                {
-                    totalDistance = missionDistance;
-                }
-
-                TotalDistance.Value = DistanceUnitItem.Value.CurrentUnitItem.Value.Print(
-                    totalDistance,
-                    "N2"
-                );
-            })
-            .DisposeItWith(Disposable);
-
-        CurrentIndex
+        _currentIndex
             .Subscribe(c =>
             {
                 if (_missionClient.MissionItems.Count == 0)
@@ -201,32 +282,15 @@ public class MissionProgressViewModel : RoutableViewModel
             })
             .DisposeItWith(Disposable);
 
-        _missionClient.Reached.Subscribe(i => ReachedIndex.Value = i).DisposeItWith(Disposable);
-        _missionClient.Current.Subscribe(i => CurrentIndex.Value = i).DisposeItWith(Disposable);
+        _missionClient.Reached.Subscribe(i => _reachedIndex.Value = i).DisposeItWith(Disposable);
+        _missionClient.Current.Subscribe(i => _currentIndex.Value = i).DisposeItWith(Disposable);
         InitiateMissionPoints(_cts.Token)
-            .SafeFireAndForget(ex => log.LogError(ex, "Mission progress error"));
+            .SafeFireAndForget(ex => _log.LogError(ex, "Mission progress error"));
 
-        _distanceBeforeMission =
-            _missionClient.MissionItems.Count == 0
-                ? 0
-                : GeoMath.Distance(
-                    _positionClient.Current.CurrentValue,
-                    _missionClient.MissionItems[0].Location.Value
-                );
-        TotalDistance.Value = DistanceUnitItem.Value.CurrentUnitItem.Value.Print(
-            _totalMissionDistance + (_distanceBeforeMission * 1000),
-            "N2"
-        );
-        var rtl = _missionClient.MissionItems.FirstOrDefault(_ =>
-            _.Command.Value == MavCmd.MavCmdNavReturnToLaunch
-        );
-        if (rtl is not null)
-        {
-            TotalDistance.Value = DistanceUnitItem.Value.CurrentUnitItem.Value.Print(
-                _totalMissionDistance + (_distanceBeforeMission * 2000),
-                "N2"
-            );
-        }
+        DistanceUnitSymbol = DistanceUnit
+            .CurrentUnitItem.Select(item => item.Symbol)
+            .ToBindableReactiveProperty<string>()
+            .DisposeItWith(Disposable);
 
         Observable
             .Timer(TimeSpan.Zero, TimeSpan.FromSeconds(1))
@@ -316,12 +380,12 @@ public class MissionProgressViewModel : RoutableViewModel
         switch (_device)
         {
             case ArduCopterClientDevice:
-                if (_isOnMission && ReachedIndex.Value > 0)
+                if (_isOnMission && _reachedIndex.Value > 0)
                 {
                     return Math.Abs((missionDistance - distance) / missionDistance);
                 }
 
-                if (CurrentIndex.Value == _missionClient.MissionItems.Count)
+                if (_currentIndex.Value == _missionClient.MissionItems.Count)
                 {
                     return 1;
                 }
@@ -334,7 +398,10 @@ public class MissionProgressViewModel : RoutableViewModel
 
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
-        return [];
+        yield return MissionDistance;
+        yield return HomeDistance;
+        yield return TargetDistance;
+        yield return TotalDistance;
     }
 
     public BindableAsyncCommand UpdateMission { get; set; }
@@ -342,14 +409,15 @@ public class MissionProgressViewModel : RoutableViewModel
     public BindableReactiveProperty<string> MissionFlightTime { get; } =
         new($"- {RS.MissionProgressViewModel_MissionFlightTime_Symbol}");
 
-    public BindableReactiveProperty<IUnit> DistanceUnitItem { get; } = new();
+    public IUnit DistanceUnit { get; }
     public BindableReactiveProperty<double> DownloadProgress { get; } = new();
-    public BindableReactiveProperty<string> MissionDistance { get; } = new(RS.NotANumber);
-    public BindableReactiveProperty<string> TotalDistance { get; } = new(RS.NotANumber);
-    public BindableReactiveProperty<string> HomeDistance { get; } = new(RS.NotANumber);
-    public BindableReactiveProperty<string> TargetDistance { get; } = new(RS.NotANumber);
+    public HistoricalUnitProperty MissionDistance { get; }
+    public HistoricalUnitProperty TotalDistance { get; }
+    public HistoricalUnitProperty HomeDistance { get; }
+    public HistoricalUnitProperty TargetDistance { get; }
     public BindableReactiveProperty<bool> IsDownloaded { get; } = new(false);
     public BindableReactiveProperty<double> PathProgress { get; } = new(0);
+    public BindableReactiveProperty<string> DistanceUnitSymbol { get; }
 
     #region Dispose
 
@@ -359,7 +427,7 @@ public class MissionProgressViewModel : RoutableViewModel
         {
             _cts.Cancel();
             MissionFlightTime.Dispose();
-            DistanceUnitItem.Dispose();
+            DistanceUnit.Dispose();
             DownloadProgress.Dispose();
             MissionDistance.Dispose();
             TargetDistance.Dispose();
@@ -367,8 +435,8 @@ public class MissionProgressViewModel : RoutableViewModel
             HomeDistance.Dispose();
             IsDownloaded.Dispose();
             PathProgress.Dispose();
-            CurrentIndex.Dispose();
-            ReachedIndex.Dispose();
+            _currentIndex.Dispose();
+            _reachedIndex.Dispose();
         }
 
         base.Dispose(disposing);

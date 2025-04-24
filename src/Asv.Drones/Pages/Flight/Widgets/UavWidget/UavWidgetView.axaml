@@ -102,7 +102,7 @@
                     MainBrush="{Binding AltitudeStatusBrush}"
                     SecondaryBrush="{DynamicResource NavySecondaryBrush}"
                     Title="{x:Static drones:RS.UavRttItem_Altitude}"
-                    Units="{Binding AltitudeMslSymbol.Value}"
+                    Units="{Binding AltitudeSymbol.Value}"
                     Icon="Altimeter"
                     CornerRadius="4">
                     <avalonia:TelemBox.CustomContent>
@@ -251,6 +251,6 @@
             </Viewbox>
         </WrapPanel>
         <drones:MissionProgressView Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"
-                                     DataContext="{Binding MissionProgress.Value}" />
+                                     DataContext="{Binding MissionProgress}" />
     </Grid>
 </UserControl>
