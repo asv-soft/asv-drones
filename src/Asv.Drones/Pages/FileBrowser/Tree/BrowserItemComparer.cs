@@ -2,44 +2,42 @@
 
 namespace Asv.Drones;
 
-public sealed class BrowserItemComparer : IComparer<IBrowserItem>
+public sealed class BrowserItemComparer : IComparer<IBrowserItemViewModel>
 {
     public static readonly BrowserItemComparer Instance = new();
 
     private BrowserItemComparer() { }
 
-    public int Compare(IBrowserItem? x, IBrowserItem? y)
+    public int Compare(IBrowserItemViewModel? x, IBrowserItemViewModel? y)
     {
-        if (x is DirectoryItem && y is not DirectoryItem)
+        if (x is DirectoryItemViewModel && y is not DirectoryItemViewModel)
         {
             return -1;
         }
 
-        if (y is DirectoryItem && x is not DirectoryItem)
+        if (y is DirectoryItemViewModel && x is not DirectoryItemViewModel)
         {
             return 1;
         }
 
         return x switch
         {
-            DirectoryItem dirX when y is DirectoryItem dirY =>
+            DirectoryItemViewModel dirX when y is DirectoryItemViewModel dirY =>
                 DirectoryItemComparer.Instance.Compare(dirX, dirY),
-            FileItem fileX when y is FileItem fileY => FileItemComparer.Instance.Compare(
-                fileX,
-                fileY
-            ),
+            FileItemViewModel fileX when y is FileItemViewModel fileY =>
+                FileItemComparer.Instance.Compare(fileX, fileY),
             _ => 0,
         };
     }
 }
 
-public sealed class DirectoryItemComparer : IComparer<DirectoryItem>
+public sealed class DirectoryItemComparer : IComparer<DirectoryItemViewModel>
 {
     public static readonly DirectoryItemComparer Instance = new();
 
     private DirectoryItemComparer() { }
 
-    public int Compare(DirectoryItem? x, DirectoryItem? y)
+    public int Compare(DirectoryItemViewModel? x, DirectoryItemViewModel? y)
     {
         switch (x)
         {
@@ -59,13 +57,13 @@ public sealed class DirectoryItemComparer : IComparer<DirectoryItem>
     }
 }
 
-public sealed class FileItemComparer : IComparer<FileItem>
+public sealed class FileItemComparer : IComparer<FileItemViewModel>
 {
     public static readonly FileItemComparer Instance = new();
 
     private FileItemComparer() { }
 
-    public int Compare(FileItem? x, FileItem? y)
+    public int Compare(FileItemViewModel? x, FileItemViewModel? y)
     {
         switch (x)
         {

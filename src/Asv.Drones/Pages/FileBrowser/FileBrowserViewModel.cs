@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
-using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
@@ -29,12 +28,17 @@ public class FileBrowserViewModel
 
     private readonly YesOrNoDialogPrefab _yesNoDialog;
     private readonly IDialogService _dialogService;
+    private readonly FileSystemWatcher _watcher;
     private readonly ILogger<FileBrowserViewModel> _log;
     private readonly INavigationService _navigation;
     private readonly string _localRootPath;
+    private readonly FileSystemEventHandler? _createdHandler;
+    private readonly FileSystemEventHandler? _deletedHandler;
+    private readonly RenamedEventHandler? _renamedHandler;
+    private readonly FileSystemEventHandler? _changedHandler;
 
-    private readonly ObservableList<IBrowserItem> _localItems;
-    private readonly ObservableList<IBrowserItem> _remoteItems;
+    private readonly ObservableList<IBrowserItemViewModel> _localItems;
+    private readonly ObservableList<IBrowserItemViewModel> _remoteItems;
 
     public FileBrowserViewModel()
         : this(
@@ -47,29 +51,6 @@ public class FileBrowserViewModel
         )
     {
         DesignTime.ThrowIfNotDesignMode();
-
-        _localItems =
-        [
-            new DirectoryItem("0", string.Empty, "/", "test"),
-            new DirectoryItem("1", "0", "/", "test"),
-            new DirectoryItem("2", "0", "/", "test"),
-            new DirectoryItem("0_1", string.Empty, "/", "test"),
-            new DirectoryItem("0_2", string.Empty, "/", "test"),
-        ];
-        _remoteItems =
-        [
-            new DirectoryItem("0", string.Empty, "/", "test"),
-            new DirectoryItem("1", "0", "/", "test"),
-            new DirectoryItem("2", "0", "/", "test"),
-            new DirectoryItem("0_1", string.Empty, "/", "test"),
-            new DirectoryItem("0_2", string.Empty, "/", "test"),
-        ];
-
-        LocalItemsView = new BrowserTree(_localItems, _localRootPath);
-        RemoteItemsView = new BrowserTree(
-            _remoteItems,
-            MavlinkFtpHelper.DirectorySeparator.ToString()
-        );
     }
 
     [ImportingConstructor]
@@ -89,67 +70,110 @@ public class FileBrowserViewModel
         _navigation = navigation;
         _yesNoDialog = dialogService.GetDialogPrefab<YesOrNoDialogPrefab>();
 
+        _watcher = new FileSystemWatcher(_localRootPath)
+        {
+            NotifyFilter =
+                NotifyFilters.FileName | NotifyFilters.DirectoryName | NotifyFilters.Size,
+            IncludeSubdirectories = true,
+            EnableRaisingEvents = true,
+        };
+        _createdHandler = (_, _) => RefreshLocalCommand?.Execute(Unit.Default);
+        _deletedHandler = (_, _) => RefreshLocalCommand?.Execute(Unit.Default);
+        _renamedHandler = (_, _) => RefreshLocalCommand?.Execute(Unit.Default);
+        _changedHandler = (_, _) => RefreshLocalCommand?.Execute(Unit.Default);
+
+        _watcher.Created += _createdHandler;
+        _watcher.Deleted += _deletedHandler;
+        _watcher.Renamed += _renamedHandler;
+        _watcher.Changed += _changedHandler;
+
         _localItems = [];
         _remoteItems = [];
-        _localItems.DisposeRemovedItems();
+        _localItems.DisposeRemovedItems(); // TODO: check if all the nodes have proper IRoutableParents. The root node must have this viewmodel as a parent.
         _remoteItems.DisposeRemovedItems();
 
-        LocalItemsView = new BrowserTree(_localItems, _localRootPath);
-        RemoteItemsView = new BrowserTree(
+        LocalItemsTree = new BrowserTree(_localItems, _localRootPath);
+        RemoteItemsTree = new BrowserTree(
             _remoteItems,
             MavlinkFtpHelper.DirectorySeparator.ToString()
         );
 
-        LocalSearchText = new BindableReactiveProperty<string>();
-        RemoteSearchText = new BindableReactiveProperty<string>();
+        var localSearchText = new ReactiveProperty<string?>();
+        var remoteSearchText = new ReactiveProperty<string?>();
+
+        LocalSearchText = new HistoricalStringProperty(
+            $"{PageId}{nameof(LocalSearchText)}",
+            localSearchText
+        )
+        {
+            Parent = this,
+        };
+        RemoteSearchText = new HistoricalStringProperty(
+            $"{PageId}{nameof(RemoteSearchText)}",
+            remoteSearchText
+        )
+        {
+            Parent = this,
+        };
+
         LocalSelectedItem = new BindableReactiveProperty<BrowserNode?>(null);
         RemoteSelectedItem = new BindableReactiveProperty<BrowserNode?>(null);
         Progress = new BindableReactiveProperty<double>(0);
         IsDownloadPopupOpen = new BindableReactiveProperty<bool>(false);
     }
 
-    private IFtpClient? Client { get; set; }
     private IFtpClientEx ClientEx { get; set; }
-    public BrowserTree LocalItemsView { get; }
-    public BrowserTree RemoteItemsView { get; }
+    private bool IsClientBusy { get; set; }
+    public BrowserTree LocalItemsTree { get; }
+    public BrowserTree RemoteItemsTree { get; }
     public BindableReactiveProperty<BrowserNode?> LocalSelectedItem { get; }
     public BindableReactiveProperty<BrowserNode?> RemoteSelectedItem { get; }
-    public BindableReactiveProperty<string> LocalSearchText { get; }
-    public BindableReactiveProperty<string> RemoteSearchText { get; }
+    public HistoricalStringProperty LocalSearchText { get; }
+    public HistoricalStringProperty RemoteSearchText { get; }
     public BindableReactiveProperty<double> Progress { get; }
     public BindableReactiveProperty<bool> IsDownloadPopupOpen { get; }
 
     #region Commands
 
     public ReactiveCommand ShowDownloadPopupCommand { get; private set; }
-    public ReactiveCommand UploadCommand { get; private set; }
-    public ReactiveCommand DownloadCommand { get; private set; }
-    public ReactiveCommand BurstDownloadCommand { get; private set; }
+    public ReactiveCommand<BrowserNode> UploadCommand { get; private set; }
+    public ReactiveCommand<BrowserNode> DownloadCommand { get; private set; }
+    public ReactiveCommand<BrowserNode> BurstDownloadCommand { get; private set; }
     public ReactiveCommand CreateRemoteFolderCommand { get; private set; }
     public ReactiveCommand CreateLocalFolderCommand { get; private set; }
     public ReactiveCommand RefreshRemoteCommand { get; private set; }
     public ReactiveCommand RefreshLocalCommand { get; private set; }
-    public ReactiveCommand RemoveLocalItemCommand { get; private set; }
-    public ReactiveCommand RemoveRemoteItemCommand { get; set; }
-    public ReactiveCommand<BrowserNode> SetInEditModeCommand { get; private set; } // TODO: implement
-    public ReactiveCommand ClearLocalSearchBoxCommand { get; private set; } // TODO: implement
-    public ReactiveCommand ClearRemoteSearchBoxCommand { get; private set; } // TODO: implement
-    public ReactiveCommand CompareSelectedItemsCommand { get; private set; } // TODO: implement
-    public ReactiveCommand FindFileOnLocalCommand { get; private set; } // TODO: implement
-    public ReactiveCommand CalculateLocalCrc32Command { get; private set; } // TODO: implement
-    public ReactiveCommand CalculateRemoteCrc32Command { get; private set; } // TODO: implement
+    public ReactiveCommand<BrowserNode> RemoveLocalItemCommand { get; private set; }
+    public ReactiveCommand<BrowserNode> RemoveRemoteItemCommand { get; private set; }
+    public ReactiveCommand<BrowserNode> LocalRenameCommand { get; private set; }
+    public ReactiveCommand<BrowserNode> RemoteRenameCommand { get; private set; }
+    public ReactiveCommand ClearLocalSearchBoxCommand { get; private set; }
+    public ReactiveCommand ClearRemoteSearchBoxCommand { get; private set; }
+    public ReactiveCommand<Unit> CompareSelectedItemsCommand { get; private set; }
+    public ReactiveCommand FindFileOnLocalCommand { get; private set; }
+    public ReactiveCommand<BrowserNode> CalculateLocalCrc32Command { get; private set; }
+    public ReactiveCommand<BrowserNode> CalculateRemoteCrc32Command { get; private set; }
 
     private Observable<bool> CanUpload =>
-        LocalSelectedItem.Select(x => x?.Base is { FtpEntryType: FtpEntryType.File });
+        LocalSelectedItem.Select(x =>
+            x?.Base is { FtpEntryType: FtpEntryType.File } && !IsClientBusy
+        );
 
     private Observable<bool> CanDownload =>
-        RemoteSelectedItem.Select(x => x?.Base is { FtpEntryType: FtpEntryType.File });
+        RemoteSelectedItem.Select(x =>
+            x?.Base is { FtpEntryType: FtpEntryType.File } && !IsClientBusy
+        );
 
-    private Observable<bool> CanEdit =>
+    private Observable<bool> CanRemoveLocal =>
         LocalSelectedItem.Select(x => x?.Base is { IsInEditMode: false });
 
-    private Observable<bool> CanFindFileOnLocal =>
+    private Observable<bool> CanRemoveRemote =>
         RemoteSelectedItem.Select(x => x?.Base is { IsInEditMode: false });
+
+    private Observable<bool> CanFindFileOnLocal =>
+        RemoteSelectedItem.Select(x =>
+            x?.Base is { IsInEditMode: false, FtpEntryType: FtpEntryType.File }
+        );
 
     private Observable<bool> CanCompareSelectedItems =>
         LocalSelectedItem.CombineLatest(
@@ -169,66 +193,87 @@ public class FileBrowserViewModel
             x?.Base is { IsInEditMode: false, FtpEntryType: FtpEntryType.File }
         );
 
+    private Observable<bool> CanRenameLocal =>
+        LocalSelectedItem.Select(x => x?.Base is { IsInEditMode: false });
+
+    private Observable<bool> CanRenameRemote =>
+        RemoteSelectedItem.Select(x => x?.Base is { IsInEditMode: false });
+
     #endregion
 
     #region Commands implementation
 
     private void InitCommands()
     {
-        // Not implemented
-        SetInEditModeCommand = CanEdit.ToReactiveCommand<BrowserNode>(SetEditModeImpl);
-        ClearLocalSearchBoxCommand = new ReactiveCommand(_ => LocalSearchText.OnNext(string.Empty));
+        ClearLocalSearchBoxCommand = new ReactiveCommand(_ =>
+            LocalSearchText.ViewValue.OnNext(string.Empty)
+        );
         ClearRemoteSearchBoxCommand = new ReactiveCommand(_ =>
-            RemoteSearchText.OnNext(string.Empty)
+            RemoteSearchText.ViewValue.OnNext(string.Empty)
         );
         FindFileOnLocalCommand = CanFindFileOnLocal.ToReactiveCommand(_ => FindFileOnLocalImpl());
-        CompareSelectedItemsCommand = CanCompareSelectedItems.ToReactiveCommand(_ =>
-            CompareSelectedItemsImpl()
+        CompareSelectedItemsCommand = CanCompareSelectedItems.ToReactiveCommand<Unit>(
+            async (_, ct) => await CompareSelectedItemsImpl(ct),
+            awaitOperation: AwaitOperation.Drop
         );
-        CalculateLocalCrc32Command = CanCalculateLocalCrc32.ToReactiveCommand(_ =>
-            CalculateLocalCrc32Impl()
+        CalculateLocalCrc32Command = CanCalculateLocalCrc32.ToReactiveCommand<BrowserNode>(
+            async (node, ct) => await CalculateLocalCrc32Impl(node, ct),
+            awaitOperation: AwaitOperation.Drop
         );
-        CalculateRemoteCrc32Command = CanCalculateRemoteCrc32.ToReactiveCommand(_ =>
-            CalculateRemoteCrc32Impl()
+        CalculateRemoteCrc32Command = CanCalculateRemoteCrc32.ToReactiveCommand<BrowserNode>(
+            async (node, ct) => await CalculateRemoteCrc32Impl(node, ct),
+            awaitOperation: AwaitOperation.Drop
         );
-
-        // Implemented
         RefreshRemoteCommand = new ReactiveCommand(async (_, ct) => await RefreshRemoteImpl(ct));
-        RefreshLocalCommand = new ReactiveCommand(async (_, _) => await RefreshLocalImpl());
+        RefreshLocalCommand = new ReactiveCommand(RefreshLocalImpl);
 
-        UploadCommand = CanUpload.ToReactiveCommand(_ => SafeUpload());
-        DownloadCommand = CanDownload.ToReactiveCommand(_ => SafeDownload());
-        BurstDownloadCommand = CanDownload.ToReactiveCommand(_ => SafeBurstDownload());
+        LocalRenameCommand = CanRenameLocal.ToReactiveCommand<BrowserNode>(
+            LocalRenameImpl,
+            awaitOperation: AwaitOperation.Drop
+        );
+        RemoteRenameCommand = CanRenameRemote.ToReactiveCommand<BrowserNode>(
+            async (node, ct) =>
+                await RemoteRenameImpl(node, ct).ContinueWith(_ => RefreshRemoteImpl(ct), ct),
+            awaitOperation: AwaitOperation.Drop
+        );
+
+        UploadCommand = CanUpload.ToReactiveCommand<BrowserNode>(
+            async (node, ct) =>
+            {
+                await UploadImpl(node, ct).ContinueWith(_ => RefreshRemoteImpl(ct), ct);
+                IsClientBusy = false;
+            }
+        );
+        DownloadCommand = CanDownload.ToReactiveCommand<BrowserNode>(
+            async (node, ct) =>
+            {
+                await DownloadImpl(node, ct);
+                IsClientBusy = false;
+            }
+        );
+        BurstDownloadCommand = CanDownload.ToReactiveCommand<BrowserNode>(
+            async (node, ct) =>
+            {
+                await BurstDownloadImpl(node, ct);
+                IsClientBusy = false;
+            }
+        );
         CreateRemoteFolderCommand = new ReactiveCommand(
             async (_, ct) =>
-            {
-                await CreateRemoteFolderImpl(ct);
-                await RefreshRemoteImpl(ct);
-            },
+                await CreateRemoteFolderImpl(ct).ContinueWith(_ => RefreshRemoteImpl(ct), ct),
             awaitOperation: AwaitOperation.Drop
         );
         CreateLocalFolderCommand = new ReactiveCommand(
-            async (_, _) =>
-            {
-                await CreateLocalFolderImpl();
-                await RefreshLocalImpl();
-            },
+            CreateLocalFolderImpl,
             awaitOperation: AwaitOperation.Drop
         );
-        RemoveLocalItemCommand = new ReactiveCommand(
-            async (_, _) =>
-            {
-                await RemoveLocalItemImpl();
-                await RefreshLocalImpl();
-            },
+        RemoveLocalItemCommand = CanRemoveLocal.ToReactiveCommand<BrowserNode>(
+            RemoveLocalItemImpl,
             awaitOperation: AwaitOperation.Drop
         );
-        RemoveRemoteItemCommand = new ReactiveCommand(
-            async (_, ct) =>
-            {
-                await RemoveRemoteItemImpl(ct);
-                await RefreshRemoteImpl(ct);
-            },
+        RemoveRemoteItemCommand = CanRemoveRemote.ToReactiveCommand<BrowserNode>(
+            async (node, ct) =>
+                await RemoveRemoteItemImpl(node, ct).ContinueWith(_ => RefreshRemoteImpl(ct), ct),
             awaitOperation: AwaitOperation.Drop
         );
 
@@ -252,6 +297,16 @@ public class FileBrowserViewModel
             }
         });
 
+        _sub2 = LocalSearchText // TODO: Remove from this method everything that is not about commands initialization
+            .ViewValue.DistinctUntilChanged()
+            .ThrottleLast(TimeSpan.FromMilliseconds(500)) // TODO: make constants for common values
+            .Subscribe(text => PerformSearch(LocalItemsTree, LocalSelectedItem, text));
+
+        _sub3 = RemoteSearchText
+            .ViewValue.DistinctUntilChanged()
+            .ThrottleLast(TimeSpan.FromMilliseconds(500)) // TODO: make constants for common values
+            .Subscribe(text => PerformSearch(RemoteItemsTree, RemoteSelectedItem, text));
+
         RefreshRemoteCommand.SubscribeOnUIThreadDispatcher();
         RefreshLocalCommand.SubscribeOnUIThreadDispatcher();
 
@@ -259,94 +314,8 @@ public class FileBrowserViewModel
         RefreshLocalCommand.Execute(Unit.Default);
     }
 
-    #region Safe
-
-    private CancellationTokenSource _uploadCts = new();
-    private CancellationTokenSource _downloadCts = new();
-    private CancellationTokenSource _burstDownloadCts = new();
-
-    private void SafeUpload()
+    private async Task UploadImpl(BrowserNode item, CancellationToken ct)
     {
-        _uploadCts.Cancel();
-        _uploadCts = new CancellationTokenSource();
-
-        UploadImpl(_uploadCts.Token)
-            .ContinueWith(_ => RefreshRemoteImpl(_uploadCts.Token))
-            .SafeFireAndForget(e =>
-            {
-                switch (e)
-                {
-                    case OperationCanceledException:
-                        _log.LogWarning("Upload was canceled.");
-                        break;
-                    case FtpNackException:
-                        _log.LogError(e, "Server returned NACK.");
-                        break;
-                    case not null:
-                        _log.LogError(e, "Unexpected error during upload.");
-                        break;
-                }
-            });
-    }
-
-    private void SafeDownload()
-    {
-        _downloadCts.Cancel();
-        _downloadCts = new CancellationTokenSource();
-
-        DownloadImpl(_downloadCts.Token)
-            .ContinueWith(_ => RefreshLocalImpl())
-            .SafeFireAndForget(e =>
-            {
-                switch (e)
-                {
-                    case OperationCanceledException:
-                        _log.LogWarning("Download was canceled.");
-                        break;
-                    case FtpNackException:
-                        _log.LogError(e, "Server returned NACK.");
-                        break;
-                    case not null:
-                        _log.LogError(e, "Unexpected error during download.");
-                        break;
-                }
-            });
-    }
-
-    private void SafeBurstDownload()
-    {
-        _burstDownloadCts.Cancel();
-        _burstDownloadCts = new CancellationTokenSource();
-
-        BurstDownloadImpl(_burstDownloadCts.Token)
-            .ContinueWith(_ => RefreshLocalImpl())
-            .SafeFireAndForget(e =>
-            {
-                switch (e)
-                {
-                    case OperationCanceledException:
-                        _log.LogWarning("Burst download was canceled.");
-                        break;
-                    case FtpNackException:
-                        _log.LogError(e, "Server returned NACK.");
-                        break;
-                    case not null:
-                        _log.LogError(e, "Unexpected error during burst download.");
-                        break;
-                }
-            });
-    }
-
-    #endregion
-
-    private async Task UploadImpl(CancellationToken ct)
-    {
-        var item = LocalSelectedItem.Value;
-        if (item is null)
-        {
-            return;
-        }
-
         var payload = new YesOrNoDialogPayload
         {
             Title = RS.FileBrowserViewModel_UploadingDialog_Title,
@@ -360,6 +329,8 @@ public class FileBrowserViewModel
 
         if (res)
         {
+            IsClientBusy = true;
+
             await using var stream = new FileStream(
                 item.Base.Path,
                 FileMode.Open,
@@ -371,6 +342,7 @@ public class FileBrowserViewModel
             {
                 path = RemoteSelectedItem.Value.Base.HasChildren
                     ? RemoteSelectedItem.Value.Base.Path
+                        + $"{LocalSelectedItem.Value?.Base.Header ?? "unknown"}"
                     : RemoteSelectedItem.Value.Base.Path[
                         ..RemoteSelectedItem.Value.Base.Path.LastIndexOf(
                             MavlinkFtpHelper.DirectorySeparator
@@ -389,35 +361,34 @@ public class FileBrowserViewModel
             await ClientEx.UploadFile(
                 path,
                 stream,
-                new Progress<double>(i => Progress.OnNext(i)),
+                new Progress<double>(i =>
+                {
+                    if (!Progress.IsCompletedOrDisposed)
+                    {
+                        Progress.OnNext(i);
+                    }
+                }),
                 ct
             );
         }
     }
 
-    private async Task DownloadImpl(CancellationToken ct)
+    private async ValueTask DownloadImpl(BrowserNode item, CancellationToken ct)
     {
-        var item = RemoteSelectedItem.Value;
-        if (item == null)
-        {
-            return;
-        }
-
         var path = _localRootPath;
+
         if (LocalSelectedItem.Value != null)
         {
-            path = Path.Combine(
-                LocalSelectedItem.Value.Base.HasChildren
-                    ? LocalSelectedItem.Value.Base.Path
-                    : LocalSelectedItem.Value.Base.Path[
-                        ..LocalSelectedItem.Value.Base.Path.LastIndexOf(Path.DirectorySeparatorChar)
-                    ],
-                RemoteSelectedItem.Value!.Base.Header!
-            );
-        }
-        else
-        {
-            path = Path.Combine(path, RemoteSelectedItem.Value!.Base.Header!);
+            if (LocalSelectedItem.Value.Base.HasChildren)
+            {
+                path = LocalSelectedItem.Value.Base.Path;
+            }
+            else
+            {
+                path = LocalSelectedItem.Value.Base.Path[
+                    ..LocalSelectedItem.Value.Base.Path.LastIndexOf(Path.DirectorySeparatorChar)
+                ];
+            }
         }
 
         var payload = new YesOrNoDialogPayload
@@ -433,48 +404,51 @@ public class FileBrowserViewModel
 
         if (res)
         {
+            IsClientBusy = true;
+
             await using MemoryStream stream = new();
 
             await ClientEx.DownloadFile(
                 item.Base.Path,
                 stream,
-                new Progress<double>(i => Progress.OnNext(i)),
+                new Progress<double>(i =>
+                {
+                    if (!Progress.IsCompletedOrDisposed)
+                    {
+                        Progress.OnNext(i);
+                    }
+                }),
                 cancel: ct
             );
-            await File.WriteAllBytesAsync(path, stream.ToArray(), ct);
-            _log.LogInformation(
-                "File downloaded successfully: {Header}",
-                RemoteSelectedItem.Value?.Base.Header
+            await LocalFilesMixin.WriteFileAsync(
+                path,
+                RemoteSelectedItem.Value!.Base.Header!, // TODO: ! is unacceptable
+                stream.ToArray(),
+                ct,
+                _log
             );
         }
     }
 
-    private async Task BurstDownloadImpl(CancellationToken ct)
+    private async ValueTask BurstDownloadImpl(BrowserNode item, CancellationToken ct)
     {
-        var item = RemoteSelectedItem.Value;
-        if (item == null)
-        {
-            return;
-        }
-
         var path = _localRootPath;
+
         if (LocalSelectedItem.Value != null)
         {
-            path = Path.Combine(
-                LocalSelectedItem.Value.Base.HasChildren
-                    ? LocalSelectedItem.Value.Base.Path
-                    : LocalSelectedItem.Value.Base.Path[
-                        ..LocalSelectedItem.Value.Base.Path.LastIndexOf(Path.DirectorySeparatorChar)
-                    ],
-                RemoteSelectedItem.Value!.Base.Header!
-            );
-        }
-        else
-        {
-            path = Path.Combine(path, RemoteSelectedItem.Value!.Base.Header!);
+            if (LocalSelectedItem.Value.Base.HasChildren)
+            {
+                path = LocalSelectedItem.Value.Base.Path;
+            }
+            else
+            {
+                path = LocalSelectedItem.Value.Base.Path[
+                    ..LocalSelectedItem.Value.Base.Path.LastIndexOf(Path.DirectorySeparatorChar)
+                ];
+            }
         }
 
-        using var viewModel = new BurstDownloadDialogViewModel("burst.dialog");
+        using var viewModel = new BurstDownloadDialogViewModel();
         var dialog = new ContentDialog(viewModel, _navigation)
         {
             Title = RS.FileBrowserViewModel_BurstDownloadDialog_Title,
@@ -488,26 +462,35 @@ public class FileBrowserViewModel
 
         if (result == ContentDialogResult.Primary)
         {
+            IsClientBusy = true;
+
             await using MemoryStream stream = new();
+            var size = viewModel.PacketSize.Value ?? MavlinkFtpHelper.MaxDataSize;
 
             await ClientEx.BurstDownloadFile(
                 item.Base.Path,
                 stream,
-                new Progress<double>(i => Progress.OnNext(i)),
-                viewModel.DialogResult,
+                new Progress<double>(i =>
+                {
+                    if (!Progress.IsCompletedOrDisposed)
+                    {
+                        Progress.OnNext(i);
+                    }
+                }),
+                size,
                 ct
             );
-            await File.WriteAllBytesAsync(path, stream.ToArray(), ct);
-            _log.LogInformation(
-                "File downloaded successfully: {Header}",
-                RemoteSelectedItem.Value?.Base.Header
+            await LocalFilesMixin.WriteFileAsync(
+                path,
+                RemoteSelectedItem.Value!.Base.Header!,
+                stream.ToArray(),
+                ct,
+                _log
             );
-
-            await RefreshLocalImpl();
         }
     }
 
-    private async Task RemoveLocalItemImpl()
+    private async ValueTask RemoveLocalItemImpl(BrowserNode item, CancellationToken ct)
     {
         var payload = new YesOrNoDialogPayload
         {
@@ -521,18 +504,18 @@ public class FileBrowserViewModel
             return;
         }
 
-        if (LocalSelectedItem.Value?.Base is { FtpEntryType: FtpEntryType.Directory })
+        if (item.Base is { FtpEntryType: FtpEntryType.Directory })
         {
-            Directory.Delete(LocalSelectedItem.Value.Base.Path, true);
+            LocalFilesMixin.RemoveDirectory(item.Base.Path, true, _log);
         }
 
-        if (LocalSelectedItem.Value?.Base is { FtpEntryType: FtpEntryType.File })
+        if (item.Base is { FtpEntryType: FtpEntryType.File })
         {
-            File.Delete(LocalSelectedItem.Value.Base.Path);
+            LocalFilesMixin.RemoveFile(item.Base.Path, _log);
         }
     }
 
-    private async Task RemoveRemoteItemImpl(CancellationToken ct)
+    private async Task RemoveRemoteItemImpl(BrowserNode item, CancellationToken ct)
     {
         var payload = new YesOrNoDialogPayload
         {
@@ -546,279 +529,375 @@ public class FileBrowserViewModel
             return;
         }
 
-        if (RemoteSelectedItem.Value?.Base is { FtpEntryType: FtpEntryType.Directory })
+        switch (item.Base)
         {
-            await RemoveDirectoryRecursive(RemoteSelectedItem.Value.Base.Path);
-        }
-
-        if (RemoteSelectedItem.Value?.Base is { FtpEntryType: FtpEntryType.File })
-        {
-            await ClientEx.Base.RemoveFile(RemoteSelectedItem.Value.Base.Path, ct);
-        }
-
-        return;
-
-        async Task RemoveDirectoryRecursive(string directoryPath)
-        {
-            var itemsInDir = ClientEx
-                .Entries.Where(x => x.Value.ParentPath == directoryPath)
-                .ToList();
-
-            foreach (var item in itemsInDir)
-            {
-                switch (item.Value.Type)
-                {
-                    case FtpEntryType.Directory:
-                        await RemoveDirectoryRecursive(item.Key);
-                        break;
-                    case FtpEntryType.File:
-                        await ClientEx.Base.RemoveFile(item.Key, ct);
-                        break;
-                    default:
-                        _log.LogError("Unknown FTP entry type: ({type})", item.Value.Type);
-                        break;
-                }
-            }
-
-            await ClientEx.Base.RemoveDirectory(directoryPath, ct);
+            case { FtpEntryType: FtpEntryType.Directory }:
+                await ClientEx.RemoveDirectoryAsync(item.Base.Path, true, ct, _log);
+                break;
+            case { FtpEntryType: FtpEntryType.File }:
+                await ClientEx.RemoveFileAsync(item.Base.Path, ct, _log);
+                break;
         }
     }
 
     private async Task CreateRemoteFolderImpl(CancellationToken ct)
     {
-        var folderNumber = 1;
-        while (true)
+        string path;
+
+        if (RemoteSelectedItem.Value != null)
         {
-            var name = $"Folder{folderNumber}{MavlinkFtpHelper.DirectorySeparator}";
-            string path;
-            if (RemoteSelectedItem.Value != null)
+            if (RemoteSelectedItem.Value!.Base.FtpEntryType == FtpEntryType.Directory)
             {
-                path =
-                    RemoteSelectedItem.Value!.Base.FtpEntryType == FtpEntryType.Directory
-                        ? Path.Combine(RemoteSelectedItem.Value.Base.Path, name)
-                        : Path.Combine(
-                            RemoteSelectedItem.Value.Base.Path[
-                                ..RemoteSelectedItem.Value.Base.Path.LastIndexOf(
-                                    MavlinkFtpHelper.DirectorySeparator
-                                )
-                            ],
-                            name
-                        );
+                path = RemoteSelectedItem.Value.Base.Path;
             }
             else
             {
-                path = $"{MavlinkFtpHelper.DirectorySeparator}{name}";
+                path = RemoteSelectedItem.Value.Base.Path[
+                    ..RemoteSelectedItem.Value.Base.Path.LastIndexOf(
+                        MavlinkFtpHelper.DirectorySeparator
+                    )
+                ];
             }
-
-            ClientEx.Entries.FirstOrDefault(x => x.Key == path).Deconstruct(out var k, out _);
-            if (!string.IsNullOrEmpty(k))
-            {
-                folderNumber++;
-                continue;
-            }
-
-            await ClientEx.Base.CreateDirectory(path, ct);
-
-            break;
         }
+        else
+        {
+            path = $"{MavlinkFtpHelper.DirectorySeparator}";
+        }
+
+        await ClientEx.CreateDirectoryAsync(path, ct, _log);
     }
 
-    private Task CreateLocalFolderImpl()
+    private ValueTask CreateLocalFolderImpl(Unit arg, CancellationToken ct)
     {
-        var folderNumber = 1;
-        while (true)
+        string path;
+
+        if (LocalSelectedItem.Value != null) // TODO: Try to shorten if else
         {
-            var name = $"Folder{folderNumber}";
-            string path;
-            if (LocalSelectedItem.Value != null)
+            if (LocalSelectedItem.Value.Base.FtpEntryType == FtpEntryType.Directory)
             {
-                path =
-                    LocalSelectedItem.Value.Base.FtpEntryType == FtpEntryType.Directory
-                        ? Path.Combine(LocalSelectedItem.Value.Base.Path, name)
-                        : Path.Combine(
-                            LocalSelectedItem.Value.Base.Path[
-                                ..LocalSelectedItem.Value.Base.Path.LastIndexOf(
-                                    Path.DirectorySeparatorChar
-                                )
-                            ],
-                            name
-                        );
+                path = LocalSelectedItem.Value.Base.Path;
             }
             else
             {
-                path = Path.Combine(_localRootPath, name);
+                path = LocalSelectedItem.Value.Base.Path[
+                    ..LocalSelectedItem.Value.Base.Path.LastIndexOf(Path.DirectorySeparatorChar)
+                ];
             }
-
-            if (Directory.Exists(path))
-            {
-                folderNumber++;
-                continue;
-            }
-
-            Directory.CreateDirectory(path);
-
-            break;
+        }
+        else
+        {
+            path = _localRootPath;
         }
 
-        return Task.CompletedTask;
+        LocalFilesMixin.CreateDirectory(path, _log);
+
+        return ValueTask.CompletedTask;
     }
 
     private async Task RefreshRemoteImpl(CancellationToken ct)
     {
         await ClientEx.Refresh(MavlinkFtpHelper.DirectorySeparator.ToString(), cancel: ct);
-        var newItems = LoadRemoteItems();
+        var newItems = ClientEx.CopyEntriesAsBrowserItems();
 
-        var toRemove = _remoteItems.Where(rs => newItems.All(n => n.Path != rs.Path)).ToList();
+        var toRemove = _remoteItems
+            .Where(rs => newItems.All(n => n.Path != rs.Path || n.Size != rs.Size))
+            .ToList();
         foreach (var item in toRemove)
         {
             _remoteItems.Remove(item);
         }
 
-        var toAdd = newItems.Where(n => _remoteItems.All(rs => rs.Path != n.Path)).ToList();
+        var toAdd = newItems
+            .Where(n => _remoteItems.All(rs => rs.Path != n.Path || rs.Size != n.Size))
+            .ToList();
         _remoteItems.AddRange(toAdd);
     }
 
-    private Task RefreshLocalImpl()
+    private ValueTask RefreshLocalImpl(Unit arg, CancellationToken ct)
     {
-        var newItems = LoadLocalItems();
+        var newItems = LocalFilesMixin.LoadBrowserItems(_localRootPath, _localRootPath, log: _log);
 
-        var toRemove = _localItems.Where(ls => newItems.All(n => n.Path != ls.Path)).ToList();
+        var toRemove = _localItems
+            .Where(ls => newItems.All(n => n.Path != ls.Path || n.Size != ls.Size))
+            .ToList();
         foreach (var item in toRemove)
         {
             _localItems.Remove(item);
         }
 
-        var toAdd = newItems.Where(n => _localItems.All(ls => ls.Path != n.Path)).ToList();
+        var toAdd = newItems
+            .Where(n => _localItems.All(ls => ls.Path != n.Path || ls.Size != n.Size))
+            .ToList();
         _localItems.AddRange(toAdd);
 
-        return Task.CompletedTask;
+        return ValueTask.CompletedTask;
     }
 
-    #endregion
-
-    #region Load items
-
-    private ObservableList<IBrowserItem> LoadLocalItems()
+    private async ValueTask LocalRenameImpl(BrowserNode? node, CancellationToken ct)
     {
-        var items = new ObservableList<IBrowserItem>();
-        ProcessDirectory(_localRootPath, items);
-        return items;
-    }
-
-    private void ProcessDirectory(string directoryPath, ObservableList<IBrowserItem> items)
-    {
-        var directories = Directory.EnumerateDirectories(directoryPath).ToList();
-        var files = Directory.EnumerateFiles(directoryPath).ToList();
-
-        Parallel.ForEach(
-            directories,
-            dir =>
-            {
-                var relativeDir = Path.GetRelativePath(_localRootPath, dir);
-                var id = NavigationId.NormalizeTypeId(relativeDir);
-                var parentPath = Directory.GetParent(dir)?.FullName ?? _localRootPath;
-                var name = new DirectoryInfo(dir).Name;
-
-                lock (items)
-                {
-                    items.Add(new DirectoryItem(id, parentPath, dir, name));
-                }
-
-                ProcessDirectory(dir, items);
-            }
-        );
-
-        Parallel.ForEach(
-            files,
-            file =>
-            {
-                var relativeFile = Path.GetRelativePath(_localRootPath, file);
-                var id = NavigationId.NormalizeTypeId(relativeFile);
-                var parentPath = Directory.GetParent(file)?.FullName ?? _localRootPath;
-                var fileInfo = new FileInfo(file);
-
-                lock (items)
-                {
-                    items.Add(new FileItem(id, parentPath, file, fileInfo.Name, fileInfo.Length));
-                }
-            }
-        );
-    }
-
-    private ObservableList<IBrowserItem> LoadRemoteItems()
-    {
-        var items = new ObservableList<IBrowserItem>();
-
-        ClientEx.Entries.ForEach(e =>
+        if (node?.Base is not BrowserItemViewModel item)
         {
-            if (e.Value.Path == MavlinkFtpHelper.DirectorySeparator.ToString())
+            return;
+        }
+
+        var oldName = item.Header;
+        var oldPath = item.Path;
+
+        using var viewModel = new RenameDialogViewModel();
+        var dialog = new ContentDialog(viewModel, _navigation)
+        {
+            Title = RS.FileBrowserViewModel_RenameDialog_Title,
+            PrimaryButtonText = RS.FileBrowserViewModel_RenameDialog_PrimaryButtonText,
+            SecondaryButtonText = RS.FileBrowserViewModel_RenameDialog_SecondaryButtonText,
+            IsSecondaryButtonEnabled = true,
+        };
+
+        if (oldName != null)
+        {
+            viewModel.NewName.OnNext(oldName);
+        }
+
+        viewModel.ApplyDialog(dialog);
+        var result = await dialog.ShowAsync();
+        var newName = viewModel.NewName.Value;
+
+        if (result != ContentDialogResult.Primary)
+        {
+            return;
+        }
+
+        if (string.Equals(newName, oldName, StringComparison.Ordinal))
+        {
+            return;
+        }
+
+        try
+        {
+            var newPath =
+                item.FtpEntryType == FtpEntryType.Directory
+                    ? LocalFilesMixin.RenameDirectory(oldPath, newName, _log)
+                    : LocalFilesMixin.RenameFile(oldPath, newName, _log);
+
+            var newNode = LocalItemsTree.FindNode(n => n.Base.Path == newPath);
+            if (newNode != null)
             {
-                var root = new DirectoryItem(
-                    "_",
-                    string.Empty,
-                    MavlinkFtpHelper.DirectorySeparator.ToString(),
-                    "_"
-                );
-                items.Add(root);
-                return;
+                LocalSelectedItem.OnNext(newNode as BrowserNode);
             }
 
-            var item = e.Value.Type switch
+            _log.LogInformation("Local item {oldName} renamed to {newName}", oldName, newName);
+        }
+        catch (Exception ex)
+        {
+            _log.LogError(
+                ex,
+                "Failed to rename local item {oldName} to {newName}",
+                oldName,
+                newName
+            );
+        }
+    }
+
+    private async Task RemoteRenameImpl(BrowserNode? node, CancellationToken ct)
+    {
+        if (node?.Base is not BrowserItemViewModel item)
+        {
+            return;
+        }
+
+        var oldName = item.Header;
+        var oldPath = item.Path;
+
+        using var viewModel = new RenameDialogViewModel();
+        var dialog = new ContentDialog(viewModel, _navigation)
+        {
+            Title = RS.FileBrowserViewModel_RenameDialog_Title,
+            PrimaryButtonText = RS.FileBrowserViewModel_RenameDialog_PrimaryButtonText,
+            SecondaryButtonText = RS.FileBrowserViewModel_RenameDialog_SecondaryButtonText,
+            IsSecondaryButtonEnabled = true,
+            Content = viewModel,
+        };
+
+        if (oldName != null)
+        {
+            viewModel.NewName.OnNext(oldName);
+        }
+
+        viewModel.ApplyDialog(dialog);
+        var result = await dialog.ShowAsync();
+        var newName = viewModel.NewName.Value;
+
+        if (result != ContentDialogResult.Primary)
+        {
+            return;
+        }
+
+        if (string.Equals(newName, oldName, StringComparison.Ordinal))
+        {
+            return;
+        }
+
+        try
+        {
+            var newPath = await ClientEx.RenameAsync(oldPath, newName, ct, _log);
+
+            var newNode = RemoteItemsTree.FindNode(n => n.Base.Path == newPath);
+            if (newNode != null)
             {
-                FtpEntryType.Directory => new DirectoryItem(
-                    NavigationId.NormalizeTypeId(e.Value.Path),
-                    e.Value.ParentPath,
-                    e.Key,
-                    e.Value.Name
-                ),
-                FtpEntryType.File => new FileItem(
-                    NavigationId.NormalizeTypeId(e.Value.Path),
-                    e.Value.ParentPath,
-                    e.Key,
-                    e.Value.Name,
-                    ((FtpFile)e.Value).Size
-                ),
-                _ => new BrowserItem(
-                    NavigationId.NormalizeTypeId(e.Value.Path),
-                    e.Value.ParentPath,
-                    e.Key
-                ),
-            };
+                RemoteSelectedItem.OnNext(newNode as BrowserNode);
+            }
 
-            items.Add(item);
-        });
-
-        return items;
+            _log.LogInformation("Remote item {oldName} renamed to {newName}", oldName, newName);
+        }
+        catch (Exception ex)
+        {
+            _log.LogError(
+                ex,
+                "Failed to rename remote item {oldName} to {newName}",
+                oldName,
+                newName
+            );
+        }
     }
 
-    #endregion
-
-    private void CalculateLocalCrc32Impl()
+    private async ValueTask CalculateLocalCrc32Impl(BrowserNode item, CancellationToken ct)
     {
-        throw new NotImplementedException();
+        if (item.Base is not FileItemViewModel fileItem)
+        {
+            return;
+        }
+
+        var crc32 = await LocalFilesMixin.CalculateCrc32Async(fileItem.Path, ct, _log);
+        fileItem.Crc32 = crc32;
+        fileItem.Crc32Status = Crc32Status.Default;
     }
 
-    private void CalculateRemoteCrc32Impl()
+    private async ValueTask CalculateRemoteCrc32Impl(BrowserNode item, CancellationToken ct)
     {
-        throw new NotImplementedException();
+        if (item.Base is not FileItemViewModel fileItem)
+        {
+            return;
+        }
+
+        var crc32 = await ClientEx.CalculateCrc32Async(fileItem.Path, ct, _log);
+        fileItem.Crc32 = crc32;
+        fileItem.Crc32Status = Crc32Status.Default;
     }
 
-    private void CompareSelectedItemsImpl()
+    private async ValueTask CompareSelectedItemsImpl(CancellationToken ct)
     {
-        throw new NotImplementedException();
+        uint localCrc32;
+        uint remoteCrc32;
+
+        if (LocalSelectedItem.Value?.Base is not FileItemViewModel localFileItem)
+        {
+            return;
+        }
+
+        if (RemoteSelectedItem.Value?.Base is not FileItemViewModel remoteFileItem)
+        {
+            return;
+        }
+
+        if (localFileItem.Crc32 == null)
+        {
+            localCrc32 = await LocalFilesMixin.CalculateCrc32Async(localFileItem.Path, ct, _log);
+            localFileItem.Crc32 = localCrc32;
+        }
+        else
+        {
+            localCrc32 = (uint)localFileItem.Crc32;
+        }
+
+        if (remoteFileItem.Crc32 == null)
+        {
+            remoteCrc32 = await ClientEx.Base.CalcFileCrc32(remoteFileItem.Path, ct);
+            remoteFileItem.Crc32 = remoteCrc32;
+        }
+        else
+        {
+            remoteCrc32 = (uint)remoteFileItem.Crc32;
+        }
+
+        if (localCrc32 == remoteCrc32 && (localCrc32 != 0 || remoteCrc32 != 0))
+        {
+            localFileItem.Crc32Status = Crc32Status.Correct;
+            remoteFileItem.Crc32Status = Crc32Status.Correct;
+        }
+        else
+        {
+            localFileItem.Crc32Status = Crc32Status.Incorrect;
+            remoteFileItem.Crc32Status = Crc32Status.Incorrect;
+        }
     }
 
     private void FindFileOnLocalImpl()
     {
-        throw new NotImplementedException();
+        if (RemoteSelectedItem.Value?.Base is not FileItemViewModel remoteFile)
+        {
+            return;
+        }
+
+        var foundNode = LocalItemsTree.FindNode(n =>
+            n.Base is FileItemViewModel lf
+            && string.Equals(lf.Header, remoteFile.Header, StringComparison.OrdinalIgnoreCase)
+        );
+
+        if (foundNode == null)
+        {
+            _log.LogWarning("Local file \"{Header}\" not found", remoteFile.Header);
+            return;
+        }
+
+        ExpandParents((BrowserNode)foundNode);
+        LocalSelectedItem.OnNext((BrowserNode)foundNode);
     }
 
-    private void SetEditModeImpl(BrowserNode item)
+    #endregion
+
+    private static void PerformSearch(
+        BrowserTree tree,
+        BindableReactiveProperty<BrowserNode?> target,
+        string? pattern
+    )
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrWhiteSpace(pattern))
+        {
+            return;
+        }
+
+        var found = tree.FindNode(n =>
+            n.Base is BrowserItemViewModel f
+            && f.Header?.Contains(pattern, StringComparison.OrdinalIgnoreCase) == true
+        );
+
+        if (found == null)
+        {
+            return;
+        }
+
+        ExpandParents((BrowserNode)found); // TODO: This is dangerous Define uneven cast as I do in ValidationValue with errors
+        target.OnNext((BrowserNode)found);
     }
 
-    private static string Crc32ToHex(uint crc32) => crc32.ToString("X8");
+    private static void ExpandParents(BrowserNode node)
+    {
+        foreach (var ancestor in node.GetAllMenuFromRoot())
+        {
+            switch (ancestor.Base)
+            {
+                case BrowserItemViewModel bi:
+                {
+                    if (bi.IsExpanded)
+                    {
+                        bi.IsExpanded = false; // reset field to trigger UI
+                    }
+
+                    bi.IsExpanded = true;
+                    break;
+                }
+            }
+        }
+    }
 
     public override ValueTask<IRoutable> Navigate(NavigationId id)
     {
@@ -835,9 +914,12 @@ public class FileBrowserViewModel
     protected override void AfterDeviceInitialized(IClientDevice device)
     {
         Title = $"Browser[{device.Id}]";
-        Client = device.GetMicroservice<IFtpClient>();
-        ArgumentNullException.ThrowIfNull(Client);
-        ClientEx = device.GetMicroservice<IFtpClientEx>() ?? new FtpClientEx(Client);
+        var client =
+            device.GetMicroservice<IFtpClient>()
+            ?? throw new MissingMemberException("FTP Client is null");
+        ArgumentNullException.ThrowIfNull(client);
+        ClientEx = device.GetMicroservice<IFtpClientEx>() ?? new FtpClientEx(client);
+
         InitCommands();
     }
 
@@ -846,19 +928,24 @@ public class FileBrowserViewModel
     #region Dispose
 
     private IDisposable _sub1;
+    private IDisposable _sub2;
+    private IDisposable _sub3;
 
     protected override void Dispose(bool disposing)
     {
         if (disposing)
         {
-            _sub1.Dispose();
+            ClientEx.Base.ResetSessions();
 
-            _uploadCts.Cancel();
-            _uploadCts.Dispose();
-            _downloadCts.Cancel();
-            _downloadCts.Dispose();
-            _burstDownloadCts.Cancel();
-            _burstDownloadCts.Dispose();
+            _watcher.Created -= _createdHandler;
+            _watcher.Deleted -= _deletedHandler;
+            _watcher.Renamed -= _renamedHandler;
+            _watcher.Changed -= _changedHandler;
+            _watcher.Dispose();
+
+            _sub1.Dispose();
+            _sub2.Dispose();
+            _sub3.Dispose();
 
             ShowDownloadPopupCommand.Dispose();
             UploadCommand.Dispose();
@@ -870,7 +957,8 @@ public class FileBrowserViewModel
             RefreshLocalCommand.Dispose();
             RemoveLocalItemCommand.Dispose();
             RemoveRemoteItemCommand.Dispose();
-            SetInEditModeCommand.Dispose();
+            LocalRenameCommand.Dispose();
+            RemoteRenameCommand.Dispose();
             ClearLocalSearchBoxCommand.Dispose();
             ClearRemoteSearchBoxCommand.Dispose();
             FindFileOnLocalCommand.Dispose();
@@ -885,11 +973,11 @@ public class FileBrowserViewModel
             LocalSelectedItem.Dispose();
             RemoteSelectedItem.Dispose();
 
-            LocalItemsView.Dispose();
-            RemoteItemsView.Dispose();
+            LocalItemsTree.Dispose();
+            RemoteItemsTree.Dispose();
 
-            _localItems.RemoveRange(0, _localItems.Count);
-            _remoteItems.RemoveRange(0, _remoteItems.Count);
+            _localItems.RemoveAll();
+            _remoteItems.RemoveAll();
         }
 
         base.Dispose(disposing);

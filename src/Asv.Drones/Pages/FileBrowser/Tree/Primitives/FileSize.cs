@@ -1,6 +1,8 @@
-﻿namespace Asv.Drones;
+﻿using System;
 
-public readonly struct FileSize(long size)
+namespace Asv.Drones;
+
+public readonly struct FileSize(long size) : IEquatable<FileSize>
 {
     private const long OneKilobyte = 1024;
     private const long OneMegabyte = OneKilobyte * 1024;
@@ -44,5 +46,30 @@ public readonly struct FileSize(long size)
     public int CompareTo(FileSize other)
     {
         return Size.CompareTo(other.Size);
+    }
+
+    public bool Equals(FileSize other)
+    {
+        return Size.Equals(other.Size);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is FileSize fileSize && Equals(fileSize);
+    }
+
+    public static bool operator ==(FileSize left, FileSize right)
+    {
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(FileSize left, FileSize right)
+    {
+        return !(left == right);
+    }
+
+    public override int GetHashCode()
+    {
+        return Size.GetHashCode();
     }
 }

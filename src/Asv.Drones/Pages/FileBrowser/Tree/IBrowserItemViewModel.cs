@@ -1,10 +1,9 @@
 ﻿using Asv.Avalonia;
 using Asv.Mavlink;
-using Avalonia.Media;
 
 namespace Asv.Drones;
 
-public interface IBrowserItem : IHeadlinedViewModel
+public interface IBrowserItemViewModel : IHeadlinedViewModel
 {
     string Path { get; }
     string? ParentPath { get; }
@@ -15,6 +14,6 @@ public interface IBrowserItem : IHeadlinedViewModel
     bool IsInEditMode { get; }
     string EditedName { get; }
     string? Crc32Hex { get; }
-    SolidColorBrush Crc32Color { get; }
+    Crc32Status Crc32Status { get; }
     FtpEntryType FtpEntryType { get; }
 }
