@@ -30,14 +30,20 @@ public class AutoModeCommand : ContextCommand<UavWidgetViewModel> // TODO: make 
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override ValueTask<ICommandArg?> InternalExecute(
+    protected override async ValueTask<ICommandArg?> InternalExecute(
         UavWidgetViewModel context,
         ICommandArg newValue,
         CancellationToken cancel
     )
     {
         var control = context.Device.GetMicroservice<ControlClient>();
-        control?.SetAutoMode(cancel);
-        return default;
+
+        if (control == null)
+        {
+            return null;
+        }
+        
+        await control.SetAutoMode(cancel);
+        return null;
     }
 }
