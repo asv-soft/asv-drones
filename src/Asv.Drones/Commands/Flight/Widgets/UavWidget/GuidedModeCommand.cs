@@ -30,14 +30,20 @@ public class GuidedModeCommand : ContextCommand<UavWidgetViewModel>
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override ValueTask<ICommandArg?> InternalExecute(
+    protected override async ValueTask<ICommandArg?> InternalExecute(
         UavWidgetViewModel context,
         ICommandArg newValue,
         CancellationToken cancel
     )
     {
         var control = context.Device.GetMicroservice<ControlClient>();
-        control?.SetGuidedMode(cancel);
-        return default;
+        
+        if (control == null)
+        {
+            return null;
+        }
+        
+        await control.SetGuidedMode(cancel);
+        return null;
     }
 }

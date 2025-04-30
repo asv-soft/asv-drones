@@ -29,20 +29,21 @@ public class RTLCommand : ContextCommand<UavWidgetViewModel>
     #endregion
     public override ICommandInfo Info => StaticInfo;
 
-    protected override ValueTask<ICommandArg?> InternalExecute(
+    protected override async ValueTask<ICommandArg?> InternalExecute(
         UavWidgetViewModel context,
         ICommandArg newValue,
         CancellationToken cancel
     )
     {
         var control = context.Device.GetMicroservice<ControlClient>();
+        
         if (control is null)
         {
-            return default;
+            return null;
         }
 
-        control.EnsureGuidedMode(cancel: cancel);
-        control.DoRtl(cancel);
-        return default;
+        await control.EnsureGuidedMode(cancel: cancel);
+        await control.DoRtl(cancel);
+        return null;
     }
 }

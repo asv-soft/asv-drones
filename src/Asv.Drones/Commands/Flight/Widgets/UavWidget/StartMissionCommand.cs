@@ -29,7 +29,7 @@ public class StartMissionCommand : ContextCommand<UavWidgetViewModel>
     #endregion
     public override ICommandInfo Info => StaticInfo;
 
-    protected override ValueTask<ICommandArg?> InternalExecute(
+    protected override async ValueTask<ICommandArg?> InternalExecute(
         UavWidgetViewModel context,
         ICommandArg newValue,
         CancellationToken cancel
@@ -37,13 +37,14 @@ public class StartMissionCommand : ContextCommand<UavWidgetViewModel>
     {
         var control = context.Device.GetMicroservice<ControlClient>();
         var mission = context.Device.GetMicroservice<MissionClientEx>();
+        
         if (control is null || mission is null)
         {
-            return default;
+            return null;
         }
 
-        mission.SetCurrent(0, cancel);
-        control.SetAutoMode(cancel);
-        return default;
+        await mission.SetCurrent(0, cancel);
+        await control.SetAutoMode(cancel);
+        return null;
     }
 }

@@ -31,7 +31,7 @@ public class TakeOffCommand : ContextCommand<UavWidgetViewModel>
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override ValueTask<ICommandArg?> InternalExecute(
+    protected override async ValueTask<ICommandArg?> InternalExecute(
         UavWidgetViewModel context,
         ICommandArg newValue,
         CancellationToken cancel
@@ -44,9 +44,14 @@ public class TakeOffCommand : ContextCommand<UavWidgetViewModel>
 
         var device = context.Device;
         var controlClient = device.GetMicroservice<ControlClient>();
-        controlClient?.SetGuidedMode(cancel);
-        controlClient?.TakeOff(value.Value, cancel);
-
-        return default;
+        
+        if (controlClient == null)
+        {
+            return null;
+        }
+        
+        await controlClient.SetGuidedMode(cancel);
+        await controlClient.TakeOff(value.Value, cancel);
+        return null;
     }
 }
