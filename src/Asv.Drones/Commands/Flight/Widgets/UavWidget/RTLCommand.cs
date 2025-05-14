@@ -36,7 +36,7 @@ public class RTLCommand : ContextCommand<UavWidgetViewModel>
     )
     {
         var control = context.Device.GetMicroservice<ControlClient>();
-        
+
         if (control is null)
         {
             return null;

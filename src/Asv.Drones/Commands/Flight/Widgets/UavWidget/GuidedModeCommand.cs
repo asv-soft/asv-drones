@@ -37,12 +37,12 @@ public class GuidedModeCommand : ContextCommand<UavWidgetViewModel>
     )
     {
         var control = context.Device.GetMicroservice<ControlClient>();
-        
+
         if (control == null)
         {
             return null;
         }
-        
+
         await control.SetGuidedMode(cancel);
         return null;
     }

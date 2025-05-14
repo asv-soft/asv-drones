@@ -37,12 +37,12 @@ public class LandCommand : ContextCommand<UavWidgetViewModel>
     )
     {
         var control = context.Device.GetMicroservice<ControlClient>();
-        
+
         if (control == null)
         {
             return null;
         }
-        
+
         await control.EnsureGuidedMode(cancel: cancel);
         await control.DoLand(cancel);
         return null;

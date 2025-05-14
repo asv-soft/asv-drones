@@ -37,7 +37,7 @@ public class StartMissionCommand : ContextCommand<UavWidgetViewModel>
     {
         var control = context.Device.GetMicroservice<ControlClient>();
         var mission = context.Device.GetMicroservice<MissionClientEx>();
-        
+
         if (control is null || mission is null)
         {
             return null;

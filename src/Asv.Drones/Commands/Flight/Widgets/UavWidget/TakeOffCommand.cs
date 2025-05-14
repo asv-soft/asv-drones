@@ -44,12 +44,12 @@ public class TakeOffCommand : ContextCommand<UavWidgetViewModel>
 
         var device = context.Device;
         var controlClient = device.GetMicroservice<ControlClient>();
-        
+
         if (controlClient == null)
         {
             return null;
         }
-        
+
         await controlClient.SetGuidedMode(cancel);
         await controlClient.TakeOff(value.Value, cancel);
         return null;

@@ -42,7 +42,7 @@ public class AutoModeCommand : ContextCommand<UavWidgetViewModel> // TODO: make 
         {
             return null;
         }
-        
+
         await control.SetAutoMode(cancel);
         return null;
     }
