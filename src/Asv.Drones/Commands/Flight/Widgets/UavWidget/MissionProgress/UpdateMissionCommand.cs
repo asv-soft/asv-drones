@@ -20,7 +20,7 @@ public class UpdateMissionCommand : ContextCommand<MissionProgressViewModel>
         Name = RS.UavAction_Land,
         Description = RS.UavAction_Land_Description,
         Icon = MaterialIconKind.Reload,
-        DefaultHotKey = null,
+        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null },
         Source = SystemModule.Instance,
     };
 

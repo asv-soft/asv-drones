@@ -19,7 +19,7 @@ public class RemoveAllPinsCommand : ContextCommand<MavParamsPageViewModel>
         Name = RS.UnpinAllParamsCommand_CommandInfo_Name,
         Description = RS.UnpinAllParamsCommand_CommandInfo_Description,
         Icon = MaterialIconKind.PinOff,
-        DefaultHotKey = null, // TODO: make a key bind when new key listener system appears
+        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null }, // TODO: make a key bind when new key listener system appears
         Source = SystemModule.Instance,
     };
 

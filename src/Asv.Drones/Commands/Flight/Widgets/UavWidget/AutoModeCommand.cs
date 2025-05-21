@@ -22,7 +22,7 @@ public class AutoModeCommand : ContextCommand<UavWidgetViewModel> // TODO: make 
         Name = RS.UavAction_AutoMode_Name,
         Description = RS.UavAction_AutoMode_Description,
         Icon = MaterialIconKind.Automatic,
-        DefaultHotKey = null,
+        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null },
         Source = SystemModule.Instance,
     };
 

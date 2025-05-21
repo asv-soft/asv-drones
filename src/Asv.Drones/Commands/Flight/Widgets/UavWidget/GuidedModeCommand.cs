@@ -22,7 +22,7 @@ public class GuidedModeCommand : ContextCommand<UavWidgetViewModel>
         Name = RS.UavAction_GuidedMode,
         Description = RS.UavAction_GuidedMode_Description,
         Icon = MaterialIconKind.Controller,
-        DefaultHotKey = null,
+        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null },
         Source = SystemModule.Instance,
     };
 

@@ -23,7 +23,7 @@ public class TakeOffCommand : ContextCommand<UavWidgetViewModel>
         Name = RS.UavAction_TakeOff,
         Description = RS.UavAction_TakeOff_Description,
         Icon = MaterialIconKind.AeroplaneTakeoff,
-        DefaultHotKey = null,
+        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null },
         Source = SystemModule.Instance,
     };
 

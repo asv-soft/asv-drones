@@ -16,7 +16,7 @@ public class UpdateParamsCommand : ContextCommand<MavParamsPageViewModel>
         Name = RS.UpdateParamsCommand_CommandInfo_Name,
         Description = RS.UpdateParamsCommand_CommandInfo_Description,
         Icon = MaterialIconKind.Refresh,
-        DefaultHotKey = null, // TODO: make a key bind when new key listener system appears
+        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null }, // TODO: make a key bind when new key listener system appears
         Source = SystemModule.Instance,
     };
 
