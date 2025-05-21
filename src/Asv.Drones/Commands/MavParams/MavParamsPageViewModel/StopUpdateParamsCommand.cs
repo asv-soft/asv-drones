@@ -16,7 +16,7 @@ public class StopUpdateParamsCommand : ContextCommand<MavParamsPageViewModel>
         Name = RS.StopUpdateParamsCommand_CommandInfo_Name,
         Description = RS.StopUpdateParamsCommand_CommandInfo_Description,
         Icon = MaterialIconKind.CancelCircle,
-        DefaultHotKey = null, // TODO: make a key bind when new key listener system appears
+        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null }, // TODO: make a key bind when new key listener system appears
         Source = SystemModule.Instance,
     };
 

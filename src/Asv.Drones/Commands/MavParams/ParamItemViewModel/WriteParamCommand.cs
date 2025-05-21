@@ -17,7 +17,7 @@ public class WriteParamCommand : ContextCommand<ParamItemViewModel>
         Name = RS.WritePatamCommand_CommandInfo_Name,
         Description = RS.WriteParamCommand_CommandInfo_Description,
         Icon = MaterialIconKind.Upload,
-        DefaultHotKey = null, // TODO: make a key bind when new key listener system appears
+        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null }, // TODO: make a key bind when new key listener system appears
         Source = SystemModule.Instance,
     };
 

@@ -22,11 +22,12 @@ public class StartMissionCommand : ContextCommand<UavWidgetViewModel>
         Name = RS.UavAction_StartMission,
         Description = RS.UavAction_StartMission_Description,
         Icon = MaterialIconKind.MapMarkerPath,
-        DefaultHotKey = null,
+        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null },
         Source = SystemModule.Instance,
     };
 
     #endregion
+
     public override ICommandInfo Info => StaticInfo;
 
     protected override async ValueTask<ICommandArg?> InternalExecute(
