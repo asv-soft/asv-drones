@@ -339,10 +339,9 @@ public class MavParamsPageViewModel
         }
 
         using var vm = new TryCloseWithApprovalDialogViewModel();
-        var dialog = new ContentDialog(_nav)
+        var dialog = new ContentDialog(vm, _nav)
         {
             Title = RS.ParamPageViewModel_DataLossDialog_Title,
-            Content = vm,
             IsSecondaryButtonEnabled = true,
             PrimaryButtonText = RS.ParamPageViewModel_DataLossDialog_PrimaryButtonText,
             SecondaryButtonText = RS.ParamPageViewModel_DataLossDialog_SecondaryButtonText,
