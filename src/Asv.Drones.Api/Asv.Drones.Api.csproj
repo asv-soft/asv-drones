@@ -56,4 +56,8 @@
       </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Asv.Drones.Api.csproj.DotSettings" />
+    </ItemGroup>
+
 </Project>

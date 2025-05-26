@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Asv.Avalonia;
+using Asv.Avalonia.IO;
 using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
@@ -208,6 +209,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         IClientDevice device,
         INavigationService navigation,
         IUnitService unitService,
+        IDeviceManager dev,
         ILoggerFactory loggerFactory
     )
         : base(WidgetId)
@@ -220,8 +222,8 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         AltitudeStatusBrush = new SolidColorBrush();
         Device = device;
         Position = WorkspaceDock.Left;
-        Icon = DeviceIconMixin.GetIcon(device.Id);
-        IconBrush = DeviceIconMixin.GetIconBrush(device.Id);
+        Icon = dev.GetIcon(device.Id);
+        IconBrush = dev.GetDeviceBrush(device.Id);
         _altitudeUnit = unitService.Units[AltitudeBase.Id];
         _velocityUnit = unitService.Units[VelocityBase.Id];
         _angleUnit = unitService.Units[AngleBase.Id];

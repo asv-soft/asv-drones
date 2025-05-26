@@ -23,8 +23,8 @@ public class MavlinkParamsSetCommand
         Source = IoModule.Instance,
         HotKeyInfo = new HotKeyInfo
         {
-            DefaultHotKey = null
-        }
+            DefaultHotKey = null,
+        },
     };
 
     public override ICommandInfo Info => StaticInfo;
@@ -41,6 +41,7 @@ public class MavlinkParamsSetCommand
         {
             return null;
         }
+
         if (newValue is ActionCommandArg { Action: CommandParameterActionType.Change, Value: not null, Id: not null } action)
         {
             var value = MavParamValue.Parse(action.Value);
@@ -49,6 +50,7 @@ public class MavlinkParamsSetCommand
             {
                 result = CreateArg(action.Id, param.Value.Value);
             }
+
             await ifc.WriteOnce(action.Id, value, cancel).ConfigureAwait(false);
             return result;
         }

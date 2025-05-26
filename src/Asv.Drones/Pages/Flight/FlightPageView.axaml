@@ -2,10 +2,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:map="clr-namespace:Asv.Avalonia.Map;assembly=Asv.Avalonia.Map"
+             xmlns:map="clr-namespace:Asv.Avalonia.GeoMap;assembly=Asv.Avalonia.Map"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:avalonia1="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
              xmlns:drones="clr-namespace:Asv.Drones"
+             xmlns:geoMap="clr-namespace:Asv.Avalonia.GeoMap;assembly=Asv.Avalonia.GeoMap"
              mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="500"
              x:Class="Asv.Drones.FlightPageView"
              x:DataType="drones:FlightPageViewModel">
@@ -13,28 +14,28 @@
         <drones:FlightPageViewModel/>
     </Design.DataContext>
     <Panel>
-        <map:MapItemsControl CenterMap="{map:GeoPoint 53, 53}" SelectionMode="Multiple" 
+        <geoMap:MapItemsControl CenterMap="{geoMap:GeoPoint 53, 53}" SelectionMode="Multiple" 
                              ItemsSource="{Binding AnchorsView}" 
                              SelectedItem="{Binding SelectedAnchor.Value}">
-            <map:MapItemsControl.AnnotationTemplate>
+            <geoMap:MapItemsControl.AnnotationTemplate>
                 <DataTemplate>
                     <Border BorderThickness="1" BorderBrush="White" x:Name="PART_Annotation" IsVisible="{Binding !!Title.Length}" Padding="3" CornerRadius="3" Background="#4a148c" >
                         <TextBlock Text="{ReflectionBinding Title}"/>
                     </Border>
                 </DataTemplate>
-            </map:MapItemsControl.AnnotationTemplate>
-            <map:MapItemsControl.Styles>
+            </geoMap:MapItemsControl.AnnotationTemplate>
+            <geoMap:MapItemsControl.Styles>
                 <Style Selector="Border.active">
                     <Setter Property="BorderThickness" Value="5"/>
                 </Style>
-            </map:MapItemsControl.Styles>
+            </geoMap:MapItemsControl.Styles>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <avalonia:MaterialIcon Width="40" Height="40" Foreground="{Binding Foreground}" Kind="{Binding Icon}"  />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerTheme>
-                <ControlTheme TargetType="map:MapItem" x:DataType="map:IMapAnchor" >
+                <ControlTheme TargetType="geoMap:MapItem" x:DataType="geoMap:IMapAnchor" >
                     <Setter Property="Location" Value="{Binding Location}"/>
                     <Setter Property="Rotation" Value="{Binding Azimuth}"/>
                     <Setter Property="CenterX" Value="{Binding CenterX}"/>
@@ -46,7 +47,7 @@
                     <Setter Property="Pen" Value="{Binding PolygonPen}"/>
                 </ControlTheme>
             </ItemsControl.ItemContainerTheme>
-        </map:MapItemsControl>
+        </geoMap:MapItemsControl>
         <ItemsControl ItemsSource="{Binding WidgetsView}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>

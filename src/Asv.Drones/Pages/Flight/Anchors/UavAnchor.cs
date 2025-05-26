@@ -1,6 +1,7 @@
 ﻿using System;
 using Asv.Avalonia;
-using Asv.Avalonia.Map;
+using Asv.Avalonia.GeoMap;
+using Asv.Avalonia.IO;
 using Asv.Common;
 using Asv.IO;
 using Asv.Mavlink;
@@ -20,15 +21,15 @@ public class UavAnchor : MapAnchor<UavAnchor>
         DesignTime.ThrowIfNotDesignMode();
     }
 
-    public UavAnchor(DeviceId deviceId, IClientDevice dev, IPositionClientEx pos)
+    public UavAnchor(DeviceId deviceId, IDeviceManager mng, IClientDevice dev, IPositionClientEx pos)
         : base("uav")
     {
         DeviceId = deviceId;
         InitArgs(deviceId.AsString());
         IsReadOnly = true;
         IsVisible = true;
-        Icon = DeviceIconMixin.GetIcon(deviceId) ?? MaterialIconKind.Memory;
-        Foreground = DeviceIconMixin.GetIconBrush(deviceId);
+        Icon = mng.GetIcon(deviceId) ?? MaterialIconKind.Memory;
+        Foreground = mng.GetDeviceBrush(deviceId) ?? throw new InvalidOperationException();
         CenterX = DeviceIconMixin.GetIconCenterX(deviceId);
         CenterY = DeviceIconMixin.GetIconCenterY(deviceId);
         dev.Name.Subscribe(x => Title = x ?? string.Empty).DisposeItWith(Disposable);

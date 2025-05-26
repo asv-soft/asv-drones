@@ -22,7 +22,7 @@ public class OpenFlightModeCommand(INavigationService nav)
         Source = SystemModule.Instance,
         HotKeyInfo = new HotKeyInfo
         {
-            DefaultHotKey = KeyGesture.Parse("Ctrl+F2")
+            DefaultHotKey = KeyGesture.Parse("Ctrl+F2"),
         },
     };
 
