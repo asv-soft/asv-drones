@@ -1,5 +1,5 @@
 using Asv.Avalonia;
-using Asv.Avalonia.Map;
+using Asv.Avalonia.GeoMap;
 using ObservableCollections;
 using R3;
 

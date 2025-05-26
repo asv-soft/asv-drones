@@ -19,8 +19,11 @@ public class OpenFlightModeCommand(INavigationService nav)
         Name = "Flight mode",
         Description = "Open flight mode map",
         Icon = FlightMode.PageIcon,
-        DefaultHotKey = KeyGesture.Parse("Ctrl+F2"),
         Source = SystemModule.Instance,
+        HotKeyInfo = new HotKeyInfo
+        {
+            DefaultHotKey = KeyGesture.Parse("Ctrl+F2")
+        },
     };
 
     #endregion

@@ -2,5 +2,7 @@
   <PropertyGroup>
     <Nullable>enable</Nullable>
     <AvaloniaVersion>11.2.5</AvaloniaVersion>
+    <AsvAvaloniaVersion>0.0.1-dev.5</AsvAvaloniaVersion>
+    <AsvMavlinkVersion>4.0.0</AsvMavlinkVersion>
   </PropertyGroup>
 </Project>

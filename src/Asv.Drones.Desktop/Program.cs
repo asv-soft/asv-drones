@@ -1,6 +1,6 @@
 ﻿using System;
 using Asv.Avalonia;
-using Asv.Avalonia.Map;
+using Asv.Avalonia.GeoMap;
 using Asv.Avalonia.Plugins;
 using Asv.Drones.Api;
 using Avalonia;

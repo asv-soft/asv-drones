@@ -19,9 +19,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\asv-avalonia\src\Asv.Avalonia.Map\Asv.Avalonia.Map.csproj" />
-      <ProjectReference Include="..\..\..\asv-avalonia\src\Asv.Avalonia.Plugins\Asv.Avalonia.Plugins.csproj" />
-      <ProjectReference Include="..\..\..\asv-avalonia\src\Asv.Avalonia\Asv.Avalonia.csproj" />
       <ProjectReference Include="..\Asv.Drones.Api\Asv.Drones.Api.csproj" />
     </ItemGroup>
     
