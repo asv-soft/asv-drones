@@ -14,10 +14,10 @@ using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Api;
 using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Markup.Xaml;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Templates;
+using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using R3;
@@ -29,7 +29,7 @@ public partial class App : Application, IContainerHost, IShellHost
     private readonly CompositionHost _container;
     private IShell _shell;
     private readonly Subject<IShell> _onShellLoaded = new();
-    
+
     public App()
     {
         var conventions = new ConventionBuilder();
@@ -74,19 +74,19 @@ public partial class App : Application, IContainerHost, IShellHost
         _container = containerCfg.CreateContainer();
         DataTemplates.Add(new CompositionViewLocator(_container));
     }
-    
+
     private IEnumerable<Assembly> DefaultAssemblies
     {
         get
         {
-            yield return GetType().Assembly;                // Asv.Drones
-            yield return typeof(IFlightMode).Assembly;      // Asv.Drones.Api
-            yield return typeof(AppHost).Assembly;          // Asv.Avalonia
-            yield return typeof(DeviceManager).Assembly;    // Asv.Avalonia.IO
-            yield return typeof(ITileCache).Assembly;       // Asv.Avalonia.Map
+            yield return GetType().Assembly; // Asv.Drones
+            yield return typeof(IFlightMode).Assembly; // Asv.Drones.Api
+            yield return typeof(AppHost).Assembly; // Asv.Avalonia
+            yield return typeof(DeviceManager).Assembly; // Asv.Avalonia.IO
+            yield return typeof(ITileCache).Assembly; // Asv.Avalonia.Map
         }
     }
-    
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -124,7 +124,7 @@ public partial class App : Application, IContainerHost, IShellHost
         this.AttachDevTools();
 #endif
     }
-    
+
     public T GetExport<T>()
         where T : IExportable
     {

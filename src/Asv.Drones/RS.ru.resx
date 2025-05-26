@@ -1,0 +1,299 @@
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="DialogPageViewModel_Title" xml:space="preserve">
+        <value>Диалоги</value>
+    </data>
+    <data name="DocumentPageViewModel_Title" xml:space="preserve">
+        <value>Документ</value>
+    </data>
+    <data name="ParametersEditorParameterView_PinToggleButton_ToolTip" xml:space="preserve">
+        <value>Включить/ выключить закрепление этого параметра</value>
+    </data>
+    <data name="ParametersEditorParameterView_UpdateButton_ToolTip" xml:space="preserve">
+        <value>Обновить этот парметр из БПЛА</value>
+    </data>
+    <data name="ParametersEditorParameterView_UpdateButton" xml:space="preserve">
+        <value>Обновить</value>
+    </data>
+    <data name="ParametersEditorParameterView_WriteButton_ToolTip" xml:space="preserve">
+        <value>Записать этот парметр в БПЛА</value>
+    </data>
+    <data name="ParametersEditorParameterView_WriteButton" xml:space="preserve">
+        <value>Записать</value>
+    </data>
+    <data name="ParametersEditorParameterView_RebootRequired" xml:space="preserve">
+        <value>Требуется перезагрузка</value>
+    </data>
+    <data name="ParametersEditorPageView_StarsToggleButton_ToolTip" xml:space="preserve">
+        <value>Показать только избранные параметры</value>
+    </data>
+    <data name="ParametersEditorPageView_UpdateButton_ToolTip" xml:space="preserve">
+        <value>Обновить все параметры</value>
+    </data>
+    <data name="ParametersEditorPageView_PinsOffButton_ToolTip" xml:space="preserve">
+        <value>Убрать все прикреплённые параметры</value>
+    </data>
+    <data name="ParametersEditorPageViewModel_Search" xml:space="preserve">
+        <value>Найти</value>
+    </data>
+    <data name="ParametersEditorPageViewModel_Total" xml:space="preserve">
+        <value>Всего: {0}</value>
+    </data>
+    <data name="ParametersEditorPageView_StarButton_ToolTip" xml:space="preserve">
+        <value>Добавить параметр в избранные</value>
+    </data>
+    <data name="ParamPageViewModel_DataLossDialog_Content" xml:space="preserve">
+        <value>У вас есть несохраненные данные. Хотите сохранить их?</value>
+    </data>
+    <data name="ParamPageViewModel_DataLossDialog_Title" xml:space="preserve">
+        <value>Предупреждение о возможной потере данных</value>
+    </data>
+    <data name="ParamPageViewModel_DataLossDialog_PrimaryButtonText" xml:space="preserve">
+        <value>Сохранить</value>
+    </data>
+    <data name="ParamPageViewModel_DataLossDialog_SecondaryButtonText" xml:space="preserve">
+        <value>Не сохранять</value>
+    </data>
+    <data name="ParamPageViewModel_DataLossDialog_CloseButtonText" xml:space="preserve">
+        <value>Отмена</value>
+    </data>
+    <data name="Unit_Byte_Abbreviation" xml:space="preserve">
+        <value>байт</value>
+    </data>
+    <data name="Unit_Gigabyte_Abbreviation" xml:space="preserve">
+        <value>ГБ</value>
+    </data>
+    <data name="Unit_Kilobyte_Abbreviation" xml:space="preserve">
+        <value>КБ</value>
+    </data>
+    <data name="Unit_Megabyte_Abbreviation" xml:space="preserve">
+        <value>МБ</value>
+    </data>
+    <data name="Unit_Terabyte_Abbreviation" xml:space="preserve">
+        <value>ТБ</value>
+    </data>
+    <data name="FileBrowserViewModel_UploadingDialog_Title" xml:space="preserve">
+        <value>Выгрузка</value>
+    </data>
+    <data name="FileBrowserViewModel_UploadingDialog_Message" xml:space="preserve">
+        <value>Вы хотите загрузить файл '{0}' на устройство?</value>
+    </data>
+    <data name="FileBrowserViewModel_DownloadDialog_Title" xml:space="preserve">
+        <value>Загрузка</value>
+    </data>
+    <data name="FileBrowserViewModel_DownloadDialog_Message" xml:space="preserve">
+        <value>Вы хотите скачать файл '{0}'?</value>
+    </data>
+    <data name="FileBrowserViewModel_FileDownloadedSuccessfully" xml:space="preserve">
+        <value>Файл успешно загружен: {0}</value>
+    </data>
+    <data name="FileBrowserViewModel_RemoveDialog_Title" xml:space="preserve">
+        <value>Удаление</value>
+    </data>
+    <data name="FileBrowserViewModel_RemoveDialog_Message" xml:space="preserve">
+        <value>Вы хотите удалить элемент?</value>
+    </data>
+    <data name="FileBrowserViewModel_BurstDownloadDialog_Title" xml:space="preserve">
+        <value>Загрузка (пакетная)</value>
+    </data>
+    <data name="FileBrowserViewModel_BurstDownloadDialog_PrimaryButtonText" xml:space="preserve">
+        <value>Загрузить</value>
+    </data>
+    <data name="FileBrowserViewModel_BurstDownloadDialog_SecondaryButtonText" xml:space="preserve">
+        <value>Отмена</value>
+    </data>
+    <data name="MavParamsPageViewModel_DeviceName_Unknown" xml:space="preserve">
+        <value>Неизвестно</value>
+    </data>
+    <data name="FileBrowserView_Watermark_Local" xml:space="preserve">
+        <value>Локальные файлы</value>
+    </data>
+    <data name="FileBrowserView_Watermark_Remote" xml:space="preserve">
+        <value>Удалённые файлы</value>
+    </data>
+    <data name="FileBrowserView_Button_Download_Content" xml:space="preserve">
+        <value>Загрузить</value>
+    </data>
+    <data name="FileBrowserView_Button_BurstDownload_Content" xml:space="preserve">
+        <value>Загрузить (пакетами)</value>
+    </data>
+    <data name="NotANumber" xml:space="preserve">
+        <value>Н/Д</value>
+    </data>
+    <data name="MissionProgressView_HomeDistance" xml:space="preserve">
+        <value>Стартовая точка</value>
+    </data>
+    <data name="MissionProgressView_MissionDistanceRTT" xml:space="preserve">
+        <value>Миссия</value>
+    </data>
+    <data name="MissionProgressView_SubStatusText" xml:space="preserve">
+        <value>до завершения</value>
+    </data>
+    <data name="MissionProgressView_TargetDistance" xml:space="preserve">
+        <value>Цель</value>
+    </data>
+    <data name="MissionProgressView_Title" xml:space="preserve">
+        <value>Прогресс миссии</value>
+    </data>
+    <data name="MissionProgressView_TotalDistanceRTT" xml:space="preserve">
+        <value>Общая дистанция</value>
+    </data>
+    <data name="MissionProgressView_DownLoadingMission" xml:space="preserve">
+        <value>Загрузка миссии</value>
+    </data>
+    <data name="UavAction_AutoMode_Name" xml:space="preserve">
+        <value>Авто режим</value>
+    </data>
+    <data name="UavAction_GuidedMode" xml:space="preserve">
+        <value>Ручной режим</value>
+    </data>
+    <data name="UavAction_Land" xml:space="preserve">
+        <value>Посадка</value>
+    </data>
+    <data name="UavAction_Rtl_Name" xml:space="preserve">
+        <value>Домой</value>
+    </data>
+    <data name="UavAction_StartMission" xml:space="preserve">
+        <value>Начать миссию</value>
+    </data>
+    <data name="UavAction_TakeOff" xml:space="preserve">
+        <value>Взлететь</value>
+    </data>
+    <data name="UavRttItem_Altitude" xml:space="preserve">
+        <value>Высота</value>
+    </data>
+    <data name="UavRttItem_Azimuth" xml:space="preserve">
+        <value>Азимут</value>
+    </data>
+    <data name="UavRttItem_Battery" xml:space="preserve">
+        <value>Батарея</value>
+    </data>
+    <data name="UavRttItem_GNSS" xml:space="preserve">
+        <value>ГНСС</value>
+    </data>
+    <data name="UavRttItem_Link" xml:space="preserve">
+        <value>Связь с НСУ</value>
+    </data>
+    <data name="UavRttItem_Mode" xml:space="preserve">
+        <value>Режим</value>
+    </data>
+    <data name="UavRttItem_Velocity" xml:space="preserve">
+        <value>Скорость</value>
+    </data>
+    <data name="UavWidgetViewModel_StatusText_PullUp" xml:space="preserve">
+        <value>Наберите высоту</value>
+    </data>
+    <data name="UavWidgetViewModel_StatusText_Armed" xml:space="preserve">
+        <value>Разблокировано</value>
+    </data>
+    <data name="UavWidgetViewModel_StatusText_DisArmed" xml:space="preserve">
+        <value>Заблокировано</value>
+    </data>
+    <data name="FlightPageViewModel_Title" xml:space="preserve">
+        <value>Полет</value>
+    </data>
+    <data name="UavAction_TakeOff_Description" xml:space="preserve">
+        <value>Начать взлёт</value>
+    </data>
+    <data name="UavAction_Rtl_Description" xml:space="preserve">
+        <value>Возврат на точку запуска</value>
+    </data>
+    <data name="UavAction_AutoMode_Description" xml:space="preserve">
+        <value>Автоматический режим. Используйте для продолжения миссии после прерывания</value>
+    </data>
+    <data name="UavAction_Land_Description" xml:space="preserve">
+        <value>Незамедлительная посадка</value>
+    </data>
+    <data name="UavAction_GuidedMode_Description" xml:space="preserve">
+        <value>Устанавливает ручной режим</value>
+    </data>
+    <data name="GpsFixType_GpsFixType2dFix" xml:space="preserve">
+        <value>2Д позиция Фикс</value>
+    </data>
+    <data name="GpsFixType_GpsFixType3dFix" xml:space="preserve">
+        <value>3Д позиция Фикс</value>
+    </data>
+    <data name="GpsFixType_GpsFixTypeDgps" xml:space="preserve">
+        <value>DGRS/SBAS</value>
+    </data>
+    <data name="GpsFixType_GpsFixTypeNoGps" xml:space="preserve">
+        <value>Нет подключения</value>
+    </data>
+    <data name="GpsFixType_GpsFixTypePpp" xml:space="preserve">
+        <value>PPP 3Д позиция</value>
+    </data>
+    <data name="GpsFixType_GpsFixTypeRtkFixed" xml:space="preserve">
+        <value>RTK фиксированный</value>
+    </data>
+    <data name="GpsFixType_GpsFixTypeRtkFloat" xml:space="preserve">
+        <value>RTK свободный</value>
+    </data>
+    <data name="GpsFixType_GpsFixTypeStatic" xml:space="preserve">
+        <value>Статичный</value>
+    </data>
+    <data name="UavAction_StartMission_Description" xml:space="preserve">
+        <value>Запуск ранее загруженной миссии</value>
+    </data>
+    <data name="SetAltitudeDialogViewModel_ApplyDialog_SecondaryButton_Cancel" xml:space="preserve">
+        <value>Отмена</value>
+    </data>
+    <data name="SetAltitudeDialogViewModel_ApplyDialog_PrimaryButton_TakeOff" xml:space="preserve">
+        <value>Взлететь</value>
+    </data>
+    <data name="MissionProgressViewModel_MissionFlightTime_Symbol" xml:space="preserve">
+        <value>мин</value>
+    </data>
+    <data name="UnpinAllParamsCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Снять пины со всех параметров</value>
+    </data>
+    <data name="WriteParamCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда записывает параметр в мавлинк устройство</value>
+    </data>
+    <data name="WritePatamCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Записать параметр</value>
+    </data>
+    <data name="UnpinAllParamsCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда снимает пины со всех параметров на странице параметров</value>
+    </data>
+    <data name="StopUpdateParamsCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда останавливает получение параметров с устройства мавлинк</value>
+    </data>
+    <data name="StopUpdateParamsCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Остановить получение параметров</value>
+    </data>
+    <data name="UpdateParamsCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Обновить параметры</value>
+    </data>
+    <data name="UpdateParamsCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда обновляет параметры с устройства мавлинк</value>
+    </data>
+    <data name="UpdateParamCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Обновить параметр</value>
+    </data>
+    <data name="UpdateParamCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда обновляет один параметр с устройства мавлинк</value>
+    </data>
+    <data name="OpenMavParamsCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Открыть параметры устройства мавлинк</value>
+    </data>
+    <data name="OpenMavParamsCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда открывает реадактор мавлинк параметров</value>
+    </data>
+    <data name="HomePageParamsDeviceItemAction_ActionViewModel_Header" xml:space="preserve">
+        <value>Редактор параметров</value>
+    </data>
+    <data name="HomePageParamsDeviceItemAction_ActionViewModel_Description" xml:space="preserve">
+        <value>Изменить параметры мавлинк устройства</value>
+    </data>
+</root>

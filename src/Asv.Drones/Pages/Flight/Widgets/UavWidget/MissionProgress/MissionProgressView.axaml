@@ -1,0 +1,113 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
+             xmlns:avalonia1="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:drones="clr-namespace:Asv.Drones"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
+             x:Class="Asv.Drones.MissionProgressView"
+             x:DataType="drones:MissionProgressViewModel">
+    <Design.DataContext>
+        <drones:MissionProgressViewModel />
+    </Design.DataContext>
+    <DockPanel LastChildFill="True" HorizontalAlignment="Left">
+            <Button DockPanel.Dock="Top" Command="{Binding UpdateMission}">
+                <avalonia1:MaterialIcon Kind="Reload"/>
+            </Button>      
+        <StackPanel Spacing="10" Orientation="Vertical" Margin="0 5 0 0" DockPanel.Dock="Top"
+                    IsVisible="{Binding  !IsDownloaded.Value}">
+            <TextBlock Text="{x:Static drones:RS.MissionProgressView_DownLoadingMission}" />
+            <ProgressBar Value="{Binding DownloadProgress.Value}" Minimum="0" Maximum="100" Width="100" />
+        </StackPanel>
+        <StackPanel Margin="0 5 0 0" DockPanel.Dock="Top" IsVisible="{Binding  IsDownloaded.Value}">
+            <Viewbox MaxWidth="400"  HorizontalAlignment="Left">
+                <drones:RouteIndicator Progress="{Binding PathProgress.Value}"
+                                        StatusText="{Binding MissionFlightTime.Value}"
+                                        Title="{x:Static drones:RS.MissionProgressView_Title}"
+                                        FontSize="24"
+                                        Width="470"
+                                       
+                                        SubStatusText="{x:Static drones:RS.MissionProgressView_SubStatusText}" />     
+            </Viewbox>
+            <WrapPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                <Viewbox Width="100">
+                    <avalonia:TelemBox
+                        Margin="4"
+                        Width="150"
+                        HorizontalAlignment="Left"
+                        MainBrush="{DynamicResource NavyMainBrush}"
+                        SecondaryBrush="{DynamicResource NavySecondaryBrush}"
+                        Title="{x:Static drones:RS.MissionProgressView_MissionDistanceRTT}"
+                        Units="{Binding DistanceUnitSymbol.Value}"
+                        IsBusy="False"
+                        Icon="MapMarkerDistance"
+                        CornerRadius="4">
+                        <avalonia:TelemBox.CustomContent>
+                            <TextBlock VerticalAlignment="Center" TextAlignment="Center"
+                                       FontSize="30"
+                                       Text="{Binding MissionDistance.ViewValue.Value}" />
+                        </avalonia:TelemBox.CustomContent>
+                    </avalonia:TelemBox>
+                </Viewbox>
+                <Viewbox Width="100">
+                    <avalonia:TelemBox
+                        Margin="4"
+                        Width="150"
+                        HorizontalAlignment="Left"
+                        MainBrush="{DynamicResource NavyMainBrush}"
+                        SecondaryBrush="{DynamicResource NavySecondaryBrush}"
+                        Title="{x:Static drones:RS.MissionProgressView_TotalDistanceRTT}"
+                        Units="{Binding DistanceUnitSymbol.Value}"
+                        IsBusy="False"
+                        Icon="LocationDistance"
+                        CornerRadius="4">
+                        <avalonia:TelemBox.CustomContent>
+                            <TextBlock VerticalAlignment="Center" TextAlignment="Center"
+                                       FontSize="30"
+                                       Text="{Binding TotalDistance.ViewValue.Value}" />
+                        </avalonia:TelemBox.CustomContent>
+                    </avalonia:TelemBox>
+                </Viewbox>
+                <Viewbox Width="100">
+                    <avalonia:TelemBox
+                        Margin="4"
+                        Width="150"
+                        HorizontalAlignment="Left"
+                        MainBrush="{DynamicResource NavyMainBrush}"
+                        SecondaryBrush="{DynamicResource NavySecondaryBrush}"
+                        Title="{x:Static drones:RS.MissionProgressView_HomeDistance}"
+                        Units="{Binding DistanceUnitSymbol.Value}"
+                        IsBusy="False"
+                        Icon="Home"
+                        CornerRadius="4">
+                        <avalonia:TelemBox.CustomContent>
+                            <TextBlock VerticalAlignment="Center" TextAlignment="Center"
+                                       FontSize="30"
+                                       Text="{Binding HomeDistance.ViewValue.Value}" />
+                        </avalonia:TelemBox.CustomContent>
+                    </avalonia:TelemBox>
+                </Viewbox>
+                <Viewbox Width="100">
+                    <avalonia:TelemBox
+                        Margin="4"
+                        Width="150"
+                        HorizontalAlignment="Left"
+                        MainBrush="{DynamicResource NavyMainBrush}"
+                        SecondaryBrush="{DynamicResource NavySecondaryBrush}"
+                        Title="{x:Static drones:RS.MissionProgressView_TargetDistance}"
+                        Units="{Binding DistanceUnitSymbol.Value}"
+                        IsBusy="False"
+                        Icon="Target"
+                        CornerRadius="4">
+                        <avalonia:TelemBox.CustomContent>
+                            <TextBlock VerticalAlignment="Center" TextAlignment="Center"
+                                       FontSize="30"
+                                       Text="{Binding TargetDistance.ViewValue.Value}" />
+                        </avalonia:TelemBox.CustomContent>
+                    </avalonia:TelemBox>
+                </Viewbox>
+            </WrapPanel>
+        </StackPanel>
+    </DockPanel>
+</UserControl>

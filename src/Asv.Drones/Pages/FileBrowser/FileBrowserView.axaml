@@ -1,0 +1,258 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:drones="clr-namespace:Asv.Drones"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:CompileBindings="True"
+             x:Class="Asv.Drones.FileBrowserView"
+             x:DataType="drones:FileBrowserViewModel">
+    <Design.DataContext>
+        <drones:FileBrowserViewModel />
+    </Design.DataContext>
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="FolderBrush" Color="{StaticResource SystemAccentColorDark2}" />
+        <SolidColorBrush x:Key="FileBrush" Color="{StaticResource SystemAccentColorLight2}" />
+        <SolidColorBrush x:Key="DeleteBrush" Color="{StaticResource SystemAccentColor}" />
+        <SolidColorBrush x:Key="ProgressBrush" Color="{StaticResource SystemAccentColorLight2}" />
+        <x:Double x:Key="IconSize">15</x:Double>
+    </UserControl.Resources>
+    <UserControl.Styles>
+        <Style Selector="TreeViewItem" x:DataType="drones:BrowserNode">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="IsExpanded" Value="{Binding Base.IsExpanded}" />
+            <Setter Property="IsSelected" Value="{Binding Base.IsSelected}" />
+        </Style>
+        <Style Selector="avalonia|MaterialIcon.folder">
+            <Setter Property="Kind" Value="FolderOutline" />
+            <Setter Property="Foreground" Value="{StaticResource FolderBrush}" />
+        </Style>
+        <Style Selector="avalonia|MaterialIcon.folder.selected">
+            <Setter Property="Kind" Value="Folder" />
+            <Setter Property="Foreground" Value="{StaticResource FolderBrush}" />
+        </Style>
+        <Style Selector="avalonia|MaterialIcon.folder.expanded">
+            <Setter Property="Kind" Value="FolderOpenOutline" />
+            <Setter Property="Foreground" Value="{StaticResource FolderBrush}" />
+        </Style>
+        <Style Selector="avalonia|MaterialIcon.file">
+            <Setter Property="Kind" Value="FileMarkerOutline" />
+            <Setter Property="Foreground" Value="{StaticResource FileBrush}" />
+        </Style>
+        <Style Selector="avalonia|MaterialIcon.file.selected" x:DataType="drones:BrowserNode">
+            <Setter Property="Kind" Value="FileMarker" />
+        </Style>
+    </UserControl.Styles>
+    <Panel>
+        <Grid RowDefinitions="*, Auto">
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" MinWidth="300"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*" MinWidth="300"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Row="0"
+                        Grid.Column="0"
+                        Padding="8">
+                    <DockPanel>
+                        <StackPanel KeyboardNavigation.TabNavigation="None"
+                                    DockPanel.Dock="Top" 
+                                    Spacing="4">
+                            <StackPanel Spacing="4"
+                                        Orientation="Horizontal">
+                                <Button Command="{Binding CreateLocalFolderCommand}">
+                                    <avalonia:MaterialIcon Kind="FolderPlusOutline" Foreground="{StaticResource FolderBrush}" />
+                                </Button>
+                                <!--<Button Command="{Binding SetInEditModeCommand}">
+                                    <avalonia:MaterialIcon Kind="Pencil" Foreground="{StaticResource SystemAccentColorLight2}" />
+                                </Button>
+                                <Button Command="{Binding CalculateLocalCrc32Command}">
+                                    <avalonia:MaterialIcon Kind="KeyOutline" Foreground="{StaticResource SystemAccentColorLight2}"/>
+                                </Button>-->
+                                <Button Command="{Binding RemoveLocalItemCommand}">
+                                    <avalonia:MaterialIcon Kind="Trash" Foreground="{StaticResource DeleteBrush}" />
+                                </Button>
+                            </StackPanel>
+                            <Grid ColumnDefinitions="*, Auto" Margin="0 0 0 4">
+                                <TextBox Grid.Column="0"
+                                         IsEnabled="False"
+                                         Watermark="{x:Static drones:RS.FileBrowserView_Watermark_Local}"
+                                         Text="{Binding LocalSearchText.Value}"
+                                         Margin="0 0 8 0">
+                                    <!--<TextBox.InnerRightContent>
+                                        <Button Command="{Binding ClearLocalSearchBoxCommand}"
+                                                Background="Transparent"
+                                                BorderBrush="Transparent">
+                                            <avalonia:MaterialIcon Kind="Close"
+                                                                   Foreground="{StaticResource DeleteBrush}"/>
+                                        </Button>
+                                    </TextBox.InnerRightContent>-->
+                                </TextBox>
+                                <Button Grid.Column="1"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Center"
+                                        Command="{Binding RefreshLocalCommand}">
+                                    <avalonia:MaterialIcon Kind="Refresh" Foreground="{StaticResource SystemAccentColorLight2}" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        
+                        <!--Local tree-->
+                        <TreeView ItemsSource="{Binding LocalItemsView.Items}"
+                                  SelectedItem="{Binding LocalSelectedItem.Value}">
+                            <TreeView.ItemTemplate>
+                                <TreeDataTemplate ItemsSource="{Binding Items}" 
+                                                  DataType="{x:Type drones:BrowserNode}">
+                                    <Grid ColumnDefinitions="Auto, Auto, *">
+                                        <avalonia:MaterialIcon Grid.Column="0" 
+                                                               Margin="0,0,8,0"
+                                                               Classes.folder="{Binding Base.HasChildren}"
+                                                               Classes.file="{Binding !Base.HasChildren}"
+                                                               Classes.expanded="{Binding Base.IsExpanded}"
+                                                               Classes.selected="{Binding Base.IsSelected}"
+                                                               Width="{StaticResource IconSize}" 
+                                                               Height="{StaticResource IconSize}"/>
+                                        <TextBlock Grid.Column="1" 
+                                                   VerticalAlignment="Center"
+                                                   Text="{Binding Base.Header}"/>
+                                        <TextBlock Grid.Column="2"
+                                                   Margin="0,0,8,0"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Right"
+                                                   Text="{Binding Base.Size}"/>
+                                    </Grid>
+                                </TreeDataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>
+                    </DockPanel>
+                </Border>
+                
+                <GridSplitter Grid.Row="0"
+                              Grid.Column="1" 
+                              Width="30"
+                              KeyboardNavigation.TabNavigation="None" 
+                              IsTabStop="False"/>
+                
+                <StackPanel Grid.Row="0"
+                            Grid.Column="1"
+                            KeyboardNavigation.TabNavigation="None"
+                            IsTabStop="False"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center" 
+                            Margin="2"
+                            Spacing="8">
+                    <Button Height="50" 
+                            Content="{avalonia:MaterialIconExt Kind=TransferRight}" 
+                            Theme="{DynamicResource TransparentButton}"
+                            Command="{Binding UploadCommand}"/>
+                    <Button Height="50" 
+                            Content="{avalonia:MaterialIconExt Kind=TransferLeft}" 
+                            Theme="{DynamicResource TransparentButton}"
+                            Command="{Binding ShowDownloadPopupCommand}"/>
+                    
+                    <Popup IsOpen="{Binding IsDownloadPopupOpen.Value}"
+                           Placement="RightEdgeAlignedBottom" 
+                           Topmost="True">
+                        <Border Padding="10">
+                            <StackPanel>
+                                <Button Content="{x:Static drones:RS.FileBrowserView_Button_Download_Content}" 
+                                        Command="{Binding DownloadCommand}" 
+                                        Margin="0,0,0,5"/>
+                                <Button Content="{x:Static drones:RS.FileBrowserView_Button_BurstDownload_Content}" 
+                                        Command="{Binding BurstDownloadCommand}"/>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                    
+                </StackPanel>
+                
+                <Border Grid.Row="0"
+                        Grid.Column="2"
+                        Padding="8">
+                    <DockPanel>
+                        <StackPanel KeyboardNavigation.TabNavigation="None"
+                                    DockPanel.Dock="Top" 
+                                    Spacing="4">
+                            <StackPanel Spacing="4"
+                                        Orientation="Horizontal">
+                                <Button Command="{Binding CreateRemoteFolderCommand}">
+                                    <avalonia:MaterialIcon Kind="FolderPlusOutline" Foreground="{StaticResource FolderBrush}" />
+                                </Button>
+                                <!--<Button Command="{Binding CompareSelectedItemsCommand}">
+                                    <avalonia:MaterialIcon Kind="SwapHorizontalCircleOutline" Foreground="{StaticResource SystemAccentColorLight2}"/>
+                                </Button>
+                                <Button Command="{Binding FindFileOnLocalCommand}">
+                                    <avalonia:MaterialIcon Kind="FileFindOutline" Foreground="{StaticResource SystemAccentColorLight2}"/>
+                                </Button>
+                                <Button Command="{Binding CalculateRemoteCrc32Command}">
+                                    <avalonia:MaterialIcon Kind="KeyOutline" Foreground="{StaticResource SystemAccentColorLight2}"/>
+                                </Button>-->
+                                <Button Command="{Binding RemoveRemoteItemCommand}">
+                                    <avalonia:MaterialIcon Kind="Trash" Foreground="{StaticResource DeleteBrush}" />
+                                </Button>
+                            </StackPanel>
+                            <Grid ColumnDefinitions="*, Auto" Margin="0 0 0 4">
+                                <TextBox Grid.Column="0"
+                                         IsEnabled="False"
+                                         Watermark="{x:Static drones:RS.FileBrowserView_Watermark_Remote}"
+                                         Text="{Binding RemoteSearchText.Value}"
+                                         Margin="0 0 8 0">
+                                    <!--<TextBox.InnerRightContent>
+                                        <Button Command="{Binding ClearRemoteSearchBoxCommand}"
+                                                Background="Transparent"
+                                                BorderBrush="Transparent">
+                                            <avalonia:MaterialIcon Kind="Close"
+                                                                   Foreground="{StaticResource DeleteBrush}"/>
+                                        </Button>
+                                    </TextBox.InnerRightContent>-->
+                                </TextBox>
+                                <Button Grid.Column="1"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Center"
+                                        Command="{Binding RefreshRemoteCommand}">
+                                    <avalonia:MaterialIcon Kind="Refresh" Foreground="{StaticResource SystemAccentColorLight2}" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        
+                        <!--Remote tree-->
+                        <TreeView ItemsSource="{Binding RemoteItemsView.Items}"
+                                  SelectedItem="{Binding RemoteSelectedItem.Value}">
+                            <TreeView.ItemTemplate>
+                                <TreeDataTemplate ItemsSource="{Binding Items}" 
+                                                  DataType="{x:Type drones:BrowserNode}">
+                                    <Grid ColumnDefinitions="Auto, Auto, *">
+                                        <avalonia:MaterialIcon Grid.Column="0" 
+                                                               Margin="0,0,8,0"
+                                                               Classes.folder="{Binding Base.HasChildren}"
+                                                               Classes.file="{Binding !Base.HasChildren}"
+                                                               Classes.expanded="{Binding Base.IsExpanded}"
+                                                               Classes.selected="{Binding Base.IsSelected}"
+                                                               Width="{StaticResource IconSize}" 
+                                                               Height="{StaticResource IconSize}"/>
+                                        <TextBlock Grid.Column="1" 
+                                                   VerticalAlignment="Center"
+                                                   Text="{Binding Base.Header}"/>
+                                        <TextBlock Grid.Column="2"
+                                                   Margin="0,0,8,0"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Right"
+                                                   Text="{Binding Base.Size}"/>
+                                    </Grid>
+                                </TreeDataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>
+                    </DockPanel>
+                </Border>
+            </Grid>
+            <ProgressBar Grid.Row="1"
+                         Height="10"
+                         Foreground="{StaticResource ProgressBrush}"
+                         Value="{Binding Progress.Value}"
+                         Minimum="0"
+                         Maximum="1"/>
+        </Grid>
+    </Panel>
+</UserControl>
