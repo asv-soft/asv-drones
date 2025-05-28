@@ -2,9 +2,11 @@
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
 using Asv.Avalonia.Plugins;
+using Asv.Common;
 using Asv.Drones.Api;
 using Avalonia;
 using Avalonia.Controls;
+using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones.Desktop;
 
@@ -20,18 +22,19 @@ sealed class Program
 
         builder
             .UseAvalonia(BuildAvaloniaApp)
-            .UseLogToConsoleOnDebug()
+            .SetLogLevel(LogLevel.Trace)
+            .UseLogToConsole()
             .UseAppPath(opt => opt.WithRelativeFolder("data"))
             .UseJsonUserConfig(opt =>
                 opt.WithFileName("user_settings.json").WithAutoSave(TimeSpan.FromSeconds(1))
             )
             .UseAppInfo(opt => opt.FillFromAssembly(typeof(App).Assembly))
             .UseSoloRun(opt => opt.WithArgumentForwarding())
-            .UseLogService(opt => opt.WithRelativeFolder("logs"))
+            .UseLogService()
             .UseAsvMap()
             .UsePluginManager(options =>
             {
-                options.WithApiPackage(typeof(IFlightMode).Assembly);
+                options.WithApiPackage("Asv.Drones.Api", SemVersion.Parse("2.0.0"));
                 options.WithPluginPrefix("Asv.Drones.Plugin.");
             });
         using var host = builder.Build();

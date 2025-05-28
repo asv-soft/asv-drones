@@ -86,7 +86,7 @@ public class MavParamsPageViewModel
         ArgumentNullException.ThrowIfNull(loggerFactory);
         ArgumentNullException.ThrowIfNull(nav);
 
-        Title.Value = "Params";
+        Title = "Params";
 
         _loggerFactory = loggerFactory;
         _log = loggerFactory.CreateLogger<MavParamsPageViewModel>();
@@ -287,13 +287,14 @@ public class MavParamsPageViewModel
 
     protected override void AfterDeviceInitialized(IClientDevice device)
     {
-        Title.Value = $"Params[{device.Id}]";
+        Title = $"Params[{device.Id}]";
         _paramsClient = device.GetMicroservice<IParamsClientEx>();
         DeviceName = device
             .Name.Select(x => x ?? RS.MavParamsPageViewModel_DeviceName_Unknown)
             .ToReadOnlyBindableReactiveProperty<string>();
         _deviceId = device.Id;
-        Icon.Value = DeviceIconMixin.GetIcon(_deviceId) ?? PageIcon;
+        Id.ChangeArgs(_deviceId.AsString());
+        Icon = DeviceIconMixin.GetIcon(_deviceId) ?? PageIcon;
         InternalInit();
     }
 
@@ -386,7 +387,7 @@ public class MavParamsPageViewModel
 
     protected override void AfterLoadExtensions()
     {
-        Id.ChangeArgs(_deviceId.AsString());
+       
     }
 
     public override IExportInfo Source => SystemModule.Instance;

@@ -43,6 +43,7 @@ public partial class App : Application, IContainerHost, IShellHost
                 .WithExport(NullLoggerFactory.Instance)
                 .WithExport(NullAppPath.Instance)
                 .WithExport(NullPluginManager.Instance)
+                .WithExport(NullLogService.Instance)
                 .WithExport(NullAppInfo.Instance)
                 .WithExport<IDataTemplateHost>(this)
                 .WithExport<IShellHost>(this)
@@ -57,6 +58,7 @@ public partial class App : Application, IContainerHost, IShellHost
                 .WithExport<IContainerHost>(this)
                 .WithExport(AppHost.Instance.GetService<IConfiguration>())
                 .WithExport(AppHost.Instance.GetService<ILoggerFactory>())
+                .WithExport(AppHost.Instance.GetService<ILogService>())
                 .WithExport(AppHost.Instance.GetService<IAppPath>())
                 .WithExport(AppHost.Instance.GetService<IAppInfo>())
                 .WithExport(AppHost.Instance.GetService<IMeterFactory>())
@@ -83,7 +85,7 @@ public partial class App : Application, IContainerHost, IShellHost
             yield return typeof(IFlightMode).Assembly; // Asv.Drones.Api
             yield return typeof(AppHost).Assembly; // Asv.Avalonia
             yield return typeof(DeviceManager).Assembly; // Asv.Avalonia.IO
-            yield return typeof(ITileCache).Assembly; // Asv.Avalonia.Map
+            yield return typeof(IPluginManager).Assembly; // Asv.Avalonia.Plugins
         }
     }
 

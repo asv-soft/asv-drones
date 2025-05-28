@@ -46,8 +46,8 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
     public FlightPageViewModel(ICommandService cmd)
         : base(PageId, cmd)
     {
-        Title.Value = RS.FlightPageViewModel_Title;
-        Icon.Value = PageIcon;
+        Title = RS.FlightPageViewModel_Title;
+        Icon = PageIcon;
         Anchors = [];
         Anchors.SetRoutableParent(this, true).DisposeItWith(Disposable);
         AnchorsView = Anchors.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);

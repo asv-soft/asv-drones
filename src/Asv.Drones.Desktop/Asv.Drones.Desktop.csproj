@@ -4,6 +4,13 @@
         <!--If you are willing to use Windows/MacOS native APIs you will need to create 3 projects.
         One for Windows with net8.0-windows TFM, one for MacOS with net8.0-macos and one with net8.0 TFM for Linux.-->
         <TargetFramework>net8.0</TargetFramework>
+        <FileVersion>$(ProductVersion)</FileVersion>
+        <Version>$(ProductVersion)</Version>
+
+        <Authors>https://github.com/asv-soft</Authors>
+        <Company>https://github.com/asv-soft</Company>
+        <Copyright>https://github.com/asv-soft</Copyright>
+        
         <Nullable>enable</Nullable>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <CodeAnalysisRuleSet>../CodeStyle.ruleset</CodeAnalysisRuleSet>
@@ -50,6 +57,12 @@
 
     <ItemGroup>
       <None Update="appsettings.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="appsettings.Development.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="appsettings.Production.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
