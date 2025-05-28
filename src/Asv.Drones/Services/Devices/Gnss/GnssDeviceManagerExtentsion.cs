@@ -14,7 +14,7 @@ public class GnssDeviceManagerExtension : IDeviceManagerExtension
     public void Configure(IProtocolBuilder builder)
     {
         builder.Features.RegisterEndpointIdTagFeature();
-        
+
         builder.Protocols.RegisterNmeaProtocol();
     }
 

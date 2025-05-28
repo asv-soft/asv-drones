@@ -14,7 +14,7 @@ public static class DeviceIconMixin
             Vehicles.PlaneDeviceClass => MaterialIconKind.Plane,
             Vehicles.CopterDeviceClass => MaterialIconKind.Navigation,
             GbsClientDevice.DeviceClass => MaterialIconKind.RouterWireless,
-            _ => null
+            _ => null,
         };
     }
 
