@@ -21,7 +21,12 @@ public class UavAnchor : MapAnchor<UavAnchor>
         DesignTime.ThrowIfNotDesignMode();
     }
 
-    public UavAnchor(DeviceId deviceId, IDeviceManager mng, IClientDevice dev, IPositionClientEx pos)
+    public UavAnchor(
+        DeviceId deviceId,
+        IDeviceManager mng,
+        IClientDevice dev,
+        IPositionClientEx pos
+    )
         : base("uav")
     {
         DeviceId = deviceId;

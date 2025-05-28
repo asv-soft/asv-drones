@@ -32,7 +32,13 @@ public class FlightUavAnchorsExtension(
     {
         var pos = device.Value.GetMicroservice<IPositionClientEx>();
         return pos != null
-            ? new UavWidgetViewModel(device.Value,navigationService, unitService, conn, loggerFactory)
+            ? new UavWidgetViewModel(
+                device.Value,
+                navigationService,
+                unitService,
+                conn,
+                loggerFactory
+            )
             : null;
     }
 

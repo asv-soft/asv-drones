@@ -385,10 +385,7 @@ public class MavParamsPageViewModel
         }
     }
 
-    protected override void AfterLoadExtensions()
-    {
-       
-    }
+    protected override void AfterLoadExtensions() { }
 
     public override IExportInfo Source => SystemModule.Instance;
 

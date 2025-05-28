@@ -1,9 +1,11 @@
-name: Build and Publish Api NuGet
+name: Release Api NuGet
 
 on:
   push:
     tags:
-      - "api-v*"
+      - "api-v[0-9]+.[0-9]+.[0-9]+"
+      - "api-v[0-9]+.[0-9]+.[0-9]+-rc.[0-9]+"
+      - "api-v[0-9]+.[0-9]+.[0-9]+-rc"
 
 env:
   NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
@@ -17,10 +19,10 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/api-v')
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
           
@@ -46,7 +48,7 @@ jobs:
           
       - name: Compare tag with NuGet package version
         run: |
-          if [ "${{ env.PropsVersion }}" != "${{ env.VERSION }}" ]; then
+          if [ api-v"${{ env.PropsVersion }}" != "${{ env.VERSION }}" ]; then
             echo "Error: Tag does not match NuGet package version"
             exit 1
           fi
@@ -58,7 +60,7 @@ jobs:
         run: ls -la
 
       - name: Push package to GitHub
-        run: dotnet nuget push ${{env.PROJECT_NAME}}.${VERSION}.nupkg --api-key ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }} --skip-duplicate --source ${{ env.GITHUB_PACKAGES_URL }}
+        run: dotnet nuget push ${{env.PROJECT_NAME}}.${{ env.VERSION }}.nupkg --api-key ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }} --skip-duplicate --source ${{ env.GITHUB_PACKAGES_URL }}
 
       - name: Push package to Nuget
-        run: dotnet nuget push ${{env.PROJECT_NAME}}.${VERSION}.nupkg --api-key ${{ secrets.NUGET_AUTH_TOKEN }} --skip-duplicate --source ${{ env.NUGET_SOURCE_URL }}
+        run: dotnet nuget push ${{env.PROJECT_NAME}}.${{ env.VERSION }}.nupkg --api-key ${{ secrets.NUGET_AUTH_TOKEN }} --skip-duplicate --source ${{ env.NUGET_SOURCE_URL }}
