@@ -18,7 +18,7 @@ public class OpenMavParamsCommand(INavigationService nav)
         Name = RS.OpenMavParamsCommand_CommandInfo_Name,
         Description = RS.OpenMavParamsCommand_CommandInfo_Description,
         Icon = MavParamsPageViewModel.PageIcon,
-        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null },
+        DefaultHotKey = null,
         Source = SystemModule.Instance,
     };
 

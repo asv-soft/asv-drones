@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
+
 using Asv.Common;
 using Asv.Drones.Api;
 using Material.Icons;

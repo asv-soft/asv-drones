@@ -2,12 +2,12 @@
 
 namespace Asv.Drones.Api;
 
-public class Module : IExportInfo
+public class ApiModule : IExportInfo
 {
     public const string Name = "Asv.Drones.Api";
-    public static IExportInfo Instance { get; } = new Module();
+    public static IExportInfo Instance { get; } = new ApiModule();
 
-    private Module() { }
+    private ApiModule() { }
 
     public string ModuleName => Name;
 }

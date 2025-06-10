@@ -18,7 +18,7 @@ public class OpenFileBrowserCommand(INavigationService nav)
         Name = "File browser",
         Description = "Open FTP file browser",
         Icon = FileBrowserViewModel.PageIcon,
-        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null },
+        DefaultHotKey = null,
         Source = SystemModule.Instance,
     };
 

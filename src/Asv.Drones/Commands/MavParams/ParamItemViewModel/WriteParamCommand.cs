@@ -1,13 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
-using Asv.Common;
 using Material.Icons;
 
 namespace Asv.Drones;
 
 [ExportCommand]
-public class WriteParamCommand : ContextCommand<ParamItemViewModel>
+public class WriteParamCommand : ContextCommand<ParamItemViewModel, ActionArg>
 {
     public const string Id = $"{BaseId}.params.item.write";
 
@@ -17,17 +16,14 @@ public class WriteParamCommand : ContextCommand<ParamItemViewModel>
         Name = RS.WritePatamCommand_CommandInfo_Name,
         Description = RS.WriteParamCommand_CommandInfo_Description,
         Icon = MaterialIconKind.Upload,
-        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null }, // TODO: make a key bind when new key listener system appears
+        DefaultHotKey = null, // TODO: make a key bind when new key listener system appears
         Source = SystemModule.Instance,
     };
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override async ValueTask<ICommandArg?> InternalExecute(
-        ParamItemViewModel context,
-        ICommandArg newValue,
-        CancellationToken cancel
-    )
+
+    public override async ValueTask<ActionArg?> InternalExecute(ParamItemViewModel context, ActionArg arg, CancellationToken cancel)
     {
         await context.WriteImpl(cancel);
         return null;

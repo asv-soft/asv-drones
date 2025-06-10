@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
+
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Api;
@@ -154,7 +155,7 @@ public class MavParamsPageViewModel
             _config
         ));
         _sub7 = _view.DisposeMany();
-        _sub8 = _view.SetRoutableParentForView(this);
+        _sub8 = _view.SetRoutableParent(this);
 
         _sub9 = SearchText
             .ViewValue.ThrottleLast(TimeSpan.FromMilliseconds(500))
@@ -306,7 +307,7 @@ public class MavParamsPageViewModel
     public ICommand StopUpdateParams { get; private set; }
     public ReactiveCommand RemoveAllPins { get; private set; }
 
-    public INotifyCollectionChangedSynchronizedViewList<ParamItemViewModel> AllParams
+    public INotifyCollectionChangedSynchronizedViewList<ParamItemViewModel>? AllParams
     {
         get;
         private set;
@@ -379,9 +380,12 @@ public class MavParamsPageViewModel
     {
         yield return ShowStaredOnly;
         yield return SearchText;
-        foreach (var paramItemViewModel in AllParams)
+        if (AllParams != null)
         {
-            yield return paramItemViewModel;
+            foreach (var paramItemViewModel in AllParams)
+            {
+                yield return paramItemViewModel;
+            }
         }
     }
 
@@ -424,7 +428,7 @@ public class MavParamsPageViewModel
             Progress.Dispose();
             Clear.Dispose();
             RemoveAllPins.Dispose();
-            AllParams.Dispose();
+            AllParams?.Dispose();
             ViewedParams.Dispose();
             Total.Dispose();
             SelectedItem.Dispose();

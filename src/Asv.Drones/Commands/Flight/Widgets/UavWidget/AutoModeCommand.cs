@@ -22,7 +22,7 @@ public class AutoModeCommand : ContextCommand<UavWidgetViewModel> // TODO: make 
         Name = RS.UavAction_AutoMode_Name,
         Description = RS.UavAction_AutoMode_Description,
         Icon = MaterialIconKind.Automatic,
-        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null },
+        DefaultHotKey = null,
         Source = SystemModule.Instance,
     };
 
@@ -30,9 +30,9 @@ public class AutoModeCommand : ContextCommand<UavWidgetViewModel> // TODO: make 
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override async ValueTask<ICommandArg?> InternalExecute(
+    protected override async ValueTask<CommandArg?> InternalExecute(
         UavWidgetViewModel context,
-        ICommandArg newValue,
+        CommandArg newValue,
         CancellationToken cancel
     )
     {

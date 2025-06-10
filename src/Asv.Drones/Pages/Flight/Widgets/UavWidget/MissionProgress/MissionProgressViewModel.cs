@@ -11,7 +11,6 @@ using Asv.Mavlink;
 using Asv.Mavlink.Common;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using ObservableCollections;
 using R3;
 
 namespace Asv.Drones;

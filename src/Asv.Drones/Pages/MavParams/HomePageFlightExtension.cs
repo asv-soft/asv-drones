@@ -25,7 +25,7 @@ public class HomePageParamsDeviceItemAction : HomePageDeviceItemAction
             Header = RS.HomePageParamsDeviceItemAction_ActionViewModel_Header,
             Description = RS.HomePageParamsDeviceItemAction_ActionViewModel_Description,
             Command = new BindableAsyncCommand(OpenMavParamsCommand.Id, context),
-            CommandParameter = new StringCommandArg(device.Id.AsString()),
+            CommandParameter = new StringArg(device.Id.AsString()),
         };
     }
 }

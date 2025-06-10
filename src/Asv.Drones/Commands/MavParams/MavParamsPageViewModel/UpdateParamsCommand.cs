@@ -16,15 +16,15 @@ public class UpdateParamsCommand : ContextCommand<MavParamsPageViewModel>
         Name = RS.UpdateParamsCommand_CommandInfo_Name,
         Description = RS.UpdateParamsCommand_CommandInfo_Description,
         Icon = MaterialIconKind.Refresh,
-        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null }, // TODO: make a key bind when new key listener system appears
+        DefaultHotKey = null, // TODO: make a key bind when new key listener system appears
         Source = SystemModule.Instance,
     };
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override ValueTask<ICommandArg?> InternalExecute(
+    protected override ValueTask<CommandArg?> InternalExecute(
         MavParamsPageViewModel context,
-        ICommandArg newValue,
+        CommandArg newValue,
         CancellationToken cancel
     )
     {

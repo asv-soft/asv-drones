@@ -1,5 +1,4 @@
-﻿using System;
-using System.Composition;
+﻿using System.Composition;
 using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
@@ -11,7 +10,7 @@ namespace Asv.Drones;
 
 [ExportCommand]
 [Shared]
-public class TakeOffCommand : ContextCommand<UavWidgetViewModel>
+public class TakeOffCommand : ContextCommand<UavWidgetViewModel, DoubleArg>
 {
     #region Static
 
@@ -23,7 +22,7 @@ public class TakeOffCommand : ContextCommand<UavWidgetViewModel>
         Name = RS.UavAction_TakeOff,
         Description = RS.UavAction_TakeOff_Description,
         Icon = MaterialIconKind.AeroplaneTakeoff,
-        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null },
+        DefaultHotKey = null,
         Source = SystemModule.Instance,
     };
 
@@ -31,17 +30,8 @@ public class TakeOffCommand : ContextCommand<UavWidgetViewModel>
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override async ValueTask<ICommandArg?> InternalExecute(
-        UavWidgetViewModel context,
-        ICommandArg newValue,
-        CancellationToken cancel
-    )
+    public override async ValueTask<DoubleArg?> InternalExecute(UavWidgetViewModel context, DoubleArg arg, CancellationToken cancel)
     {
-        if (newValue is not DoubleCommandArg value)
-        {
-            throw new InvalidCastException("Invalid value type. CommandArg must be a double");
-        }
-
         var device = context.Device;
         var controlClient = device.GetMicroservice<ControlClient>();
 
@@ -51,7 +41,7 @@ public class TakeOffCommand : ContextCommand<UavWidgetViewModel>
         }
 
         await controlClient.SetGuidedMode(cancel);
-        await controlClient.TakeOff(value.Value, cancel);
+        await controlClient.TakeOff(arg.Value, cancel);
         return null;
     }
 }

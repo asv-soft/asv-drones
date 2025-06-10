@@ -1,7 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
-using Asv.Common;
 using Material.Icons;
 
 namespace Asv.Drones;
@@ -17,15 +16,15 @@ public class UpdateParamCommand : ContextCommand<ParamItemViewModel>
         Name = RS.UpdateParamCommand_CommandInfo_Name,
         Description = RS.UpdateParamCommand_CommandInfo_Description,
         Icon = MaterialIconKind.Update,
-        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null }, // TODO: make a key bind when new key listener system appears
+        DefaultHotKey = null, // TODO: make a key bind when new key listener system appears
         Source = SystemModule.Instance,
     };
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override async ValueTask<ICommandArg?> InternalExecute(
+    protected override async ValueTask<CommandArg?> InternalExecute(
         ParamItemViewModel context,
-        ICommandArg newValue,
+        CommandArg newValue,
         CancellationToken cancel
     )
     {

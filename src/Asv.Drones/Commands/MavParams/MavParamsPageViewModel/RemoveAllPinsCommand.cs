@@ -1,15 +1,12 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Material.Icons;
-using R3;
 
 namespace Asv.Drones;
 
 [ExportCommand]
-public class RemoveAllPinsCommand : ContextCommand<MavParamsPageViewModel>
+public class RemoveAllPinsCommand : ContextCommand<MavParamsPageViewModel, ListArg>
 {
     public const string Id = $"{BaseId}.params.remove-all-pins";
 
@@ -19,21 +16,21 @@ public class RemoveAllPinsCommand : ContextCommand<MavParamsPageViewModel>
         Name = RS.UnpinAllParamsCommand_CommandInfo_Name,
         Description = RS.UnpinAllParamsCommand_CommandInfo_Description,
         Icon = MaterialIconKind.PinOff,
-        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null }, // TODO: make a key bind when new key listener system appears
+        DefaultHotKey = null, // TODO: make a key bind when new key listener system appears
         Source = SystemModule.Instance,
     };
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override ValueTask<ICommandArg?> InternalExecute(
+    /*protected override void InternalExecute(
         MavParamsPageViewModel context,
-        ICommandArg newValue,
+        CommandArg newValue,
         CancellationToken cancel
     )
     {
-        var value = newValue as ListCommandArg<ParamItemViewModel>;
+        /*var value = newValue as ListCommandArg<ParamItemViewModel>;
 
-        context.SelectedItem.Value = null;
+        
 
         if (value?.Items is null)
         {
@@ -51,7 +48,7 @@ public class RemoveAllPinsCommand : ContextCommand<MavParamsPageViewModel>
 
             var oldValue = new ListCommandArg<ParamItemViewModel>(pinned);
 
-            return ValueTask.FromResult<ICommandArg?>(oldValue);
+            return ValueTask.FromResult<CommandArg?>(oldValue);
         }
 
         foreach (var item in context.AllParams)
@@ -73,6 +70,11 @@ public class RemoveAllPinsCommand : ContextCommand<MavParamsPageViewModel>
 
         var oldValue1 = new ListCommandArg<ParamItemViewModel>(value.Items);
 
-        return ValueTask.FromResult<ICommandArg?>(oldValue1);
+        return ValueTask.FromResult<CommandArg?>(oldValue1);
+    }*/
+
+    public override async ValueTask<ListArg?> InternalExecute(MavParamsPageViewModel context, ListArg arg, CancellationToken cancel)
+    {
+        return null; // TODO: implement this method
     }
 }

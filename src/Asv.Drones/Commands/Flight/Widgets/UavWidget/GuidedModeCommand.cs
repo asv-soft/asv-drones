@@ -22,7 +22,7 @@ public class GuidedModeCommand : ContextCommand<UavWidgetViewModel>
         Name = RS.UavAction_GuidedMode,
         Description = RS.UavAction_GuidedMode_Description,
         Icon = MaterialIconKind.Controller,
-        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null },
+        DefaultHotKey = null,
         Source = SystemModule.Instance,
     };
 
@@ -30,9 +30,9 @@ public class GuidedModeCommand : ContextCommand<UavWidgetViewModel>
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override async ValueTask<ICommandArg?> InternalExecute(
+    protected override async ValueTask<CommandArg?> InternalExecute(
         UavWidgetViewModel context,
-        ICommandArg newValue,
+        CommandArg newValue,
         CancellationToken cancel
     )
     {

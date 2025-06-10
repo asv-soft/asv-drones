@@ -16,15 +16,15 @@ public class StopUpdateParamsCommand : ContextCommand<MavParamsPageViewModel>
         Name = RS.StopUpdateParamsCommand_CommandInfo_Name,
         Description = RS.StopUpdateParamsCommand_CommandInfo_Description,
         Icon = MaterialIconKind.CancelCircle,
-        HotKeyInfo = new HotKeyInfo { DefaultHotKey = null }, // TODO: make a key bind when new key listener system appears
+        DefaultHotKey = null, // TODO: make a key bind when new key listener system appears
         Source = SystemModule.Instance,
     };
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override ValueTask<ICommandArg?> InternalExecute(
+    protected override ValueTask<CommandArg?> InternalExecute(
         MavParamsPageViewModel context,
-        ICommandArg newValue,
+        CommandArg newValue,
         CancellationToken cancel
     )
     {

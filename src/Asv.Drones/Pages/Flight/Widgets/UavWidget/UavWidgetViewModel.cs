@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
+
 using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
@@ -288,7 +289,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
                 {
                     await this.ExecuteCommand(
                         TakeOffCommand.Id,
-                        new DoubleCommandArg(
+                        new DoubleArg(
                             _altitudeUnit.CurrentUnitItem.Value.ParseToSi(vm.Altitude.Value)
                         )
                     );

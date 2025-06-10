@@ -26,7 +26,7 @@ public class HomePageFileBrowserExtension() : HomePageDeviceItemAction
             Description = OpenFileBrowserCommand.StaticInfo.Description,
             Icon = OpenFileBrowserCommand.StaticInfo.Icon,
             Command = new BindableAsyncCommand(OpenFileBrowserCommand.Id, context),
-            CommandParameter = new StringCommandArg(device.Id.AsString()),
+            CommandParameter = new StringArg(device.Id.AsString()),
         };
     }
 }
