@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
-
 using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Api;

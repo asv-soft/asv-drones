@@ -1,6 +1,3 @@
 ﻿namespace Asv.Drones.Api;
 
-public interface IFlightModeCommands
-{
-    
-}
+public interface IFlightModeCommands { }

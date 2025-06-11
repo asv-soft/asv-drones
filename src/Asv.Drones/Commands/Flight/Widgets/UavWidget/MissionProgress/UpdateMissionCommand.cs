@@ -28,8 +28,11 @@ public class UpdateMissionCommand : ContextCommand<MissionProgressViewModel>
 
     public override ICommandInfo Info => StaticInfo;
 
-   
-    protected override async ValueTask<CommandArg?> InternalExecute(MissionProgressViewModel context, CommandArg newValue, CancellationToken cancel)
+    protected override async ValueTask<CommandArg?> InternalExecute(
+        MissionProgressViewModel context,
+        CommandArg newValue,
+        CancellationToken cancel
+    )
     {
         await context.InitiateMissionPoints(cancel);
         return null;

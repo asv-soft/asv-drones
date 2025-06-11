@@ -296,4 +296,46 @@
     <data name="HomePageParamsDeviceItemAction_ActionViewModel_Description" xml:space="preserve">
         <value>Изменить параметры мавлинк устройства</value>
     </data>
+    <data name="PacketViewerViewModel_SavePacketMessagesDialog_Title" xml:space="preserve">
+        <value>Выберите разделитель:</value>
+    </data>
+    <data name="SavePacketMessagesDialogView_Separator_Tab" xml:space="preserve">
+        <value>Табуляция</value>
+    </data>
+    <data name="PacketViewerView_ToolTip_Save" xml:space="preserve">
+        <value>Сохранить</value>
+    </data>
+    <data name="PacketViewerView_ToolTip_ClearAll" xml:space="preserve">
+        <value>Очистить все</value>
+    </data>
+    <data name="PacketViewerView_ToolTip_PlayPause" xml:space="preserve">
+        <value>ЗАПУСТИТЬ/ОСТАНОВИТЬ</value>
+    </data>
+    <data name="PacketMessageViewModel_CsvColumn_Date" xml:space="preserve">
+        <value>Дата</value>
+    </data>
+    <data name="PacketMessageViewModel_CsvColumn_Message" xml:space="preserve">
+        <value>Сообщение</value>
+    </data>
+    <data name="PacketMessageViewModel_CsvColumn_Source" xml:space="preserve">
+        <value>Источник</value>
+    </data>
+    <data name="PacketMessageViewModel_CsvColumn_Type" xml:space="preserve">
+        <value>Тип</value>
+    </data>
+    <data name="PacketViewerView_ExpanderFilterBySources_Header" xml:space="preserve">
+        <value>Источники</value>
+    </data>
+    <data name="PacketViewerView_ExpanderFilterByTypes_Header" xml:space="preserve">
+        <value>Типы</value>
+    </data>
+    <data name="PacketViewerView_Filters_CheckAll" xml:space="preserve">
+        <value>Выбрать все</value>
+    </data>
+    <data name="PacketViewerViewModel_SavePacketMessagesDialog_CloseButtonText" xml:space="preserve">
+        <value>Отменить</value>
+    </data>
+    <data name="PacketViewerViewModel_SavePacketMessagesDialog_PrimaryButtonText" xml:space="preserve">
+        <value>Подтвердить</value>
+    </data>
 </root>

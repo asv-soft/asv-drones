@@ -614,5 +614,89 @@ namespace Asv.Drones {
                 return ResourceManager.GetString("HomePageParamsDeviceItemAction_ActionViewModel_Description", resourceCulture);
             }
         }
+        
+        public static string PacketViewerViewModel_SavePacketMessagesDialog_Title {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SavePacketMessagesDialog_Title", resourceCulture);
+            }
+        }
+        
+        public static string SavePacketMessagesDialogView_Separator_Tab {
+            get {
+                return ResourceManager.GetString("SavePacketMessagesDialogView_Separator_Tab", resourceCulture);
+            }
+        }
+        
+        public static string PacketViewerView_ToolTip_Save {
+            get {
+                return ResourceManager.GetString("PacketViewerView_ToolTip_Save", resourceCulture);
+            }
+        }
+        
+        public static string PacketViewerView_ToolTip_ClearAll {
+            get {
+                return ResourceManager.GetString("PacketViewerView_ToolTip_ClearAll", resourceCulture);
+            }
+        }
+        
+        public static string PacketViewerView_ToolTip_PlayPause {
+            get {
+                return ResourceManager.GetString("PacketViewerView_ToolTip_PlayPause", resourceCulture);
+            }
+        }
+        
+        public static string PacketMessageViewModel_CsvColumn_Date {
+            get {
+                return ResourceManager.GetString("PacketMessageViewModel_CsvColumn_Date", resourceCulture);
+            }
+        }
+        
+        public static string PacketMessageViewModel_CsvColumn_Source {
+            get {
+                return ResourceManager.GetString("PacketMessageViewModel_CsvColumn_Source", resourceCulture);
+            }
+        }
+        
+        public static string PacketMessageViewModel_CsvColumn_Type {
+            get {
+                return ResourceManager.GetString("PacketMessageViewModel_CsvColumn_Type", resourceCulture);
+            }
+        }
+        
+        public static string PacketMessageViewModel_CsvColumn_Message {
+            get {
+                return ResourceManager.GetString("PacketMessageViewModel_CsvColumn_Message", resourceCulture);
+            }
+        }
+        
+        public static string PacketViewerView_ExpanderFilterBySources_Header {
+            get {
+                return ResourceManager.GetString("PacketViewerView_ExpanderFilterBySources_Header", resourceCulture);
+            }
+        }
+        
+        public static string PacketViewerView_ExpanderFilterByTypes_Header {
+            get {
+                return ResourceManager.GetString("PacketViewerView_ExpanderFilterByTypes_Header", resourceCulture);
+            }
+        }
+        
+        public static string PacketViewerView_Filters_CheckAll {
+            get {
+                return ResourceManager.GetString("PacketViewerView_Filters_CheckAll", resourceCulture);
+            }
+        }
+        
+        public static string PacketViewerViewModel_SavePacketMessagesDialog_CloseButtonText {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SavePacketMessagesDialog_CloseButtonText", resourceCulture);
+            }
+        }
+        
+        public static string PacketViewerViewModel_SavePacketMessagesDialog_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_SavePacketMessagesDialog_PrimaryButtonText", resourceCulture);
+            }
+        }
     }
 }

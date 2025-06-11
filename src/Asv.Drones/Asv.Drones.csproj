@@ -79,10 +79,6 @@
       </Compile>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Controls\Params\" />
-    </ItemGroup>
-
    
     
 </Project>

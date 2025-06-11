@@ -27,18 +27,34 @@ public class MavlinkParamsWriteCommand : MavlinkMicroserviceCommand<IParamsClien
         DefaultHotKey = null,
     };
 
-    public static ValueTask Execute(IRoutable context, string name, MavParamValue value, CancellationToken cancel = default)
+    public static ValueTask Execute(
+        IRoutable context,
+        string name,
+        MavParamValue value,
+        CancellationToken cancel = default
+    )
     {
-        return context.ExecuteCommand(Id, CommandArg.ChangeAction(name, CommandArg.CreateString(value.PrintValue())), cancel);
+        return context.ExecuteCommand(
+            Id,
+            CommandArg.ChangeAction(name, CommandArg.CreateString(value.PrintValue())),
+            cancel
+        );
     }
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override async ValueTask<ActionArg?> InternalExecute(IParamsClientEx microservice, ActionArg arg, CancellationToken cancel)
+    protected override async ValueTask<ActionArg?> InternalExecute(
+        IParamsClientEx microservice,
+        ActionArg arg,
+        CancellationToken cancel
+    )
     {
         if (string.IsNullOrWhiteSpace(arg.SubjectId))
         {
-            throw new ArgumentException($"{nameof(arg.SubjectId)} cannot be null or empty.", nameof(arg.SubjectId));
+            throw new ArgumentException(
+                $"{nameof(arg.SubjectId)} cannot be null or empty.",
+                nameof(arg.SubjectId)
+            );
         }
 
         MavParamValue prevValue;
@@ -50,7 +66,7 @@ public class MavlinkParamsWriteCommand : MavlinkMicroserviceCommand<IParamsClien
         {
             prevValue = param.Value.Value;
         }
-        
+
         var stringValue = arg.Value?.AsString();
         if (string.IsNullOrWhiteSpace(stringValue))
         {
@@ -66,12 +82,17 @@ public class MavlinkParamsWriteCommand : MavlinkMicroserviceCommand<IParamsClien
             Debug.Assert(result.ValidationException != null, "result.ValidationException != null");
             throw new ArgumentException(
                 $"Cannot parse value '{stringValue}' to type {prevValue.Type}: {result.ValidationException.Message}",
-                nameof(arg.Value), result.ValidationException);
+                nameof(arg.Value),
+                result.ValidationException
+            );
         }
 
         Debug.Assert(value != null, nameof(value) + " != null");
         await microservice.WriteOnce(arg.SubjectId, value.Value, cancel);
 
-        return CommandArg.ChangeAction(arg.SubjectId, CommandArg.CreateString(prevValue.PrintValue()));
+        return CommandArg.ChangeAction(
+            arg.SubjectId,
+            CommandArg.CreateString(prevValue.PrintValue())
+        );
     }
 }

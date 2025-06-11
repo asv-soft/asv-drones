@@ -30,7 +30,11 @@ public class TakeOffCommand : ContextCommand<UavWidgetViewModel, DoubleArg>
 
     public override ICommandInfo Info => StaticInfo;
 
-    public override async ValueTask<DoubleArg?> InternalExecute(UavWidgetViewModel context, DoubleArg arg, CancellationToken cancel)
+    public override async ValueTask<DoubleArg?> InternalExecute(
+        UavWidgetViewModel context,
+        DoubleArg arg,
+        CancellationToken cancel
+    )
     {
         var device = context.Device;
         var controlClient = device.GetMicroservice<ControlClient>();
