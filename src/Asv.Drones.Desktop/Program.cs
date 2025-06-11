@@ -32,6 +32,7 @@ sealed class Program
             .UseSoloRun(opt => opt.WithArgumentForwarding())
             .UseLogService()
             .UseAsvMap()
+            .RegisterMavlinkCommands()
             .UsePluginManager(options =>
             {
                 options.WithApiPackage("Asv.Drones.Api", SemVersion.Parse("2.0.0"));

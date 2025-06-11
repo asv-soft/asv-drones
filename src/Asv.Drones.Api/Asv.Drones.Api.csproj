@@ -11,8 +11,8 @@
         <Copyright>https://github.com/asv-soft</Copyright>
 
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        
-        <LangVersion>latest</LangVersion>
+
+        <LangVersion>preview</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <Title>Asv.Drones.Api</Title>
