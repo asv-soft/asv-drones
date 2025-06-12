@@ -3,9 +3,9 @@ using Asv.Mavlink;
 
 namespace Asv.Drones;
 
-public class DirectoryItem : BrowserItem
+public class DirectoryItemViewModel : BrowserItemViewModel
 {
-    public DirectoryItem(NavigationId id, string? parentPath, string path, string? name)
+    public DirectoryItemViewModel(NavigationId id, string? parentPath, string path, string? name)
         : base(id, parentPath, path)
     {
         HasChildren = true;

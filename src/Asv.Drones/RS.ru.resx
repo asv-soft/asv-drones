@@ -117,10 +117,10 @@
         <value>Неизвестно</value>
     </data>
     <data name="FileBrowserView_Watermark_Local" xml:space="preserve">
-        <value>Локальные файлы</value>
+        <value>Локальный поиск</value>
     </data>
     <data name="FileBrowserView_Watermark_Remote" xml:space="preserve">
-        <value>Удалённые файлы</value>
+        <value>Удалённый поиск</value>
     </data>
     <data name="FileBrowserView_Button_Download_Content" xml:space="preserve">
         <value>Загрузить</value>
@@ -337,5 +337,17 @@
     </data>
     <data name="PacketViewerViewModel_SavePacketMessagesDialog_PrimaryButtonText" xml:space="preserve">
         <value>Подтвердить</value>
+    </data>
+    <data name="FileBrowserViewModel_RenameDialog_Title" xml:space="preserve">
+        <value>Переименовать</value>
+    </data>
+    <data name="FileBrowserViewModel_RenameDialog_PrimaryButtonText" xml:space="preserve">
+        <value>Подтвердить</value>
+    </data>
+    <data name="FileBrowserViewModel_RenameDialog_SecondaryButtonText" xml:space="preserve">
+        <value>Отменить</value>
+    </data>
+    <data name="FileBrowserViewModel_RenameDialog_Message" xml:space="preserve">
+        <value>Введите новое имя</value>
     </data>
 </root>

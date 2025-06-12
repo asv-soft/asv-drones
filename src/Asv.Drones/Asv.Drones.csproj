@@ -77,6 +77,10 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>RS.resx</DependentUpon>
       </Compile>
+      <Compile Update="Pages\FileBrowser\Dialogs\BurstDownloadDialogView.axaml.cs">
+        <DependentUpon>BurstDownloadDialogView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
    
