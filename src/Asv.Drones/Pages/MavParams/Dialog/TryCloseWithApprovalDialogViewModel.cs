@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using Asv.Avalonia;
 
-
-
 namespace Asv.Drones;
 
 public class TryCloseWithApprovalDialogViewModel : DialogViewModelBase
