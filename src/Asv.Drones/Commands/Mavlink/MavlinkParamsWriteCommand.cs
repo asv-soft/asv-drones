@@ -4,9 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
-using Asv.Avalonia.IO;
 using Asv.Drones.Api;
-using Asv.IO;
 using Asv.Mavlink;
 using Material.Icons;
 
@@ -20,8 +18,8 @@ public class MavlinkParamsWriteCommand : MavlinkMicroserviceCommand<IParamsClien
     public static readonly ICommandInfo StaticInfo = new CommandInfo
     {
         Id = Id,
-        Name = "Write mavlink param",
-        Description = "Write mavlink param to device",
+        Name = RS.WritePatamCommand_CommandInfo_Name,
+        Description = RS.WriteParamCommand_CommandInfo_Description,
         Icon = MaterialIconKind.Set,
         Source = ApiModule.Instance,
         DefaultHotKey = null,
@@ -58,7 +56,7 @@ public class MavlinkParamsWriteCommand : MavlinkMicroserviceCommand<IParamsClien
         }
 
         MavParamValue prevValue;
-        if (microservice.Items.TryGetValue(arg.SubjectId, out var param) == false)
+        if (!microservice.Items.TryGetValue(arg.SubjectId, out var param))
         {
             prevValue = await microservice.ReadOnce(arg.SubjectId, cancel);
         }
@@ -77,7 +75,7 @@ public class MavlinkParamsWriteCommand : MavlinkMicroserviceCommand<IParamsClien
         }
 
         var result = MavParamValue.TryParseValue(stringValue, prevValue.Type, out var value);
-        if (result.IsSuccess == false)
+        if (!result.IsSuccess)
         {
             Debug.Assert(result.ValidationException != null, "result.ValidationException != null");
             throw new ArgumentException(

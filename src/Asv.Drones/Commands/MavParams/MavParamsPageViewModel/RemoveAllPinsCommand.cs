@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
@@ -6,7 +8,7 @@ using Material.Icons;
 namespace Asv.Drones;
 
 [ExportCommand]
-public class RemoveAllPinsCommand : ContextCommand<MavParamsPageViewModel, ListArg>
+public class RemoveAllPinsCommand : ContextCommand<MavParamsPageViewModel, DictArg>
 {
     public const string Id = $"{BaseId}.params.remove-all-pins";
 
@@ -22,63 +24,45 @@ public class RemoveAllPinsCommand : ContextCommand<MavParamsPageViewModel, ListA
 
     public override ICommandInfo Info => StaticInfo;
 
-    /*protected override void InternalExecute(
+    public override ValueTask<DictArg?> InternalExecute(
         MavParamsPageViewModel context,
-        CommandArg newValue,
+        DictArg arg,
         CancellationToken cancel
     )
     {
-        /*var value = newValue as ListCommandArg<ParamItemViewModel>;
-
-        
-
-        if (value?.Items is null)
+        if (context.AllParams is null)
         {
-            var pinned = new List<ParamItemViewModel>();
+            return ValueTask.FromResult<DictArg?>(null);
+        }
+
+        if (arg.Count == 0)
+        {
+            var oldValue = new DictArg();
             foreach (var item in context.AllParams.Where(item => item.IsPinned.ViewValue.Value))
             {
-                pinned.Add(item);
-                item.IsPinned.ViewValue.Value = false;
+                oldValue.Add(
+                    new KeyValuePair<string, CommandArg>(item.Id.ToString(), new BoolArg(true))
+                );
+                item.IsPinned.ModelValue.Value = false;
             }
 
-            foreach (var item in pinned)
+            var notSelected = context
+                .ViewedParams.Where(it => it.Id != context.SelectedItem.Value?.Id)
+                .ToArray();
+
+            foreach (var item in notSelected)
             {
                 context.ViewedParams.Remove(item);
             }
 
-            var oldValue = new ListCommandArg<ParamItemViewModel>(pinned);
-
-            return ValueTask.FromResult<CommandArg?>(oldValue);
+            return ValueTask.FromResult<DictArg?>(oldValue);
         }
 
-        foreach (var item in context.AllParams)
+        foreach (var item in context.AllParams.Where(item => arg.ContainsKey(item.Id.ToString())))
         {
-            var oldItem = value.Items.FirstOrDefault(it => it.Name == item.Name);
-
-            if (oldItem is null)
-            {
-                continue;
-            }
-
-            item.PinItem.Execute(Unit.Default);
-
-            if (item.IsPinned.ViewValue.Value)
-            {
-                context.ViewedParams.Add(item);
-            }
+            item.IsPinned.ModelValue.Value = !item.IsPinned.ModelValue.Value;
         }
 
-        var oldValue1 = new ListCommandArg<ParamItemViewModel>(value.Items);
-
-        return ValueTask.FromResult<CommandArg?>(oldValue1);
-    }*/
-
-    public override async ValueTask<ListArg?> InternalExecute(
-        MavParamsPageViewModel context,
-        ListArg arg,
-        CancellationToken cancel
-    )
-    {
-        return null; // TODO: implement this method
+        return ValueTask.FromResult<DictArg?>(arg);
     }
 }
