@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Asv.Avalonia;
 
 using Asv.Common;
+using Microsoft.Extensions.Logging;
 using R3;
 
 namespace Asv.Drones;
@@ -12,13 +13,13 @@ public class SetAltitudeDialogViewModel : DialogViewModelBase
     public const string DialogId = "dialog.altitude";
 
     public SetAltitudeDialogViewModel()
-        : base(DialogId)
+        : base(DialogId, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
     }
 
-    public SetAltitudeDialogViewModel(in IUnit unit)
-        : base(DialogId)
+    public SetAltitudeDialogViewModel(IUnit unit, ILoggerFactory loggerFactory)
+        : base(DialogId, loggerFactory)
     {
         AltitudeUnit =
             unit as AltitudeBase

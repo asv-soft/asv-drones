@@ -17,7 +17,6 @@ namespace Asv.Drones;
 
 public class MissionProgressViewModel : RoutableViewModel
 {
-    private readonly ILogger _log;
     private readonly IClientDevice _device;
     private readonly PositionClientEx _positionClient;
     private readonly MissionClientEx _missionClient;
@@ -29,10 +28,9 @@ public class MissionProgressViewModel : RoutableViewModel
     private bool _isOnMission;
 
     public MissionProgressViewModel()
-        : base("mission.progress")
+        : base("mission.progress", DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
-        _log = NullLoggerFactory.Instance.CreateLogger<MissionProgressViewModel>();
         var missionDistance = new ReactiveProperty<double>(1000).DisposeItWith(Disposable);
         var targetDistance = new ReactiveProperty<double>(100).DisposeItWith(Disposable);
         var totalDistance = new ReactiveProperty<double>(1100).DisposeItWith(Disposable);
@@ -45,6 +43,7 @@ public class MissionProgressViewModel : RoutableViewModel
             $"{Id}.{nameof(MissionDistance)}",
             missionDistance,
             nullUnit,
+            DesignTime.LoggerFactory,
             "N2"
         )
         {
@@ -54,6 +53,7 @@ public class MissionProgressViewModel : RoutableViewModel
             $"{Id}.{nameof(HomeDistance)}",
             homeDistance,
             nullUnit,
+            DesignTime.LoggerFactory,
             "N2"
         )
         {
@@ -63,6 +63,7 @@ public class MissionProgressViewModel : RoutableViewModel
             $"{Id}.{nameof(TargetDistance)}",
             targetDistance,
             nullUnit,
+            DesignTime.LoggerFactory,
             "N2"
         )
         {
@@ -72,6 +73,7 @@ public class MissionProgressViewModel : RoutableViewModel
             $"{Id}.{nameof(TotalDistance)}",
             totalDistance,
             nullUnit,
+            DesignTime.LoggerFactory,
             "N2"
         )
         {
@@ -90,12 +92,11 @@ public class MissionProgressViewModel : RoutableViewModel
         ILoggerFactory loggerFactory,
         IRoutable parent
     )
-        : base($"{parent.Id}.mission.progress")
+        : base($"{parent.Id}.mission.progress", loggerFactory)
     {
         ArgumentNullException.ThrowIfNull(device);
         ArgumentNullException.ThrowIfNull(unitService);
         ArgumentNullException.ThrowIfNull(loggerFactory);
-        _log = loggerFactory.CreateLogger<MissionProgressViewModel>();
         _device = device;
         DistanceUnit = unitService.Units[DistanceBase.Id];
         _missionClient =
@@ -180,6 +181,7 @@ public class MissionProgressViewModel : RoutableViewModel
             $"{Id}.{nameof(MissionDistance)}",
             missionDistance,
             DistanceUnit,
+            loggerFactory,
             "N2"
         )
         {
@@ -189,6 +191,7 @@ public class MissionProgressViewModel : RoutableViewModel
             $"{Id}.{nameof(HomeDistance)}",
             homeDistance,
             DistanceUnit,
+            loggerFactory,
             "N2"
         )
         {
@@ -198,6 +201,7 @@ public class MissionProgressViewModel : RoutableViewModel
             $"{Id}.{nameof(TargetDistance)}",
             targetDistance,
             DistanceUnit,
+            loggerFactory,
             "N2"
         )
         {
@@ -207,6 +211,7 @@ public class MissionProgressViewModel : RoutableViewModel
             $"{Id}.{nameof(TotalDistance)}",
             totalDistance,
             DistanceUnit,
+            loggerFactory,
             "N2"
         )
         {
@@ -284,7 +289,7 @@ public class MissionProgressViewModel : RoutableViewModel
         _missionClient.Reached.Subscribe(i => _reachedIndex.Value = i).DisposeItWith(Disposable);
         _missionClient.Current.Subscribe(i => _currentIndex.Value = i).DisposeItWith(Disposable);
         InitiateMissionPoints(_cts.Token)
-            .SafeFireAndForget(ex => _log.LogError(ex, "Mission progress error"));
+            .SafeFireAndForget(ex => Logger.LogError(ex, "Mission progress error"));
 
         DistanceUnitSymbol = DistanceUnit
             .CurrentUnitItem.Select(item => item.Symbol)

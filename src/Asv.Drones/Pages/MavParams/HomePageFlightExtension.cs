@@ -1,13 +1,16 @@
-﻿using Asv.Avalonia;
+﻿using System.Composition;
+using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.IO;
 using Asv.Mavlink;
 using Material.Icons;
+using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
 
 [ExportExtensionFor<IHomePageItem>]
-public class HomePageParamsDeviceItemAction : HomePageDeviceItemAction
+[method: ImportingConstructor]
+public class HomePageParamsDeviceItemAction(ILoggerFactory loggerFactory) : HomePageDeviceItemAction
 {
     protected override IActionViewModel? TryCreateAction(
         IClientDevice device,
@@ -19,7 +22,7 @@ public class HomePageParamsDeviceItemAction : HomePageDeviceItemAction
             return null;
         }
 
-        return new ActionViewModel("params")
+        return new ActionViewModel("params", loggerFactory)
         {
             Icon = MaterialIconKind.CogTransferOutline,
             Header = RS.HomePageParamsDeviceItemAction_ActionViewModel_Header,

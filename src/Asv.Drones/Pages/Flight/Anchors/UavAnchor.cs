@@ -6,6 +6,7 @@ using Asv.Common;
 using Asv.IO;
 using Asv.Mavlink;
 using Material.Icons;
+using Microsoft.Extensions.Logging;
 using R3;
 
 namespace Asv.Drones;
@@ -16,7 +17,7 @@ public class UavAnchor : MapAnchor<UavAnchor>
     public DeviceId DeviceId { get; }
 
     public UavAnchor()
-        : base("uav_design_time")
+        : base("uav_design_time", DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
     }
@@ -25,9 +26,10 @@ public class UavAnchor : MapAnchor<UavAnchor>
         DeviceId deviceId,
         IDeviceManager mng,
         IClientDevice dev,
-        IPositionClientEx pos
+        IPositionClientEx pos,
+        ILoggerFactory loggerFactory
     )
-        : base("uav")
+        : base("uav", loggerFactory)
     {
         DeviceId = deviceId;
         InitArgs(deviceId.AsString());

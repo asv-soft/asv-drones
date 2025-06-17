@@ -2,6 +2,7 @@
 
 using Asv.Mavlink;
 using Avalonia.Media;
+using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
 
@@ -19,8 +20,8 @@ public class BrowserItem : HeadlinedViewModel, IBrowserItem
     private SolidColorBrush _crc32Color = null!;
     private FtpEntryType _ftpEntryType;
 
-    public BrowserItem(NavigationId id, string? parentPath, string path)
-        : base(id)
+    public BrowserItem(NavigationId id, string? parentPath, string path, ILoggerFactory loggerFactory)
+        : base(id, loggerFactory)
     {
         ParentPath = parentPath;
         Path = path;

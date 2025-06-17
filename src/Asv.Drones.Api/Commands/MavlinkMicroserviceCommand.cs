@@ -17,7 +17,7 @@ public abstract class MavlinkMicroserviceCommand<TMicroservice, TArg> : ContextC
 
         if (targetContext is IDevicePage devicePage)
         {
-            return devicePage.Device?.GetMicroservice<TMicroservice>() != null;
+            return devicePage.Target.CurrentValue?.Device.GetMicroservice<TMicroservice>() != null;
         }
 
         return false;
@@ -25,7 +25,7 @@ public abstract class MavlinkMicroserviceCommand<TMicroservice, TArg> : ContextC
 
     public override ValueTask<TArg?> InternalExecute(IDevicePage context, TArg arg, CancellationToken cancel)
     {
-        var microservice = context.Device?.GetMicroservice<TMicroservice>();
+        var microservice = context.Target.CurrentValue?.Device.GetMicroservice<TMicroservice>();
         if (microservice == null)
         {
             throw new Exception($"Error to execute command {GetType().Name}[{Info.Id}]: device microservice {nameof(TMicroservice)} not found");

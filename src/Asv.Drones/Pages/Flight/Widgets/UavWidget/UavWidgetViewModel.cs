@@ -19,6 +19,7 @@ namespace Asv.Drones;
 
 public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>, IUavFlightWidget
 {
+    private readonly ILoggerFactory _loggerFactory;
     private const string WidgetId = "widget-uav";
     private WorkspaceDock _position;
 
@@ -30,7 +31,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
     private readonly IUnit _amperageUnit;
     private readonly IUnit _voltageUnit;
     private readonly IUnit _progressUnit;
-    private readonly ILogger _log;
     private readonly GnssClientEx? _gnssClient;
     private const int CriticalAltitude = 40;
     private const int DangerHighSpeed = 10;
@@ -43,7 +43,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
     private static readonly Color YellowColor = Color.Parse("#dfc34a");
 
     public UavWidgetViewModel()
-        : base(WidgetId)
+        : base(WidgetId, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
         InitArgs("1");
@@ -85,7 +85,8 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         LinkQuality = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(LinkQuality)}",
             linkQuality,
-            unitItem
+            unitItem, 
+            DesignTime.LoggerFactory
         )
         {
             Parent = this,
@@ -93,7 +94,8 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         AltitudeAgl = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(AltitudeAgl)}",
             altitudeAgl,
-            unitItem
+            unitItem, 
+            DesignTime.LoggerFactory
         )
         {
             Parent = this,
@@ -101,28 +103,30 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         AltitudeMsl = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(AltitudeMsl)}",
             altitudeMsl,
-            unitItem
+            unitItem, 
+            DesignTime.LoggerFactory
         )
         {
             Parent = this,
         }.DisposeItWith(Disposable);
-        Azimuth = new HistoricalUnitProperty($"{WidgetId}.{nameof(Azimuth)}", azimuth, unitItem)
+        Azimuth = new HistoricalUnitProperty($"{WidgetId}.{nameof(Azimuth)}", azimuth, unitItem, DesignTime.LoggerFactory)
         {
             Parent = this,
         }.DisposeItWith(Disposable);
-        Heading = new HistoricalUnitProperty($"{WidgetId}.{nameof(Heading)}", heading, unitItem)
+        Heading = new HistoricalUnitProperty($"{WidgetId}.{nameof(Heading)}", heading, unitItem, DesignTime.LoggerFactory)
         {
             Parent = this,
         }.DisposeItWith(Disposable);
         HomeAzimuth = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(HomeAzimuth)}",
             homeAzimuth,
-            unitItem
+            unitItem, 
+            DesignTime.LoggerFactory
         )
         {
             Parent = this,
         }.DisposeItWith(Disposable);
-        Velocity = new HistoricalUnitProperty($"{WidgetId}.{nameof(Velocity)}", velocity, unitItem)
+        Velocity = new HistoricalUnitProperty($"{WidgetId}.{nameof(Velocity)}", velocity, unitItem, DesignTime.LoggerFactory)
         {
             Parent = this,
         }.DisposeItWith(Disposable);
@@ -130,6 +134,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             $"{WidgetId}.{nameof(BatteryAmperage)}",
             batteryAmperage,
             unitItem,
+            DesignTime.LoggerFactory,
             "N2"
         )
         {
@@ -139,6 +144,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             $"{WidgetId}.{nameof(BatteryVoltage)}",
             batteryVoltage,
             unitItem,
+            DesignTime.LoggerFactory,
             "N2"
         )
         {
@@ -147,7 +153,8 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         BatteryCharge = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(BatteryCharge)}",
             batteryCharge,
-            unitItem
+            unitItem,
+            DesignTime.LoggerFactory
         )
         {
             Parent = this,
@@ -155,7 +162,8 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         BatteryConsumed = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(BatteryConsumed)}",
             batteryConsumed,
-            unitItem
+            unitItem,
+            DesignTime.LoggerFactory
         )
         {
             Parent = this,
@@ -213,10 +221,10 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         IDeviceManager dev,
         ILoggerFactory loggerFactory
     )
-        : base(WidgetId)
+        : base(WidgetId, loggerFactory)
     {
+        _loggerFactory = loggerFactory;
         ArgumentNullException.ThrowIfNull(device);
-        _log = loggerFactory.CreateLogger<UavWidgetViewModel>();
         GnssStatusBrush = new SolidColorBrush();
         LinkQualityStatusBrush = new SolidColorBrush();
         BatteryStatusBrush = new SolidColorBrush();
@@ -273,7 +281,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         TakeOff = new ReactiveCommand(
             async (_, _) =>
             {
-                using var vm = new SetAltitudeDialogViewModel(_altitudeUnit);
+                using var vm = new SetAltitudeDialogViewModel(_altitudeUnit, loggerFactory);
                 var dialog = new ContentDialog(vm, navigation)
                 {
                     PrimaryButtonText =
@@ -345,7 +353,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
                             positionClientEx.Base.GlobalPosition.CurrentValue.RelativeAlt / 1000,
                             Math.Round(_gnssClient.Main.GroundVelocity.CurrentValue)
                         )
-                        .SafeFireAndForget(ex => _log.LogError(ex, "Velocity error"));
+                        .SafeFireAndForget(ex => Logger.LogError(ex, "Velocity error"));
                 }
             })
             .DisposeItWith(Disposable);
@@ -357,7 +365,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             {
                 batteryCharge.Value = d;
                 BatteryStatus(d * 100)
-                    .SafeFireAndForget(ex => _log.LogError(ex, "Battery charge error"));
+                    .SafeFireAndForget(ex => Logger.LogError(ex, "Battery charge error"));
             })
             .DisposeItWith(Disposable);
         batteryAmperage
@@ -375,14 +383,15 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             .DisposeItWith(Disposable);
         _gnssClient
             .Main.Info.Subscribe(_ =>
-                GnssStatus().SafeFireAndForget(ex => _log.LogError(ex, "Gnss status error"))
+                GnssStatus().SafeFireAndForget(ex => Logger.LogError(ex, "Gnss status error"))
             )
             .DisposeItWith(Disposable);
 
         LinkQuality = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(LinkQuality)}",
             linkQuality,
-            _progressUnit
+            _progressUnit,
+            _loggerFactory
         )
         {
             Parent = this,
@@ -390,7 +399,8 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         AltitudeAgl = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(AltitudeAgl)}",
             altitudeAgl,
-            _altitudeUnit
+            _altitudeUnit,
+            _loggerFactory
         )
         {
             Parent = this,
@@ -398,23 +408,25 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         AltitudeMsl = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(AltitudeMsl)}",
             altitudeMsl,
-            _altitudeUnit
+            _altitudeUnit,
+            _loggerFactory
         )
         {
             Parent = this,
         }.DisposeItWith(Disposable);
-        Azimuth = new HistoricalUnitProperty($"{WidgetId}.{nameof(Azimuth)}", azimuth, _angleUnit)
+        Azimuth = new HistoricalUnitProperty($"{WidgetId}.{nameof(Azimuth)}", azimuth, _angleUnit, _loggerFactory)
         {
             Parent = this,
         }.DisposeItWith(Disposable);
-        Heading = new HistoricalUnitProperty($"{WidgetId}.{nameof(Heading)}", heading, _angleUnit)
+        Heading = new HistoricalUnitProperty($"{WidgetId}.{nameof(Heading)}", heading, _angleUnit, _loggerFactory)
         {
             Parent = this,
         }.DisposeItWith(Disposable);
         HomeAzimuth = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(HomeAzimuth)}",
             homeAzimuth,
-            _angleUnit
+            _angleUnit,
+            _loggerFactory
         )
         {
             Parent = this,
@@ -422,7 +434,8 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         Velocity = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(Velocity)}",
             velocity,
-            _velocityUnit
+            _velocityUnit,
+            _loggerFactory
         )
         {
             Parent = this,
@@ -431,6 +444,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             $"{WidgetId}.{nameof(BatteryAmperage)}",
             batteryAmperage,
             _amperageUnit,
+            _loggerFactory,
             "N2"
         )
         {
@@ -440,6 +454,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             $"{WidgetId}.{nameof(BatteryVoltage)}",
             batteryVoltage,
             _voltageUnit,
+            _loggerFactory,
             "N2"
         )
         {
@@ -448,7 +463,8 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         BatteryCharge = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(BatteryCharge)}",
             batteryCharge,
-            _progressUnit
+            _progressUnit,
+            _loggerFactory
         )
         {
             Parent = this,
@@ -456,7 +472,8 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         BatteryConsumed = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(BatteryConsumed)}",
             batteryConsumed,
-            _capacityUnit
+            _capacityUnit,
+            _loggerFactory
         )
         {
             Parent = this,
@@ -498,7 +515,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         LinkState = heartbeatClient
             .Link.State.Select(state =>
             {
-                LinkStatus(state).SafeFireAndForget(ex => _log.LogError(ex, "Link status error"));
+                LinkStatus(state).SafeFireAndForget(ex => Logger.LogError(ex, "Link status error"));
                 return state.ToString();
             })
             .ToBindableReactiveProperty<string>();

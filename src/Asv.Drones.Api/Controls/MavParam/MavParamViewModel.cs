@@ -4,6 +4,7 @@ using Asv.Avalonia;
 using Asv.Common;
 using Asv.Mavlink;
 using Asv.Mavlink.Common;
+using Microsoft.Extensions.Logging;
 using R3;
 
 namespace Asv.Drones.Api;
@@ -12,8 +13,8 @@ public class MavParamViewModel : RoutableViewModel, ISupportRefresh, ISupportCan
 {
     public IMavParamTypeMetadata Metadata { get; }
 
-    public MavParamViewModel(IMavParamTypeMetadata metadata, Observable<MavParamValue> update) 
-        : base(metadata.Name)
+    public MavParamViewModel(IMavParamTypeMetadata metadata, Observable<MavParamValue> update, ILoggerFactory loggerFactory) 
+        : base(metadata.Name, loggerFactory)
     {
         
         Metadata = metadata;
@@ -59,8 +60,6 @@ public class MavParamViewModel : RoutableViewModel, ISupportRefresh, ISupportCan
             MavParamType.MavParamTypeUint32 => new MavParamValue(Convert.ToUInt32(value)),
             MavParamType.MavParamTypeInt32 => new MavParamValue(Convert.ToInt32(value)),
             MavParamType.MavParamTypeReal32 => new MavParamValue(Convert.ToSingle(value)),
-            MavParamType.MavParamTypeUint64 or MavParamType.MavParamTypeInt64 or MavParamType.MavParamTypeReal64 =>
-                throw new ArgumentOutOfRangeException(),
             _ => throw new ArgumentOutOfRangeException()
         };
     }

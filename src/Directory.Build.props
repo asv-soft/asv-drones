@@ -4,7 +4,7 @@
     <ProductVersion>2.0.0-dev.1</ProductVersion>
     <ApiVersion>2.0.0-dev.1</ApiVersion>
     <AvaloniaVersion>11.2.5</AvaloniaVersion>
-    <AsvAvaloniaVersion>0.0.1-dev.13</AsvAvaloniaVersion>
+    <AsvAvaloniaVersion>0.0.1-dev.19</AsvAvaloniaVersion>
     <AsvMavlinkVersion>4.0.0</AsvMavlinkVersion>
     <AsvGnssVersion>2.0.0</AsvGnssVersion>
   </PropertyGroup>

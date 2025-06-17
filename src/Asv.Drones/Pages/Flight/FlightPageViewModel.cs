@@ -9,6 +9,7 @@ using Asv.Avalonia.GeoMap;
 using Asv.Common;
 using Asv.Drones.Api;
 using Material.Icons;
+using Microsoft.Extensions.Logging;
 using ObservableCollections;
 using R3;
 
@@ -21,10 +22,10 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
     public const MaterialIconKind PageIcon = MaterialIconKind.MapSearch;
 
     public FlightPageViewModel()
-        : this(DesignTime.CommandService)
+        : this(DesignTime.CommandService, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
-        var drone = new MapAnchor<IMapAnchor>("1")
+        var drone = new MapAnchor<IMapAnchor>(DesignTime.Id, DesignTime.LoggerFactory)
         {
             Icon = MaterialIconKind.Navigation,
             Location = new GeoPoint(53, 53, 100),
@@ -44,16 +45,19 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
     }
 
     [ImportingConstructor]
-    public FlightPageViewModel(ICommandService cmd)
-        : base(PageId, cmd)
+    public FlightPageViewModel(ICommandService cmd, ILoggerFactory loggerFactory)
+        : base(PageId, cmd, loggerFactory)
     {
         Title = RS.FlightPageViewModel_Title;
         Icon = PageIcon;
         Anchors = [];
-        Anchors.SetRoutableParent(this, true).DisposeItWith(Disposable);
+        Anchors.SetRoutableParent(this).DisposeItWith(Disposable);
+        Anchors.DisposeRemovedItems().DisposeItWith(Disposable);
         AnchorsView = Anchors.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);
         Widgets = [];
-        Widgets.SetRoutableParent(this, true).DisposeItWith(Disposable);
+        Widgets.SetRoutableParent(this).DisposeItWith(Disposable);
+        Widgets.DisposeRemovedItems().DisposeItWith(Disposable);
+        
         WidgetsView = Widgets.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);
         SelectedAnchor = new BindableReactiveProperty<IMapAnchor?>().DisposeItWith(Disposable);
     }
