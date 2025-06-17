@@ -24,7 +24,7 @@ public class MavlinkParamReadCommand : MavlinkMicroserviceCommand<IParamsClientE
         Name = "Read mavlink param",
         Description = "Read mavlink param from device",
         Icon = MaterialIconKind.Set,
-        Source = IoModule.Instance,
+        Source = ApiModule.Instance,
         DefaultHotKey = null,
     };
 

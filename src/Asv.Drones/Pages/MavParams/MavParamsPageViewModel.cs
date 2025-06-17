@@ -35,7 +35,7 @@ public class MavParamsPageViewModel
 
     private DeviceId _deviceId;
     private IParamsClientEx? _paramsClient;
-    private CancellationTokenSource _cancellationTokenSource;
+    private CancellationTokenSource? _cancellationTokenSource;
     private ISynchronizedView<KeyValuePair<string, ParamItem>, ParamItemViewModel> _view;
     private readonly ILoggerFactory _loggerFactory;
     private readonly INavigationService _nav;
@@ -96,8 +96,6 @@ public class MavParamsPageViewModel
         _viewedParamsList = [];
         ViewedParams = _viewedParamsList.ToNotifyCollectionChangedSlim();
 
-        _cancellationTokenSource = new CancellationTokenSource();
-
         SearchText = new HistoricalStringProperty($"{PageId}{nameof(SearchText)}", _searchText, loggerFactory)
         {
             Parent = this,
@@ -135,6 +133,19 @@ public class MavParamsPageViewModel
         );
 
         Clear = _canClearSearchText.ToReactiveCommand(_ => _searchText.Value = string.Empty);
+
+        Disposable.AddAction(() =>
+        {
+            if (_cancellationTokenSource != null)
+            {
+                if (_cancellationTokenSource.Token.CanBeCanceled)
+                {
+                    _cancellationTokenSource?.Cancel(false);        
+                }
+                _cancellationTokenSource?.Dispose();
+                _cancellationTokenSource = null;
+            }
+        });
     }
 
     private void InternalInit()
@@ -232,7 +243,15 @@ public class MavParamsPageViewModel
             return;
         }
 
-        _cancellationTokenSource.Cancel();
+        if (_cancellationTokenSource != null)
+        {
+            if (_cancellationTokenSource.Token.CanBeCanceled)
+            {
+                _cancellationTokenSource?.Cancel(false);        
+            }
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = null;
+        }
     }
 
     internal void UpdateParamsImpl()
@@ -250,7 +269,13 @@ public class MavParamsPageViewModel
 
         _paramsClient
             .ReadAll(
-                new Progress<double>(i => Progress.Value = i),
+                new Progress<double>(i =>
+                {
+                    if (IsDisposed == false) // TODO: remove when Mavlink ReadAll
+                    {
+                        Progress.Value = i;    
+                    }
+                }),
                 cancel: _cancellationTokenSource.Token
             )
             .SafeFireAndForget(ex =>
@@ -281,6 +306,7 @@ public class MavParamsPageViewModel
 
         IsRefreshing.Value = false;
         _cancellationTokenSource.Dispose();
+        _cancellationTokenSource = null;
     }
 
     protected override void AfterDeviceInitialized(IClientDevice device, CancellationToken cancel)
@@ -417,7 +443,6 @@ public class MavParamsPageViewModel
             _searchText.Dispose();
             _showStarredOnly.Dispose();
             _canClearSearchText.Dispose();
-            _cancellationTokenSource.Dispose();
             DeviceName.Dispose();
             SearchText.Dispose();
             IsRefreshing.Dispose();
