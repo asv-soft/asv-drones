@@ -28,7 +28,7 @@ public class HomePageParamsDeviceItemAction(ILoggerFactory loggerFactory) : Home
             Header = RS.HomePageParamsDeviceItemAction_ActionViewModel_Header,
             Description = RS.HomePageParamsDeviceItemAction_ActionViewModel_Description,
             Command = new BindableAsyncCommand(OpenMavParamsCommand.Id, context),
-            CommandParameter = new StringArg(device.Id.AsString()),
+            CommandParameter = new StringArg($"dev_id={device.Id}"), // TODO: replace with DevicePageViewModelMixin.CreateOpenPageArgs
         };
     }
 }
