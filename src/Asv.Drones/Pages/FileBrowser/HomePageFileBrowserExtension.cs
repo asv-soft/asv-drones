@@ -27,7 +27,7 @@ public class HomePageFileBrowserExtension(ILoggerFactory loggerFactory) : HomePa
             Description = OpenFileBrowserCommand.StaticInfo.Description,
             Icon = OpenFileBrowserCommand.StaticInfo.Icon,
             Command = new BindableAsyncCommand(OpenFileBrowserCommand.Id, context),
-            CommandParameter = new StringArg(device.Id.AsString()),
+            CommandParameter = new StringArg($"dev_id={device.Id}"), // TODO: replate with DevicePageViewModelMixin.CreateOpenPageArgs
         };
     }
 }
