@@ -1,0 +1,202 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:drones="clr-namespace:Asv.Drones"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="drones:PacketViewerViewModel"
+             x:Class="Asv.Drones.PacketViewerView">
+    <UserControl.Styles>
+        <Style Selector="ToggleButton ContentPresenter.tbchecked">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="ToggleButton:checked ContentPresenter.tbchecked">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="ToggleButton ContentPresenter.tbunchecked">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="ToggleButton:checked ContentPresenter.tbunchecked">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="Button.saveButton">
+            <Setter Property="Opacity" Value="1.0" />
+        </Style>
+        <Style Selector="Button.saveButton:disabled">
+            <Setter Property="Opacity" Value="0.3" />
+        </Style>
+        <Style Selector="Expander">
+            <Setter Property="CornerRadius" Value="0"/>
+        </Style>
+    </UserControl.Styles>
+    <Design.DataContext>
+        <drones:PacketViewerViewModel />
+    </Design.DataContext>
+    <Grid ColumnDefinitions="* Auto" RowDefinitions="Auto 4 *" Margin="8">
+        <DockPanel Grid.Row="0" Grid.ColumnSpan="2" Margin="2 2 2 0">
+            <Button DockPanel.Dock="Right"  
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="2 0 0 0"
+                    Command="{Binding ExportToCsv}"
+                    Content="{avalonia:MaterialIconExt ContentSave}"
+                    ToolTip.Tip="{x:Static drones:RS.PacketViewerView_ToolTip_Save}"
+                    IsEnabled="{Binding IsPaused.Value}"
+                    Classes="saveButton" />
+            <Button DockPanel.Dock="Right" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch"
+                    Command="{CompiledBinding ClearAll}" 
+                    Content="{avalonia:MaterialIconExt Bin}"
+                    Margin="2 0 0 0"
+                    ToolTip.Tip="{x:Static drones:RS.PacketViewerView_ToolTip_ClearAll}" />
+            <ToggleButton DockPanel.Dock="Right" 
+                          Margin="2 0 0 0" 
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch" 
+                          IsChecked="{Binding IsPaused.Value, Mode=TwoWay}"
+                          ToolTip.Tip="{x:Static drones:RS.PacketViewerView_ToolTip_PlayPause}">
+                <Panel>
+                    <ContentPresenter Content="{avalonia:MaterialIconExt Play}" Classes="tbchecked" />
+                    <ContentPresenter Content="{avalonia:MaterialIconExt Pause}" Classes="tbunchecked" />
+                </Panel>
+            </ToggleButton>
+           <TextBox DockPanel.Dock="Right" MinWidth="200" Text="{Binding SearchText.Value, Mode=TwoWay}">
+                <TextBox.Styles>
+                    <Style Selector="TextBox">
+                        <Setter Property="InnerRightContent">
+                            <Template>
+                                <Button Content="{avalonia:MaterialIconExt Close}" Background="Transparent" BorderBrush="{x:Null}"
+                                        Command="{Binding $parent[TextBox].Clear}" />
+                            </Template>
+                        </Setter>
+                    </Style>
+                </TextBox.Styles>
+            </TextBox>
+            <avalonia:MaterialIcon DockPanel.Dock="Left" Height="30" Width="30" Kind="Package"/>
+        </DockPanel>
+        <ListBox 
+            IsHitTestVisible="{CompiledBinding IsPaused.Value}"
+            ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+            Grid.Column="0" 
+            Grid.Row="2" 
+            Margin="8,1,8,0"
+            ItemsSource="{CompiledBinding Packets}" 
+            SelectedItem="{CompiledBinding SelectedPacket.Value}" 
+            Grid.IsSharedSizeScope="True">
+            <ListBox.Styles>
+                <Style Selector="ListBoxItem">
+                    <Setter Property="MinHeight" Value="25"></Setter>
+                </Style>
+            </ListBox.Styles>
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="drones:PacketMessageViewModel">
+                    <Grid
+                        ToolTip.Tip="{CompiledBinding Description}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="Date" Width="Auto" />
+                            <ColumnDefinition SharedSizeGroup="Source" Width="Auto" />
+                            <ColumnDefinition SharedSizeGroup="Size" Width="Auto" />
+                            <ColumnDefinition SharedSizeGroup="Type" Width="Auto" />
+                            <ColumnDefinition SharedSizeGroup="Message" Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Panel Grid.ColumnSpan="4" Background="#5779C1" IsVisible="{Binding Highlight}" />
+                        <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="0"
+                                   Text="{Binding DateTime, StringFormat={}{0:hh:mm:ss.fff}}" />
+                        <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="1" Text="{Binding Source}" />
+                        <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="2" Text="{Binding Size}" />
+                        <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="3" Text="{Binding Type}" />
+                        <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="4" Text="{Binding Message}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Grid.Column="1" Grid.Row="2" MinWidth="340" Margin="2 0 2 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/> 
+            </Grid.RowDefinitions>
+            <Expander 
+                Grid.Row="0" 
+                Header="{x:Static drones:RS.PacketViewerView_ExpanderFilterBySources_Header}" 
+                VerticalAlignment="Top"
+                HorizontalAlignment="Stretch">
+                <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
+                    <CheckBox
+                        Grid.Row="0" 
+                        HorizontalAlignment="Left" 
+                        IsChecked="{CompiledBinding IsCheckedAllSources.Value}" 
+                        Content="{x:Static drones:RS.PacketViewerView_Filters_CheckAll}" />
+                    <ListBox
+                        Grid.Row="1"
+                        HorizontalAlignment="Stretch" 
+                        x:Name="SourceFilters"
+                        ItemsSource="{Binding FiltersBySource}" 
+                        ScrollViewer.VerticalScrollBarVisibility="Visible"
+                        Grid.IsSharedSizeScope="True">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="8" />
+                                        <ColumnDefinition Width="Auto" SharedSizeGroup="Rate" />
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsChecked.Value, Mode=TwoWay}"
+                                              Padding="4 2 0 0">
+                                        <CheckBox.Content>
+                                            <TextBlock VerticalAlignment="Center" Text="{Binding FilterValue.Value}" />
+                                        </CheckBox.Content>
+                                    </CheckBox>
+                                    <TextBlock Grid.Column="2" VerticalAlignment="Center"
+                                               Text="{Binding MessageRateText.Value}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Expander>
+            <Expander 
+                Grid.Row="1" 
+                Header="{x:Static drones:RS.PacketViewerView_ExpanderFilterByTypes_Header}" 
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch">
+                <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
+                    <CheckBox
+                        Grid.Row="0" 
+                        HorizontalAlignment="Left" 
+                        IsChecked="{CompiledBinding IsCheckedAllTypes.Value}" 
+                        Content="{x:Static drones:RS.PacketViewerView_Filters_CheckAll}" />
+                    <ListBox 
+                        Grid.Row="1" 
+                        HorizontalAlignment="Stretch" 
+                        x:Name="TypeFilters"
+                        ItemsSource="{Binding FiltersByType}" 
+                        ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                        Grid.IsSharedSizeScope="True">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="8" />
+                                        <ColumnDefinition Width="Auto" SharedSizeGroup="Rate" />
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsChecked.Value, Mode=TwoWay}"
+                                              Padding="4 2 0 0">
+                                        <CheckBox.Content>
+                                            <TextBlock Text="{Binding FilterValue.Value}" />
+                                        </CheckBox.Content>
+                                    </CheckBox>
+                                    <TextBlock Grid.Column="2" VerticalAlignment="Center"
+                                               Text="{Binding MessageRateText.Value}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Expander>
+        </Grid>
+    </Grid>
+</UserControl>

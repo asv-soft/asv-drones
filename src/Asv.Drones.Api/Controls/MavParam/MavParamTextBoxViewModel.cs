@@ -4,7 +4,6 @@ using Asv.Avalonia;
 using Asv.Common;
 using Asv.Mavlink;
 using Asv.Mavlink.Common;
-using Microsoft.Extensions.Logging;
 using R3;
 
 namespace Asv.Drones.Api;
@@ -16,7 +15,7 @@ public class MavParamTextBoxViewModel : MavParamViewModel
 
     public MavParamTextBoxViewModel() 
         : this(
-            new MavParamTypeMetadata(NavigationId.GenerateRandomAsString(), MavParamType.MavParamTypeInt32)
+            new MavParamTypeMetadata(DesignTime.Id, MavParamType.MavParamTypeInt32)
         {
             Units = "MHz",
             RebootRequired = false,
@@ -29,8 +28,7 @@ public class MavParamTextBoxViewModel : MavParamViewModel
             MaxValue = new MavParamValue(100),
             DefaultValue = new MavParamValue(50),
             Increment = new MavParamValue(1),
-        }, new Subject<MavParamValue>(), 
-            DesignTime.LoggerFactory)
+        }, new Subject<MavParamValue>())
     {
         DesignTime.ThrowIfNotDesignMode();
         
@@ -58,8 +56,8 @@ public class MavParamTextBoxViewModel : MavParamViewModel
         });
     }
     
-    public MavParamTextBoxViewModel(IMavParamTypeMetadata param, Observable<MavParamValue> update, ILoggerFactory loggerFactory, string? formatString = null) 
-        : base(param, update, loggerFactory)
+    public MavParamTextBoxViewModel(IMavParamTypeMetadata param, Observable<MavParamValue> update, string? formatString = null) 
+        : base(param, update)
     {
         _textValue = new BindableReactiveProperty<string>()
             .DisposeItWith(Disposable);

@@ -1,13 +1,12 @@
-﻿using Asv.Avalonia;
-
+﻿using System.Linq;
+using Asv.Avalonia;
 using Asv.Mavlink;
-using Avalonia.Media;
-using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
 
-public class BrowserItem : HeadlinedViewModel, IBrowserItem
+public class BrowserItemViewModel : HeadlinedViewModel, IBrowserItemViewModel
 {
+    private string? _headerRaw = string.Empty;
     private string _path = string.Empty;
     private string? _parentPath;
     private FileSize? _size;
@@ -17,15 +16,26 @@ public class BrowserItem : HeadlinedViewModel, IBrowserItem
     private bool _isInEditMode;
     private string _editedName = string.Empty;
     private string? _crc32Hex;
-    private SolidColorBrush _crc32Color = null!;
+    private Crc32Status _crc32Status = Crc32Status.Default;
     private FtpEntryType _ftpEntryType;
 
-    public BrowserItem(NavigationId id, string? parentPath, string path, ILoggerFactory loggerFactory)
-        : base(id, loggerFactory)
+    public BrowserItemViewModel(NavigationId id, string? parentPath, string path)
+        : base(id)
     {
         ParentPath = parentPath;
         Path = path;
         Order = 0;
+    }
+
+    public new string? Header
+    {
+        get =>
+            _headerRaw == null
+                ? null
+                : new string(
+                    _headerRaw.Select(ch => ch is >= (char)32 and <= (char)126 ? ch : '*').ToArray()
+                );
+        set => SetField(ref _headerRaw, value);
     }
 
     public string Path
@@ -79,13 +89,13 @@ public class BrowserItem : HeadlinedViewModel, IBrowserItem
     public string? Crc32Hex
     {
         get => _crc32Hex;
-        set => SetField(ref _crc32Hex, value);
+        protected set => SetField(ref _crc32Hex, value);
     }
 
-    public SolidColorBrush Crc32Color
+    public Crc32Status Crc32Status
     {
-        get => _crc32Color;
-        set => SetField(ref _crc32Color, value);
+        get => _crc32Status;
+        set => SetField(ref _crc32Status, value);
     }
 
     public FtpEntryType FtpEntryType

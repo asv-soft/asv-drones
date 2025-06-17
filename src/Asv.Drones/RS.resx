@@ -255,10 +255,10 @@
         <value>min</value>
     </data>
     <data name="FileBrowserView_Watermark_Local" xml:space="preserve">
-        <value>Local files</value>
+        <value>Local Search</value>
     </data>
     <data name="FileBrowserView_Watermark_Remote" xml:space="preserve">
-        <value>Remote files</value>
+        <value>Remote Search</value>
     </data>
     <data name="FileBrowserView_Button_Download_Content" xml:space="preserve">
         <value>Download</value>
@@ -307,5 +307,59 @@
     </data>
     <data name="HomePageParamsDeviceItemAction_ActionViewModel_Description" xml:space="preserve">
         <value>Edit mavlink device parameters</value>
+    </data>
+    <data name="PacketViewerViewModel_SavePacketMessagesDialog_Title" xml:space="preserve">
+        <value>Select Separator:</value>
+    </data>
+    <data name="SavePacketMessagesDialogView_Separator_Tab" xml:space="preserve">
+        <value>TAB</value>
+    </data>
+    <data name="PacketViewerView_ToolTip_Save" xml:space="preserve">
+        <value>Save</value>
+    </data>
+    <data name="PacketViewerView_ToolTip_ClearAll" xml:space="preserve">
+        <value>Clear All</value>
+    </data>
+    <data name="PacketViewerView_ToolTip_PlayPause" xml:space="preserve">
+        <value>PLAY/PAUSE</value>
+    </data>
+    <data name="PacketMessageViewModel_CsvColumn_Date" xml:space="preserve">
+        <value>Date</value>
+    </data>
+    <data name="PacketMessageViewModel_CsvColumn_Source" xml:space="preserve">
+        <value>Source</value>
+    </data>
+    <data name="PacketMessageViewModel_CsvColumn_Type" xml:space="preserve">
+        <value>Type</value>
+    </data>
+    <data name="PacketMessageViewModel_CsvColumn_Message" xml:space="preserve">
+        <value>Message</value>
+    </data>
+    <data name="PacketViewerView_ExpanderFilterBySources_Header" xml:space="preserve">
+        <value>Sources</value>
+    </data>
+    <data name="PacketViewerView_ExpanderFilterByTypes_Header" xml:space="preserve">
+        <value>Types</value>
+    </data>
+    <data name="PacketViewerView_Filters_CheckAll" xml:space="preserve">
+        <value>Check All</value>
+    </data>
+    <data name="PacketViewerViewModel_SavePacketMessagesDialog_CloseButtonText" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="PacketViewerViewModel_SavePacketMessagesDialog_PrimaryButtonText" xml:space="preserve">
+        <value>Accept</value>
+    </data>
+    <data name="FileBrowserViewModel_RenameDialog_Title" xml:space="preserve">
+        <value>Rename</value>
+    </data>
+    <data name="FileBrowserViewModel_RenameDialog_PrimaryButtonText" xml:space="preserve">
+        <value>Accept</value>
+    </data>
+    <data name="FileBrowserViewModel_RenameDialog_SecondaryButtonText" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="FileBrowserViewModel_RenameDialog_Message" xml:space="preserve">
+        <value>Input new name</value>
     </data>
 </root>

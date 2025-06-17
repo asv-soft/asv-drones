@@ -22,8 +22,11 @@ public class WriteParamCommand : ContextCommand<ParamItemViewModel, ActionArg>
 
     public override ICommandInfo Info => StaticInfo;
 
-
-    public override async ValueTask<ActionArg?> InternalExecute(ParamItemViewModel context, ActionArg arg, CancellationToken cancel)
+    public override async ValueTask<ActionArg?> InternalExecute(
+        ParamItemViewModel context,
+        ActionArg arg,
+        CancellationToken cancel
+    )
     {
         await context.WriteImpl(cancel);
         return null;

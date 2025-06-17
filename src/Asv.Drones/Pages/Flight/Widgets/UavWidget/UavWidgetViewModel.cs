@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
-
 using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;

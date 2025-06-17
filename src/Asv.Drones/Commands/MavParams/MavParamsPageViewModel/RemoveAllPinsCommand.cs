@@ -73,7 +73,11 @@ public class RemoveAllPinsCommand : ContextCommand<MavParamsPageViewModel, ListA
         return ValueTask.FromResult<CommandArg?>(oldValue1);
     }*/
 
-    public override async ValueTask<ListArg?> InternalExecute(MavParamsPageViewModel context, ListArg arg, CancellationToken cancel)
+    public override async ValueTask<ListArg?> InternalExecute(
+        MavParamsPageViewModel context,
+        ListArg arg,
+        CancellationToken cancel
+    )
     {
         return null; // TODO: implement this method
     }
