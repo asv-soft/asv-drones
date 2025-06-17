@@ -18,7 +18,7 @@ public class RenameDialogViewModel : DialogViewModelBase
     private static readonly HashSet<char> AllowedCharSet = AllowedCharacters.ToHashSet();
 
     public RenameDialogViewModel()
-        : base(DialogId)
+        : base(DialogId, DesignTime.LoggerFactory)
     {
         NewName = new BindableReactiveProperty<string>(string.Empty);
         NewName

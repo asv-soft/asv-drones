@@ -4,6 +4,7 @@ using System.Composition;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Common;
+using Microsoft.Extensions.Logging;
 using R3;
 
 namespace Asv.Drones;
@@ -15,8 +16,8 @@ public class SavePacketMessagesDialogViewModel : DialogViewModelBase
     public const string DefaultShieldSymbol = ",";
 
     [ImportingConstructor]
-    public SavePacketMessagesDialogViewModel()
-        : base(ViewModelId)
+    public SavePacketMessagesDialogViewModel(ILoggerFactory loggerFactory)
+        : base(ViewModelId, loggerFactory)
     {
         IsSemicolon = new BindableReactiveProperty<bool>(true).DisposeItWith(Disposable);
         IsComa = new BindableReactiveProperty<bool>(false).DisposeItWith(Disposable);

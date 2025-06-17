@@ -2,6 +2,7 @@
 using System.Threading;
 using Asv.Avalonia;
 using Asv.Common;
+using Microsoft.Extensions.Logging;
 using R3;
 
 namespace Asv.Drones;
@@ -21,8 +22,8 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
     public BindableReactiveProperty<string> MessageRateText { get; }
     public BindableReactiveProperty<bool> IsChecked { get; }
 
-    public PacketFilterViewModelBase(string idArg, IUnitService unitService)
-        : base(new NavigationId(BaseId, idArg))
+    public PacketFilterViewModelBase(string idArg, IUnitService unitService, ILoggerFactory loggerFactory)
+        : base(new NavigationId(BaseId, idArg), loggerFactory)
     {
         _unit = unitService.Units[FrequencyBase.Id];
         MessageRateText = new BindableReactiveProperty<string>(string.Empty).DisposeItWith(

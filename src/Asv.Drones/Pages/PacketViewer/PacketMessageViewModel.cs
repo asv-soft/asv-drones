@@ -25,7 +25,7 @@ public class PacketMessageViewModel : RoutableViewModel
     }
 
     public PacketMessageViewModel()
-        : base(NavigationId.Empty)
+        : base(DesignTime.Id, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
         DateTime = DateTime.Now;
@@ -37,7 +37,7 @@ public class PacketMessageViewModel : RoutableViewModel
     }
 
     public PacketMessageViewModel(MavlinkMessage packet, IPacketConverter converter)
-        : base(new NavigationId($"{PageId}.{packet.Id.ToString()}", Guid.NewGuid().ToString()))
+        : base(NavigationId.GenerateByHash(packet.SystemId, packet.ComponentId, packet.Sequence, packet.Id), DesignTime.LoggerFactory)
     {
         DateTime = DateTime.Now;
         Source = $"[{packet.SystemId},{packet.ComponentId}]";

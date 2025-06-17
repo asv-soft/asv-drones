@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Asv.Avalonia;
 using Asv.Mavlink;
+using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
 
@@ -19,8 +20,8 @@ public class BrowserItemViewModel : HeadlinedViewModel, IBrowserItemViewModel
     private Crc32Status _crc32Status = Crc32Status.Default;
     private FtpEntryType _ftpEntryType;
 
-    public BrowserItemViewModel(NavigationId id, string? parentPath, string path)
-        : base(id)
+    public BrowserItemViewModel(NavigationId id, string? parentPath, string path, ILoggerFactory loggerFactory)
+        : base(id, loggerFactory)
     {
         ParentPath = parentPath;
         Path = path;

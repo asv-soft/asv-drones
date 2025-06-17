@@ -15,12 +15,13 @@ public static class LocalFilesMixin
     public static IReadOnlyList<IBrowserItemViewModel> LoadBrowserItems(
         string path,
         string root,
+        ILoggerFactory loggerFactory,
         CancellationToken ct = default,
         ILogger? log = null
     )
     {
         var result = new ConcurrentBag<IBrowserItemViewModel>();
-        ProcessBrowserDirectory(path, root, result, ct, log);
+        ProcessBrowserDirectory(path, root, result,loggerFactory, ct, log);
         log?.LogTrace("Directory processed ({Path})", path);
         return result.ToList();
     }
@@ -29,6 +30,7 @@ public static class LocalFilesMixin
         string path,
         string root,
         ConcurrentBag<IBrowserItemViewModel> items,
+        ILoggerFactory loggerFactory,
         CancellationToken ct = default,
         ILogger? log = null
     )
@@ -43,8 +45,8 @@ public static class LocalFilesMixin
             var id = PathHelper.EncodePathToId(dir);
             var parent = info.Parent?.FullName ?? root;
 
-            items.Add(new DirectoryItemViewModel(id, parent, dir, info.Name));
-            ProcessBrowserDirectory(dir, root, items, ct, log);
+            items.Add(new DirectoryItemViewModel(id, parent, dir, info.Name, loggerFactory));
+            ProcessBrowserDirectory(dir, root, items, loggerFactory, ct);
         }
 
         foreach (var file in Directory.EnumerateFiles(path))
@@ -56,7 +58,7 @@ public static class LocalFilesMixin
                 var info = new FileInfo(file);
                 var id = PathHelper.EncodePathToId(file);
                 var parent = info.Directory?.FullName ?? root;
-                items.Add(new FileItemViewModel(id, parent, file, info.Name, info.Length));
+                items.Add(new FileItemViewModel(id, parent, file, info.Name, info.Length, loggerFactory));
             }
             catch (FileNotFoundException ex)
             {

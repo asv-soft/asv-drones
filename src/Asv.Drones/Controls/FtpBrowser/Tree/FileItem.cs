@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
 
-public class FileItem : BrowserItem
+public class FileItem : BrowserItemViewModel
 {
     public FileItem(NavigationId id, string parentPath, string path, string? name, long size, ILoggerFactory loggerFactory)
         : base(id, parentPath, path, loggerFactory)

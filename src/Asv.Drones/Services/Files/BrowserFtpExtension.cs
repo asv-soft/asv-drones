@@ -14,7 +14,8 @@ namespace Asv.Drones;
 public static class BrowserFtpExtension
 {
     public static IReadOnlyObservableList<IBrowserItemViewModel> CopyEntriesAsBrowserItems(
-        this IFtpClientEx clientEx
+        this IFtpClientEx clientEx,
+        ILoggerFactory loggerFactory
     )
     {
         // TODO: need to work with this collection as with an observable collection
@@ -27,7 +28,8 @@ public static class BrowserFtpExtension
                     "_",
                     string.Empty,
                     MavlinkFtpHelper.DirectorySeparator.ToString(),
-                    "_"
+                    "_",
+                    loggerFactory
                 );
 
                 items.Add(root);
@@ -39,19 +41,22 @@ public static class BrowserFtpExtension
                     PathHelper.EncodePathToId(e.Value.Path),
                     e.Value.ParentPath,
                     e.Key,
-                    e.Value.Name
+                    e.Value.Name,
+                    loggerFactory
                 ),
                 FtpEntryType.File => new FileItemViewModel(
                     PathHelper.EncodePathToId(e.Value.Path),
                     e.Value.ParentPath,
                     e.Key,
                     e.Value.Name,
-                    ((FtpFile)e.Value).Size
+                    ((FtpFile)e.Value).Size,
+                    loggerFactory
                 ),
                 _ => new BrowserItemViewModel(
                     PathHelper.EncodePathToId(e.Value.Path),
                     e.Value.ParentPath,
-                    e.Key
+                    e.Key,
+                    loggerFactory
                 ),
             };
 

@@ -28,8 +28,8 @@ public class FileBrowserViewModel
 
     private readonly YesOrNoDialogPrefab _yesNoDialog;
     private readonly IDialogService _dialogService;
+    private readonly ILoggerFactory _loggerFactory;
     private readonly FileSystemWatcher _watcher;
-    private readonly ILogger<FileBrowserViewModel> _log;
     private readonly INavigationService _navigation;
     private readonly string _localRootPath;
     private readonly FileSystemEventHandler? _createdHandler;
@@ -59,14 +59,14 @@ public class FileBrowserViewModel
         IDeviceManager devices,
         IDialogService dialogService,
         IAppPath appPath,
-        ILoggerFactory log,
+        ILoggerFactory loggerFactory,
         INavigationService navigation
     )
-        : base(PageId, devices, cmd)
+        : base(PageId, devices, cmd, loggerFactory)
     {
         _localRootPath = appPath.UserDataFolder;
         _dialogService = dialogService;
-        _log = log.CreateLogger<FileBrowserViewModel>();
+        _loggerFactory = loggerFactory;
         _navigation = navigation;
         _yesNoDialog = dialogService.GetDialogPrefab<YesOrNoDialogPrefab>();
 
@@ -103,14 +103,17 @@ public class FileBrowserViewModel
 
         LocalSearchText = new HistoricalStringProperty(
             $"{PageId}{nameof(LocalSearchText)}",
-            localSearchText
+            localSearchText,
+            loggerFactory
+            
         )
         {
             Parent = this,
         };
         RemoteSearchText = new HistoricalStringProperty(
             $"{PageId}{nameof(RemoteSearchText)}",
-            remoteSearchText
+            remoteSearchText,
+            loggerFactory
         )
         {
             Parent = this,
@@ -424,8 +427,7 @@ public class FileBrowserViewModel
                 path,
                 RemoteSelectedItem.Value!.Base.Header!, // TODO: ! is unacceptable
                 stream.ToArray(),
-                ct,
-                _log
+                ct
             );
         }
     }
@@ -485,7 +487,7 @@ public class FileBrowserViewModel
                 RemoteSelectedItem.Value!.Base.Header!,
                 stream.ToArray(),
                 ct,
-                _log
+                Logger
             );
         }
     }
@@ -506,12 +508,12 @@ public class FileBrowserViewModel
 
         if (item.Base is { FtpEntryType: FtpEntryType.Directory })
         {
-            LocalFilesMixin.RemoveDirectory(item.Base.Path, true, _log);
+            LocalFilesMixin.RemoveDirectory(item.Base.Path, true, Logger);
         }
 
         if (item.Base is { FtpEntryType: FtpEntryType.File })
         {
-            LocalFilesMixin.RemoveFile(item.Base.Path, _log);
+            LocalFilesMixin.RemoveFile(item.Base.Path, Logger);
         }
     }
 
@@ -532,10 +534,10 @@ public class FileBrowserViewModel
         switch (item.Base)
         {
             case { FtpEntryType: FtpEntryType.Directory }:
-                await ClientEx.RemoveDirectoryAsync(item.Base.Path, true, ct, _log);
+                await ClientEx.RemoveDirectoryAsync(item.Base.Path, true, ct, Logger);
                 break;
             case { FtpEntryType: FtpEntryType.File }:
-                await ClientEx.RemoveFileAsync(item.Base.Path, ct, _log);
+                await ClientEx.RemoveFileAsync(item.Base.Path, ct, Logger);
                 break;
         }
     }
@@ -564,7 +566,7 @@ public class FileBrowserViewModel
             path = $"{MavlinkFtpHelper.DirectorySeparator}";
         }
 
-        await ClientEx.CreateDirectoryAsync(path, ct, _log);
+        await ClientEx.CreateDirectoryAsync(path, ct, Logger);
     }
 
     private ValueTask CreateLocalFolderImpl(Unit arg, CancellationToken ct)
@@ -589,7 +591,7 @@ public class FileBrowserViewModel
             path = _localRootPath;
         }
 
-        LocalFilesMixin.CreateDirectory(path, _log);
+        LocalFilesMixin.CreateDirectory(path, Logger);
 
         return ValueTask.CompletedTask;
     }
@@ -597,7 +599,7 @@ public class FileBrowserViewModel
     private async Task RefreshRemoteImpl(CancellationToken ct)
     {
         await ClientEx.Refresh(MavlinkFtpHelper.DirectorySeparator.ToString(), cancel: ct);
-        var newItems = ClientEx.CopyEntriesAsBrowserItems();
+        var newItems = ClientEx.CopyEntriesAsBrowserItems(_loggerFactory);
 
         var toRemove = _remoteItems
             .Where(rs => newItems.All(n => n.Path != rs.Path || n.Size != rs.Size))
@@ -615,7 +617,7 @@ public class FileBrowserViewModel
 
     private ValueTask RefreshLocalImpl(Unit arg, CancellationToken ct)
     {
-        var newItems = LocalFilesMixin.LoadBrowserItems(_localRootPath, _localRootPath, log: _log);
+        var newItems = LocalFilesMixin.LoadBrowserItems(_localRootPath, _localRootPath, loggerFactory:_loggerFactory);
 
         var toRemove = _localItems
             .Where(ls => newItems.All(n => n.Path != ls.Path || n.Size != ls.Size))
@@ -675,8 +677,8 @@ public class FileBrowserViewModel
         {
             var newPath =
                 item.FtpEntryType == FtpEntryType.Directory
-                    ? LocalFilesMixin.RenameDirectory(oldPath, newName, _log)
-                    : LocalFilesMixin.RenameFile(oldPath, newName, _log);
+                    ? LocalFilesMixin.RenameDirectory(oldPath, newName, Logger)
+                    : LocalFilesMixin.RenameFile(oldPath, newName, Logger);
 
             var newNode = LocalItemsTree.FindNode(n => n.Base.Path == newPath);
             if (newNode != null)
@@ -684,11 +686,11 @@ public class FileBrowserViewModel
                 LocalSelectedItem.OnNext(newNode as BrowserNode);
             }
 
-            _log.LogInformation("Local item {oldName} renamed to {newName}", oldName, newName);
+            Logger.LogInformation("Local item {oldName} renamed to {newName}", oldName, newName);
         }
         catch (Exception ex)
         {
-            _log.LogError(
+            Logger.LogError(
                 ex,
                 "Failed to rename local item {oldName} to {newName}",
                 oldName,
@@ -738,7 +740,7 @@ public class FileBrowserViewModel
 
         try
         {
-            var newPath = await ClientEx.RenameAsync(oldPath, newName, ct, _log);
+            var newPath = await ClientEx.RenameAsync(oldPath, newName, ct, Logger);
 
             var newNode = RemoteItemsTree.FindNode(n => n.Base.Path == newPath);
             if (newNode != null)
@@ -746,11 +748,11 @@ public class FileBrowserViewModel
                 RemoteSelectedItem.OnNext(newNode as BrowserNode);
             }
 
-            _log.LogInformation("Remote item {oldName} renamed to {newName}", oldName, newName);
+            Logger.LogInformation("Remote item {oldName} renamed to {newName}", oldName, newName);
         }
         catch (Exception ex)
         {
-            _log.LogError(
+            Logger.LogError(
                 ex,
                 "Failed to rename remote item {oldName} to {newName}",
                 oldName,
@@ -766,7 +768,7 @@ public class FileBrowserViewModel
             return;
         }
 
-        var crc32 = await LocalFilesMixin.CalculateCrc32Async(fileItem.Path, ct, _log);
+        var crc32 = await LocalFilesMixin.CalculateCrc32Async(fileItem.Path, ct, Logger);
         fileItem.Crc32 = crc32;
         fileItem.Crc32Status = Crc32Status.Default;
     }
@@ -778,7 +780,7 @@ public class FileBrowserViewModel
             return;
         }
 
-        var crc32 = await ClientEx.CalculateCrc32Async(fileItem.Path, ct, _log);
+        var crc32 = await ClientEx.CalculateCrc32Async(fileItem.Path, ct, Logger);
         fileItem.Crc32 = crc32;
         fileItem.Crc32Status = Crc32Status.Default;
     }
@@ -800,7 +802,7 @@ public class FileBrowserViewModel
 
         if (localFileItem.Crc32 == null)
         {
-            localCrc32 = await LocalFilesMixin.CalculateCrc32Async(localFileItem.Path, ct, _log);
+            localCrc32 = await LocalFilesMixin.CalculateCrc32Async(localFileItem.Path, ct, Logger);
             localFileItem.Crc32 = localCrc32;
         }
         else
@@ -844,7 +846,7 @@ public class FileBrowserViewModel
 
         if (foundNode == null)
         {
-            _log.LogWarning("Local file \"{Header}\" not found", remoteFile.Header);
+            Logger.LogWarning("Local file \"{Header}\" not found", remoteFile.Header);
             return;
         }
 
@@ -911,18 +913,7 @@ public class FileBrowserViewModel
 
     protected override void AfterLoadExtensions() { }
 
-    protected override void AfterDeviceInitialized(IClientDevice device)
-    {
-        Title = $"Browser[{device.Id}]";
-        var client =
-            device.GetMicroservice<IFtpClient>()
-            ?? throw new MissingMemberException("FTP Client is null");
-        ArgumentNullException.ThrowIfNull(client);
-        ClientEx = device.GetMicroservice<IFtpClientEx>() ?? new FtpClientEx(client);
-
-        InitCommands();
-    }
-
+   
     public override IExportInfo Source => SystemModule.Instance;
 
     #region Dispose
@@ -984,4 +975,16 @@ public class FileBrowserViewModel
     }
 
     #endregion
+
+    protected override void AfterDeviceInitialized(IClientDevice device, CancellationToken onDisconnectedToken)
+    {
+        Title = $"Browser[{device.Id}]";
+        var client =
+            device.GetMicroservice<IFtpClient>()
+            ?? throw new MissingMemberException("FTP Client is null");
+        ArgumentNullException.ThrowIfNull(client);
+        ClientEx = device.GetMicroservice<IFtpClientEx>() ?? new FtpClientEx(client);
+
+        InitCommands();
+    }
 }

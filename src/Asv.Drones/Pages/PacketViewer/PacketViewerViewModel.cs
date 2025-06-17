@@ -28,8 +28,8 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
     private const int MaxPacketsAmount = 1000;
     private const int PacketsReceiveDelayInSeconds = 1;
 
-    private readonly ILogger<PacketViewerViewModel> _logger;
     private readonly IAppPath _app;
+    private readonly ILoggerFactory _loggerFactory;
     private readonly IUnitService _unit;
     private readonly IDeviceManager _deviceManager;
     private readonly INavigationService _navigationService;
@@ -58,7 +58,8 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
             NullUnitService.Instance,
             [],
             NullDeviceManager.Instance,
-            NullNavigationService.Instance
+            DesignTime.Navigation
+            
         )
     {
         DesignTime.ThrowIfNotDesignMode();
@@ -76,17 +77,17 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
     public PacketViewerViewModel(
         ICommandService cmd,
         IAppPath app,
-        ILoggerFactory logFactory,
+        ILoggerFactory loggerFactory,
         IUnitService unit,
         [ImportMany] IEnumerable<IPacketConverter> converters,
         IDeviceManager deviceManager,
-        INavigationService navigationService
+        INavigationService navigationService 
     )
-        : base(PageId, cmd)
+        : base(PageId, cmd, loggerFactory)
     {
         Title = "Packet Viewer";
         _app = app;
-        _logger = logFactory.CreateLogger<PacketViewerViewModel>();
+        _loggerFactory = loggerFactory;
         _unit = unit;
         _converters = converters;
         _deviceManager = deviceManager;
@@ -277,7 +278,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
 
     private async ValueTask ExportToCsvImpl(Unit unit, CancellationToken cancellationToken)
     {
-        using var vm = new SavePacketMessagesDialogViewModel();
+        using var vm = new SavePacketMessagesDialogViewModel(_loggerFactory);
         var dialog = new ContentDialog(vm, _navigationService)
         {
             Title = $"{RS.PacketViewerViewModel_SavePacketMessagesDialog_Title}",
@@ -325,11 +326,11 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
                 )
             );
 
-            _logger.LogInformation("Export file saved to: {filePath}", filePath);
+            Logger.LogInformation("Export file saved to: {filePath}", filePath);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Аn error occurred while saving the file: {filePath}", filePath);
+            Logger.LogError(ex, "Аn error occurred while saving the file: {filePath}", filePath);
         }
     }
 
@@ -369,7 +370,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
             return;
         }
 
-        var newFilter = new SourcePacketFilterViewModel(vm, _unit);
+        var newFilter = new SourcePacketFilterViewModel(vm, _unit, _loggerFactory);
         _disposables.Add(newFilter);
         var isAdded = _filtersBySourceSet.Add(newFilter);
 
@@ -378,7 +379,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
             newFilter.Dispose();
         }
 
-        _logger.LogInformation("Added new source filter: {Source}", vm.Source);
+        Logger.LogInformation("Added new source filter: {Source}", vm.Source);
     }
 
     private void UpdateTypeFilters(PacketMessageViewModel vm)
@@ -390,7 +391,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
             return;
         }
 
-        var newFilter = new TypePacketFilterViewModel(vm, _unit);
+        var newFilter = new TypePacketFilterViewModel(vm, _unit, _loggerFactory);
         _disposables.Add(newFilter);
         var isAdded = _filtersByTypeSet.Add(newFilter);
 
@@ -399,7 +400,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
             newFilter.Dispose();
         }
 
-        _logger.LogInformation("Added new type filter: {Type}", vm.Type);
+        Logger.LogInformation("Added new type filter: {Type}", vm.Type);
     }
 
     public override IEnumerable<IRoutable> GetRoutableChildren()

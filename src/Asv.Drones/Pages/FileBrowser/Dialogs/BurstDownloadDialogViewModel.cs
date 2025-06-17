@@ -12,7 +12,7 @@ public class BurstDownloadDialogViewModel : DialogViewModelBase
     private const string DialogId = "burst.dialog";
 
     public BurstDownloadDialogViewModel()
-        : base(DialogId)
+        : base(DialogId, DesignTime.LoggerFactory)
     {
         PacketSize = new BindableReactiveProperty<byte?>(MavlinkFtpHelper.MaxDataSize);
         PacketSize.EnableValidation(
