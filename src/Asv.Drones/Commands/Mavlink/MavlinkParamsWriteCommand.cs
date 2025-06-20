@@ -23,7 +23,7 @@ public class MavlinkParamsWriteCommand : MavlinkMicroserviceCommand<IParamsClien
         Name = "Write mavlink param",
         Description = "Write mavlink param to device",
         Icon = MaterialIconKind.Set,
-        Source = IoModule.Instance,
+        Source = ApiModule.Instance,
         DefaultHotKey = null,
     };
 

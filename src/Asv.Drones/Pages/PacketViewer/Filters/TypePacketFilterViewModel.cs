@@ -8,7 +8,11 @@ namespace Asv.Drones;
 
 public sealed class TypePacketFilterViewModel : PacketFilterViewModelBase<TypePacketFilterViewModel>
 {
-    public TypePacketFilterViewModel(PacketMessageViewModel pkt, IUnitService unitService, ILoggerFactory loggerFactory)
+    public TypePacketFilterViewModel(
+        PacketMessageViewModel pkt,
+        IUnitService unitService,
+        ILoggerFactory loggerFactory
+    )
         : base(pkt.Type, unitService, loggerFactory)
     {
         FilterValue = new BindableReactiveProperty<string>(pkt.Type).DisposeItWith(Disposable);

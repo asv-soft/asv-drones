@@ -96,11 +96,19 @@ public class MavParamsPageViewModel
         _viewedParamsList = [];
         ViewedParams = _viewedParamsList.ToNotifyCollectionChangedSlim();
 
-        SearchText = new HistoricalStringProperty($"{PageId}{nameof(SearchText)}", _searchText, loggerFactory)
+        SearchText = new HistoricalStringProperty(
+            $"{PageId}{nameof(SearchText)}",
+            _searchText,
+            loggerFactory
+        )
         {
             Parent = this,
         };
-        ShowStaredOnly = new HistoricalBoolProperty($"{PageId}.{ShowStaredOnly}", _showStarredOnly, loggerFactory)
+        ShowStaredOnly = new HistoricalBoolProperty(
+            $"{PageId}.{ShowStaredOnly}",
+            _showStarredOnly,
+            loggerFactory
+        )
         {
             Parent = this,
         };
@@ -140,7 +148,7 @@ public class MavParamsPageViewModel
             {
                 if (_cancellationTokenSource.Token.CanBeCanceled)
                 {
-                    _cancellationTokenSource?.Cancel(false);        
+                    _cancellationTokenSource?.Cancel(false);
                 }
                 _cancellationTokenSource?.Dispose();
                 _cancellationTokenSource = null;
@@ -232,7 +240,9 @@ public class MavParamsPageViewModel
             }
 
             this.ExecuteCommand(RemoveAllPinsCommand.Id)
-                .SafeFireAndForget(ex => Logger.LogError(ex, "Something went wrong with unpin all"));
+                .SafeFireAndForget(ex =>
+                    Logger.LogError(ex, "Something went wrong with unpin all")
+                );
         });
     }
 
@@ -247,7 +257,7 @@ public class MavParamsPageViewModel
         {
             if (_cancellationTokenSource.Token.CanBeCanceled)
             {
-                _cancellationTokenSource?.Cancel(false);        
+                _cancellationTokenSource?.Cancel(false);
             }
             _cancellationTokenSource?.Dispose();
             _cancellationTokenSource = null;
@@ -273,7 +283,7 @@ public class MavParamsPageViewModel
                 {
                     if (IsDisposed == false) // TODO: remove when Mavlink ReadAll
                     {
-                        Progress.Value = i;    
+                        Progress.Value = i;
                     }
                 }),
                 cancel: _cancellationTokenSource.Token

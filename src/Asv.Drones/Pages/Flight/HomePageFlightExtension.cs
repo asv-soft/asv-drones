@@ -8,13 +8,15 @@ using R3;
 namespace Asv.Drones;
 
 [ExportExtensionFor<IHomePage>]
-[method: ImportingConstructor] 
+[method: ImportingConstructor]
 public class HomePageFlightExtension(ILoggerFactory loggerFactory) : IExtensionFor<IHomePage>
 {
     public void Extend(IHomePage context, CompositeDisposable contextDispose)
     {
         context.Tools.Add(
-            OpenFlightModeCommand.StaticInfo.CreateAction(loggerFactory).DisposeItWith(contextDispose)
+            OpenFlightModeCommand
+                .StaticInfo.CreateAction(loggerFactory)
+                .DisposeItWith(contextDispose)
         );
     }
 }

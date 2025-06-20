@@ -37,7 +37,15 @@ public class PacketMessageViewModel : RoutableViewModel
     }
 
     public PacketMessageViewModel(MavlinkMessage packet, IPacketConverter converter)
-        : base(NavigationId.GenerateByHash(packet.SystemId, packet.ComponentId, packet.Sequence, packet.Id), DesignTime.LoggerFactory)
+        : base(
+            NavigationId.GenerateByHash(
+                packet.SystemId,
+                packet.ComponentId,
+                packet.Sequence,
+                packet.Id
+            ),
+            DesignTime.LoggerFactory
+        )
     {
         DateTime = DateTime.Now;
         Source = $"[{packet.SystemId},{packet.ComponentId}]";

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
-
 using Asv.Common;
 using Asv.Drones.Api;
 using Material.Icons;
@@ -57,7 +56,7 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
         Widgets = [];
         Widgets.SetRoutableParent(this).DisposeItWith(Disposable);
         Widgets.DisposeRemovedItems().DisposeItWith(Disposable);
-        
+
         WidgetsView = Widgets.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);
         SelectedAnchor = new BindableReactiveProperty<IMapAnchor?>().DisposeItWith(Disposable);
     }

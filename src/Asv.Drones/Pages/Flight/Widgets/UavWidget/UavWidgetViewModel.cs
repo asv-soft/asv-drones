@@ -84,7 +84,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         LinkQuality = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(LinkQuality)}",
             linkQuality,
-            unitItem, 
+            unitItem,
             DesignTime.LoggerFactory
         )
         {
@@ -93,7 +93,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         AltitudeAgl = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(AltitudeAgl)}",
             altitudeAgl,
-            unitItem, 
+            unitItem,
             DesignTime.LoggerFactory
         )
         {
@@ -102,30 +102,45 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         AltitudeMsl = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(AltitudeMsl)}",
             altitudeMsl,
-            unitItem, 
+            unitItem,
             DesignTime.LoggerFactory
         )
         {
             Parent = this,
         }.DisposeItWith(Disposable);
-        Azimuth = new HistoricalUnitProperty($"{WidgetId}.{nameof(Azimuth)}", azimuth, unitItem, DesignTime.LoggerFactory)
+        Azimuth = new HistoricalUnitProperty(
+            $"{WidgetId}.{nameof(Azimuth)}",
+            azimuth,
+            unitItem,
+            DesignTime.LoggerFactory
+        )
         {
             Parent = this,
         }.DisposeItWith(Disposable);
-        Heading = new HistoricalUnitProperty($"{WidgetId}.{nameof(Heading)}", heading, unitItem, DesignTime.LoggerFactory)
+        Heading = new HistoricalUnitProperty(
+            $"{WidgetId}.{nameof(Heading)}",
+            heading,
+            unitItem,
+            DesignTime.LoggerFactory
+        )
         {
             Parent = this,
         }.DisposeItWith(Disposable);
         HomeAzimuth = new HistoricalUnitProperty(
             $"{WidgetId}.{nameof(HomeAzimuth)}",
             homeAzimuth,
-            unitItem, 
+            unitItem,
             DesignTime.LoggerFactory
         )
         {
             Parent = this,
         }.DisposeItWith(Disposable);
-        Velocity = new HistoricalUnitProperty($"{WidgetId}.{nameof(Velocity)}", velocity, unitItem, DesignTime.LoggerFactory)
+        Velocity = new HistoricalUnitProperty(
+            $"{WidgetId}.{nameof(Velocity)}",
+            velocity,
+            unitItem,
+            DesignTime.LoggerFactory
+        )
         {
             Parent = this,
         }.DisposeItWith(Disposable);
@@ -413,11 +428,21 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         {
             Parent = this,
         }.DisposeItWith(Disposable);
-        Azimuth = new HistoricalUnitProperty($"{WidgetId}.{nameof(Azimuth)}", azimuth, _angleUnit, _loggerFactory)
+        Azimuth = new HistoricalUnitProperty(
+            $"{WidgetId}.{nameof(Azimuth)}",
+            azimuth,
+            _angleUnit,
+            _loggerFactory
+        )
         {
             Parent = this,
         }.DisposeItWith(Disposable);
-        Heading = new HistoricalUnitProperty($"{WidgetId}.{nameof(Heading)}", heading, _angleUnit, _loggerFactory)
+        Heading = new HistoricalUnitProperty(
+            $"{WidgetId}.{nameof(Heading)}",
+            heading,
+            _angleUnit,
+            _loggerFactory
+        )
         {
             Parent = this,
         }.DisposeItWith(Disposable);

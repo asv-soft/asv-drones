@@ -75,11 +75,18 @@ public class ParamItemViewModel : RoutableViewModel
         {
             Parent = this,
         };
-        IsStarred = new HistoricalBoolProperty($"{id}.{nameof(IsStarred)}", _isStarred, loggerFactory)
+        IsStarred = new HistoricalBoolProperty(
+            $"{id}.{nameof(IsStarred)}",
+            _isStarred,
+            loggerFactory
+        )
         {
             Parent = this,
         };
-        Value = new HistoricalStringProperty($"{id}.{nameof(Value)}", _value, loggerFactory) { Parent = this };
+        Value = new HistoricalStringProperty($"{id}.{nameof(Value)}", _value, loggerFactory)
+        {
+            Parent = this,
+        };
         IsSynced = new BindableReactiveProperty<bool>();
         StarKind = new BindableReactiveProperty<MaterialIconKind>();
 

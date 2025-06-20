@@ -14,26 +14,32 @@ public class MavParamTextBoxViewModel : MavParamViewModel
     private readonly BindableReactiveProperty<string> _textValue;
     private bool _internalChange;
 
-    public MavParamTextBoxViewModel() 
+    public MavParamTextBoxViewModel()
         : this(
-            new MavParamTypeMetadata(NavigationId.GenerateRandomAsString(16), MavParamType.MavParamTypeInt32)
-        {
-            Units = "MHz",
-            RebootRequired = false,
-            Volatile = false,
-            MinValue = new MavParamValue(-100),
-            ShortDesc = "Test param",
-            LongDesc = "Long description for test param",
-            Group = "System",
-            Category = "System",
-            MaxValue = new MavParamValue(100),
-            DefaultValue = new MavParamValue(50),
-            Increment = new MavParamValue(1),
-        }, new Subject<MavParamValue>(), 
-            DesignTime.LoggerFactory)
+            new MavParamTypeMetadata(
+                "A" + NavigationId.GenerateRandomAsString(15).Replace('.', '_').Replace('-', '_'),
+                MavParamType.MavParamTypeInt32
+            )
+            {
+                Units = "MHz",
+                RebootRequired = false,
+                Volatile = false,
+                MinValue = new MavParamValue(-100),
+                ShortDesc = "Test param",
+                LongDesc = "Long description for test param",
+                Group = "System",
+                Category = "System",
+                MaxValue = new MavParamValue(100),
+                DefaultValue = new MavParamValue(50),
+                Increment = new MavParamValue(1),
+            },
+            new Subject<MavParamValue>(),
+            (_, _) => ValueTask.FromResult(new MavParamValue(100)),
+            DesignTime.LoggerFactory
+        )
     {
         DesignTime.ThrowIfNotDesignMode();
-        
+
         Task.Run(async () =>
         {
             while (true)
@@ -44,7 +50,7 @@ public class MavParamTextBoxViewModel : MavParamViewModel
                 IsNetworkError = true;
                 NetworkErrorMessage = "Network error occurred. Please try again later.";
                 await Task.Delay(5000);
-                
+                IsNetworkError = false;
                 IsBusy = true;
                 await Task.Delay(3000);
                 IsBusy = false;
@@ -57,30 +63,51 @@ public class MavParamTextBoxViewModel : MavParamViewModel
             }
         });
     }
-    
-    public MavParamTextBoxViewModel(IMavParamTypeMetadata param, Observable<MavParamValue> update, ILoggerFactory loggerFactory, string? formatString = null) 
-        : base(param, update, loggerFactory)
+
+    public MavParamTextBoxViewModel(
+        IMavParamTypeMetadata param,
+        IParamsClientEx svc,
+        ILoggerFactory loggerFactory,
+        string? formatString = null
+    )
+        : this(
+            param,
+            svc.Filter(param.Name),
+            (name, cancel) => // TODO: replace this 'svc.GetFromCacheOrReadOnce' when mavlink after 4.0.1
+                svc.Items.TryGetValue(name, out var item)
+                    ? new ValueTask<MavParamValue>(item.Value.Value)
+                    : new ValueTask<MavParamValue>(svc.ReadOnce(name, cancel)),
+            loggerFactory,
+            formatString
+        ) { }
+
+    public MavParamTextBoxViewModel(
+        IMavParamTypeMetadata param,
+        Observable<MavParamValue> update,
+        InitialReadParamDelegate initReadCallback,
+        ILoggerFactory loggerFactory,
+        string? formatString = null
+    )
+        : base(param, update, initReadCallback, loggerFactory)
     {
-        _textValue = new BindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        
-        Value.Where(_ => _internalChange == false)
+        _textValue = new BindableReactiveProperty<string>().DisposeItWith(Disposable);
+
+        Value
+            .Where(_ => _internalChange == false)
             .Subscribe(x => _textValue.Value = ConvertToString(x, formatString) ?? string.Empty)
             .DisposeItWith(Disposable);
 
         // we don't subscribe to value changes here, because we set Value at Validator
-        TextValue
-            .EnableValidation(Validator)
-            .DisposeItWith(Disposable);
-        Observable.FromEventHandler<DataErrorsChangedEventArgs>(
+        TextValue.EnableValidation(Validator).DisposeItWith(Disposable);
+        Observable
+            .FromEventHandler<DataErrorsChangedEventArgs>(
                 h => _textValue.ErrorsChanged += h,
-                h => _textValue.ErrorsChanged -= h)
+                h => _textValue.ErrorsChanged -= h
+            )
             .Subscribe(_ => HasValidationErrors = _textValue.HasErrors)
             .DisposeItWith(Disposable);
 
-        _textValue.DistinctUntilChanged()
-            .Subscribe(_ => IsSync = false)
-            .DisposeItWith(Disposable);
+        _textValue.DistinctUntilChanged().Subscribe(_ => IsSync = false).DisposeItWith(Disposable);
     }
 
     private Exception? Validator(string valueAsString)
@@ -98,15 +125,24 @@ public class MavParamTextBoxViewModel : MavParamViewModel
         int multiply;
         switch (lastChar)
         {
-            case 'M' or 'm' or 'М' or 'м':
+            case 'M'
+            or 'm'
+            or 'М'
+            or 'м':
                 multiply = 1_000_000;
                 valueAsString = valueAsString[..^1];
                 break;
-            case 'K' or 'k' or 'К' or 'к':
+            case 'K'
+            or 'k'
+            or 'К'
+            or 'к':
                 multiply = 1_000;
                 valueAsString = valueAsString[..^1];
                 break;
-            case 'G' or 'g' or 'Г' or 'г':
+            case 'G'
+            or 'g'
+            or 'Г'
+            or 'г':
                 multiply = 1_000_000_000;
                 valueAsString = valueAsString[..^1];
                 break;
@@ -114,14 +150,21 @@ public class MavParamTextBoxViewModel : MavParamViewModel
                 multiply = 1;
                 break;
         }
-        
-        if (double.TryParse(valueAsString, NumberStyles.Any, CultureInfo.InvariantCulture, out var doubleValue))
+
+        if (
+            double.TryParse(
+                valueAsString,
+                NumberStyles.Any,
+                CultureInfo.InvariantCulture,
+                out var doubleValue
+            )
+        )
         {
             doubleValue *= multiply;
         }
         else
         {
-           return new Exception("Value must be a number with optional suffix (K, M, G)");
+            return new Exception("Value must be a number with optional suffix (K, M, G)");
         }
 
         ValueType value;
@@ -136,14 +179,14 @@ public class MavParamTextBoxViewModel : MavParamViewModel
             case MavParamType.MavParamTypeUint16:
                 value = (ushort)doubleValue;
                 break;
-                
+
             case MavParamType.MavParamTypeInt16:
                 value = (short)doubleValue;
                 break;
-                
+
             case MavParamType.MavParamTypeUint32:
                 value = (uint)doubleValue;
-                break;           
+                break;
             case MavParamType.MavParamTypeInt32:
                 value = (int)doubleValue;
                 break;
@@ -172,7 +215,6 @@ public class MavParamTextBoxViewModel : MavParamViewModel
 
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
-        yield break;
+        return [];
     }
-
 }

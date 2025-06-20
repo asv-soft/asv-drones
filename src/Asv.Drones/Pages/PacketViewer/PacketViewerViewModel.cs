@@ -59,7 +59,6 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
             [],
             NullDeviceManager.Instance,
             DesignTime.Navigation
-            
         )
     {
         DesignTime.ThrowIfNotDesignMode();
@@ -81,7 +80,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         IUnitService unit,
         [ImportMany] IEnumerable<IPacketConverter> converters,
         IDeviceManager deviceManager,
-        INavigationService navigationService 
+        INavigationService navigationService
     )
         : base(PageId, cmd, loggerFactory)
     {

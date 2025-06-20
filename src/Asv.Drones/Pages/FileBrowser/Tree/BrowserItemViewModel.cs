@@ -20,7 +20,12 @@ public class BrowserItemViewModel : HeadlinedViewModel, IBrowserItemViewModel
     private Crc32Status _crc32Status = Crc32Status.Default;
     private FtpEntryType _ftpEntryType;
 
-    public BrowserItemViewModel(NavigationId id, string? parentPath, string path, ILoggerFactory loggerFactory)
+    public BrowserItemViewModel(
+        NavigationId id,
+        string? parentPath,
+        string path,
+        ILoggerFactory loggerFactory
+    )
         : base(id, loggerFactory)
     {
         ParentPath = parentPath;

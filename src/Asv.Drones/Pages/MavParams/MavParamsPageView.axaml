@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:drones="clr-namespace:Asv.Drones"
+             xmlns:avalonia1="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Asv.Drones.MavParamsPageView"
              x:DataType="drones:MavParamsPageViewModel">

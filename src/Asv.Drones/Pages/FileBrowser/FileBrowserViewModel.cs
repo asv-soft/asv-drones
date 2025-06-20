@@ -105,7 +105,6 @@ public class FileBrowserViewModel
             $"{PageId}{nameof(LocalSearchText)}",
             localSearchText,
             loggerFactory
-            
         )
         {
             Parent = this,
@@ -617,7 +616,11 @@ public class FileBrowserViewModel
 
     private ValueTask RefreshLocalImpl(Unit arg, CancellationToken ct)
     {
-        var newItems = LocalFilesMixin.LoadBrowserItems(_localRootPath, _localRootPath, loggerFactory:_loggerFactory);
+        var newItems = LocalFilesMixin.LoadBrowserItems(
+            _localRootPath,
+            _localRootPath,
+            loggerFactory: _loggerFactory
+        );
 
         var toRemove = _localItems
             .Where(ls => newItems.All(n => n.Path != ls.Path || n.Size != ls.Size))
@@ -913,7 +916,6 @@ public class FileBrowserViewModel
 
     protected override void AfterLoadExtensions() { }
 
-   
     public override IExportInfo Source => SystemModule.Instance;
 
     #region Dispose
@@ -976,7 +978,10 @@ public class FileBrowserViewModel
 
     #endregion
 
-    protected override void AfterDeviceInitialized(IClientDevice device, CancellationToken onDisconnectedToken)
+    protected override void AfterDeviceInitialized(
+        IClientDevice device,
+        CancellationToken onDisconnectedToken
+    )
     {
         Title = $"Browser[{device.Id}]";
         var client =

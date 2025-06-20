@@ -6,7 +6,13 @@ namespace Asv.Drones;
 
 public class DirectoryItemViewModel : BrowserItemViewModel
 {
-    public DirectoryItemViewModel(NavigationId id, string? parentPath, string path, string? name, ILoggerFactory loggerFactory)
+    public DirectoryItemViewModel(
+        NavigationId id,
+        string? parentPath,
+        string path,
+        string? name,
+        ILoggerFactory loggerFactory
+    )
         : base(id, parentPath, path, loggerFactory)
     {
         HasChildren = true;

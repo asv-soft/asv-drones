@@ -13,7 +13,7 @@ public class FileItemViewModel : BrowserItemViewModel
         string parentPath,
         string path,
         string? name,
-        long size, 
+        long size,
         ILoggerFactory loggerFactory
     )
         : base(id, parentPath, path, loggerFactory)

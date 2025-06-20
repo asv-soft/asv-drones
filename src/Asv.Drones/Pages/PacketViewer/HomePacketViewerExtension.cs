@@ -13,7 +13,9 @@ public class HomePacketViewerExtension(ILoggerFactory loggerFactory) : IExtensio
     public void Extend(IHomePage context, CompositeDisposable contextDispose)
     {
         context.Tools.Add(
-            OpenPacketViewerCommand.StaticInfo.CreateAction(loggerFactory).DisposeItWith(contextDispose)
+            OpenPacketViewerCommand
+                .StaticInfo.CreateAction(loggerFactory)
+                .DisposeItWith(contextDispose)
         );
     }
 }

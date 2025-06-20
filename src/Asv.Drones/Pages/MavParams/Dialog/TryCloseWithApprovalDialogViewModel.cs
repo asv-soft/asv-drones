@@ -2,7 +2,6 @@
 using Asv.Avalonia;
 using Microsoft.Extensions.Logging;
 
-
 namespace Asv.Drones;
 
 public class TryCloseWithApprovalDialogViewModel : DialogViewModelBase

@@ -22,7 +22,11 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
     public BindableReactiveProperty<string> MessageRateText { get; }
     public BindableReactiveProperty<bool> IsChecked { get; }
 
-    public PacketFilterViewModelBase(string idArg, IUnitService unitService, ILoggerFactory loggerFactory)
+    public PacketFilterViewModelBase(
+        string idArg,
+        IUnitService unitService,
+        ILoggerFactory loggerFactory
+    )
         : base(new NavigationId(BaseId, idArg), loggerFactory)
     {
         _unit = unitService.Units[FrequencyBase.Id];
