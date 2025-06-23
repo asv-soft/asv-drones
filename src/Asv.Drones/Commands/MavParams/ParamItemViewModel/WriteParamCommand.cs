@@ -6,7 +6,7 @@ using Material.Icons;
 namespace Asv.Drones;
 
 [ExportCommand]
-public class WriteParamCommand : ContextCommand<ParamItemViewModel, ActionArg>
+public class WriteParamCommand : ContextCommand<ParamItemViewModel>
 {
     public const string Id = $"{BaseId}.params.item.write";
 
@@ -22,9 +22,9 @@ public class WriteParamCommand : ContextCommand<ParamItemViewModel, ActionArg>
 
     public override ICommandInfo Info => StaticInfo;
 
-    public override async ValueTask<ActionArg?> InternalExecute(
+    protected override async ValueTask<CommandArg?> InternalExecute(
         ParamItemViewModel context,
-        ActionArg arg,
+        CommandArg newValue,
         CancellationToken cancel
     )
     {

@@ -15,8 +15,8 @@
     </Design.DataContext>
     <Panel>
         <geoMap:MapItemsControl CenterMap="{geoMap:GeoPoint 53, 53}" SelectionMode="Multiple" 
-                             ItemsSource="{Binding AnchorsView}" 
-                             SelectedItem="{Binding SelectedAnchor.Value}">
+                                ItemsSource="{Binding AnchorsView}" 
+                                SelectedItem="{Binding SelectedAnchor.Value}">
             <geoMap:MapItemsControl.AnnotationTemplate>
                 <DataTemplate>
                     <Border BorderThickness="1" BorderBrush="White" x:Name="PART_Annotation" IsVisible="{Binding !!Title.Length}" Padding="3" CornerRadius="3" Background="#4a148c" >
