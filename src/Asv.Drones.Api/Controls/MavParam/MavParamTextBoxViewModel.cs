@@ -16,23 +16,29 @@ public class MavParamTextBoxViewModel : MavParamViewModel
 
     public MavParamTextBoxViewModel()
         : this(
-            new MavParamTypeMetadata(
-                "A" + NavigationId.GenerateRandomAsString(15).Replace('.', '_').Replace('-', '_'),
-                MavParamType.MavParamTypeInt32
-            )
-            {
-                Units = "MHz",
-                RebootRequired = false,
-                Volatile = false,
-                MinValue = new MavParamValue(-100),
-                ShortDesc = "Test param",
-                LongDesc = "Long description for test param",
-                Group = "System",
-                Category = "System",
-                MaxValue = new MavParamValue(100),
-                DefaultValue = new MavParamValue(50),
-                Increment = new MavParamValue(1),
-            },
+            new MavParamInfo(
+                new MavParamTypeMetadata(
+                    "A"
+                        + NavigationId
+                            .GenerateRandomAsString(15)
+                            .Replace('.', '_')
+                            .Replace('-', '_'),
+                    MavParamType.MavParamTypeInt32
+                )
+                {
+                    Units = "MHz",
+                    RebootRequired = false,
+                    Volatile = false,
+                    MinValue = new MavParamValue(-100),
+                    ShortDesc = "Test param",
+                    LongDesc = "Long description for test param",
+                    Group = "System",
+                    Category = "System",
+                    MaxValue = new MavParamValue(100),
+                    DefaultValue = new MavParamValue(50),
+                    Increment = new MavParamValue(1),
+                }
+            ),
             new Subject<MavParamValue>(),
             (_, _) => ValueTask.FromResult(new MavParamValue(100)),
             DesignTime.LoggerFactory
@@ -65,28 +71,10 @@ public class MavParamTextBoxViewModel : MavParamViewModel
     }
 
     public MavParamTextBoxViewModel(
-        IMavParamTypeMetadata param,
-        IParamsClientEx svc,
-        ILoggerFactory loggerFactory,
-        string? formatString = null
-    )
-        : this(
-            param,
-            svc.Filter(param.Name),
-            (name, cancel) => // TODO: replace this 'svc.GetFromCacheOrReadOnce' when mavlink after 4.0.1
-                svc.Items.TryGetValue(name, out var item)
-                    ? new ValueTask<MavParamValue>(item.Value.Value)
-                    : new ValueTask<MavParamValue>(svc.ReadOnce(name, cancel)),
-            loggerFactory,
-            formatString
-        ) { }
-
-    public MavParamTextBoxViewModel(
-        IMavParamTypeMetadata param,
+        MavParamInfo param,
         Observable<MavParamValue> update,
         InitialReadParamDelegate initReadCallback,
-        ILoggerFactory loggerFactory,
-        string? formatString = null
+        ILoggerFactory loggerFactory
     )
         : base(param, update, initReadCallback, loggerFactory)
     {
@@ -94,7 +82,7 @@ public class MavParamTextBoxViewModel : MavParamViewModel
 
         Value
             .Where(_ => _internalChange == false)
-            .Subscribe(x => _textValue.Value = ConvertToString(x, formatString) ?? string.Empty)
+            .Subscribe(x => _textValue.Value = Info.Print(x) ?? string.Empty)
             .DisposeItWith(Disposable);
 
         // we don't subscribe to value changes here, because we set Value at Validator
@@ -112,99 +100,11 @@ public class MavParamTextBoxViewModel : MavParamViewModel
 
     private Exception? Validator(string valueAsString)
     {
-        if (string.IsNullOrWhiteSpace(valueAsString))
+        var err = Info.ValidateString(valueAsString, out var value);
+        if (err != null)
         {
-            return new Exception("Value is empty");
+            return err;
         }
-        valueAsString = valueAsString.Replace(',', '.').Trim(' ').Replace(" ", string.Empty);
-        if (valueAsString.Length == 0)
-        {
-            return new Exception("Value is empty");
-        }
-        var lastChar = valueAsString[^1];
-        int multiply;
-        switch (lastChar)
-        {
-            case 'M'
-            or 'm'
-            or 'М'
-            or 'м':
-                multiply = 1_000_000;
-                valueAsString = valueAsString[..^1];
-                break;
-            case 'K'
-            or 'k'
-            or 'К'
-            or 'к':
-                multiply = 1_000;
-                valueAsString = valueAsString[..^1];
-                break;
-            case 'G'
-            or 'g'
-            or 'Г'
-            or 'г':
-                multiply = 1_000_000_000;
-                valueAsString = valueAsString[..^1];
-                break;
-            default:
-                multiply = 1;
-                break;
-        }
-
-        if (
-            double.TryParse(
-                valueAsString,
-                NumberStyles.Any,
-                CultureInfo.InvariantCulture,
-                out var doubleValue
-            )
-        )
-        {
-            doubleValue *= multiply;
-        }
-        else
-        {
-            return new Exception("Value must be a number with optional suffix (K, M, G)");
-        }
-
-        ValueType value;
-        switch (Metadata.Type)
-        {
-            case MavParamType.MavParamTypeUint8:
-                value = (byte)doubleValue;
-                break;
-            case MavParamType.MavParamTypeInt8:
-                value = (sbyte)doubleValue;
-                break;
-            case MavParamType.MavParamTypeUint16:
-                value = (ushort)doubleValue;
-                break;
-
-            case MavParamType.MavParamTypeInt16:
-                value = (short)doubleValue;
-                break;
-
-            case MavParamType.MavParamTypeUint32:
-                value = (uint)doubleValue;
-                break;
-            case MavParamType.MavParamTypeInt32:
-                value = (int)doubleValue;
-                break;
-            case MavParamType.MavParamTypeReal32:
-                value = (float)doubleValue;
-                break;
-            case MavParamType.MavParamTypeReal64:
-            case MavParamType.MavParamTypeUint64:
-            case MavParamType.MavParamTypeInt64:
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-
-        if (IsValid(value) == false)
-        {
-            return new Exception(GetError(value));
-        }
-
         _internalChange = true;
         Value.Value = value;
         _internalChange = false;

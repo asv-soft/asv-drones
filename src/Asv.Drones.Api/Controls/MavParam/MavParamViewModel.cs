@@ -1,9 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Globalization;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Mavlink;
 using Asv.Mavlink.Common;
+using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
 using ZLogger;
@@ -15,51 +17,52 @@ public delegate ValueTask<MavParamValue> InitialReadParamDelegate(
     CancellationToken cancel
 );
 
-public class MavParamViewModel : RoutableViewModel, ISupportRefresh, ISupportCancel
+public class MavParamViewModel
+    : RoutableViewModel,
+        ISupportRefresh,
+        ISupportCancel,
+        IComparable<MavParamViewModel>,
+        IComparable
 {
-    public IMavParamTypeMetadata Metadata { get; }
-
     protected MavParamViewModel(
-        IMavParamTypeMetadata metadata,
+        MavParamInfo metadata,
         Observable<MavParamValue> update,
         InitialReadParamDelegate initReadCallback,
         ILoggerFactory loggerFactory
     )
-        : base(metadata.Name, loggerFactory)
+        : base(metadata.Id, loggerFactory)
     {
-        Metadata = metadata;
+        Info = metadata;
 
         update
             .ObserveOnCurrentSynchronizationContext()
             .Subscribe(InternalOnRemoteChanged)
             .DisposeItWith(Disposable);
 
-        Value = new BindableReactiveProperty<ValueType>(
-            InternalConvert(metadata.DefaultValue)
-        ).DisposeItWith(Disposable);
+        Value = new BindableReactiveProperty<ValueType>(metadata.DefaultValue).DisposeItWith(
+            Disposable
+        );
         Value
             .Where(_ => IsRemoteChange == false)
             .Subscribe(_ => IsSync = false)
             .DisposeItWith(Disposable);
-
-        Max = InternalConvert(metadata.MaxValue);
-        Min = InternalConvert(metadata.MinValue);
-        Increment = InternalConvert(metadata.Increment);
         Init(initReadCallback);
     }
+
+    public MavParamInfo Info { get; }
 
     private async void Init(InitialReadParamDelegate callback)
     {
         try
         {
-            var value = await callback(Metadata.Name, DisposeCancel);
+            var value = await callback(Info.Metadata.Name, DisposeCancel);
             InternalOnRemoteChanged(value);
         }
         catch (Exception e)
         {
             Logger.ZLogError(
                 e,
-                $"Failed to read initial value for param {Metadata.Name}:{e.Message}"
+                $"Failed to read initial value for param {Info.Metadata.Name}:{e.Message}"
             );
             IsNetworkError = true;
             NetworkErrorMessage = e.Message;
@@ -73,229 +76,15 @@ public class MavParamViewModel : RoutableViewModel, ISupportRefresh, ISupportCan
             return;
         }
         IsRemoteChange = true;
-        Value.OnNext(InternalConvert(value));
+        Value.OnNext(Info.Convert(value));
         IsSync = true;
         IsNetworkError = false;
         IsRemoteChange = false;
     }
 
-    private MavParamValue InternalConvert(ValueType value)
-    {
-        return Metadata.Type switch
-        {
-            MavParamType.MavParamTypeUint8 => new MavParamValue(Convert.ToByte(value)),
-            MavParamType.MavParamTypeInt8 => new MavParamValue(Convert.ToSByte(value)),
-            MavParamType.MavParamTypeUint16 => new MavParamValue(Convert.ToUInt16(value)),
-            MavParamType.MavParamTypeInt16 => new MavParamValue(Convert.ToInt16(value)),
-            MavParamType.MavParamTypeUint32 => new MavParamValue(Convert.ToUInt32(value)),
-            MavParamType.MavParamTypeInt32 => new MavParamValue(Convert.ToInt32(value)),
-            MavParamType.MavParamTypeReal32 => new MavParamValue(Convert.ToSingle(value)),
-            _ => throw new ArgumentOutOfRangeException(),
-        };
-    }
-
-    private ValueType InternalConvert(MavParamValue value)
-    {
-        Debug.Assert(
-            value.Type == Metadata.Type,
-            $"Value type {value.Type} does not match metadata type {Metadata.Type} for param {Metadata.Name}"
-        );
-        switch (Metadata.Type)
-        {
-            case MavParamType.MavParamTypeUint8:
-                return (byte)value;
-            case MavParamType.MavParamTypeInt8:
-                return (sbyte)value;
-            case MavParamType.MavParamTypeUint16:
-                return (ushort)value;
-            case MavParamType.MavParamTypeInt16:
-                return (short)value;
-            case MavParamType.MavParamTypeUint32:
-                return (uint)value;
-            case MavParamType.MavParamTypeInt32:
-                return (int)value;
-            case MavParamType.MavParamTypeReal32:
-                return (float)value;
-            case MavParamType.MavParamTypeUint64:
-            case MavParamType.MavParamTypeInt64:
-            case MavParamType.MavParamTypeReal64:
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-    }
-
-    protected string? GetError(ValueType? value)
-    {
-        if (value == null)
-        {
-            return "Value is required";
-        }
-        switch (Metadata.Type)
-        {
-            case MavParamType.MavParamTypeUint8:
-                var byteVal = Convert.ToByte(value);
-                if (byteVal > Convert.ToByte(Max) || byteVal < Convert.ToByte(Min))
-                {
-                    return $"Value must be in range {Min}..{Max}";
-                }
-                break;
-            case MavParamType.MavParamTypeInt8:
-                var sbyteVal = Convert.ToSByte(value);
-                if (sbyteVal > Convert.ToSByte(Max) || sbyteVal < Convert.ToSByte(Min))
-                {
-                    return $"Value must be in range {Min}..{Max}";
-                }
-                break;
-            case MavParamType.MavParamTypeUint16:
-                var ushortVal = Convert.ToUInt16(value);
-                if (ushortVal > Convert.ToUInt16(Max) || ushortVal < Convert.ToUInt16(Min))
-                {
-                    return $"Value must be in range {Min}..{Max}";
-                }
-                break;
-            case MavParamType.MavParamTypeInt16:
-                var shortVal = Convert.ToInt16(value);
-                if (shortVal > Convert.ToInt16(Max) || shortVal < Convert.ToInt16(Min))
-                {
-                    return $"Value must be in range {Min}..{Max}";
-                }
-                break;
-            case MavParamType.MavParamTypeUint32:
-                var uintVal = Convert.ToUInt32(value);
-                if (uintVal > Convert.ToUInt32(Max) || uintVal < Convert.ToUInt32(Min))
-                {
-                    return $"Value must be in range {Min}..{Max}";
-                }
-                break;
-            case MavParamType.MavParamTypeInt32:
-                var intVal = Convert.ToInt32(value);
-                if (intVal > Convert.ToInt32(Max) || intVal < Convert.ToInt32(Min))
-                {
-                    return $"Value must be in range {Min}..{Max}";
-                }
-                break;
-            case MavParamType.MavParamTypeReal32:
-                var floatVal = Convert.ToSingle(value);
-                if (floatVal > Convert.ToSingle(Max) || floatVal < Convert.ToSingle(Min))
-                {
-                    return $"Value must be in range {Min}..{Max}";
-                }
-                break;
-            case MavParamType.MavParamTypeUint64:
-            case MavParamType.MavParamTypeInt64:
-            case MavParamType.MavParamTypeReal64:
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-
-        return null;
-    }
-
-    protected bool IsValid(ValueType? value)
-    {
-        if (value == null)
-        {
-            return false;
-        }
-        switch (Metadata.Type)
-        {
-            case MavParamType.MavParamTypeUint8:
-                var byteVal = Convert.ToByte(value);
-                if (byteVal > Convert.ToByte(Max) || byteVal < Convert.ToByte(Min))
-                {
-                    return false;
-                }
-                break;
-            case MavParamType.MavParamTypeInt8:
-                var sbyteVal = Convert.ToSByte(value);
-                if (sbyteVal > Convert.ToSByte(Max) || sbyteVal < Convert.ToSByte(Min))
-                {
-                    return false;
-                }
-                break;
-            case MavParamType.MavParamTypeUint16:
-                var ushortVal = Convert.ToUInt16(value);
-                if (ushortVal > Convert.ToUInt16(Max) || ushortVal < Convert.ToUInt16(Min))
-                {
-                    return false;
-                }
-                break;
-            case MavParamType.MavParamTypeInt16:
-                var shortVal = Convert.ToInt16(value);
-                if (shortVal > Convert.ToInt16(Max) || shortVal < Convert.ToInt16(Min))
-                {
-                    return false;
-                }
-                break;
-            case MavParamType.MavParamTypeUint32:
-                var uintVal = Convert.ToUInt32(value);
-                if (uintVal > Convert.ToUInt32(Max) || uintVal < Convert.ToUInt32(Min))
-                {
-                    return false;
-                }
-                break;
-            case MavParamType.MavParamTypeInt32:
-                var intVal = Convert.ToInt32(value);
-                if (intVal > Convert.ToInt32(Max) || intVal < Convert.ToInt32(Min))
-                {
-                    return false;
-                }
-                break;
-            case MavParamType.MavParamTypeReal32:
-                var floatVal = Convert.ToSingle(value);
-                if (floatVal > Convert.ToSingle(Max) || floatVal < Convert.ToSingle(Min))
-                {
-                    return false;
-                }
-                break;
-            case MavParamType.MavParamTypeUint64:
-            case MavParamType.MavParamTypeInt64:
-            case MavParamType.MavParamTypeReal64:
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-        return true;
-    }
-
-    protected string? ConvertToString(ValueType? value, string? formatString)
-    {
-        if (value == null)
-        {
-            return null;
-        }
-
-        if (formatString == null)
-        {
-            return value.ToString();
-        }
-
-        switch (Metadata.Type)
-        {
-            case MavParamType.MavParamTypeUint8:
-                return ((byte)value).ToString(formatString, CultureInfo.InvariantCulture);
-            case MavParamType.MavParamTypeInt8:
-                return ((sbyte)value).ToString(formatString, CultureInfo.InvariantCulture);
-            case MavParamType.MavParamTypeUint16:
-                return ((ushort)value).ToString(formatString, CultureInfo.InvariantCulture);
-            case MavParamType.MavParamTypeInt16:
-                return ((short)value).ToString(formatString, CultureInfo.InvariantCulture);
-            case MavParamType.MavParamTypeUint32:
-                return ((uint)value).ToString(formatString, CultureInfo.InvariantCulture);
-            case MavParamType.MavParamTypeInt32:
-                return ((int)value).ToString(formatString, CultureInfo.InvariantCulture);
-            case MavParamType.MavParamTypeReal32:
-                return ((float)value).ToString(formatString, CultureInfo.InvariantCulture);
-            case MavParamType.MavParamTypeUint64:
-            case MavParamType.MavParamTypeInt64:
-            case MavParamType.MavParamTypeReal64:
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-    }
-
     public void ResetToDefault()
     {
-        Value.Value = InternalConvert(Metadata.DefaultValue);
+        Value.Value = Info.DefaultValue;
         Write();
     }
 
@@ -307,7 +96,7 @@ public class MavParamViewModel : RoutableViewModel, ISupportRefresh, ISupportCan
             IsNetworkError = false;
             NetworkErrorMessage = null;
             IsInEditMode = false;
-            await Api.Commands.Mavlink.ReadParam(this, Metadata.Name);
+            await Api.Commands.Mavlink.ReadParam(this, Info.Metadata.Name);
         }
         catch (Exception e)
         {
@@ -332,11 +121,7 @@ public class MavParamViewModel : RoutableViewModel, ISupportRefresh, ISupportCan
             NetworkErrorMessage = null;
             IsNetworkError = false;
             IsBusy = true;
-            await Api.Commands.Mavlink.WriteParam(
-                this,
-                Metadata.Name,
-                InternalConvert(Value.Value)
-            );
+            await Commands.Mavlink.WriteParam(this, Info.Metadata.Name, Info.Convert(Value.Value));
         }
         catch (Exception e)
         {
@@ -378,7 +163,7 @@ public class MavParamViewModel : RoutableViewModel, ISupportRefresh, ISupportCan
     {
         get;
         set => SetField(ref field, value);
-    }
+    } = true;
 
     public BindableReactiveProperty<ValueType> Value { get; }
 
@@ -389,24 +174,6 @@ public class MavParamViewModel : RoutableViewModel, ISupportRefresh, ISupportCan
     }
 
     public bool IsInEditMode
-    {
-        get;
-        set => SetField(ref field, value);
-    }
-
-    public ValueType Max
-    {
-        get;
-        set => SetField(ref field, value);
-    }
-
-    public ValueType Min
-    {
-        get;
-        set => SetField(ref field, value);
-    }
-
-    public ValueType Increment
     {
         get;
         set => SetField(ref field, value);
@@ -424,4 +191,56 @@ public class MavParamViewModel : RoutableViewModel, ISupportRefresh, ISupportCan
     }
 
     public void Cancel() { }
+
+    public int CompareTo(MavParamViewModel? other)
+    {
+        if (ReferenceEquals(this, other))
+        {
+            return 0;
+        }
+
+        if (other is null)
+        {
+            return 1;
+        }
+
+        return Info.Order.CompareTo(other.Info.Order);
+    }
+
+    public int CompareTo(object? obj)
+    {
+        if (obj is null)
+        {
+            return 1;
+        }
+
+        if (ReferenceEquals(this, obj))
+        {
+            return 0;
+        }
+
+        return obj is MavParamViewModel other
+            ? CompareTo(other)
+            : throw new ArgumentException($"Object must be of type {nameof(MavParamViewModel)}");
+    }
+
+    public static bool operator <(MavParamViewModel? left, MavParamViewModel? right)
+    {
+        return Comparer<MavParamViewModel>.Default.Compare(left, right) < 0;
+    }
+
+    public static bool operator >(MavParamViewModel? left, MavParamViewModel? right)
+    {
+        return Comparer<MavParamViewModel>.Default.Compare(left, right) > 0;
+    }
+
+    public static bool operator <=(MavParamViewModel? left, MavParamViewModel? right)
+    {
+        return Comparer<MavParamViewModel>.Default.Compare(left, right) <= 0;
+    }
+
+    public static bool operator >=(MavParamViewModel? left, MavParamViewModel? right)
+    {
+        return Comparer<MavParamViewModel>.Default.Compare(left, right) >= 0;
+    }
 }

@@ -1,0 +1,39 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:api="clr-namespace:Asv.Drones.Api"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="300"
+             x:Class="Asv.Drones.Api.MavParamButtonView"
+             x:DataType="api:MavParamButtonViewModel">
+    <Design.DataContext>
+        <api:MavParamButtonViewModel/>
+    </Design.DataContext>
+    <Button Padding="0"
+            Height="30"
+            HorizontalContentAlignment="Stretch"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            IsEnabled="{Binding !IsBusy}"
+            Command="{Binding InternalWrite}">
+        <ToolTip.Tip>
+            <StackPanel Spacing="8">
+                <TextBlock Classes="h1" Text="{Binding Info.Title}"/>
+                <TextBlock Classes="description" Text="{Binding Info.Description}"/>
+            </StackPanel>
+        </ToolTip.Tip>
+        <Panel HorizontalAlignment="Stretch">
+            <ProgressBar IsVisible="{Binding IsBusy}" VerticalAlignment="Stretch" IsIndeterminate="True"/>
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Spacing="4">
+                <avalonia:MaterialIcon
+                    IsVisible="{Binding Info.Icon, Converter={x:Static ObjectConverters.IsNotNull}}"
+                    Margin="8,0"
+                    Width="25" Height="25" 
+                    Kind="{Binding Info.Icon}" 
+                    Foreground="{StaticResource SystemAccentColor}"/>
+                <TextBlock VerticalAlignment="Center" Text="{Binding Info.Title}"/>
+            </StackPanel>
+        </Panel>
+    </Button>
+</UserControl>

@@ -77,8 +77,8 @@
             </TextBox.KeyBindings>
             <ToolTip.Tip>
                 <StackPanel Spacing="8">
-                    <TextBlock Classes="h1" Text="{Binding Metadata.ShortDesc}"/>
-                    <TextBlock Classes="description" Text="{Binding Metadata.LongDesc}"/>
+                    <TextBlock Classes="h1" Text="{Binding Info.Title}"/>
+                    <TextBlock Classes="description" Text="{Binding Info.Description}"/>
                 </StackPanel>
             </ToolTip.Tip>
             <TextBox.InnerLeftContent>
@@ -94,7 +94,7 @@
                         HorizontalAlignment="Stretch"
                         Margin="4,0"
                         Width="20" Height="20" 
-                        Foreground="{DynamicResource AsvForegroundInfoBrush}"
+                        Foreground="{DynamicResource AsvForegroundUnknownBrush}"
                         Kind="Sync" 
                     />
                 </Button>
@@ -141,7 +141,7 @@
                         Foreground="{DynamicResource TextFillColorDisabledBrush}"
                         Theme="{DynamicResource BodyTextBlockStyle}"
                         VerticalAlignment="Center" 
-                        Text="{Binding Metadata.Units}" />
+                        Text="{Binding Info.Metadata.Units}" />
                     
                 </StackPanel>
             </TextBox.InnerRightContent>
