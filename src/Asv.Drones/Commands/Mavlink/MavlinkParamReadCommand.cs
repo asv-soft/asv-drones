@@ -21,8 +21,8 @@ public class MavlinkParamReadCommand : MavlinkMicroserviceCommand<IParamsClientE
     public static readonly ICommandInfo StaticInfo = new CommandInfo
     {
         Id = Id,
-        Name = "Read mavlink param",
-        Description = "Read mavlink param from device",
+        Name = RS.ReadParamCommand_CommandInfo_Name,
+        Description = RS.ReadParamCommand_CommandInfo_Description,
         Icon = MaterialIconKind.Set,
         Source = ApiModule.Instance,
         DefaultHotKey = null,

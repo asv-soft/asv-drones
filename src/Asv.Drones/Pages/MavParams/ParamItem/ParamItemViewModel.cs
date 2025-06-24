@@ -7,29 +7,28 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
 using Asv.Common;
+using Asv.Drones.Api;
 using Asv.Mavlink;
 using Asv.Mavlink.Common;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
+using Commands = Asv.Avalonia.Commands;
 
 namespace Asv.Drones;
 
 public class ParamItemViewModelConfig
 {
-    public bool IsStarred { get; set; }
-    public string Name { get; set; }
-    public bool IsPinned { get; set; }
+    public bool IsStarred { get; init; }
+    public string Name { get; init; }
+    public bool IsPinned { get; init; }
 }
 
 public class ParamItemViewModel : RoutableViewModel
 {
     private readonly ParamItem _paramItem;
-    private readonly ReactiveProperty<string?> _value;
     private readonly ReactiveProperty<bool> _isPinned;
     private readonly ReactiveProperty<bool> _isStarred;
-    private readonly ReactiveProperty<bool> _isWriting;
-    private readonly ReactiveProperty<bool> _isUpdate;
     private bool _internalUpdate;
 
     public ParamItemViewModel()
@@ -48,13 +47,12 @@ public class ParamItemViewModel : RoutableViewModel
         NavigationId id,
         ParamItem paramItem,
         ILoggerFactory loggerFactory,
-        ParamsConfig config
+        ParamItemViewModelConfig? config
     )
         : base(id, loggerFactory)
     {
         ArgumentNullException.ThrowIfNull(paramItem);
         ArgumentNullException.ThrowIfNull(loggerFactory);
-        ArgumentNullException.ThrowIfNull(config);
 
         _paramItem = paramItem;
         Name = paramItem.Name;
@@ -63,30 +61,20 @@ public class ParamItemViewModel : RoutableViewModel
         Description = paramItem.Info.Description ?? string.Empty;
         ValueDescription = paramItem.Info.UnitsDisplayName ?? string.Empty;
         IsRebootRequired = paramItem.Info.IsRebootRequired;
-        var fromCfg = config.Params.FirstOrDefault(p => p.Name == Name);
 
-        _isPinned = new ReactiveProperty<bool>();
-        _isStarred = new ReactiveProperty<bool>(fromCfg?.IsStarred ?? false);
-        _value = new ReactiveProperty<string?>();
+        _isPinned = new ReactiveProperty<bool>(config?.IsPinned ?? false);
+        _isStarred = new ReactiveProperty<bool>(config?.IsStarred ?? false);
 
-        _isUpdate = new BindableReactiveProperty<bool>();
-        _isWriting = new BindableReactiveProperty<bool>();
-        IsPinned = new HistoricalBoolProperty($"{id}.{nameof(IsPinned)}", _isPinned, loggerFactory)
+        IsPinned = new HistoricalBoolProperty(nameof(IsPinned), _isPinned, loggerFactory)
         {
             Parent = this,
         };
-        IsStarred = new HistoricalBoolProperty(
-            $"{id}.{nameof(IsStarred)}",
-            _isStarred,
-            loggerFactory
-        )
+        IsStarred = new HistoricalBoolProperty(nameof(IsStarred), _isStarred, loggerFactory)
         {
             Parent = this,
         };
-        Value = new HistoricalStringProperty($"{id}.{nameof(Value)}", _value, loggerFactory)
-        {
-            Parent = this,
-        };
+
+        Value = new BindableReactiveProperty<string?>();
         IsSynced = new BindableReactiveProperty<bool>();
         StarKind = new BindableReactiveProperty<MaterialIconKind>();
 
@@ -101,7 +89,7 @@ public class ParamItemViewModel : RoutableViewModel
                 return;
             }
 
-            Value.ModelValue.Value = param.Type switch
+            Value.Value = param.Type switch
             {
                 MavParamType.MavParamTypeUint8 => ((byte)param).ToString(),
                 MavParamType.MavParamTypeInt8 => ((sbyte)param).ToString(),
@@ -118,13 +106,18 @@ public class ParamItemViewModel : RoutableViewModel
                 MavParamType.MavParamTypeReal64 => ((double)param).ToString(
                     CultureInfo.InvariantCulture
                 ),
-                _ => Value.ViewValue.Value,
+                _ => Value.Value,
             };
         });
 
-        _sub2 = Value.ViewValue.Subscribe(val =>
+        _sub2 = Value.Subscribe(val =>
         {
             _internalUpdate = true;
+            if (string.IsNullOrWhiteSpace(val))
+            {
+                paramItem.Value.OnNext(0);
+            }
+
             switch (paramItem.Type)
             {
                 case MavParamType.MavParamTypeUint8:
@@ -231,40 +224,69 @@ public class ParamItemViewModel : RoutableViewModel
             _internalUpdate = false;
         });
 
-        Write = new BindableAsyncCommand(WriteParamCommand.Id, this);
+        Write = new ReactiveCommand(
+            async (_, ct) =>
+            {
+                try
+                {
+                    await Api.Commands.Mavlink.WriteParam(
+                        this,
+                        paramItem.Name,
+                        paramItem.Value.Value,
+                        ct
+                    );
+                    IsSynced.Value = true;
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ex, "Write {Name} error", Name);
+                }
+            }
+        ).DisposeItWith(Disposable);
 
-        Update = new BindableAsyncCommand(UpdateParamCommand.Id, this);
+        Read = new ReactiveCommand(
+            async (_, ct) =>
+            {
+                try
+                {
+                    await Api.Commands.Mavlink.ReadParam(this, paramItem.Name, ct);
+                    IsSynced.Value = true;
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ex, "Read {Name} error", Name);
+                }
+            }
+        ).DisposeItWith(Disposable);
 
         _sub3 = IsStarred.ViewValue.Subscribe(isStarted =>
             StarKind.Value = isStarted ? MaterialIconKind.Star : MaterialIconKind.StarBorder
         );
 
-        _sub4 = IsStarred.ViewValue.Subscribe(_ =>
-        {
-            var existItem = config.Params.FirstOrDefault(__ => __.Name == Name);
-
-            if (existItem != null)
-            {
-                config.Params.Remove(existItem);
-            }
-
-            config.Params.Add(
-                new ParamItemViewModelConfig
-                {
-                    IsStarred = IsStarred.ViewValue.CurrentValue,
-                    IsPinned = IsPinned.ViewValue.CurrentValue,
-                    Name = Name,
-                }
-            );
-        });
+        IsPinned
+            .ViewValue.SubscribeAwait(
+                async (_, _) => await Rise(new ParamItemChangedEvent(this, IsPinned))
+            )
+            .DisposeItWith(Disposable);
+        IsStarred
+            .ViewValue.SubscribeAwait(
+                async (_, _) => await Rise(new ParamItemChangedEvent(this, IsStarred))
+            )
+            .DisposeItWith(Disposable);
     }
 
     public string Name { get; }
 
-    public string DisplayName { get; init; }
+    private readonly string _displayName;
+    public string DisplayName
+    {
+        get => _displayName;
+        init => SetField(ref _displayName, value);
+    }
+
     public string Units { get; }
-    public ICommand Update { get; }
-    public ICommand Write { get; }
+    public ICommand Read { get; }
+    public ReactiveCommand Write { get; }
     public ReactiveCommand PinItem { get; }
     public string ValueDescription { get; }
     public string Description { get; }
@@ -272,7 +294,7 @@ public class ParamItemViewModel : RoutableViewModel
     public BindableReactiveProperty<bool> IsSynced { get; }
     public BindableReactiveProperty<MaterialIconKind> StarKind { get; }
     public HistoricalBoolProperty IsPinned { get; }
-    public HistoricalStringProperty Value { get; }
+    public BindableReactiveProperty<string?> Value { get; }
     public HistoricalBoolProperty IsStarred { get; }
 
     public bool Filter(string searchText, bool starredOnly)
@@ -309,50 +331,10 @@ public class ParamItemViewModel : RoutableViewModel
         IsPinned.ViewValue.Value = item.IsPinned;
     }
 
-    internal async ValueTask UpdateImpl(CancellationToken cancel)
-    {
-        try
-        {
-            _isUpdate.Value = true;
-            await _paramItem.Read(cancel);
-        }
-        catch (Exception ex)
-        {
-            Logger.LogError(ex, "Read {Name} error", Name);
-        }
-        finally
-        {
-            _isUpdate.Value = false;
-        }
-    }
-
-    internal async ValueTask WriteImpl(CancellationToken cancel)
-    {
-        try
-        {
-            _isWriting.Value = true;
-            await _paramItem.Write(cancel);
-        }
-        catch (Exception ex)
-        {
-            Logger.LogError(ex, "Write {Name} error", Name);
-        }
-        finally
-        {
-            _isWriting.Value = false;
-        }
-    }
-
-    internal async Task WriteParamData(CancellationToken cancel)
-    {
-        await _paramItem.Write(cancel);
-    }
-
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
         yield return IsPinned;
         yield return IsStarred;
-        yield return Value;
     }
 
     #region Dispose
@@ -361,7 +343,6 @@ public class ParamItemViewModel : RoutableViewModel
     private readonly IDisposable _sub1;
     private readonly IDisposable _sub2;
     private readonly IDisposable _sub3;
-    private readonly IDisposable _sub4;
 
     protected override void Dispose(bool disposing)
     {
@@ -371,11 +352,8 @@ public class ParamItemViewModel : RoutableViewModel
             _sub1.Dispose();
             _sub2.Dispose();
             _sub3.Dispose();
-            _sub4.Dispose();
             _isPinned.Dispose();
             _isStarred.Dispose();
-            _isWriting.Dispose();
-            _isUpdate.Dispose();
             IsSynced.Dispose();
             IsStarred.Dispose();
             IsPinned.Dispose();

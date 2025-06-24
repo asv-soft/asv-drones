@@ -41,14 +41,14 @@
                            HorizontalAlignment="Center" />
             </DockPanel>
             <TextBlock Text="{CompiledBinding DisplayName, Mode=OneTime}" TextWrapping="Wrap" Margin="10 5" />
-            <TextBox Margin="10 5" Text="{CompiledBinding Value.ViewValue.Value, UpdateSourceTrigger=LostFocus}">
+            <TextBox Margin="10 5" Text="{CompiledBinding Value.Value}">
                 <TextBox.InnerRightContent>
                     <TextBlock Text="{CompiledBinding Units, Mode=OneTime}" Margin="10 0" VerticalAlignment="Center" />
                 </TextBox.InnerRightContent>
             </TextBox>
             <Grid Margin="10 5" ColumnDefinitions="*, 5, *">
                 <Button ToolTip.Tip="{x:Static drones:RS.ParametersEditorParameterView_UpdateButton_ToolTip}"
-                        Command="{CompiledBinding Update}"
+                        Command="{CompiledBinding Read}"
                         HorizontalAlignment="Stretch"
                         Grid.Column="0"
                         Content="{x:Static drones:RS.ParametersEditorParameterView_UpdateButton}" />
