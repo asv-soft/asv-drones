@@ -278,10 +278,10 @@
     <data name="UpdateParamsCommand_CommandInfo_Description" xml:space="preserve">
         <value>Команда обновляет параметры с устройства мавлинк</value>
     </data>
-    <data name="UpdateParamCommand_CommandInfo_Name" xml:space="preserve">
+    <data name="ReadParamCommand_CommandInfo_Name" xml:space="preserve">
         <value>Обновить параметр</value>
     </data>
-    <data name="UpdateParamCommand_CommandInfo_Description" xml:space="preserve">
+    <data name="ReadParamCommand_CommandInfo_Description" xml:space="preserve">
         <value>Команда обновляет один параметр с устройства мавлинк</value>
     </data>
     <data name="OpenMavParamsCommand_CommandInfo_Name" xml:space="preserve">

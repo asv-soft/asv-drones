@@ -290,10 +290,10 @@
     <data name="UpdateParamsCommand_CommandInfo_Description" xml:space="preserve">
         <value>Command that refreshes params from the mavlink device</value>
     </data>
-    <data name="UpdateParamCommand_CommandInfo_Name" xml:space="preserve">
+    <data name="ReadParamCommand_CommandInfo_Name" xml:space="preserve">
         <value>Update param</value>
     </data>
-    <data name="UpdateParamCommand_CommandInfo_Description" xml:space="preserve">
+    <data name="ReadParamCommand_CommandInfo_Description" xml:space="preserve">
         <value>Command that updates param from the mavlink device</value>
     </data>
     <data name="OpenMavParamsCommand_CommandInfo_Name" xml:space="preserve">
