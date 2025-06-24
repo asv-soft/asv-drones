@@ -65,4 +65,23 @@
       <None Remove="Asv.Drones.Api.csproj.DotSettings" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Controls\MavParam\ComboBox\MavParamComboBoxView.axaml.cs">
+        <DependentUpon>MavParamComboBoxView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Controls\MavParam\Button\MavParamButtonView.axaml.cs">
+        <DependentUpon>MavParamButtonView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Controls\MavParam\TextBox\MavParamTextBoxView.axaml.cs">
+        <DependentUpon>MavParamTextBoxView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Controls\MavParam\ToggleSwitch\MavParamToggleSwitchView.axaml" />
+    </ItemGroup>
+
 </Project>

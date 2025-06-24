@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 using Asv.Avalonia;
 using Asv.Mavlink;
 using Asv.Mavlink.Common;
-using Avalonia.Media;
 using Material.Icons;
 
 namespace Asv.Drones.Api;
@@ -15,6 +14,9 @@ public enum MavParamWidgetType
     TextBox,
     ComboBox,
     Button,
+    Latitude,
+    Longitude,
+    Altitude,
 }
 
 public partial class MavParamInfo
@@ -154,7 +156,6 @@ public partial class MavParamInfo
     }
 
     #endregion
-
 
     public string Description => _description;
 

@@ -1,0 +1,40 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:api="clr-namespace:Asv.Drones.Api"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="300"
+             x:Class="Asv.Drones.Api.MavParamComboBoxView"
+             x:DataType="api:MavParamComboBoxViewModel">
+    <Design.DataContext>
+        <api:MavParamComboBoxViewModel/>
+    </Design.DataContext>
+    <Panel VerticalAlignment="Top" HorizontalAlignment="Stretch">
+        <ComboBox HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                  ItemsSource="{Binding Items}"
+                  IsEnabled="{Binding !IsBusy}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel IsVisible="{Binding Converter={x:Static ObjectConverters.IsNotNull}}" Margin="10,0,0,0" Orientation="Horizontal" Spacing="8">
+                        <avalonia:MaterialIcon 
+                            Foreground="{StaticResource SystemAccentColor}"
+                            IsVisible="{Binding Icon, Converter={x:Static ObjectConverters.IsNotNull}}" 
+                            Kind="{Binding Icon}"/>
+                        <TextBlock VerticalAlignment="Center" Text="{Binding Title}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+            <ToolTip.Tip>
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="h1" Text="{Binding Info.Title}"/>
+                    <TextBlock Classes="description" Text="{Binding Info.Description}"/>
+                </StackPanel>
+            </ToolTip.Tip>
+        </ComboBox>
+        <Ellipse Opacity="0" Margin="10,0,0,0" Classes.fadeout="{Binding !IsRemoteChange}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="5" Height="5" Fill="{DynamicResource AsvForegroundInfo3Brush}"/>
+        <ProgressBar Opacity="0.5" IsVisible="{Binding IsBusy}" VerticalAlignment="Stretch" IsIndeterminate="True"/>
+        <avalonia:MaterialIcon ToolTip.Tip="{Binding NetworkErrorMessage}" IsVisible="{Binding IsNetworkError}" Classes="blink" HorizontalAlignment="Left" Kind="CloseNetwork" Foreground="{DynamicResource AsvForegroundErrorBrush}"  Margin="4,0,0,0" Width="18" Height="18"/>
+    </Panel>
+</UserControl>

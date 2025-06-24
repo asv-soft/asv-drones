@@ -26,7 +26,7 @@ public class MavParamButtonViewModel : MavParamViewModel
                     Volatile = false,
                     MinValue = new MavParamValue(-100),
                     ShortDesc = "Test param",
-                    LongDesc = "Long description for test param",
+                    LongDesc = "Long description for test param [icon=power]",
                     Group = "System",
                     Category = "System",
                     MaxValue = new MavParamValue(100),

@@ -36,8 +36,14 @@ public class MavParamComboBoxViewModel : MavParamViewModel
                     Increment = new MavParamValue(1),
                     Values =
                     [
-                        new ValueTuple<MavParamValue, string>((byte)1, "TX1"),
-                        new ValueTuple<MavParamValue, string>((byte)2, "TX2"),
+                        new ValueTuple<MavParamValue, string>(
+                            1,
+                            "TX1 [icon=numeric-1-box-outline]"
+                        ),
+                        new ValueTuple<MavParamValue, string>(
+                            2,
+                            "TX2 [icon=numeric-2-box-outline]"
+                        ),
                     ],
                 }
             ),

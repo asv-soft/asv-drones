@@ -12,28 +12,65 @@ public static class MavParamFactory
         IMavParamTypeMetadata metadata,
         Observable<MavParamValue> update,
         InitialReadParamDelegate initReadCallback,
-        ILoggerFactory loggerFactory
+        ILoggerFactory loggerFactory,
+        IUnitService measureService
     )
     {
         var info = new MavParamInfo(metadata);
-        switch (info.WidgetType)
+        return info.WidgetType switch
         {
-            case MavParamWidgetType.Button:
-                return new MavParamButtonViewModel(info, update, initReadCallback, loggerFactory);
-            case MavParamWidgetType.ComboBox:
-                return new MavParamComboBoxViewModel(info, update, initReadCallback, loggerFactory);
-            case MavParamWidgetType.TextBox:
-            default:
-                return new MavParamTextBoxViewModel(info, update, initReadCallback, loggerFactory);
-        }
+            MavParamWidgetType.Altitude => new MavParamAltitudeTextBoxViewModel(
+                info,
+                update,
+                initReadCallback,
+                loggerFactory,
+                measureService
+            ),
+            MavParamWidgetType.Latitude => new MavParamLatLonTextBoxViewModel(
+                info,
+                update,
+                initReadCallback,
+                loggerFactory,
+                measureService,
+                true
+            ),
+            MavParamWidgetType.Longitude => new MavParamLatLonTextBoxViewModel(
+                info,
+                update,
+                initReadCallback,
+                loggerFactory,
+                measureService,
+                false
+            ),
+            MavParamWidgetType.Button => new MavParamButtonViewModel(
+                info,
+                update,
+                initReadCallback,
+                loggerFactory
+            ),
+            MavParamWidgetType.ComboBox => new MavParamComboBoxViewModel(
+                info,
+                update,
+                initReadCallback,
+                loggerFactory
+            ),
+            _ => new MavParamTextBoxViewModel(info, update, initReadCallback, loggerFactory),
+        };
     }
 
     public static MavParamViewModel Create(
         IMavParamTypeMetadata param,
         IParamsClientEx svc,
-        ILoggerFactory loggerFactory
+        ILoggerFactory loggerFactory,
+        IUnitService measureService
     )
     {
-        return Create(param, svc.Filter(param.Name), svc.GetFromCacheOrReadOnce, loggerFactory);
+        return Create(
+            param,
+            svc.Filter(param.Name),
+            svc.GetFromCacheOrReadOnce,
+            loggerFactory,
+            measureService
+        );
     }
 }

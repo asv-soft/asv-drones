@@ -10,9 +10,9 @@
     <Design.DataContext>
         <api:MavParamButtonViewModel/>
     </Design.DataContext>
-    <Button Padding="0"
-            Height="30"
-            HorizontalContentAlignment="Stretch"
+    <Button 
+            Padding="20,8,8,8"
+            HorizontalContentAlignment="Left"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Top"
             IsEnabled="{Binding !IsBusy}"
@@ -24,6 +24,8 @@
             </StackPanel>
         </ToolTip.Tip>
         <Panel HorizontalAlignment="Stretch">
+            <avalonia:MaterialIcon ToolTip.Tip="{Binding NetworkErrorMessage}" IsVisible="{Binding IsNetworkError}" Classes="blink" HorizontalAlignment="Left" Kind="CloseNetwork" Foreground="{DynamicResource AsvForegroundErrorBrush}"  Margin="4,0,0,0" Width="18" Height="18"/>
+            <Ellipse Opacity="0" Margin="10,0,0,0" Classes.fadeout="{Binding !IsRemoteChange}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="5" Height="5" Fill="{DynamicResource AsvForegroundInfo3Brush}"/>
             <ProgressBar IsVisible="{Binding IsBusy}" VerticalAlignment="Stretch" IsIndeterminate="True"/>
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Spacing="4">
                 <avalonia:MaterialIcon
@@ -33,6 +35,7 @@
                     Kind="{Binding Info.Icon}" 
                     Foreground="{StaticResource SystemAccentColor}"/>
                 <TextBlock VerticalAlignment="Center" Text="{Binding Info.Title}"/>
+                
             </StackPanel>
         </Panel>
     </Button>

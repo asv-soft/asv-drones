@@ -79,10 +79,10 @@ public class MavParamTextBoxViewModel : MavParamViewModel
         : base(param, update, initReadCallback, loggerFactory)
     {
         _textValue = new BindableReactiveProperty<string>().DisposeItWith(Disposable);
-
+        _internalChange = true;
         Value
             .Where(_ => _internalChange == false)
-            .Subscribe(x => _textValue.Value = Info.Print(x) ?? string.Empty)
+            .Subscribe(x => _textValue.Value = ValueToText(x))
             .DisposeItWith(Disposable);
 
         // we don't subscribe to value changes here, because we set Value at Validator
@@ -96,11 +96,24 @@ public class MavParamTextBoxViewModel : MavParamViewModel
             .DisposeItWith(Disposable);
 
         _textValue.DistinctUntilChanged().Subscribe(_ => IsSync = false).DisposeItWith(Disposable);
+        _internalChange = false;
+    }
+
+    public virtual string? Units => Info.Metadata.Units;
+
+    protected virtual string ValueToText(ValueType remoteValue)
+    {
+        return Info.Print(remoteValue) ?? string.Empty;
+    }
+
+    protected virtual Exception? TextToValue(string valueAsString, out ValueType value)
+    {
+        return Info.ValidateString(valueAsString, out value);
     }
 
     private Exception? Validator(string valueAsString)
     {
-        var err = Info.ValidateString(valueAsString, out var value);
+        var err = TextToValue(valueAsString, out var value);
         if (err != null)
         {
             return err;
@@ -112,9 +125,4 @@ public class MavParamTextBoxViewModel : MavParamViewModel
     }
 
     public IReadOnlyBindableReactiveProperty<string> TextValue => _textValue;
-
-    public override IEnumerable<IRoutable> GetRoutableChildren()
-    {
-        return [];
-    }
 }

@@ -82,26 +82,31 @@
                 </StackPanel>
             </ToolTip.Tip>
             <TextBox.InnerLeftContent>
-                <Button
-                    IsEnabled="{Binding !IsBusy}"
-                    TabIndex="0" IsTabStop="True" 
+                <Panel >
+                    <Ellipse Opacity="0" Margin="10,0,0,0" Classes.fadeout="{Binding !IsRemoteChange}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="5" Height="5" Fill="{DynamicResource AsvForegroundInfo3Brush}"/>
+                    <Button
+                        IsEnabled="{Binding !IsBusy}"
+                        TabIndex="0" IsTabStop="True" 
                         Padding="0"
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Left"
                         Theme="{DynamicResource TransparentButton}" 
                         Command="{Binding Refresh}">
-                    <avalonia1:MaterialIcon
-                        HorizontalAlignment="Stretch"
-                        Margin="4,0"
-                        Width="20" Height="20" 
-                        Foreground="{DynamicResource AsvForegroundUnknownBrush}"
-                        Kind="Sync" 
-                    />
-                </Button>
+                        <avalonia1:MaterialIcon
+                            HorizontalAlignment="Stretch"
+                            Margin="3,0"
+                            Width="20" Height="20" 
+                            Foreground="{DynamicResource AsvForegroundUnknownBrush}"
+                            Kind="Sync" 
+                        />
+                    </Button>
+                </Panel>
+                
+                
                 
             </TextBox.InnerLeftContent>
             <TextBox.InnerRightContent>
-                <StackPanel Orientation="Horizontal" Spacing="4" Margin="0,0,4,0">
+                <StackPanel Orientation="Horizontal" Spacing="4" Margin="0,0,25,0">
                     <Button Padding="0"
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Right"
@@ -116,33 +121,16 @@
                         </Button.IsVisible>
                         <avalonia1:MaterialIcon
                             Width="20" Height="20" 
-                            Kind="ContentSaveEditOutline" 
-                            Foreground="{DynamicResource AsvForegroundInfoBrush}"
+                            Kind="Pencil" 
+                            Foreground="{DynamicResource AsvForegroundSuccessBrush}"
                         />
                     </Button>
-                    <Ellipse Opacity="0" Classes.Updated="{Binding !IsRemoteChange}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="5" Height="5" Fill="{DynamicResource AsvForegroundInfo3Brush}">
-                        <Ellipse.Styles>
-                            <Style Selector="Ellipse.Updated">
-                                <Style.Animations>
-                                    <Animation Duration="0:0:1"> 
-                                        <KeyFrame Cue="0%">
-                                            <Setter Property="Opacity" Value="1.0"/>
-                                        </KeyFrame>
-                                        <KeyFrame Cue="100%">
-                                            <Setter Property="Opacity" Value="0.0"/>
-                                        </KeyFrame>
-                                    </Animation>
-                                </Style.Animations>
-                            </Style>
-                        </Ellipse.Styles>
-                    </Ellipse>
                     <TextBlock
-                        Margin="0,0,20,0"
+                        
                         Foreground="{DynamicResource TextFillColorDisabledBrush}"
                         Theme="{DynamicResource BodyTextBlockStyle}"
                         VerticalAlignment="Center" 
-                        Text="{Binding Info.Metadata.Units}" />
-                    
+                        Text="{Binding Units}" />
                 </StackPanel>
             </TextBox.InnerRightContent>
             
@@ -153,25 +141,7 @@
                      Height="20" Opacity="0.5" VerticalAlignment="Center" HorizontalAlignment="Stretch" 
                      Minimum="0" Maximum="1"
                      IsIndeterminate="True"/>
+        <avalonia1:MaterialIcon HorizontalAlignment="Right" Classes="blink" ToolTip.Tip="{Binding NetworkErrorMessage}" IsVisible="{Binding IsNetworkError}"  Kind="CloseNetwork" Foreground="{DynamicResource AsvForegroundErrorBrush}"  Margin="0,0,4,0" Width="18" Height="18"/>
         
-        <avalonia1:MaterialIcon IsVisible="{Binding IsNetworkError}"  Kind="CloseNetwork" Foreground="{DynamicResource AsvForegroundErrorBrush}" HorizontalAlignment="Right" Margin="0,0,4,0" Width="18" Height="18">
-            <ToolTip.Tip>
-                <TextBlock Text="{Binding NetworkErrorMessage}"></TextBlock>
-            </ToolTip.Tip>
-            <avalonia1:MaterialIcon.Styles>
-                <Style Selector="avalonia1|MaterialIcon">
-                    <Style.Animations>
-                        <Animation Duration="0:0:0.5"> 
-                            <KeyFrame Cue="0%">
-                                <Setter Property="Opacity" Value="0.0"/>
-                            </KeyFrame>
-                            <KeyFrame Cue="100%">
-                                <Setter Property="Opacity" Value="1.0"/>
-                            </KeyFrame>
-                        </Animation>
-                    </Style.Animations>
-                </Style>
-            </avalonia1:MaterialIcon.Styles>
-        </avalonia1:MaterialIcon>
     </Panel>
 </UserControl>
