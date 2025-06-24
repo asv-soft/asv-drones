@@ -11,7 +11,7 @@
         <api:MavParamButtonViewModel/>
     </Design.DataContext>
     <Button 
-            Padding="20,8,8,8"
+            Padding="8,8,8,8"
             HorizontalContentAlignment="Left"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Top"
@@ -27,7 +27,7 @@
             <avalonia:MaterialIcon ToolTip.Tip="{Binding NetworkErrorMessage}" IsVisible="{Binding IsNetworkError}" Classes="blink" HorizontalAlignment="Left" Kind="CloseNetwork" Foreground="{DynamicResource AsvForegroundErrorBrush}"  Margin="4,0,0,0" Width="18" Height="18"/>
             <Ellipse Opacity="0" Margin="10,0,0,0" Classes.fadeout="{Binding !IsRemoteChange}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="5" Height="5" Fill="{DynamicResource AsvForegroundInfo3Brush}"/>
             <ProgressBar IsVisible="{Binding IsBusy}" VerticalAlignment="Stretch" IsIndeterminate="True"/>
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Spacing="4">
+            <StackPanel Margin="20,0,0,0" Orientation="Horizontal" Spacing="4">
                 <avalonia:MaterialIcon
                     IsVisible="{Binding Info.Icon, Converter={x:Static ObjectConverters.IsNotNull}}"
                     Margin="8,0"
