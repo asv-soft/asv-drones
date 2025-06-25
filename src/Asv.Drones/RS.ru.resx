@@ -350,4 +350,10 @@
     <data name="FileBrowserViewModel_RenameDialog_Message" xml:space="preserve">
         <value>Введите новое имя</value>
     </data>
+    <data name="OpenFlightModeCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Открыть режим полета</value>
+    </data>
+    <data name="OpenFlightModeCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая открывает страницу режима полета</value>
+    </data>
 </root>
