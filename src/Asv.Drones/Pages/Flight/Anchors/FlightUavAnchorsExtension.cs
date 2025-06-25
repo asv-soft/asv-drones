@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Composition;
+﻿using System.Composition;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Common;
@@ -13,50 +12,23 @@ namespace Asv.Drones;
 
 [ExportExtensionFor<IFlightMode>]
 [method: ImportingConstructor]
-public class FlightUavAnchorsExtension(
-    IDeviceManager conn,
-    INavigationService navigationService,
-    IUnitService unitService,
-    ILoggerFactory loggerFactory
-) : IExtensionFor<IFlightMode>
+public class FlightUavAnchorsExtension(IDeviceManager conn, ILoggerFactory loggerFactory)
+    : IExtensionFor<IFlightMode>
 {
     public void Extend(IFlightMode context, CompositeDisposable contextDispose)
     {
-        conn.Explorer.Devices.PopulateTo(context.Anchors, TryCreateAnchor, RemoveAnchor)
-            .DisposeItWith(contextDispose);
-        conn.Explorer.Devices.PopulateTo(context.Widgets, TryCreateWidget, RemoveWidget)
+        conn.Explorer.InitializedDevices.PopulateTo(context.Anchors, TryCreateAnchor, RemoveAnchor)
             .DisposeItWith(contextDispose);
     }
 
-    private UavWidgetViewModel? TryCreateWidget(KeyValuePair<DeviceId, IClientDevice> device)
+    private UavAnchor? TryCreateAnchor(IClientDevice device)
     {
-        var pos = device.Value.GetMicroservice<IPositionClientEx>();
-        return pos != null
-            ? new UavWidgetViewModel(
-                device.Value,
-                navigationService,
-                unitService,
-                conn,
-                loggerFactory
-            )
-            : null;
+        var pos = device.GetMicroservice<IPositionClientEx>();
+        return pos != null ? new UavAnchor(device.Id, conn, device, pos, loggerFactory) : null;
     }
 
-    private bool RemoveWidget(KeyValuePair<DeviceId, IClientDevice> model, UavWidgetViewModel vm)
+    private static bool RemoveAnchor(IClientDevice dev, UavAnchor anchor)
     {
-        return model.Key == vm.Device.Id;
-    }
-
-    private UavAnchor? TryCreateAnchor(KeyValuePair<DeviceId, IClientDevice> device)
-    {
-        var pos = device.Value.GetMicroservice<IPositionClientEx>();
-        return pos != null
-            ? new UavAnchor(device.Key, conn, device.Value, pos, loggerFactory)
-            : null;
-    }
-
-    private static bool RemoveAnchor(KeyValuePair<DeviceId, IClientDevice> dev, UavAnchor anchor)
-    {
-        return anchor.DeviceId == dev.Key;
+        return anchor.DeviceId == dev.Id;
     }
 }

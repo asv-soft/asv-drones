@@ -362,4 +362,10 @@
     <data name="FileBrowserViewModel_RenameDialog_Message" xml:space="preserve">
         <value>Input new name</value>
     </data>
+    <data name="OpenFlightModeCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Open flight mode</value>
+    </data>
+    <data name="OpenFlightModeCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that opens flight mode page</value>
+    </data>
 </root>

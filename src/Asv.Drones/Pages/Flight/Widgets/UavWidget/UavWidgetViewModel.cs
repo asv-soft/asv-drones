@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
@@ -18,13 +19,11 @@ namespace Asv.Drones;
 
 public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>, IUavFlightWidget
 {
-    private readonly ILoggerFactory _loggerFactory;
     private const string WidgetId = "widget-uav";
     private WorkspaceDock _position;
 
     private readonly IUnit _velocityUnit;
     private readonly IUnit _altitudeUnit;
-    private readonly IUnit _bearingUnit;
     private readonly IUnit _angleUnit;
     private readonly IUnit _capacityUnit;
     private readonly IUnit _amperageUnit;
@@ -49,11 +48,9 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         AltitudeStatusBrush.Color = GreenColor;
         BatteryStatusBrush.Color = RedColor;
         GnssStatusBrush.Color = OrangeColor;
-        SatelliteCount.Value = 10;
-        RtkMode.Value = "RTK Fixed";
         LinkQualityStatusBrush.Color = GreenColor;
         GnssStatusBrush.Color = GreenColor;
-        MissionProgress = new MissionProgressViewModel();
+        MissionProgress = new MissionProgressViewModel().DisposeItWith(Disposable);
 
         var unitService = NullUnitService.Instance;
 
@@ -63,7 +60,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         _altitudeUnit = unitService.Units[NullUnitBase.Id];
         _velocityUnit = unitService.Units[NullUnitBase.Id];
         _angleUnit = unitService.Units[NullUnitBase.Id];
-        _bearingUnit = unitService.Units[NullUnitBase.Id];
         _capacityUnit = unitService.Units[NullUnitBase.Id];
         _amperageUnit = unitService.Units[NullUnitBase.Id];
         _voltageUnit = unitService.Units[NullUnitBase.Id];
@@ -82,7 +78,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         var batteryConsumed = new ReactiveProperty<double>(39).DisposeItWith(Disposable);
 
         LinkQuality = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(LinkQuality)}",
+            nameof(LinkQuality),
             linkQuality,
             unitItem,
             DesignTime.LoggerFactory
@@ -91,7 +87,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             Parent = this,
         }.DisposeItWith(Disposable);
         AltitudeAgl = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(AltitudeAgl)}",
+            nameof(AltitudeAgl),
             altitudeAgl,
             unitItem,
             DesignTime.LoggerFactory
@@ -100,7 +96,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             Parent = this,
         }.DisposeItWith(Disposable);
         AltitudeMsl = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(AltitudeMsl)}",
+            nameof(AltitudeMsl),
             altitudeMsl,
             unitItem,
             DesignTime.LoggerFactory
@@ -109,7 +105,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             Parent = this,
         }.DisposeItWith(Disposable);
         Azimuth = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(Azimuth)}",
+            nameof(Azimuth),
             azimuth,
             unitItem,
             DesignTime.LoggerFactory
@@ -118,7 +114,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             Parent = this,
         }.DisposeItWith(Disposable);
         Heading = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(Heading)}",
+            nameof(Heading),
             heading,
             unitItem,
             DesignTime.LoggerFactory
@@ -127,7 +123,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             Parent = this,
         }.DisposeItWith(Disposable);
         HomeAzimuth = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(HomeAzimuth)}",
+            nameof(HomeAzimuth),
             homeAzimuth,
             unitItem,
             DesignTime.LoggerFactory
@@ -136,7 +132,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             Parent = this,
         }.DisposeItWith(Disposable);
         Velocity = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(Velocity)}",
+            nameof(Velocity),
             velocity,
             unitItem,
             DesignTime.LoggerFactory
@@ -145,7 +141,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             Parent = this,
         }.DisposeItWith(Disposable);
         BatteryAmperage = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(BatteryAmperage)}",
+            nameof(BatteryAmperage),
             batteryAmperage,
             unitItem,
             DesignTime.LoggerFactory,
@@ -155,7 +151,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             Parent = this,
         }.DisposeItWith(Disposable);
         BatteryVoltage = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(BatteryVoltage)}",
+            nameof(BatteryVoltage),
             batteryVoltage,
             unitItem,
             DesignTime.LoggerFactory,
@@ -165,7 +161,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             Parent = this,
         }.DisposeItWith(Disposable);
         BatteryCharge = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(BatteryCharge)}",
+            nameof(BatteryCharge),
             batteryCharge,
             unitItem,
             DesignTime.LoggerFactory
@@ -174,7 +170,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             Parent = this,
         }.DisposeItWith(Disposable);
         BatteryConsumed = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(BatteryConsumed)}",
+            nameof(BatteryConsumed),
             batteryConsumed,
             unitItem,
             DesignTime.LoggerFactory
@@ -183,16 +179,23 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             Parent = this,
         }.DisposeItWith(Disposable);
 
-        LinkState = new BindableReactiveProperty<string>("Connected");
-        CurrentFlightMode = new BindableReactiveProperty<string>("Auto");
-        Roll = new BindableReactiveProperty<double>();
-        Pitch = new BindableReactiveProperty<double>();
-        VdopCount = new BindableReactiveProperty<string>();
-        HdopCount = new BindableReactiveProperty<string>();
-        SatelliteCount = new BindableReactiveProperty<int>();
-        RtkMode = new BindableReactiveProperty<string>();
-        IsArmed = new BindableReactiveProperty<bool>();
-        StatusText = new BindableReactiveProperty<string>();
+        LinkState = new BindableReactiveProperty<string>("Connected").DisposeItWith(Disposable);
+        CurrentFlightMode = new BindableReactiveProperty<string>("Auto").DisposeItWith(Disposable);
+        Roll = new BindableReactiveProperty<double>().DisposeItWith(Disposable);
+        Pitch = new BindableReactiveProperty<double>().DisposeItWith(Disposable);
+        VdopCount = new BindableReactiveProperty<string>().DisposeItWith(Disposable);
+        HdopCount = new BindableReactiveProperty<string>().DisposeItWith(Disposable);
+        SatelliteCount = new BindableReactiveProperty<int>(10).DisposeItWith(Disposable);
+        RtkMode = new BindableReactiveProperty<string>("RTK Fixed").DisposeItWith(Disposable);
+        IsArmed = new BindableReactiveProperty<bool>().DisposeItWith(Disposable);
+        StatusText = new BindableReactiveProperty<string>().DisposeItWith(Disposable);
+        VibrationX = new BindableReactiveProperty<float>().DisposeItWith(Disposable);
+        VibrationY = new BindableReactiveProperty<float>().DisposeItWith(Disposable);
+        VibrationZ = new BindableReactiveProperty<float>().DisposeItWith(Disposable);
+        Clipping0 = new BindableReactiveProperty<uint>().DisposeItWith(Disposable);
+        Clipping1 = new BindableReactiveProperty<uint>().DisposeItWith(Disposable);
+        Clipping2 = new BindableReactiveProperty<uint>().DisposeItWith(Disposable);
+        ArmedTime = new BindableReactiveProperty<TimeSpan>().DisposeItWith(Disposable);
 
         BatteryConsumedSymbol = BatteryConsumed
             .Unit.CurrentUnitItem.Select(item => item.Symbol)
@@ -237,12 +240,14 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
     )
         : base(WidgetId, loggerFactory)
     {
-        _loggerFactory = loggerFactory;
         ArgumentNullException.ThrowIfNull(device);
-        GnssStatusBrush = new SolidColorBrush();
-        LinkQualityStatusBrush = new SolidColorBrush();
-        BatteryStatusBrush = new SolidColorBrush();
-        AltitudeStatusBrush = new SolidColorBrush();
+        Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            GnssStatusBrush = new SolidColorBrush();
+            LinkQualityStatusBrush = new SolidColorBrush();
+            BatteryStatusBrush = new SolidColorBrush();
+            AltitudeStatusBrush = new SolidColorBrush();
+        });
         Device = device;
         Position = WorkspaceDock.Left;
         Icon = dev.GetIcon(device.Id);
@@ -250,17 +255,18 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         _altitudeUnit = unitService.Units[AltitudeBase.Id];
         _velocityUnit = unitService.Units[VelocityBase.Id];
         _angleUnit = unitService.Units[AngleBase.Id];
-        _bearingUnit = unitService.Units[BearingBase.Id];
         _capacityUnit = unitService.Units[CapacityBase.Id];
         _amperageUnit = unitService.Units[AmperageBase.Id];
         _voltageUnit = unitService.Units[VoltageBase.Id];
         _progressUnit = unitService.Units[ProgressBase.Id];
         device.Name.Subscribe(x => Header = x).DisposeItWith(Disposable);
         InitArgs(device.Id.AsString());
-        MissionProgress = new MissionProgressViewModel(device, unitService, loggerFactory, this)
-        {
-            Parent = this,
-        };
+        MissionProgress = new MissionProgressViewModel(
+            device,
+            unitService,
+            loggerFactory,
+            this
+        ).DisposeItWith(Disposable);
         var positionClientEx =
             device.GetMicroservice<PositionClientEx>()
             ?? throw new ArgumentException(
@@ -293,7 +299,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
                 $"Unable to load {nameof(PositionClientEx)} from {device.Id}"
             );
         TakeOff = new ReactiveCommand(
-            async (_, _) =>
+            async (_, ct) =>
             {
                 using var vm = new SetAltitudeDialogViewModel(_altitudeUnit, loggerFactory);
                 var dialog = new ContentDialog(vm, navigation)
@@ -313,7 +319,8 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
                         TakeOffCommand.Id,
                         new DoubleArg(
                             _altitudeUnit.CurrentUnitItem.Value.ParseToSi(vm.Altitude.Value)
-                        )
+                        ),
+                        ct
                     );
                 }
             }
@@ -353,6 +360,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             .DisposeItWith(Disposable);
         positionClientEx
             .Current.Where(_ => positionClientEx.Home.CurrentValue.HasValue)
+            .ThrottleLast(TimeSpan.FromMilliseconds(200))
             .Subscribe(p =>
                 homeAzimuth.Value = p.Azimuth(positionClientEx.Home.CurrentValue ?? GeoPoint.NaN)
             )
@@ -402,102 +410,92 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             .DisposeItWith(Disposable);
 
         LinkQuality = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(LinkQuality)}",
+            nameof(LinkQuality),
             linkQuality,
             _progressUnit,
-            _loggerFactory
+            loggerFactory
         )
         {
             Parent = this,
         }.DisposeItWith(Disposable);
         AltitudeAgl = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(AltitudeAgl)}",
+            nameof(AltitudeAgl),
             altitudeAgl,
             _altitudeUnit,
-            _loggerFactory
+            loggerFactory
         )
         {
             Parent = this,
         }.DisposeItWith(Disposable);
         AltitudeMsl = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(AltitudeMsl)}",
+            nameof(AltitudeMsl),
             altitudeMsl,
             _altitudeUnit,
-            _loggerFactory
+            loggerFactory
         )
         {
             Parent = this,
         }.DisposeItWith(Disposable);
-        Azimuth = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(Azimuth)}",
-            azimuth,
-            _angleUnit,
-            _loggerFactory
-        )
+        Azimuth = new HistoricalUnitProperty(nameof(Azimuth), azimuth, _angleUnit, loggerFactory)
         {
             Parent = this,
         }.DisposeItWith(Disposable);
-        Heading = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(Heading)}",
-            heading,
-            _angleUnit,
-            _loggerFactory
-        )
+        Heading = new HistoricalUnitProperty(nameof(Heading), heading, _angleUnit, loggerFactory)
         {
             Parent = this,
         }.DisposeItWith(Disposable);
         HomeAzimuth = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(HomeAzimuth)}",
+            nameof(HomeAzimuth),
             homeAzimuth,
             _angleUnit,
-            _loggerFactory
+            loggerFactory
         )
         {
             Parent = this,
         }.DisposeItWith(Disposable);
         Velocity = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(Velocity)}",
+            nameof(Velocity),
             velocity,
             _velocityUnit,
-            _loggerFactory
+            loggerFactory
         )
         {
             Parent = this,
         }.DisposeItWith(Disposable);
         BatteryAmperage = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(BatteryAmperage)}",
+            nameof(BatteryAmperage),
             batteryAmperage,
             _amperageUnit,
-            _loggerFactory,
+            loggerFactory,
             "N2"
         )
         {
             Parent = this,
         }.DisposeItWith(Disposable);
         BatteryVoltage = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(BatteryVoltage)}",
+            nameof(BatteryVoltage),
             batteryVoltage,
             _voltageUnit,
-            _loggerFactory,
+            loggerFactory,
             "N2"
         )
         {
             Parent = this,
         }.DisposeItWith(Disposable);
         BatteryCharge = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(BatteryCharge)}",
+            nameof(BatteryCharge),
             batteryCharge,
             _progressUnit,
-            _loggerFactory
+            loggerFactory
         )
         {
             Parent = this,
         }.DisposeItWith(Disposable);
         BatteryConsumed = new HistoricalUnitProperty(
-            $"{WidgetId}.{nameof(BatteryConsumed)}",
+            nameof(BatteryConsumed),
             batteryConsumed,
             _capacityUnit,
-            _loggerFactory
+            loggerFactory
         )
         {
             Parent = this,
@@ -542,35 +540,52 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
                 LinkStatus(state).SafeFireAndForget(ex => Logger.LogError(ex, "Link status error"));
                 return state.ToString();
             })
-            .ToBindableReactiveProperty<string>();
+            .ToBindableReactiveProperty<string>()
+            .DisposeItWith(Disposable);
         CurrentFlightMode = modeClient
             .CurrentMode.Select(mode => mode.Name)
-            .ToBindableReactiveProperty<string>();
-        Roll = positionClientEx.Roll.ToBindableReactiveProperty();
-        Pitch = positionClientEx.Pitch.ToBindableReactiveProperty();
+            .ToBindableReactiveProperty<string>()
+            .DisposeItWith(Disposable);
+        Roll = positionClientEx.Roll.ToBindableReactiveProperty().DisposeItWith(Disposable);
+        Pitch = positionClientEx.Pitch.ToBindableReactiveProperty().DisposeItWith(Disposable);
         VdopCount = _gnssClient
             .Main.Info.Select(info => info.Vdop is null ? RS.NotANumber : $"{info.Vdop.Value} VDOP")
-            .ToBindableReactiveProperty<string>();
+            .ToBindableReactiveProperty<string>()
+            .DisposeItWith(Disposable);
         HdopCount = _gnssClient
             .Main.Info.Select(info => info.Hdop is null ? RS.NotANumber : $"{info.Hdop.Value} HDOP")
-            .ToBindableReactiveProperty<string>();
+            .ToBindableReactiveProperty<string>()
+            .DisposeItWith(Disposable);
         SatelliteCount = _gnssClient
             .Main.Info.Select(info => info.SatellitesVisible)
-            .ToBindableReactiveProperty();
+            .ToBindableReactiveProperty()
+            .DisposeItWith(Disposable);
         RtkMode = _gnssClient
             .Main.Info.Select(gpsInfo => GpsFixTypeToString(gpsInfo.FixType))
-            .ToBindableReactiveProperty<string>();
+            .ToBindableReactiveProperty<string>()
+            .DisposeItWith(Disposable);
         IsArmed = positionClientEx
             .IsArmed.DistinctUntilChanged()
             .Select(b => b)
-            .ToBindableReactiveProperty();
+            .ToBindableReactiveProperty()
+            .DisposeItWith(Disposable);
         StatusText = positionClientEx
             .IsArmed.Select(b =>
                 b
                     ? RS.UavWidgetViewModel_StatusText_Armed
                     : RS.UavWidgetViewModel_StatusText_DisArmed
             )
-            .ToBindableReactiveProperty<string>();
+            .ToBindableReactiveProperty<string>()
+            .DisposeItWith(Disposable);
+
+        VibrationX = new BindableReactiveProperty<float>().DisposeItWith(Disposable);
+        VibrationY = new BindableReactiveProperty<float>().DisposeItWith(Disposable);
+        VibrationZ = new BindableReactiveProperty<float>().DisposeItWith(Disposable);
+        Clipping0 = new BindableReactiveProperty<uint>().DisposeItWith(Disposable);
+        Clipping1 = new BindableReactiveProperty<uint>().DisposeItWith(Disposable);
+        Clipping2 = new BindableReactiveProperty<uint>().DisposeItWith(Disposable);
+        ArmedTime = new BindableReactiveProperty<TimeSpan>().DisposeItWith(Disposable);
+
         Observable
             .Timer(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(4))
             .Subscribe(_ => StatusText.Value = string.Empty)
@@ -730,10 +745,10 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
 
     #region Gnss
 
-    public BindableReactiveProperty<int> SatelliteCount { get; } = new();
-    public BindableReactiveProperty<string> HdopCount { get; } = new();
-    public BindableReactiveProperty<string> VdopCount { get; } = new();
-    public BindableReactiveProperty<string> RtkMode { get; } = new();
+    public BindableReactiveProperty<int> SatelliteCount { get; }
+    public BindableReactiveProperty<string> HdopCount { get; }
+    public BindableReactiveProperty<string> VdopCount { get; }
+    public BindableReactiveProperty<string> RtkMode { get; }
 
     private SolidColorBrush _gnssStatusBrush;
 
@@ -763,12 +778,12 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
     }
 
     public BindableReactiveProperty<string> CurrentFlightMode { get; }
-    public BindableReactiveProperty<float> VibrationX { get; } = new();
-    public BindableReactiveProperty<float> VibrationY { get; } = new();
-    public BindableReactiveProperty<float> VibrationZ { get; } = new();
-    public BindableReactiveProperty<uint> Clipping0 { get; } = new();
-    public BindableReactiveProperty<uint> Clipping1 { get; } = new();
-    public BindableReactiveProperty<uint> Clipping2 { get; } = new();
+    public BindableReactiveProperty<float> VibrationX { get; }
+    public BindableReactiveProperty<float> VibrationY { get; }
+    public BindableReactiveProperty<float> VibrationZ { get; }
+    public BindableReactiveProperty<uint> Clipping0 { get; }
+    public BindableReactiveProperty<uint> Clipping1 { get; }
+    public BindableReactiveProperty<uint> Clipping2 { get; }
     public BindableReactiveProperty<double> Roll { get; }
     public BindableReactiveProperty<double> Pitch { get; }
     public HistoricalUnitProperty Velocity { get; }
@@ -782,7 +797,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
     public BindableReactiveProperty<string> AzimuthSymbol { get; }
     public BindableReactiveProperty<string> StatusText { get; }
     public BindableReactiveProperty<bool> IsArmed { get; }
-    public BindableReactiveProperty<TimeSpan> ArmedTime { get; } = new();
+    public BindableReactiveProperty<TimeSpan> ArmedTime { get; }
 
     public IClientDevice Device { get; }
 
@@ -791,40 +806,4 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         get => _position;
         private init => SetField(ref _position, value);
     }
-
-    #region Dispose
-
-    protected override void Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            Roll.Dispose();
-            Pitch.Dispose();
-            IsArmed.Dispose();
-            RtkMode.Dispose();
-            _angleUnit.Dispose();
-            LinkState.Dispose();
-            VdopCount.Dispose();
-            HdopCount.Dispose();
-            Clipping0.Dispose();
-            Clipping1.Dispose();
-            Clipping2.Dispose();
-            ArmedTime.Dispose();
-            VibrationY.Dispose();
-            VibrationZ.Dispose();
-            VibrationX.Dispose();
-            StatusText.Dispose();
-            _bearingUnit.Dispose();
-            _velocityUnit.Dispose();
-            _altitudeUnit.Dispose();
-            _capacityUnit.Dispose();
-            SatelliteCount.Dispose();
-            MissionProgress.Dispose();
-            CurrentFlightMode.Dispose();
-        }
-
-        base.Dispose(disposing);
-    }
-
-    #endregion
 }
