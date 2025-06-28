@@ -46,7 +46,13 @@ public class MavParamViewModel
             .Where(_ => IsRemoteChange == false)
             .Subscribe(_ => IsSync = false)
             .DisposeItWith(Disposable);
-        Init(initReadCallback);
+
+        // this is random delay for inital read to avoid many requests at the same time
+        Observable
+            .Timer(TimeSpan.FromMilliseconds(Random.Shared.Next(1, 1000)))
+            .Take(1)
+            .Subscribe(initReadCallback, (_, callback) => Init(callback))
+            .DisposeItWith(Disposable);
     }
 
     public MavParamInfo Info { get; }
