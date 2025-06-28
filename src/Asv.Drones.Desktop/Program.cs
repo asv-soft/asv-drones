@@ -24,6 +24,7 @@ sealed class Program
             .UseAvalonia(BuildAvaloniaApp)
             .SetLogLevel(LogLevel.Trace)
             .UseLogToConsole()
+            .UseLogToFile()
             .UseAppPath(opt => opt.WithRelativeFolder("data"))
             .UseJsonUserConfig(opt =>
                 opt.WithFileName("user_settings.json").WithAutoSave(TimeSpan.FromSeconds(1))

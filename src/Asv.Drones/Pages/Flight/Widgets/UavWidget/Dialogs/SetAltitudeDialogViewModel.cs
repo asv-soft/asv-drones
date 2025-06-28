@@ -40,6 +40,9 @@ public class SetAltitudeDialogViewModel : DialogViewModelBase
 
     public void ApplyDialog(ContentDialog dialog)
     {
+        _sub2?.Dispose();
+        _sub2 = null;
+
         _sub2 = IsValid.Subscribe(enabled => dialog.IsPrimaryButtonEnabled = enabled);
     }
 
@@ -55,14 +58,14 @@ public class SetAltitudeDialogViewModel : DialogViewModelBase
     #region Dispose
 
     private readonly IDisposable _sub1;
-    private IDisposable _sub2;
+    private IDisposable? _sub2;
 
     protected override void Dispose(bool disposing)
     {
         if (disposing)
         {
             _sub1.Dispose();
-            _sub2.Dispose();
+            _sub2?.Dispose();
             Altitude.Dispose();
         }
 
