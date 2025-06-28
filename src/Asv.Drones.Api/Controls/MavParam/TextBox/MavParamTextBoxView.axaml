@@ -65,13 +65,13 @@
     <Panel VerticalAlignment="Top" HorizontalAlignment="Stretch">
         <TextBox 
                  MinWidth="200" 
-                 Padding="0" 
+                 
                  IsReadOnly="{Binding IsBusy}"
                  VerticalContentAlignment="Center"
                  GotFocus="PART_TextBox_OnGotFocus"
                  avalonia:NavigationHelper.IsSelected ="{Binding IsFocused, Mode=OneWay}"
                  Text="{Binding TextValue.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 MinHeight="0" Height="25">
+                 MinHeight="0" >
             <TextBox.KeyBindings>
                 <KeyBinding Gesture="Enter" Command="{Binding Write}" />
             </TextBox.KeyBindings>

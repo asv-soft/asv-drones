@@ -48,7 +48,10 @@ public class MavParamButtonViewModel : MavParamViewModel
         InitialReadParamDelegate initReadCallback,
         ILoggerFactory loggerFactory
     )
-        : base(info, update, initReadCallback, loggerFactory) { }
+        : base(info, update, initReadCallback, loggerFactory)
+    {
+        ShowHeader = false;
+    }
 
     public void InternalWrite()
     {

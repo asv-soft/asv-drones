@@ -25,7 +25,7 @@ public class MavParamLatLonTextBoxViewModel : MavParamTextBoxViewModel
                 .CurrentValue ?? throw new ArgumentNullException(LatitudeBase.Id);
     }
 
-    public override string? Units => _unit.Symbol;
+    public override string? Units => null;
 
     protected override string ValueToText(ValueType remoteValue)
     {

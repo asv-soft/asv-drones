@@ -185,6 +185,18 @@ public class MavParamViewModel
         set => SetField(ref field, value);
     }
 
+    public bool ShowHeader
+    {
+        get;
+        set => SetField(ref field, value);
+    } = true;
+
+    public bool IsVisible
+    {
+        get;
+        set => SetField(ref field, value);
+    } = true;
+
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
         yield break;
