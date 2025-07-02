@@ -1,5 +1,5 @@
 ﻿; Main constants - define following constants as you want them displayed in your installation wizard
-!define PRODUCT_NAME "Asv.Avalonia.Gui"
+!define PRODUCT_NAME "Asv.Drones"
 !define PRODUCT_PUBLISHER "Cursir"
 
 ; Following constants you should never change
@@ -7,28 +7,39 @@
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
 !include "MUI.nsh"
+!include "nsDialogs.nsh"
+
 !define MUI_ABORTWARNING
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 
 ; Wizard pages
 !insertmacro MUI_PAGE_WELCOME
+!insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_LANGUAGE "English"
 
-Name "Asv Drones Gui "
-OutFile "AsvDronesGuiInstaller.exe"
-InstallDir "$PROGRAMFILES\Asv\Asv-Drones-Gui"
+Name "Asv Drones "
+OutFile "AsvDronesInstaller.exe"
+InstallDir "$PROGRAMFILES\Asv\Asv-Drones"
 ShowInstDetails show
 ShowUnInstDetails show
 
 ; Following lists the files you want to include, go through this list carefully!
-Section "MainSection" SEC01
+Section "Core Files (required)" SEC01
   SetOutPath "$INSTDIR"
   ; Check dir in yml where your project is stored
   File /r "./publish/app\\*.*"
+SectionEnd
+
+; Section for shortcuts
+Section "Start Menu and Desktop Shortcuts" SEC02
+  ; Create a shortcut on the desktop
+  CreateShortcut "$DESKTOP\Asv Drones.lnk" "$INSTDIR\Asv.Drones.Desktop.exe" "" "$INSTDIR\Asv.Drones.Desktop.exe" 0
+  ; Create a shortcut in the Start menu
+  CreateShortcut "$SMPROGRAMS\Asv Drones\Asv Drones.lnk" "$INSTDIR\Asv.Drones.Desktop.exe" "" "$INSTDIR\Asv.Drones.Desktop.exe" 0
 SectionEnd
 
 Section -Post
@@ -45,7 +56,7 @@ Function un.onUninstSuccess
 FunctionEnd
 
 Function un.onInit
-  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Are you sure you want to completely remove Asv Drones Gui and all of its components?" IDYES +2
+  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Are you sure you want to completely remove Asv Drones and all of its components?" IDYES +2
   Abort
 FunctionEnd
 
@@ -58,6 +69,11 @@ Section Uninstall
   
   ; Remove the installation directory
   RMDir /r "$INSTDIR"
+  
+  ; Remove the shortcuts
+    Delete "$DESKTOP\Asv Drones.lnk"
+    Delete "$SMPROGRAMS\Asv Drones\Asv Drones.lnk"
+    RMDir "$SMPROGRAMS\Asv Drones"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   SetAutoClose true
