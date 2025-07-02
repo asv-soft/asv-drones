@@ -356,4 +356,28 @@
     <data name="OpenFlightModeCommand_CommandInfo_Description" xml:space="preserve">
         <value>Команда, которая открывает страницу режима полета</value>
     </data>
+    <data name="OpenFileBrowserCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Открыть браузер файлов</value>
+    </data>
+    <data name="OpenFileBrowserCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда открывает файл браузер</value>
+    </data>
+    <data name="OpenPacketViewerCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Открыть просмотр пакетов</value>
+    </data>
+    <data name="OpenPacketViewerCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда открывает просмотр пакетов</value>
+    </data>
+    <data name="AltitudeIndicatorStyles_ToolTip_Velocity" xml:space="preserve">
+        <value>Скорость</value>
+    </data>
+    <data name="AltitudeIndicatorStyles_ToolTip_Altitude" xml:space="preserve">
+        <value>Высота</value>
+    </data>
+    <data name="AltitudeIndicatorStyles_ToolTip_Compass" xml:space="preserve">
+        <value>Компас</value>
+    </data>
+    <data name="AltitudeIndicatorStyles_ToolTip_Vibration" xml:space="preserve">
+        <value>Вибрация</value>
+    </data>
 </root>

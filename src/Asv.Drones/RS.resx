@@ -368,4 +368,28 @@
     <data name="OpenFlightModeCommand_CommandInfo_Description" xml:space="preserve">
         <value>Command that opens flight mode page</value>
     </data>
+    <data name="OpenFileBrowserCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Open file browser</value>
+    </data>
+    <data name="OpenFileBrowserCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that opens file browser</value>
+    </data>
+    <data name="OpenPacketViewerCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Open packet viewer</value>
+    </data>
+    <data name="OpenPacketViewerCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that opens packet viewer</value>
+    </data>
+    <data name="AltitudeIndicatorStyles_ToolTip_Velocity" xml:space="preserve">
+        <value>Velocity</value>
+    </data>
+    <data name="AltitudeIndicatorStyles_ToolTip_Altitude" xml:space="preserve">
+        <value>Altitude</value>
+    </data>
+    <data name="AltitudeIndicatorStyles_ToolTip_Compass" xml:space="preserve">
+        <value>Compass</value>
+    </data>
+    <data name="AltitudeIndicatorStyles_ToolTip_Vibration" xml:space="preserve">
+        <value>Vibration</value>
+    </data>
 </root>
