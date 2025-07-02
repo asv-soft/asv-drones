@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
 using Asv.Avalonia.IO;
@@ -43,10 +44,8 @@ public class UavAnchor : MapAnchor<UavAnchor>
         dev.Name.Subscribe(x => Title = x ?? string.Empty).DisposeItWith(Disposable);
         pos.Current.Subscribe(x => Location = x).DisposeItWith(Disposable);
         pos.Yaw.Subscribe(x => Azimuth = x).DisposeItWith(Disposable);
-
         var currentUavLocation = pos.Current.CurrentValue;
         var currentHomeLocation = pos.Home.CurrentValue ?? GeoPoint.Zero;
-        pos.GetHomePosition().SafeFireAndForget();
         pos.Home.Subscribe(x =>
             {
                 Polygon.Remove(currentHomeLocation);
