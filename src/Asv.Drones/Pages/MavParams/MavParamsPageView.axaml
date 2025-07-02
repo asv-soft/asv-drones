@@ -12,7 +12,10 @@
         <drones:MavParamsPageViewModel />
     </Design.DataContext>
     <Panel>
-        <avalonia1:AwaitingScreen Header="Connecting" Description="Connect to the device..." IsVisible="{Binding !IsDeviceInitialized}"/>
+        <avalonia1:AwaitingScreen 
+            Header="{x:Static drones:RS.MavParamsPageView_AwaitingScreen_Header}" 
+            Description="{x:Static drones:RS.MavParamsPageView_AwaitingScreen_Description}" 
+            IsVisible="{Binding !IsDeviceInitialized}"/>
         <Grid IsVisible="{Binding IsDeviceInitialized}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="220" Width="*" />
@@ -85,9 +88,9 @@
             <GridSplitter Background="Transparent" Grid.Column="1" />
             <Panel Grid.Column="2">
                 <StackPanel IsVisible="{Binding IsRefreshing.Value}" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock Text="Loading..." />
+                    <TextBlock Text="{x:Static drones:RS.MavParamsPageView_Loading_Text}" />
                     <ProgressBar Width="100" Value="{Binding Progress.Value}" Minimum="0" Maximum="1" />
-                    <Button Margin="0,10,0,0" Content="Cancel" Command="{Binding StopUpdateParams}"></Button>
+                    <Button Margin="0,10,0,0" Content="{x:Static drones:RS.MavParamsPageView_CancelButton_Content}" Command="{Binding StopUpdateParams}"></Button>
                 </StackPanel>
                 <ScrollViewer ClipToBounds="True" IsVisible="{Binding !IsRefreshing.Value}">
                     <ItemsControl HorizontalAlignment="Stretch" ItemsSource="{Binding ViewedParams}">

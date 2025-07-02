@@ -782,5 +782,47 @@ namespace Asv.Drones {
                 return ResourceManager.GetString("AltitudeIndicatorStyles_ToolTip_Vibration", resourceCulture);
             }
         }
+        
+        public static string FileBrowserViewModel_Title {
+            get {
+                return ResourceManager.GetString("FileBrowserViewModel_Title", resourceCulture);
+            }
+        }
+        
+        public static string UavWidgetViewModel_SetAltitudeDialog_Title {
+            get {
+                return ResourceManager.GetString("UavWidgetViewModel_SetAltitudeDialog_Title", resourceCulture);
+            }
+        }
+        
+        public static string MavParamsPageView_AwaitingScreen_Header {
+            get {
+                return ResourceManager.GetString("MavParamsPageView_AwaitingScreen_Header", resourceCulture);
+            }
+        }
+        
+        public static string MavParamsPageView_AwaitingScreen_Description {
+            get {
+                return ResourceManager.GetString("MavParamsPageView_AwaitingScreen_Description", resourceCulture);
+            }
+        }
+        
+        public static string MavParamsPageView_CancelButton_Content {
+            get {
+                return ResourceManager.GetString("MavParamsPageView_CancelButton_Content", resourceCulture);
+            }
+        }
+        
+        public static string MavParamsPageView_Loading_Text {
+            get {
+                return ResourceManager.GetString("MavParamsPageView_Loading_Text", resourceCulture);
+            }
+        }
+        
+        public static string PacketViewerViewModel_Title {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_Title", resourceCulture);
+            }
+        }
     }
 }

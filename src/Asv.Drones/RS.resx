@@ -392,4 +392,25 @@
     <data name="AltitudeIndicatorStyles_ToolTip_Vibration" xml:space="preserve">
         <value>Vibration</value>
     </data>
+    <data name="FileBrowserViewModel_Title" xml:space="preserve">
+        <value>Browser</value>
+    </data>
+    <data name="UavWidgetViewModel_SetAltitudeDialog_Title" xml:space="preserve">
+        <value>Input Altitude</value>
+    </data>
+    <data name="MavParamsPageView_AwaitingScreen_Header" xml:space="preserve">
+        <value>Connecting</value>
+    </data>
+    <data name="MavParamsPageView_AwaitingScreen_Description" xml:space="preserve">
+        <value>Connecting to the device...</value>
+    </data>
+    <data name="MavParamsPageView_CancelButton_Content" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="MavParamsPageView_Loading_Text" xml:space="preserve">
+        <value>Loading</value>
+    </data>
+    <data name="PacketViewerViewModel_Title" xml:space="preserve">
+        <value>Packet Viewer</value>
+    </data>
 </root>

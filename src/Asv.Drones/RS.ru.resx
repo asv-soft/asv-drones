@@ -380,4 +380,25 @@
     <data name="AltitudeIndicatorStyles_ToolTip_Vibration" xml:space="preserve">
         <value>Вибрация</value>
     </data>
+    <data name="FileBrowserViewModel_Title" xml:space="preserve">
+        <value>Браузер</value>
+    </data>
+    <data name="UavWidgetViewModel_SetAltitudeDialog_Title" xml:space="preserve">
+        <value>Введите высоту</value>
+    </data>
+    <data name="MavParamsPageView_AwaitingScreen_Header" xml:space="preserve">
+        <value>Подключение</value>
+    </data>
+    <data name="MavParamsPageView_AwaitingScreen_Description" xml:space="preserve">
+        <value>Подключение к устройству...</value>
+    </data>
+    <data name="MavParamsPageView_CancelButton_Content" xml:space="preserve">
+        <value>Отмена</value>
+    </data>
+    <data name="MavParamsPageView_Loading_Text" xml:space="preserve">
+        <value>Загрузка...</value>
+    </data>
+    <data name="PacketViewerViewModel_Title" xml:space="preserve">
+        <value>Просмотр пакетов</value>
+    </data>
 </root>

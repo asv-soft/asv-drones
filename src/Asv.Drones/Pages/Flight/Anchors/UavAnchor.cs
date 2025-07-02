@@ -13,11 +13,12 @@ namespace Asv.Drones;
 
 public class UavAnchor : MapAnchor<UavAnchor>
 {
+    public const string UavAnchorIdBase = "uav";
     private const uint CurrentUavPositionChangeThrottleMs = 200;
     public DeviceId DeviceId { get; }
 
     public UavAnchor()
-        : base("uav_design_time", DesignTime.LoggerFactory)
+        : base(DesignTime.Id, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
     }
@@ -29,7 +30,7 @@ public class UavAnchor : MapAnchor<UavAnchor>
         IPositionClientEx pos,
         ILoggerFactory loggerFactory
     )
-        : base("uav", loggerFactory)
+        : base(UavAnchorIdBase, loggerFactory)
     {
         DeviceId = deviceId;
         InitArgs(deviceId.AsString());

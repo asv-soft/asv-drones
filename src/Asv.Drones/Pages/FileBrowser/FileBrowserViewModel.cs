@@ -983,7 +983,7 @@ public class FileBrowserViewModel
         CancellationToken onDisconnectedToken
     )
     {
-        Title = $"Browser[{device.Id}]";
+        Title = $"{RS.FileBrowserViewModel_Title}[{device.Id}]";
         var client =
             device.GetMicroservice<IFtpClient>()
             ?? throw new MissingMemberException("FTP Client is null");
