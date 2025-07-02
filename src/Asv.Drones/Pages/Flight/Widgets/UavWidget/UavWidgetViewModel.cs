@@ -304,6 +304,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
                 using var vm = new SetAltitudeDialogViewModel(_altitudeUnit, loggerFactory);
                 var dialog = new ContentDialog(vm, navigation)
                 {
+                    Title = RS.UavWidgetViewModel_SetAltitudeDialog_Title,
                     PrimaryButtonText =
                         RS.SetAltitudeDialogViewModel_ApplyDialog_PrimaryButton_TakeOff,
                     SecondaryButtonText =

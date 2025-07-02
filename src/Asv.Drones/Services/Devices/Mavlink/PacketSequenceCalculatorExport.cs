@@ -1,7 +1,7 @@
 using System.Composition;
 using Asv.Mavlink;
 
-namespace Asv.Drones.Api;
+namespace Asv.Drones;
 
 [Export(typeof(IPacketSequenceCalculator))]
 [Shared]

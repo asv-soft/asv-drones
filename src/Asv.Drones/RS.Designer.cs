@@ -60,6 +60,42 @@ namespace Asv.Drones {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Altitude.
+        /// </summary>
+        public static string AltitudeIndicatorStyles_ToolTip_Altitude {
+            get {
+                return ResourceManager.GetString("AltitudeIndicatorStyles_ToolTip_Altitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compass.
+        /// </summary>
+        public static string AltitudeIndicatorStyles_ToolTip_Compass {
+            get {
+                return ResourceManager.GetString("AltitudeIndicatorStyles_ToolTip_Compass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velocity.
+        /// </summary>
+        public static string AltitudeIndicatorStyles_ToolTip_Velocity {
+            get {
+                return ResourceManager.GetString("AltitudeIndicatorStyles_ToolTip_Velocity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vibration.
+        /// </summary>
+        public static string AltitudeIndicatorStyles_ToolTip_Vibration {
+            get {
+                return ResourceManager.GetString("AltitudeIndicatorStyles_ToolTip_Vibration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dialogs.
         /// </summary>
         public static string DialogPageViewModel_Title {
@@ -222,6 +258,15 @@ namespace Asv.Drones {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browser.
+        /// </summary>
+        public static string FileBrowserViewModel_Title {
+            get {
+                return ResourceManager.GetString("FileBrowserViewModel_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to upload file &apos;{0}&apos; to device?.
         /// </summary>
         public static string FileBrowserViewModel_UploadingDialog_Message {
@@ -339,6 +384,42 @@ namespace Asv.Drones {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connecting to the device....
+        /// </summary>
+        public static string MavParamsPageView_AwaitingScreen_Description {
+            get {
+                return ResourceManager.GetString("MavParamsPageView_AwaitingScreen_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connecting.
+        /// </summary>
+        public static string MavParamsPageView_AwaitingScreen_Header {
+            get {
+                return ResourceManager.GetString("MavParamsPageView_AwaitingScreen_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string MavParamsPageView_CancelButton_Content {
+            get {
+                return ResourceManager.GetString("MavParamsPageView_CancelButton_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading.
+        /// </summary>
+        public static string MavParamsPageView_Loading_Text {
+            get {
+                return ResourceManager.GetString("MavParamsPageView_Loading_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unknown.
         /// </summary>
         public static string MavParamsPageViewModel_DeviceName_Unknown {
@@ -429,6 +510,24 @@ namespace Asv.Drones {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Command that opens file browser.
+        /// </summary>
+        public static string OpenFileBrowserCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("OpenFileBrowserCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open file browser.
+        /// </summary>
+        public static string OpenFileBrowserCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("OpenFileBrowserCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Command that opens flight mode page.
         /// </summary>
         public static string OpenFlightModeCommand_CommandInfo_Description {
@@ -461,6 +560,24 @@ namespace Asv.Drones {
         public static string OpenMavParamsCommand_CommandInfo_Name {
             get {
                 return ResourceManager.GetString("OpenMavParamsCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command that opens packet viewer.
+        /// </summary>
+        public static string OpenPacketViewerCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("OpenPacketViewerCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open packet viewer.
+        /// </summary>
+        public static string OpenPacketViewerCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("OpenPacketViewerCommand_CommandInfo_Name", resourceCulture);
             }
         }
         
@@ -578,6 +695,15 @@ namespace Asv.Drones {
         public static string PacketViewerViewModel_SavePacketMessagesDialog_Title {
             get {
                 return ResourceManager.GetString("PacketViewerViewModel_SavePacketMessagesDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packet Viewer.
+        /// </summary>
+        public static string PacketViewerViewModel_Title {
+            get {
+                return ResourceManager.GetString("PacketViewerViewModel_Title", resourceCulture);
             }
         }
         
@@ -965,6 +1091,15 @@ namespace Asv.Drones {
         public static string UavRttItem_Velocity {
             get {
                 return ResourceManager.GetString("UavRttItem_Velocity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input Altitude.
+        /// </summary>
+        public static string UavWidgetViewModel_SetAltitudeDialog_Title {
+            get {
+                return ResourceManager.GetString("UavWidgetViewModel_SetAltitudeDialog_Title", resourceCulture);
             }
         }
         

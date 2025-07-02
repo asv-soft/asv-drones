@@ -14,8 +14,8 @@ public class OpenPacketViewerCommand(INavigationService nav)
     public static readonly ICommandInfo StaticInfo = new CommandInfo
     {
         Id = Id,
-        Name = "Open Packet Viewer",
-        Description = "Command that opens packet viewer",
+        Name = RS.OpenPacketViewerCommand_CommandInfo_Name,
+        Description = RS.OpenPacketViewerCommand_CommandInfo_Description,
         Icon = PacketViewerViewModel.PageIcon,
         DefaultHotKey = null,
         Source = SystemModule.Instance,

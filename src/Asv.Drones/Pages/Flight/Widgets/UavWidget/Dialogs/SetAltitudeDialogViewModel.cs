@@ -12,7 +12,7 @@ public class SetAltitudeDialogViewModel : DialogViewModelBase
     public const string DialogId = "dialog.altitude";
 
     public SetAltitudeDialogViewModel()
-        : base(DialogId, DesignTime.LoggerFactory)
+        : this(new NullUnitBase([new NullUnitItemInternational()]), DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
     }
@@ -38,7 +38,7 @@ public class SetAltitudeDialogViewModel : DialogViewModelBase
         );
     }
 
-    public void ApplyDialog(ContentDialog dialog)
+    public override void ApplyDialog(ContentDialog dialog)
     {
         _sub2?.Dispose();
         _sub2 = null;
