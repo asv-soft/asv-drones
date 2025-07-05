@@ -93,7 +93,7 @@ public class MavParamsPageViewModel
         ArgumentNullException.ThrowIfNull(loggerFactory);
         ArgumentNullException.ThrowIfNull(nav);
 
-        Title = "Params";
+        Title = RS.MavParamsPageViewModel_Title;
 
         _loggerFactory = loggerFactory;
         _cfg = cfg;
@@ -354,7 +354,7 @@ public class MavParamsPageViewModel
     protected override void AfterDeviceInitialized(IClientDevice device, CancellationToken cancel)
     {
         IsDeviceInitialized = true;
-        Title = $"Params[{device.Id}]";
+        Title = $"{RS.MavParamsPageViewModel_Title}[{device.Id}]";
         _paramsClient = device.GetMicroservice<IParamsClientEx>();
         DeviceName = device
             .Name.Select(x => x ?? RS.MavParamsPageViewModel_DeviceName_Unknown)
