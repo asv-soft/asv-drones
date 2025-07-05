@@ -23,12 +23,6 @@
             PublicKeyToken=b77a5c561934e089
         </value>
     </resheader>
-    <data name="DialogPageViewModel_Title" xml:space="preserve">
-        <value>Dialogs</value>
-    </data>
-    <data name="DocumentPageViewModel_Title" xml:space="preserve">
-        <value>Document</value>
-    </data>
     <data name="ParametersEditorParameterView_PinToggleButton_ToolTip" xml:space="preserve">
         <value>On/ off pin for this parameter</value>
     </data>
@@ -412,5 +406,8 @@
     </data>
     <data name="PacketViewerViewModel_Title" xml:space="preserve">
         <value>Packet Viewer</value>
+    </data>
+    <data name="MavParamsPageViewModel_Title" xml:space="preserve">
+        <value>Params</value>
     </data>
 </root>

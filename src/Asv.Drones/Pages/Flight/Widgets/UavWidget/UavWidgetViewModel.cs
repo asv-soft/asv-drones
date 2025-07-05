@@ -29,7 +29,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
     private readonly IUnit _amperageUnit;
     private readonly IUnit _voltageUnit;
     private readonly IUnit _progressUnit;
-    private readonly GnssClientEx? _gnssClient;
+    private readonly IGnssClientEx? _gnssClient;
     private const int CriticalAltitude = 40;
     private const int DangerHighSpeed = 10;
     private const int DangerSatelliteCount = 10;
@@ -268,22 +268,22 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             this
         ).DisposeItWith(Disposable);
         var positionClientEx =
-            device.GetMicroservice<PositionClientEx>()
+            device.GetMicroservice<IPositionClientEx>()
             ?? throw new ArgumentException(
                 $"Unable to load {nameof(PositionClientEx)} from {device.Id}"
             );
         _gnssClient =
-            device.GetMicroservice<GnssClientEx>()
+            device.GetMicroservice<IGnssClientEx>()
             ?? throw new ArgumentException(
                 $"Unable to load {nameof(GnssClientEx)} from {device.Id}"
             );
         var telemetryClient =
-            device.GetMicroservice<TelemetryClientEx>()
+            device.GetMicroservice<ITelemetryClientEx>()
             ?? throw new ArgumentException(
                 $"Unable to load {nameof(TelemetryClientEx)} from {device.Id}"
             );
         var heartbeatClient =
-            device.GetMicroservice<HeartbeatClient>()
+            device.GetMicroservice<IHeartbeatClient>()
             ?? throw new ArgumentException(
                 $"Unable to load {nameof(HeartbeatClient)} from {device.Id}"
             );
@@ -544,7 +544,10 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             .ToBindableReactiveProperty<string>()
             .DisposeItWith(Disposable);
         CurrentFlightMode = modeClient
-            .CurrentMode.Select(mode => mode.Name)
+            .CurrentMode.Select(mode =>
+            {
+                return mode.Name;
+            })
             .ToBindableReactiveProperty<string>()
             .DisposeItWith(Disposable);
         Roll = positionClientEx.Roll.ToBindableReactiveProperty().DisposeItWith(Disposable);

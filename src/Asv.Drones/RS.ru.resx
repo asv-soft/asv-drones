@@ -11,12 +11,6 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="DialogPageViewModel_Title" xml:space="preserve">
-        <value>Диалоги</value>
-    </data>
-    <data name="DocumentPageViewModel_Title" xml:space="preserve">
-        <value>Документ</value>
-    </data>
     <data name="ParametersEditorParameterView_PinToggleButton_ToolTip" xml:space="preserve">
         <value>Включить/ выключить закрепление этого параметра</value>
     </data>
@@ -400,5 +394,8 @@
     </data>
     <data name="PacketViewerViewModel_Title" xml:space="preserve">
         <value>Просмотр пакетов</value>
+    </data>
+    <data name="MavParamsPageViewModel_Title" xml:space="preserve">
+        <value>Параметры</value>
     </data>
 </root>

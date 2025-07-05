@@ -1,11 +1,11 @@
 <Project>
   <PropertyGroup>
     <Nullable>enable</Nullable>
-    <ProductVersion>2.0.0-rc.1</ProductVersion>
-    <ApiVersion>2.0.0-rc.1</ApiVersion>
+    <ProductVersion>2.0.0-rc.2</ProductVersion>
+    <ApiVersion>2.0.0-dev.2</ApiVersion>
     <AvaloniaVersion>11.2.5</AvaloniaVersion>
-    <AsvAvaloniaVersion>1.0.1-dev.3</AsvAvaloniaVersion>
-    <AsvMavlinkVersion>4.0.12</AsvMavlinkVersion>
+    <AsvAvaloniaVersion>1.0.1-dev.5</AsvAvaloniaVersion>
+    <AsvMavlinkVersion>4.0.16</AsvMavlinkVersion>
     <AsvGnssVersion>2.0.0</AsvGnssVersion>
     <ScottPlotVersion>5.0.55</ScottPlotVersion>
   </PropertyGroup>

@@ -19,9 +19,9 @@ public class MissionProgressViewModel : RoutableViewModel
     public const string ViewModelId = "mission.progress";
 
     private readonly IClientDevice _device;
-    private readonly PositionClientEx _positionClient;
-    private readonly MissionClientEx _missionClient;
-    private readonly GnssClientEx _gnssClientEx;
+    private readonly IPositionClientEx _positionClient;
+    private readonly IMissionClientEx _missionClient;
+    private readonly IGnssClientEx _gnssClientEx;
     private readonly IUnit _distanceUnit;
     private readonly CancellationTokenSource _cts;
     private readonly ReactiveProperty<ushort> _currentIndex;
@@ -110,17 +110,17 @@ public class MissionProgressViewModel : RoutableViewModel
         Parent = parent;
         _distanceUnit = unitService.Units[DistanceBase.Id];
         _missionClient =
-            device.GetMicroservice<MissionClientEx>()
-            ?? throw new Exception($"Unable to load {nameof(MissionClientEx)} from {device.Id}");
+            device.GetMicroservice<IMissionClientEx>()
+            ?? throw new Exception($"Unable to load {nameof(IMissionClientEx)} from {device.Id}");
         _gnssClientEx =
-            device.GetMicroservice<GnssClientEx>()
-            ?? throw new Exception($"Unable to load {nameof(GnssClientEx)} from {device.Id}");
+            device.GetMicroservice<IGnssClientEx>()
+            ?? throw new Exception($"Unable to load {nameof(IGnssClientEx)} from {device.Id}");
         _positionClient =
-            device.GetMicroservice<PositionClientEx>()
-            ?? throw new Exception($"Unable to load {nameof(PositionClientEx)} from {device.Id}");
+            device.GetMicroservice<IPositionClientEx>()
+            ?? throw new Exception($"Unable to load {nameof(IPositionClientEx)} from {device.Id}");
         var mode =
-            device.GetMicroservice<ModeClient>()
-            ?? throw new Exception($"Unable to load {nameof(ModeClient)} from {device.Id}");
+            device.GetMicroservice<IModeClient>()
+            ?? throw new Exception($"Unable to load {nameof(IModeClient)} from {device.Id}");
 
         UpdateMission = new BindableAsyncCommand(UpdateMissionCommand.Id, this);
 
