@@ -7,9 +7,23 @@ public class BrowserTree(IReadOnlyObservableList<IBrowserItemViewModel> flatList
     : ObservableTree<IBrowserItemViewModel, string>(
         flatList,
         rootKey,
-        x => x.Path,
-        x => x.ParentPath ?? string.Empty,
+        static x => x.Path,
+        static x =>
+        {
+            var p = x.ParentPath ?? string.Empty;
+            return p == x.Path ? string.Empty : p;
+        },
         BrowserItemComparer.Instance,
-        (item, list, key, parent, comparer, transform, node) =>
-            new BrowserNode(item, list, key, parent, comparer, transform, node) // TODO: Fix potential memory loss
-    ) { }
+        NodeFactory
+    )
+{
+    private static readonly CreateNodeDelegate<IBrowserItemViewModel, string> NodeFactory = static (
+        item,
+        list,
+        key,
+        parent,
+        comparer,
+        factory,
+        parentNode
+    ) => new BrowserNode(item, list, key, parent, comparer, factory, parentNode);
+}
