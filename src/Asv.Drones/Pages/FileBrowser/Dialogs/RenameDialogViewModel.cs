@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Common;
@@ -9,18 +10,16 @@ using R3;
 
 namespace Asv.Drones;
 
-public class RenameDialogViewModel : DialogViewModelBase
+public partial class RenameDialogViewModel : DialogViewModelBase
 {
     private const string DialogId = "rename.dialog";
     private const int MaxNameLenght = 255;
-    private const string AllowedCharacters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-()[]{} ";
-    private static readonly HashSet<char> AllowedCharSet = AllowedCharacters.ToHashSet();
+    private static readonly Regex ValidNameRegex = MyRegex();
 
     public RenameDialogViewModel()
         : base(DialogId, DesignTime.LoggerFactory)
     {
-        NewName = new BindableReactiveProperty<string>(string.Empty);
+        NewName = new BindableReactiveProperty<string>(string.Empty).DisposeItWith(Disposable);
         NewName
             .EnableValidationRoutable(NameValidator, this, isForceValidation: true)
             .DisposeItWith(Disposable);
@@ -35,10 +34,7 @@ public class RenameDialogViewModel : DialogViewModelBase
             return new ArgumentException("Name cannot be empty");
         }
 
-        if (
-            arg.Any(Path.GetInvalidFileNameChars().Contains)
-            || arg.Any(c => !AllowedCharSet.Contains(c))
-        )
+        if (arg.Any(Path.GetInvalidFileNameChars().Contains) || !ValidNameRegex.IsMatch(arg))
         {
             return new ArgumentException("Name contains invalid characters");
         }
@@ -53,10 +49,8 @@ public class RenameDialogViewModel : DialogViewModelBase
 
     public override void ApplyDialog(ContentDialog dialog)
     {
-        _sub1?.Dispose();
-
         dialog.DefaultButton = ContentDialogButton.Primary;
-        _sub1 = IsValid.Subscribe(b => dialog.IsPrimaryButtonEnabled = b);
+        IsValid.Subscribe(b => dialog.IsPrimaryButtonEnabled = b).DisposeItWith(Disposable);
     }
 
     public override IEnumerable<IRoutable> GetRoutableChildren()
@@ -64,16 +58,6 @@ public class RenameDialogViewModel : DialogViewModelBase
         return [];
     }
 
-    private IDisposable? _sub1;
-
-    protected override void Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            _sub1?.Dispose();
-            NewName.Dispose();
-        }
-
-        base.Dispose(disposing);
-    }
+    [GeneratedRegex(@"^[a-zA-Z0-9_.-]+$", RegexOptions.Compiled)]
+    private static partial Regex MyRegex();
 }
