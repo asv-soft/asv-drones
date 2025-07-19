@@ -142,6 +142,7 @@ public class FileBrowserViewModel
         RemoteSelectedItem = new BindableReactiveProperty<BrowserNode?>(null).DisposeItWith(
             Disposable
         );
+
         Progress = new BindableReactiveProperty<double>(0).DisposeItWith(Disposable);
         IsDownloadPopupOpen = new BindableReactiveProperty<bool>(false).DisposeItWith(Disposable);
 
@@ -210,48 +211,48 @@ public class FileBrowserViewModel
 
     private Observable<bool> CanUpload =>
         LocalSelectedItem.Select(x =>
-            x?.Base is { FtpEntryType: FtpEntryType.File } && !IsClientBusy
+            x is { Base.FtpEntryType: FtpEntryType.File } && !IsClientBusy
         );
 
     private Observable<bool> CanDownload =>
         RemoteSelectedItem.Select(x =>
-            x?.Base is { FtpEntryType: FtpEntryType.File } && !IsClientBusy
+            x is { Base.FtpEntryType: FtpEntryType.File } && !IsClientBusy
         );
 
     private Observable<bool> CanRemoveLocal =>
-        LocalSelectedItem.Select(x => x?.Base is { IsInEditMode: false });
+        LocalSelectedItem.Select(x => x is { Base.IsInEditMode: false });
 
     private Observable<bool> CanRemoveRemote =>
-        RemoteSelectedItem.Select(x => x?.Base is { IsInEditMode: false });
+        RemoteSelectedItem.Select(x => x is { Base.IsInEditMode: false });
 
     private Observable<bool> CanFindFileOnLocal =>
         RemoteSelectedItem.Select(x =>
-            x?.Base is { IsInEditMode: false, FtpEntryType: FtpEntryType.File }
+            x is { Base: { IsInEditMode: false, FtpEntryType: FtpEntryType.File } }
         );
 
     private Observable<bool> CanCompareSelectedItems =>
         LocalSelectedItem.CombineLatest(
             RemoteSelectedItem,
             (local, remote) =>
-                local?.Base is { IsInEditMode: false, FtpEntryType: FtpEntryType.File }
-                && remote?.Base is { IsInEditMode: false, FtpEntryType: FtpEntryType.File }
+                local is { Base: { IsInEditMode: false, FtpEntryType: FtpEntryType.File } }
+                && remote is { Base: { IsInEditMode: false, FtpEntryType: FtpEntryType.File } }
         );
 
     private Observable<bool> CanCalculateRemoteCrc32 =>
         RemoteSelectedItem.Select(x =>
-            x?.Base is { IsInEditMode: false, FtpEntryType: FtpEntryType.File }
+            x is { Base: { IsInEditMode: false, FtpEntryType: FtpEntryType.File } }
         );
 
     private Observable<bool> CanCalculateLocalCrc32 =>
         LocalSelectedItem.Select(x =>
-            x?.Base is { IsInEditMode: false, FtpEntryType: FtpEntryType.File }
+            x is { Base: { IsInEditMode: false, FtpEntryType: FtpEntryType.File } }
         );
 
     private Observable<bool> CanRenameLocal =>
-        LocalSelectedItem.Select(x => x?.Base is { IsInEditMode: false });
+        LocalSelectedItem.Select(x => x is { Base.IsInEditMode: false });
 
     private Observable<bool> CanRenameRemote =>
-        RemoteSelectedItem.Select(x => x?.Base is { IsInEditMode: false });
+        RemoteSelectedItem.Select(x => x is { Base.IsInEditMode: false });
 
     #endregion
 

@@ -122,7 +122,8 @@
                         
                         <!--Local tree-->
                         <TreeView ItemsSource="{Binding LocalItemsTree.Items}"
-                                  SelectedItem="{Binding LocalSelectedItem.Value}">
+                                  SelectedItem="{Binding LocalSelectedItem.Value}"
+                                  PointerPressed="LocalTree_OnPointerPressed">
                             <TreeView.ItemTemplate>
                                 <TreeDataTemplate ItemsSource="{Binding Items}" 
                                                   DataType="{x:Type drones:BrowserNode}">
@@ -275,7 +276,8 @@
                         
                         <!--Remote tree-->
                         <TreeView ItemsSource="{Binding RemoteItemsTree.Items}"
-                                  SelectedItem="{Binding RemoteSelectedItem.Value}">
+                                  SelectedItem="{Binding RemoteSelectedItem.Value}"
+                                  PointerPressed="RemoteTree_OnPointerPressed">
                             <TreeView.ItemTemplate>
                                 <TreeDataTemplate ItemsSource="{Binding Items}" 
                                                   DataType="{x:Type drones:BrowserNode}">
