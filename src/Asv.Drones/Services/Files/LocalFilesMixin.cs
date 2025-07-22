@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -134,7 +133,7 @@ public static class LocalFilesMixin
         return newPath;
     }
 
-    public static DirectoryInfo CreateDirectory(string path, ILogger? log = null)
+    public static void CreateDirectory(string path, ILogger? log = null)
     {
         var folderNumber = 1;
         while (true)
@@ -147,7 +146,8 @@ public static class LocalFilesMixin
             }
 
             log?.LogInformation("Creating directory '{Path}'", name);
-            return Directory.CreateDirectory(name);
+            Directory.CreateDirectory(name);
+            return;
         }
     }
 
@@ -174,27 +174,6 @@ public static class LocalFilesMixin
         catch (FileNotFoundException e)
         {
             log?.LogError(e, "Directory '{Path}' not found", path);
-        }
-    }
-
-    public static async Task WriteFileAsync(
-        string directoryPath,
-        string fileName,
-        byte[] data,
-        CancellationToken ct = default,
-        ILogger? log = null
-    )
-    {
-        try
-        {
-            var fullPath = Path.Combine(directoryPath, fileName);
-
-            await File.WriteAllBytesAsync(fullPath, data, ct);
-            log?.LogInformation("File created successfully: {name}", fileName);
-        }
-        catch (Exception e)
-        {
-            log?.LogError(e, "Failed to create file '{Name}'", fileName);
         }
     }
 
