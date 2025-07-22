@@ -191,6 +191,7 @@
                 <StackPanel Grid.Row="0"
                             Grid.Column="1"
                             KeyboardNavigation.TabNavigation="None"
+                            IsEnabled="{Binding !IsUiBlocked}"
                             IsTabStop="False"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center" 
@@ -199,9 +200,11 @@
                     <Button Height="50" 
                             Content="{avalonia:MaterialIconExt Kind=TransferRight}" 
                             Command="{Binding UploadCommand}"
+                            IsEnabled="{Binding !IsUiBlocked.Value}"
                             CommandParameter="{Binding LocalSelectedItem.Value}"/>
                     <Button Height="50" 
                             Content="{avalonia:MaterialIconExt Kind=TransferLeft}" 
+                            IsEnabled="{Binding !IsUiBlocked.Value}"
                             Command="{Binding ShowDownloadPopupCommand}"/>
                     
                     <Popup IsOpen="{Binding IsDownloadPopupOpen.Value}"
@@ -211,9 +214,11 @@
                             <StackPanel>
                                 <Button Content="{x:Static drones:RS.FileBrowserView_Button_Download_Content}" 
                                         Command="{Binding DownloadCommand}" 
+                                        IsEnabled="{Binding !IsUiBlocked.Value}"
                                         CommandParameter="{Binding RemoteSelectedItem.Value}"
                                         Margin="0,0,0,5"/>
                                 <Button Content="{x:Static drones:RS.FileBrowserView_Button_BurstDownload_Content}" 
+                                        IsEnabled="{Binding !IsUiBlocked.Value}"
                                         Command="{Binding BurstDownloadCommand}"
                                         CommandParameter="{Binding RemoteSelectedItem.Value}"/>
                             </StackPanel>
