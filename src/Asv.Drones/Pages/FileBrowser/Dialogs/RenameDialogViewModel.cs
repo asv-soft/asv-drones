@@ -22,17 +22,17 @@ public class RenameDialogViewModel : DialogViewModelBase
     {
         NewName = new BindableReactiveProperty<string>(string.Empty);
         NewName
-            .EnableValidation(NameValidator, this, isForceValidation: true)
+            .EnableValidationRoutable(NameValidator, this, isForceValidation: true)
             .DisposeItWith(Disposable);
     }
 
     public BindableReactiveProperty<string> NewName { get; }
 
-    private static ValueTask<ValidationResult> NameValidator(string arg)
+    private static ValidationResult NameValidator(string arg)
     {
         if (string.IsNullOrWhiteSpace(arg))
         {
-            return ValidationResult.Create(new ArgumentException("Name cannot be empty"));
+            return new ArgumentException("Name cannot be empty");
         }
 
         if (
@@ -40,14 +40,12 @@ public class RenameDialogViewModel : DialogViewModelBase
             || arg.Any(c => !AllowedCharSet.Contains(c))
         )
         {
-            return ValidationResult.Create(
-                new ArgumentException("Name contains invalid characters")
-            );
+            return new ArgumentException("Name contains invalid characters");
         }
 
         if (arg.Length > MaxNameLenght)
         {
-            return ValidationResult.Create(new ArgumentException("Name is too long"));
+            return new ArgumentException("Name is too long");
         }
 
         return ValidationResult.Success;

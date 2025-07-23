@@ -15,7 +15,7 @@ public class BurstDownloadDialogViewModel : DialogViewModelBase
         : base(DialogId, DesignTime.LoggerFactory)
     {
         PacketSize = new BindableReactiveProperty<byte?>(MavlinkFtpHelper.MaxDataSize);
-        PacketSize.EnableValidation(
+        PacketSize.EnableValidationRoutable(
             arg =>
             {
                 if (arg is >= 1 and <= MavlinkFtpHelper.MaxDataSize)
@@ -23,10 +23,8 @@ public class BurstDownloadDialogViewModel : DialogViewModelBase
                     return ValidationResult.Success;
                 }
 
-                return ValidationResult.Create(
-                    new ArgumentOutOfRangeException(
-                        $"Invalid value (1 - {MavlinkFtpHelper.MaxDataSize})"
-                    )
+                return new ArgumentOutOfRangeException(
+                    $"Invalid value (1 - {MavlinkFtpHelper.MaxDataSize})"
                 );
             },
             this,

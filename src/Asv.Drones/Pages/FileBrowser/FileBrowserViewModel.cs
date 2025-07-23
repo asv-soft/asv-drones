@@ -104,19 +104,17 @@ public class FileBrowserViewModel
         LocalSearchText = new HistoricalStringProperty(
             $"{PageId}{nameof(LocalSearchText)}",
             localSearchText,
-            loggerFactory
-        )
-        {
-            Parent = this,
-        };
+            loggerFactory,
+            this
+        );
+        LocalSearchText.ForceValidate();
         RemoteSearchText = new HistoricalStringProperty(
             $"{PageId}{nameof(RemoteSearchText)}",
             remoteSearchText,
-            loggerFactory
-        )
-        {
-            Parent = this,
-        };
+            loggerFactory,
+            this
+        );
+        RemoteSearchText.ForceValidate();
 
         LocalSelectedItem = new BindableReactiveProperty<BrowserNode?>(null);
         RemoteSelectedItem = new BindableReactiveProperty<BrowserNode?>(null);
