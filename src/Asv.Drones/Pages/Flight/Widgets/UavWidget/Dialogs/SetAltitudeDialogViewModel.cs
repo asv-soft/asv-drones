@@ -27,7 +27,7 @@ public class SetAltitudeDialogViewModel : DialogViewModelBase
             .CurrentUnitItem.Select(item => item.Symbol)
             .ToBindableReactiveProperty<string>()
             .DisposeItWith(Disposable);
-        _sub1 = Altitude.EnableValidation(
+        _sub1 = Altitude.EnableValidationRoutable(
             s =>
             {
                 var valid = AltitudeUnit.CurrentUnitItem.Value.ValidateValue(s);

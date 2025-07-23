@@ -115,11 +115,9 @@ public class MavParamsPageViewModel
         ShowStaredOnly = new HistoricalBoolProperty(
             nameof(ShowStaredOnly),
             _showStarredOnly,
-            loggerFactory
-        )
-        {
-            Parent = this,
-        }.DisposeItWith(Disposable);
+            loggerFactory,
+            this
+        ).DisposeItWith(Disposable);
         IsRefreshing = new BindableReactiveProperty<bool>().DisposeItWith(Disposable);
         SelectedItem = new BindableReactiveProperty<ParamItemViewModel?>().DisposeItWith(
             Disposable

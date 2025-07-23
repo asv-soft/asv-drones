@@ -65,14 +65,10 @@ public class ParamItemViewModel : RoutableViewModel
         _isPinned = new ReactiveProperty<bool>(config?.IsPinned ?? false);
         _isStarred = new ReactiveProperty<bool>(config?.IsStarred ?? false);
 
-        IsPinned = new HistoricalBoolProperty(nameof(IsPinned), _isPinned, loggerFactory)
-        {
-            Parent = this,
-        };
-        IsStarred = new HistoricalBoolProperty(nameof(IsStarred), _isStarred, loggerFactory)
-        {
-            Parent = this,
-        };
+        IsPinned = new HistoricalBoolProperty(nameof(IsPinned), _isPinned, loggerFactory, this);
+        IsPinned.ForceValidate();
+        IsStarred = new HistoricalBoolProperty(nameof(IsStarred), _isStarred, loggerFactory, this);
+        IsStarred.ForceValidate();
 
         Value = new BindableReactiveProperty<string?>();
         IsSynced = new BindableReactiveProperty<bool>();

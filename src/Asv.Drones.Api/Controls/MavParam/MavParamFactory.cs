@@ -1,5 +1,4 @@
-﻿using System.Collections.Specialized;
-using Asv.Avalonia;
+﻿using Asv.Avalonia;
 using Asv.Mavlink;
 using Microsoft.Extensions.Logging;
 using R3;
