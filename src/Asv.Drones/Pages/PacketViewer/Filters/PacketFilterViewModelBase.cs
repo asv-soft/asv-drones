@@ -35,7 +35,6 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
         );
         IsChecked = new BindableReactiveProperty<bool>(false).DisposeItWith(Disposable);
         IncreaseRatesCounterSafe();
-        UpdateRateText();
 
         IsChecked.Value = true;
 
