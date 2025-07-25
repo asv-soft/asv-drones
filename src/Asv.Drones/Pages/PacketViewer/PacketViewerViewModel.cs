@@ -84,7 +84,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
     )
         : base(PageId, cmd, loggerFactory)
     {
-        Title = "Packet Viewer";
+        Title = RS.PacketViewerViewModel_Title;
         _app = app;
         _loggerFactory = loggerFactory;
         _unit = unit;
@@ -280,7 +280,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         using var vm = new SavePacketMessagesDialogViewModel(_loggerFactory);
         var dialog = new ContentDialog(vm, _navigationService)
         {
-            Title = $"{RS.PacketViewerViewModel_SavePacketMessagesDialog_Title}",
+            Title = RS.PacketViewerViewModel_SavePacketMessagesDialog_Title,
             CloseButtonText =
                 $"{RS.PacketViewerViewModel_SavePacketMessagesDialog_CloseButtonText}",
             PrimaryButtonText =

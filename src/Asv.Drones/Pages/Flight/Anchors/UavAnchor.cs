@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
 using Asv.Avalonia.IO;
@@ -13,11 +14,12 @@ namespace Asv.Drones;
 
 public class UavAnchor : MapAnchor<UavAnchor>
 {
+    public const string UavAnchorIdBase = "uav";
     private const uint CurrentUavPositionChangeThrottleMs = 200;
     public DeviceId DeviceId { get; }
 
     public UavAnchor()
-        : base("uav_design_time", DesignTime.LoggerFactory)
+        : base(DesignTime.Id, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
     }
@@ -29,7 +31,7 @@ public class UavAnchor : MapAnchor<UavAnchor>
         IPositionClientEx pos,
         ILoggerFactory loggerFactory
     )
-        : base("uav", loggerFactory)
+        : base(UavAnchorIdBase, loggerFactory)
     {
         DeviceId = deviceId;
         InitArgs(deviceId.AsString());
@@ -42,10 +44,8 @@ public class UavAnchor : MapAnchor<UavAnchor>
         dev.Name.Subscribe(x => Title = x ?? string.Empty).DisposeItWith(Disposable);
         pos.Current.Subscribe(x => Location = x).DisposeItWith(Disposable);
         pos.Yaw.Subscribe(x => Azimuth = x).DisposeItWith(Disposable);
-
         var currentUavLocation = pos.Current.CurrentValue;
         var currentHomeLocation = pos.Home.CurrentValue ?? GeoPoint.Zero;
-        pos.GetHomePosition().SafeFireAndForget();
         pos.Home.Subscribe(x =>
             {
                 Polygon.Remove(currentHomeLocation);

@@ -1,7 +1,6 @@
 ﻿using System.Composition;
 using Asv.Avalonia;
 using Asv.Common;
-using Asv.Drones.Api;
 using Microsoft.Extensions.Logging;
 using R3;
 

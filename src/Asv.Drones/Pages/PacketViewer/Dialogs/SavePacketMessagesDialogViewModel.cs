@@ -15,6 +15,12 @@ public class SavePacketMessagesDialogViewModel : DialogViewModelBase
     public const string DefaultSeparator = ";";
     public const string DefaultShieldSymbol = ",";
 
+    public SavePacketMessagesDialogViewModel()
+        : this(DesignTime.LoggerFactory)
+    {
+        DesignTime.ThrowIfNotDesignMode();
+    }
+
     [ImportingConstructor]
     public SavePacketMessagesDialogViewModel(ILoggerFactory loggerFactory)
         : base(ViewModelId, loggerFactory)

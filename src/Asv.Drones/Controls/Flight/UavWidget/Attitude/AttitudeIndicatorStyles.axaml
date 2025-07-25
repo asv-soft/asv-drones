@@ -213,7 +213,7 @@
                                 BorderThickness="3" 
                                 CornerRadius="5"
                                 Background="Black">
-                            <Path ToolTip.Tip="Velocity"
+                            <Path ToolTip.Tip="{x:Static drones:RS.AltitudeIndicatorStyles_ToolTip_Velocity}"
                                   HorizontalAlignment="Left" Width="20" Height="30" Stretch="Fill" Fill="White" Stroke="White" StrokeThickness="3"
                                   Opacity="0.7" >
                                 <Path.Data>
@@ -227,23 +227,42 @@
                             </Path>     
                         </Border>
                        
-                        <TextBlock ToolTip.Tip="Velocity" Canvas.Left="0"
-                                   Canvas.Top="470" Margin="0,0,0,0" Foreground="White"
-                                   Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Velocity}"
-                                   TextAlignment="Right" FontSize="40" Width="87" FontWeight="DemiBold" />
-                        <Border ToolTip.Tip="Velocity"
+                        <TextBlock 
+                            ToolTip.Tip="{x:Static drones:RS.AltitudeIndicatorStyles_ToolTip_Velocity}" 
+                            Canvas.Left="0"
+                            Canvas.Top="470" 
+                            Margin="0,0,0,0" 
+                            Foreground="White"
+                            Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Velocity}"
+                            TextAlignment="Right" 
+                            FontSize="40" 
+                            Width="87" 
+                            FontWeight="DemiBold" />
+                        <Border ToolTip.Tip="{x:Static drones:RS.AltitudeIndicatorStyles_ToolTip_Velocity}"
                                  Canvas.Top="300" Canvas.Left="-3" BorderThickness="5"
                                 CornerRadius="3" Width="113" Height="400" />
 
 
                         <!-- Altitude -->
-                        <Rectangle ToolTip.Tip="Altitude" Canvas.Top="301"
-                                   Canvas.Right="-3" Opacity="0.3" StrokeThickness="0"
-                                   HorizontalAlignment="Stretch" Width="111" Height="398" />
-                        <ItemsControl ToolTip.Tip="Altitude"
-                                      x:Name="Altitude" Canvas.Right="0" Canvas.Top="300" Width="110" Height="400"
-                                      HorizontalAlignment="Center" VerticalAlignment="Center"
-                                      ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=AltitudeItems}">
+                        <Rectangle 
+                            ToolTip.Tip="{x:Static drones:RS.AltitudeIndicatorStyles_ToolTip_Altitude}" 
+                            Canvas.Top="301"
+                            Canvas.Right="-3" 
+                            Opacity="0.3" 
+                            StrokeThickness="0"
+                            HorizontalAlignment="Stretch" 
+                            Width="111" 
+                            Height="398" />
+                        <ItemsControl 
+                            ToolTip.Tip="{x:Static drones:RS.AltitudeIndicatorStyles_ToolTip_Altitude}"
+                            x:Name="Altitude" 
+                            Canvas.Right="0" 
+                            Canvas.Top="300" 
+                            Width="110" 
+                            Height="400"
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center"
+                            ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=AltitudeItems}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <Canvas Width="110" Height="400" HorizontalAlignment="Center"
@@ -273,7 +292,7 @@
                                 BorderThickness="3" 
                                 CornerRadius="5"
                                 Background="Black">
-                            <Path ToolTip.Tip="Velocity"
+                            <Path ToolTip.Tip="{x:Static drones:RS.AltitudeIndicatorStyles_ToolTip_Altitude}"
                                   HorizontalAlignment="Left" Width="20" Height="30" Stretch="Fill" Fill="White" Stroke="White" StrokeThickness="3"
                                   Opacity="0.7" >
                                 <Path.Data>
@@ -287,22 +306,22 @@
                             </Path>     
                         </Border>
                         <!-- <Polygon/> -->
-                        <TextBlock ToolTip.Tip="Altitude" Canvas.Right="-1"
+                        <TextBlock ToolTip.Tip="{x:Static drones:RS.AltitudeIndicatorStyles_ToolTip_Altitude}" Canvas.Right="-1"
                                    Canvas.Top="470" Margin="0,0,0,0" Foreground="White" FontWeight="DemiBold"
                                    Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Altitude}"
                                    VerticalAlignment="Center" TextAlignment="Left" FontSize="40" Width="87" />
-                        <Border ToolTip.Tip="Altitude"
+                        <Border ToolTip.Tip="{x:Static drones:RS.AltitudeIndicatorStyles_ToolTip_Altitude}"
                                 Canvas.Right="-3" Canvas.Top="300" BorderThickness="5"
                                 CornerRadius="3" Width="113" Height="400" />
 
                         <!-- Сompass -->
-                        <Rectangle ToolTip.Tip="Compass" Canvas.Left="-3"
+                        <Rectangle ToolTip.Tip="{x:Static drones:RS.AltitudeIndicatorStyles_ToolTip_Compass}" Canvas.Left="-3"
                                    Canvas.Top="-3" Width="1006" Height="93" Fill="White" Opacity="0.3" Stroke="Black"
                                    StrokeThickness="3" HorizontalAlignment="Stretch" />
-                        <Line ToolTip.Tip="Compass" StartPoint="0,80"
+                        <Line ToolTip.Tip="{x:Static drones:RS.AltitudeIndicatorStyles_ToolTip_Compass}" StartPoint="0,80"
                               EndPoint="1000,80" Stroke="#e0e0e0" StrokeThickness="5" />
                         <ItemsControl x:Name="Heading" Canvas.Left="0" Canvas.Top="0" Width="1000" Height="80"
-                                      ToolTip.Tip="Compass"
+                                      ToolTip.Tip="{x:Static drones:RS.AltitudeIndicatorStyles_ToolTip_Compass}"
                                       HorizontalAlignment="Center" VerticalAlignment="Center"
                                       ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeadingItems}">
                             <ItemsControl.ItemsPanel>
@@ -329,10 +348,10 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <Rectangle ToolTip.Tip="Compass" Canvas.Left="450"
+                        <Rectangle ToolTip.Tip="{x:Static drones:RS.AltitudeIndicatorStyles_ToolTip_Compass}" Canvas.Left="450"
                                    Canvas.Top="-3" Width="100" Height="80" Fill="#000a12" Opacity="0.7"
                                    Stroke="#eceff1" StrokeThickness="3" HorizontalAlignment="Stretch" />
-                        <TextBlock ToolTip.Tip="Compass" Canvas.Top="12"
+                        <TextBlock ToolTip.Tip="{x:Static drones:RS.AltitudeIndicatorStyles_ToolTip_Compass}" Canvas.Top="12"
                                    Canvas.Left="460" Foreground="White"
                                    Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Heading}"
                                    VerticalAlignment="Center" TextAlignment="Center" FontWeight="DemiBold"
@@ -354,14 +373,13 @@
 
 
                         <!-- Vibration -->
-
-                        <Border IsVisible="False" ToolTip.Tip="Vibration"
+                        <Border IsVisible="False" ToolTip.Tip="{x:Static drones:RS.AltitudeIndicatorStyles_ToolTip_Vibration}"
                                 BorderBrush="#e0e0e0" BorderThickness="5" CornerRadius="3" Canvas.Top="105"
                                 Canvas.Left="-3" Height="185" Width="170" />
-                        <Border IsVisible="False" ToolTip.Tip="Vibration" Background="White"
+                        <Border IsVisible="False" ToolTip.Tip="{x:Static drones:RS.AltitudeIndicatorStyles_ToolTip_Vibration}" Background="White"
                                 Opacity="0.3" CornerRadius="3" Canvas.Top="105" Canvas.Left="-3" Height="185"
                                 Width="170" />
-                        <Grid IsVisible="False" ToolTip.Tip="Vibration" Canvas.Top="110"
+                        <Grid IsVisible="False" ToolTip.Tip="{x:Static drones:RS.AltitudeIndicatorStyles_ToolTip_Vibration}" Canvas.Top="110"
                               Canvas.Left="10" Height="175" ColumnDefinitions="*, 10, *, 10, *"
                               RowDefinitions="40, *, 2, *, 2, *, 40">
                             <TextBlock Grid.Row="0" Grid.Column="0" FontSize="25" HorizontalAlignment="Center"

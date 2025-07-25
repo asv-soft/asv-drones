@@ -1,4 +1,5 @@
-﻿using System.Composition;
+﻿using System;
+using System.Composition;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Common;
@@ -6,6 +7,7 @@ using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
 using Microsoft.Extensions.Logging;
+using ObservableCollections;
 using R3;
 
 namespace Asv.Drones;

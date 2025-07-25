@@ -11,12 +11,6 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="DialogPageViewModel_Title" xml:space="preserve">
-        <value>Диалоги</value>
-    </data>
-    <data name="DocumentPageViewModel_Title" xml:space="preserve">
-        <value>Документ</value>
-    </data>
     <data name="ParametersEditorParameterView_PinToggleButton_ToolTip" xml:space="preserve">
         <value>Включить/ выключить закрепление этого параметра</value>
     </data>
@@ -355,5 +349,53 @@
     </data>
     <data name="OpenFlightModeCommand_CommandInfo_Description" xml:space="preserve">
         <value>Команда, которая открывает страницу режима полета</value>
+    </data>
+    <data name="OpenFileBrowserCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Открыть браузер файлов</value>
+    </data>
+    <data name="OpenFileBrowserCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда открывает файл браузер</value>
+    </data>
+    <data name="OpenPacketViewerCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Открыть просмотр пакетов</value>
+    </data>
+    <data name="OpenPacketViewerCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда открывает просмотр пакетов</value>
+    </data>
+    <data name="AltitudeIndicatorStyles_ToolTip_Velocity" xml:space="preserve">
+        <value>Скорость</value>
+    </data>
+    <data name="AltitudeIndicatorStyles_ToolTip_Altitude" xml:space="preserve">
+        <value>Высота</value>
+    </data>
+    <data name="AltitudeIndicatorStyles_ToolTip_Compass" xml:space="preserve">
+        <value>Компас</value>
+    </data>
+    <data name="AltitudeIndicatorStyles_ToolTip_Vibration" xml:space="preserve">
+        <value>Вибрация</value>
+    </data>
+    <data name="FileBrowserViewModel_Title" xml:space="preserve">
+        <value>Браузер</value>
+    </data>
+    <data name="UavWidgetViewModel_SetAltitudeDialog_Title" xml:space="preserve">
+        <value>Введите высоту</value>
+    </data>
+    <data name="MavParamsPageView_AwaitingScreen_Header" xml:space="preserve">
+        <value>Подключение</value>
+    </data>
+    <data name="MavParamsPageView_AwaitingScreen_Description" xml:space="preserve">
+        <value>Подключение к устройству...</value>
+    </data>
+    <data name="MavParamsPageView_CancelButton_Content" xml:space="preserve">
+        <value>Отмена</value>
+    </data>
+    <data name="MavParamsPageView_Loading_Text" xml:space="preserve">
+        <value>Загрузка...</value>
+    </data>
+    <data name="PacketViewerViewModel_Title" xml:space="preserve">
+        <value>Просмотр пакетов</value>
+    </data>
+    <data name="MavParamsPageViewModel_Title" xml:space="preserve">
+        <value>Параметры</value>
     </data>
 </root>

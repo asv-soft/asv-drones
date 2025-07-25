@@ -4,9 +4,9 @@ using Avalonia.Controls;
 namespace Asv.Drones;
 
 [ExportViewFor(typeof(SetAltitudeDialogViewModel))]
-public partial class SetAltitudeDialog : UserControl
+public partial class SetAltitudeDialogView : UserControl
 {
-    public SetAltitudeDialog()
+    public SetAltitudeDialogView()
     {
         InitializeComponent();
     }
