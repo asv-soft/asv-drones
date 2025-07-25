@@ -33,7 +33,6 @@ public class MavParamViewModel
         : base(metadata.Id, loggerFactory)
     {
         Info = metadata;
-
         update
             .ObserveOnCurrentSynchronizationContext()
             .Subscribe(InternalOnRemoteChanged)
