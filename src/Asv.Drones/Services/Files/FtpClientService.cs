@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Asv.Common;
 using Asv.Mavlink;
 using Microsoft.Extensions.Logging;
 using ObservableCollections;
@@ -80,7 +81,312 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
         );
 
         await ftp.UploadFile(remoteDirectory, stream, progress, ct);
-        _log.LogInformation("Uploaded {file} → {target}", localFilePath, remoteDirectory);
+        _log.LogInformation("Uploaded {file} -> {target}", localFilePath, remoteDirectory);
+
+        _remoteChanged.OnNext(Unit.Default);
+    }
+
+    public async Task DownloadDirectoryAsync(
+        string remoteDirectoryPath,
+        string localDirectory,
+        byte partSize = MavlinkFtpHelper.MaxDataSize,
+        CancellationToken ct = default,
+        IProgress<double>? progress = null
+    )
+    {
+        using var busy = BeginBusyScope();
+
+        const char dirSep = MavlinkFtpHelper.DirectorySeparator;
+        var remoteRoot = remoteDirectoryPath.TrimEnd(dirSep);
+        if (string.IsNullOrEmpty(remoteRoot))
+        {
+            throw new ArgumentNullException(nameof(remoteDirectoryPath));
+        }
+
+        var remoteRootName = remoteRoot[(remoteRoot.LastIndexOf(dirSep) + 1)..];
+
+        var destRoot = Path.Combine(localDirectory, remoteRootName);
+        Directory.CreateDirectory(destRoot);
+
+        var remotePrefix = $"{remoteRoot}{dirSep}";
+
+        var dirs = ftp
+            .Entries.Where(e =>
+                e.Value.Type == FtpEntryType.Directory
+                && e.Key.StartsWith(remotePrefix, StringComparison.Ordinal)
+            )
+            .Select(e => e.Key)
+            .Order()
+            .ToList();
+
+        var files = ftp
+            .Entries.Where(e =>
+                e.Value.Type == FtpEntryType.File
+                && e.Key.StartsWith(remotePrefix, StringComparison.Ordinal)
+            )
+            .Select(e => e.Key)
+            .Order()
+            .ToList();
+
+        foreach (var dir in dirs)
+        {
+            ct.ThrowIfCancellationRequested();
+
+            var relative = dir[remotePrefix.Length..].TrimEnd(dirSep);
+            if (relative.Length == 0)
+            {
+                continue;
+            }
+
+            var localDir = Path.Combine(
+                destRoot,
+                relative.Replace(dirSep, Path.DirectorySeparatorChar)
+            );
+
+            Directory.CreateDirectory(localDir);
+        }
+
+        var total = files.Count;
+        if (total == 0)
+        {
+            progress?.Report(1.0);
+            _log.LogInformation(
+                "Remote directory '{remote}' contains no files",
+                remoteDirectoryPath
+            );
+            return;
+        }
+
+        var completed = 0;
+        foreach (var file in files)
+        {
+            ct.ThrowIfCancellationRequested();
+
+            var relative = file[remotePrefix.Length..];
+            var localFileDir = Path.Combine(
+                destRoot,
+                Path.GetDirectoryName(relative)!.Replace(dirSep, Path.DirectorySeparatorChar)
+            );
+
+            Directory.CreateDirectory(localFileDir);
+
+            var completedSafe = completed;
+            var nested = progress is null
+                ? null
+                : new Progress<double>(p => progress.Report((completedSafe + p) / total));
+
+            await DownloadFileAsync(file, localFileDir, partSize, ct, nested);
+
+            completed++;
+            progress?.Report((double)completed / total);
+        }
+
+        _log.LogInformation(
+            "Downloaded directory '{remote}' -> '{dest}' (files: {count})",
+            remoteDirectoryPath,
+            destRoot,
+            total
+        );
+    }
+
+    public async Task BurstDownloadDirectoryAsync(
+        string remoteDirectoryPath,
+        string localDirectory,
+        byte partSize = MavlinkFtpHelper.MaxDataSize,
+        CancellationToken ct = default,
+        IProgress<double>? progress = null
+    )
+    {
+        using var busy = BeginBusyScope();
+
+        const char dirSep = MavlinkFtpHelper.DirectorySeparator;
+        var remoteRoot = remoteDirectoryPath.TrimEnd(dirSep);
+        if (string.IsNullOrEmpty(remoteRoot))
+        {
+            throw new ArgumentNullException(nameof(remoteDirectoryPath));
+        }
+
+        var remoteRootName = remoteRoot[(remoteRoot.LastIndexOf(dirSep) + 1)..];
+
+        var destRoot = Path.Combine(localDirectory, remoteRootName);
+        Directory.CreateDirectory(destRoot);
+
+        var remotePrefix = $"{remoteRoot}{dirSep}";
+
+        var dirs = ftp
+            .Entries.Where(e =>
+                e.Value.Type == FtpEntryType.Directory
+                && e.Key.StartsWith(remotePrefix, StringComparison.Ordinal)
+            )
+            .Select(e => e.Key)
+            .Order()
+            .ToList();
+
+        var files = ftp
+            .Entries.Where(e =>
+                e.Value.Type == FtpEntryType.File
+                && e.Key.StartsWith(remotePrefix, StringComparison.Ordinal)
+            )
+            .Select(e => e.Key)
+            .Order()
+            .ToList();
+
+        foreach (var dir in dirs)
+        {
+            ct.ThrowIfCancellationRequested();
+
+            var relative = dir[remotePrefix.Length..].TrimEnd(dirSep);
+            if (relative.Length == 0)
+            {
+                continue;
+            }
+
+            var localDir = Path.Combine(
+                destRoot,
+                relative.Replace(dirSep, Path.DirectorySeparatorChar)
+            );
+
+            Directory.CreateDirectory(localDir);
+        }
+
+        var total = files.Count;
+        if (total == 0)
+        {
+            progress?.Report(1.0);
+            _log.LogInformation(
+                "Remote directory '{remote}' contains no files",
+                remoteDirectoryPath
+            );
+            return;
+        }
+
+        var completed = 0;
+        foreach (var file in files)
+        {
+            ct.ThrowIfCancellationRequested();
+
+            var relative = file[remotePrefix.Length..];
+            var localFileDir = Path.Combine(
+                destRoot,
+                Path.GetDirectoryName(relative)!.Replace(dirSep, Path.DirectorySeparatorChar)
+            );
+
+            Directory.CreateDirectory(localFileDir);
+
+            var completedSafe = completed;
+            var nested = progress is null
+                ? null
+                : new Progress<double>(p => progress.Report((completedSafe + p) / total));
+
+            await BurstDownloadFileAsync(file, localFileDir, partSize, ct, nested);
+
+            completed++;
+            progress?.Report((double)completed / total);
+        }
+
+        _log.LogInformation(
+            "Burst-Downloaded directory '{remote}' -> '{dest}' (files: {count})",
+            remoteDirectoryPath,
+            destRoot,
+            total
+        );
+    }
+
+    public async Task UploadDirectoryAsync(
+        string localDirectoryPath,
+        string remoteDirectory,
+        CancellationToken ct = default,
+        IProgress<double>? progress = null
+    )
+    {
+        using var busy = BeginBusyScope();
+
+        var localRoot = new DirectoryInfo(localDirectoryPath);
+        if (!localRoot.Exists)
+        {
+            throw new DirectoryNotFoundException(localDirectoryPath);
+        }
+
+        const char rSep = MavlinkFtpHelper.DirectorySeparator;
+        var rootName = localRoot.Name;
+
+        var remoteDirNorm = remoteDirectory;
+        if (!remoteDirNorm.EndsWith(rSep))
+        {
+            remoteDirNorm += rSep;
+        }
+
+        var lastSegment = remoteDirNorm
+            .TrimEnd(rSep)
+            .Split(rSep, StringSplitOptions.RemoveEmptyEntries)
+            .LastOrDefault();
+
+        var remoteRoot = string.Equals(lastSegment, rootName, StringComparison.Ordinal)
+            ? remoteDirNorm
+            : $"{remoteDirNorm}{rootName}{rSep}";
+
+        await ftp.Base.CreateDirectory(remoteRoot, ct);
+
+        var localDirs = Directory.GetDirectories(
+            localDirectoryPath,
+            "*",
+            SearchOption.AllDirectories
+        );
+
+        foreach (var dir in localDirs)
+        {
+            var rel = Path.GetRelativePath(localDirectoryPath, dir)
+                .Replace(Path.DirectorySeparatorChar, rSep);
+
+            var remoteDir = MavlinkFtpHelper.Combine(remoteRoot, $"{rel}{rSep}");
+
+            await ftp.Base.CreateDirectory(remoteDir, ct);
+        }
+
+        var localFiles = Directory.GetFiles(localDirectoryPath, "*", SearchOption.AllDirectories);
+        var totalBytes = localFiles.Sum(f => new FileInfo(f).Length);
+        long uploaded = 0;
+
+        foreach (var file in localFiles)
+        {
+            ct.ThrowIfCancellationRequested();
+
+            var rel = Path.GetRelativePath(localDirectoryPath, file)
+                .Replace(Path.DirectorySeparatorChar, rSep);
+
+            var remoteFilePath = MavlinkFtpHelper.Combine(remoteRoot, rel);
+
+            await using var stream = new FileStream(
+                file,
+                FileMode.Open,
+                FileAccess.Read,
+                FileShare.Read
+            );
+
+            var fileLength = stream.Length;
+            var uploadedSafe = uploaded;
+            var fileProgress =
+                progress == null
+                    ? null
+                    : new Progress<double>(p =>
+                    {
+                        var current = uploadedSafe + (long)(fileLength * p);
+                        progress.Report(current / (double)totalBytes);
+                    });
+
+            await ftp.UploadFile(remoteFilePath, stream, fileProgress, ct);
+
+            uploaded += fileLength;
+            progress?.Report(uploaded / (double)totalBytes);
+            _log.LogInformation("Uploaded {File} -> {Target}", file, remoteFilePath);
+        }
+
+        _log.LogInformation(
+            "Uploaded folder {local} -> {remote} (files: {count})",
+            localDirectoryPath,
+            remoteDirectory,
+            localFiles.Length
+        );
 
         _remoteChanged.OnNext(Unit.Default);
     }
