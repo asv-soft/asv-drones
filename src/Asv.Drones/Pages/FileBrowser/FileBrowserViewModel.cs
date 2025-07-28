@@ -238,11 +238,9 @@ public class FileBrowserViewModel
     public ReactiveCommand<BrowserNode> CalculateLocalCrc32Command { get; private set; }
     public ReactiveCommand<BrowserNode> CalculateRemoteCrc32Command { get; private set; }
 
-    private Observable<bool> CanUpload =>
-        LocalSelectedItem.Select(x => x is { Base.FtpEntryType: FtpEntryType.File });
+    private Observable<bool> CanUpload => LocalSelectedItem.Select(x => x is not null);
 
-    private Observable<bool> CanDownload =>
-        RemoteSelectedItem.Select(x => x is { Base.FtpEntryType: FtpEntryType.File });
+    private Observable<bool> CanDownload => RemoteSelectedItem.Select(x => x is not null);
 
     private Observable<bool> CanRemoveLocal =>
         LocalSelectedItem.Select(x => x is { Base.IsInEditMode: false });
@@ -417,18 +415,39 @@ public class FileBrowserViewModel
                     + $"{LocalSelectedItem.Value?.Base.Header ?? BlankName}";
             }
 
-            await _ftpService.UploadFileAsync(
-                item.Base.Path,
-                remoteDirectory,
-                ct,
-                new Progress<double>(i =>
-                {
-                    if (!Progress.IsCompletedOrDisposed)
-                    {
-                        Progress.OnNext(i);
-                    }
-                })
-            );
+            switch (item.Base.FtpEntryType)
+            {
+                case FtpEntryType.File:
+                    await _ftpService.UploadFileAsync(
+                        item.Base.Path,
+                        remoteDirectory,
+                        ct,
+                        new Progress<double>(i =>
+                        {
+                            if (!Progress.IsCompletedOrDisposed)
+                            {
+                                Progress.OnNext(i);
+                            }
+                        })
+                    );
+                    break;
+                case FtpEntryType.Directory:
+                    await _ftpService.UploadDirectoryAsync(
+                        item.Base.Path,
+                        remoteDirectory,
+                        ct,
+                        new Progress<double>(i =>
+                        {
+                            if (!Progress.IsCompletedOrDisposed)
+                            {
+                                Progress.OnNext(i);
+                            }
+                        })
+                    );
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(item));
+            }
         }
     }
 
@@ -473,18 +492,39 @@ public class FileBrowserViewModel
 
         if (res)
         {
-            await _ftpService.DownloadFileAsync(
-                item.Base.Path,
-                localDirectory,
-                ct: ct,
-                progress: new Progress<double>(i =>
-                {
-                    if (!Progress.IsCompletedOrDisposed)
-                    {
-                        Progress.OnNext(i);
-                    }
-                })
-            );
+            switch (item.Base.FtpEntryType)
+            {
+                case FtpEntryType.File:
+                    await _ftpService.DownloadFileAsync(
+                        item.Base.Path,
+                        localDirectory,
+                        ct: ct,
+                        progress: new Progress<double>(i =>
+                        {
+                            if (!Progress.IsCompletedOrDisposed)
+                            {
+                                Progress.OnNext(i);
+                            }
+                        })
+                    );
+                    break;
+                case FtpEntryType.Directory:
+                    await _ftpService.DownloadDirectoryAsync(
+                        item.Base.Path,
+                        localDirectory,
+                        ct: ct,
+                        progress: new Progress<double>(i =>
+                        {
+                            if (!Progress.IsCompletedOrDisposed)
+                            {
+                                Progress.OnNext(i);
+                            }
+                        })
+                    );
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(item));
+            }
         }
     }
 
@@ -527,19 +567,41 @@ public class FileBrowserViewModel
         {
             var size = viewModel.PacketSize.Value ?? MavlinkFtpHelper.MaxDataSize;
 
-            await _ftpService.BurstDownloadFileAsync(
-                item.Base.Path,
-                localDirectory,
-                size,
-                ct,
-                new Progress<double>(i =>
-                {
-                    if (!Progress.IsCompletedOrDisposed)
-                    {
-                        Progress.OnNext(i);
-                    }
-                })
-            );
+            switch (item.Base.FtpEntryType)
+            {
+                case FtpEntryType.File:
+                    await _ftpService.BurstDownloadFileAsync(
+                        item.Base.Path,
+                        localDirectory,
+                        size,
+                        ct,
+                        new Progress<double>(i =>
+                        {
+                            if (!Progress.IsCompletedOrDisposed)
+                            {
+                                Progress.OnNext(i);
+                            }
+                        })
+                    );
+                    break;
+                case FtpEntryType.Directory:
+                    await _ftpService.BurstDownloadDirectoryAsync(
+                        item.Base.Path,
+                        localDirectory,
+                        size,
+                        ct,
+                        new Progress<double>(i =>
+                        {
+                            if (!Progress.IsCompletedOrDisposed)
+                            {
+                                Progress.OnNext(i);
+                            }
+                        })
+                    );
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(item));
+            }
         }
     }
 
