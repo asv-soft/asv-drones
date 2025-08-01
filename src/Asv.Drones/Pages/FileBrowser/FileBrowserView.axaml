@@ -185,14 +185,16 @@
                             Margin="2"
                             Spacing="8">
                     <Button Height="50" 
-                            Content="{avalonia:MaterialIconExt Kind=TransferRight}" 
                             Theme="{DynamicResource TransparentButton}"
                             Command="{Binding UploadCommand}"
-                            CommandParameter="{Binding LocalSelectedItem.Value}"/>
+                            CommandParameter="{Binding LocalSelectedItem.Value}">
+                        <avalonia:MaterialIcon Kind="TransferRight"/>
+                    </Button>
                     <Button Height="50" 
-                            Content="{avalonia:MaterialIconExt Kind=TransferLeft}" 
                             Theme="{DynamicResource TransparentButton}"
-                            Command="{Binding ShowDownloadPopupCommand}"/>
+                            Command="{Binding ShowDownloadPopupCommand}">
+                        <avalonia:MaterialIcon Kind="TransferLeft"/>
+                    </Button>
                     
                     <Popup IsOpen="{Binding IsDownloadPopupOpen.Value}"
                            Placement="RightEdgeAlignedBottom" 
