@@ -40,17 +40,19 @@
                     VerticalAlignment="Stretch"
                     Margin="2 0 0 0"
                     Command="{Binding ExportToCsv}"
-                    Content="{avalonia:MaterialIconExt ContentSave}"
                     ToolTip.Tip="{x:Static drones:RS.PacketViewerView_ToolTip_Save}"
                     IsEnabled="{Binding IsPaused.Value}"
-                    Classes="saveButton" />
+                    Classes="saveButton">
+                <avalonia:MaterialIcon Kind="ContentSave"/>
+            </Button>
             <Button DockPanel.Dock="Right" 
                     HorizontalAlignment="Stretch" 
                     VerticalAlignment="Stretch"
                     Command="{CompiledBinding ClearAll}" 
-                    Content="{avalonia:MaterialIconExt Bin}"
                     Margin="2 0 0 0"
-                    ToolTip.Tip="{x:Static drones:RS.PacketViewerView_ToolTip_ClearAll}" />
+                    ToolTip.Tip="{x:Static drones:RS.PacketViewerView_ToolTip_ClearAll}">
+                <avalonia:MaterialIcon Kind="Bin"/>
+            </Button>
             <ToggleButton DockPanel.Dock="Right" 
                           Margin="2 0 0 0" 
                           HorizontalAlignment="Stretch"
@@ -58,8 +60,16 @@
                           IsChecked="{Binding IsPaused.Value, Mode=TwoWay}"
                           ToolTip.Tip="{x:Static drones:RS.PacketViewerView_ToolTip_PlayPause}">
                 <Panel>
-                    <ContentPresenter Content="{avalonia:MaterialIconExt Play}" Classes="tbchecked" />
-                    <ContentPresenter Content="{avalonia:MaterialIconExt Pause}" Classes="tbunchecked" />
+                    <ContentPresenter Classes="tbchecked">
+                        <ContentPresenter.Content>
+                            <avalonia:MaterialIcon Kind="Play"/>
+                        </ContentPresenter.Content>
+                    </ContentPresenter>
+                    <ContentPresenter Classes="tbunchecked">
+                        <ContentPresenter.Content>
+                            <avalonia:MaterialIcon Kind="Pause"/>
+                        </ContentPresenter.Content>
+                    </ContentPresenter>
                 </Panel>
             </ToggleButton>
            <TextBox DockPanel.Dock="Right" MinWidth="200" Text="{Binding SearchText.Value, Mode=TwoWay}">
@@ -67,8 +77,12 @@
                     <Style Selector="TextBox">
                         <Setter Property="InnerRightContent">
                             <Template>
-                                <Button Content="{avalonia:MaterialIconExt Close}" Background="Transparent" BorderBrush="{x:Null}"
-                                        Command="{Binding $parent[TextBox].Clear}" />
+                                <Button 
+                                    Background="Transparent" 
+                                    BorderBrush="{x:Null}"
+                                    Command="{Binding $parent[TextBox].Clear}">
+                                    <avalonia:MaterialIcon Kind="Close"/>
+                                </Button>
                             </Template>
                         </Setter>
                     </Style>
