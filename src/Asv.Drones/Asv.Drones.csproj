@@ -82,5 +82,9 @@
         <DependentUpon>BurstDownloadDialogView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Pages\PacketViewer\PacketMessage\PacketMessageView.axaml.cs">
+        <DependentUpon>PacketMessageView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>

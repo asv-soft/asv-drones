@@ -43,7 +43,7 @@ public partial class App : Application, IContainerHost, IShellHost
                 .WithExport(NullLoggerFactory.Instance)
                 .WithExport(NullAppPath.Instance)
                 .WithExport(NullPluginManager.Instance)
-                .WithExport(NullLogService.Instance)
+                .WithExport(NullLogReaderService.Instance)
                 .WithExport(NullAppInfo.Instance)
                 .WithExport<IDataTemplateHost>(this)
                 .WithExport<IShellHost>(this)
@@ -54,15 +54,17 @@ public partial class App : Application, IContainerHost, IShellHost
         else
         {
             var pluginManager = AppHost.Instance.GetService<IPluginManager>();
+            var logReader = AppHost.Instance.GetService<ILogReaderService>();
+
             containerCfg
                 .WithExport<IContainerHost>(this)
                 .WithExport(AppHost.Instance.GetService<IConfiguration>())
                 .WithExport(AppHost.Instance.GetService<ILoggerFactory>())
-                .WithExport(AppHost.Instance.GetService<ILogService>())
                 .WithExport(AppHost.Instance.GetService<IAppPath>())
                 .WithExport(AppHost.Instance.GetService<IAppInfo>())
                 .WithExport(AppHost.Instance.GetService<IMeterFactory>())
                 .WithExport(pluginManager)
+                .WithExport(logReader)
                 .WithAssemblies(pluginManager.PluginsAssemblies)
                 .WithExport<IDataTemplateHost>(this)
                 .WithExport<IShellHost>(this)

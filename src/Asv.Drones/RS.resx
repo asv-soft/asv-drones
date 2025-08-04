@@ -410,4 +410,16 @@
     <data name="MavParamsPageViewModel_Title" xml:space="preserve">
         <value>Params</value>
     </data>
+    <data name="ClearAllPacketsCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Clear all packets</value>
+    </data>
+    <data name="ClearAllPacketsCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that clears all packets</value>
+    </data>
+    <data name="ExportPacketsToCsvCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Export packets to CSV</value>
+    </data>
+    <data name="ExportPacketsToCsvCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that exports packets to a CSV file</value>
+    </data>
 </root>

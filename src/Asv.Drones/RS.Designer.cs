@@ -96,6 +96,42 @@ namespace Asv.Drones {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Command that clears all packets.
+        /// </summary>
+        public static string ClearAllPacketsCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("ClearAllPacketsCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear all packets.
+        /// </summary>
+        public static string ClearAllPacketsCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("ClearAllPacketsCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command that exports packets to a CSV file.
+        /// </summary>
+        public static string ExportPacketsToCsvCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("ExportPacketsToCsvCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export packets to CSV.
+        /// </summary>
+        public static string ExportPacketsToCsvCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("ExportPacketsToCsvCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Burst download.
         /// </summary>
         public static string FileBrowserView_Button_BurstDownload_Content {

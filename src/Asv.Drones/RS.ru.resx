@@ -398,4 +398,16 @@
     <data name="MavParamsPageViewModel_Title" xml:space="preserve">
         <value>Параметры</value>
     </data>
+    <data name="ClearAllPacketsCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Очистить все пакеты</value>
+    </data>
+    <data name="ClearAllPacketsCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая очищает все пакеты</value>
+    </data>
+    <data name="ExportPacketsToCsvCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Экспортировать пакеты в CSV файл</value>
+    </data>
+    <data name="ExportPacketsToCsvCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда экспортирует пакеты в файл с CSV расширением</value>
+    </data>
 </root>
