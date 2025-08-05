@@ -32,17 +32,17 @@ public class FileBrowserViewModel
 
     private IFtpClientService? _ftpService;
     private readonly YesOrNoDialogPrefab _yesNoDialog;
-    private readonly IDialogService _dialogService;
     private readonly ILoggerFactory _loggerFactory;
     private readonly FileSystemWatcher _watcher;
     private readonly INavigationService _navigation;
     private readonly string _localRootPath;
+    private CancellationTokenSource? _transferCts;
     private readonly FileSystemEventHandler? _createdHandler;
     private readonly FileSystemEventHandler? _deletedHandler;
     private readonly RenamedEventHandler? _renamedHandler;
     private readonly FileSystemEventHandler? _changedHandler;
 
-    private ObservableDictionary<string, IFtpEntry> _rawRemoteEntries;
+    private readonly ObservableDictionary<string, IFtpEntry> _rawRemoteEntries;
 
     private readonly ObservableList<IBrowserItemViewModel> _localItems;
     private readonly ObservableList<IBrowserItemViewModel> _remoteItems;
@@ -80,7 +80,6 @@ public class FileBrowserViewModel
         : base(PageId, devices, cmd, loggerFactory)
     {
         _localRootPath = appPath.UserDataFolder;
-        _dialogService = dialogService;
         _loggerFactory = loggerFactory;
         _navigation = navigation;
         _yesNoDialog = dialogService.GetDialogPrefab<YesOrNoDialogPrefab>();
@@ -101,6 +100,9 @@ public class FileBrowserViewModel
         _watcher.Deleted += _deletedHandler;
         _watcher.Renamed += _renamedHandler;
         _watcher.Changed += _changedHandler;
+
+        IsProgressVisible = new BindableReactiveProperty<bool>(false).DisposeItWith(Disposable);
+        IsTransferInProgress = new BindableReactiveProperty<bool>(false).DisposeItWith(Disposable);
 
         _localItems = [];
         _remoteItems = [];
@@ -149,7 +151,7 @@ public class FileBrowserViewModel
         var remoteSearchText = new ReactiveProperty<string?>();
 
         LocalSearchText = new HistoricalStringProperty(
-            $"{PageId}{nameof(LocalSearchText)}",
+            nameof(LocalSearchText),
             localSearchText,
             loggerFactory,
             this
@@ -157,7 +159,7 @@ public class FileBrowserViewModel
         LocalSearchText.ForceValidate();
 
         RemoteSearchText = new HistoricalStringProperty(
-            $"{PageId}{nameof(RemoteSearchText)}",
+            nameof(RemoteSearchText),
             remoteSearchText,
             loggerFactory,
             this
@@ -208,7 +210,9 @@ public class FileBrowserViewModel
     public HistoricalStringProperty RemoteSearchText { get; }
     public BindableReactiveProperty<double> Progress { get; }
     public BindableReactiveProperty<bool> IsDownloadPopupOpen { get; }
-    public BindableReactiveProperty<bool> IsUiBlocked { get; set; }
+    public BindableReactiveProperty<bool> IsUiBlocked { get; }
+    public BindableReactiveProperty<bool> IsProgressVisible { get; }
+    public BindableReactiveProperty<bool> IsTransferInProgress { get; }
 
     private bool _isDeviceInitialized;
     public bool IsDeviceInitialized
@@ -243,39 +247,41 @@ public class FileBrowserViewModel
     private Observable<bool> CanDownload => RemoteSelectedItem.Select(x => x is not null);
 
     private Observable<bool> CanRemoveLocal =>
-        LocalSelectedItem.Select(x => x is { Base.IsInEditMode: false });
+        LocalSelectedItem.Select(x => x is { Base.EditMode: false });
 
     private Observable<bool> CanRemoveRemote =>
-        RemoteSelectedItem.Select(x => x is { Base.IsInEditMode: false });
+        RemoteSelectedItem.Select(x => x is { Base.EditMode: false });
 
     private Observable<bool> CanFindFileOnLocal =>
         RemoteSelectedItem.Select(x =>
-            x is { Base: { IsInEditMode: false, FtpEntryType: FtpEntryType.File } }
+            x is { Base: { EditMode: false, FtpEntryType: FtpEntryType.File } }
         );
 
     private Observable<bool> CanCompareSelectedItems =>
         LocalSelectedItem.CombineLatest(
             RemoteSelectedItem,
             (local, remote) =>
-                local is { Base: { IsInEditMode: false, FtpEntryType: FtpEntryType.File } }
-                && remote is { Base: { IsInEditMode: false, FtpEntryType: FtpEntryType.File } }
+                local is { Base: { EditMode: false, FtpEntryType: FtpEntryType.File } }
+                && remote is { Base: { EditMode: false, FtpEntryType: FtpEntryType.File } }
         );
 
     private Observable<bool> CanCalculateRemoteCrc32 =>
         RemoteSelectedItem.Select(x =>
-            x is { Base: { IsInEditMode: false, FtpEntryType: FtpEntryType.File } }
+            x is { Base: { EditMode: false, FtpEntryType: FtpEntryType.File } }
         );
 
     private Observable<bool> CanCalculateLocalCrc32 =>
         LocalSelectedItem.Select(x =>
-            x is { Base: { IsInEditMode: false, FtpEntryType: FtpEntryType.File } }
+            x is { Base: { EditMode: false, FtpEntryType: FtpEntryType.File } }
         );
 
     private Observable<bool> CanRenameLocal =>
-        LocalSelectedItem.Select(x => x is { Base.IsInEditMode: false });
+        LocalSelectedItem.Select(x => x is { Base.EditMode: false });
 
     private Observable<bool> CanRenameRemote =>
-        RemoteSelectedItem.Select(x => x is { Base.IsInEditMode: false });
+        RemoteSelectedItem.Select(x => x is { Base.EditMode: false });
+
+    public ReactiveCommand CancelTransferCommand { get; private set; }
 
     #endregion
 
@@ -334,6 +340,18 @@ public class FileBrowserViewModel
         BurstDownloadCommand = CanDownload
             .ToReactiveCommand<BrowserNode>(async (node, ct) => await BurstDownloadImpl(node, ct))
             .DisposeItWith(Disposable);
+
+        CancelTransferCommand = new ReactiveCommand(
+            async (_, _) =>
+            {
+                if (_transferCts != null)
+                {
+                    await _transferCts.CancelAsync();
+                }
+            },
+            awaitOperation: AwaitOperation.Drop
+        ).DisposeItWith(Disposable);
+
         CreateRemoteFolderCommand = new ReactiveCommand(
             async (_, ct) => await CreateRemoteFolderImpl(ct),
             awaitOperation: AwaitOperation.Drop
@@ -415,38 +433,51 @@ public class FileBrowserViewModel
                     + $"{LocalSelectedItem.Value?.Base.Header ?? BlankName}";
             }
 
-            switch (item.Base.FtpEntryType)
+            var token = PrepareTransfer(ct);
+
+            try
             {
-                case FtpEntryType.File:
-                    await _ftpService.UploadFileAsync(
-                        item.Base.Path,
-                        remoteDirectory,
-                        ct,
-                        new Progress<double>(i =>
-                        {
-                            if (!Progress.IsCompletedOrDisposed)
+                switch (item.Base.FtpEntryType)
+                {
+                    case FtpEntryType.File:
+                        await _ftpService.UploadFileAsync(
+                            item.Base.Path,
+                            remoteDirectory,
+                            token,
+                            new Progress<double>(i =>
                             {
-                                Progress.OnNext(i);
-                            }
-                        })
-                    );
-                    break;
-                case FtpEntryType.Directory:
-                    await _ftpService.UploadDirectoryAsync(
-                        item.Base.Path,
-                        remoteDirectory,
-                        ct,
-                        new Progress<double>(i =>
-                        {
-                            if (!Progress.IsCompletedOrDisposed)
+                                if (!Progress.IsCompletedOrDisposed)
+                                {
+                                    Progress.OnNext(i);
+                                }
+                            })
+                        );
+                        break;
+                    case FtpEntryType.Directory:
+                        await _ftpService.UploadDirectoryAsync(
+                            item.Base.Path,
+                            remoteDirectory,
+                            token,
+                            new Progress<double>(i =>
                             {
-                                Progress.OnNext(i);
-                            }
-                        })
-                    );
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(item));
+                                if (!Progress.IsCompletedOrDisposed)
+                                {
+                                    Progress.OnNext(i);
+                                }
+                            })
+                        );
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(item));
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                Logger.LogWarning("Upload {Path} cancelled by user", item.Base.Path);
+            }
+            finally
+            {
+                FinishTransfer();
             }
         }
     }
@@ -492,38 +523,50 @@ public class FileBrowserViewModel
 
         if (res)
         {
-            switch (item.Base.FtpEntryType)
+            var token = PrepareTransfer(ct);
+            try
             {
-                case FtpEntryType.File:
-                    await _ftpService.DownloadFileAsync(
-                        item.Base.Path,
-                        localDirectory,
-                        ct: ct,
-                        progress: new Progress<double>(i =>
-                        {
-                            if (!Progress.IsCompletedOrDisposed)
+                switch (item.Base.FtpEntryType)
+                {
+                    case FtpEntryType.File:
+                        await _ftpService.DownloadFileAsync(
+                            item.Base.Path,
+                            localDirectory,
+                            ct: token,
+                            progress: new Progress<double>(i =>
                             {
-                                Progress.OnNext(i);
-                            }
-                        })
-                    );
-                    break;
-                case FtpEntryType.Directory:
-                    await _ftpService.DownloadDirectoryAsync(
-                        item.Base.Path,
-                        localDirectory,
-                        ct: ct,
-                        progress: new Progress<double>(i =>
-                        {
-                            if (!Progress.IsCompletedOrDisposed)
+                                if (!Progress.IsCompletedOrDisposed)
+                                {
+                                    Progress.OnNext(i);
+                                }
+                            })
+                        );
+                        break;
+                    case FtpEntryType.Directory:
+                        await _ftpService.DownloadDirectoryAsync(
+                            item.Base.Path,
+                            localDirectory,
+                            ct: token,
+                            progress: new Progress<double>(i =>
                             {
-                                Progress.OnNext(i);
-                            }
-                        })
-                    );
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(item));
+                                if (!Progress.IsCompletedOrDisposed)
+                                {
+                                    Progress.OnNext(i);
+                                }
+                            })
+                        );
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(item));
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                Logger.LogWarning("Download {Path} cancelled by user", item.Base.Path);
+            }
+            finally
+            {
+                FinishTransfer();
             }
         }
     }
@@ -566,41 +609,52 @@ public class FileBrowserViewModel
         if (result == ContentDialogResult.Primary)
         {
             var size = viewModel.PacketSize.Value ?? MavlinkFtpHelper.MaxDataSize;
-
-            switch (item.Base.FtpEntryType)
+            var token = PrepareTransfer(ct);
+            try
             {
-                case FtpEntryType.File:
-                    await _ftpService.BurstDownloadFileAsync(
-                        item.Base.Path,
-                        localDirectory,
-                        size,
-                        ct,
-                        new Progress<double>(i =>
-                        {
-                            if (!Progress.IsCompletedOrDisposed)
+                switch (item.Base.FtpEntryType)
+                {
+                    case FtpEntryType.File:
+                        await _ftpService.BurstDownloadFileAsync(
+                            item.Base.Path,
+                            localDirectory,
+                            size,
+                            token,
+                            new Progress<double>(i =>
                             {
-                                Progress.OnNext(i);
-                            }
-                        })
-                    );
-                    break;
-                case FtpEntryType.Directory:
-                    await _ftpService.BurstDownloadDirectoryAsync(
-                        item.Base.Path,
-                        localDirectory,
-                        size,
-                        ct,
-                        new Progress<double>(i =>
-                        {
-                            if (!Progress.IsCompletedOrDisposed)
+                                if (!Progress.IsCompletedOrDisposed)
+                                {
+                                    Progress.OnNext(i);
+                                }
+                            })
+                        );
+                        break;
+                    case FtpEntryType.Directory:
+                        await _ftpService.BurstDownloadDirectoryAsync(
+                            item.Base.Path,
+                            localDirectory,
+                            size,
+                            token,
+                            new Progress<double>(i =>
                             {
-                                Progress.OnNext(i);
-                            }
-                        })
-                    );
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(item));
+                                if (!Progress.IsCompletedOrDisposed)
+                                {
+                                    Progress.OnNext(i);
+                                }
+                            })
+                        );
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(item));
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                Logger.LogWarning("Burst-Download {Path} cancelled by user", item.Base.Path);
+            }
+            finally
+            {
+                FinishTransfer();
             }
         }
     }
@@ -886,13 +940,13 @@ public class FileBrowserViewModel
                 RemoteSelectedItem.OnNext(newNode as BrowserNode);
             }
 
-            Logger.LogInformation("Remote item {oldName} renamed to {newName}", oldName, newName);
+            Logger.LogInformation("Remote item {OldName} renamed to {NewName}", oldName, newName);
         }
         catch (Exception ex)
         {
             Logger.LogError(
                 ex,
-                "Failed to rename remote item {oldName} to {newName}",
+                "Failed to rename remote item {OldName} to {NewName}",
                 oldName,
                 newName
             );
@@ -1119,6 +1173,30 @@ public class FileBrowserViewModel
         };
     }
 
+    private CancellationToken PrepareTransfer(CancellationToken outer)
+    {
+        _transferCts?.Dispose();
+        _transferCts = new CancellationTokenSource();
+        var linked = CancellationTokenSource
+            .CreateLinkedTokenSource(outer, _transferCts.Token)
+            .DisposeItWith(Disposable);
+
+        IsTransferInProgress.OnNext(true);
+        IsProgressVisible.OnNext(true);
+        Progress.OnNext(0);
+
+        return linked.Token;
+    }
+
+    private void FinishTransfer()
+    {
+        IsTransferInProgress.OnNext(false);
+        IsProgressVisible.OnNext(false);
+        Progress.OnNext(0);
+        _transferCts?.Dispose();
+        _transferCts = null;
+    }
+
     public override ValueTask<IRoutable> Navigate(NavigationId id)
     {
         return ValueTask.FromResult<IRoutable>(this);
@@ -1126,7 +1204,18 @@ public class FileBrowserViewModel
 
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
-        return [];
+        yield return LocalSearchText;
+        yield return RemoteSearchText;
+
+        foreach (var item in LocalItemsTree.Items)
+        {
+            yield return item.Base;
+        }
+
+        foreach (var item in RemoteItemsTree.Items)
+        {
+            yield return item.Base;
+        }
     }
 
     protected override void AfterLoadExtensions() { }
@@ -1153,7 +1242,10 @@ public class FileBrowserViewModel
 
     #endregion
 
-    protected override void AfterDeviceInitialized(IClientDevice device, CancellationToken cancel)
+    protected override void AfterDeviceInitialized(
+        IClientDevice device,
+        CancellationToken onDisconnectedToken
+    )
     {
         IsDeviceInitialized = true;
         Title = $"{RS.FileBrowserViewModel_Title}[{device.Id}]";
@@ -1164,13 +1256,13 @@ public class FileBrowserViewModel
 
         _ftpService
             .RemoteChanged.ThrottleLast(TimeSpan.FromMilliseconds(200))
-            .SubscribeAwait(async (_, _) => await RefreshRemoteImpl(cancel))
+            .SubscribeAwait(async (_, _) => await RefreshRemoteImpl(onDisconnectedToken))
             .DisposeItWith(Disposable);
         _ftpService
             .RemoteChanging.Subscribe(isBusy => IsUiBlocked.OnNext(isBusy))
             .DisposeItWith(Disposable);
 
-        cancel.Register(() => IsDeviceInitialized = false);
+        onDisconnectedToken.Register(() => IsDeviceInitialized = false);
         InitCommands();
     }
 }

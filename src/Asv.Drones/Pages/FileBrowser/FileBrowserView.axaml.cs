@@ -14,24 +14,7 @@ public partial class FileBrowserView : UserControl
         InitializeComponent();
     }
 
-    private void LocalTree_OnPointerPressed(object? sender, PointerPressedEventArgs e)
-    {
-        if (sender is not TreeView tree)
-        {
-            return;
-        }
-
-        var hit = tree.InputHitTest(e.GetPosition(tree));
-
-        if (IsInsideTreeViewItem(hit))
-        {
-            return;
-        }
-
-        tree.SelectedItem = null;
-    }
-
-    private void RemoteTree_OnPointerPressed(object? sender, PointerPressedEventArgs e)
+    private void TreeView_OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
         if (sender is not TreeView tree)
         {
