@@ -410,4 +410,10 @@
     <data name="MavParamsPageViewModel_Title" xml:space="preserve">
         <value>Params</value>
     </data>
+    <data name="CommitBrowserItemRenameCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Commit item rename</value>
+    </data>
+    <data name="CommitBrowserItemRenameCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that commits an item renaming</value>
+    </data>
 </root>

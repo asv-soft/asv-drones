@@ -82,5 +82,6 @@
         <DependentUpon>BurstDownloadDialogView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Remove="Controls\FtpBrowser\Tree\FileItem.cs" />
     </ItemGroup>
 </Project>

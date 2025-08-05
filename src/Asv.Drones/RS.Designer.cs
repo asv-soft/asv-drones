@@ -96,6 +96,24 @@ namespace Asv.Drones {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Command that commits an item renaming.
+        /// </summary>
+        public static string CommitBrowserItemRenameCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("CommitBrowserItemRenameCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commit item rename.
+        /// </summary>
+        public static string CommitBrowserItemRenameCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("CommitBrowserItemRenameCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Burst download.
         /// </summary>
         public static string FileBrowserView_Button_BurstDownload_Content {

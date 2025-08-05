@@ -123,7 +123,8 @@
                         <!--Local tree-->
                         <TreeView ItemsSource="{Binding LocalItemsTree.Items}"
                                   SelectedItem="{Binding LocalSelectedItem.Value}"
-                                  PointerPressed="LocalTree_OnPointerPressed">
+                                  PointerPressed="TreeView_OnPointerPressed"
+                                  Name="LocalTree">
                             <TreeView.ItemTemplate>
                                 <TreeDataTemplate ItemsSource="{Binding Items}" 
                                                   DataType="{x:Type drones:BrowserNode}">
@@ -191,7 +192,7 @@
                 <StackPanel Grid.Row="0"
                             Grid.Column="1"
                             KeyboardNavigation.TabNavigation="None"
-                            IsEnabled="{Binding !IsUiBlocked}"
+                            IsEnabled="{Binding !IsUiBlocked.Value}"
                             IsTabStop="False"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center" 
@@ -282,7 +283,7 @@
                         <!--Remote tree-->
                         <TreeView ItemsSource="{Binding RemoteItemsTree.Items}"
                                   SelectedItem="{Binding RemoteSelectedItem.Value}"
-                                  PointerPressed="RemoteTree_OnPointerPressed">
+                                  PointerPressed="TreeView_OnPointerPressed">
                             <TreeView.ItemTemplate>
                                 <TreeDataTemplate ItemsSource="{Binding Items}" 
                                                   DataType="{x:Type drones:BrowserNode}">
@@ -340,12 +341,21 @@
                     </DockPanel>
                 </Border>
             </Grid>
-            <ProgressBar Grid.Row="1"
-                         Height="10"
-                         Foreground="{StaticResource ProgressBrush}"
-                         Value="{Binding Progress.Value}"
-                         Minimum="0"
-                         Maximum="1"/>
+            <Grid Grid.Row="1" ColumnDefinitions="*, Auto" Margin="0 4 0 0"
+                  IsVisible="{Binding IsProgressVisible.Value}">
+                <ProgressBar Grid.Column="0"
+                             Height="10"
+                             Foreground="{StaticResource ProgressBrush}"
+                             Value="{Binding Progress.Value}"
+                             Minimum="0"
+                             Maximum="1"/>
+                <Button Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Command="{Binding CancelTransferCommand}"
+                        IsEnabled="{Binding IsTransferInProgress.Value}">
+                    <avalonia:MaterialIcon Kind="Close"/>
+                </Button>
+            </Grid>
         </Grid>
     </Panel>
 </UserControl>
