@@ -422,4 +422,10 @@
     <data name="ExportPacketsToCsvCommand_CommandInfo_Description" xml:space="preserve">
         <value>Command that exports packets to a CSV file</value>
     </data>
+    <data name="CommitBrowserItemRenameCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Commit item rename</value>
+    </data>
+    <data name="CommitBrowserItemRenameCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that commits an item renaming</value>
+    </data>
 </root>

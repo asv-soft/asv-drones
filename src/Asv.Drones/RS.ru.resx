@@ -398,6 +398,12 @@
     <data name="MavParamsPageViewModel_Title" xml:space="preserve">
         <value>Параметры</value>
     </data>
+    <data name="CommitBrowserItemRenameCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Подтвердить переименование элемента</value>
+    </data>
+    <data name="CommitBrowserItemRenameCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая подтверждает переименование элемента</value>
+    </data>
     <data name="ClearAllPacketsCommand_CommandInfo_Name" xml:space="preserve">
         <value>Очистить все пакеты</value>
     </data>
