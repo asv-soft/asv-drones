@@ -23,7 +23,8 @@ namespace Asv.Drones;
 [ExportPage(PageId)]
 public class FileBrowserViewModel
     : DevicePageViewModel<IFileBrowserViewModel>,
-        IFileBrowserViewModel
+        IFileBrowserViewModel,
+        IRenamable
 {
     public const string PageId = "files.browser";
     public const MaterialIconKind PageIcon = MaterialIconKind.FolderEye;
@@ -214,11 +215,10 @@ public class FileBrowserViewModel
     public BindableReactiveProperty<bool> IsProgressVisible { get; }
     public BindableReactiveProperty<bool> IsTransferInProgress { get; }
 
-    private bool _isDeviceInitialized;
     public bool IsDeviceInitialized
     {
-        get => _isDeviceInitialized;
-        set => SetField(ref _isDeviceInitialized, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     #region Commands
@@ -241,6 +241,8 @@ public class FileBrowserViewModel
     public ReactiveCommand FindFileOnLocalCommand { get; private set; }
     public ReactiveCommand<BrowserNode> CalculateLocalCrc32Command { get; private set; }
     public ReactiveCommand<BrowserNode> CalculateRemoteCrc32Command { get; private set; }
+    public ReactiveCommand<BrowserNode> CommitLocalRename { get; private set; }
+    public ReactiveCommand<BrowserNode> CommitRemoteRename { get; private set; }
 
     private Observable<bool> CanUpload => LocalSelectedItem.Select(x => x is not null);
 
@@ -330,6 +332,15 @@ public class FileBrowserViewModel
                 awaitOperation: AwaitOperation.Drop
             )
             .DisposeItWith(Disposable);
+
+        CommitLocalRename = new ReactiveCommand<BrowserNode>(
+            async (n, ct) => await CommitLocalRenameAsync(n, ct),
+            awaitOperation: AwaitOperation.Drop
+        ).DisposeItWith(Disposable);
+        CommitRemoteRename = new ReactiveCommand<BrowserNode>(
+            async (n, ct) => await CommitRemoteRenameAsync(n, ct),
+            awaitOperation: AwaitOperation.Drop
+        ).DisposeItWith(Disposable);
 
         UploadCommand = CanUpload
             .ToReactiveCommand<BrowserNode>(async (node, ct) => await UploadImpl(node, ct))
@@ -822,58 +833,207 @@ public class FileBrowserViewModel
         return ValueTask.CompletedTask;
     }
 
-    private async ValueTask LocalRenameImpl(BrowserNode? node, CancellationToken ct)
+    private ValueTask LocalRenameImpl(BrowserNode? node, CancellationToken ct)
     {
         if (node?.Base is not BrowserItemViewModel item)
+        {
+            return ValueTask.CompletedTask;
+        }
+
+        item.EditedName.Value = item.Header ?? string.Empty;
+        item.EditMode = true;
+
+        LocalSelectedItem.OnNext(node);
+
+        return ValueTask.CompletedTask;
+    }
+
+    private ValueTask RemoteRenameImpl(BrowserNode? node, CancellationToken ct)
+    {
+        if (_ftpService is null || node?.Base is not BrowserItemViewModel item)
+        {
+            return ValueTask.CompletedTask;
+        }
+
+        item.EditedName.Value = item.Header ?? string.Empty;
+        item.EditMode = true;
+
+        RemoteSelectedItem.OnNext(node);
+
+        return ValueTask.CompletedTask;
+    }
+
+    public async ValueTask<string> RenameItemAsync(
+        string oldPath,
+        string newName,
+        CancellationToken ct
+    )
+    {
+        if (LocalItemsTree.FindNode(n => n.Base.Path == oldPath) is BrowserNode localNode)
+        {
+            return await RenameLocalItemAsync(oldPath, newName, localNode, ct);
+        }
+
+        if (RemoteItemsTree.FindNode(n => n.Base.Path == oldPath) is BrowserNode remoteNode)
+        {
+            return await RenameRemoteItemAsync(oldPath, newName, remoteNode, ct);
+        }
+
+        return string.Empty;
+    }
+
+    private async ValueTask<string> RenameLocalItemAsync(
+        string oldPath,
+        string newName,
+        BrowserNode node,
+        CancellationToken ct
+    )
+    {
+        string? newPath;
+        if (node?.Base is BrowserItemViewModel item)
+        {
+            try
+            {
+                if (item.FtpEntryType == FtpEntryType.Directory || Directory.Exists(oldPath))
+                {
+                    newPath = LocalFilesMixin.RenameDirectory(oldPath, newName, Logger);
+                }
+                else
+                {
+                    newPath = LocalFilesMixin.RenameFile(oldPath, newName, Logger);
+                }
+
+                item.Header = newName;
+                item.EditedName.Value = newName;
+                item.Path = newPath;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(
+                    ex,
+                    "Failed to rename local item {oldPath} to {newName}",
+                    oldPath,
+                    newName
+                );
+                throw;
+            }
+        }
+        else
+        {
+            try
+            {
+                newPath = Directory.Exists(oldPath)
+                    ? LocalFilesMixin.RenameDirectory(oldPath, newName, Logger)
+                    : LocalFilesMixin.RenameFile(oldPath, newName, Logger);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(
+                    ex,
+                    "Failed to rename local path {oldPath} to {newName}",
+                    oldPath,
+                    newName
+                );
+                throw;
+            }
+        }
+
+        try
+        {
+            RefreshLocalCommand.Execute(Unit.Default);
+        }
+        catch
+        {
+            // ignored
+        }
+
+        if (LocalItemsTree.FindNode(n => n.Base.Path == newPath) is BrowserNode newNode)
+        {
+            LocalSelectedItem.OnNext(newNode);
+        }
+
+        return newPath;
+    }
+
+    private async ValueTask<string> RenameRemoteItemAsync(
+        string oldPath,
+        string newName,
+        BrowserNode node,
+        CancellationToken ct
+    )
+    {
+        if (_ftpService is null)
+        {
+            throw new InvalidOperationException("FTP service is not initialized");
+        }
+
+        string newPath;
+        try
+        {
+            newPath = await _ftpService.RenameAsync(oldPath, newName, ct);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(
+                ex,
+                "Failed to rename remote path {oldPath} to {newName}",
+                oldPath,
+                newName
+            );
+            throw;
+        }
+
+        if (node.Base is BrowserItemViewModel item)
+        {
+            item.Header = newName;
+            item.EditedName.Value = newName;
+            item.Path = newPath;
+        }
+
+        try
+        {
+            RefreshRemoteCommand.Execute(Unit.Default);
+        }
+        catch
+        {
+            // ignored
+        }
+
+        if (RemoteItemsTree.FindNode(n => n.Base.Path == newPath) is BrowserNode newNode)
+        {
+            RemoteSelectedItem.OnNext(newNode);
+        }
+
+        return newPath;
+    }
+
+    public async ValueTask CommitLocalRenameAsync(BrowserNode node, CancellationToken ct)
+    {
+        if (node.Base is not BrowserItemViewModel item)
         {
             return;
         }
 
         var oldName = item.Header;
         var oldPath = item.Path;
+        var newName = string.IsNullOrWhiteSpace(item.EditedName.Value)
+            ? BlankName
+            : item.EditedName.Value;
 
-        using var viewModel = new RenameDialogViewModel();
-        var dialog = new ContentDialog(viewModel, _navigation)
-        {
-            Title = RS.FileBrowserViewModel_RenameDialog_Title,
-            PrimaryButtonText = RS.FileBrowserViewModel_RenameDialog_PrimaryButtonText,
-            SecondaryButtonText = RS.FileBrowserViewModel_RenameDialog_SecondaryButtonText,
-            IsSecondaryButtonEnabled = true,
-        };
-
-        if (oldName != null)
-        {
-            viewModel.NewName.OnNext(oldName);
-        }
-
-        viewModel.ApplyDialog(dialog);
-        var result = await dialog.ShowAsync();
-        var newName = viewModel.NewName.Value;
-
-        if (result != ContentDialogResult.Primary)
-        {
-            return;
-        }
-
+        item.EditMode = false;
         if (string.Equals(newName, oldName, StringComparison.Ordinal))
         {
+            item.EditedName.Value = oldName ?? string.Empty;
             return;
         }
 
         try
         {
-            var newPath =
-                item.FtpEntryType == FtpEntryType.Directory
-                    ? LocalFilesMixin.RenameDirectory(oldPath, newName, Logger)
-                    : LocalFilesMixin.RenameFile(oldPath, newName, Logger);
-
-            var newNode = LocalItemsTree.FindNode(n => n.Base.Path == newPath);
-            if (newNode != null)
-            {
-                LocalSelectedItem.OnNext(newNode as BrowserNode);
-            }
-
-            Logger.LogInformation("Local item {oldName} renamed to {newName}", oldName, newName);
+            await this.ExecuteCommand(
+                RenameItemCommand.Id,
+                CommandArg.ChangeAction(oldPath, CommandArg.CreateString(newName)),
+                ct
+            );
         }
         catch (Exception ex)
         {
@@ -883,73 +1043,54 @@ public class FileBrowserViewModel
                 oldName,
                 newName
             );
+            item.Header = oldName;
+            item.EditedName.Value = oldName ?? string.Empty;
         }
     }
 
-    private async Task RemoteRenameImpl(BrowserNode? node, CancellationToken ct)
+    public async ValueTask CommitRemoteRenameAsync(BrowserNode node, CancellationToken ct)
     {
         if (_ftpService is null)
         {
             return;
         }
 
-        if (node?.Base is not BrowserItemViewModel item)
+        if (node.Base is not BrowserItemViewModel item)
         {
             return;
         }
 
         var oldName = item.Header;
         var oldPath = item.Path;
+        var newName = string.IsNullOrWhiteSpace(item.EditedName.Value)
+            ? BlankName
+            : item.EditedName.Value;
 
-        using var viewModel = new RenameDialogViewModel();
-        var dialog = new ContentDialog(viewModel, _navigation)
-        {
-            Title = RS.FileBrowserViewModel_RenameDialog_Title,
-            PrimaryButtonText = RS.FileBrowserViewModel_RenameDialog_PrimaryButtonText,
-            SecondaryButtonText = RS.FileBrowserViewModel_RenameDialog_SecondaryButtonText,
-            IsSecondaryButtonEnabled = true,
-            Content = viewModel,
-        };
-
-        if (oldName != null)
-        {
-            viewModel.NewName.OnNext(oldName);
-        }
-
-        viewModel.ApplyDialog(dialog);
-        var result = await dialog.ShowAsync();
-        var newName = viewModel.NewName.Value;
-
-        if (result != ContentDialogResult.Primary)
-        {
-            return;
-        }
-
+        item.EditMode = false;
         if (string.Equals(newName, oldName, StringComparison.Ordinal))
         {
+            item.EditedName.Value = oldName ?? string.Empty;
             return;
         }
 
         try
         {
-            var newPath = await _ftpService.RenameAsync(oldPath, newName, ct);
-
-            var newNode = RemoteItemsTree.FindNode(n => n.Base.Path == newPath);
-            if (newNode != null)
-            {
-                RemoteSelectedItem.OnNext(newNode as BrowserNode);
-            }
-
-            Logger.LogInformation("Remote item {OldName} renamed to {NewName}", oldName, newName);
+            await this.ExecuteCommand(
+                RenameItemCommand.Id,
+                CommandArg.ChangeAction(oldPath, CommandArg.CreateString(newName)),
+                ct
+            );
         }
         catch (Exception ex)
         {
             Logger.LogError(
                 ex,
-                "Failed to rename remote item {OldName} to {NewName}",
+                "Failed to rename remote item {oldName} to {newName}",
                 oldName,
                 newName
             );
+            item.Header = oldName;
+            item.EditedName.Value = oldName ?? string.Empty;
         }
     }
 
@@ -1141,6 +1282,7 @@ public class FileBrowserViewModel
                 string.Empty,
                 MavlinkFtpHelper.DirectorySeparator.ToString(),
                 "_",
+                EntityType.Remote,
                 _loggerFactory
             );
         }
@@ -1152,6 +1294,7 @@ public class FileBrowserViewModel
                 entry.ParentPath,
                 key,
                 entry.Name,
+                EntityType.Remote,
                 _loggerFactory
             ),
 
@@ -1161,6 +1304,7 @@ public class FileBrowserViewModel
                 key,
                 entry.Name,
                 ((FtpFile)entry).Size,
+                EntityType.Remote,
                 _loggerFactory
             ),
 
@@ -1168,6 +1312,7 @@ public class FileBrowserViewModel
                 PathHelper.EncodePathToId(entry.Path),
                 entry.ParentPath,
                 key,
+                EntityType.Remote,
                 _loggerFactory
             ),
         };

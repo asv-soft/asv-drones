@@ -2,111 +2,105 @@
 using Asv.Avalonia;
 using Asv.Mavlink;
 using Microsoft.Extensions.Logging;
+using R3;
 
 namespace Asv.Drones;
 
 public class BrowserItemViewModel : HeadlinedViewModel, IBrowserItemViewModel
 {
-    private string? _headerRaw = string.Empty;
-    private string _path = string.Empty;
-    private string? _parentPath;
-    private FileSize? _size;
-    private bool _hasChildren;
-    private bool _isExpanded;
-    private bool _isSelected;
-    private bool _isInEditMode;
-    private string _editedName = string.Empty;
-    private string? _crc32Hex;
-    private Crc32Status _crc32Status = Crc32Status.Default;
-    private FtpEntryType _ftpEntryType;
-
     public BrowserItemViewModel(
         NavigationId id,
         string? parentPath,
         string path,
+        EntityType type,
         ILoggerFactory loggerFactory
     )
         : base(id, loggerFactory)
     {
         ParentPath = parentPath;
         Path = path;
+        Type = type;
         Order = 0;
+
+        EditedName = new BindableReactiveProperty<string>();
     }
 
     public new string? Header
     {
         get =>
-            _headerRaw == null
+            field == null
                 ? null
                 : new string(
-                    _headerRaw.Select(ch => ch is >= (char)32 and <= (char)126 ? ch : '*').ToArray()
+                    field.Select(ch => ch is >= (char)32 and <= (char)126 ? ch : '*').ToArray()
                 );
-        set => SetField(ref _headerRaw, value);
-    }
+        set => SetField(ref field, value);
+    } = string.Empty;
 
     public string Path
     {
-        get => _path;
-        set => SetField(ref _path, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public string? ParentPath
     {
-        get => _parentPath;
-        set => SetField(ref _parentPath, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public FileSize? Size
     {
-        get => _size;
-        set => SetField(ref _size, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public bool HasChildren
     {
-        get => _hasChildren;
-        set => SetField(ref _hasChildren, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public bool IsExpanded
     {
-        get => _isExpanded;
-        set => SetField(ref _isExpanded, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public bool IsSelected
     {
-        get => _isSelected;
-        set => SetField(ref _isSelected, value);
+        get;
+        set => SetField(ref field, value);
     }
 
-    public bool IsInEditMode
+    public EntityType Type
     {
-        get => _isInEditMode;
-        set => SetField(ref _isInEditMode, value);
+        get;
+        set => SetField(ref field, value);
     }
 
-    public string EditedName
+    public bool EditMode
     {
-        get => _editedName;
-        set => SetField(ref _editedName, value);
+        get;
+        set => SetField(ref field, value);
     }
+
+    public BindableReactiveProperty<string> EditedName { get; set; }
 
     public string? Crc32Hex
     {
-        get => _crc32Hex;
-        protected set => SetField(ref _crc32Hex, value);
+        get;
+        protected set => SetField(ref field, value);
     }
 
     public Crc32Status Crc32Status
     {
-        get => _crc32Status;
-        set => SetField(ref _crc32Status, value);
-    }
+        get;
+        set => SetField(ref field, value);
+    } = Crc32Status.Default;
 
     public FtpEntryType FtpEntryType
     {
-        get => _ftpEntryType;
-        set => SetField(ref _ftpEntryType, value);
+        get;
+        set => SetField(ref field, value);
     }
 }
