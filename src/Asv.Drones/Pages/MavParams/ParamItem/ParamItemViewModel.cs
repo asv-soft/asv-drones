@@ -1,19 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
 using Asv.Common;
-using Asv.Drones.Api;
 using Asv.Mavlink;
 using Asv.Mavlink.Common;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
-using Commands = Asv.Avalonia.Commands;
 
 namespace Asv.Drones;
 
