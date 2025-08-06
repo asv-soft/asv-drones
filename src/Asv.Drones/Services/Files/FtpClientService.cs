@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Asv.Common;
 using Asv.Mavlink;
 using Microsoft.Extensions.Logging;
 using ObservableCollections;
