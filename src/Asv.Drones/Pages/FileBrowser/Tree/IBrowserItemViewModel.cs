@@ -1,5 +1,6 @@
 ﻿using Asv.Avalonia;
 using Asv.Mavlink;
+using R3;
 
 namespace Asv.Drones;
 
@@ -11,8 +12,9 @@ public interface IBrowserItemViewModel : IHeadlinedViewModel
     bool HasChildren { get; }
     bool IsExpanded { get; }
     bool IsSelected { get; }
-    bool IsInEditMode { get; }
-    string EditedName { get; }
+    EntityType Type { get; }
+    bool EditMode { get; }
+    BindableReactiveProperty<string> EditedName { get; }
     string? Crc32Hex { get; }
     Crc32Status Crc32Status { get; }
     FtpEntryType FtpEntryType { get; }

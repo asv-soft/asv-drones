@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -44,7 +45,16 @@ public static class LocalFilesMixin
             var id = PathHelper.EncodePathToId(dir);
             var parent = info.Parent?.FullName ?? root;
 
-            items.Add(new DirectoryItemViewModel(id, parent, dir, info.Name, loggerFactory));
+            items.Add(
+                new DirectoryItemViewModel(
+                    id,
+                    parent,
+                    dir,
+                    info.Name,
+                    EntityType.Local,
+                    loggerFactory
+                )
+            );
             ProcessBrowserDirectory(dir, root, items, loggerFactory, ct);
         }
 
@@ -58,7 +68,15 @@ public static class LocalFilesMixin
                 var id = PathHelper.EncodePathToId(file);
                 var parent = info.Directory?.FullName ?? root;
                 items.Add(
-                    new FileItemViewModel(id, parent, file, info.Name, info.Length, loggerFactory)
+                    new FileItemViewModel(
+                        id,
+                        parent,
+                        file,
+                        info.Name,
+                        info.Length,
+                        EntityType.Local,
+                        loggerFactory
+                    )
                 );
             }
             catch (FileNotFoundException ex)
@@ -88,15 +106,14 @@ public static class LocalFilesMixin
             {
                 throw new FileNotFoundException("Path not found");
             }
+            File.Move(oldPath, newPath);
+
+            log?.LogInformation("File renamed to '{new}'", newPath);
         }
         catch (FileNotFoundException e)
         {
             log?.LogError(e, "Failed to rename file. Incorrect path: {Path}", oldPath);
         }
-
-        File.Move(oldPath, newPath);
-
-        log?.LogInformation("File renamed to '{new}'", newPath);
 
         return newPath;
     }
@@ -118,10 +135,10 @@ public static class LocalFilesMixin
             }
             else
             {
-                throw new FileNotFoundException("Path not found");
+                throw new DirectoryNotFoundException("Path not found");
             }
         }
-        catch (FileNotFoundException e)
+        catch (DirectoryNotFoundException e)
         {
             log?.LogError(e, "Failed to rename directory. Incorrect path: {Path}", oldPath);
         }

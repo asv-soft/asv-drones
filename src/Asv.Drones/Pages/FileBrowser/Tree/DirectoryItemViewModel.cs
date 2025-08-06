@@ -11,9 +11,10 @@ public class DirectoryItemViewModel : BrowserItemViewModel
         string? parentPath,
         string path,
         string? name,
+        EntityType type,
         ILoggerFactory loggerFactory
     )
-        : base(id, parentPath, path, loggerFactory)
+        : base(id, parentPath, path, type, loggerFactory)
     {
         HasChildren = true;
         Header = name;
