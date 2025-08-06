@@ -6,17 +6,16 @@ namespace Asv.Drones;
 
 public class FileItemViewModel : BrowserItemViewModel
 {
-    private uint? _crc32;
-
     public FileItemViewModel(
         NavigationId id,
         string parentPath,
         string path,
         string? name,
         long size,
+        EntityType type,
         ILoggerFactory loggerFactory
     )
-        : base(id, parentPath, path, loggerFactory)
+        : base(id, parentPath, path, type, loggerFactory)
     {
         HasChildren = false;
         Header = name;
@@ -26,10 +25,10 @@ public class FileItemViewModel : BrowserItemViewModel
 
     public uint? Crc32
     {
-        get => _crc32;
+        get;
         set
         {
-            SetField(ref _crc32, value);
+            SetField(ref field, value);
 
             if (value is null)
             {

@@ -96,7 +96,7 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
     {
         using var busy = BeginBusyScope();
 
-        const char dirSep = MavlinkFtpHelper.DirectorySeparator;
+        var dirSep = MavlinkFtpHelper.DirectorySeparator;
         var remoteRoot = remoteDirectoryPath.TrimEnd(dirSep);
         if (string.IsNullOrEmpty(remoteRoot))
         {
@@ -199,7 +199,7 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
     {
         using var busy = BeginBusyScope();
 
-        const char dirSep = MavlinkFtpHelper.DirectorySeparator;
+        var dirSep = MavlinkFtpHelper.DirectorySeparator;
         var remoteRoot = remoteDirectoryPath.TrimEnd(dirSep);
         if (string.IsNullOrEmpty(remoteRoot))
         {
@@ -307,7 +307,7 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
             throw new DirectoryNotFoundException(localDirectoryPath);
         }
 
-        const char rSep = MavlinkFtpHelper.DirectorySeparator;
+        var rSep = MavlinkFtpHelper.DirectorySeparator;
         var rootName = localRoot.Name;
 
         var remoteDirNorm = remoteDirectory;
@@ -509,8 +509,9 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
                 || ftp.Entries.ContainsKey(newPath + MavlinkFtpHelper.DirectorySeparator)
             )
             {
-                var baseName = Path.GetFileNameWithoutExtension(newName);
-                var ext = Path.GetExtension(newName);
+                var fullName = MavlinkFtpHelper.GetFileName(newName);
+                var baseName = GetFileNameWithoutExtension(fullName);
+                var ext = GetFileExtension(fullName);
                 var counter = 1;
 
                 while (
@@ -573,6 +574,35 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
                 _remoteChanging.OnNext(false);
             }
         });
+    }
+
+    private static string GetFileExtension(string fileName)
+    {
+        if (string.IsNullOrEmpty(fileName))
+        {
+            return string.Empty;
+        }
+
+        var dotIndex = fileName.LastIndexOf('.');
+
+        if (dotIndex <= 0 || dotIndex == fileName.Length - 1)
+        {
+            return string.Empty;
+        }
+
+        return fileName[dotIndex..];
+    }
+
+    private static string GetFileNameWithoutExtension(string fileName)
+    {
+        if (string.IsNullOrEmpty(fileName))
+        {
+            return string.Empty;
+        }
+
+        var dotIndex = fileName.LastIndexOf('.');
+
+        return dotIndex <= 0 ? fileName : fileName[..dotIndex];
     }
 
     public void Dispose()
