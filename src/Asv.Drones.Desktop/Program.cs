@@ -22,16 +22,19 @@ sealed class Program
 
         builder
             .UseAvalonia(BuildAvaloniaApp)
-            .SetLogLevel(LogLevel.Trace)
-            .UseLogToConsole()
-            .UseLogToFile()
             .UseAppPath(opt => opt.WithRelativeFolder("data"))
             .UseJsonUserConfig(opt =>
                 opt.WithFileName("user_settings.json").WithAutoSave(TimeSpan.FromSeconds(1))
             )
             .UseAppInfo(opt => opt.FillFromAssembly(typeof(App).Assembly))
             .UseSoloRun(opt => opt.WithArgumentForwarding())
-            .UseLogService()
+            .UseLogging(options =>
+            {
+                options.WithLogToFile();
+                options.WithLogToConsole();
+                options.WithLogViewer();
+                options.WithLogLevel(LogLevel.Trace);
+            })
             .UseAsvMap()
             .RegisterMavlinkCommands()
             .UsePluginManager(options =>

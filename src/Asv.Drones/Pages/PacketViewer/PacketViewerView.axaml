@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:drones="clr-namespace:Asv.Drones"
+             xmlns:avalonia1="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="drones:PacketViewerViewModel"
              x:Class="Asv.Drones.PacketViewerView">
@@ -41,7 +42,7 @@
                     Margin="2 0 0 0"
                     Command="{Binding ExportToCsv}"
                     ToolTip.Tip="{x:Static drones:RS.PacketViewerView_ToolTip_Save}"
-                    IsEnabled="{Binding IsPaused.Value}"
+                    IsEnabled="{Binding IsPaused.ViewValue.Value}"
                     Classes="saveButton">
                 <avalonia:MaterialIcon Kind="ContentSave"/>
             </Button>
@@ -57,7 +58,7 @@
                           Margin="2 0 0 0" 
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Stretch" 
-                          IsChecked="{Binding IsPaused.Value, Mode=TwoWay}"
+                          IsChecked="{Binding IsPaused.ViewValue.Value, Mode=TwoWay}"
                           ToolTip.Tip="{x:Static drones:RS.PacketViewerView_ToolTip_PlayPause}">
                 <Panel>
                     <ContentPresenter Classes="tbchecked">
@@ -72,26 +73,14 @@
                     </ContentPresenter>
                 </Panel>
             </ToggleButton>
-           <TextBox DockPanel.Dock="Right" MinWidth="200" Text="{Binding SearchText.Value, Mode=TwoWay}">
-                <TextBox.Styles>
-                    <Style Selector="TextBox">
-                        <Setter Property="InnerRightContent">
-                            <Template>
-                                <Button 
-                                    Background="Transparent" 
-                                    BorderBrush="{x:Null}"
-                                    Command="{Binding $parent[TextBox].Clear}">
-                                    <avalonia:MaterialIcon Kind="Close"/>
-                                </Button>
-                            </Template>
-                        </Setter>
-                    </Style>
-                </TextBox.Styles>
-            </TextBox>
+            <avalonia1:SearchBoxView 
+                DockPanel.Dock="Right" MinWidth="200"
+                Margin="0" 
+                DataContext="{Binding Search}"/>
             <avalonia:MaterialIcon DockPanel.Dock="Left" Height="30" Width="30" Kind="Package"/>
         </DockPanel>
         <ListBox 
-            IsHitTestVisible="{CompiledBinding IsPaused.Value}"
+            IsHitTestVisible="{CompiledBinding IsPaused.ViewValue.Value}"
             ScrollViewer.HorizontalScrollBarVisibility="Visible" 
             Grid.Column="0" 
             Grid.Row="2" 
@@ -104,27 +93,6 @@
                     <Setter Property="MinHeight" Value="25"></Setter>
                 </Style>
             </ListBox.Styles>
-            <ListBox.ItemTemplate>
-                <DataTemplate DataType="drones:PacketMessageViewModel">
-                    <Grid
-                        ToolTip.Tip="{CompiledBinding Description}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition SharedSizeGroup="Date" Width="Auto" />
-                            <ColumnDefinition SharedSizeGroup="Source" Width="Auto" />
-                            <ColumnDefinition SharedSizeGroup="Size" Width="Auto" />
-                            <ColumnDefinition SharedSizeGroup="Type" Width="Auto" />
-                            <ColumnDefinition SharedSizeGroup="Message" Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Panel Grid.ColumnSpan="4" Background="#5779C1" IsVisible="{Binding Highlight}" />
-                        <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="0"
-                                   Text="{Binding DateTime, StringFormat={}{0:hh:mm:ss.fff}}" />
-                        <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="1" Text="{Binding Source}" />
-                        <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="2" Text="{Binding Size}" />
-                        <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="3" Text="{Binding Type}" />
-                        <TextBlock FontFamily="Consolas" Margin="5,0" Grid.Column="4" Text="{Binding Message}" />
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
         </ListBox>
         <Grid Grid.Column="1" Grid.Row="2" MinWidth="340" Margin="2 0 2 0">
             <Grid.RowDefinitions>
@@ -140,7 +108,7 @@
                     <CheckBox
                         Grid.Row="0" 
                         HorizontalAlignment="Left" 
-                        IsChecked="{CompiledBinding IsCheckedAllSources.Value}" 
+                        IsChecked="{CompiledBinding IsCheckedAllSources.ViewValue.Value}" 
                         Content="{x:Static drones:RS.PacketViewerView_Filters_CheckAll}" />
                     <ListBox
                         Grid.Row="1"
@@ -157,14 +125,16 @@
                                         <ColumnDefinition Width="8" />
                                         <ColumnDefinition Width="Auto" SharedSizeGroup="Rate" />
                                     </Grid.ColumnDefinitions>
-                                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsChecked.Value, Mode=TwoWay}"
+                                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsChecked.ViewValue.Value, Mode=TwoWay}"
                                               Padding="4 2 0 0">
                                         <CheckBox.Content>
-                                            <TextBlock VerticalAlignment="Center" Text="{Binding FilterValue.Value}" />
+                                            <TextBlock VerticalAlignment="Center" Text="{Binding FilterValue}" />
                                         </CheckBox.Content>
                                     </CheckBox>
-                                    <TextBlock Grid.Column="2" VerticalAlignment="Center"
-                                               Text="{Binding MessageRateText.Value}" />
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding MessageRateText.ViewValue.Value}" />
+                                        <TextBlock Text="{Binding MessageRateTextUnit.Value}" Margin="5,0,0,0" />
+                                    </StackPanel>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -180,7 +150,7 @@
                     <CheckBox
                         Grid.Row="0" 
                         HorizontalAlignment="Left" 
-                        IsChecked="{CompiledBinding IsCheckedAllTypes.Value}" 
+                        IsChecked="{CompiledBinding IsCheckedAllTypes.ViewValue.Value}" 
                         Content="{x:Static drones:RS.PacketViewerView_Filters_CheckAll}" />
                     <ListBox 
                         Grid.Row="1" 
@@ -197,14 +167,16 @@
                                         <ColumnDefinition Width="8" />
                                         <ColumnDefinition Width="Auto" SharedSizeGroup="Rate" />
                                     </Grid.ColumnDefinitions>
-                                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsChecked.Value, Mode=TwoWay}"
+                                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsChecked.ViewValue.Value, Mode=TwoWay}"
                                               Padding="4 2 0 0">
                                         <CheckBox.Content>
-                                            <TextBlock Text="{Binding FilterValue.Value}" />
+                                            <TextBlock Text="{Binding FilterValue}" />
                                         </CheckBox.Content>
                                     </CheckBox>
-                                    <TextBlock Grid.Column="2" VerticalAlignment="Center"
-                                               Text="{Binding MessageRateText.Value}" />
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding MessageRateText.ViewValue.Value}" />
+                                        <TextBlock Text="{Binding MessageRateTextUnit.Value}" Margin="5,0,0,0" />
+                                    </StackPanel>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

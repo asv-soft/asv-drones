@@ -34,12 +34,12 @@ public abstract class PacketFilterComparerBase<TFilter>
         }
 
         return x.Id.Equals(y.Id)
-            && x.FilterValue.Value.Equals(y.FilterValue.Value)
-            && x.MessageRateText.Value.Equals(y.MessageRateText.Value);
+            && x.FilterValue.Equals(y.FilterValue)
+            && x.MessageRateText.ModelValue.Value.Equals(y.MessageRateText.ModelValue.Value);
     }
 
     public virtual int GetHashCode(PacketFilterViewModelBase<TFilter> obj)
     {
-        return HashCode.Combine(obj.Id, obj.FilterValue.Value, obj.MessageRateText.Value);
+        return HashCode.Combine(obj.Id, obj.FilterValue, obj.MessageRateText.ModelValue);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Asv.Avalonia;
 using Asv.Common;
@@ -14,15 +15,18 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
     private const int BaseMovingAverageSize = 3;
 
     private readonly IUnit _unit;
+    private readonly ReactiveProperty<bool> _isChecked;
+    private readonly ReactiveProperty<double> _messageRate;
     private readonly IncrementalRateCounter _packetRate = new(BaseMovingAverageSize);
     private volatile int _cnt;
 
-    public abstract BindableReactiveProperty<string> FilterValue { get; }
+    public abstract string FilterValue { get; }
 
-    public BindableReactiveProperty<string> MessageRateText { get; }
-    public BindableReactiveProperty<bool> IsChecked { get; }
+    public IReadOnlyBindableReactiveProperty<string> MessageRateTextUnit { get; }
+    public HistoricalUnitProperty MessageRateText { get; }
+    public HistoricalBoolProperty IsChecked { get; }
 
-    public PacketFilterViewModelBase(
+    protected PacketFilterViewModelBase(
         string idArg,
         IUnitService unitService,
         ILoggerFactory loggerFactory
@@ -30,13 +34,27 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
         : base(new NavigationId(BaseId, idArg), loggerFactory)
     {
         _unit = unitService.Units[FrequencyBase.Id];
-        MessageRateText = new BindableReactiveProperty<string>(string.Empty).DisposeItWith(
-            Disposable
-        );
-        IsChecked = new BindableReactiveProperty<bool>(false).DisposeItWith(Disposable);
+        _isChecked = new ReactiveProperty<bool>(true).DisposeItWith(Disposable);
+        _messageRate = new ReactiveProperty<double>().DisposeItWith(Disposable);
+        MessageRateText = new HistoricalUnitProperty(
+            nameof(MessageRateText),
+            _messageRate,
+            _unit,
+            loggerFactory,
+            this,
+            "F1"
+        ).DisposeItWith(Disposable);
+        IsChecked = new HistoricalBoolProperty(
+            nameof(IsChecked),
+            _isChecked,
+            loggerFactory,
+            this
+        ).DisposeItWith(Disposable);
+        MessageRateTextUnit = MessageRateText
+            .Unit.CurrentUnitItem.Select(item => item.Symbol)
+            .ToBindableReactiveProperty<string>()
+            .DisposeItWith(Disposable);
         IncreaseRatesCounterSafe();
-
-        IsChecked.Value = true;
 
         Observable
             .Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1))
@@ -49,9 +67,13 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
         Interlocked.Increment(ref _cnt);
     }
 
+    public override IEnumerable<IRoutable> GetRoutableChildren()
+    {
+        yield return IsChecked;
+    }
+
     private void UpdateRateText()
     {
-        var packetRate = Math.Round(_packetRate.Calculate(_cnt), 1);
-        MessageRateText.Value = _unit.CurrentUnitItem.Value.PrintWithUnits(packetRate, "F1");
+        MessageRateText.ModelValue.Value = Math.Round(_packetRate.Calculate(_cnt), 1);
     }
 }
