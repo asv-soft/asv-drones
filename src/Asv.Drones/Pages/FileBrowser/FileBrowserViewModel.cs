@@ -34,13 +34,13 @@ public class FileBrowserViewModel
     private const int SearchThrottleMs = 500;
     private const string BlankName = "UNNAMED";
 
-    private IFtpClientService? _ftpService;
+    private FtpClientService? _ftpService;
+    private CancellationTokenSource? _transferCts;
     private readonly YesOrNoDialogPrefab _yesNoDialog;
     private readonly ILoggerFactory _loggerFactory;
     private readonly FileSystemWatcher _watcher;
     private readonly INavigationService _navigation;
     private readonly string _localRootPath;
-    private CancellationTokenSource? _transferCts;
     private readonly FileSystemEventHandler? _createdHandler;
     private readonly FileSystemEventHandler? _deletedHandler;
     private readonly RenamedEventHandler? _renamedHandler;
@@ -124,32 +124,53 @@ public class FileBrowserViewModel
         ).DisposeItWith(Disposable);
 
         _rawRemoteEntries = new ObservableDictionary<string, IFtpEntry>();
+
         _rawRemoteEntries
             .ObserveAdd()
-            .Subscribe(kv => _remoteItems.Add(EntryToBrowserItem(kv.Value.Key, kv.Value.Value)))
-            .DisposeItWith(Disposable);
-        _rawRemoteEntries
-            .ObserveRemove()
             .Subscribe(kv =>
             {
-                var victim = _remoteItems.FirstOrDefault(i => i.Path == kv.Value.Key);
+                const char sep = MavlinkFtpHelper.DirectorySeparator;
+                var key = Canonical(kv.Value.Key, sep);
+
+                var victim = _remoteItems.FirstOrDefault(i => Canonical(i.Path, sep) == key);
                 if (victim != null)
                 {
                     _remoteItems.Remove(victim);
                 }
+
+                _remoteItems.Add(EntryToBrowserItem(kv.Value.Key, kv.Value.Value));
             })
             .DisposeItWith(Disposable);
+
         _rawRemoteEntries
             .ObserveReplace()
             .Subscribe(kv =>
             {
-                var victim = _remoteItems.FirstOrDefault(i => i.Path == kv.NewValue.Key);
+                const char sep = MavlinkFtpHelper.DirectorySeparator;
+                var key = Canonical(kv.NewValue.Key, sep);
+
+                var victim = _remoteItems.FirstOrDefault(i => Canonical(i.Path, sep) == key);
                 if (victim != null)
                 {
                     _remoteItems.Remove(victim);
                 }
 
                 _remoteItems.Add(EntryToBrowserItem(kv.NewValue.Key, kv.NewValue.Value));
+            })
+            .DisposeItWith(Disposable);
+
+        _rawRemoteEntries
+            .ObserveRemove()
+            .Subscribe(kv =>
+            {
+                const char sep = MavlinkFtpHelper.DirectorySeparator;
+                var key = Canonical(kv.Value.Key, sep);
+
+                var victim = _remoteItems.FirstOrDefault(i => Canonical(i.Path, sep) == key);
+                if (victim != null)
+                {
+                    _remoteItems.Remove(victim);
+                }
             })
             .DisposeItWith(Disposable);
 
@@ -895,66 +916,52 @@ public class FileBrowserViewModel
     )
     {
         string? newPath;
-        if (node?.Base is BrowserItemViewModel item)
+
+        if (node.Base is not BrowserItemViewModel item)
         {
-            try
+            newPath = Directory.Exists(oldPath)
+                ? LocalFilesMixin.RenameDirectory(oldPath, newName, Logger)
+                : LocalFilesMixin.RenameFile(oldPath, newName, Logger);
+
+            RefreshLocalCommand.Execute(Unit.Default);
+            return newPath;
+        }
+        try
+        {
+            if (item.FtpEntryType == FtpEntryType.Directory || Directory.Exists(oldPath))
             {
-                if (item.FtpEntryType == FtpEntryType.Directory || Directory.Exists(oldPath))
-                {
-                    newPath = LocalFilesMixin.RenameDirectory(oldPath, newName, Logger);
-                }
-                else
-                {
-                    newPath = LocalFilesMixin.RenameFile(oldPath, newName, Logger);
-                }
+                newPath = LocalFilesMixin.RenameDirectory(oldPath, newName, Logger);
 
                 item.Header = newName;
                 item.EditedName.Value = newName;
-                item.Path = newPath;
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(
-                    ex,
-                    "Failed to rename local item {oldPath} to {newName}",
-                    oldPath,
-                    newName
-                );
-                throw;
-            }
-        }
-        else
-        {
-            try
-            {
-                newPath = Directory.Exists(oldPath)
-                    ? LocalFilesMixin.RenameDirectory(oldPath, newName, Logger)
-                    : LocalFilesMixin.RenameFile(oldPath, newName, Logger);
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(
-                    ex,
-                    "Failed to rename local path {oldPath} to {newName}",
-                    oldPath,
-                    newName
-                );
-                throw;
-            }
-        }
 
-        try
-        {
-            RefreshLocalCommand.Execute(Unit.Default);
-        }
-        catch
-        {
-            // ignored
-        }
+                RelinkAfterDirectoryRename(
+                    _localItems,
+                    item,
+                    oldPath,
+                    newPath,
+                    Path.DirectorySeparatorChar
+                );
+            }
+            else
+            {
+                newPath = LocalFilesMixin.RenameFile(oldPath, newName, Logger);
 
-        if (LocalItemsTree.FindNode(n => n.Base.Path == newPath) is BrowserNode newNode)
+                item.Header = newName;
+                item.EditedName.Value = newName;
+
+                RelinkAfterFileRename(_localItems, item, newPath);
+            }
+        }
+        catch (Exception ex)
         {
-            LocalSelectedItem.OnNext(newNode);
+            Logger.LogError(
+                ex,
+                "Failed to rename local item {oldPath} to {newName}",
+                oldPath,
+                newName
+            );
+            throw;
         }
 
         return newPath;
@@ -972,41 +979,31 @@ public class FileBrowserViewModel
             throw new InvalidOperationException("FTP service is not initialized");
         }
 
-        string newPath;
-        try
+        if (node.Base is not BrowserItemViewModel item)
         {
-            newPath = await _ftpService.RenameAsync(oldPath, newName, ct);
-        }
-        catch (Exception ex)
-        {
-            Logger.LogError(
-                ex,
-                "Failed to rename remote path {oldPath} to {newName}",
-                oldPath,
-                newName
-            );
-            throw;
+            throw new InvalidOperationException("Unexpected node base type");
         }
 
-        if (node.Base is BrowserItemViewModel item)
-        {
-            item.Header = newName;
-            item.EditedName.Value = newName;
-            item.Path = newPath;
-        }
+        var newPath = await _ftpService.RenameAsync(oldPath, newName, ct);
 
-        try
-        {
-            RefreshRemoteCommand.Execute(Unit.Default);
-        }
-        catch
-        {
-            // ignored
-        }
+        item.Header = newName;
+        item.EditedName.Value = newName;
 
-        if (RemoteItemsTree.FindNode(n => n.Base.Path == newPath) is BrowserNode newNode)
+        if (item.FtpEntryType == FtpEntryType.Directory)
         {
-            RemoteSelectedItem.OnNext(newNode);
+            RelinkAfterDirectoryRenameRemote(_remoteItems, item, oldPath, newPath);
+        }
+        else
+        {
+            var wasExpanded = item.IsExpanded;
+            var wasSelected = item.IsSelected;
+
+            _remoteItems.Remove(item);
+            item.Path = Canonical(newPath, MavlinkFtpHelper.DirectorySeparator);
+            _remoteItems.Add(item);
+
+            ReapplyIsExpanded(item, wasExpanded);
+            ReselectIfNeeded(RemoteItemsTree, RemoteSelectedItem, item.Path, wasSelected);
         }
 
         return newPath;
@@ -1203,6 +1200,8 @@ public class FileBrowserViewModel
 
     #endregion
 
+    #region Helpers
+
     private static void PerformSearch(
         BrowserTree tree,
         BindableReactiveProperty<BrowserNode?> target,
@@ -1346,6 +1345,204 @@ public class FileBrowserViewModel
         _transferCts?.Dispose();
         _transferCts = null;
     }
+
+    private static string ReplacePrefix(string value, string oldPrefix, string newPrefix)
+    {
+        return value.StartsWith(oldPrefix, StringComparison.Ordinal)
+            ? newPrefix + value[oldPrefix.Length..]
+            : value;
+    }
+
+    private static void ReapplyIsExpanded(BrowserItemViewModel item, bool wasExpanded)
+    {
+        if (item.IsExpanded == wasExpanded)
+        {
+            item.IsExpanded = !wasExpanded;
+        }
+        item.IsExpanded = wasExpanded;
+    }
+
+    private static void ReselectIfNeeded(
+        BrowserTree tree,
+        BindableReactiveProperty<BrowserNode?> selected,
+        string newPath,
+        bool wasSelected
+    )
+    {
+        if (!wasSelected)
+        {
+            return;
+        }
+
+        if (tree.FindNode(n => n.Base.Path == newPath) is BrowserNode node)
+        {
+            selected.OnNext(node);
+        }
+    }
+
+    private void RelinkAfterDirectoryRenameRemote(
+        ObservableList<IBrowserItemViewModel> list,
+        BrowserItemViewModel renamedItem,
+        string oldPath,
+        string newPath
+    )
+    {
+        const char sep = MavlinkFtpHelper.DirectorySeparator;
+
+        var oldC = Canonical(oldPath, sep);
+        var newC = Canonical(newPath, sep);
+
+        var wasExpanded = renamedItem.IsExpanded;
+        var wasSelected = renamedItem.IsSelected;
+
+        var descendants = list.OfType<BrowserItemViewModel>()
+            .Where(x => !ReferenceEquals(x, renamedItem) && IsDescendantOf(oldC, x.Path, sep))
+            .ToList();
+
+        list.Remove(renamedItem);
+
+        renamedItem.Path = newC;
+        list.Add(renamedItem);
+        ReapplyIsExpanded(renamedItem, wasExpanded);
+
+        foreach (var d in descendants)
+        {
+            var dWasExpanded = d.IsExpanded;
+
+            if (!string.IsNullOrEmpty(d.ParentPath))
+            {
+                d.ParentPath = ReplacePrefixNormalized(d.ParentPath!, oldC, newC, sep);
+            }
+
+            d.Path = ReplacePrefixNormalized(d.Path, oldC, newC, sep);
+
+            list.Remove(d);
+            list.Add(d);
+
+            ReapplyIsExpanded(d, dWasExpanded);
+        }
+
+        ReselectIfNeeded(RemoteItemsTree, RemoteSelectedItem, newC, wasSelected);
+    }
+
+    private void RelinkAfterDirectoryRename(
+        ObservableList<IBrowserItemViewModel> list,
+        BrowserItemViewModel renamedItem,
+        string oldPath,
+        string newPath,
+        char sep
+    )
+    {
+        var wasExpanded = renamedItem.IsExpanded;
+        var wasSelected = renamedItem.IsSelected;
+
+        var descendants = list.Where(x =>
+                !ReferenceEquals(x, renamedItem) && IsDescendantOf(oldPath, x.Path, sep)
+            )
+            .Cast<BrowserItemViewModel>()
+            .ToList();
+
+        list.Remove(renamedItem);
+
+        foreach (var d in descendants)
+        {
+            if (
+                !string.IsNullOrEmpty(d.ParentPath)
+                && d.ParentPath!.StartsWith(oldPath, StringComparison.Ordinal)
+            )
+            {
+                d.ParentPath = ReplacePrefix(d.ParentPath!, oldPath, newPath);
+            }
+
+            d.Path = ReplacePrefix(d.Path, oldPath, newPath);
+        }
+
+        renamedItem.Path = newPath;
+        list.Add(renamedItem);
+
+        ReapplyIsExpanded(renamedItem, wasExpanded);
+
+        var tree = ReferenceEquals(list, _localItems) ? LocalItemsTree : RemoteItemsTree;
+        var sel = ReferenceEquals(list, _localItems) ? LocalSelectedItem : RemoteSelectedItem;
+        ReselectIfNeeded(tree, sel, newPath, wasSelected);
+    }
+
+    private void RelinkAfterFileRename(
+        ObservableList<IBrowserItemViewModel> list,
+        BrowserItemViewModel renamedItem,
+        string newPath
+    )
+    {
+        var wasExpanded = renamedItem.IsExpanded;
+        var wasSelected = renamedItem.IsSelected;
+
+        list.Remove(renamedItem);
+        renamedItem.Path = newPath;
+        list.Add(renamedItem);
+
+        ReapplyIsExpanded(renamedItem, wasExpanded);
+
+        var tree = ReferenceEquals(list, _localItems) ? LocalItemsTree : RemoteItemsTree;
+        var sel = ReferenceEquals(list, _localItems) ? LocalSelectedItem : RemoteSelectedItem;
+        ReselectIfNeeded(tree, sel, newPath, wasSelected);
+    }
+
+    private static string Canonical(string path, char sep)
+    {
+        if (string.IsNullOrEmpty(path))
+        {
+            return string.Empty;
+        }
+
+        if (path.Length == 1 && path[0] == sep)
+        {
+            return path;
+        }
+
+        var i = path.Length;
+        while (i > 1 && path[i - 1] == sep)
+        {
+            i--;
+        }
+
+        return path.AsSpan(0, i).ToString();
+    }
+
+    private static string WithSep(string path, char sep)
+    {
+        var c = Canonical(path, sep);
+        if (c.Length == 1 && c[0] == sep)
+        {
+            return c;
+        }
+
+        return c.EndsWith(sep) ? c : c + sep;
+    }
+
+    private static bool IsDescendantOf(string ancestor, string path, char sep)
+    {
+        var prefix = WithSep(ancestor, sep);
+        return path.StartsWith(prefix, StringComparison.Ordinal);
+    }
+
+    private static string ReplacePrefixNormalized(
+        string value,
+        string oldPrefix,
+        string newPrefix,
+        char sep
+    )
+    {
+        var oldWith = WithSep(oldPrefix, sep);
+        if (!value.StartsWith(oldWith, StringComparison.Ordinal))
+        {
+            return value;
+        }
+
+        var rest = value.AsSpan(oldWith.Length);
+        return string.Concat(WithSep(newPrefix, sep).AsSpan(), rest);
+    }
+
+    #endregion
 
     public override ValueTask<IRoutable> Navigate(NavigationId id)
     {

@@ -13,7 +13,6 @@ public class BrowserTree(IReadOnlyObservableList<IBrowserItemViewModel> flatList
         NodeFactory
     )
 {
-    // Single shared factory avoids an allocation per BrowserTree instance.
     private static readonly CreateNodeDelegate<IBrowserItemViewModel, string> NodeFactory = static (
         item,
         list,
