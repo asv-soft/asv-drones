@@ -10,11 +10,11 @@ public interface IBrowserItemViewModel : IHeadlinedViewModel
     string? ParentPath { get; }
     FileSize? Size { get; }
     bool HasChildren { get; }
-    bool IsExpanded { get; }
-    bool IsSelected { get; }
+    bool IsExpanded { get; set; }
+    bool IsSelected { get; set; }
+    bool EditMode { get; set; }
+    BindableReactiveProperty<string> EditedName { get; set; }
     EntityType Type { get; }
-    bool EditMode { get; }
-    BindableReactiveProperty<string> EditedName { get; }
     string? Crc32Hex { get; }
     Crc32Status Crc32Status { get; }
     FtpEntryType FtpEntryType { get; }
