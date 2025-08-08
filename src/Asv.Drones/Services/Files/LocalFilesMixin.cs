@@ -101,12 +101,7 @@ public static class LocalFilesMixin
                     newPath = Path.Combine(parentDir, $"{baseName} ({counter++}){ext}");
                 }
             }
-            else
-            {
-                throw new FileNotFoundException("Path not found");
-            }
             File.Move(oldPath, newPath);
-
             log?.LogInformation("File renamed to '{new}'", newPath);
         }
         catch (FileNotFoundException e)
@@ -132,19 +127,13 @@ public static class LocalFilesMixin
                     newPath = Path.Combine(parentDir, $"{newName} ({counter++})");
                 }
             }
-            else
-            {
-                throw new DirectoryNotFoundException("Path not found");
-            }
+            Directory.Move(oldPath, newPath);
+            log?.LogInformation("Directory renamed to '{new}'", newPath);
         }
         catch (DirectoryNotFoundException e)
         {
             log?.LogError(e, "Failed to rename directory. Incorrect path: {Path}", oldPath);
         }
-
-        Directory.Move(oldPath, newPath);
-
-        log?.LogInformation("Directory renamed to '{new}'", newPath);
 
         return newPath;
     }
