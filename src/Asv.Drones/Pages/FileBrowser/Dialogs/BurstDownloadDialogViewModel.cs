@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Asv.Avalonia;
+using Asv.Common;
 using Asv.Mavlink;
 using R3;
-using ValidationResult = Asv.Avalonia.ValidationResult;
 
 namespace Asv.Drones;
 
@@ -23,9 +23,7 @@ public class BurstDownloadDialogViewModel : DialogViewModelBase
                     return ValidationResult.Success;
                 }
 
-                return new ArgumentOutOfRangeException(
-                    $"Invalid value (1 - {MavlinkFtpHelper.MaxDataSize})"
-                );
+                return ValidationResult.FailAsOutOfRange("1", MavlinkFtpHelper.MaxDataSize.ToString());
             },
             this,
             isForceValidation: true

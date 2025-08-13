@@ -37,7 +37,7 @@ public class MavParamLatLonTextBoxViewModel : MavParamTextBoxViewModel
     {
         var result = _unit.ValidateValue(valueAsString);
 
-        if (result.IsFailed)
+        if (result.IsSuccess == false)
         {
             value = Info.DefaultValue;
             return result.ValidationException;

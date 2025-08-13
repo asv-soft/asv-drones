@@ -32,7 +32,7 @@ public class RenameDialogViewModel : DialogViewModelBase
     {
         if (string.IsNullOrWhiteSpace(arg))
         {
-            return new ArgumentException("Name cannot be empty");
+            return ValidationResult.FailAsNullOrWhiteSpace;
         }
 
         if (
@@ -40,12 +40,16 @@ public class RenameDialogViewModel : DialogViewModelBase
             || arg.Any(c => !AllowedCharSet.Contains(c))
         )
         {
-            return new ArgumentException("Name contains invalid characters");
+            return new ValidationResult
+            {
+                IsSuccess = false,
+                ValidationException = new ValidationException("Name contains invalid characters"),
+            };
         }
 
         if (arg.Length > MaxNameLenght)
         {
-            return new ArgumentException("Name is too long");
+            return ValidationResult.FailAsOutOfRange("1", MaxNameLenght.ToString());
         }
 
         return ValidationResult.Success;
