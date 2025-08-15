@@ -494,46 +494,36 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
 
     public async Task<string> RenameAsync(
         string oldPath,
-        string newName,
+        string newPath,
         CancellationToken ct = default
     )
     {
         var parentDir = ftp.Entries[oldPath].ParentPath;
-        var newPath = MavlinkFtpHelper.Combine(parentDir, newName);
 
         try
         {
-            if (
-                ftp.Entries.ContainsKey(newPath)
-                || ftp.Entries.ContainsKey(newPath + MavlinkFtpHelper.DirectorySeparator)
-            )
+            if (ftp.Entries.ContainsKey(newPath))
             {
-                var fullName = MavlinkFtpHelper.GetFileName(newName);
-                var baseName = GetFileNameWithoutExtension(fullName);
-                var ext = GetFileExtension(fullName);
+                var fullName = MavlinkFtpHelper.GetFileName(newPath);
+                var baseName = Path.GetFileNameWithoutExtension(fullName);
+                var ext = Path.GetExtension(fullName);
                 var counter = 1;
 
-                while (
-                    ftp.Entries.ContainsKey(newPath)
-                    || ftp.Entries.ContainsKey(newPath + MavlinkFtpHelper.DirectorySeparator)
-                )
+                while (ftp.Entries.ContainsKey(newPath))
                 {
                     newPath = MavlinkFtpHelper.Combine(parentDir, $"{baseName} ({counter++}){ext}");
                 }
             }
             else
             {
-                throw new FileNotFoundException("Path not found");
+                await ftp.Base.Rename(oldPath, newPath, ct);
+                _log.LogInformation("File renamed to '{new}'", newPath);
             }
         }
         catch (FileNotFoundException e)
         {
             _log.LogError(e, "Failed to rename file. Incorrect path: {Path}", oldPath);
         }
-
-        await ftp.Base.Rename(oldPath, newPath, ct);
-
-        _log.LogInformation("File renamed to '{new}'", newPath);
 
         _remoteChanged.OnNext(Unit.Default);
 
@@ -573,35 +563,6 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
                 _remoteChanging.OnNext(false);
             }
         });
-    }
-
-    private static string GetFileExtension(string fileName)
-    {
-        if (string.IsNullOrEmpty(fileName))
-        {
-            return string.Empty;
-        }
-
-        var dotIndex = fileName.LastIndexOf('.');
-
-        if (dotIndex <= 0 || dotIndex == fileName.Length - 1)
-        {
-            return string.Empty;
-        }
-
-        return fileName[dotIndex..];
-    }
-
-    private static string GetFileNameWithoutExtension(string fileName)
-    {
-        if (string.IsNullOrEmpty(fileName))
-        {
-            return string.Empty;
-        }
-
-        var dotIndex = fileName.LastIndexOf('.');
-
-        return dotIndex <= 0 ? fileName : fileName[..dotIndex];
     }
 
     public void Dispose()

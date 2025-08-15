@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Text.RegularExpressions;
 using Asv.Avalonia;
 using Asv.Mavlink;
 using Microsoft.Extensions.Logging;
@@ -27,12 +28,7 @@ public class BrowserItemViewModel : HeadlinedViewModel, IBrowserItemViewModel
 
     public new string? Header
     {
-        get =>
-            field == null
-                ? null
-                : new string(
-                    field.Select(ch => ch is >= (char)32 and <= (char)126 ? ch : '*').ToArray()
-                );
+        get => BrowserNamingPolicy.SanitizeForDisplay(field);
         set => SetField(ref field, value);
     } = string.Empty;
 
