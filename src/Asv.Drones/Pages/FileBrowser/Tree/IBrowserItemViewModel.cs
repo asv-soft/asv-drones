@@ -6,8 +6,8 @@ namespace Asv.Drones;
 
 public interface IBrowserItemViewModel : IHeadlinedViewModel
 {
-    string Path { get; }
-    string? ParentPath { get; }
+    string Path { get; set; }
+    string? ParentPath { get; set; }
     FileSize? Size { get; }
     bool HasChildren { get; }
     bool IsExpanded { get; set; }

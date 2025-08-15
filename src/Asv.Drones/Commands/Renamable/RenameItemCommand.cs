@@ -36,7 +36,7 @@ public class RenameItemCommand : ContextCommand<IRenamable, ActionArg>
             return null;
         }
 
-        var oldName = Path.GetFileName(oldPath);
+        var oldName = PathEx.NameOf(oldPath);
         string newPath;
         try
         {
