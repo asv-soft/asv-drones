@@ -142,15 +142,15 @@
                                         <TextBlock Grid.Column="1"
                                                    VerticalAlignment="Center"
                                                    IsVisible="{Binding !Base.EditMode}"
-                                                   Text="{Binding Base.Header}"/>
+                                                   Text="{Binding Base.Name}"/>
                                         <TextBox Grid.Column="1"
                                                  VerticalAlignment="Center"
                                                  IsVisible="{Binding Base.EditMode}"
                                                  Text="{Binding Base.EditedName.Value}">
                                             <TextBox.InnerRightContent>
                                                 <Button Content="{avalonia:MaterialIconExt Kind=Edit}"
-                                                        Command="{Binding $parent[TreeView].((drones:FileBrowserViewModel)DataContext).CommitLocalRename}"
-                                                        CommandParameter="{Binding .}"
+                                                        Command="{Binding Base.CommitRename}"
+                                                        CommandParameter="{Binding Base}"
                                                         VerticalAlignment="Stretch"
                                                         HorizontalAlignment="Stretch"
                                                         Margin="1"/>
@@ -316,15 +316,15 @@
                                         <TextBlock Grid.Column="1"
                                                    VerticalAlignment="Center"
                                                    IsVisible="{Binding !Base.EditMode}"
-                                                   Text="{Binding Base.Header}"/>
+                                                   Text="{Binding Base.Name}"/>
                                         <TextBox Grid.Column="1"
                                                  VerticalAlignment="Center"
                                                  IsVisible="{Binding Base.EditMode}"
                                                  Text="{Binding Base.EditedName.Value}">
                                             <TextBox.InnerRightContent>
                                                 <Button Content="{avalonia:MaterialIconExt Kind=Edit}"
-                                                        Command="{Binding $parent[TreeView].((drones:FileBrowserViewModel)DataContext).CommitLocalRename}"
-                                                        CommandParameter="{Binding .}"
+                                                        Command="{Binding Base.CommitRename}"
+                                                        CommandParameter="{Binding Base}"
                                                         VerticalAlignment="Stretch"
                                                         HorizontalAlignment="Stretch"
                                                         Margin="1"/>

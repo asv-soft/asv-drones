@@ -51,7 +51,8 @@ public static class LocalFilesMixin
                     dir,
                     info.Name,
                     EntityType.Local,
-                    loggerFactory
+                    loggerFactory,
+                    null
                 )
             );
             ProcessBrowserDirectory(dir, root, items, loggerFactory, ct);
@@ -74,7 +75,8 @@ public static class LocalFilesMixin
                         info.Name,
                         info.Length,
                         EntityType.Local,
-                        loggerFactory
+                        loggerFactory,
+                        null
                     )
                 );
             }

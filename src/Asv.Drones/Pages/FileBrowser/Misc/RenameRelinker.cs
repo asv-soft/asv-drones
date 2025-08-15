@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Composition;
 using System.Linq;
 
 namespace Asv.Drones;
@@ -39,7 +38,7 @@ public sealed class RenameRelinker : IRenameRelinker
         {
             item.Path = newC;
             item.ParentPath = PathEx.ParentOf(newC, sep);
-            item.Header = PathEx.LastSegment(newC, sep);
+            item.Name = PathEx.LastSegment(newC, sep);
         }
 
         // Update descendants
@@ -50,7 +49,7 @@ public sealed class RenameRelinker : IRenameRelinker
 
             if (!string.IsNullOrEmpty(item.ParentPath))
             {
-                item.ParentPath = PathEx.ReplacePrefixNormalized(item.ParentPath!, oldC, newC, sep);
+                item.ParentPath = PathEx.ReplacePrefixNormalized(item.ParentPath, oldC, newC, sep);
             }
         }
     }
@@ -69,7 +68,7 @@ public sealed class RenameRelinker : IRenameRelinker
         var newPath = parentWithSep + newName;
 
         item.Path = PathEx.Canonical(newPath, sep);
-        item.Header = newName;
+        item.Name = newName;
 
         return item.Path;
     }

@@ -130,9 +130,9 @@ public sealed class RemoteEntriesSync(
 
     private static void TrySyncMetadata(IBrowserItemViewModel vm, IFtpEntry entry)
     {
-        if (vm is BrowserItemViewModel b && entry.Name != b.Header)
+        if (vm is BrowserItemViewModel b && entry.Name != b.Name)
         {
-            b.Header = entry.Name;
+            b.Name = entry.Name;
         }
     }
 }
