@@ -8,7 +8,11 @@ public class BrowserTree(IReadOnlyObservableList<IBrowserItemViewModel> flatList
         flatList,
         rootKey,
         static x => x.Path,
-        static x => x.ParentPath ?? string.Empty,
+        static x =>
+        {
+            var p = x.ParentPath ?? string.Empty;
+            return p == x.Path ? string.Empty : p;
+        },
         BrowserItemComparer.Instance,
         NodeFactory
     )

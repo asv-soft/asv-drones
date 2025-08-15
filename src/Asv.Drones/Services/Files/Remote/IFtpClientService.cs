@@ -73,7 +73,7 @@ public interface IFtpClientService : IDisposable
 
     Task<uint> CalculateCrc32Async(string filePath, CancellationToken ct = default);
 
-    Task<string> RenameAsync(string oldPath, string newName, CancellationToken ct = default);
+    Task<string> RenameAsync(string oldPath, string newPath, CancellationToken ct = default);
 
     Task<IReadOnlyObservableDictionary<string, IFtpEntry>> Refresh(CancellationToken ct = default);
 
