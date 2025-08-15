@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Asv.Avalonia;
 using Asv.Common;
 using R3;
+using ValidationResult = Asv.Avalonia.ValidationResult;
 
 namespace Asv.Drones;
 
