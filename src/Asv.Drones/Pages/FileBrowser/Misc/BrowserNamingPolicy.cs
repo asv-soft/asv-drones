@@ -1,16 +1,16 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Asv.Avalonia;
+using Asv.Common;
 
 namespace Asv.Drones;
 
 public static partial class BrowserNamingPolicy
 {
-    public const string AllowedCharsPattern = @"[A-Za-z0-9_.\- ]";
+    public const string AllowedCharsPattern = @"[A-Za-z0-9_.\-() ]";
     public const int MaxNameLength = 255;
+    public const string BlankName = "UNNAMED";
 
     private static readonly Regex AllowedChar = AllowedCharsRegex();
 
@@ -30,24 +30,24 @@ public static partial class BrowserNamingPolicy
         return sb.ToString();
     }
 
-    public static ValidationResult? Validate(string name)
+    public static ValidationResult Validate(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
-            return new ArgumentException("Name cannot be empty");
+            return ValidationResult.FailAsNullOrWhiteSpace;
         }
 
         if (name.Any(Path.GetInvalidFileNameChars().Contains))
         {
-            return new ArgumentException("Name contains invalid characters");
+            return ValidationResult.FailAsInvalidCharacters;
         }
 
         if (name.Length > MaxNameLength)
         {
-            return new ArgumentException("Name is too long");
+            return ValidationResult.FailAsOutOfRange("1", MaxNameLength.ToString());
         }
 
-        return null;
+        return ValidationResult.Success;
     }
 
     [GeneratedRegex(AllowedCharsPattern, RegexOptions.Compiled)]
