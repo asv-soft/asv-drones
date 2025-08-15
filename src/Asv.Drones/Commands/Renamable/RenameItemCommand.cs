@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Material.Icons;
@@ -17,7 +16,7 @@ public class RenameItemCommand : ContextCommand<IRenamable, ActionArg>
         Name = RS.RenameItemCommand_CommandInfo_Name,
         Description = RS.RenameItemCommand_CommandInfo_Description,
         Icon = MaterialIconKind.Pencil,
-        DefaultHotKey = HotKeyInfo.Parse("Enter"),
+        DefaultHotKey = "Enter",
         Source = SystemModule.Instance,
     };
 
