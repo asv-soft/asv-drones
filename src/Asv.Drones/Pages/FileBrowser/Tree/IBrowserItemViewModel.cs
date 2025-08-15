@@ -4,8 +4,9 @@ using R3;
 
 namespace Asv.Drones;
 
-public interface IBrowserItemViewModel : IHeadlinedViewModel
+public interface IBrowserItemViewModel : IRoutable
 {
+    string Name { get; set; }
     string Path { get; set; }
     string? ParentPath { get; set; }
     FileSize? Size { get; }
@@ -18,4 +19,5 @@ public interface IBrowserItemViewModel : IHeadlinedViewModel
     string? Crc32Hex { get; }
     Crc32Status Crc32Status { get; }
     FtpEntryType FtpEntryType { get; }
+    ReactiveCommand CommitRename { get; }
 }
