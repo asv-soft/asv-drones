@@ -5,6 +5,7 @@
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:conv="clr-namespace:Avalonia.Data.Converters;assembly=Avalonia.Base"
              xmlns:drones="clr-namespace:Asv.Drones"
+             xmlns:avalonia1="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:CompileBindings="True"
              x:Class="Asv.Drones.FileBrowserView"
@@ -13,10 +14,11 @@
         <drones:FileBrowserViewModel />
     </Design.DataContext>
     <UserControl.Resources>
+        <SolidColorBrush x:Key="IconBrushDefault" Color="{DynamicResource SystemAccentColorLight2}" />
+        <SolidColorBrush x:Key="IconBrushDelete" Color="{DynamicResource SystemAccentColorDark2}" />
+        <SolidColorBrush x:Key="IconBrushDisabled" Color="{DynamicResource SystemBaseLowColor}" />
         <SolidColorBrush x:Key="FolderBrush" Color="{DynamicResource SystemAccentColorDark2}" />
         <SolidColorBrush x:Key="FileBrush" Color="{DynamicResource SystemAccentColorLight2}" />
-        <SolidColorBrush x:Key="ButtonBrush" Color="{DynamicResource SystemAccentColorLight2}" />
-        <SolidColorBrush x:Key="DeleteButtonBrush" Color="{DynamicResource SystemAccentColorDark2}" />
         <SolidColorBrush x:Key="ProgressBrush" Color="{DynamicResource SystemAccentColorLight2}" />
         <SolidColorBrush x:Key="Crc32DefaultBrush" Color="{DynamicResource SystemAccentColorLight2}" />
         <SolidColorBrush x:Key="Crc32CorrectBrush" Color="{DynamicResource SystemFillColorSuccess}" />
@@ -48,9 +50,24 @@
         <Style Selector="avalonia|MaterialIcon.file.selected" x:DataType="drones:BrowserNode">
             <Setter Property="Kind" Value="FileMarker" />
         </Style>
+        <Style Selector="Button avalonia|MaterialIcon, Button avalonia|MaterialIconExt">
+            <Setter Property="Button.Foreground" Value="{StaticResource IconBrushDefault}" />
+        </Style>
+        <Style Selector="Button.delete avalonia|MaterialIcon, Button.delete avalonia|MaterialIconExt">
+            <Setter Property="Button.Foreground" Value="{StaticResource IconBrushDelete}" />
+        </Style>
+        <Style Selector="Button:disabled avalonia|MaterialIcon, Button:disabled avalonia|MaterialIconExt">
+            <Setter Property="Button.Foreground" Value="{StaticResource IconBrushDisabled}" />
+            <Setter Property="Button.Opacity"    Value="0.4"/>
+        </Style>
+        <Style Selector="Button">
+            <Setter Property="Theme" Value="{DynamicResource TransparentButton}"/>
+        </Style>
     </UserControl.Styles>
     <Panel>
-        <Grid RowDefinitions="*, Auto">
+        <avalonia1:AwaitingScreen Header="Connecting" Description="Connect to the device..." IsVisible="{Binding !IsDeviceInitialized}"/>
+        <Grid RowDefinitions="*, Auto" 
+              IsVisible="{Binding IsDeviceInitialized}">
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" MinWidth="300"/>
@@ -67,24 +84,20 @@
                                     Spacing="4">
                             <StackPanel Spacing="4"
                                         Orientation="Horizontal">
-                                <Button Command="{Binding CreateLocalFolderCommand}"
-                                        Theme="{DynamicResource TransparentButton}">
-                                    <avalonia:MaterialIcon Kind="FolderPlusOutline" Foreground="{DynamicResource ButtonBrush}" />
+                                <Button Command="{Binding CreateLocalFolderCommand}">
+                                    <avalonia:MaterialIcon Kind="FolderPlusOutline"  />
                                 </Button>
                                 <Button Command="{Binding LocalRenameCommand}"
-                                        CommandParameter="{Binding LocalSelectedItem.Value}"
-                                        Theme="{DynamicResource TransparentButton}">
-                                    <avalonia:MaterialIcon Kind="Pencil" Foreground="{DynamicResource ButtonBrush}" />
+                                        CommandParameter="{Binding LocalSelectedItem.Value}">
+                                    <avalonia:MaterialIcon Kind="Pencil" />
                                 </Button>
                                 <Button Command="{Binding CalculateLocalCrc32Command}"
-                                        CommandParameter="{Binding LocalSelectedItem.Value}"
-                                        Theme="{DynamicResource TransparentButton}">
-                                    <avalonia:MaterialIcon Kind="KeyOutline" Foreground="{DynamicResource ButtonBrush}"/>
+                                        CommandParameter="{Binding LocalSelectedItem.Value}">
+                                    <avalonia:MaterialIcon Kind="KeyOutline" />
                                 </Button>
                                 <Button Command="{Binding RemoveLocalItemCommand}"
-                                        CommandParameter="{Binding LocalSelectedItem.Value}"
-                                        Theme="{DynamicResource TransparentButton}">
-                                    <avalonia:MaterialIcon Kind="Trash" Foreground="{DynamicResource DeleteButtonBrush}" />
+                                        CommandParameter="{Binding LocalSelectedItem.Value}">
+                                    <avalonia:MaterialIcon Kind="Trash"  />
                                 </Button>
                             </StackPanel>
                             <Grid ColumnDefinitions="*, Auto" Margin="0 0 0 4">
@@ -93,17 +106,15 @@
                                          Text="{Binding LocalSearchText.ViewValue.Value}"
                                          Margin="0 0 8 0">
                                     <TextBox.InnerRightContent>
-                                        <Button Command="{Binding ClearLocalSearchBoxCommand}"
-                                                Theme="{DynamicResource TransparentButton}">
-                                            <avalonia:MaterialIcon Kind="Close" Foreground="{DynamicResource DeleteButtonBrush}"/>
+                                        <Button Command="{Binding ClearLocalSearchBoxCommand}">
+                                            <avalonia:MaterialIcon Kind="Close" />
                                         </Button>
                                     </TextBox.InnerRightContent>
                                 </TextBox>
                                 <Button Grid.Column="1"
                                         VerticalAlignment="Stretch"
                                         HorizontalAlignment="Center"
-                                        Command="{Binding RefreshLocalCommand}"
-                                        Theme="{DynamicResource TransparentButton}">
+                                        Command="{Binding RefreshLocalCommand}">
                                     <avalonia:MaterialIcon Kind="Refresh" Foreground="{DynamicResource SystemAccentColorLight2}" />
                                 </Button>
                             </Grid>
@@ -111,7 +122,9 @@
                         
                         <!--Local tree-->
                         <TreeView ItemsSource="{Binding LocalItemsTree.Items}"
-                                  SelectedItem="{Binding LocalSelectedItem.Value}">
+                                  SelectedItem="{Binding LocalSelectedItem.Value}"
+                                  drones:TreeViewBehaviors.IgnoreEnter="True"
+                                  PointerPressed="TreeView_OnPointerPressed">
                             <TreeView.ItemTemplate>
                                 <TreeDataTemplate ItemsSource="{Binding Items}" 
                                                   DataType="{x:Type drones:BrowserNode}">
@@ -128,7 +141,21 @@
                                                                Height="{DynamicResource IconSize}"/>
                                         <TextBlock Grid.Column="1"
                                                    VerticalAlignment="Center"
-                                                   Text="{Binding Base.Header}"/>
+                                                   IsVisible="{Binding !Base.EditMode}"
+                                                   Text="{Binding Base.Name}"/>
+                                        <TextBox Grid.Column="1"
+                                                 VerticalAlignment="Center"
+                                                 IsVisible="{Binding Base.EditMode}"
+                                                 Text="{Binding Base.EditedName.Value}">
+                                            <TextBox.InnerRightContent>
+                                                <Button Content="{avalonia:MaterialIconExt Kind=Edit}"
+                                                        Command="{Binding Base.CommitRename}"
+                                                        CommandParameter="{Binding Base}"
+                                                        VerticalAlignment="Stretch"
+                                                        HorizontalAlignment="Stretch"
+                                                        Margin="1"/>
+                                            </TextBox.InnerRightContent>
+                                        </TextBox>
                                         <TextBlock Grid.Column="2"
                                                    Margin="0,0,8,0"
                                                    VerticalAlignment="Center"
@@ -179,22 +206,21 @@
                 <StackPanel Grid.Row="0"
                             Grid.Column="1"
                             KeyboardNavigation.TabNavigation="None"
+                            IsEnabled="{Binding !IsUiBlocked.Value}"
                             IsTabStop="False"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center" 
                             Margin="2"
                             Spacing="8">
                     <Button Height="50" 
-                            Theme="{DynamicResource TransparentButton}"
+                            Content="{avalonia:MaterialIconExt Kind=TransferRight}" 
                             Command="{Binding UploadCommand}"
-                            CommandParameter="{Binding LocalSelectedItem.Value}">
-                        <avalonia:MaterialIcon Kind="TransferRight"/>
-                    </Button>
+                            IsEnabled="{Binding !IsUiBlocked.Value}"
+                            CommandParameter="{Binding LocalSelectedItem.Value}"/>
                     <Button Height="50" 
-                            Theme="{DynamicResource TransparentButton}"
-                            Command="{Binding ShowDownloadPopupCommand}">
-                        <avalonia:MaterialIcon Kind="TransferLeft"/>
-                    </Button>
+                            Content="{avalonia:MaterialIconExt Kind=TransferLeft}" 
+                            IsEnabled="{Binding !IsUiBlocked.Value}"
+                            Command="{Binding ShowDownloadPopupCommand}"/>
                     
                     <Popup IsOpen="{Binding IsDownloadPopupOpen.Value}"
                            Placement="RightEdgeAlignedBottom" 
@@ -203,9 +229,11 @@
                             <StackPanel>
                                 <Button Content="{x:Static drones:RS.FileBrowserView_Button_Download_Content}" 
                                         Command="{Binding DownloadCommand}" 
+                                        IsEnabled="{Binding !IsUiBlocked.Value}"
                                         CommandParameter="{Binding RemoteSelectedItem.Value}"
                                         Margin="0,0,0,5"/>
                                 <Button Content="{x:Static drones:RS.FileBrowserView_Button_BurstDownload_Content}" 
+                                        IsEnabled="{Binding !IsUiBlocked.Value}"
                                         Command="{Binding BurstDownloadCommand}"
                                         CommandParameter="{Binding RemoteSelectedItem.Value}"/>
                             </StackPanel>
@@ -223,33 +251,27 @@
                                     Spacing="4">
                             <StackPanel Spacing="4"
                                         Orientation="Horizontal">
-                                <Button Command="{Binding CreateRemoteFolderCommand}"
-                                        Theme="{DynamicResource TransparentButton}"> <!-- TODO: Fix style issues -->
-                                    <avalonia:MaterialIcon Kind="FolderPlusOutline" Foreground="{DynamicResource ButtonBrush}" />
+                                <Button Command="{Binding CreateRemoteFolderCommand}">
+                                    <avalonia:MaterialIcon Kind="FolderPlusOutline"  />
                                 </Button>
                                 <Button Command="{Binding RemoteRenameCommand}"
-                                        CommandParameter="{Binding RemoteSelectedItem.Value}"
-                                        Theme="{DynamicResource TransparentButton}">
-                                    <avalonia:MaterialIcon Kind="Pencil" Foreground="{DynamicResource ButtonBrush}" />
+                                        CommandParameter="{Binding RemoteSelectedItem.Value}">
+                                    <avalonia:MaterialIcon Kind="Pencil"  />
                                 </Button>
                                 <Button Command="{Binding CompareSelectedItemsCommand}"
-                                        CommandParameter="{Binding LocalSelectedItem.Value}"
-                                        Theme="{DynamicResource TransparentButton}">
-                                    <avalonia:MaterialIcon Kind="SwapHorizontalCircleOutline" Foreground="{DynamicResource ButtonBrush}"/>
+                                        CommandParameter="{Binding LocalSelectedItem.Value}">
+                                    <avalonia:MaterialIcon Kind="SwapHorizontalCircleOutline" />
                                 </Button>
-                                <Button Command="{Binding FindFileOnLocalCommand}"
-                                        Theme="{DynamicResource TransparentButton}">
-                                    <avalonia:MaterialIcon Kind="FileFindOutline" Foreground="{DynamicResource ButtonBrush}"/>
+                                <Button Command="{Binding FindFileOnLocalCommand}">
+                                    <avalonia:MaterialIcon Kind="FileFindOutline" />
                                 </Button>
                                 <Button Command="{Binding CalculateRemoteCrc32Command}"
-                                        CommandParameter="{Binding RemoteSelectedItem.Value}"
-                                        Theme="{DynamicResource TransparentButton}">
-                                    <avalonia:MaterialIcon Kind="KeyOutline" Foreground="{DynamicResource ButtonBrush}"/>
+                                        CommandParameter="{Binding RemoteSelectedItem.Value}">
+                                    <avalonia:MaterialIcon Kind="KeyOutline" />
                                 </Button>
                                 <Button Command="{Binding RemoveRemoteItemCommand}"
-                                        CommandParameter="{Binding RemoteSelectedItem.Value}"
-                                        Theme="{DynamicResource TransparentButton}">
-                                    <avalonia:MaterialIcon Kind="Trash" Foreground="{DynamicResource DeleteButtonBrush}" />
+                                        CommandParameter="{Binding RemoteSelectedItem.Value}">
+                                    <avalonia:MaterialIcon Kind="Trash"  />
                                 </Button>
                             </StackPanel>
                             <Grid ColumnDefinitions="*, Auto" Margin="0 0 0 4">
@@ -258,18 +280,15 @@
                                          Text="{Binding RemoteSearchText.ViewValue.Value}"
                                          Margin="0 0 8 0">
                                     <TextBox.InnerRightContent>
-                                        <Button Command="{Binding ClearRemoteSearchBoxCommand}"
-                                                Theme="{DynamicResource TransparentButton}">
-                                            <avalonia:MaterialIcon Kind="Close"
-                                                                   Foreground="{DynamicResource DeleteButtonBrush}"/>
+                                        <Button Command="{Binding ClearRemoteSearchBoxCommand}">
+                                            <avalonia:MaterialIcon Kind="Close"/>
                                         </Button>
                                     </TextBox.InnerRightContent>
                                 </TextBox>
                                 <Button Grid.Column="1"
                                         VerticalAlignment="Stretch"
                                         HorizontalAlignment="Center"
-                                        Command="{Binding RefreshRemoteCommand}"
-                                        Theme="{DynamicResource TransparentButton}">
+                                        Command="{Binding RefreshRemoteCommand}">
                                     <avalonia:MaterialIcon Kind="Refresh" Foreground="{DynamicResource SystemAccentColorLight2}" />
                                 </Button>
                             </Grid>
@@ -277,7 +296,9 @@
                         
                         <!--Remote tree-->
                         <TreeView ItemsSource="{Binding RemoteItemsTree.Items}"
-                                  SelectedItem="{Binding RemoteSelectedItem.Value}">
+                                  SelectedItem="{Binding RemoteSelectedItem.Value}"
+                                  drones:TreeViewBehaviors.IgnoreEnter="True"
+                                  PointerPressed="TreeView_OnPointerPressed">
                             <TreeView.ItemTemplate>
                                 <TreeDataTemplate ItemsSource="{Binding Items}" 
                                                   DataType="{x:Type drones:BrowserNode}">
@@ -294,7 +315,21 @@
                                                                Height="{DynamicResource IconSize}"/>
                                         <TextBlock Grid.Column="1"
                                                    VerticalAlignment="Center"
-                                                   Text="{Binding Base.Header}"/>
+                                                   IsVisible="{Binding !Base.EditMode}"
+                                                   Text="{Binding Base.Name}"/>
+                                        <TextBox Grid.Column="1"
+                                                 VerticalAlignment="Center"
+                                                 IsVisible="{Binding Base.EditMode}"
+                                                 Text="{Binding Base.EditedName.Value}">
+                                            <TextBox.InnerRightContent>
+                                                <Button Content="{avalonia:MaterialIconExt Kind=Edit}"
+                                                        Command="{Binding Base.CommitRename}"
+                                                        CommandParameter="{Binding Base}"
+                                                        VerticalAlignment="Stretch"
+                                                        HorizontalAlignment="Stretch"
+                                                        Margin="1"/>
+                                            </TextBox.InnerRightContent>
+                                        </TextBox>
                                         <TextBlock Grid.Column="2"
                                                    Margin="0,0,8,0"
                                                    VerticalAlignment="Center"
@@ -335,12 +370,21 @@
                     </DockPanel>
                 </Border>
             </Grid>
-            <ProgressBar Grid.Row="1"
-                         Height="10"
-                         Foreground="{StaticResource ProgressBrush}"
-                         Value="{Binding Progress.Value}"
-                         Minimum="0"
-                         Maximum="1"/>
+            <Grid Grid.Row="1" ColumnDefinitions="*, Auto" Margin="0 4 0 0"
+                  IsVisible="{Binding IsProgressVisible.Value}">
+                <ProgressBar Grid.Column="0"
+                             Height="10"
+                             Foreground="{StaticResource ProgressBrush}"
+                             Value="{Binding Progress.Value}"
+                             Minimum="0"
+                             Maximum="1"/>
+                <Button Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Command="{Binding CancelTransferCommand}"
+                        IsEnabled="{Binding IsTransferInProgress.Value}">
+                    <avalonia:MaterialIcon Kind="Close"/>
+                </Button>
+            </Grid>
         </Grid>
     </Panel>
 </UserControl>
