@@ -10,20 +10,30 @@ using R3;
 
 namespace Asv.Drones;
 
-public class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel
+public class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel, ISupportRename
 {
+    private readonly FtpClientService? _ftpService;
+    private readonly char _separator;
+
     public BrowserItemViewModel(
         NavigationId id,
         string? parentPath,
         string path,
         EntityType type,
+        FtpClientService? ftpService,
         ILoggerFactory loggerFactory
     )
         : base(id, loggerFactory)
     {
+        _ftpService = ftpService;
         ParentPath = parentPath;
         Path = path;
         Type = type;
+
+        _separator =
+            Type is EntityType.Local
+                ? System.IO.Path.DirectorySeparatorChar
+                : MavlinkFtpHelper.DirectorySeparator;
 
         EditedName = new BindableReactiveProperty<string>().DisposeItWith(Disposable);
         EditedName
@@ -119,9 +129,17 @@ public class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel
         var newName = string.IsNullOrWhiteSpace(EditedName.Value)
             ? BrowserNamingPolicy.BlankName
             : EditedName.Value;
+        var parentDir = BrowserPathRules.ParentDirOf(oldPath, _separator);
+        var isDirectory = FtpEntryType == FtpEntryType.Directory;
+        var newPath = isDirectory
+            ? BrowserPathRules.CombineDir(parentDir, newName, _separator)
+            : BrowserPathRules.CombineFile(parentDir, newName, _separator);
 
         EditMode = false;
-        if (string.Equals(newName, oldName, StringComparison.Ordinal))
+        if (
+            string.IsNullOrEmpty(newPath)
+            || string.Equals(newName, oldName, StringComparison.Ordinal)
+        )
         {
             EditedName.Value = oldName;
             return;
@@ -130,8 +148,11 @@ public class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel
         try
         {
             await this.ExecuteCommand(
-                RenameItemCommand.Id,
-                CommandArg.ChangeAction(oldPath, CommandArg.CreateString(newName)),
+                CommitRenameCommand.Id,
+                CommandArg.CreateList(
+                    CommandArg.CreateString(oldPath),
+                    CommandArg.CreateString(newPath)
+                ),
                 ct
             );
         }
@@ -151,5 +172,78 @@ public class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
         return [];
+    }
+
+    public async ValueTask<string> RenameAsync(
+        string oldValue,
+        string newValue,
+        CancellationToken ct
+    )
+    {
+        if (string.IsNullOrWhiteSpace(oldValue))
+        {
+            throw new ArgumentException("Old path is empty", nameof(oldValue));
+        }
+
+        if (string.IsNullOrWhiteSpace(newValue))
+        {
+            throw new ArgumentException("New name is empty", nameof(newValue));
+        }
+
+        var isDir = FtpEntryType == FtpEntryType.Directory;
+        var sep =
+            Type == EntityType.Remote
+                ? MavlinkFtpHelper.DirectorySeparator
+                : System.IO.Path.DirectorySeparatorChar;
+
+        var oldPath = isDir
+            ? BrowserPathRules.EnsureDir(oldValue, sep)
+            : BrowserPathRules.EnsureFile(oldValue, sep);
+
+        var newPath = isDir
+            ? BrowserPathRules.EnsureDir(newValue, sep)
+            : BrowserPathRules.EnsureFile(newValue, sep);
+
+        switch (Type)
+        {
+            case EntityType.Local when !isDir:
+            {
+                var result = LocalFilesMixin.RenameFile(oldPath, newPath, Logger);
+                result = BrowserPathRules.EnsureFile(result, sep);
+
+                EditMode = false;
+                EditedName.Value = BrowserPathRules.NameOf(result, sep);
+                IsSelected = true;
+                return result;
+            }
+            case EntityType.Local when isDir:
+            {
+                var result = LocalFilesMixin.RenameDirectory(oldPath, newPath, Logger);
+                result = BrowserPathRules.EnsureDir(result, sep);
+
+                EditMode = false;
+                EditedName.Value = BrowserPathRules.NameOf(result, sep);
+                IsSelected = true;
+                return result;
+            }
+            case EntityType.Remote when !isDir:
+            case EntityType.Remote when isDir:
+            {
+                if (_ftpService is null)
+                {
+                    throw new InvalidOperationException("FTP service is not initialized");
+                }
+
+                await _ftpService.RenameAsync(oldPath, newPath, ct).ConfigureAwait(false);
+
+                EditMode = false;
+                EditedName.Value = BrowserPathRules.NameOf(newPath, sep);
+                break;
+            }
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        IsSelected = true;
+        return newPath;
     }
 }

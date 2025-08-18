@@ -993,8 +993,8 @@ public class FileBrowserViewModel
                     dirPath,
                     entry.Name,
                     EntityType.Remote,
-                    _loggerFactory,
-                    _ftpService
+                    _ftpService,
+                    _loggerFactory
                 );
             }
             case FtpEntryType.File:
@@ -1007,8 +1007,8 @@ public class FileBrowserViewModel
                     entry.Name,
                     ((FtpFile)entry).Size,
                     EntityType.Remote,
-                    _loggerFactory,
-                    _ftpService
+                    _ftpService,
+                    _loggerFactory
                 );
             }
             default:
