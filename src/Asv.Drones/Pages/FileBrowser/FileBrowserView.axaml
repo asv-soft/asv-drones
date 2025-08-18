@@ -14,15 +14,27 @@
         <drones:FileBrowserViewModel />
     </Design.DataContext>
     <UserControl.Resources>
+        <!--TODO: move dictionary to Themes.axaml (Asv.Avalonia)-->
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="Crc32CorrectBrush" Color="#FF2E7D32" />
+                    <SolidColorBrush x:Key="Crc32IncorrectBrush" Color="#FFC62828" />
+                    <SolidColorBrush x:Key="IconBrushDelete" Color="#FFC62828" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="Crc32CorrectBrush" Color="#FF34C759" />
+                    <SolidColorBrush x:Key="Crc32IncorrectBrush" Color="#FFFF453A" />
+                    <SolidColorBrush x:Key="IconBrushDelete" Color="#FFFF453A" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
         <SolidColorBrush x:Key="IconBrushDefault" Color="{DynamicResource SystemAccentColorLight2}" />
-        <SolidColorBrush x:Key="IconBrushDelete" Color="{DynamicResource SystemAccentColorDark2}" />
         <SolidColorBrush x:Key="IconBrushDisabled" Color="{DynamicResource SystemBaseLowColor}" />
         <SolidColorBrush x:Key="FolderBrush" Color="{DynamicResource SystemAccentColorDark2}" />
         <SolidColorBrush x:Key="FileBrush" Color="{DynamicResource SystemAccentColorLight2}" />
         <SolidColorBrush x:Key="ProgressBrush" Color="{DynamicResource SystemAccentColorLight2}" />
         <SolidColorBrush x:Key="Crc32DefaultBrush" Color="{DynamicResource SystemAccentColorLight2}" />
-        <SolidColorBrush x:Key="Crc32CorrectBrush" Color="{DynamicResource SystemFillColorSuccess}" />
-        <SolidColorBrush x:Key="Crc32IncorrectBrush" Color="{DynamicResource SystemFillColorCritical}" />
         <x:Double x:Key="IconSize">15</x:Double>
     </UserControl.Resources>
     <UserControl.Styles>
@@ -33,31 +45,31 @@
         </Style>
         <Style Selector="avalonia|MaterialIcon.folder">
             <Setter Property="Kind" Value="FolderOutline" />
-            <Setter Property="Foreground" Value="{StaticResource FolderBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource FolderBrush}" />
         </Style>
         <Style Selector="avalonia|MaterialIcon.folder.selected">
             <Setter Property="Kind" Value="Folder" />
-            <Setter Property="Foreground" Value="{StaticResource FolderBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource FolderBrush}" />
         </Style>
         <Style Selector="avalonia|MaterialIcon.folder.expanded">
             <Setter Property="Kind" Value="FolderOpenOutline" />
-            <Setter Property="Foreground" Value="{StaticResource FolderBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource FolderBrush}" />
         </Style>
         <Style Selector="avalonia|MaterialIcon.file">
             <Setter Property="Kind" Value="FileMarkerOutline" />
-            <Setter Property="Foreground" Value="{StaticResource FileBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource FileBrush}" />
         </Style>
         <Style Selector="avalonia|MaterialIcon.file.selected" x:DataType="drones:BrowserNode">
             <Setter Property="Kind" Value="FileMarker" />
         </Style>
         <Style Selector="Button avalonia|MaterialIcon, Button avalonia|MaterialIconExt">
-            <Setter Property="Button.Foreground" Value="{StaticResource IconBrushDefault}" />
+            <Setter Property="Button.Foreground" Value="{DynamicResource IconBrushDefault}" />
         </Style>
         <Style Selector="Button.delete avalonia|MaterialIcon, Button.delete avalonia|MaterialIconExt">
-            <Setter Property="Button.Foreground" Value="{StaticResource IconBrushDelete}" />
+            <Setter Property="Button.Foreground" Value="{DynamicResource IconBrushDelete}" />
         </Style>
         <Style Selector="Button:disabled avalonia|MaterialIcon, Button:disabled avalonia|MaterialIconExt">
-            <Setter Property="Button.Foreground" Value="{StaticResource IconBrushDisabled}" />
+            <Setter Property="Button.Foreground" Value="{DynamicResource IconBrushDisabled}" />
             <Setter Property="Button.Opacity"    Value="0.4"/>
         </Style>
         <Style Selector="Button">
@@ -95,7 +107,8 @@
                                         CommandParameter="{Binding LocalSelectedItem.Value}">
                                     <avalonia:MaterialIcon Kind="KeyOutline" />
                                 </Button>
-                                <Button Command="{Binding RemoveLocalItemCommand}"
+                                <Button Classes="delete"
+                                        Command="{Binding RemoveLocalItemCommand}"
                                         CommandParameter="{Binding LocalSelectedItem.Value}">
                                     <avalonia:MaterialIcon Kind="Trash"  />
                                 </Button>
@@ -148,7 +161,7 @@
                                                  IsVisible="{Binding Base.EditMode}"
                                                  Text="{Binding Base.EditedName.Value}">
                                             <TextBox.InnerRightContent>
-                                                <Button Content="{avalonia:MaterialIconExt Kind=Edit}"
+                                                <Button Content="{avalonia:MaterialIconExt Kind=Check}"
                                                         Command="{Binding Base.CommitRename}"
                                                         CommandParameter="{Binding Base}"
                                                         VerticalAlignment="Stretch"
@@ -269,7 +282,8 @@
                                         CommandParameter="{Binding RemoteSelectedItem.Value}">
                                     <avalonia:MaterialIcon Kind="KeyOutline" />
                                 </Button>
-                                <Button Command="{Binding RemoveRemoteItemCommand}"
+                                <Button Classes="delete"
+                                        Command="{Binding RemoveRemoteItemCommand}"
                                         CommandParameter="{Binding RemoteSelectedItem.Value}">
                                     <avalonia:MaterialIcon Kind="Trash"  />
                                 </Button>
@@ -322,7 +336,7 @@
                                                  IsVisible="{Binding Base.EditMode}"
                                                  Text="{Binding Base.EditedName.Value}">
                                             <TextBox.InnerRightContent>
-                                                <Button Content="{avalonia:MaterialIconExt Kind=Edit}"
+                                                <Button Content="{avalonia:MaterialIconExt Kind=Check}"
                                                         Command="{Binding Base.CommitRename}"
                                                         CommandParameter="{Binding Base}"
                                                         VerticalAlignment="Stretch"
@@ -374,7 +388,7 @@
                   IsVisible="{Binding IsProgressVisible.Value}">
                 <ProgressBar Grid.Column="0"
                              Height="10"
-                             Foreground="{StaticResource ProgressBrush}"
+                             Foreground="{DynamicResource ProgressBrush}"
                              Value="{Binding Progress.Value}"
                              Minimum="0"
                              Maximum="1"/>
