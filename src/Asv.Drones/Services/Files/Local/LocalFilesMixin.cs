@@ -51,8 +51,8 @@ public static class LocalFilesMixin
                     dir,
                     info.Name,
                     EntityType.Local,
-                    loggerFactory,
-                    null
+                    null,
+                    loggerFactory
                 )
             );
             ProcessBrowserDirectory(dir, root, items, loggerFactory, ct);
@@ -75,8 +75,8 @@ public static class LocalFilesMixin
                         info.Name,
                         info.Length,
                         EntityType.Local,
-                        loggerFactory,
-                        null
+                        null,
+                        loggerFactory
                     )
                 );
             }
@@ -87,16 +87,15 @@ public static class LocalFilesMixin
         }
     }
 
-    public static string RenameFile(string oldPath, string newName, ILogger? log = null)
+    public static string RenameFile(string oldPath, string newPath, ILogger? log = null)
     {
-        var parentDir = Path.GetDirectoryName(oldPath)!;
-        var newPath = Path.Combine(parentDir, newName);
         try
         {
             if (File.Exists(newPath))
             {
-                var baseName = Path.GetFileNameWithoutExtension(newName);
-                var ext = Path.GetExtension(newName);
+                var parentDir = Path.GetDirectoryName(oldPath) ?? string.Empty;
+                var baseName = Path.GetFileNameWithoutExtension(newPath);
+                var ext = Path.GetExtension(newPath);
                 var counter = 1;
                 while (File.Exists(newPath))
                 {
@@ -114,19 +113,18 @@ public static class LocalFilesMixin
         return newPath;
     }
 
-    public static string RenameDirectory(string oldPath, string newName, ILogger? log = null)
+    public static string RenameDirectory(string oldPath, string newPath, ILogger? log = null)
     {
-        var parentDir = Path.GetDirectoryName(oldPath)!;
-        var newPath = Path.Combine(parentDir, newName);
-
         try
         {
             if (Directory.Exists(newPath))
             {
+                var parentDir = Path.GetDirectoryName(oldPath) ?? string.Empty;
+                var baseName = Path.GetFileNameWithoutExtension(newPath);
                 var counter = 1;
                 while (Directory.Exists(newPath))
                 {
-                    newPath = Path.Combine(parentDir, $"{newName} ({counter++})");
+                    newPath = Path.Combine(parentDir, $"{baseName} ({counter++})");
                 }
             }
             Directory.Move(oldPath, newPath);

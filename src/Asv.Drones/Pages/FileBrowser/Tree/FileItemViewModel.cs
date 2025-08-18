@@ -8,10 +8,8 @@ using R3;
 
 namespace Asv.Drones;
 
-public class FileItemViewModel : BrowserItemViewModel, IRenamable
+public class FileItemViewModel : BrowserItemViewModel
 {
-    private readonly FtpClientService? _ftpService;
-
     public FileItemViewModel(
         NavigationId id,
         string parentPath,
@@ -19,13 +17,11 @@ public class FileItemViewModel : BrowserItemViewModel, IRenamable
         string name,
         long size,
         EntityType type,
-        ILoggerFactory loggerFactory,
-        FtpClientService? ftpService
+        FtpClientService? ftpService,
+        ILoggerFactory loggerFactory
     )
-        : base(id, parentPath, path, type, loggerFactory)
+        : base(id, parentPath, path, type, ftpService, loggerFactory)
     {
-        _ftpService = ftpService;
-
         HasChildren = false;
         Name = name;
         Size = new FileSize(size);
@@ -50,64 +46,4 @@ public class FileItemViewModel : BrowserItemViewModel, IRenamable
     }
 
     private static string Crc32ToHex(uint crc32) => crc32.ToString("X8");
-
-    public async ValueTask<string> RenameItemAsync(
-        string oldPath,
-        string newName,
-        CancellationToken ct
-    )
-    {
-        if (string.IsNullOrWhiteSpace(oldPath))
-        {
-            throw new ArgumentException("Old path is empty", nameof(oldPath));
-        }
-
-        if (string.IsNullOrWhiteSpace(newName))
-        {
-            throw new ArgumentException("New name is empty", nameof(newName));
-        }
-
-        string newPath;
-
-        switch (Type)
-        {
-            case EntityType.Local:
-                newPath = LocalFilesMixin.RenameFile(oldPath, newName, Logger);
-                newPath = BrowserPathRules.EnsureFile(
-                    newPath,
-                    System.IO.Path.DirectorySeparatorChar
-                );
-                EditMode = false;
-                EditedName.Value = BrowserPathRules.FileNameOf(
-                    newPath,
-                    System.IO.Path.DirectorySeparatorChar
-                );
-                break;
-            case EntityType.Remote:
-                if (_ftpService is null)
-                {
-                    throw new InvalidOperationException("FTP service is not initialized");
-                }
-                var parentDir = BrowserPathRules.ParentDirOf(
-                    oldPath,
-                    MavlinkFtpHelper.DirectorySeparator
-                );
-                newPath = BrowserPathRules.CombineFile(
-                    parentDir,
-                    newName,
-                    MavlinkFtpHelper.DirectorySeparator
-                );
-                await _ftpService.RenameAsync(oldPath, newPath, ct).ConfigureAwait(false);
-                EditMode = false;
-                EditedName.Value = BrowserPathRules.FileNameOf(
-                    newPath,
-                    MavlinkFtpHelper.DirectorySeparator
-                );
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-        IsSelected = true;
-        return newPath;
-    }
 }

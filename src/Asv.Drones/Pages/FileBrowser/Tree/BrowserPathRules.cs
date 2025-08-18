@@ -58,11 +58,21 @@ public static class BrowserPathRules
         };
     }
 
-    public static string FileNameOf(string path, char sep)
+    public static string NameOf(string? path, char sep)
     {
-        var f = EnsureFile(path, sep);
-        var idx = f.LastIndexOf(sep);
-        return idx < 0 ? f : f[(idx + 1)..];
+        if (string.IsNullOrEmpty(path) || (path.Length == 1 && path[0] == sep))
+        {
+            return string.Empty;
+        }
+
+        var end = path.Length;
+        while (end > 1 && path[end - 1] == sep)
+        {
+            end--;
+        }
+
+        var idx = path.LastIndexOf(sep, end - 1);
+        return idx < 0 ? path[..end] : path.Substring(idx + 1, end - (idx + 1));
     }
 
     public static bool IsDescendantOf(string ancestorDir, string path, char sep)
