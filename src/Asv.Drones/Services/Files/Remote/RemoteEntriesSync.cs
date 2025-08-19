@@ -42,10 +42,8 @@ public sealed class RemoteEntriesSync(
                 .Subscribe(kv =>
                 {
                     var pair = kv.Value;
-                    var key =
-                        pair.Value.Type == FtpEntryType.Directory
-                            ? BrowserPathRules.EnsureDir(pair.Key, separator)
-                            : BrowserPathRules.EnsureFile(pair.Key, separator);
+                    var isDir = pair.Value.Type is FtpEntryType.Directory;
+                    var key = BrowserPathRules.Normalize(pair.Key, isDir, separator);
 
                     var existing = _target.FirstOrDefault(i => i.Path == key);
                     if (existing != null)
@@ -64,10 +62,8 @@ public sealed class RemoteEntriesSync(
                 .Subscribe(kv =>
                 {
                     var pair = kv.Value;
-                    var key =
-                        pair.Value.Type == FtpEntryType.Directory
-                            ? BrowserPathRules.EnsureDir(pair.Key, separator)
-                            : BrowserPathRules.EnsureFile(pair.Key, separator);
+                    var isDir = pair.Value.Type is FtpEntryType.Directory;
+                    var key = BrowserPathRules.Normalize(pair.Key, isDir, separator);
 
                     var victim = _target.FirstOrDefault(i => i.Path == key);
                     if (victim != null)
@@ -85,15 +81,11 @@ public sealed class RemoteEntriesSync(
                     var oldPair = kv.OldValue;
                     var newPair = kv.NewValue;
 
-                    var oldKey =
-                        oldPair.Value.Type == FtpEntryType.Directory
-                            ? BrowserPathRules.EnsureDir(oldPair.Key, separator)
-                            : BrowserPathRules.EnsureFile(oldPair.Key, separator);
+                    var isOldDir = oldPair.Value.Type is FtpEntryType.Directory;
+                    var oldKey = BrowserPathRules.Normalize(oldPair.Key, isOldDir, separator);
 
-                    var newKey =
-                        newPair.Value.Type == FtpEntryType.Directory
-                            ? BrowserPathRules.EnsureDir(newPair.Key, separator)
-                            : BrowserPathRules.EnsureFile(newPair.Key, separator);
+                    var isNewDir = newPair.Value.Type is FtpEntryType.Directory;
+                    var newKey = BrowserPathRules.Normalize(newPair.Key, isNewDir, separator);
 
                     var victim =
                         _target.FirstOrDefault(i => i.Path == oldKey)
