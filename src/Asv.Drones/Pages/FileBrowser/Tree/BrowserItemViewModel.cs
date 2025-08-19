@@ -196,20 +196,16 @@ public class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel, IS
                 ? MavlinkFtpHelper.DirectorySeparator
                 : System.IO.Path.DirectorySeparatorChar;
 
-        var oldPath = isDir
-            ? BrowserPathRules.EnsureDir(oldValue, sep)
-            : BrowserPathRules.EnsureFile(oldValue, sep);
+        var oldPath = BrowserPathRules.Normalize(oldValue, isDir, sep);
 
-        var newPath = isDir
-            ? BrowserPathRules.EnsureDir(newValue, sep)
-            : BrowserPathRules.EnsureFile(newValue, sep);
+        var newPath = BrowserPathRules.Normalize(newValue, isDir, sep);
 
         switch (Type)
         {
             case EntityType.Local when !isDir:
             {
                 var result = LocalFilesMixin.RenameFile(oldPath, newPath, Logger);
-                result = BrowserPathRules.EnsureFile(result, sep);
+                result = BrowserPathRules.Normalize(result, isDir, sep);
 
                 EditMode = false;
                 EditedName.Value = BrowserPathRules.NameOf(result, sep);
@@ -219,7 +215,7 @@ public class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel, IS
             case EntityType.Local when isDir:
             {
                 var result = LocalFilesMixin.RenameDirectory(oldPath, newPath, Logger);
-                result = BrowserPathRules.EnsureDir(result, sep);
+                result = BrowserPathRules.Normalize(result, isDir, sep);
 
                 EditMode = false;
                 EditedName.Value = BrowserPathRules.NameOf(result, sep);
