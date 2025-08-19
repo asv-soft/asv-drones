@@ -4,32 +4,6 @@ namespace Asv.Drones;
 
 public static class BrowserPathRules
 {
-    public static string EnsureDir(string path, char sep)
-    {
-        if (string.IsNullOrWhiteSpace(path) || (path.Length == 1 && path[0] == sep))
-        {
-            return sep.ToString();
-        }
-
-        return path[^1] == sep ? path : path + sep;
-    }
-
-    public static string EnsureFile(string path, char sep)
-    {
-        if (string.IsNullOrWhiteSpace(path) || (path.Length == 1 && path[0] == sep))
-        {
-            return string.Empty;
-        }
-
-        var end = path.Length;
-        while (end > 1 && path[end - 1] == sep)
-        {
-            end--;
-        }
-
-        return path[..end];
-    }
-
     public static string Normalize(string path, bool isDirectory, char sep) =>
         isDirectory ? EnsureDir(path, sep) : EnsureFile(path, sep);
 
@@ -73,6 +47,32 @@ public static class BrowserPathRules
 
         var idx = path.LastIndexOf(sep, end - 1);
         return idx < 0 ? path[..end] : path.Substring(idx + 1, end - (idx + 1));
+    }
+
+    private static string EnsureDir(string path, char sep)
+    {
+        if (string.IsNullOrWhiteSpace(path) || (path.Length == 1 && path[0] == sep))
+        {
+            return sep.ToString();
+        }
+
+        return path[^1] == sep ? path : path + sep;
+    }
+
+    private static string EnsureFile(string path, char sep)
+    {
+        if (string.IsNullOrWhiteSpace(path) || (path.Length == 1 && path[0] == sep))
+        {
+            return string.Empty;
+        }
+
+        var end = path.Length;
+        while (end > 1 && path[end - 1] == sep)
+        {
+            end--;
+        }
+
+        return path[..end];
     }
 
     public static bool IsDescendantOf(string ancestorDir, string path, char sep)

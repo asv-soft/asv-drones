@@ -986,7 +986,7 @@ public class FileBrowserViewModel
         {
             case FtpEntryType.Directory:
             {
-                var dirPath = BrowserPathRules.EnsureDir(key, sep);
+                var dirPath = BrowserPathRules.Normalize(key, true, sep);
                 return new DirectoryItemViewModel(
                     PathHelper.EncodePathToId(dirPath),
                     BrowserPathRules.ParentDirOf(dirPath, sep),
@@ -999,7 +999,7 @@ public class FileBrowserViewModel
             }
             case FtpEntryType.File:
             {
-                var filePath = BrowserPathRules.EnsureFile(key, sep);
+                var filePath = BrowserPathRules.Normalize(key, false, sep);
                 return new FileItemViewModel(
                     PathHelper.EncodePathToId(filePath),
                     BrowserPathRules.ParentDirOf(filePath, sep),
