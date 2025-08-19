@@ -20,14 +20,14 @@ using R3;
 
 namespace Asv.Drones;
 
-public class ParamsConfig
+public sealed class MavParamsPageViewModelConfig : PageConfig
 {
     public List<ParamItemViewModelConfig> Params { get; set; } = [];
 }
 
 [ExportPage(PageId)]
-public class MavParamsPageViewModel
-    : DevicePageViewModel<IMavParamsPageViewModel>,
+public class MavParamsPageViewModel // TODO: change config to new safe changes logic
+    : DevicePageViewModel<IMavParamsPageViewModel, MavParamsPageViewModelConfig>,
         IMavParamsPageViewModel
 {
     public const string PageId = "mav-params";
@@ -40,10 +40,8 @@ public class MavParamsPageViewModel
 
     private readonly ILoggerFactory _loggerFactory;
     private readonly INavigationService _nav;
-    private readonly IConfiguration _cfg;
     private readonly ObservableList<ParamItemViewModel> _viewedParamsList; // TODO: Separate views for this collection and all params
     private readonly ReactiveProperty<bool> _showStarredOnly;
-    private readonly ParamsConfig _config;
 
     public MavParamsPageViewModel()
         : this(
@@ -85,7 +83,7 @@ public class MavParamsPageViewModel
         IConfiguration cfg,
         INavigationService nav
     )
-        : base(PageId, devices, cmd, loggerFactory)
+        : base(PageId, devices, cmd, cfg, loggerFactory)
     {
         ArgumentNullException.ThrowIfNull(devices);
         ArgumentNullException.ThrowIfNull(cmd);
@@ -96,8 +94,6 @@ public class MavParamsPageViewModel
         Title = RS.MavParamsPageViewModel_Title;
 
         _loggerFactory = loggerFactory;
-        _cfg = cfg;
-        _config = _cfg.Get<ParamsConfig>();
         _nav = nav;
         _showStarredOnly = new ReactiveProperty<bool>().DisposeItWith(Disposable);
         _viewedParamsList = [];
@@ -150,8 +146,8 @@ public class MavParamsPageViewModel
 
         Disposable.AddAction(() =>
         {
-            _config.Params = _config.Params.Where(_ => _.IsStarred || _.IsPinned).ToList();
-            _cfg.Set(_config);
+            Config.Params = Config.Params.Where(_ => _.IsStarred || _.IsPinned).ToList();
+            CfgService.Set(Config);
 
             if (_cancellationTokenSource is not null)
             {
@@ -234,7 +230,7 @@ public class MavParamsPageViewModel
             kvp.Key,
             kvp.Value,
             _loggerFactory,
-            _config.Params.FirstOrDefault(_ => _.Name == kvp.Key)
+            Config.Params.FirstOrDefault(_ => _.Name == kvp.Key)
         ));
         _view.RegisterTo(cancel);
         _view.DisposeMany().RegisterTo(cancel);
@@ -254,7 +250,7 @@ public class MavParamsPageViewModel
             .ObserveAdd(cancellationToken: cancel)
             .Subscribe(e =>
             {
-                foreach (var item in _config.Params)
+                foreach (var item in Config.Params)
                 {
                     if (e.Value.View.Name == item.Name)
                     {
@@ -448,14 +444,14 @@ public class MavParamsPageViewModel
 
     private void UpdateConfig(ParamItemViewModel param)
     {
-        var existItem = _config.Params.FirstOrDefault(_ => _.Name == param.Name);
+        var existItem = Config.Params.FirstOrDefault(_ => _.Name == param.Name);
 
         if (existItem is not null)
         {
-            _config.Params.Remove(existItem);
+            Config.Params.Remove(existItem);
         }
 
-        _config.Params.Add(param.GetConfig());
+        Config.Params.Add(param.GetConfig());
     }
 
     private async Task<bool> TryCloseWithApproval()

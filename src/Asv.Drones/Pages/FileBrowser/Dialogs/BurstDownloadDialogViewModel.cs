@@ -23,7 +23,10 @@ public class BurstDownloadDialogViewModel : DialogViewModelBase
                     return ValidationResult.Success;
                 }
 
-                return ValidationResult.FailAsOutOfRange("1", MavlinkFtpHelper.MaxDataSize.ToString());
+                return ValidationResult.FailAsOutOfRange(
+                    "1",
+                    MavlinkFtpHelper.MaxDataSize.ToString()
+                );
             },
             this,
             isForceValidation: true

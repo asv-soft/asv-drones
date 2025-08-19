@@ -15,12 +15,15 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using ObservableCollections;
 using R3;
+using IConfiguration = Asv.Cfg.IConfiguration;
 
 namespace Asv.Drones;
 
+public sealed class FileBrowserViewModelConfig : PageConfig { }
+
 [ExportPage(PageId)]
 public class FileBrowserViewModel
-    : DevicePageViewModel<IFileBrowserViewModel>,
+    : DevicePageViewModel<IFileBrowserViewModel, FileBrowserViewModelConfig>,
         IFileBrowserViewModel
 {
     public const string PageId = "files.browser";
@@ -46,6 +49,7 @@ public class FileBrowserViewModel
             NullDeviceManager.Instance,
             NullDialogService.Instance,
             NullAppPath.Instance,
+            DesignTime.Configuration,
             NullLoggerFactory.Instance,
             DesignTime.Navigation
         )
@@ -59,10 +63,11 @@ public class FileBrowserViewModel
         IDeviceManager devices,
         IDialogService dialogService,
         IAppPath appPath,
+        IConfiguration cfg,
         ILoggerFactory loggerFactory,
         INavigationService navigation
     )
-        : base(PageId, devices, cmd, loggerFactory)
+        : base(PageId, devices, cmd, cfg, loggerFactory)
     {
         _localRootPath = appPath.UserDataFolder;
         _dialogService = dialogService;
