@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
+using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Api;
 using Material.Icons;
@@ -14,14 +15,18 @@ using R3;
 
 namespace Asv.Drones;
 
+public sealed class FlightPageViewModelConfig : PageConfig { }
+
 [ExportPage(PageId)]
-public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
+public class FlightPageViewModel
+    : PageViewModel<IFlightMode, FileBrowserViewModelConfig>,
+        IFlightMode
 {
     public const string PageId = "flight";
     public const MaterialIconKind PageIcon = MaterialIconKind.MapSearch;
 
     public FlightPageViewModel()
-        : this(DesignTime.CommandService, DesignTime.LoggerFactory)
+        : this(DesignTime.CommandService, DesignTime.Configuration, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
         var drone = new MapAnchor<IMapAnchor>(DesignTime.Id, DesignTime.LoggerFactory)
@@ -44,8 +49,12 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
     }
 
     [ImportingConstructor]
-    public FlightPageViewModel(ICommandService cmd, ILoggerFactory loggerFactory)
-        : base(PageId, cmd, loggerFactory)
+    public FlightPageViewModel(
+        ICommandService cmd,
+        IConfiguration cfg,
+        ILoggerFactory loggerFactory
+    )
+        : base(PageId, cmd, cfg, loggerFactory)
     {
         Title = RS.FlightPageViewModel_Title;
         Icon = PageIcon;

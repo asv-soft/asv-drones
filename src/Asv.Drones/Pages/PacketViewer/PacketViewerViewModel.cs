@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
+using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
@@ -21,8 +22,11 @@ using R3;
 
 namespace Asv.Drones;
 
+public sealed class PacketViewerViewModelConfig : PageConfig { }
+
 [ExportPage(PageId)]
-public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
+public class PacketViewerViewModel
+    : PageViewModel<PacketViewerViewModel, PacketViewerViewModelConfig>
 {
     public const string PageId = "packet-viewer";
     public const MaterialIconKind PageIcon = MaterialIconKind.Package;
@@ -62,6 +66,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
             NullUnitService.Instance,
             [],
             NullDeviceManager.Instance,
+            DesignTime.Configuration,
             DesignTime.Navigation
         )
     {
@@ -84,9 +89,10 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         IUnitService unit,
         [ImportMany] IEnumerable<IPacketConverter> converters,
         IDeviceManager deviceManager,
+        IConfiguration cfg,
         INavigationService navigationService
     )
-        : base(PageId, cmd, loggerFactory)
+        : base(PageId, cmd, cfg, loggerFactory)
     {
         Title = RS.PacketViewerViewModel_Title;
         _app = app;
