@@ -38,7 +38,6 @@ public class FileBrowserViewModel
     private readonly INavigationService _navigation;
     private readonly FileSystemWatcher _watcher;
     private readonly TransferController _transfer;
-    private readonly RenameRelinker _relinker;
     private readonly string _localRootPath;
     private readonly FileSystemEventHandler? _createdHandler;
     private readonly FileSystemEventHandler? _deletedHandler;
@@ -88,7 +87,6 @@ public class FileBrowserViewModel
         _loggerFactory = loggerFactory;
         _navigation = navigation;
         _yesNoDialog = dialogService.GetDialogPrefab<YesOrNoDialogPrefab>();
-        _relinker = new RenameRelinker();
         _transfer = new TransferController(loggerFactory).DisposeItWith(Disposable);
         IsTransferInProgress = _transfer.IsTransferInProgress;
         IsProgressVisible = _transfer.IsProgressVisible;
