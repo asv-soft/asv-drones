@@ -184,6 +184,8 @@ public class FileBrowserViewModel
             .DisposeItWith(Disposable);
 
         IsDeviceInitialized = false;
+
+        InitCommands();
     }
 
     public BrowserTree LocalItemsTree { get; }
@@ -314,6 +316,7 @@ public class FileBrowserViewModel
             )
             .DisposeItWith(Disposable);
 
+        // TODO: Upload incorrectly processes cancellation (prob. something wrong at Asv.Mavlink)
         UploadCommand = CanUpload
             .ToReactiveCommand<BrowserNode>(async (node, ct) => await UploadImpl(node, ct))
             .DisposeItWith(Disposable);
@@ -1068,20 +1071,47 @@ public class FileBrowserViewModel
     {
         IsDeviceInitialized = true;
         Title = $"{RS.FileBrowserViewModel_Title}[{device.Id}]";
+        Icon = DeviceIconMixin.GetIcon(device.Id) ?? PageIcon;
+
         var client = device.GetMicroservice<IFtpClient>();
         ArgumentNullException.ThrowIfNull(client);
         var clientEx = device.GetMicroservice<IFtpClientEx>() ?? new FtpClientEx(client);
+
         _ftpService = new FtpClientService(clientEx, _loggerFactory).DisposeItWith(Disposable);
+        _ftpService.RegisterTo(onDisconnectedToken);
 
         _ftpService
             .RemoteChanged.ThrottleLast(TimeSpan.FromMilliseconds(200))
             .SubscribeAwait(async (_, _) => await RefreshRemoteImpl(onDisconnectedToken))
-            .DisposeItWith(Disposable);
+            .RegisterTo(onDisconnectedToken);
         _ftpService
             .RemoteChanging.Subscribe(isBusy => IsUiBlocked.OnNext(isBusy))
-            .DisposeItWith(Disposable);
+            .RegisterTo(onDisconnectedToken);
 
-        onDisconnectedToken.Register(() => IsDeviceInitialized = false);
-        InitCommands();
+        onDisconnectedToken.Register(() =>
+        {
+            try
+            {
+                _transfer.TryCancel();
+            }
+            catch
+            {
+                // ignored
+            }
+
+            IsUiBlocked.OnNext(false);
+            IsProgressVisible.OnNext(false);
+            IsTransferInProgress.OnNext(false);
+            Progress.OnNext(0);
+
+            _rawRemoteEntries.Clear();
+            _remoteItems.Clear();
+            RemoteSelectedItem.OnNext(null);
+
+            IsDeviceInitialized = false;
+            _ftpService = null;
+        });
+
+        RefreshRemoteCommand.Execute(Unit.Default);
     }
 }

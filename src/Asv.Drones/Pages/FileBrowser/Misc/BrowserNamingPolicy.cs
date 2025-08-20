@@ -12,7 +12,10 @@ public static partial class BrowserNamingPolicy
     public const int MaxNameLength = 255;
     public const string BlankName = "UNNAMED";
 
-    private static readonly Regex AllowedChar = AllowedCharsRegex();
+    private static readonly Regex AllowedChars = AllowedCharsRegex();
+
+    [GeneratedRegex(AllowedCharsPattern, RegexOptions.Compiled)]
+    private static partial Regex AllowedCharsRegex();
 
     public static string SanitizeForDisplay(string? value)
     {
@@ -24,7 +27,7 @@ public static partial class BrowserNamingPolicy
         var sb = new StringBuilder(value.Length);
         foreach (var ch in value)
         {
-            sb.Append(AllowedChar.IsMatch(ch.ToString()) ? ch : '*');
+            sb.Append(AllowedChars.IsMatch(ch.ToString()) ? ch : '*');
         }
 
         return sb.ToString();
@@ -49,7 +52,4 @@ public static partial class BrowserNamingPolicy
 
         return ValidationResult.Success;
     }
-
-    [GeneratedRegex(AllowedCharsPattern, RegexOptions.Compiled)]
-    private static partial Regex AllowedCharsRegex();
 }
