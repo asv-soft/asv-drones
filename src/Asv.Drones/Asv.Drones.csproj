@@ -43,7 +43,7 @@
         <PackageReference Include="Asv.Avalonia.IO" Version="$(AsvAvaloniaVersion)" />
         <PackageReference Include="Asv.Avalonia.Plugins" Version="$(AsvAvaloniaVersion)" />-->
 
-        <PackageReference Include="Asv.Mavlink" Version="4.0.17-dev.7" />
+        <PackageReference Include="Asv.Mavlink" Version="$(AsvMavlinkVersion)" />
         <PackageReference Include="Asv.Gnss" Version="$(AsvGnssVersion)" />
         
         <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)"/>

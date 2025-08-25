@@ -416,4 +416,10 @@
     <data name="ExportPacketsToCsvCommand_CommandInfo_Description" xml:space="preserve">
         <value>Команда экспортирует пакеты в файл с CSV расширением</value>
     </data>
+    <data name="FileBrowserView_AwaitingScreen_Description" xml:space="preserve">
+        <value>Подключение к FTP сервису устройства...</value>
+    </data>
+    <data name="FileBrowserView_AwaitingScreen_Header" xml:space="preserve">
+        <value>Подключение</value>
+    </data>
 </root>
