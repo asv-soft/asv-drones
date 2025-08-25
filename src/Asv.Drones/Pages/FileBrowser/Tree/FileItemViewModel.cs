@@ -1,35 +1,39 @@
-﻿using Asv.Avalonia;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Asv.Avalonia;
 using Asv.Mavlink;
 using Microsoft.Extensions.Logging;
+using R3;
 
 namespace Asv.Drones;
 
 public class FileItemViewModel : BrowserItemViewModel
 {
-    private uint? _crc32;
-
     public FileItemViewModel(
         NavigationId id,
         string parentPath,
         string path,
-        string? name,
+        string name,
         long size,
+        FtpBrowserSourceType type,
+        FtpClientService? ftpService,
         ILoggerFactory loggerFactory
     )
-        : base(id, parentPath, path, loggerFactory)
+        : base(id, parentPath, path, type, ftpService, loggerFactory)
     {
         HasChildren = false;
-        Header = name;
+        Name = name;
         Size = new FileSize(size);
         FtpEntryType = FtpEntryType.File;
     }
 
     public uint? Crc32
     {
-        get => _crc32;
+        get;
         set
         {
-            SetField(ref _crc32, value);
+            SetField(ref field, value);
 
             if (value is null)
             {

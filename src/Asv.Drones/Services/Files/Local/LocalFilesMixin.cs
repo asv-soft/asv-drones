@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,7 +20,7 @@ public static class LocalFilesMixin
     )
     {
         var result = new ConcurrentBag<IBrowserItemViewModel>();
-        ProcessBrowserDirectory(path, root, result, loggerFactory, ct, log);
+        ProcessBrowserDirectory(path, root, ref result, loggerFactory, ct, log);
         log?.LogTrace("Directory processed ({Path})", path);
         return result.ToList();
     }
@@ -29,7 +28,7 @@ public static class LocalFilesMixin
     private static void ProcessBrowserDirectory(
         string path,
         string root,
-        ConcurrentBag<IBrowserItemViewModel> items,
+        ref ConcurrentBag<IBrowserItemViewModel> items,
         ILoggerFactory loggerFactory,
         CancellationToken ct = default,
         ILogger? log = null
@@ -45,8 +44,18 @@ public static class LocalFilesMixin
             var id = PathHelper.EncodePathToId(dir);
             var parent = info.Parent?.FullName ?? root;
 
-            items.Add(new DirectoryItemViewModel(id, parent, dir, info.Name, loggerFactory));
-            ProcessBrowserDirectory(dir, root, items, loggerFactory, ct);
+            items.Add(
+                new DirectoryItemViewModel(
+                    id,
+                    parent,
+                    dir,
+                    info.Name,
+                    FtpBrowserSourceType.Local,
+                    null,
+                    loggerFactory
+                )
+            );
+            ProcessBrowserDirectory(dir, root, ref items, loggerFactory, ct);
         }
 
         foreach (var file in Directory.EnumerateFiles(path))
@@ -59,7 +68,16 @@ public static class LocalFilesMixin
                 var id = PathHelper.EncodePathToId(file);
                 var parent = info.Directory?.FullName ?? root;
                 items.Add(
-                    new FileItemViewModel(id, parent, file, info.Name, info.Length, loggerFactory)
+                    new FileItemViewModel(
+                        id,
+                        parent,
+                        file,
+                        info.Name,
+                        info.Length,
+                        FtpBrowserSourceType.Local,
+                        null,
+                        loggerFactory
+                    )
                 );
             }
             catch (FileNotFoundException ex)
@@ -69,72 +87,58 @@ public static class LocalFilesMixin
         }
     }
 
-    public static string RenameFile(string oldPath, string newName, ILogger? log = null)
+    public static string RenameFile(string oldPath, string newPath, ILogger? log = null)
     {
-        var parentDir = Path.GetDirectoryName(oldPath)!;
-        var newPath = Path.Combine(parentDir, newName);
         try
         {
             if (File.Exists(newPath))
             {
-                var baseName = Path.GetFileNameWithoutExtension(newName);
-                var ext = Path.GetExtension(newName);
+                var parentDir = Path.GetDirectoryName(oldPath) ?? string.Empty;
+                var baseName = Path.GetFileNameWithoutExtension(newPath);
+                var ext = Path.GetExtension(newPath);
                 var counter = 1;
                 while (File.Exists(newPath))
                 {
                     newPath = Path.Combine(parentDir, $"{baseName} ({counter++}){ext}");
                 }
             }
-            else
-            {
-                throw new FileNotFoundException("Path not found");
-            }
+            File.Move(oldPath, newPath);
+            log?.LogInformation("File renamed to '{new}'", newPath);
         }
         catch (FileNotFoundException e)
         {
             log?.LogError(e, "Failed to rename file. Incorrect path: {Path}", oldPath);
         }
 
-        File.Move(oldPath, newPath);
-
-        log?.LogInformation("File renamed to '{new}'", newPath);
-
         return newPath;
     }
 
-    public static string RenameDirectory(string oldPath, string newName, ILogger? log = null)
+    public static string RenameDirectory(string oldPath, string newPath, ILogger? log = null)
     {
-        var parentDir = Path.GetDirectoryName(oldPath)!;
-        var newPath = Path.Combine(parentDir, newName);
-
         try
         {
             if (Directory.Exists(newPath))
             {
+                var parentDir = Path.GetDirectoryName(oldPath) ?? string.Empty;
+                var baseName = Path.GetFileNameWithoutExtension(newPath);
                 var counter = 1;
                 while (Directory.Exists(newPath))
                 {
-                    newPath = Path.Combine(parentDir, $"{newName} ({counter++})");
+                    newPath = Path.Combine(parentDir, $"{baseName} ({counter++})");
                 }
             }
-            else
-            {
-                throw new FileNotFoundException("Path not found");
-            }
+            Directory.Move(oldPath, newPath);
+            log?.LogInformation("Directory renamed to '{new}'", newPath);
         }
-        catch (FileNotFoundException e)
+        catch (DirectoryNotFoundException e)
         {
             log?.LogError(e, "Failed to rename directory. Incorrect path: {Path}", oldPath);
         }
 
-        Directory.Move(oldPath, newPath);
-
-        log?.LogInformation("Directory renamed to '{new}'", newPath);
-
         return newPath;
     }
 
-    public static DirectoryInfo CreateDirectory(string path, ILogger? log = null)
+    public static void CreateDirectory(string path, ILogger? log = null)
     {
         var folderNumber = 1;
         while (true)
@@ -147,7 +151,8 @@ public static class LocalFilesMixin
             }
 
             log?.LogInformation("Creating directory '{Path}'", name);
-            return Directory.CreateDirectory(name);
+            Directory.CreateDirectory(name);
+            return;
         }
     }
 
@@ -174,27 +179,6 @@ public static class LocalFilesMixin
         catch (FileNotFoundException e)
         {
             log?.LogError(e, "Directory '{Path}' not found", path);
-        }
-    }
-
-    public static async Task WriteFileAsync(
-        string directoryPath,
-        string fileName,
-        byte[] data,
-        CancellationToken ct = default,
-        ILogger? log = null
-    )
-    {
-        try
-        {
-            var fullPath = Path.Combine(directoryPath, fileName);
-
-            await File.WriteAllBytesAsync(fullPath, data, ct);
-            log?.LogInformation("File created successfully: {name}", fileName);
-        }
-        catch (Exception e)
-        {
-            log?.LogError(e, "Failed to create file '{Name}'", fileName);
         }
     }
 

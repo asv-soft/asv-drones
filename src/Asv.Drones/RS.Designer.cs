@@ -132,6 +132,24 @@ namespace Asv.Drones {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connect to the device&apos;s FTP service....
+        /// </summary>
+        public static string FileBrowserView_AwaitingScreen_Description {
+            get {
+                return ResourceManager.GetString("FileBrowserView_AwaitingScreen_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connecting.
+        /// </summary>
+        public static string FileBrowserView_AwaitingScreen_Header {
+            get {
+                return ResourceManager.GetString("FileBrowserView_AwaitingScreen_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Burst download.
         /// </summary>
         public static string FileBrowserView_Button_BurstDownload_Content {
@@ -902,6 +920,24 @@ namespace Asv.Drones {
         public static string ReadParamCommand_CommandInfo_Name {
             get {
                 return ResourceManager.GetString("ReadParamCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command that commits an item renaming.
+        /// </summary>
+        public static string RenameItemCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("RenameItemCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commit item rename.
+        /// </summary>
+        public static string RenameItemCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("RenameItemCommand_CommandInfo_Name", resourceCulture);
             }
         }
         

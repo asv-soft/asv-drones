@@ -1,112 +1,245 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Asv.Avalonia;
+using Asv.Common;
 using Asv.Mavlink;
 using Microsoft.Extensions.Logging;
+using R3;
 
 namespace Asv.Drones;
 
-public class BrowserItemViewModel : HeadlinedViewModel, IBrowserItemViewModel
+public class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel, ISupportRename
 {
-    private string? _headerRaw = string.Empty;
-    private string _path = string.Empty;
-    private string? _parentPath;
-    private FileSize? _size;
-    private bool _hasChildren;
-    private bool _isExpanded;
-    private bool _isSelected;
-    private bool _isInEditMode;
-    private string _editedName = string.Empty;
-    private string? _crc32Hex;
-    private Crc32Status _crc32Status = Crc32Status.Default;
-    private FtpEntryType _ftpEntryType;
+    private readonly FtpClientService? _ftpService;
+    private readonly char _separator;
 
     public BrowserItemViewModel(
         NavigationId id,
         string? parentPath,
         string path,
+        FtpBrowserSourceType type,
+        FtpClientService? ftpService,
         ILoggerFactory loggerFactory
     )
         : base(id, loggerFactory)
     {
+        _ftpService = ftpService;
         ParentPath = parentPath;
         Path = path;
-        Order = 0;
+        Type = type;
+
+        _separator =
+            Type is FtpBrowserSourceType.Local
+                ? System.IO.Path.DirectorySeparatorChar
+                : MavlinkFtpHelper.DirectorySeparator;
+
+        EditedName = new BindableReactiveProperty<string>().DisposeItWith(Disposable);
+        EditedName
+            .EnableValidationRoutable(FtpBrowserNamingPolicy.Validate, this, true)
+            .DisposeItWith(Disposable);
+
+        CommitRename = new ReactiveCommand(
+            (_, ct) => CommitRenameImpl(ct),
+            AwaitOperation.Drop
+        ).DisposeItWith(Disposable);
     }
 
-    public new string? Header
+    public string Name
     {
-        get =>
-            _headerRaw == null
-                ? null
-                : new string(
-                    _headerRaw.Select(ch => ch is >= (char)32 and <= (char)126 ? ch : '*').ToArray()
-                );
-        set => SetField(ref _headerRaw, value);
-    }
+        get => FtpBrowserNamingPolicy.SanitizeForDisplay(field);
+        set => SetField(ref field, value);
+    } = string.Empty;
 
     public string Path
     {
-        get => _path;
-        set => SetField(ref _path, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public string? ParentPath
     {
-        get => _parentPath;
-        set => SetField(ref _parentPath, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public FileSize? Size
     {
-        get => _size;
-        set => SetField(ref _size, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public bool HasChildren
     {
-        get => _hasChildren;
-        set => SetField(ref _hasChildren, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public bool IsExpanded
     {
-        get => _isExpanded;
-        set => SetField(ref _isExpanded, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public bool IsSelected
     {
-        get => _isSelected;
-        set => SetField(ref _isSelected, value);
+        get;
+        set => SetField(ref field, value);
     }
 
-    public bool IsInEditMode
+    public FtpBrowserSourceType Type
     {
-        get => _isInEditMode;
-        set => SetField(ref _isInEditMode, value);
+        get;
+        set => SetField(ref field, value);
     }
 
-    public string EditedName
+    public bool EditMode
     {
-        get => _editedName;
-        set => SetField(ref _editedName, value);
+        get;
+        set => SetField(ref field, value);
     }
+
+    public BindableReactiveProperty<string> EditedName { get; set; }
 
     public string? Crc32Hex
     {
-        get => _crc32Hex;
-        protected set => SetField(ref _crc32Hex, value);
+        get;
+        protected set => SetField(ref field, value);
     }
 
     public Crc32Status Crc32Status
     {
-        get => _crc32Status;
-        set => SetField(ref _crc32Status, value);
-    }
+        get;
+        set => SetField(ref field, value);
+    } = Crc32Status.Default;
 
     public FtpEntryType FtpEntryType
     {
-        get => _ftpEntryType;
-        set => SetField(ref _ftpEntryType, value);
+        get;
+        set => SetField(ref field, value);
+    }
+
+    public ReactiveCommand CommitRename { get; }
+
+    private async ValueTask CommitRenameImpl(CancellationToken ct)
+    {
+        var oldName = Name;
+        var oldPath = Path;
+        var newName = string.IsNullOrWhiteSpace(EditedName.Value)
+            ? FtpBrowserNamingPolicy.BlankName
+            : EditedName.Value;
+        var parentDir = FtpBrowserPathRules.ParentDirOf(oldPath, _separator);
+        var isDirectory = FtpEntryType == FtpEntryType.Directory;
+        var newPath = isDirectory
+            ? FtpBrowserPathRules.CombineDir(parentDir, newName, _separator)
+            : FtpBrowserPathRules.CombineFile(parentDir, newName, _separator);
+
+        EditMode = false;
+        if (
+            string.IsNullOrEmpty(newPath)
+            || string.Equals(newName, oldName, StringComparison.Ordinal)
+        )
+        {
+            EditedName.Value = oldName;
+            return;
+        }
+
+        try
+        {
+            await this.ExecuteCommand(
+                CommitRenameCommand.Id,
+                CommandArg.CreateList(
+                    CommandArg.CreateString(oldPath),
+                    CommandArg.CreateString(newPath)
+                ),
+                ct
+            );
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(
+                ex,
+                "Failed to rename remote item {oldName} to {newName}",
+                oldName,
+                newName
+            );
+            Name = oldName;
+            EditedName.Value = oldName;
+        }
+    }
+
+    public override IEnumerable<IRoutable> GetRoutableChildren()
+    {
+        return [];
+    }
+
+    public async ValueTask<string> RenameAsync(
+        string oldValue,
+        string newValue,
+        CancellationToken ct
+    )
+    {
+        if (string.IsNullOrWhiteSpace(oldValue))
+        {
+            throw new ArgumentException("Old path is empty", nameof(oldValue));
+        }
+
+        if (string.IsNullOrWhiteSpace(newValue))
+        {
+            throw new ArgumentException("New name is empty", nameof(newValue));
+        }
+
+        var isDir = FtpEntryType == FtpEntryType.Directory;
+        var sep =
+            Type == FtpBrowserSourceType.Remote
+                ? MavlinkFtpHelper.DirectorySeparator
+                : System.IO.Path.DirectorySeparatorChar;
+
+        var oldPath = FtpBrowserPathRules.Normalize(oldValue, isDir, sep);
+
+        var newPath = FtpBrowserPathRules.Normalize(newValue, isDir, sep);
+
+        switch (Type)
+        {
+            case FtpBrowserSourceType.Local when !isDir:
+            {
+                var result = LocalFilesMixin.RenameFile(oldPath, newPath, Logger);
+                result = FtpBrowserPathRules.Normalize(result, isDir, sep);
+
+                EditMode = false;
+                EditedName.Value = FtpBrowserPathRules.NameOf(result, sep);
+                IsSelected = true;
+                return result;
+            }
+            case FtpBrowserSourceType.Local when isDir:
+            {
+                var result = LocalFilesMixin.RenameDirectory(oldPath, newPath, Logger);
+                result = FtpBrowserPathRules.Normalize(result, isDir, sep);
+
+                EditMode = false;
+                EditedName.Value = FtpBrowserPathRules.NameOf(result, sep);
+                IsSelected = true;
+                return result;
+            }
+            case FtpBrowserSourceType.Remote when !isDir:
+            case FtpBrowserSourceType.Remote when isDir:
+            {
+                if (_ftpService is null)
+                {
+                    throw new InvalidOperationException("FTP service is not initialized");
+                }
+
+                await _ftpService.RenameAsync(oldPath, newPath, ct).ConfigureAwait(false);
+
+                EditMode = false;
+                EditedName.Value = FtpBrowserPathRules.NameOf(newPath, sep);
+                break;
+            }
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        IsSelected = true;
+        return newPath;
     }
 }
