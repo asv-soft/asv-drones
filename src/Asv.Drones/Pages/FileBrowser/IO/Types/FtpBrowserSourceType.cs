@@ -1,6 +1,6 @@
 ﻿namespace Asv.Drones;
 
-public enum EntityType
+public enum FtpBrowserSourceType
 {
     Local,
     Remote,

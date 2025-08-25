@@ -14,9 +14,9 @@ public sealed class TransferController(ILoggerFactory? loggerFactory = null) : I
     private CancellationTokenSource? _cts;
     private readonly Lock _sync = new();
 
-    public BindableReactiveProperty<bool> IsTransferInProgress { get; } = new(false);
-    public BindableReactiveProperty<bool> IsProgressVisible { get; } = new(false);
-    public BindableReactiveProperty<double> Progress { get; } = new(0);
+    public ReactiveProperty<bool> IsTransferInProgress { get; } = new(false);
+    public ReactiveProperty<bool> IsProgressVisible { get; } = new(false);
+    public ReactiveProperty<double> Progress { get; } = new(0);
 
     public CancellationToken Begin(CancellationToken externalToken = default)
     {

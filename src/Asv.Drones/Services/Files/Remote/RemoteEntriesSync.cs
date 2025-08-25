@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Asv.Avalonia;
 using Asv.Mavlink;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -9,25 +10,33 @@ using R3;
 namespace Asv.Drones;
 
 /// <inheritdoc />
-public sealed class RemoteEntriesSync(
-    ObservableDictionary<string, IFtpEntry> source,
-    ObservableList<IBrowserItemViewModel> target,
-    Func<string, IFtpEntry, IBrowserItemViewModel> factory,
-    ILoggerFactory? loggerFactory = null,
-    char separator = MavlinkFtpHelper.DirectorySeparator
-) : IRemoteEntriesSync
+public sealed class RemoteEntriesSync : IRemoteEntriesSync
 {
-    private readonly ObservableDictionary<string, IFtpEntry> _source =
-        source ?? throw new ArgumentNullException(nameof(source));
-    private readonly ObservableList<IBrowserItemViewModel> _target =
-        target ?? throw new ArgumentNullException(nameof(target));
-    private readonly Func<string, IFtpEntry, IBrowserItemViewModel> _factory =
-        factory ?? throw new ArgumentNullException(nameof(factory));
-    private readonly ILogger _log = (
-        loggerFactory ?? NullLoggerFactory.Instance
-    ).CreateLogger<RemoteEntriesSync>();
+    private readonly ObservableDictionary<string, IFtpEntry> _source;
+    private readonly ObservableList<IBrowserItemViewModel> _target;
+    private readonly Func<string, IFtpEntry, IBrowserItemViewModel> _factory;
+    private readonly ILogger _log;
 
     private readonly CompositeDisposable _subscriptions = new();
+    private readonly char _separator;
+
+    public RemoteEntriesSync(
+        ObservableDictionary<string, IFtpEntry> source,
+        ObservableList<IBrowserItemViewModel> target,
+        Func<string, IFtpEntry, IBrowserItemViewModel> factory,
+        ILoggerFactory? loggerFactory = null,
+        char separator = MavlinkFtpHelper.DirectorySeparator
+    )
+    {
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(target);
+        ArgumentNullException.ThrowIfNull(factory);
+        _separator = separator;
+        _source = source;
+        _target = target;
+        _factory = factory;
+        _log = (loggerFactory ?? NullLoggerFactory.Instance).CreateLogger<RemoteEntriesSync>();
+    }
 
     public void Start()
     {
@@ -43,7 +52,7 @@ public sealed class RemoteEntriesSync(
                 {
                     var pair = kv.Value;
                     var isDir = pair.Value.Type is FtpEntryType.Directory;
-                    var key = BrowserPathRules.Normalize(pair.Key, isDir, separator);
+                    var key = FtpBrowserPathRules.Normalize(pair.Key, isDir, _separator);
 
                     var existing = _target.FirstOrDefault(i => i.Path == key);
                     if (existing != null)
@@ -63,7 +72,7 @@ public sealed class RemoteEntriesSync(
                 {
                     var pair = kv.Value;
                     var isDir = pair.Value.Type is FtpEntryType.Directory;
-                    var key = BrowserPathRules.Normalize(pair.Key, isDir, separator);
+                    var key = FtpBrowserPathRules.Normalize(pair.Key, isDir, _separator);
 
                     var victim = _target.FirstOrDefault(i => i.Path == key);
                     if (victim != null)
@@ -82,10 +91,10 @@ public sealed class RemoteEntriesSync(
                     var newPair = kv.NewValue;
 
                     var isOldDir = oldPair.Value.Type is FtpEntryType.Directory;
-                    var oldKey = BrowserPathRules.Normalize(oldPair.Key, isOldDir, separator);
+                    var oldKey = FtpBrowserPathRules.Normalize(oldPair.Key, isOldDir, _separator);
 
                     var isNewDir = newPair.Value.Type is FtpEntryType.Directory;
-                    var newKey = BrowserPathRules.Normalize(newPair.Key, isNewDir, separator);
+                    var newKey = FtpBrowserPathRules.Normalize(newPair.Key, isNewDir, _separator);
 
                     var victim =
                         _target.FirstOrDefault(i => i.Path == oldKey)
@@ -107,7 +116,7 @@ public sealed class RemoteEntriesSync(
                 })
         );
 
-        _subscriptions.Add(_source.ObserveReset().Subscribe(_ => _target.Clear()));
+        _subscriptions.Add(_source.ObserveReset().Subscribe(_ => _target.RemoveAll()));
 
         _log.LogDebug("RemoteEntriesSync started");
     }

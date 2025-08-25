@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -6,13 +7,12 @@ using Asv.Common;
 
 namespace Asv.Drones;
 
-public static partial class BrowserNamingPolicy
+public static partial class FtpBrowserNamingPolicy
 {
-    public const string AllowedCharsPattern = @"[A-Za-z0-9_.\-() ]";
-    public const int MaxNameLength = 255;
-    public const string BlankName = "UNNAMED";
-
+    public const int MaxNameLength = 248; // see MAVLINK_MSG_ID_FILE_TRANSFER_PROTOCOL spec.
+    public static readonly string BlankName = Guid.NewGuid().ToString(); // TODO: prohibit empty names
     private static readonly Regex AllowedChars = AllowedCharsRegex();
+    public const string AllowedCharsPattern = @"[A-Za-z0-9_.\-() ]";
 
     [GeneratedRegex(AllowedCharsPattern, RegexOptions.Compiled)]
     private static partial Regex AllowedCharsRegex();

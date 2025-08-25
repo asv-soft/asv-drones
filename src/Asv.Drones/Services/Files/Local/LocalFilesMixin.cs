@@ -20,7 +20,7 @@ public static class LocalFilesMixin
     )
     {
         var result = new ConcurrentBag<IBrowserItemViewModel>();
-        ProcessBrowserDirectory(path, root, result, loggerFactory, ct, log);
+        ProcessBrowserDirectory(path, root, ref result, loggerFactory, ct, log);
         log?.LogTrace("Directory processed ({Path})", path);
         return result.ToList();
     }
@@ -28,7 +28,7 @@ public static class LocalFilesMixin
     private static void ProcessBrowserDirectory(
         string path,
         string root,
-        ConcurrentBag<IBrowserItemViewModel> items,
+        ref ConcurrentBag<IBrowserItemViewModel> items,
         ILoggerFactory loggerFactory,
         CancellationToken ct = default,
         ILogger? log = null
@@ -50,12 +50,12 @@ public static class LocalFilesMixin
                     parent,
                     dir,
                     info.Name,
-                    EntityType.Local,
+                    FtpBrowserSourceType.Local,
                     null,
                     loggerFactory
                 )
             );
-            ProcessBrowserDirectory(dir, root, items, loggerFactory, ct);
+            ProcessBrowserDirectory(dir, root, ref items, loggerFactory, ct);
         }
 
         foreach (var file in Directory.EnumerateFiles(path))
@@ -74,7 +74,7 @@ public static class LocalFilesMixin
                         file,
                         info.Name,
                         info.Length,
-                        EntityType.Local,
+                        FtpBrowserSourceType.Local,
                         null,
                         loggerFactory
                     )
