@@ -7,13 +7,13 @@ namespace Asv.Drones;
 public interface ITransferController : IDisposable
 {
     /// <summary>Gets true while a transfer is in progress.</summary>
-    BindableReactiveProperty<bool> IsTransferInProgress { get; }
+    ReactiveProperty<bool> IsTransferInProgress { get; }
 
     /// <summary>Gets controls progress overlay visibility.</summary>
-    BindableReactiveProperty<bool> IsProgressVisible { get; }
+    ReactiveProperty<bool> IsProgressVisible { get; }
 
     /// <summary>Gets progress value in range [0..1].</summary>
-    BindableReactiveProperty<double> Progress { get; }
+    ReactiveProperty<double> Progress { get; }
 
     /// <summary>
     /// Starts a transfer session.

@@ -15,11 +15,10 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
 {
     private readonly ILogger _log = logFactory.CreateLogger<FtpClientService>();
     private readonly Subject<Unit> _remoteChanged = new();
-    private readonly BehaviorSubject<bool> _remoteChanging = new(false);
-    private int _busyCounter;
+    private readonly BusyFlag _busy = new();
+    public Observable<bool> RemoteChanging => _busy.IsBusy;
 
     public Observable<Unit> RemoteChanged => _remoteChanged;
-    public Observable<bool> RemoteChanging => _remoteChanging;
 
     public async Task DownloadFileAsync(
         string remoteFilePath,
@@ -29,7 +28,8 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
         IProgress<double>? progress = null
     )
     {
-        using var busy = BeginBusyScope();
+        using var busyScope = _busy.Enter();
+        ct.ThrowIfCancellationRequested();
 
         await using var stream = new FileStream(
             Path.Combine(localDirectory, GetRemoteFileName(remoteFilePath)),
@@ -50,7 +50,8 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
         IProgress<double>? progress = null
     )
     {
-        using var busy = BeginBusyScope();
+        using var busyScope = _busy.Enter();
+        ct.ThrowIfCancellationRequested();
 
         await using var stream = new FileStream(
             Path.Combine(localDirectory, GetRemoteFileName(remoteFilePath)),
@@ -70,7 +71,8 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
         IProgress<double>? progress = null
     )
     {
-        using var busy = BeginBusyScope();
+        using var busyScope = _busy.Enter();
+        ct.ThrowIfCancellationRequested();
 
         await using var stream = new FileStream(
             localFilePath,
@@ -79,6 +81,7 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
             FileShare.Read
         );
 
+        // TODO: sends "(Error to CreateFile: Fail)" after cancellation
         await ftp.UploadFile(remoteDirectory, stream, progress, ct);
         _log.LogInformation("Uploaded {file} -> {target}", localFilePath, remoteDirectory);
 
@@ -93,14 +96,12 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
         IProgress<double>? progress = null
     )
     {
-        using var busy = BeginBusyScope();
+        using var busyScope = _busy.Enter();
+        ct.ThrowIfCancellationRequested();
 
-        var dirSep = MavlinkFtpHelper.DirectorySeparator;
+        const char dirSep = MavlinkFtpHelper.DirectorySeparator;
         var remoteRoot = remoteDirectoryPath.TrimEnd(dirSep);
-        if (string.IsNullOrEmpty(remoteRoot))
-        {
-            throw new ArgumentNullException(nameof(remoteDirectoryPath));
-        }
+        ArgumentException.ThrowIfNullOrEmpty(remoteRoot);
 
         var remoteRootName = remoteRoot[(remoteRoot.LastIndexOf(dirSep) + 1)..];
 
@@ -111,7 +112,7 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
 
         var dirs = ftp
             .Entries.Where(e =>
-                e.Value.Type == FtpEntryType.Directory
+                e.Value.Type is FtpEntryType.Directory
                 && e.Key.StartsWith(remotePrefix, StringComparison.Ordinal)
             )
             .Select(e => e.Key)
@@ -120,7 +121,7 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
 
         var files = ftp
             .Entries.Where(e =>
-                e.Value.Type == FtpEntryType.File
+                e.Value.Type is FtpEntryType.File
                 && e.Key.StartsWith(remotePrefix, StringComparison.Ordinal)
             )
             .Select(e => e.Key)
@@ -196,9 +197,10 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
         IProgress<double>? progress = null
     )
     {
-        using var busy = BeginBusyScope();
+        using var busyScope = _busy.Enter();
+        ct.ThrowIfCancellationRequested();
 
-        var dirSep = MavlinkFtpHelper.DirectorySeparator;
+        const char dirSep = MavlinkFtpHelper.DirectorySeparator;
         var remoteRoot = remoteDirectoryPath.TrimEnd(dirSep);
         if (string.IsNullOrEmpty(remoteRoot))
         {
@@ -277,6 +279,7 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
                 ? null
                 : new Progress<double>(p => progress.Report((completedSafe + p) / total));
 
+            // TODO: sends "(Timeout to execute 'FILE_TRANSFER_PROTOCOL')" when tries to TerminateSession(0)
             await BurstDownloadFileAsync(file, localFileDir, partSize, ct, nested);
 
             completed++;
@@ -298,7 +301,8 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
         IProgress<double>? progress = null
     )
     {
-        using var busy = BeginBusyScope();
+        using var busyScope = _busy.Enter();
+        ct.ThrowIfCancellationRequested();
 
         var localRoot = new DirectoryInfo(localDirectoryPath);
         if (!localRoot.Exists)
@@ -306,7 +310,7 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
             throw new DirectoryNotFoundException(localDirectoryPath);
         }
 
-        var rSep = MavlinkFtpHelper.DirectorySeparator;
+        const char rSep = MavlinkFtpHelper.DirectorySeparator;
         var rootName = localRoot.Name;
 
         var remoteDirNorm = remoteDirectory;
@@ -549,26 +553,10 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
         return slash >= 0 ? path[(slash + 1)..] : path;
     }
 
-    private IDisposable BeginBusyScope()
-    {
-        if (Interlocked.Increment(ref _busyCounter) == 1)
-        {
-            _remoteChanging.OnNext(true);
-        }
-
-        return Disposable.Create(() =>
-        {
-            if (Interlocked.Decrement(ref _busyCounter) == 0)
-            {
-                _remoteChanging.OnNext(false);
-            }
-        });
-    }
-
     public void Dispose()
     {
+        _busy.Dispose();
         _remoteChanged.OnCompleted();
-        _remoteChanging.OnCompleted();
         ftp.Base.ResetSessions();
     }
 }

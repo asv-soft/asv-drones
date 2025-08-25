@@ -2,7 +2,7 @@
 
 namespace Asv.Drones;
 
-public static class BrowserPathRules
+public static class FtpBrowserPathRules
 {
     public static string Normalize(string path, bool isDirectory, char sep) =>
         isDirectory ? EnsureDir(path, sep) : EnsureFile(path, sep);

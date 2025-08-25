@@ -15,7 +15,7 @@ public interface IBrowserItemViewModel : IRoutable
     bool IsSelected { get; set; }
     bool EditMode { get; set; }
     BindableReactiveProperty<string> EditedName { get; set; }
-    EntityType Type { get; }
+    FtpBrowserSourceType Type { get; }
     string? Crc32Hex { get; }
     Crc32Status Crc32Status { get; }
     FtpEntryType FtpEntryType { get; }

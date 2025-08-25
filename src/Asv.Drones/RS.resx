@@ -428,4 +428,10 @@
     <data name="RenameItemCommand_CommandInfo_Description" xml:space="preserve">
         <value>Command that commits an item renaming</value>
     </data>
+    <data name="FileBrowserView_AwaitingScreen_Header" xml:space="preserve">
+        <value>Connecting</value>
+    </data>
+    <data name="FileBrowserView_AwaitingScreen_Description" xml:space="preserve">
+        <value>Connect to the device's FTP service...</value>
+    </data>
 </root>

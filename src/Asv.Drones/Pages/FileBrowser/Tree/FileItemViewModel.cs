@@ -16,7 +16,7 @@ public class FileItemViewModel : BrowserItemViewModel
         string path,
         string name,
         long size,
-        EntityType type,
+        FtpBrowserSourceType type,
         FtpClientService? ftpService,
         ILoggerFactory loggerFactory
     )

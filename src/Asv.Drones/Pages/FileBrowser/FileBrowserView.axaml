@@ -15,6 +15,7 @@
     </Design.DataContext>
     <UserControl.Resources>
         <!--TODO: move dictionary to Themes.axaml (Asv.Avalonia)-->
+        <!--These resources ARE being used, despite the fact that inspector writes the opposite-->
         <ResourceDictionary>
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light">
@@ -77,7 +78,9 @@
         </Style>
     </UserControl.Styles>
     <Panel>
-        <avalonia1:AwaitingScreen Header="Connecting" Description="Connect to the device..." IsVisible="{Binding !IsDeviceInitialized}"/>
+        <avalonia1:AwaitingScreen Header="{x:Static drones:RS.FileBrowserView_AwaitingScreen_Header}" 
+                                  Description="{x:Static drones:RS.FileBrowserView_AwaitingScreen_Description}" 
+                                  IsVisible="{Binding !IsDeviceInitialized}"/>
         <Grid RowDefinitions="*, Auto" 
               IsVisible="{Binding IsDeviceInitialized}">
             <Grid Grid.Row="0">

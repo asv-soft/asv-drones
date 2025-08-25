@@ -12,12 +12,12 @@ namespace Asv.Drones;
 /// </summary>
 public interface IFtpClientService : IDisposable
 {
-    /// <summary>Gets is remote side changed by this service.</summary>
+    /// <summary>Gets an observable that emits whenever this service changes the remote file system.</summary>
     Observable<Unit> RemoteChanged { get; }
 
     /// <summary>
     /// Gets <c>true</c> when FTP-operation executes
-    /// and <c>false</c> when client is not busy anymore.
+    /// and <c>false</c> when the client is not busy anymore.
     /// </summary>
     Observable<bool> RemoteChanging { get; }
 

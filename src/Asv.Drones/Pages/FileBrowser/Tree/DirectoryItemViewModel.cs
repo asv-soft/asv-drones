@@ -14,7 +14,7 @@ public class DirectoryItemViewModel : BrowserItemViewModel, ISupportRename
         string? parentPath,
         string path,
         string name,
-        EntityType type,
+        FtpBrowserSourceType type,
         FtpClientService? ftpService,
         ILoggerFactory loggerFactory
     )

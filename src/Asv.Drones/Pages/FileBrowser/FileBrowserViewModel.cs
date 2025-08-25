@@ -88,9 +88,13 @@ public class FileBrowserViewModel
         _navigation = navigation;
         _yesNoDialog = dialogService.GetDialogPrefab<YesOrNoDialogPrefab>();
         _transfer = new TransferController(loggerFactory).DisposeItWith(Disposable);
-        IsTransferInProgress = _transfer.IsTransferInProgress;
-        IsProgressVisible = _transfer.IsProgressVisible;
-        Progress = _transfer.Progress;
+        IsTransferInProgress = _transfer
+            .IsTransferInProgress.ToBindableReactiveProperty()
+            .DisposeItWith(Disposable);
+        IsProgressVisible = _transfer
+            .IsProgressVisible.ToBindableReactiveProperty()
+            .DisposeItWith(Disposable);
+        Progress = _transfer.Progress.ToBindableReactiveProperty().DisposeItWith(Disposable);
 
         _watcher = new FileSystemWatcher(_localRootPath)
         {
@@ -113,8 +117,8 @@ public class FileBrowserViewModel
         _remoteItems = [];
         _localItems.DisposeRemovedItems().DisposeItWith(Disposable);
         _remoteItems.DisposeRemovedItems().DisposeItWith(Disposable);
-        _localItems.SetRoutableParent(this);
-        _remoteItems.SetRoutableParent(this);
+        _localItems.SetRoutableParent(this).DisposeItWith(Disposable);
+        _remoteItems.SetRoutableParent(this).DisposeItWith(Disposable);
 
         // TODO: The sync may be done by ObservableTree in Asv.Avalonia instead
         _rawRemoteEntries = new ObservableDictionary<string, IFtpEntry>();
@@ -132,8 +136,8 @@ public class FileBrowserViewModel
             MavlinkFtpHelper.DirectorySeparator.ToString()
         ).DisposeItWith(Disposable);
 
-        var localSearchText = new ReactiveProperty<string?>();
-        var remoteSearchText = new ReactiveProperty<string?>();
+        var localSearchText = new ReactiveProperty<string?>().DisposeItWith(Disposable);
+        var remoteSearchText = new ReactiveProperty<string?>().DisposeItWith(Disposable);
 
         LocalSearchText = new HistoricalStringProperty(
             nameof(LocalSearchText),
@@ -141,7 +145,6 @@ public class FileBrowserViewModel
             loggerFactory,
             this
         ).DisposeItWith(Disposable);
-        LocalSearchText.ForceValidate();
 
         RemoteSearchText = new HistoricalStringProperty(
             nameof(RemoteSearchText),
@@ -149,7 +152,6 @@ public class FileBrowserViewModel
             loggerFactory,
             this
         ).DisposeItWith(Disposable);
-        RemoteSearchText.ForceValidate();
 
         LocalSelectedItem = new BindableReactiveProperty<BrowserNode?>(null).DisposeItWith(
             Disposable
@@ -396,20 +398,20 @@ public class FileBrowserViewModel
             {
                 remoteDirectory = RemoteSelectedItem.Value.Base.HasChildren
                     ? RemoteSelectedItem.Value.Base.Path
-                        + $"{LocalSelectedItem.Value?.Base.Name ?? BrowserNamingPolicy.BlankName}"
+                        + $"{LocalSelectedItem.Value?.Base.Name ?? FtpBrowserNamingPolicy.BlankName}"
                     : RemoteSelectedItem.Value.Base.Path[
                         ..RemoteSelectedItem.Value.Base.Path.LastIndexOf(
                             MavlinkFtpHelper.DirectorySeparator
                         )
                     ]
                         + $"{MavlinkFtpHelper.DirectorySeparator}"
-                        + $"{LocalSelectedItem.Value?.Base.Name ?? BrowserNamingPolicy.BlankName}";
+                        + $"{LocalSelectedItem.Value?.Base.Name ?? FtpBrowserNamingPolicy.BlankName}";
             }
             else
             {
                 remoteDirectory =
                     $"{MavlinkFtpHelper.DirectorySeparator}"
-                    + $"{LocalSelectedItem.Value?.Base.Name ?? BrowserNamingPolicy.BlankName}";
+                    + $"{LocalSelectedItem.Value?.Base.Name ?? FtpBrowserNamingPolicy.BlankName}";
             }
 
             var token = _transfer.Begin(ct);
@@ -790,10 +792,15 @@ public class FileBrowserViewModel
             _localItems.Remove(item);
         }
 
-        var toAdd = newItems
-            .Where(n => _localItems.All(ls => ls.Path != n.Path || ls.Size != n.Size))
-            .ToList();
+        var existing = new HashSet<(string path, FileSize? size)>(
+            _localItems.Select(i => (i.Path, i.Size))
+        );
+
+        var toAdd = newItems.Where(n => !existing.Contains((n.Path, n.Size))).ToList();
+        var toDispose = newItems.Where(n => existing.Contains((n.Path, n.Size))).ToList();
+
         _localItems.AddRange(toAdd);
+        toDispose.ForEach(i => i.Dispose());
 
         return ValueTask.CompletedTask;
     }
@@ -805,7 +812,7 @@ public class FileBrowserViewModel
             return ValueTask.CompletedTask;
         }
 
-        item.EditedName.Value = item.Name ?? string.Empty;
+        item.EditedName.Value = item.Name;
         item.EditMode = true;
 
         LocalSelectedItem.OnNext(node);
@@ -987,27 +994,27 @@ public class FileBrowserViewModel
         {
             case FtpEntryType.Directory:
             {
-                var dirPath = BrowserPathRules.Normalize(key, true, sep);
+                var dirPath = FtpBrowserPathRules.Normalize(key, true, sep);
                 return new DirectoryItemViewModel(
                     PathHelper.EncodePathToId(dirPath),
-                    BrowserPathRules.ParentDirOf(dirPath, sep),
+                    FtpBrowserPathRules.ParentDirOf(dirPath, sep),
                     dirPath,
                     entry.Name,
-                    EntityType.Remote,
+                    FtpBrowserSourceType.Remote,
                     _ftpService,
                     _loggerFactory
                 );
             }
             case FtpEntryType.File:
             {
-                var filePath = BrowserPathRules.Normalize(key, false, sep);
+                var filePath = FtpBrowserPathRules.Normalize(key, false, sep);
                 return new FileItemViewModel(
                     PathHelper.EncodePathToId(filePath),
-                    BrowserPathRules.ParentDirOf(filePath, sep),
+                    FtpBrowserPathRules.ParentDirOf(filePath, sep),
                     filePath,
                     entry.Name,
                     ((FtpFile)entry).Size,
-                    EntityType.Remote,
+                    FtpBrowserSourceType.Remote,
                     _ftpService,
                     _loggerFactory
                 );
