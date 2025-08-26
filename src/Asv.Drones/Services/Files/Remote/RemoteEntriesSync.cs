@@ -52,7 +52,7 @@ public sealed class RemoteEntriesSync : IRemoteEntriesSync
                 {
                     var pair = kv.Value;
                     var isDir = pair.Value.Type is FtpEntryType.Directory;
-                    var key = FtpBrowserPathRules.Normalize(pair.Key, isDir, _separator);
+                    var key = FtpBrowserPath.Normalize(pair.Key, isDir, _separator);
 
                     var existing = _target.FirstOrDefault(i => i.Path == key);
                     if (existing != null)
@@ -72,7 +72,7 @@ public sealed class RemoteEntriesSync : IRemoteEntriesSync
                 {
                     var pair = kv.Value;
                     var isDir = pair.Value.Type is FtpEntryType.Directory;
-                    var key = FtpBrowserPathRules.Normalize(pair.Key, isDir, _separator);
+                    var key = FtpBrowserPath.Normalize(pair.Key, isDir, _separator);
 
                     var victim = _target.FirstOrDefault(i => i.Path == key);
                     if (victim != null)
@@ -91,10 +91,10 @@ public sealed class RemoteEntriesSync : IRemoteEntriesSync
                     var newPair = kv.NewValue;
 
                     var isOldDir = oldPair.Value.Type is FtpEntryType.Directory;
-                    var oldKey = FtpBrowserPathRules.Normalize(oldPair.Key, isOldDir, _separator);
+                    var oldKey = FtpBrowserPath.Normalize(oldPair.Key, isOldDir, _separator);
 
                     var isNewDir = newPair.Value.Type is FtpEntryType.Directory;
-                    var newKey = FtpBrowserPathRules.Normalize(newPair.Key, isNewDir, _separator);
+                    var newKey = FtpBrowserPath.Normalize(newPair.Key, isNewDir, _separator);
 
                     var victim =
                         _target.FirstOrDefault(i => i.Path == oldKey)

@@ -5,26 +5,35 @@ using R3;
 
 namespace Asv.Drones;
 
-/// <inheritdoc />
-public sealed class TransferController(ILoggerFactory? loggerFactory = null) : ITransferController
+public sealed class ProgressWithLock(ILoggerFactory? loggerFactory = null) : IDisposable
 {
     private readonly ILogger _log = (
         loggerFactory ?? Microsoft.Extensions.Logging.Abstractions.NullLoggerFactory.Instance
-    ).CreateLogger<TransferController>();
+    ).CreateLogger<ProgressWithLock>();
     private CancellationTokenSource? _cts;
     private readonly Lock _sync = new();
 
+    /// <summary>Gets true while a transfer is in progress.</summary>
     public ReactiveProperty<bool> IsTransferInProgress { get; } = new(false);
+
+    /// <summary>Gets controls progress overlay visibility.</summary>
     public ReactiveProperty<bool> IsProgressVisible { get; } = new(false);
+
+    /// <summary>Gets progress value in range [0..1].</summary>
     public ReactiveProperty<double> Progress { get; } = new(0);
 
-    public CancellationToken Begin(CancellationToken externalToken = default)
+    /// <summary>
+    /// Starts a transfer session.
+    /// </summary>
+    /// <param name="ct">External token.</param>
+    /// <returns>A linked CancellationToken.</returns>
+    public CancellationToken Begin(CancellationToken ct = default)
     {
         lock (_sync)
         {
             _cts?.Dispose();
-            _cts = externalToken.CanBeCanceled
-                ? CancellationTokenSource.CreateLinkedTokenSource(externalToken)
+            _cts = ct.CanBeCanceled
+                ? CancellationTokenSource.CreateLinkedTokenSource(ct)
                 : new CancellationTokenSource();
 
             IsTransferInProgress.OnNext(true);
@@ -36,6 +45,10 @@ public sealed class TransferController(ILoggerFactory? loggerFactory = null) : I
         }
     }
 
+    /// <summary>
+    /// Finish current transfer (hides progress, disposes CTS).
+    /// Safe to call multiple times.
+    /// </summary>
     public void Complete()
     {
         lock (_sync)
@@ -53,6 +66,10 @@ public sealed class TransferController(ILoggerFactory? loggerFactory = null) : I
         }
     }
 
+    /// <summary>
+    /// Update progress safely (0..1). Values outside the range are clamped.
+    /// </summary>
+    /// <param name="value">Progress value.</param>
     public void Report(double value)
     {
         if (double.IsNaN(value) || double.IsInfinity(value))
@@ -73,6 +90,10 @@ public sealed class TransferController(ILoggerFactory? loggerFactory = null) : I
         Progress.OnNext(value);
     }
 
+    /// <summary>
+    /// Tries to cancel the current transfer if any.
+    /// </summary>
+    /// <returns>True if cancellation is successful.</returns>
     public bool TryCancel()
     {
         lock (_sync)
