@@ -117,16 +117,9 @@
                                 </Button>
                             </StackPanel>
                             <Grid ColumnDefinitions="*, Auto" Margin="0 0 0 4">
-                                <TextBox Grid.Column="0"
-                                         Watermark="{x:Static drones:RS.FileBrowserView_Watermark_Local}"
-                                         Text="{Binding LocalSearchText.ViewValue.Value}"
-                                         Margin="0 0 8 0">
-                                    <TextBox.InnerRightContent>
-                                        <Button Command="{Binding ClearLocalSearchBoxCommand}">
-                                            <avalonia:MaterialIcon Kind="Close" />
-                                        </Button>
-                                    </TextBox.InnerRightContent>
-                                </TextBox>
+                                <avalonia1:SearchBoxView Grid.Column="0"
+                                                         DataContext="{Binding LocalSearchText}"
+                                                         Margin="0 0 8 0"/>
                                 <Button Grid.Column="1"
                                         VerticalAlignment="Stretch"
                                         HorizontalAlignment="Center"
@@ -292,16 +285,9 @@
                                 </Button>
                             </StackPanel>
                             <Grid ColumnDefinitions="*, Auto" Margin="0 0 0 4">
-                                <TextBox Grid.Column="0"
-                                         Watermark="{x:Static drones:RS.FileBrowserView_Watermark_Remote}"
-                                         Text="{Binding RemoteSearchText.ViewValue.Value}"
-                                         Margin="0 0 8 0">
-                                    <TextBox.InnerRightContent>
-                                        <Button Command="{Binding ClearRemoteSearchBoxCommand}">
-                                            <avalonia:MaterialIcon Kind="Close"/>
-                                        </Button>
-                                    </TextBox.InnerRightContent>
-                                </TextBox>
+                                <avalonia1:SearchBoxView Grid.Column="0"
+                                                         DataContext="{Binding RemoteSearchText}"
+                                                         Margin="0 0 8 0"/>
                                 <Button Grid.Column="1"
                                         VerticalAlignment="Stretch"
                                         HorizontalAlignment="Center"
