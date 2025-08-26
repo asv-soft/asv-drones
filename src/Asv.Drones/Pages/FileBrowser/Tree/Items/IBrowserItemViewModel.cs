@@ -14,10 +14,10 @@ public interface IBrowserItemViewModel : IRoutable
     bool IsExpanded { get; set; }
     bool IsSelected { get; set; }
     bool EditMode { get; set; }
-    BindableReactiveProperty<string> EditedName { get; set; }
     FtpBrowserSourceType Type { get; }
     string? Crc32Hex { get; }
     Crc32Status Crc32Status { get; }
     FtpEntryType FtpEntryType { get; }
     ReactiveCommand CommitRename { get; }
+    BindableReactiveProperty<string> EditedName { get; set; }
 }

@@ -37,12 +37,8 @@ public class FileBrowserViewModel
     private readonly ILoggerFactory _loggerFactory;
     private readonly INavigationService _navigation;
     private readonly FileSystemWatcher _watcher;
-    private readonly TransferController _transfer;
+    private readonly ProgressWithLock _transfer;
     private readonly string _localRootPath;
-    private readonly FileSystemEventHandler? _createdHandler;
-    private readonly FileSystemEventHandler? _deletedHandler;
-    private readonly RenamedEventHandler? _renamedHandler;
-    private readonly FileSystemEventHandler? _changedHandler;
 
     private readonly ObservableDictionary<string, IFtpEntry> _rawRemoteEntries;
 
@@ -87,7 +83,7 @@ public class FileBrowserViewModel
         _loggerFactory = loggerFactory;
         _navigation = navigation;
         _yesNoDialog = dialogService.GetDialogPrefab<YesOrNoDialogPrefab>();
-        _transfer = new TransferController(loggerFactory).DisposeItWith(Disposable);
+        _transfer = new ProgressWithLock(loggerFactory).DisposeItWith(Disposable);
         IsTransferInProgress = _transfer
             .IsTransferInProgress.ToBindableReactiveProperty()
             .DisposeItWith(Disposable);
@@ -103,15 +99,33 @@ public class FileBrowserViewModel
             IncludeSubdirectories = true,
             EnableRaisingEvents = true,
         }.DisposeItWith(Disposable);
-        _createdHandler = (_, _) => RefreshLocalCommand?.Execute(Unit.Default);
-        _deletedHandler = (_, _) => RefreshLocalCommand?.Execute(Unit.Default);
-        _renamedHandler = (_, _) => RefreshLocalCommand?.Execute(Unit.Default);
-        _changedHandler = (_, _) => RefreshLocalCommand?.Execute(Unit.Default);
 
-        _watcher.Created += _createdHandler;
-        _watcher.Deleted += _deletedHandler;
-        _watcher.Renamed += _renamedHandler;
-        _watcher.Changed += _changedHandler;
+        Observable
+            .Merge(
+                Observable.FromEvent<FileSystemEventHandler, Unit>(
+                    h => (_, _) => h(Unit.Default),
+                    h => _watcher.Created += h,
+                    h => _watcher.Created -= h
+                ),
+                Observable.FromEvent<FileSystemEventHandler, Unit>(
+                    h => (_, _) => h(Unit.Default),
+                    h => _watcher.Deleted += h,
+                    h => _watcher.Deleted -= h
+                ),
+                Observable.FromEvent<FileSystemEventHandler, Unit>(
+                    h => (_, _) => h(Unit.Default),
+                    h => _watcher.Changed += h,
+                    h => _watcher.Changed -= h
+                ),
+                Observable.FromEvent<RenamedEventHandler, Unit>(
+                    h => (_, _) => h(Unit.Default),
+                    h => _watcher.Renamed += h,
+                    h => _watcher.Renamed -= h
+                )
+            )
+            .ThrottleLast(TimeSpan.FromMilliseconds(150))
+            .Subscribe(_ => RefreshLocalCommand?.Execute(Unit.Default))
+            .DisposeItWith(Disposable);
 
         _localItems = [];
         _remoteItems = [];
@@ -139,20 +153,6 @@ public class FileBrowserViewModel
         var localSearchText = new ReactiveProperty<string?>().DisposeItWith(Disposable);
         var remoteSearchText = new ReactiveProperty<string?>().DisposeItWith(Disposable);
 
-        LocalSearchText = new HistoricalStringProperty(
-            nameof(LocalSearchText),
-            localSearchText,
-            loggerFactory,
-            this
-        ).DisposeItWith(Disposable);
-
-        RemoteSearchText = new HistoricalStringProperty(
-            nameof(RemoteSearchText),
-            remoteSearchText,
-            loggerFactory,
-            this
-        ).DisposeItWith(Disposable);
-
         LocalSelectedItem = new BindableReactiveProperty<BrowserNode?>(null).DisposeItWith(
             Disposable
         );
@@ -164,25 +164,26 @@ public class FileBrowserViewModel
         IsUiBlocked = new BindableReactiveProperty<bool>(false).DisposeItWith(Disposable);
 
         CanDownload
-            .Subscribe(b =>
-            {
-                if (!b)
-                {
-                    IsDownloadPopupOpen.OnNext(false);
-                }
-            })
+            .Where(b => !b)
+            .Subscribe(_ => IsDownloadPopupOpen.OnNext(false))
             .DisposeItWith(Disposable);
 
-        LocalSearchText
-            .ViewValue.DistinctUntilChanged()
-            .ThrottleLast(TimeSpan.FromMilliseconds(SearchThrottleMs))
-            .Subscribe(text => PerformSearch(LocalItemsTree, LocalSelectedItem, text))
+        LocalSearchText = new SearchBoxViewModel(
+            nameof(LocalSearchText),
+            loggerFactory,
+            PerformLocalSearch,
+            TimeSpan.FromMilliseconds(SearchThrottleMs)
+        )
+            .SetRoutableParent(this)
             .DisposeItWith(Disposable);
 
-        RemoteSearchText
-            .ViewValue.DistinctUntilChanged()
-            .ThrottleLast(TimeSpan.FromMilliseconds(SearchThrottleMs))
-            .Subscribe(text => PerformSearch(RemoteItemsTree, RemoteSelectedItem, text))
+        RemoteSearchText = new SearchBoxViewModel(
+            nameof(RemoteSearchText),
+            loggerFactory,
+            PerformRemoteSearch,
+            TimeSpan.FromMilliseconds(SearchThrottleMs)
+        )
+            .SetRoutableParent(this)
             .DisposeItWith(Disposable);
 
         IsDeviceInitialized = false;
@@ -194,8 +195,8 @@ public class FileBrowserViewModel
     public BrowserTree RemoteItemsTree { get; }
     public BindableReactiveProperty<BrowserNode?> LocalSelectedItem { get; }
     public BindableReactiveProperty<BrowserNode?> RemoteSelectedItem { get; }
-    public HistoricalStringProperty LocalSearchText { get; }
-    public HistoricalStringProperty RemoteSearchText { get; }
+    public SearchBoxViewModel LocalSearchText { get; }
+    public SearchBoxViewModel RemoteSearchText { get; }
     public BindableReactiveProperty<double> Progress { get; }
     public BindableReactiveProperty<bool> IsDownloadPopupOpen { get; }
     public BindableReactiveProperty<bool> IsUiBlocked { get; }
@@ -222,8 +223,6 @@ public class FileBrowserViewModel
     public ReactiveCommand<BrowserNode> RemoveRemoteItemCommand { get; private set; }
     public ReactiveCommand<BrowserNode> LocalRenameCommand { get; private set; }
     public ReactiveCommand<BrowserNode> RemoteRenameCommand { get; private set; }
-    public ReactiveCommand ClearLocalSearchBoxCommand { get; private set; }
-    public ReactiveCommand ClearRemoteSearchBoxCommand { get; private set; }
     public ReactiveCommand<Unit> CompareSelectedItemsCommand { get; private set; }
     public ReactiveCommand FindFileOnLocalCommand { get; private set; }
     public ReactiveCommand<BrowserNode> CalculateLocalCrc32Command { get; private set; }
@@ -276,12 +275,6 @@ public class FileBrowserViewModel
 
     private void InitCommands()
     {
-        ClearLocalSearchBoxCommand = new ReactiveCommand(_ =>
-            LocalSearchText.ViewValue.OnNext(string.Empty)
-        ).DisposeItWith(Disposable);
-        ClearRemoteSearchBoxCommand = new ReactiveCommand(_ =>
-            RemoteSearchText.ViewValue.OnNext(string.Empty)
-        ).DisposeItWith(Disposable);
         FindFileOnLocalCommand = CanFindFileOnLocal
             .ToReactiveCommand(_ => FindFileOnLocalImpl())
             .DisposeItWith(Disposable);
@@ -394,24 +387,28 @@ public class FileBrowserViewModel
         if (res)
         {
             string remoteDirectory;
-            if (RemoteSelectedItem.Value != null)
+
+            var remoteNode = RemoteSelectedItem.Value;
+            var localName = LocalSelectedItem.Value?.Base.Name ?? FtpBrowserNamingPolicy.BlankName;
+            const char sep = MavlinkFtpHelper.DirectorySeparator;
+
+            if (remoteNode != null)
             {
-                remoteDirectory = RemoteSelectedItem.Value.Base.HasChildren
-                    ? RemoteSelectedItem.Value.Base.Path
-                        + $"{LocalSelectedItem.Value?.Base.Name ?? FtpBrowserNamingPolicy.BlankName}"
-                    : RemoteSelectedItem.Value.Base.Path[
-                        ..RemoteSelectedItem.Value.Base.Path.LastIndexOf(
-                            MavlinkFtpHelper.DirectorySeparator
-                        )
-                    ]
-                        + $"{MavlinkFtpHelper.DirectorySeparator}"
-                        + $"{LocalSelectedItem.Value?.Base.Name ?? FtpBrowserNamingPolicy.BlankName}";
+                var remotePath = remoteNode.Base.Path;
+
+                if (remoteNode.Base.FtpEntryType is FtpEntryType.Directory)
+                {
+                    remoteDirectory = remotePath + localName;
+                }
+                else
+                {
+                    var parentDir = remotePath[..remotePath.LastIndexOf(sep)];
+                    remoteDirectory = parentDir + sep + localName;
+                }
             }
             else
             {
-                remoteDirectory =
-                    $"{MavlinkFtpHelper.DirectorySeparator}"
-                    + $"{LocalSelectedItem.Value?.Base.Name ?? FtpBrowserNamingPolicy.BlankName}";
+                remoteDirectory = sep + localName;
             }
 
             var token = _transfer.Begin(ct);
@@ -941,6 +938,26 @@ public class FileBrowserViewModel
 
     #region Helpers
 
+    private Task PerformLocalSearch(
+        string? query,
+        IProgress<double> progress,
+        CancellationToken cancel
+    )
+    {
+        PerformSearch(LocalItemsTree, LocalSelectedItem, query);
+        return Task.CompletedTask;
+    }
+
+    private Task PerformRemoteSearch(
+        string? query,
+        IProgress<double> progress,
+        CancellationToken cancel
+    )
+    {
+        PerformSearch(RemoteItemsTree, RemoteSelectedItem, query);
+        return Task.CompletedTask;
+    }
+
     private static void PerformSearch(
         BrowserTree tree,
         BindableReactiveProperty<BrowserNode?> target,
@@ -994,10 +1011,10 @@ public class FileBrowserViewModel
         {
             case FtpEntryType.Directory:
             {
-                var dirPath = FtpBrowserPathRules.Normalize(key, true, sep);
+                var dirPath = FtpBrowserPath.Normalize(key, true, sep);
                 return new DirectoryItemViewModel(
                     PathHelper.EncodePathToId(dirPath),
-                    FtpBrowserPathRules.ParentDirOf(dirPath, sep),
+                    FtpBrowserPath.ParentDirOf(dirPath, sep),
                     dirPath,
                     entry.Name,
                     FtpBrowserSourceType.Remote,
@@ -1007,10 +1024,10 @@ public class FileBrowserViewModel
             }
             case FtpEntryType.File:
             {
-                var filePath = FtpBrowserPathRules.Normalize(key, false, sep);
+                var filePath = FtpBrowserPath.Normalize(key, false, sep);
                 return new FileItemViewModel(
                     PathHelper.EncodePathToId(filePath),
-                    FtpBrowserPathRules.ParentDirOf(filePath, sep),
+                    FtpBrowserPath.ParentDirOf(filePath, sep),
                     filePath,
                     entry.Name,
                     ((FtpFile)entry).Size,
@@ -1057,11 +1074,6 @@ public class FileBrowserViewModel
     {
         if (disposing)
         {
-            _watcher.Created -= _createdHandler;
-            _watcher.Deleted -= _deletedHandler;
-            _watcher.Renamed -= _renamedHandler;
-            _watcher.Changed -= _changedHandler;
-
             _localItems.RemoveAll();
             _remoteItems.RemoveAll();
         }
