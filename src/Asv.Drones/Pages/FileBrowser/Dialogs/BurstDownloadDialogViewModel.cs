@@ -15,22 +15,19 @@ public class BurstDownloadDialogViewModel : DialogViewModelBase
         : base(DialogId, DesignTime.LoggerFactory)
     {
         PacketSize = new BindableReactiveProperty<byte?>(MavlinkFtpHelper.MaxDataSize);
-        PacketSize.EnableValidationRoutable(
-            arg =>
-            {
-                if (arg is >= 1 and <= MavlinkFtpHelper.MaxDataSize)
-                {
-                    return ValidationResult.Success;
-                }
-
-                return ValidationResult.FailAsOutOfRange(
-                    "1",
-                    MavlinkFtpHelper.MaxDataSize.ToString()
-                );
-            },
-            this,
-            isForceValidation: true
-        );
+        PacketSize
+            .EnableValidationRoutable(
+                arg =>
+                    arg is >= 1 and <= MavlinkFtpHelper.MaxDataSize
+                        ? ValidationResult.Success
+                        : ValidationResult.FailAsOutOfRange(
+                            "1",
+                            MavlinkFtpHelper.MaxDataSize.ToString()
+                        ),
+                this,
+                isForceValidation: true
+            )
+            .DisposeItWith(Disposable);
     }
 
     public BindableReactiveProperty<byte?> PacketSize { get; }

@@ -82,9 +82,8 @@
         <DependentUpon>BurstDownloadDialogView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="Pages\PacketViewer\PacketMessage\PacketMessageView.axaml.cs">
-        <DependentUpon>PacketMessageView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
+      <Compile Remove="Services\Files\IFtpClientService.cs" />
+      <Compile Remove="Services\Files\FtpClientService.cs" />
+      <Compile Remove="Services\Files\LocalFilesMixin.cs" />
     </ItemGroup>
 </Project>

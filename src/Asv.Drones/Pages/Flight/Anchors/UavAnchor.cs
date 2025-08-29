@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
 using Asv.Avalonia.IO;
