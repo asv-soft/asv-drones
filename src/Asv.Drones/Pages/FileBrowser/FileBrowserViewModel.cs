@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
+using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
@@ -17,7 +18,6 @@ using Microsoft.Extensions.Logging.Abstractions;
 using NuGet.Packaging;
 using ObservableCollections;
 using R3;
-using IConfiguration = Asv.Cfg.IConfiguration;
 
 namespace Asv.Drones;
 
@@ -32,7 +32,10 @@ public class FileBrowserViewModel
     public const MaterialIconKind PageIcon = MaterialIconKind.FolderEye;
     private const int SearchThrottleMs = 500;
 
+    private readonly LocalFilesService _localFilesService;
     private FtpClientService? _ftpService;
+    private FileBrowserBackend? _backend;
+
     private readonly YesOrNoDialogPrefab _yesNoDialog;
     private readonly ILoggerFactory _loggerFactory;
     private readonly INavigationService _navigation;
@@ -83,6 +86,7 @@ public class FileBrowserViewModel
         _loggerFactory = loggerFactory;
         _navigation = navigation;
         _yesNoDialog = dialogService.GetDialogPrefab<YesOrNoDialogPrefab>();
+        _localFilesService = new LocalFilesService();
         _transfer = new ProgressWithLock(loggerFactory).DisposeItWith(Disposable);
         IsTransferInProgress = _transfer
             .IsTransferInProgress.ToBindableReactiveProperty()
@@ -149,9 +153,6 @@ public class FileBrowserViewModel
             _remoteItems,
             MavlinkFtpHelper.DirectorySeparator.ToString()
         ).DisposeItWith(Disposable);
-
-        var localSearchText = new ReactiveProperty<string?>().DisposeItWith(Disposable);
-        var remoteSearchText = new ReactiveProperty<string?>().DisposeItWith(Disposable);
 
         LocalSelectedItem = new BindableReactiveProperty<BrowserNode?>(null).DisposeItWith(
             Disposable
@@ -361,9 +362,6 @@ public class FileBrowserViewModel
 
         RefreshRemoteCommand.SubscribeOnUIThreadDispatcher();
         RefreshLocalCommand.SubscribeOnUIThreadDispatcher();
-
-        RefreshRemoteCommand.Execute(Unit.Default);
-        RefreshLocalCommand.Execute(Unit.Default);
     }
 
     private async Task UploadImpl(BrowserNode item, CancellationToken ct)
@@ -650,12 +648,12 @@ public class FileBrowserViewModel
 
         if (item.Base is { FtpEntryType: FtpEntryType.Directory })
         {
-            LocalFilesMixin.RemoveDirectory(item.Base.Path, true, Logger);
+            _localFilesService.RemoveDirectory(item.Base.Path, true, Logger);
         }
 
         if (item.Base is { FtpEntryType: FtpEntryType.File })
         {
-            LocalFilesMixin.RemoveFile(item.Base.Path, Logger);
+            _localFilesService.RemoveFile(item.Base.Path, Logger);
         }
     }
 
@@ -715,7 +713,7 @@ public class FileBrowserViewModel
             _ => _localRootPath,
         };
 
-        LocalFilesMixin.CreateDirectory(path, Logger);
+        _localFilesService.CreateDirectory(path, Logger);
 
         return ValueTask.CompletedTask;
     }
@@ -775,10 +773,15 @@ public class FileBrowserViewModel
 
     private ValueTask RefreshLocalImpl(Unit arg, CancellationToken ct)
     {
-        var newItems = LocalFilesMixin.LoadBrowserItems(
+        if (_backend == null)
+        {
+            return ValueTask.CompletedTask;
+        }
+        var newItems = _localFilesService.LoadBrowserItems(
             _localRootPath,
             _localRootPath,
-            loggerFactory: _loggerFactory
+            _backend,
+            _loggerFactory
         );
 
         var toRemove = _localItems
@@ -839,7 +842,7 @@ public class FileBrowserViewModel
             return;
         }
 
-        var crc32 = await LocalFilesMixin.CalculateCrc32Async(fileItem.Path, ct, Logger);
+        var crc32 = await _localFilesService.CalculateCrc32Async(fileItem.Path, ct, Logger);
         fileItem.Crc32 = crc32;
         fileItem.Crc32Status = Crc32Status.Default;
     }
@@ -882,7 +885,11 @@ public class FileBrowserViewModel
 
         if (localFileItem.Crc32 == null)
         {
-            localCrc32 = await LocalFilesMixin.CalculateCrc32Async(localFileItem.Path, ct, Logger);
+            localCrc32 = await _localFilesService.CalculateCrc32Async(
+                localFileItem.Path,
+                ct,
+                Logger
+            );
             localFileItem.Crc32 = localCrc32;
         }
         else
@@ -1005,40 +1012,50 @@ public class FileBrowserViewModel
 
     private IBrowserItemViewModel EntryToBrowserItem(string key, IFtpEntry entry)
     {
+        if (_backend == null)
+        {
+            throw new InvalidOperationException("Backend is not initialized");
+        }
+
         const char sep = MavlinkFtpHelper.DirectorySeparator;
+
+        IBrowserItemViewModel vm;
 
         switch (entry.Type)
         {
             case FtpEntryType.Directory:
             {
                 var dirPath = FtpBrowserPath.Normalize(key, true, sep);
-                return new DirectoryItemViewModel(
+                vm = new DirectoryItemViewModel(
                     PathHelper.EncodePathToId(dirPath),
                     FtpBrowserPath.ParentDirOf(dirPath, sep),
                     dirPath,
                     entry.Name,
                     FtpBrowserSourceType.Remote,
-                    _ftpService,
                     _loggerFactory
                 );
+                break;
             }
             case FtpEntryType.File:
             {
                 var filePath = FtpBrowserPath.Normalize(key, false, sep);
-                return new FileItemViewModel(
+                vm = new FileItemViewModel(
                     PathHelper.EncodePathToId(filePath),
                     FtpBrowserPath.ParentDirOf(filePath, sep),
                     filePath,
                     entry.Name,
                     ((FtpFile)entry).Size,
                     FtpBrowserSourceType.Remote,
-                    _ftpService,
                     _loggerFactory
                 );
+                break;
             }
             default:
                 throw new ArgumentOutOfRangeException(nameof(entry));
         }
+
+        vm.AttachBackend(_backend);
+        return vm;
     }
 
     #endregion
@@ -1107,6 +1124,8 @@ public class FileBrowserViewModel
             .RemoteChanging.Subscribe(isBusy => IsUiBlocked.OnNext(isBusy))
             .RegisterTo(onDisconnectedToken);
 
+        _backend = new FileBrowserBackend(_localFilesService, _ftpService);
+
         onDisconnectedToken.Register(() =>
         {
             try
@@ -1132,5 +1151,6 @@ public class FileBrowserViewModel
         });
 
         RefreshRemoteCommand.Execute(Unit.Default);
+        RefreshLocalCommand.Execute(Unit.Default);
     }
 }
