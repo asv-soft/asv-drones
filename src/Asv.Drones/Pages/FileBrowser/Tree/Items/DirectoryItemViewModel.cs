@@ -9,20 +9,16 @@ namespace Asv.Drones;
 
 public class DirectoryItemViewModel : BrowserItemViewModel, ISupportRename
 {
-    private readonly FtpClientService? _ftpService;
-
     public DirectoryItemViewModel(
         NavigationId id,
         string? parentPath,
         string path,
         string name,
         FtpBrowserSourceType type,
-        FtpClientService? ftpService,
         ILoggerFactory loggerFactory
     )
         : base(id, parentPath, path, type, loggerFactory)
     {
-        _ftpService = ftpService;
         HasChildren = true;
         Name = name;
         FtpEntryType = FtpEntryType.Directory;
@@ -45,34 +41,21 @@ public class DirectoryItemViewModel : BrowserItemViewModel, ISupportRename
         var oldPath = FtpBrowserPath.Normalize(oldValue, true, sep);
         var newPath = FtpBrowserPath.Normalize(newValue, true, sep);
 
-        switch (Type)
-        {
-            case FtpBrowserSourceType.Local:
+        var result = await Backend.UseAsync(
+            Type,
+            onLocal: local =>
             {
-                var result = LocalFilesMixin.RenameDirectory(oldPath, newPath, Logger);
-                result = FtpBrowserPath.Normalize(result, true, sep);
-
-                EditMode = false;
-                EditedName.Value = FtpBrowserPath.NameOf(result, sep);
-                IsSelected = true;
-                return result;
-            }
-            case FtpBrowserSourceType.Remote:
+                var newDirPath = local.RenameDirectory(oldPath, newPath, Logger);
+                return ValueTask.FromResult(newDirPath);
+            },
+            onRemote: async ftp =>
             {
-                if (_ftpService is null)
-                {
-                    throw new InvalidOperationException("FTP service is not initialized");
-                }
-
-                await _ftpService.RenameAsync(oldPath, newPath, ct).ConfigureAwait(false);
-
-                EditMode = false;
-                EditedName.Value = FtpBrowserPath.NameOf(newPath, sep);
-                break;
+                var newDirPath = await ftp.RenameAsync(oldPath, newPath, ct);
+                return newDirPath;
             }
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+        );
+        EditMode = false;
+        EditedName.Value = FtpBrowserPath.NameOf(result, sep);
         IsSelected = true;
         return newPath;
     }

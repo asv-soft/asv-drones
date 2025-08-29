@@ -9,8 +9,11 @@ using R3;
 
 namespace Asv.Drones;
 
-/// <inheritdoc />
-public sealed class RemoteEntriesSync : IRemoteEntriesSync
+/// <summary>
+/// Synchronizes source dictionary of IFtpEntry into a flat VM list.
+/// Applies canonicalization and centralizes add/replace/remove logic.
+/// </summary>
+public sealed class RemoteEntriesSync : IDisposable
 {
     private readonly ObservableDictionary<string, IFtpEntry> _source;
     private readonly ObservableList<IBrowserItemViewModel> _target;
@@ -38,6 +41,7 @@ public sealed class RemoteEntriesSync : IRemoteEntriesSync
         _log = (loggerFactory ?? NullLoggerFactory.Instance).CreateLogger<RemoteEntriesSync>();
     }
 
+    /// <summary>Start syncing. Safe to call once; subsequent calls are no-op.</summary>
     public void Start()
     {
         if (_subscriptions.Count > 0)
@@ -121,13 +125,12 @@ public sealed class RemoteEntriesSync : IRemoteEntriesSync
         _log.LogDebug("RemoteEntriesSync started");
     }
 
+    /// <summary>Stop syncing and release subscriptions.</summary>
     public void Stop()
     {
         _subscriptions.Dispose();
         _log.LogDebug("RemoteEntriesSync stopped");
     }
-
-    public void Dispose() => Stop();
 
     private static void TrySyncMetadata(IBrowserItemViewModel vm, IFtpEntry entry)
     {
@@ -136,4 +139,6 @@ public sealed class RemoteEntriesSync : IRemoteEntriesSync
             b.Name = entry.Name;
         }
     }
+
+    public void Dispose() => Stop();
 }

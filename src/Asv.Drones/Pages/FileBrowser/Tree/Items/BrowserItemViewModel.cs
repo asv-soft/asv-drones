@@ -13,6 +13,12 @@ namespace Asv.Drones;
 public class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel
 {
     private readonly char _separator;
+    private FileBrowserBackend? _backend;
+    protected FileBrowserBackend Backend =>
+        _backend
+        ?? throw new InvalidOperationException(
+            "Backend is not attached. Call AttachBackend(...) first."
+        );
 
     public BrowserItemViewModel(
         NavigationId id,
@@ -149,6 +155,15 @@ public class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel
             ),
             ct
         );
+    }
+
+    /// <summary>
+    /// Attach backend context once right after VM creation.
+    /// </summary>
+    /// <param name="backend">Backend context from VM.</param>
+    public void AttachBackend(FileBrowserBackend backend)
+    {
+        _backend = backend ?? throw new ArgumentNullException(nameof(backend));
     }
 
     public override IEnumerable<IRoutable> GetRoutableChildren()
