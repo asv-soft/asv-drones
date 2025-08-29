@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,14 +11,27 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory)
-    : IFtpClientService
+/// <summary>
+/// Unified API for manipulating with files via FTP
+/// </summary>
+public sealed class FtpClientService(
+    IFtpClientEx ftp,
+    ILoggerFactory logFactory,
+    IFileSystem? fileSystem = null
+) : IDisposable
 {
+    private readonly IFileSystem _fileSystem = fileSystem ?? new FileSystem();
     private readonly ILogger _log = logFactory.CreateLogger<FtpClientService>();
     private readonly Subject<Unit> _remoteChanged = new();
     private readonly BusyFlag _busy = new();
+
+    /// <summary>
+    /// Gets <c>true</c> when FTP-operation executes
+    /// and <c>false</c> when the client is not busy anymore.
+    /// </summary>
     public Observable<bool> RemoteChanging => _busy.IsBusy;
 
+    /// <summary>Gets an observable that emits whenever this service changes the remote file system.</summary>
     public Observable<Unit> RemoteChanged => _remoteChanged;
 
     public async Task DownloadFileAsync(
@@ -32,7 +46,7 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
         ct.ThrowIfCancellationRequested();
 
         await using var stream = new FileStream(
-            Path.Combine(localDirectory, GetRemoteFileName(remoteFilePath)),
+            _fileSystem.Path.Combine(localDirectory, GetRemoteFileName(remoteFilePath)),
             FileMode.Create,
             FileAccess.Write,
             FileShare.None
@@ -54,7 +68,7 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
         ct.ThrowIfCancellationRequested();
 
         await using var stream = new FileStream(
-            Path.Combine(localDirectory, GetRemoteFileName(remoteFilePath)),
+            _fileSystem.Path.Combine(localDirectory, GetRemoteFileName(remoteFilePath)),
             FileMode.Create,
             FileAccess.Write,
             FileShare.None
@@ -105,8 +119,8 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
 
         var remoteRootName = remoteRoot[(remoteRoot.LastIndexOf(dirSep) + 1)..];
 
-        var destRoot = Path.Combine(localDirectory, remoteRootName);
-        Directory.CreateDirectory(destRoot);
+        var destRoot = _fileSystem.Path.Combine(localDirectory, remoteRootName);
+        _fileSystem.Directory.CreateDirectory(destRoot);
 
         var remotePrefix = $"{remoteRoot}{dirSep}";
 
@@ -138,12 +152,12 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
                 continue;
             }
 
-            var localDir = Path.Combine(
+            var localDir = _fileSystem.Path.Combine(
                 destRoot,
-                relative.Replace(dirSep, Path.DirectorySeparatorChar)
+                relative.Replace(dirSep, _fileSystem.Path.DirectorySeparatorChar)
             );
 
-            Directory.CreateDirectory(localDir);
+            _fileSystem.Directory.CreateDirectory(localDir);
         }
 
         var total = files.Count;
@@ -163,12 +177,14 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
             ct.ThrowIfCancellationRequested();
 
             var relative = file[remotePrefix.Length..];
-            var localFileDir = Path.Combine(
+            var localFileDir = _fileSystem.Path.Combine(
                 destRoot,
-                Path.GetDirectoryName(relative)!.Replace(dirSep, Path.DirectorySeparatorChar)
+                _fileSystem
+                    .Path.GetDirectoryName(relative)!
+                    .Replace(dirSep, _fileSystem.Path.DirectorySeparatorChar)
             );
 
-            Directory.CreateDirectory(localFileDir);
+            _fileSystem.Directory.CreateDirectory(localFileDir);
 
             var completedSafe = completed;
             var nested = progress is null
@@ -209,8 +225,8 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
 
         var remoteRootName = remoteRoot[(remoteRoot.LastIndexOf(dirSep) + 1)..];
 
-        var destRoot = Path.Combine(localDirectory, remoteRootName);
-        Directory.CreateDirectory(destRoot);
+        var destRoot = _fileSystem.Path.Combine(localDirectory, remoteRootName);
+        _fileSystem.Directory.CreateDirectory(destRoot);
 
         var remotePrefix = $"{remoteRoot}{dirSep}";
 
@@ -242,12 +258,12 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
                 continue;
             }
 
-            var localDir = Path.Combine(
+            var localDir = _fileSystem.Path.Combine(
                 destRoot,
-                relative.Replace(dirSep, Path.DirectorySeparatorChar)
+                relative.Replace(dirSep, _fileSystem.Path.DirectorySeparatorChar)
             );
 
-            Directory.CreateDirectory(localDir);
+            _fileSystem.Directory.CreateDirectory(localDir);
         }
 
         var total = files.Count;
@@ -267,12 +283,14 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
             ct.ThrowIfCancellationRequested();
 
             var relative = file[remotePrefix.Length..];
-            var localFileDir = Path.Combine(
+            var localFileDir = _fileSystem.Path.Combine(
                 destRoot,
-                Path.GetDirectoryName(relative)!.Replace(dirSep, Path.DirectorySeparatorChar)
+                _fileSystem
+                    .Path.GetDirectoryName(relative)!
+                    .Replace(dirSep, _fileSystem.Path.DirectorySeparatorChar)
             );
 
-            Directory.CreateDirectory(localFileDir);
+            _fileSystem.Directory.CreateDirectory(localFileDir);
 
             var completedSafe = completed;
             var nested = progress is null
@@ -330,7 +348,7 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
 
         await ftp.Base.CreateDirectory(remoteRoot, ct);
 
-        var localDirs = Directory.GetDirectories(
+        var localDirs = _fileSystem.Directory.GetDirectories(
             localDirectoryPath,
             "*",
             SearchOption.AllDirectories
@@ -338,15 +356,20 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
 
         foreach (var dir in localDirs)
         {
-            var rel = Path.GetRelativePath(localDirectoryPath, dir)
-                .Replace(Path.DirectorySeparatorChar, rSep);
+            var rel = _fileSystem
+                .Path.GetRelativePath(localDirectoryPath, dir)
+                .Replace(_fileSystem.Path.DirectorySeparatorChar, rSep);
 
             var remoteDir = MavlinkFtpHelper.Combine(remoteRoot, $"{rel}{rSep}");
 
             await ftp.Base.CreateDirectory(remoteDir, ct);
         }
 
-        var localFiles = Directory.GetFiles(localDirectoryPath, "*", SearchOption.AllDirectories);
+        var localFiles = _fileSystem.Directory.GetFiles(
+            localDirectoryPath,
+            "*",
+            SearchOption.AllDirectories
+        );
         var totalBytes = localFiles.Sum(f => new FileInfo(f).Length);
         long uploaded = 0;
 
@@ -354,8 +377,9 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
         {
             ct.ThrowIfCancellationRequested();
 
-            var rel = Path.GetRelativePath(localDirectoryPath, file)
-                .Replace(Path.DirectorySeparatorChar, rSep);
+            var rel = _fileSystem
+                .Path.GetRelativePath(localDirectoryPath, file)
+                .Replace(_fileSystem.Path.DirectorySeparatorChar, rSep);
 
             var remoteFilePath = MavlinkFtpHelper.Combine(remoteRoot, rel);
 
@@ -509,8 +533,8 @@ public sealed class FtpClientService(IFtpClientEx ftp, ILoggerFactory logFactory
             if (ftp.Entries.ContainsKey(newPath))
             {
                 var fullName = MavlinkFtpHelper.GetFileName(newPath);
-                var baseName = Path.GetFileNameWithoutExtension(fullName);
-                var ext = Path.GetExtension(fullName);
+                var baseName = _fileSystem.Path.GetFileNameWithoutExtension(fullName);
+                var ext = _fileSystem.Path.GetExtension(fullName);
                 var counter = 1;
 
                 while (ftp.Entries.ContainsKey(newPath))

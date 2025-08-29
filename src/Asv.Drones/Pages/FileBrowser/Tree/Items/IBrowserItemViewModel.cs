@@ -20,4 +20,5 @@ public interface IBrowserItemViewModel : IRoutable
     FtpEntryType FtpEntryType { get; }
     ReactiveCommand CommitRename { get; }
     BindableReactiveProperty<string> EditedName { get; set; }
+    void AttachBackend(FileBrowserBackend backend);
 }
