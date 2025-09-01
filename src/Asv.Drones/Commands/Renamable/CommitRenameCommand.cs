@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Material.Icons;
@@ -7,11 +8,11 @@ namespace Asv.Drones;
 
 /// <summary>
 /// <para>Executes with:</para>
-/// <para>- <c>arg[0]</c> as Old Value.</para>
-/// <para>- <c>arg[1]</c> as New Value.</para>
+/// <para>- <c>arg["old"]</c> as Old Value.</para>
+/// <para>- <c>arg["new"]</c> as New Value.</para>
 /// </summary>
 [ExportCommand]
-public class CommitRenameCommand : ContextCommand<ISupportRename, ListArg>
+public class CommitRenameCommand : ContextCommand<ISupportRename, DictArg>
 {
     public const string Id = $"{BaseId}.rename.commit";
 
@@ -27,29 +28,32 @@ public class CommitRenameCommand : ContextCommand<ISupportRename, ListArg>
 
     public override ICommandInfo Info => StaticInfo;
 
-    public override async ValueTask<ListArg?> InternalExecute(
+    public override async ValueTask<DictArg?> InternalExecute(
         ISupportRename context,
-        ListArg arg,
+        DictArg arg,
         CancellationToken cancel
     )
     {
-        var oldPath = arg[0].AsString();
-        var newPath = arg[1].AsString();
-        if (string.IsNullOrWhiteSpace(oldPath) || string.IsNullOrWhiteSpace(newPath))
+        var oldValue = arg["old"].AsString();
+        var newValue = arg["new"].AsString();
+        if (string.IsNullOrWhiteSpace(oldValue) || string.IsNullOrWhiteSpace(newValue))
         {
             return null;
         }
         try
         {
-            await context.RenameAsync(oldPath, newPath, cancel);
+            await context.RenameAsync(oldValue, newValue, cancel);
         }
         catch
         {
             return null;
         }
-        return CommandArg.CreateList(
-            CommandArg.CreateString(newPath),
-            CommandArg.CreateString(oldPath)
+        return CommandArg.CreateDictionary(
+            new Dictionary<string, CommandArg>
+            {
+                { "new", CommandArg.CreateString(oldValue) },
+                { "old", CommandArg.CreateString(newValue) },
+            }
         );
     }
 }

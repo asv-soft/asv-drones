@@ -71,7 +71,7 @@
         </Style>
         <Style Selector="Button:disabled avalonia|MaterialIcon, Button:disabled avalonia|MaterialIconExt">
             <Setter Property="Button.Foreground" Value="{DynamicResource IconBrushDisabled}" />
-            <Setter Property="Button.Opacity"    Value="0.4"/>
+            <Setter Property="Button.Opacity" Value="0.4"/>
         </Style>
         <Style Selector="Button">
             <Setter Property="Theme" Value="{DynamicResource TransparentButton}"/>
