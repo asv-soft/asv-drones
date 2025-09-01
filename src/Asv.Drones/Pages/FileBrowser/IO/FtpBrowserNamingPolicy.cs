@@ -9,13 +9,20 @@ namespace Asv.Drones;
 
 public static partial class FtpBrowserNamingPolicy
 {
-    public const int MaxNameLength = 248; // see MAVLINK_MSG_ID_FILE_TRANSFER_PROTOCOL spec.
+    // MAVLINK_MSG_ID_FILE_TRANSFER_PROTOCOL spec. says that only 248 symbols allowed,
+    // that is an approximate value, not including a path length
+    public const int MaxNameLength = 100;
     public static readonly string BlankName = Guid.NewGuid().ToString(); // TODO: prohibit empty names
     private static readonly Regex AllowedChars = AllowedCharsRegex();
-    public const string AllowedCharsPattern = @"[A-Za-z0-9_.\-() ]";
+    private const string AllowedCharsPattern = @"[A-Za-z0-9_.\-() ]";
+    private const string AllowedNamePattern = "^" + AllowedCharsPattern + "+$";
+    private static readonly Regex AllowedName = AllowedNameRegex();
 
     [GeneratedRegex(AllowedCharsPattern, RegexOptions.Compiled)]
     private static partial Regex AllowedCharsRegex();
+
+    [GeneratedRegex(AllowedNamePattern, RegexOptions.Compiled)]
+    private static partial Regex AllowedNameRegex();
 
     public static string SanitizeForDisplay(string? value)
     {
@@ -41,6 +48,11 @@ public static partial class FtpBrowserNamingPolicy
         }
 
         if (name.Any(Path.GetInvalidFileNameChars().Contains))
+        {
+            return ValidationResult.FailAsInvalidCharacters;
+        }
+
+        if (!AllowedName.IsMatch(name))
         {
             return ValidationResult.FailAsInvalidCharacters;
         }

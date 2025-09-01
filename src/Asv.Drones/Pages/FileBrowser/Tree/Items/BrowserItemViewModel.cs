@@ -42,11 +42,12 @@ public class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel
         EditedName
             .EnableValidationRoutable(FtpBrowserNamingPolicy.Validate, this, true)
             .DisposeItWith(Disposable);
-
-        CommitRename = new ReactiveCommand(
-            (_, ct) => CommitRenameImpl(ct),
-            AwaitOperation.Drop
-        ).DisposeItWith(Disposable);
+        CommitRename = CanRename
+            .ToReactiveCommand<Unit>(
+                async (_, ct) => await CommitRenameImpl(ct),
+                awaitOperation: AwaitOperation.Drop
+            )
+            .DisposeItWith(Disposable);
     }
 
     public string Name
@@ -121,9 +122,10 @@ public class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel
         set => SetField(ref field, value);
     }
 
-    public ReactiveCommand CommitRename { get; }
-
     public BindableReactiveProperty<string> EditedName { get; set; }
+    public Observable<bool> CanRename =>
+        EditedName.Select(_ => !EditedName.HasErrors).DistinctUntilChanged().Share();
+    public ReactiveCommand<Unit> CommitRename { get; }
 
     private async ValueTask CommitRenameImpl(CancellationToken ct)
     {
@@ -149,9 +151,12 @@ public class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel
         }
         await this.ExecuteCommand(
             CommitRenameCommand.Id,
-            CommandArg.CreateList(
-                CommandArg.CreateString(oldPath),
-                CommandArg.CreateString(newPath)
+            CommandArg.CreateDictionary(
+                new Dictionary<string, CommandArg>
+                {
+                    { "new", CommandArg.CreateString(newPath) },
+                    { "old", CommandArg.CreateString(oldPath) },
+                }
             ),
             ct
         );

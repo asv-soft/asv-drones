@@ -18,7 +18,7 @@ public interface IBrowserItemViewModel : IRoutable
     string? Crc32Hex { get; }
     Crc32Status Crc32Status { get; }
     FtpEntryType FtpEntryType { get; }
-    ReactiveCommand CommitRename { get; }
+    ReactiveCommand<Unit> CommitRename { get; }
     BindableReactiveProperty<string> EditedName { get; set; }
     void AttachBackend(FileBrowserBackend backend);
 }
