@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
 using Asv.Avalonia.Plugins;
@@ -6,7 +8,9 @@ using Asv.Common;
 using Asv.Drones.Api;
 using Avalonia;
 using Avalonia.Controls;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using R3;
 
 namespace Asv.Drones.Desktop;
 
@@ -19,10 +23,14 @@ sealed class Program
     public static void Main(string[] args)
     {
         var builder = AppHost.CreateBuilder(args);
-
+        var dataFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
+        
         builder
             .UseAvalonia(BuildAvaloniaApp)
-            .UseAppPath(opt => opt.WithRelativeFolder("data"))
+            .UseAppPath(opt =>
+            {
+                opt.WithRelativeFolder(Path.Combine(dataFolder, "data"));
+            })
             .UseJsonUserConfig(opt =>
                 opt.WithFileName("user_settings.json").WithAutoSave(TimeSpan.FromSeconds(1))
             )
@@ -30,7 +38,7 @@ sealed class Program
             .UseSoloRun(opt => opt.WithArgumentForwarding())
             .UseLogging(options =>
             {
-                options.WithLogToFile();
+                options.WithLogToFile(Path.Combine(dataFolder, "data", "logs"));
                 options.WithLogToConsole();
                 options.WithLogViewer();
                 options.WithLogLevel(LogLevel.Trace);
@@ -43,8 +51,10 @@ sealed class Program
                 options.WithPluginPrefix("Asv.Drones.Plugin.");
             });
         using var host = builder.Build();
+        ((AppHost)host).ExitIfNotFirstInstance();
 
         host.StartWithClassicDesktopLifetime(args, ShutdownMode.OnMainWindowClose);
+        
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.

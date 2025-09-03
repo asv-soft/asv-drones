@@ -32,6 +32,7 @@
             CA1510,
             CA1851
         </WarningsAsErrors>
+        <ApplicationIcon>app.ico</ApplicationIcon>
     </PropertyGroup>
 
     <PropertyGroup>

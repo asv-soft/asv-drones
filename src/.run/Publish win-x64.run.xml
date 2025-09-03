@@ -1,0 +1,6 @@
+﻿<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Publish win-x64" type="DotNetFolderPublish" factoryName="Publish to folder">
+    <riderPublish configuration="Release" platform="Any CPU" runtime="Portable" target_folder="$PROJECT_DIR$/Asv.Drones.Desktop/bin/Release/net9.0/publish" target_framework="net9.0" uuid_high="-6069974389149972757" uuid_low="-5498245974063364756" />
+    <method v="2" />
+  </configuration>
+</component>
