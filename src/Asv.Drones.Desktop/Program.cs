@@ -51,10 +51,9 @@ sealed class Program
                 options.WithPluginPrefix("Asv.Drones.Plugin.");
             });
         using var host = builder.Build();
-        ((AppHost)host).ExitIfNotFirstInstance();
+        host.ExitIfNotFirstInstance();
 
         host.StartWithClassicDesktopLifetime(args, ShutdownMode.OnMainWindowClose);
-        
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.
