@@ -7,6 +7,7 @@ using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reflection;
 using Asv.Avalonia;
+using Asv.Avalonia.FileAssociation;
 using Asv.Avalonia.GeoMap;
 using Asv.Avalonia.IO;
 using Asv.Avalonia.Plugins;
@@ -18,6 +19,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Templates;
 using Avalonia.Markup.Xaml;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using R3;
@@ -128,6 +130,12 @@ public partial class App : Application, IContainerHost, IShellHost
 #if DEBUG
         this.AttachDevTools();
 #endif
+        
+        // this is for file association from OS
+        var svc = _container.GetExport<IFileAssociationService>();
+        AppHost.Instance.Services.GetRequiredService<ISoloRunFeature>()
+            .Args.Where(x => x.Tags.Count > 1 )
+            .Subscribe(x => svc.Open(x.Tags.Skip(1).First()));
     }
 
     public T GetExport<T>()
