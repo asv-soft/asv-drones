@@ -53,7 +53,6 @@ sealed class Program
             });
         using var host = builder.Build();
         host.ExitIfNotFirstInstance();
-
         host.StartWithClassicDesktopLifetime(args, ShutdownMode.OnMainWindowClose);
     }
 
