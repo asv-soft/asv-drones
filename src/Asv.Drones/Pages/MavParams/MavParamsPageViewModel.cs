@@ -184,7 +184,7 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
             .ViewValue.ThrottleLast(TimeSpan.FromMilliseconds(500))
             .Subscribe(x =>
             {
-                if (!x && string.IsNullOrWhiteSpace(Search.Text.Value))
+                if (!x && string.IsNullOrWhiteSpace(Search.Text.ViewValue.Value))
                 {
                     _view?.ResetFilter();
                     return;
@@ -192,7 +192,7 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
 
                 _view?.AttachFilter(
                     new SynchronizedViewFilter<KeyValuePair<string, ParamItem>, ParamItemViewModel>(
-                        (_, model) => model.Filter(Search.Text.Value, x)
+                        (_, model) => model.Filter(Search.Text.ViewValue.Value, x)
                     )
                 );
             })
