@@ -5,6 +5,9 @@ namespace Asv.Drones;
 
 public sealed class BusyFlag : IDisposable
 {
+    // guarantees correct balancing
+    // even if multiple operations overlap, and ensures that IsBusy only toggles
+    // on the very first start and the very last completion.
     private readonly Subject<int> _delta = new();
     public Observable<bool> IsBusy { get; }
 

@@ -4,11 +4,10 @@ using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Mavlink;
 using Microsoft.Extensions.Logging;
-using R3;
 
 namespace Asv.Drones;
 
-public class FileItemViewModel : BrowserItemViewModel, ISupportRename
+public class FileItemViewModel : BrowserItemViewModel
 {
     public FileItemViewModel(
         NavigationId id,
@@ -46,7 +45,7 @@ public class FileItemViewModel : BrowserItemViewModel, ISupportRename
 
     private static string Crc32ToHex(uint crc32) => crc32.ToString("X8");
 
-    public async ValueTask<string> RenameAsync(
+    public override async ValueTask<string> RenameAsync(
         string oldValue,
         string newValue,
         CancellationToken ct
@@ -55,30 +54,29 @@ public class FileItemViewModel : BrowserItemViewModel, ISupportRename
         ArgumentException.ThrowIfNullOrEmpty(oldValue);
         ArgumentException.ThrowIfNullOrEmpty(newValue);
 
-        var sep =
-            Type == FtpBrowserSourceType.Remote
-                ? MavlinkFtpHelper.DirectorySeparator
-                : System.IO.Path.DirectorySeparatorChar;
+        var sep = Ops.Separator;
 
         var oldPath = FtpBrowserPath.Normalize(oldValue, false, sep);
         var newPath = FtpBrowserPath.Normalize(newValue, false, sep);
 
-        var result = await Backend.UseAsync(
-            Type,
-            onLocal: local =>
-            {
-                var newFilePath = local.RenameFile(oldPath, newPath, Logger);
-                return ValueTask.FromResult(newFilePath);
-            },
-            onRemote: async ftp =>
-            {
-                var newFilePath = await ftp.RenameAsync(oldPath, newPath, ct);
-                return newFilePath;
-            }
-        );
+        var result = await Ops.RenameFileAsync(oldPath, newPath, Logger, ct);
+
         EditMode = false;
         EditedName.Value = FtpBrowserPath.NameOf(result, sep);
         IsSelected = true;
         return newPath;
+    }
+
+    public override async ValueTask RemoveAsync(CancellationToken ct)
+    {
+        await Ops.RemoveFileAsync(Path, Logger, ct);
+    }
+
+    public override async ValueTask<uint> CalculateCrc32Async(CancellationToken ct)
+    {
+        var crc32 = await Ops.CalculateCrc32Async(Path, Logger, ct);
+        Crc32 = crc32;
+        Crc32Status = Crc32Status.Default;
+        return crc32;
     }
 }
