@@ -293,7 +293,7 @@ public class ParamItemViewModel : RoutableViewModel
     public BindableReactiveProperty<string?> Value { get; }
     public HistoricalBoolProperty IsStarred { get; }
 
-    public bool Filter(string searchText, bool starredOnly)
+    public bool Filter(string? searchText, bool starredOnly)
     {
         if (starredOnly)
         {
@@ -303,7 +303,7 @@ public class ParamItemViewModel : RoutableViewModel
             }
         }
 
-        if (searchText.IsNullOrWhiteSpace())
+        if (string.IsNullOrWhiteSpace(searchText))
         {
             return true;
         }

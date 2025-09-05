@@ -130,10 +130,10 @@ public partial class App : Application, IContainerHost, IShellHost
 #if DEBUG
         this.AttachDevTools();
 #endif
-        // this is for file association from OS
-        var svc = _container.GetExport<IFileAssociationService>();
-        AppHost.Instance.Services.GetRequiredService<ISoloRunFeature>()
-            .Args.Where(x => x.Tags.Count > 1 )
+        var svc = _container.GetExport<IFileAssociationService>(); // this is for file association from OS
+        AppHost
+            .Instance.Services.GetRequiredService<ISoloRunFeature>()
+            .Args.Where(x => x.Tags.Count > 1)
             .Subscribe(x => svc.Open(x.Tags.Skip(1).First()));
     }
 
