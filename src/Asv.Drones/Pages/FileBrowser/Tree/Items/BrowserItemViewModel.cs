@@ -10,17 +10,17 @@ using R3;
 
 namespace Asv.Drones;
 
-public class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel
+public abstract class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel
 {
     private readonly char _separator;
-    private FileBrowserBackend? _backend;
-    protected FileBrowserBackend Backend =>
-        _backend
+    private IFileBrowserOps? _ops;
+    protected IFileBrowserOps Ops =>
+        _ops
         ?? throw new InvalidOperationException(
-            "Backend is not attached. Call AttachBackend(...) first."
+            "Ops are not attached. Call AttachBackend(...) first."
         );
 
-    public BrowserItemViewModel(
+    protected BrowserItemViewModel(
         NavigationId id,
         string? parentPath,
         string path,
@@ -49,6 +49,8 @@ public class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel
             )
             .DisposeItWith(Disposable);
     }
+
+    #region Properties
 
     public string Name
     {
@@ -123,9 +125,27 @@ public class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel
     }
 
     public BindableReactiveProperty<string> EditedName { get; set; }
+
+    #endregion
+
     public Observable<bool> CanRename =>
         EditedName.Select(_ => !EditedName.HasErrors).DistinctUntilChanged().Share();
+
+    #region Commands
+
     public ReactiveCommand<Unit> CommitRename { get; }
+
+    #endregion
+
+    public abstract ValueTask<string> RenameAsync(
+        string oldValue,
+        string newValue,
+        CancellationToken ct
+    );
+
+    public abstract ValueTask RemoveAsync(CancellationToken ct);
+
+    public abstract ValueTask<uint> CalculateCrc32Async(CancellationToken ct);
 
     private async ValueTask CommitRenameImpl(CancellationToken ct)
     {
@@ -154,8 +174,8 @@ public class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel
             CommandArg.CreateDictionary(
                 new Dictionary<string, CommandArg>
                 {
-                    { "new", CommandArg.CreateString(newPath) },
-                    { "old", CommandArg.CreateString(oldPath) },
+                    { CommitRenameCommand.NewValue, CommandArg.CreateString(newPath) },
+                    { CommitRenameCommand.OldValue, CommandArg.CreateString(oldPath) },
                 }
             ),
             ct
@@ -168,7 +188,7 @@ public class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel
     /// <param name="backend">Backend context from VM.</param>
     public void AttachBackend(FileBrowserBackend backend)
     {
-        _backend = backend ?? throw new ArgumentNullException(nameof(backend));
+        _ops = backend.ResolveOps(Type);
     }
 
     public override IEnumerable<IRoutable> GetRoutableChildren()

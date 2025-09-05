@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Mavlink;
@@ -35,24 +34,11 @@ public class BurstDownloadDialogViewModel : DialogViewModelBase
     public override void ApplyDialog(ContentDialog dialog)
     {
         dialog.DefaultButton = ContentDialogButton.Primary;
-        _sub1 = IsValid.Subscribe(b => dialog.IsPrimaryButtonEnabled = b);
+        IsValid.Subscribe(b => dialog.IsPrimaryButtonEnabled = b).DisposeItWith(Disposable);
     }
 
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
         return [];
-    }
-
-    private IDisposable? _sub1;
-
-    protected override void Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            _sub1?.Dispose();
-            PacketSize.Dispose();
-        }
-
-        base.Dispose(disposing);
     }
 }

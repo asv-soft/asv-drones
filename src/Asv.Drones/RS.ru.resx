@@ -422,4 +422,16 @@
     <data name="FileBrowserView_AwaitingScreen_Header" xml:space="preserve">
         <value>Подключение</value>
     </data>
+    <data name="RemoveItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Удалить элемент</value>
+    </data>
+    <data name="RemoveItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая удаляет элемент</value>
+    </data>
+    <data name="CalculateCrc32Command_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая проверяет циклическую избыточность файла (crc32)</value>
+    </data>
+    <data name="CalculateCrc32Command_CommandInfo_Name" xml:space="preserve">
+        <value>Высчитывает CRC32</value>
+    </data>
 </root>

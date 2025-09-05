@@ -39,7 +39,6 @@ public class FileBrowserViewModel
     private readonly YesOrNoDialogPrefab _yesNoDialog;
     private readonly ILoggerFactory _loggerFactory;
     private readonly INavigationService _navigation;
-    private readonly FileSystemWatcher _watcher;
     private readonly ProgressWithLock _transfer;
     private readonly string _localRootPath;
 
@@ -96,7 +95,7 @@ public class FileBrowserViewModel
             .DisposeItWith(Disposable);
         Progress = _transfer.Progress.ToBindableReactiveProperty().DisposeItWith(Disposable);
 
-        _watcher = new FileSystemWatcher(_localRootPath)
+        var watcher = new FileSystemWatcher(_localRootPath)
         {
             NotifyFilter =
                 NotifyFilters.FileName | NotifyFilters.DirectoryName | NotifyFilters.Size,
@@ -108,23 +107,23 @@ public class FileBrowserViewModel
             .Merge(
                 Observable.FromEvent<FileSystemEventHandler, Unit>(
                     h => (_, _) => h(Unit.Default),
-                    h => _watcher.Created += h,
-                    h => _watcher.Created -= h
+                    h => watcher.Created += h,
+                    h => watcher.Created -= h
                 ),
                 Observable.FromEvent<FileSystemEventHandler, Unit>(
                     h => (_, _) => h(Unit.Default),
-                    h => _watcher.Deleted += h,
-                    h => _watcher.Deleted -= h
+                    h => watcher.Deleted += h,
+                    h => watcher.Deleted -= h
                 ),
                 Observable.FromEvent<FileSystemEventHandler, Unit>(
                     h => (_, _) => h(Unit.Default),
-                    h => _watcher.Changed += h,
-                    h => _watcher.Changed -= h
+                    h => watcher.Changed += h,
+                    h => watcher.Changed -= h
                 ),
                 Observable.FromEvent<RenamedEventHandler, Unit>(
                     h => (_, _) => h(Unit.Default),
-                    h => _watcher.Renamed += h,
-                    h => _watcher.Renamed -= h
+                    h => watcher.Renamed += h,
+                    h => watcher.Renamed -= h
                 )
             )
             .ThrottleLast(TimeSpan.FromMilliseconds(150))
@@ -169,8 +168,8 @@ public class FileBrowserViewModel
             .Subscribe(_ => IsDownloadPopupOpen.OnNext(false))
             .DisposeItWith(Disposable);
 
-        LocalSearchText = new SearchBoxViewModel(
-            nameof(LocalSearchText),
+        LocalSearch = new SearchBoxViewModel(
+            nameof(LocalSearch),
             loggerFactory,
             PerformLocalSearch,
             TimeSpan.FromMilliseconds(SearchThrottleMs)
@@ -178,8 +177,8 @@ public class FileBrowserViewModel
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
 
-        RemoteSearchText = new SearchBoxViewModel(
-            nameof(RemoteSearchText),
+        RemoteSearch = new SearchBoxViewModel(
+            nameof(RemoteSearch),
             loggerFactory,
             PerformRemoteSearch,
             TimeSpan.FromMilliseconds(SearchThrottleMs)
@@ -196,8 +195,8 @@ public class FileBrowserViewModel
     public BrowserTree RemoteItemsTree { get; }
     public BindableReactiveProperty<BrowserNode?> LocalSelectedItem { get; }
     public BindableReactiveProperty<BrowserNode?> RemoteSelectedItem { get; }
-    public SearchBoxViewModel LocalSearchText { get; }
-    public SearchBoxViewModel RemoteSearchText { get; }
+    public SearchBoxViewModel LocalSearch { get; }
+    public SearchBoxViewModel RemoteSearch { get; }
     public BindableReactiveProperty<double> Progress { get; }
     public BindableReactiveProperty<bool> IsDownloadPopupOpen { get; }
     public BindableReactiveProperty<bool> IsUiBlocked { get; }
@@ -287,13 +286,13 @@ public class FileBrowserViewModel
             .DisposeItWith(Disposable);
         CalculateLocalCrc32Command = CanCalculateLocalCrc32
             .ToReactiveCommand<BrowserNode>(
-                async (node, ct) => await CalculateLocalCrc32Impl(node, ct),
+                async (node, ct) => await CalculateCrc32Impl(node, ct),
                 awaitOperation: AwaitOperation.Drop
             )
             .DisposeItWith(Disposable);
         CalculateRemoteCrc32Command = CanCalculateRemoteCrc32
             .ToReactiveCommand<BrowserNode>(
-                async (node, ct) => await CalculateRemoteCrc32Impl(node, ct),
+                async (node, ct) => await CalculateCrc32Impl(node, ct),
                 awaitOperation: AwaitOperation.Drop
             )
             .DisposeItWith(Disposable);
@@ -303,11 +302,11 @@ public class FileBrowserViewModel
         RefreshLocalCommand = new ReactiveCommand(RefreshLocalImpl).DisposeItWith(Disposable);
 
         LocalRenameCommand = CanRenameLocal
-            .ToReactiveCommand<BrowserNode>(LocalRenameImpl, awaitOperation: AwaitOperation.Drop)
+            .ToReactiveCommand<BrowserNode>(SetEditModeImpl, awaitOperation: AwaitOperation.Drop)
             .DisposeItWith(Disposable);
         RemoteRenameCommand = CanRenameRemote
             .ToReactiveCommand<BrowserNode>(
-                async (node, ct) => await RemoteRenameImpl(node, ct),
+                async (node, ct) => await SetEditModeImpl(node, ct),
                 awaitOperation: AwaitOperation.Drop
             )
             .DisposeItWith(Disposable);
@@ -336,14 +335,11 @@ public class FileBrowserViewModel
             awaitOperation: AwaitOperation.Drop
         ).DisposeItWith(Disposable);
         RemoveLocalItemCommand = CanRemoveLocal
-            .ToReactiveCommand<BrowserNode>(
-                RemoveLocalItemImpl,
-                awaitOperation: AwaitOperation.Drop
-            )
+            .ToReactiveCommand<BrowserNode>(RemoveItemImpl, awaitOperation: AwaitOperation.Drop)
             .DisposeItWith(Disposable);
         RemoveRemoteItemCommand = CanRemoveRemote
             .ToReactiveCommand<BrowserNode>(
-                async (node, ct) => await RemoveRemoteItemImpl(node, ct),
+                async (node, ct) => await RemoveItemImpl(node, ct),
                 awaitOperation: AwaitOperation.Drop
             )
             .DisposeItWith(Disposable);
@@ -632,7 +628,7 @@ public class FileBrowserViewModel
         }
     }
 
-    private async ValueTask RemoveLocalItemImpl(BrowserNode item, CancellationToken ct)
+    private async ValueTask RemoveItemImpl(BrowserNode item, CancellationToken ct)
     {
         var payload = new YesOrNoDialogPayload
         {
@@ -646,45 +642,7 @@ public class FileBrowserViewModel
             return;
         }
 
-        if (item.Base is { FtpEntryType: FtpEntryType.Directory })
-        {
-            _localFilesService.RemoveDirectory(item.Base.Path, true, Logger);
-        }
-
-        if (item.Base is { FtpEntryType: FtpEntryType.File })
-        {
-            _localFilesService.RemoveFile(item.Base.Path, Logger);
-        }
-    }
-
-    private async Task RemoveRemoteItemImpl(BrowserNode item, CancellationToken ct)
-    {
-        if (_ftpService is null)
-        {
-            return;
-        }
-
-        var payload = new YesOrNoDialogPayload
-        {
-            Title = RS.FileBrowserViewModel_RemoveDialog_Title,
-            Message = RS.FileBrowserViewModel_RemoveDialog_Message,
-        };
-
-        var res = await _yesNoDialog.ShowDialogAsync(payload);
-        if (!res)
-        {
-            return;
-        }
-
-        switch (item.Base)
-        {
-            case { FtpEntryType: FtpEntryType.Directory }:
-                await _ftpService.RemoveDirectoryAsync(item.Base.Path, true, ct);
-                break;
-            case { FtpEntryType: FtpEntryType.File }:
-                await _ftpService.RemoveFileAsync(item.Base.Path, ct);
-                break;
-        }
+        await item.Base.ExecuteCommand(RemoveItemCommand.Id, CommandArg.Empty, ct);
     }
 
     private async Task CreateRemoteFolderImpl(CancellationToken ct)
@@ -805,7 +763,7 @@ public class FileBrowserViewModel
         return ValueTask.CompletedTask;
     }
 
-    private ValueTask LocalRenameImpl(BrowserNode? node, CancellationToken ct)
+    private ValueTask SetEditModeImpl(BrowserNode? node, CancellationToken ct)
     {
         if (node?.Base is not BrowserItemViewModel item)
         {
@@ -820,47 +778,14 @@ public class FileBrowserViewModel
         return ValueTask.CompletedTask;
     }
 
-    private ValueTask RemoteRenameImpl(BrowserNode? node, CancellationToken ct)
-    {
-        if (_ftpService is null || node?.Base is not BrowserItemViewModel item)
-        {
-            return ValueTask.CompletedTask;
-        }
-
-        item.EditedName.Value = item.Name;
-        item.EditMode = true;
-
-        RemoteSelectedItem.OnNext(node);
-
-        return ValueTask.CompletedTask;
-    }
-
-    private async ValueTask CalculateLocalCrc32Impl(BrowserNode item, CancellationToken ct)
+    private static async ValueTask CalculateCrc32Impl(BrowserNode item, CancellationToken ct)
     {
         if (item.Base is not FileItemViewModel fileItem)
         {
             return;
         }
 
-        var crc32 = await _localFilesService.CalculateCrc32Async(fileItem.Path, ct, Logger);
-        fileItem.Crc32 = crc32;
-        fileItem.Crc32Status = Crc32Status.Default;
-    }
-
-    private async ValueTask CalculateRemoteCrc32Impl(BrowserNode item, CancellationToken ct)
-    {
-        if (_ftpService is null)
-        {
-            return;
-        }
-        if (item.Base is not FileItemViewModel fileItem)
-        {
-            return;
-        }
-
-        var crc32 = await _ftpService.CalculateCrc32Async(fileItem.Path, ct);
-        fileItem.Crc32 = crc32;
-        fileItem.Crc32Status = Crc32Status.Default;
+        await fileItem.ExecuteCommand(CalculateCrc32Command.Id, CommandArg.Empty, ct);
     }
 
     private async ValueTask CompareSelectedItemsImpl(CancellationToken ct)
@@ -1067,8 +992,8 @@ public class FileBrowserViewModel
 
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
-        yield return LocalSearchText;
-        yield return RemoteSearchText;
+        yield return LocalSearch;
+        yield return RemoteSearch;
 
         foreach (var item in _localItems)
         {

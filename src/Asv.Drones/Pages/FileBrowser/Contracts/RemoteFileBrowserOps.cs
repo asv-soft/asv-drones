@@ -1,0 +1,53 @@
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Asv.Mavlink;
+using Microsoft.Extensions.Logging;
+
+namespace Asv.Drones;
+
+public sealed class RemoteFileBrowserOps(FtpClientService ftp) : IFileBrowserOps
+{
+    private readonly FtpClientService _ftp =
+        ftp ?? throw new System.ArgumentNullException(nameof(ftp));
+
+    public char Separator => MavlinkFtpHelper.DirectorySeparator;
+
+    public async ValueTask<string> RenameDirectoryAsync(
+        string oldPath,
+        string newPath,
+        ILogger logger,
+        CancellationToken ct
+    )
+    {
+        return await _ftp.RenameAsync(oldPath, newPath, ct).ConfigureAwait(false);
+    }
+
+    public async ValueTask<string> RenameFileAsync(
+        string oldPath,
+        string newPath,
+        ILogger logger,
+        CancellationToken ct
+    )
+    {
+        return await _ftp.RenameAsync(oldPath, newPath, ct).ConfigureAwait(false);
+    }
+
+    public async ValueTask RemoveDirectoryAsync(string path, ILogger logger, CancellationToken ct)
+    {
+        await _ftp.RemoveDirectoryAsync(path, true, ct).ConfigureAwait(false);
+    }
+
+    public async ValueTask RemoveFileAsync(string path, ILogger logger, CancellationToken ct)
+    {
+        await _ftp.RemoveFileAsync(path, ct).ConfigureAwait(false);
+    }
+
+    public async ValueTask<uint> CalculateCrc32Async(
+        string path,
+        ILogger logger,
+        CancellationToken ct
+    )
+    {
+        return await _ftp.CalculateCrc32Async(path, ct);
+    }
+}

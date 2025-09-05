@@ -16,6 +16,9 @@ public class CommitRenameCommand : ContextCommand<ISupportRename, DictArg>
 {
     public const string Id = $"{BaseId}.rename.commit";
 
+    public const string OldValue = "old";
+    public const string NewValue = "new";
+
     private static readonly ICommandInfo StaticInfo = new CommandInfo
     {
         Id = Id,
@@ -34,15 +37,24 @@ public class CommitRenameCommand : ContextCommand<ISupportRename, DictArg>
         CancellationToken cancel
     )
     {
-        var oldValue = arg["old"].AsString();
-        var newValue = arg["new"].AsString();
-        if (string.IsNullOrWhiteSpace(oldValue) || string.IsNullOrWhiteSpace(newValue))
+        arg.TryGetValue(OldValue, out var oldValue);
+        arg.TryGetValue(NewValue, out var newValue);
+
+        if (oldValue is not StringArg || newValue is not StringArg)
+        {
+            return null;
+        }
+
+        var oldString = oldValue.AsString();
+        var newString = newValue.AsString();
+
+        if (string.IsNullOrWhiteSpace(oldString) || string.IsNullOrWhiteSpace(newString))
         {
             return null;
         }
         try
         {
-            await context.RenameAsync(oldValue, newValue, cancel);
+            await context.RenameAsync(oldString, newString, cancel);
         }
         catch
         {
@@ -51,8 +63,8 @@ public class CommitRenameCommand : ContextCommand<ISupportRename, DictArg>
         return CommandArg.CreateDictionary(
             new Dictionary<string, CommandArg>
             {
-                { "new", CommandArg.CreateString(oldValue) },
-                { "old", CommandArg.CreateString(newValue) },
+                { NewValue, CommandArg.CreateString(oldString) },
+                { OldValue, CommandArg.CreateString(newString) },
             }
         );
     }

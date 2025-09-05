@@ -12,6 +12,7 @@ public static partial class FtpBrowserNamingPolicy
     // MAVLINK_MSG_ID_FILE_TRANSFER_PROTOCOL spec. says that only 248 symbols allowed,
     // that is an approximate value, not including a path length
     public const int MaxNameLength = 100;
+    public const int MinNameLength = 1;
     public static readonly string BlankName = Guid.NewGuid().ToString(); // TODO: prohibit empty names
     private static readonly Regex AllowedChars = AllowedCharsRegex();
     private const string AllowedCharsPattern = @"[A-Za-z0-9_.\-() ]";
@@ -59,7 +60,10 @@ public static partial class FtpBrowserNamingPolicy
 
         if (name.Length > MaxNameLength)
         {
-            return ValidationResult.FailAsOutOfRange("1", MaxNameLength.ToString());
+            return ValidationResult.FailAsOutOfRange(
+                MinNameLength.ToString(),
+                MaxNameLength.ToString()
+            );
         }
 
         return ValidationResult.Success;

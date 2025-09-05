@@ -96,6 +96,24 @@ namespace Asv.Drones {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Command that checks a cyclic redundancy of a file (crc32).
+        /// </summary>
+        public static string CalculateCrc32Command_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("CalculateCrc32Command_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Calculates CRC32.
+        /// </summary>
+        public static string CalculateCrc32Command_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("CalculateCrc32Command_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Command that clears all packets.
         /// </summary>
         public static string ClearAllPacketsCommand_CommandInfo_Description {
@@ -920,6 +938,24 @@ namespace Asv.Drones {
         public static string ReadParamCommand_CommandInfo_Name {
             get {
                 return ResourceManager.GetString("ReadParamCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command that removes item.
+        /// </summary>
+        public static string RemoveItemCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("RemoveItemCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove item.
+        /// </summary>
+        public static string RemoveItemCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("RemoveItemCommand_CommandInfo_Name", resourceCulture);
             }
         }
         

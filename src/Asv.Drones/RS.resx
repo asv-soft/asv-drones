@@ -434,4 +434,16 @@
     <data name="FileBrowserView_AwaitingScreen_Description" xml:space="preserve">
         <value>Connect to the device's FTP service...</value>
     </data>
+    <data name="RemoveItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Remove item</value>
+    </data>
+    <data name="RemoveItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that removes item</value>
+    </data>
+    <data name="CalculateCrc32Command_CommandInfo_Description" xml:space="preserve">
+        <value>Command that checks a cyclic redundancy of a file (crc32)</value>
+    </data>
+    <data name="CalculateCrc32Command_CommandInfo_Name" xml:space="preserve">
+        <value>Calculates CRC32</value>
+    </data>
 </root>

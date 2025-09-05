@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
 
-public class DirectoryItemViewModel : BrowserItemViewModel, ISupportRename
+public class DirectoryItemViewModel : BrowserItemViewModel
 {
     public DirectoryItemViewModel(
         NavigationId id,
@@ -24,7 +24,7 @@ public class DirectoryItemViewModel : BrowserItemViewModel, ISupportRename
         FtpEntryType = FtpEntryType.Directory;
     }
 
-    public async ValueTask<string> RenameAsync(
+    public override async ValueTask<string> RenameAsync(
         string oldValue,
         string newValue,
         CancellationToken ct
@@ -33,30 +33,27 @@ public class DirectoryItemViewModel : BrowserItemViewModel, ISupportRename
         ArgumentException.ThrowIfNullOrEmpty(oldValue);
         ArgumentException.ThrowIfNullOrEmpty(newValue);
 
-        var sep =
-            Type == FtpBrowserSourceType.Remote
-                ? MavlinkFtpHelper.DirectorySeparator
-                : System.IO.Path.DirectorySeparatorChar;
+        var sep = Ops.Separator;
 
         var oldPath = FtpBrowserPath.Normalize(oldValue, true, sep);
         var newPath = FtpBrowserPath.Normalize(newValue, true, sep);
 
-        var result = await Backend.UseAsync(
-            Type,
-            onLocal: local =>
-            {
-                var newDirPath = local.RenameDirectory(oldPath, newPath, Logger);
-                return ValueTask.FromResult(newDirPath);
-            },
-            onRemote: async ftp =>
-            {
-                var newDirPath = await ftp.RenameAsync(oldPath, newPath, ct);
-                return newDirPath;
-            }
-        );
+        var result = await Ops.RenameDirectoryAsync(oldPath, newPath, Logger, ct);
+
         EditMode = false;
         EditedName.Value = FtpBrowserPath.NameOf(result, sep);
         IsSelected = true;
-        return newPath;
+        return result;
+    }
+
+    public override async ValueTask RemoveAsync(CancellationToken ct)
+    {
+        await Ops.RemoveDirectoryAsync(Path, Logger, ct);
+    }
+
+    public override ValueTask<uint> CalculateCrc32Async(CancellationToken ct)
+    {
+        Logger.LogError("Cannot calculate CRC32 for directory");
+        return new ValueTask<uint>(0);
     }
 }

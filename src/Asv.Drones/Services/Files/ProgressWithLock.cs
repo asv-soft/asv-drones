@@ -29,7 +29,7 @@ public sealed class ProgressWithLock(ILoggerFactory? loggerFactory = null) : IDi
     /// <returns>A linked CancellationToken.</returns>
     public CancellationToken Begin(CancellationToken ct = default)
     {
-        lock (_sync)
+        using (_sync.EnterScope())
         {
             _cts?.Dispose();
             _cts = ct.CanBeCanceled
@@ -51,7 +51,7 @@ public sealed class ProgressWithLock(ILoggerFactory? loggerFactory = null) : IDi
     /// </summary>
     public void Complete()
     {
-        lock (_sync)
+        using (_sync.EnterScope())
         {
             if (IsTransferInProgress.Value || IsProgressVisible.Value)
             {

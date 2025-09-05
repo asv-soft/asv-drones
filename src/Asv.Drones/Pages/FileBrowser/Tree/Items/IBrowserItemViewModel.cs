@@ -1,10 +1,12 @@
-﻿using Asv.Avalonia;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Asv.Avalonia;
 using Asv.Mavlink;
 using R3;
 
 namespace Asv.Drones;
 
-public interface IBrowserItemViewModel : IRoutable
+public interface IBrowserItemViewModel : IRoutable, ISupportRename, ISupportRemove
 {
     string Name { get; set; }
     string Path { get; set; }
@@ -20,5 +22,8 @@ public interface IBrowserItemViewModel : IRoutable
     FtpEntryType FtpEntryType { get; }
     ReactiveCommand<Unit> CommitRename { get; }
     BindableReactiveProperty<string> EditedName { get; set; }
+
     void AttachBackend(FileBrowserBackend backend);
+
+    ValueTask<uint> CalculateCrc32Async(CancellationToken ct);
 }

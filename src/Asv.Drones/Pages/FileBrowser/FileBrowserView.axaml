@@ -118,7 +118,7 @@
                             </StackPanel>
                             <Grid ColumnDefinitions="*, Auto" Margin="0 0 0 4">
                                 <avalonia1:SearchBoxView Grid.Column="0"
-                                                         DataContext="{Binding LocalSearchText}"
+                                                         DataContext="{Binding LocalSearch}"
                                                          Margin="0 0 8 0"/>
                                 <Button Grid.Column="1"
                                         VerticalAlignment="Stretch"
@@ -286,7 +286,7 @@
                             </StackPanel>
                             <Grid ColumnDefinitions="*, Auto" Margin="0 0 0 4">
                                 <avalonia1:SearchBoxView Grid.Column="0"
-                                                         DataContext="{Binding RemoteSearchText}"
+                                                         DataContext="{Binding RemoteSearch}"
                                                          Margin="0 0 8 0"/>
                                 <Button Grid.Column="1"
                                         VerticalAlignment="Stretch"
