@@ -41,6 +41,21 @@ public class LocalFilesService(IFileSystem? fileSystem = null)
     {
         ct.ThrowIfCancellationRequested();
 
+        var rootInfo = new DirectoryInfo(root);
+        var rootId = PathHelper.EncodePathToId(root);
+
+        var rootVm = new DirectoryItemViewModel(
+            rootId,
+            null,
+            root,
+            rootInfo.Name,
+            FtpBrowserSourceType.Local,
+            loggerFactory
+        );
+
+        rootVm.AttachBackend(backend);
+        items.Add(rootVm);
+
         foreach (var dir in _fileSystem.Directory.EnumerateDirectories(path))
         {
             ct.ThrowIfCancellationRequested();

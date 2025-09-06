@@ -432,6 +432,12 @@
         <value>Команда, которая проверяет циклическую избыточность файла (crc32)</value>
     </data>
     <data name="CalculateCrc32Command_CommandInfo_Name" xml:space="preserve">
-        <value>Высчитывает CRC32</value>
+        <value>Рассчитать CRC32</value>
+    </data>
+    <data name="CreateDirectoryCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Создать папку</value>
+    </data>
+    <data name="CreateDirectoryCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая создаёт папку</value>
     </data>
 </root>

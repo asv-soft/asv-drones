@@ -6,7 +6,7 @@ using R3;
 
 namespace Asv.Drones;
 
-public interface IBrowserItemViewModel : IRoutable, ISupportRename, ISupportRemove
+public interface IBrowserItemViewModel : ISupportRename, ISupportRemove
 {
     string Name { get; set; }
     string Path { get; set; }
@@ -25,5 +25,6 @@ public interface IBrowserItemViewModel : IRoutable, ISupportRename, ISupportRemo
 
     void AttachBackend(FileBrowserBackend backend);
 
+    ValueTask CreateDirectoryAsync(CancellationToken ct);
     ValueTask<uint> CalculateCrc32Async(CancellationToken ct);
 }

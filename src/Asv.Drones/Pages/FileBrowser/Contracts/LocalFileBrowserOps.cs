@@ -48,6 +48,12 @@ public sealed class LocalFileBrowserOps(LocalFilesService local) : IFileBrowserO
         return ValueTask.CompletedTask;
     }
 
+    public ValueTask CreateDirectoryAsync(string path, ILogger logger, CancellationToken ct)
+    {
+        _local.CreateDirectory(path, logger);
+        return ValueTask.CompletedTask;
+    }
+
     public async ValueTask<uint> CalculateCrc32Async(
         string path,
         ILogger logger,
