@@ -78,7 +78,7 @@ public partial class App : Application, IContainerHost, IShellHost
         // TODO: load plugin manager before creating container
         _container = containerCfg.CreateContainer();
         DataTemplates.Add(new CompositionViewLocator(_container));
-        
+
         if (!Design.IsDesignMode)
         {
             _container.GetExport<IAppStartupService>().AppCtor();

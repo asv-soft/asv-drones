@@ -1,7 +1,5 @@
 ﻿using Asv.Avalonia;
-using Asv.Common;
 using Microsoft.Extensions.Logging;
-using R3;
 
 namespace Asv.Drones;
 
