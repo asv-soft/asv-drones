@@ -22,5 +22,6 @@ public interface IFileBrowserOps
     );
     ValueTask RemoveDirectoryAsync(string path, ILogger logger, CancellationToken ct);
     ValueTask RemoveFileAsync(string path, ILogger logger, CancellationToken ct);
+    ValueTask CreateDirectoryAsync(string path, ILogger logger, CancellationToken ct);
     ValueTask<uint> CalculateCrc32Async(string path, ILogger logger, CancellationToken ct);
 }

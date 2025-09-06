@@ -56,4 +56,9 @@ public class DirectoryItemViewModel : BrowserItemViewModel
         Logger.LogError("Cannot calculate CRC32 for directory");
         return new ValueTask<uint>(0);
     }
+
+    public override async ValueTask CreateDirectoryAsync(CancellationToken ct)
+    {
+        await Ops.CreateDirectoryAsync(Path, Logger, ct);
+    }
 }

@@ -41,6 +41,7 @@ public class FileBrowserViewModel
     private readonly INavigationService _navigation;
     private readonly ProgressWithLock _transfer;
     private readonly string _localRootPath;
+    private readonly string _remoteRootPath;
 
     private readonly ObservableDictionary<string, IFtpEntry> _rawRemoteEntries;
 
@@ -82,6 +83,7 @@ public class FileBrowserViewModel
         : base(PageId, devices, cmd, cfg, loggerFactory)
     {
         _localRootPath = appPath.UserDataFolder;
+        _remoteRootPath = MavlinkFtpHelper.DirectorySeparator.ToString();
         _loggerFactory = loggerFactory;
         _navigation = navigation;
         _yesNoDialog = dialogService.GetDialogPrefab<YesOrNoDialogPrefab>();
@@ -215,8 +217,8 @@ public class FileBrowserViewModel
     public ReactiveCommand<BrowserNode> UploadCommand { get; private set; }
     public ReactiveCommand<BrowserNode> DownloadCommand { get; private set; }
     public ReactiveCommand<BrowserNode> BurstDownloadCommand { get; private set; }
-    public ReactiveCommand CreateRemoteFolderCommand { get; private set; }
-    public ReactiveCommand CreateLocalFolderCommand { get; private set; }
+    public ReactiveCommand<BrowserNode?> CreateRemoteFolderCommand { get; private set; }
+    public ReactiveCommand<BrowserNode?> CreateLocalFolderCommand { get; private set; }
     public ReactiveCommand RefreshRemoteCommand { get; private set; }
     public ReactiveCommand RefreshLocalCommand { get; private set; }
     public ReactiveCommand<BrowserNode> RemoveLocalItemCommand { get; private set; }
@@ -326,12 +328,40 @@ public class FileBrowserViewModel
             Disposable
         );
 
-        CreateRemoteFolderCommand = new ReactiveCommand(
-            async (_, ct) => await CreateRemoteFolderImpl(ct),
+        CreateRemoteFolderCommand = new ReactiveCommand<BrowserNode?>(
+            async (node, ct) =>
+            {
+                if (node is null)
+                {
+                    var item = _remoteItems.FirstOrDefault(x => x.Path.Equals(_remoteRootPath));
+                    if (item != null)
+                    {
+                        await CreateFolderImpl(item, ct);
+                    }
+                }
+                else
+                {
+                    await CreateFolderImpl(node.Base, ct);
+                }
+            },
             awaitOperation: AwaitOperation.Drop
         ).DisposeItWith(Disposable);
-        CreateLocalFolderCommand = new ReactiveCommand(
-            CreateLocalFolderImpl,
+        CreateLocalFolderCommand = new ReactiveCommand<BrowserNode?>(
+            async (node, ct) =>
+            {
+                if (node is null)
+                {
+                    var item = _localItems.FirstOrDefault(x => x.Path.Equals(_localRootPath));
+                    if (item != null)
+                    {
+                        await CreateFolderImpl(item, ct);
+                    }
+                }
+                else
+                {
+                    await CreateFolderImpl(node.Base, ct);
+                }
+            },
             awaitOperation: AwaitOperation.Drop
         ).DisposeItWith(Disposable);
         RemoveLocalItemCommand = CanRemoveLocal
@@ -645,35 +675,12 @@ public class FileBrowserViewModel
         await item.Base.ExecuteCommand(RemoveItemCommand.Id, CommandArg.Empty, ct);
     }
 
-    private async Task CreateRemoteFolderImpl(CancellationToken ct)
+    private static async ValueTask CreateFolderImpl(
+        IBrowserItemViewModel item,
+        CancellationToken ct
+    )
     {
-        if (_ftpService is null)
-        {
-            return;
-        }
-
-        var path = RemoteSelectedItem.Value switch
-        {
-            { Base.FtpEntryType: FtpEntryType.Directory } dir => dir.Base.Path,
-            { Base.Path: var p } => p[..p.LastIndexOf(MavlinkFtpHelper.DirectorySeparator)],
-            _ => $"{MavlinkFtpHelper.DirectorySeparator}",
-        };
-
-        await _ftpService.CreateDirectoryAsync(path, ct);
-    }
-
-    private ValueTask CreateLocalFolderImpl(Unit arg, CancellationToken ct)
-    {
-        var path = LocalSelectedItem.Value switch
-        {
-            { Base.FtpEntryType: FtpEntryType.Directory } dir => dir.Base.Path,
-            { Base.Path: var p } => Path.GetDirectoryName(p) ?? _localRootPath,
-            _ => _localRootPath,
-        };
-
-        _localFilesService.CreateDirectory(path, Logger);
-
-        return ValueTask.CompletedTask;
+        await item.ExecuteCommand(CreateDirectoryCommand.Id, CommandArg.Empty, ct);
     }
 
     private async Task RefreshRemoteImpl(CancellationToken ct)
@@ -795,9 +802,6 @@ public class FileBrowserViewModel
             return;
         }
 
-        uint localCrc32;
-        uint remoteCrc32;
-
         if (LocalSelectedItem.Value?.Base is not FileItemViewModel localFileItem)
         {
             return;
@@ -810,27 +814,15 @@ public class FileBrowserViewModel
 
         if (localFileItem.Crc32 == null)
         {
-            localCrc32 = await _localFilesService.CalculateCrc32Async(
-                localFileItem.Path,
-                ct,
-                Logger
-            );
-            localFileItem.Crc32 = localCrc32;
+            await localFileItem.ExecuteCommand(CalculateCrc32Command.Id, CommandArg.Empty, ct);
         }
-        else
-        {
-            localCrc32 = (uint)localFileItem.Crc32;
-        }
+        var localCrc32 = localFileItem.Crc32 ?? 0;
 
         if (remoteFileItem.Crc32 == null)
         {
-            remoteCrc32 = await _ftpService.CalculateCrc32Async(remoteFileItem.Path, ct);
-            remoteFileItem.Crc32 = remoteCrc32;
+            await remoteFileItem.ExecuteCommand(CalculateCrc32Command.Id, CommandArg.Empty, ct);
         }
-        else
-        {
-            remoteCrc32 = (uint)remoteFileItem.Crc32;
-        }
+        var remoteCrc32 = remoteFileItem.Crc32 ?? 0;
 
         if (localCrc32 == remoteCrc32 && (localCrc32 != 0 || remoteCrc32 != 0))
         {

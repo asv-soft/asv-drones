@@ -105,7 +105,7 @@ namespace Asv.Drones {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Calculates CRC32.
+        ///   Looks up a localized string similar to Calculate CRC32.
         /// </summary>
         public static string CalculateCrc32Command_CommandInfo_Name {
             get {
@@ -128,6 +128,24 @@ namespace Asv.Drones {
         public static string ClearAllPacketsCommand_CommandInfo_Name {
             get {
                 return ResourceManager.GetString("ClearAllPacketsCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command that creates a folder.
+        /// </summary>
+        public static string CreateDirectoryCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("CreateDirectoryCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a folder.
+        /// </summary>
+        public static string CreateDirectoryCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("CreateDirectoryCommand_CommandInfo_Name", resourceCulture);
             }
         }
         

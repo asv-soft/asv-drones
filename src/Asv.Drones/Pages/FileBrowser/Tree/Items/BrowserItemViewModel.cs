@@ -146,6 +146,7 @@ public abstract class BrowserItemViewModel : RoutableViewModel, IBrowserItemView
     public abstract ValueTask RemoveAsync(CancellationToken ct);
 
     public abstract ValueTask<uint> CalculateCrc32Async(CancellationToken ct);
+    public abstract ValueTask CreateDirectoryAsync(CancellationToken ct);
 
     private async ValueTask CommitRenameImpl(CancellationToken ct)
     {

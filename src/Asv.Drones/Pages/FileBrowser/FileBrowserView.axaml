@@ -99,7 +99,8 @@
                                     Spacing="4">
                             <StackPanel Spacing="4"
                                         Orientation="Horizontal">
-                                <Button Command="{Binding CreateLocalFolderCommand}">
+                                <Button Command="{Binding CreateLocalFolderCommand}"
+                                        CommandParameter="{Binding LocalSelectedItem.Value}">
                                     <avalonia:MaterialIcon Kind="FolderPlusOutline"  />
                                 </Button>
                                 <Button Command="{Binding LocalRenameCommand}"
@@ -260,7 +261,8 @@
                                     Spacing="4">
                             <StackPanel Spacing="4"
                                         Orientation="Horizontal">
-                                <Button Command="{Binding CreateRemoteFolderCommand}">
+                                <Button Command="{Binding CreateRemoteFolderCommand}"
+                                        CommandParameter="{Binding RemoteSelectedItem.Value}">
                                     <avalonia:MaterialIcon Kind="FolderPlusOutline"  />
                                 </Button>
                                 <Button Command="{Binding RemoteRenameCommand}"

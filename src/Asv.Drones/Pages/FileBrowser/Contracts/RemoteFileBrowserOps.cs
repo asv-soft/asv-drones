@@ -19,7 +19,7 @@ public sealed class RemoteFileBrowserOps(FtpClientService ftp) : IFileBrowserOps
         CancellationToken ct
     )
     {
-        return await _ftp.RenameAsync(oldPath, newPath, ct).ConfigureAwait(false);
+        return await _ftp.RenameAsync(oldPath, newPath, ct);
     }
 
     public async ValueTask<string> RenameFileAsync(
@@ -29,17 +29,22 @@ public sealed class RemoteFileBrowserOps(FtpClientService ftp) : IFileBrowserOps
         CancellationToken ct
     )
     {
-        return await _ftp.RenameAsync(oldPath, newPath, ct).ConfigureAwait(false);
+        return await _ftp.RenameAsync(oldPath, newPath, ct);
     }
 
     public async ValueTask RemoveDirectoryAsync(string path, ILogger logger, CancellationToken ct)
     {
-        await _ftp.RemoveDirectoryAsync(path, true, ct).ConfigureAwait(false);
+        await _ftp.RemoveDirectoryAsync(path, true, ct);
     }
 
     public async ValueTask RemoveFileAsync(string path, ILogger logger, CancellationToken ct)
     {
-        await _ftp.RemoveFileAsync(path, ct).ConfigureAwait(false);
+        await _ftp.RemoveFileAsync(path, ct);
+    }
+
+    public async ValueTask CreateDirectoryAsync(string path, ILogger logger, CancellationToken ct)
+    {
+        await _ftp.CreateDirectoryAsync(path, ct);
     }
 
     public async ValueTask<uint> CalculateCrc32Async(

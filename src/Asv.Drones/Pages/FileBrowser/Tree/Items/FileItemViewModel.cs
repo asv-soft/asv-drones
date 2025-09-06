@@ -79,4 +79,10 @@ public class FileItemViewModel : BrowserItemViewModel
         Crc32Status = Crc32Status.Default;
         return crc32;
     }
+
+    public override async ValueTask CreateDirectoryAsync(CancellationToken ct)
+    {
+        var path = FtpBrowserPath.ParentDirOf(Path, Ops.Separator);
+        await Ops.CreateDirectoryAsync(path, Logger, ct);
+    }
 }

@@ -444,6 +444,12 @@
         <value>Command that checks a cyclic redundancy of a file (crc32)</value>
     </data>
     <data name="CalculateCrc32Command_CommandInfo_Name" xml:space="preserve">
-        <value>Calculates CRC32</value>
+        <value>Calculate CRC32</value>
+    </data>
+    <data name="CreateDirectoryCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Create a folder</value>
+    </data>
+    <data name="CreateDirectoryCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that creates a folder</value>
     </data>
 </root>
