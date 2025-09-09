@@ -11,7 +11,7 @@ namespace Asv.Drones;
 
 public class SavePacketMessagesDialogViewModel : DialogViewModelBase
 {
-    public const string ViewModelId = $"{PacketViewerViewModel.PageId}.dialog.separator";
+    public const string ViewModelId = $"{PacketViewerViewModel.PageId}.{BaseId}.separator";
     public const string DefaultSeparator = ";";
     public const string DefaultShieldSymbol = ",";
 

@@ -7,7 +7,7 @@ namespace Asv.Drones;
 
 public class TryCloseWithApprovalDialogViewModel : DialogViewModelBase
 {
-    public const string DialogId = "params.close-with-approval-dialog.text";
+    public const string DialogId = $"{BaseId}.close-with-approval";
 
     public TryCloseWithApprovalDialogViewModel()
         : this(DesignTime.LoggerFactory)
