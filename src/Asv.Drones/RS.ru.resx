@@ -398,6 +398,12 @@
     <data name="MavParamsPageViewModel_Title" xml:space="preserve">
         <value>Параметры</value>
     </data>
+    <data name="RenameItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Подтвердить переименование элемента</value>
+    </data>
+    <data name="RenameItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая подтверждает переименование элемента</value>
+    </data>
     <data name="ClearAllPacketsCommand_CommandInfo_Name" xml:space="preserve">
         <value>Очистить все пакеты</value>
     </data>
@@ -409,5 +415,53 @@
     </data>
     <data name="ExportPacketsToCsvCommand_CommandInfo_Description" xml:space="preserve">
         <value>Команда экспортирует пакеты в файл с CSV расширением</value>
+    </data>
+    <data name="FileBrowserView_AwaitingScreen_Description" xml:space="preserve">
+        <value>Подключение к FTP сервису устройства...</value>
+    </data>
+    <data name="FileBrowserView_AwaitingScreen_Header" xml:space="preserve">
+        <value>Подключение</value>
+    </data>
+    <data name="RemoveItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Удалить элемент</value>
+    </data>
+    <data name="RemoveItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая удаляет элемент</value>
+    </data>
+    <data name="CalculateCrc32Command_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая проверяет циклическую избыточность файла (crc32)</value>
+    </data>
+    <data name="CalculateCrc32Command_CommandInfo_Name" xml:space="preserve">
+        <value>Рассчитать CRC32</value>
+    </data>
+    <data name="CreateDirectoryCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Создать папку</value>
+    </data>
+    <data name="CreateDirectoryCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая создаёт папку</value>
+    </data>
+    <data name="BurstDownloadItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Загрузить (пакетами)</value>
+    </data>
+    <data name="BurstDownloadItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая загружает элемент пакетами</value>
+    </data>
+    <data name="DownloadItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Загрузка</value>
+    </data>
+    <data name="DownloadItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая загружает удалённые элементы</value>
+    </data>
+    <data name="UploadItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Отгрузка</value>
+    </data>
+    <data name="UploadItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая отгружает файлы на удалённое устройство</value>
+    </data>
+    <data name="FindFileOnLocalCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Найти файл</value>
+    </data>
+    <data name="FindFileOnLocalCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая находит файл, выбранный в удаленном дереве, в локальном дереве</value>
     </data>
 </root>

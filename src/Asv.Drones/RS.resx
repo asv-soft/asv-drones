@@ -422,4 +422,58 @@
     <data name="ExportPacketsToCsvCommand_CommandInfo_Description" xml:space="preserve">
         <value>Command that exports packets to a CSV file</value>
     </data>
+    <data name="RenameItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Commit item rename</value>
+    </data>
+    <data name="RenameItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that commits an item renaming</value>
+    </data>
+    <data name="FileBrowserView_AwaitingScreen_Header" xml:space="preserve">
+        <value>Connecting</value>
+    </data>
+    <data name="FileBrowserView_AwaitingScreen_Description" xml:space="preserve">
+        <value>Connect to the device's FTP service...</value>
+    </data>
+    <data name="RemoveItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Remove item</value>
+    </data>
+    <data name="RemoveItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that removes item</value>
+    </data>
+    <data name="CalculateCrc32Command_CommandInfo_Description" xml:space="preserve">
+        <value>Command that checks a cyclic redundancy of a file (crc32)</value>
+    </data>
+    <data name="CalculateCrc32Command_CommandInfo_Name" xml:space="preserve">
+        <value>Calculate CRC32</value>
+    </data>
+    <data name="CreateDirectoryCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Create a folder</value>
+    </data>
+    <data name="CreateDirectoryCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that creates a folder</value>
+    </data>
+    <data name="BurstDownloadItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Burst-Download</value>
+    </data>
+    <data name="BurstDownloadItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that download an element by burst</value>
+    </data>
+    <data name="DownloadItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Download</value>
+    </data>
+    <data name="DownloadItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that downloads remote entries</value>
+    </data>
+    <data name="UploadItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Upload</value>
+    </data>
+    <data name="UploadItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that uploads files to the remote device</value>
+    </data>
+    <data name="FindFileOnLocalCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Find file</value>
+    </data>
+    <data name="FindFileOnLocalCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that finds a file selected in a remote tree in a local tree</value>
+    </data>
 </root>
