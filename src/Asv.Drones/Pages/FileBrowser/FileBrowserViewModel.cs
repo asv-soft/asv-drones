@@ -70,6 +70,107 @@ public class FileBrowserViewModel
                 Timeout.InfiniteTimeSpan
             )
             .DisposeItWith(Disposable);
+
+        RemoteItemsTree = new BrowserTree(
+            new ObservableList<IBrowserItemViewModel>
+            {
+                new DirectoryItemViewModel(
+                    NavigationId.Empty,
+                    "/",
+                    "/folder/",
+                    "folder",
+                    FtpBrowserSourceType.Remote,
+                    _loggerFactory
+                ),
+                new FileItemViewModel(
+                    NavigationId.Empty,
+                    "/",
+                    "/file.txt",
+                    "file.txt",
+                    111,
+                    FtpBrowserSourceType.Remote,
+                    _loggerFactory
+                ),
+                new FileItemViewModel(
+                    NavigationId.Empty,
+                    "/",
+                    "/file2.txt",
+                    "file2.txt",
+                    2222,
+                    FtpBrowserSourceType.Remote,
+                    _loggerFactory
+                ),
+                new FileItemViewModel(
+                    NavigationId.Empty,
+                    "/",
+                    "/file3.txt",
+                    "file3.txt",
+                    333333,
+                    FtpBrowserSourceType.Remote,
+                    _loggerFactory
+                ),
+                new FileItemViewModel(
+                    NavigationId.Empty,
+                    "/",
+                    "/file4.txt",
+                    "file4.txt",
+                    44444444,
+                    FtpBrowserSourceType.Remote,
+                    _loggerFactory
+                ),
+            },
+            "/"
+        );
+        LocalItemsTree = new BrowserTree(
+            new ObservableList<IBrowserItemViewModel>
+            {
+                new DirectoryItemViewModel(
+                    NavigationId.Empty,
+                    "/",
+                    "/folder/",
+                    "folder",
+                    FtpBrowserSourceType.Remote,
+                    _loggerFactory
+                ),
+                new FileItemViewModel(
+                    NavigationId.Empty,
+                    "/",
+                    "/file.txt",
+                    "file.txt",
+                    128,
+                    FtpBrowserSourceType.Remote,
+                    _loggerFactory
+                ),
+                new FileItemViewModel(
+                    NavigationId.Empty,
+                    "/",
+                    "/file2.txt",
+                    "file2.txt",
+                    64544,
+                    FtpBrowserSourceType.Remote,
+                    _loggerFactory
+                ),
+                new FileItemViewModel(
+                    NavigationId.Empty,
+                    "/",
+                    "/file3.txt",
+                    "file3.txt",
+                    23512612,
+                    FtpBrowserSourceType.Remote,
+                    _loggerFactory
+                ),
+                new FileItemViewModel(
+                    NavigationId.Empty,
+                    "/",
+                    "/file4.txt",
+                    "file4.txt",
+                    23423,
+                    FtpBrowserSourceType.Remote,
+                    _loggerFactory
+                ),
+            },
+            "/"
+        );
     }
 
     [ImportingConstructor]

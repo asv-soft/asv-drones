@@ -233,9 +233,16 @@
                             Command="{Binding ShowDownloadPopupCommand}"/>
                     
                     <Popup IsOpen="{Binding IsDownloadPopupOpen.Value}"
-                           Placement="RightEdgeAlignedBottom" 
+                           ShouldUseOverlayLayer="True"
+                           OverlayDismissEventPassThrough="False"
+                           Placement="RightEdgeAlignedBottom"
+                           HorizontalOffset="12"
                            Topmost="True">
-                        <Border Padding="10">
+                        <Border Padding="10" 
+                                CornerRadius="6">
+                            <Border.Background>
+                                <SolidColorBrush Color="{DynamicResource SystemAltHighColor}" Opacity="0.5"/>
+                            </Border.Background>
                             <StackPanel>
                                 <Button Content="{x:Static drones:RS.FileBrowserView_Button_Download_Content}" 
                                         Command="{Binding DownloadCommand}" 
