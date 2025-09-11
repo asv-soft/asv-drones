@@ -440,4 +440,22 @@
     <data name="CreateDirectoryCommand_CommandInfo_Description" xml:space="preserve">
         <value>Команда, которая создаёт папку</value>
     </data>
+    <data name="BurstDownloadItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Загрузить (пакетами)</value>
+    </data>
+    <data name="BurstDownloadItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая загружает элемент пакетами</value>
+    </data>
+    <data name="DownloadItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Загрузка</value>
+    </data>
+    <data name="DownloadItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая загружает удалённые элементы</value>
+    </data>
+    <data name="UploadItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Отгрузка</value>
+    </data>
+    <data name="UploadItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая отгружает файлы на удалённое устройство</value>
+    </data>
 </root>

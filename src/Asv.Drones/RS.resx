@@ -452,4 +452,22 @@
     <data name="CreateDirectoryCommand_CommandInfo_Description" xml:space="preserve">
         <value>Command that creates a folder</value>
     </data>
+    <data name="BurstDownloadItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Burst-Download</value>
+    </data>
+    <data name="BurstDownloadItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that download an element by burst</value>
+    </data>
+    <data name="DownloadItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Download</value>
+    </data>
+    <data name="DownloadItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that downloads remote entries</value>
+    </data>
+    <data name="UploadItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Upload</value>
+    </data>
+    <data name="UploadItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that uploads files to the remote device</value>
+    </data>
 </root>

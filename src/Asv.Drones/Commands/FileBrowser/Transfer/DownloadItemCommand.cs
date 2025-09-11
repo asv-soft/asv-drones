@@ -27,9 +27,9 @@ public class DownloadItemCommand : ContextCommand<ITransferFtpEntries, DictArg>
     private static readonly ICommandInfo StaticInfo = new CommandInfo
     {
         Id = Id,
-        Name = "null",
-        Description = " ",
-        Icon = MaterialIconKind.Transfer,
+        Name = RS.DownloadItemCommand_CommandInfo_Name,
+        Description = RS.DownloadItemCommand_CommandInfo_Description,
+        Icon = MaterialIconKind.TransferLeft,
         DefaultHotKey = null,
         Source = SystemModule.Instance,
     };

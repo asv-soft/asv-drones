@@ -96,6 +96,24 @@ namespace Asv.Drones {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Command that download an element by burst.
+        /// </summary>
+        public static string BurstDownloadItemCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("BurstDownloadItemCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Burst-Download.
+        /// </summary>
+        public static string BurstDownloadItemCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("BurstDownloadItemCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Command that checks a cyclic redundancy of a file (crc32).
         /// </summary>
         public static string CalculateCrc32Command_CommandInfo_Description {
@@ -146,6 +164,24 @@ namespace Asv.Drones {
         public static string CreateDirectoryCommand_CommandInfo_Name {
             get {
                 return ResourceManager.GetString("CreateDirectoryCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command that downloads remote entries.
+        /// </summary>
+        public static string DownloadItemCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("DownloadItemCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        public static string DownloadItemCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("DownloadItemCommand_CommandInfo_Name", resourceCulture);
             }
         }
         
@@ -1325,6 +1361,24 @@ namespace Asv.Drones {
         public static string UpdateParamsCommand_CommandInfo_Name {
             get {
                 return ResourceManager.GetString("UpdateParamsCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command that uploads files to the remote device.
+        /// </summary>
+        public static string UploadItemCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("UploadItemCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        public static string UploadItemCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("UploadItemCommand_CommandInfo_Name", resourceCulture);
             }
         }
         

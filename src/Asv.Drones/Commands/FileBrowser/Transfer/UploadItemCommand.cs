@@ -25,9 +25,9 @@ public class UploadItemCommand : ContextCommand<ITransferFtpEntries, DictArg>
     private static readonly ICommandInfo StaticInfo = new CommandInfo
     {
         Id = Id,
-        Name = "null",
-        Description = " ",
-        Icon = MaterialIconKind.Transfer,
+        Name = RS.UploadItemCommand_CommandInfo_Name,
+        Description = RS.UploadItemCommand_CommandInfo_Description,
+        Icon = MaterialIconKind.TransferRight,
         DefaultHotKey = null,
         Source = SystemModule.Instance,
     };

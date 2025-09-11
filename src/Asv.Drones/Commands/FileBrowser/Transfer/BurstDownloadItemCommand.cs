@@ -27,9 +27,9 @@ public class BurstDownloadItemCommand : ContextCommand<ITransferFtpEntries, Dict
     private static readonly ICommandInfo StaticInfo = new CommandInfo
     {
         Id = Id,
-        Name = "null",
-        Description = " ",
-        Icon = MaterialIconKind.Transfer,
+        Name = RS.BurstDownloadItemCommand_CommandInfo_Name,
+        Description = RS.BurstDownloadItemCommand_CommandInfo_Description,
+        Icon = MaterialIconKind.TransferLeft,
         DefaultHotKey = null,
         Source = SystemModule.Instance,
     };
