@@ -458,4 +458,10 @@
     <data name="UploadItemCommand_CommandInfo_Description" xml:space="preserve">
         <value>Команда, которая отгружает файлы на удалённое устройство</value>
     </data>
+    <data name="FindFileOnLocalCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Найти файл</value>
+    </data>
+    <data name="FindFileOnLocalCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая находит файл, выбранный в удаленном дереве, в локальном дереве</value>
+    </data>
 </root>

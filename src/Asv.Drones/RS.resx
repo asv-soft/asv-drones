@@ -470,4 +470,10 @@
     <data name="UploadItemCommand_CommandInfo_Description" xml:space="preserve">
         <value>Command that uploads files to the remote device</value>
     </data>
+    <data name="FindFileOnLocalCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Find file</value>
+    </data>
+    <data name="FindFileOnLocalCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that finds a file selected in a remote tree in a local tree</value>
+    </data>
 </root>

@@ -333,7 +333,7 @@ public class FileBrowserViewModel
     public ReactiveCommand<BrowserNode> LocalRenameCommand { get; private set; }
     public ReactiveCommand<BrowserNode> RemoteRenameCommand { get; private set; }
     public ReactiveCommand<Unit> CompareSelectedItemsCommand { get; private set; }
-    public ReactiveCommand FindFileOnLocalCommand { get; private set; }
+    public ReactiveCommand<Unit> FindFileOnLocalCommand { get; private set; }
     public ReactiveCommand<BrowserNode> CalculateLocalCrc32Command { get; private set; }
     public ReactiveCommand<BrowserNode> CalculateRemoteCrc32Command { get; private set; }
     public ReactiveCommand CancelTransferCommand { get; private set; }
@@ -388,7 +388,11 @@ public class FileBrowserViewModel
     private void InitCommands()
     {
         FindFileOnLocalCommand = CanFindFileOnLocal
-            .ToReactiveCommand(_ => FindFileOnLocalImpl())
+            .ToReactiveCommand<Unit>(
+                async (_, ct) =>
+                    await this.ExecuteCommand(FindFileCommand.Id, CommandArg.Empty, ct),
+                awaitOperation: AwaitOperation.Drop
+            )
             .DisposeItWith(Disposable);
         CompareSelectedItemsCommand = CanCompareSelectedItems
             .ToReactiveCommand<Unit>(
@@ -866,7 +870,7 @@ public class FileBrowserViewModel
         }
     }
 
-    private void FindFileOnLocalImpl()
+    public void FindFileOnLocal()
     {
         if (RemoteSelectedItem.Value?.Base is not FileItemViewModel remoteFile)
         {

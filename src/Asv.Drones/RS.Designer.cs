@@ -393,6 +393,24 @@ namespace Asv.Drones {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Command that finds a file selected in a remote tree in a local tree.
+        /// </summary>
+        public static string FindFileOnLocalCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("FindFileOnLocalCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find file.
+        /// </summary>
+        public static string FindFileOnLocalCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("FindFileOnLocalCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Flight.
         /// </summary>
         public static string FlightPageViewModel_Title {
