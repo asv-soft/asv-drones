@@ -904,7 +904,7 @@ public class FileBrowserViewModel
             return;
         }
 
-        var token = _transfer.Begin(ct);
+        using var transfer = _transfer.BeginScope(ct);
 
         try
         {
@@ -912,23 +912,13 @@ public class FileBrowserViewModel
                 source,
                 destination,
                 type,
-                token,
-                new Progress<double>(i =>
-                {
-                    if (!Progress.IsCompletedOrDisposed)
-                    {
-                        Progress.OnNext(i);
-                    }
-                })
+                transfer.Token,
+                transfer.Reporter
             );
         }
         catch (OperationCanceledException)
         {
             Logger.LogWarning("Upload {Path} cancelled by user", source);
-        }
-        finally
-        {
-            _transfer.Complete();
         }
     }
 
@@ -945,31 +935,21 @@ public class FileBrowserViewModel
             return;
         }
 
-        var token = _transfer.Begin(ct);
+        using var transfer = _transfer.BeginScope(ct);
         try
         {
             await _ftpService.DownloadAsync(
                 source,
                 destination,
                 type,
-                token,
+                transfer.Token,
                 partSize,
-                new Progress<double>(i =>
-                {
-                    if (!Progress.IsCompletedOrDisposed)
-                    {
-                        Progress.OnNext(i);
-                    }
-                })
+                transfer.Reporter
             );
         }
         catch (OperationCanceledException)
         {
             Logger.LogWarning("Download {Path} cancelled by user", source);
-        }
-        finally
-        {
-            _transfer.Complete();
         }
     }
 
@@ -985,31 +965,21 @@ public class FileBrowserViewModel
         {
             return;
         }
-        var token = _transfer.Begin(ct);
+        using var transfer = _transfer.BeginScope(ct);
         try
         {
             await _ftpService.BurstDownloadAsync(
                 source,
                 destination,
                 type,
-                token,
+                transfer.Token,
                 partSize,
-                new Progress<double>(i =>
-                {
-                    if (!Progress.IsCompletedOrDisposed)
-                    {
-                        Progress.OnNext(i);
-                    }
-                })
+                transfer.Reporter
             );
         }
         catch (OperationCanceledException)
         {
             Logger.LogWarning("Burst-Download {Path} cancelled by user", source);
-        }
-        finally
-        {
-            _transfer.Complete();
         }
     }
 

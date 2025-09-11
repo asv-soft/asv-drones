@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using R3;
 
 namespace Asv.Drones;
@@ -8,8 +9,9 @@ namespace Asv.Drones;
 public sealed class ProgressWithLock(ILoggerFactory? loggerFactory = null) : IDisposable
 {
     private readonly ILogger _log = (
-        loggerFactory ?? Microsoft.Extensions.Logging.Abstractions.NullLoggerFactory.Instance
+        loggerFactory ?? NullLoggerFactory.Instance
     ).CreateLogger<ProgressWithLock>();
+
     private CancellationTokenSource? _cts;
     private readonly Lock _sync = new();
 
@@ -23,11 +25,41 @@ public sealed class ProgressWithLock(ILoggerFactory? loggerFactory = null) : IDi
     public ReactiveProperty<double> Progress { get; } = new(0);
 
     /// <summary>
-    /// Starts a transfer session.
+    /// Disposable scope that represents a single transfer session.
+    /// When disposed, it finalizes the transfer by calling Complete().
     /// </summary>
-    /// <param name="ct">External token.</param>
-    /// <returns>A linked CancellationToken.</returns>
-    public CancellationToken Begin(CancellationToken ct = default)
+    public readonly struct TransferScope : IDisposable
+    {
+        private readonly ProgressWithLock _owner;
+
+        /// <summary>Gets a linked cancellation token for the current transfer.</summary>
+        public CancellationToken Token { get; }
+
+        /// <summary>
+        /// Gets a progress reporter bound to the owner's Report method.
+        /// Prefer to reuse if you report often.
+        /// </summary>
+        public IProgress<double> Reporter { get; }
+
+        internal TransferScope(ProgressWithLock owner, CancellationToken token)
+        {
+            _owner = owner;
+            Token = token;
+            Reporter = new Progress<double>(owner.Report);
+        }
+
+        public void Dispose()
+        {
+            _owner.Complete();
+        }
+    }
+
+    /// <summary>
+    /// Starts a transfer session.
+    /// Use <c>using var t = _transfer.BeginScope(ct);</c> and pass <c>t.Token</c> to async operations.
+    /// </summary>
+    /// <returns>A disposable scope.</returns>
+    public TransferScope BeginScope(CancellationToken ct = default)
     {
         using (_sync.EnterScope())
         {
@@ -41,7 +73,7 @@ public sealed class ProgressWithLock(ILoggerFactory? loggerFactory = null) : IDi
             Progress.OnNext(0);
 
             _log.LogDebug("Transfer started");
-            return _cts.Token;
+            return new TransferScope(this, _cts.Token);
         }
     }
 
@@ -69,7 +101,6 @@ public sealed class ProgressWithLock(ILoggerFactory? loggerFactory = null) : IDi
     /// <summary>
     /// Update progress safely (0..1). Values outside the range are clamped.
     /// </summary>
-    /// <param name="value">Progress value.</param>
     public void Report(double value)
     {
         if (double.IsNaN(value) || double.IsInfinity(value))
@@ -93,10 +124,9 @@ public sealed class ProgressWithLock(ILoggerFactory? loggerFactory = null) : IDi
     /// <summary>
     /// Tries to cancel the current transfer if any.
     /// </summary>
-    /// <returns>True if cancellation is successful.</returns>
     public bool TryCancel()
     {
-        lock (_sync)
+        using (_sync.EnterScope())
         {
             if (_cts == null)
             {
