@@ -26,7 +26,9 @@ public sealed class FileBrowserViewModelConfig : PageConfig { }
 [ExportPage(PageId)]
 public class FileBrowserViewModel
     : DevicePageViewModel<IFileBrowserViewModel, FileBrowserViewModelConfig>,
-        IFileBrowserViewModel
+        IFileBrowserViewModel,
+        ISupportRefresh,
+        ITransferFtpEntries
 {
     public const string PageId = "files.browser";
     public const MaterialIconKind PageIcon = MaterialIconKind.FolderEye;
@@ -193,6 +195,8 @@ public class FileBrowserViewModel
         InitCommands();
     }
 
+    #region Props
+
     public BrowserTree LocalItemsTree { get; }
     public BrowserTree RemoteItemsTree { get; }
     public BindableReactiveProperty<BrowserNode?> LocalSelectedItem { get; }
@@ -210,6 +214,8 @@ public class FileBrowserViewModel
         get;
         set => SetField(ref field, value);
     }
+
+    #endregion
 
     #region Commands
 
@@ -229,6 +235,11 @@ public class FileBrowserViewModel
     public ReactiveCommand FindFileOnLocalCommand { get; private set; }
     public ReactiveCommand<BrowserNode> CalculateLocalCrc32Command { get; private set; }
     public ReactiveCommand<BrowserNode> CalculateRemoteCrc32Command { get; private set; }
+    public ReactiveCommand CancelTransferCommand { get; private set; }
+
+    #endregion
+
+    #region Observables
 
     private Observable<bool> CanUpload => LocalSelectedItem.Select(x => x is not null);
 
@@ -269,11 +280,9 @@ public class FileBrowserViewModel
     private Observable<bool> CanRenameRemote =>
         RemoteSelectedItem.Select(x => x is { Base.EditMode: false });
 
-    public ReactiveCommand CancelTransferCommand { get; private set; }
-
     #endregion
 
-    #region Commands implementation
+    #region Commands Impl
 
     private void InitCommands()
     {
@@ -392,11 +401,6 @@ public class FileBrowserViewModel
 
     private async Task UploadImpl(BrowserNode item, CancellationToken ct)
     {
-        if (_ftpService is null)
-        {
-            return;
-        }
-
         var payload = new YesOrNoDialogPayload
         {
             Title = RS.FileBrowserViewModel_UploadingDialog_Title,
@@ -435,52 +439,24 @@ public class FileBrowserViewModel
                 remoteDirectory = sep + localName;
             }
 
-            var token = _transfer.Begin(ct);
-
-            try
-            {
-                switch (item.Base.FtpEntryType)
-                {
-                    case FtpEntryType.File:
-                        await _ftpService.UploadFileAsync(
-                            item.Base.Path,
-                            remoteDirectory,
-                            token,
-                            new Progress<double>(i =>
-                            {
-                                if (!Progress.IsCompletedOrDisposed)
-                                {
-                                    Progress.OnNext(i);
-                                }
-                            })
-                        );
-                        break;
-                    case FtpEntryType.Directory:
-                        await _ftpService.UploadDirectoryAsync(
-                            item.Base.Path,
-                            remoteDirectory,
-                            token,
-                            new Progress<double>(i =>
-                            {
-                                if (!Progress.IsCompletedOrDisposed)
-                                {
-                                    Progress.OnNext(i);
-                                }
-                            })
-                        );
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(item));
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                Logger.LogWarning("Upload {Path} cancelled by user", item.Base.Path);
-            }
-            finally
-            {
-                _transfer.Complete();
-            }
+            await this.ExecuteCommand(
+                UploadItemCommand.Id,
+                CommandArg.CreateDictionary(
+                    new Dictionary<string, CommandArg>
+                    {
+                        { UploadItemCommand.SourcePath, CommandArg.CreateString(item.Base.Path) },
+                        {
+                            UploadItemCommand.DestinationPath,
+                            CommandArg.CreateString(remoteDirectory)
+                        },
+                        {
+                            UploadItemCommand.EntryType,
+                            CommandArg.CreateString(item.Base.FtpEntryType.ToString())
+                        },
+                    }
+                ),
+                ct
+            );
         }
     }
 
@@ -522,61 +498,36 @@ public class FileBrowserViewModel
 
         if (res)
         {
-            var token = _transfer.Begin(ct);
-            try
-            {
-                switch (item.Base.FtpEntryType)
-                {
-                    case FtpEntryType.File:
-                        await _ftpService.DownloadFileAsync(
-                            item.Base.Path,
-                            localDirectory,
-                            ct: token,
-                            progress: new Progress<double>(i =>
-                            {
-                                if (!Progress.IsCompletedOrDisposed)
-                                {
-                                    Progress.OnNext(i);
-                                }
-                            })
-                        );
-                        break;
-                    case FtpEntryType.Directory:
-                        await _ftpService.DownloadDirectoryAsync(
-                            item.Base.Path,
-                            localDirectory,
-                            ct: token,
-                            progress: new Progress<double>(i =>
-                            {
-                                if (!Progress.IsCompletedOrDisposed)
-                                {
-                                    Progress.OnNext(i);
-                                }
-                            })
-                        );
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(item));
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                Logger.LogWarning("Download {Path} cancelled by user", item.Base.Path);
-            }
-            finally
-            {
-                _transfer.Complete();
-            }
+            await this.ExecuteCommand(
+                BurstDownloadItemCommand.Id,
+                CommandArg.CreateDictionary(
+                    new Dictionary<string, CommandArg>
+                    {
+                        {
+                            BurstDownloadItemCommand.SourcePath,
+                            CommandArg.CreateString(item.Base.Path)
+                        },
+                        {
+                            BurstDownloadItemCommand.DestinationPath,
+                            CommandArg.CreateString(localDirectory)
+                        },
+                        {
+                            BurstDownloadItemCommand.PartSize,
+                            CommandArg.CreateInteger(MavlinkFtpHelper.MaxDataSize)
+                        },
+                        {
+                            BurstDownloadItemCommand.EntryType,
+                            CommandArg.CreateString(item.Base.FtpEntryType.ToString())
+                        },
+                    }
+                ),
+                ct
+            );
         }
     }
 
     private async ValueTask BurstDownloadImpl(BrowserNode item, CancellationToken ct)
     {
-        if (_ftpService is null)
-        {
-            return;
-        }
-
         var localDirectory = _localRootPath;
 
         if (LocalSelectedItem.Value != null)
@@ -604,57 +555,35 @@ public class FileBrowserViewModel
         };
         viewModel.ApplyDialog(dialog);
         var result = await dialog.ShowAsync();
-
         if (result == ContentDialogResult.Primary)
         {
-            var size = viewModel.PacketSize.Value ?? MavlinkFtpHelper.MaxDataSize;
-            var token = _transfer.Begin(ct);
-            try
-            {
-                switch (item.Base.FtpEntryType)
-                {
-                    case FtpEntryType.File:
-                        await _ftpService.BurstDownloadFileAsync(
-                            item.Base.Path,
-                            localDirectory,
-                            size,
-                            token,
-                            new Progress<double>(i =>
-                            {
-                                if (!Progress.IsCompletedOrDisposed)
-                                {
-                                    Progress.OnNext(i);
-                                }
-                            })
-                        );
-                        break;
-                    case FtpEntryType.Directory:
-                        await _ftpService.BurstDownloadDirectoryAsync(
-                            item.Base.Path,
-                            localDirectory,
-                            size,
-                            token,
-                            new Progress<double>(i =>
-                            {
-                                if (!Progress.IsCompletedOrDisposed)
-                                {
-                                    Progress.OnNext(i);
-                                }
-                            })
-                        );
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(item));
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                Logger.LogWarning("Burst-Download {Path} cancelled by user", item.Base.Path);
-            }
-            finally
-            {
-                _transfer.Complete();
-            }
+            await this.ExecuteCommand(
+                BurstDownloadItemCommand.Id,
+                CommandArg.CreateDictionary(
+                    new Dictionary<string, CommandArg>
+                    {
+                        {
+                            BurstDownloadItemCommand.SourcePath,
+                            CommandArg.CreateString(item.Base.Path)
+                        },
+                        {
+                            BurstDownloadItemCommand.DestinationPath,
+                            CommandArg.CreateString(localDirectory)
+                        },
+                        {
+                            BurstDownloadItemCommand.PartSize,
+                            CommandArg.CreateInteger(
+                                viewModel.PacketSize.Value ?? MavlinkFtpHelper.MaxDataSize
+                            )
+                        },
+                        {
+                            BurstDownloadItemCommand.EntryType,
+                            CommandArg.CreateString(item.Base.FtpEntryType.ToString())
+                        },
+                    }
+                ),
+                ct
+            );
         }
     }
 
@@ -860,6 +789,141 @@ public class FileBrowserViewModel
 
     #endregion
 
+    #region Transfer
+
+    public async ValueTask UploadItem(
+        string source,
+        string destination,
+        FtpEntryType type,
+        CancellationToken ct
+    )
+    {
+        if (_ftpService is null)
+        {
+            return;
+        }
+
+        var token = _transfer.Begin(ct);
+
+        try
+        {
+            await _ftpService.UploadAsync(
+                source,
+                destination,
+                type,
+                token,
+                new Progress<double>(i =>
+                {
+                    if (!Progress.IsCompletedOrDisposed)
+                    {
+                        Progress.OnNext(i);
+                    }
+                })
+            );
+        }
+        catch (OperationCanceledException)
+        {
+            Logger.LogWarning("Upload {Path} cancelled by user", source);
+        }
+        finally
+        {
+            _transfer.Complete();
+        }
+    }
+
+    public async ValueTask DownloadItem(
+        string source,
+        string destination,
+        byte partSize,
+        FtpEntryType type,
+        CancellationToken ct
+    )
+    {
+        if (_ftpService is null)
+        {
+            return;
+        }
+
+        var token = _transfer.Begin(ct);
+        try
+        {
+            await _ftpService.DownloadAsync(
+                source,
+                destination,
+                type,
+                token,
+                partSize,
+                new Progress<double>(i =>
+                {
+                    if (!Progress.IsCompletedOrDisposed)
+                    {
+                        Progress.OnNext(i);
+                    }
+                })
+            );
+        }
+        catch (OperationCanceledException)
+        {
+            Logger.LogWarning("Download {Path} cancelled by user", source);
+        }
+        finally
+        {
+            _transfer.Complete();
+        }
+    }
+
+    public async ValueTask BurstDownloadItem(
+        string source,
+        string destination,
+        byte partSize,
+        FtpEntryType type,
+        CancellationToken ct
+    )
+    {
+        if (_ftpService is null)
+        {
+            return;
+        }
+        var token = _transfer.Begin(ct);
+        try
+        {
+            await _ftpService.BurstDownloadAsync(
+                source,
+                destination,
+                type,
+                token,
+                partSize,
+                new Progress<double>(i =>
+                {
+                    if (!Progress.IsCompletedOrDisposed)
+                    {
+                        Progress.OnNext(i);
+                    }
+                })
+            );
+        }
+        catch (OperationCanceledException)
+        {
+            Logger.LogWarning("Burst-Download {Path} cancelled by user", source);
+        }
+        finally
+        {
+            _transfer.Complete();
+        }
+    }
+
+    #endregion
+
+    #region Refresh
+
+    public void Refresh()
+    {
+        RefreshLocalCommand.Execute(Unit.Default);
+        RefreshRemoteCommand.Execute(Unit.Default);
+    }
+
+    #endregion
+
     #region Helpers
 
     private Task PerformLocalSearch(
@@ -977,6 +1041,8 @@ public class FileBrowserViewModel
 
     #endregion
 
+    #region Routable
+
     public override ValueTask<IRoutable> Navigate(NavigationId id)
     {
         return ValueTask.FromResult<IRoutable>(this);
@@ -1001,6 +1067,8 @@ public class FileBrowserViewModel
     protected override void AfterLoadExtensions() { }
 
     public override IExportInfo Source => SystemModule.Instance;
+
+    #endregion
 
     #region Dispose
 

@@ -13,8 +13,8 @@ namespace Asv.Drones;
 public abstract class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel
 {
     private readonly char _separator;
-    private IFileBrowserOps? _ops;
-    protected IFileBrowserOps Ops =>
+    private IBrowserItemsOps? _ops;
+    protected IBrowserItemsOps ItemsOps =>
         _ops
         ?? throw new InvalidOperationException(
             "Ops are not attached. Call AttachBackend(...) first."

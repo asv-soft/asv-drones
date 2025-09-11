@@ -34,11 +34,95 @@ public sealed class FtpClientService(
     /// <summary>Gets an observable that emits whenever this service changes the remote file system.</summary>
     public Observable<Unit> RemoteChanged => _remoteChanged;
 
-    public async Task DownloadFileAsync(
+    public async Task DownloadAsync(
+        string from,
+        string to,
+        FtpEntryType type,
+        CancellationToken ct,
+        byte partSize = MavlinkFtpHelper.MaxDataSize,
+        IProgress<double>? progress = null
+    )
+    {
+        ArgumentException.ThrowIfNullOrEmpty(from);
+        ArgumentException.ThrowIfNullOrEmpty(to);
+
+        if (!_fileSystem.Directory.Exists(to))
+        {
+            _fileSystem.Directory.CreateDirectory(to);
+        }
+
+        switch (type)
+        {
+            case FtpEntryType.File:
+                await DownloadFileAsync(from, to, ct, partSize, progress);
+                break;
+            case FtpEntryType.Directory:
+                await DownloadDirectoryAsync(from, to, ct, partSize, progress);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException($"Unsupported FTP entry type: {type}");
+        }
+    }
+
+    public async Task BurstDownloadAsync(
+        string from,
+        string to,
+        FtpEntryType type,
+        CancellationToken ct,
+        byte partSize = MavlinkFtpHelper.MaxDataSize,
+        IProgress<double>? progress = null
+    )
+    {
+        ArgumentException.ThrowIfNullOrEmpty(from);
+        ArgumentException.ThrowIfNullOrEmpty(to);
+
+        if (!_fileSystem.Directory.Exists(to))
+        {
+            _fileSystem.Directory.CreateDirectory(to);
+        }
+
+        switch (type)
+        {
+            case FtpEntryType.File:
+                await BurstDownloadFileAsync(from, to, ct, partSize, progress);
+                break;
+            case FtpEntryType.Directory:
+                await BurstDownloadDirectoryAsync(from, to, ct, partSize, progress);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException($"Unsupported FTP entry type: {type}");
+        }
+    }
+
+    public async Task UploadAsync(
+        string from,
+        string to,
+        FtpEntryType type,
+        CancellationToken ct,
+        IProgress<double>? progress = null
+    )
+    {
+        ArgumentException.ThrowIfNullOrEmpty(from);
+        ArgumentException.ThrowIfNullOrEmpty(to);
+
+        switch (type)
+        {
+            case FtpEntryType.File:
+                await UploadFileAsync(from, to, ct, progress);
+                break;
+            case FtpEntryType.Directory:
+                await UploadDirectoryAsync(from, to, ct, progress);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(type), type, null);
+        }
+    }
+
+    private async Task DownloadFileAsync(
         string remoteFilePath,
         string localDirectory,
+        CancellationToken ct,
         byte partSize = MavlinkFtpHelper.MaxDataSize,
-        CancellationToken ct = default,
         IProgress<double>? progress = null
     )
     {
@@ -56,11 +140,11 @@ public sealed class FtpClientService(
         _log.LogInformation("Downloaded {path} -> {dir}", remoteFilePath, localDirectory);
     }
 
-    public async Task BurstDownloadFileAsync(
+    private async Task BurstDownloadFileAsync(
         string remoteFilePath,
         string localDirectory,
+        CancellationToken ct,
         byte partSize = MavlinkFtpHelper.MaxDataSize,
-        CancellationToken ct = default,
         IProgress<double>? progress = null
     )
     {
@@ -78,10 +162,10 @@ public sealed class FtpClientService(
         _log.LogInformation("Burst-Downloaded {path} -> {dir}", remoteFilePath, localDirectory);
     }
 
-    public async Task UploadFileAsync(
+    private async Task UploadFileAsync(
         string localFilePath,
         string remoteDirectory,
-        CancellationToken ct = default,
+        CancellationToken ct,
         IProgress<double>? progress = null
     )
     {
@@ -102,11 +186,11 @@ public sealed class FtpClientService(
         _remoteChanged.OnNext(Unit.Default);
     }
 
-    public async Task DownloadDirectoryAsync(
+    private async Task DownloadDirectoryAsync(
         string remoteDirectoryPath,
         string localDirectory,
+        CancellationToken ct,
         byte partSize = MavlinkFtpHelper.MaxDataSize,
-        CancellationToken ct = default,
         IProgress<double>? progress = null
     )
     {
@@ -191,7 +275,7 @@ public sealed class FtpClientService(
                 ? null
                 : new Progress<double>(p => progress.Report((completedSafe + p) / total));
 
-            await DownloadFileAsync(file, localFileDir, partSize, ct, nested);
+            await DownloadFileAsync(file, localFileDir, ct, partSize, nested);
 
             completed++;
             progress?.Report((double)completed / total);
@@ -205,11 +289,11 @@ public sealed class FtpClientService(
         );
     }
 
-    public async Task BurstDownloadDirectoryAsync(
+    private async Task BurstDownloadDirectoryAsync(
         string remoteDirectoryPath,
         string localDirectory,
+        CancellationToken ct,
         byte partSize = MavlinkFtpHelper.MaxDataSize,
-        CancellationToken ct = default,
         IProgress<double>? progress = null
     )
     {
@@ -298,7 +382,7 @@ public sealed class FtpClientService(
                 : new Progress<double>(p => progress.Report((completedSafe + p) / total));
 
             // TODO: sends "(Timeout to execute 'FILE_TRANSFER_PROTOCOL')" when tries to TerminateSession(0)
-            await BurstDownloadFileAsync(file, localFileDir, partSize, ct, nested);
+            await BurstDownloadFileAsync(file, localFileDir, ct, partSize, nested);
 
             completed++;
             progress?.Report((double)completed / total);
@@ -312,10 +396,10 @@ public sealed class FtpClientService(
         );
     }
 
-    public async Task UploadDirectoryAsync(
+    private async Task UploadDirectoryAsync(
         string localDirectoryPath,
         string remoteDirectory,
-        CancellationToken ct = default,
+        CancellationToken ct,
         IProgress<double>? progress = null
     )
     {

@@ -1,14 +1,15 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
 
-public sealed class LocalFileBrowserOps(LocalFilesService local) : IFileBrowserOps
+public sealed class LocalBrowserItemsOps(LocalFilesService local) : IBrowserItemsOps
 {
     private readonly LocalFilesService _local =
-        local ?? throw new System.ArgumentNullException(nameof(local));
+        local ?? throw new ArgumentNullException(nameof(local));
 
     public char Separator => Path.DirectorySeparatorChar;
 

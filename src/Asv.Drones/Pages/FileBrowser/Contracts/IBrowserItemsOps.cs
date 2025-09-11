@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
 
-public interface IFileBrowserOps
+public interface IBrowserItemsOps
 {
     char Separator { get; }
 

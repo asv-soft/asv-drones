@@ -33,12 +33,12 @@ public class DirectoryItemViewModel : BrowserItemViewModel
         ArgumentException.ThrowIfNullOrEmpty(oldValue);
         ArgumentException.ThrowIfNullOrEmpty(newValue);
 
-        var sep = Ops.Separator;
+        var sep = ItemsOps.Separator;
 
         var oldPath = FtpBrowserPath.Normalize(oldValue, true, sep);
         var newPath = FtpBrowserPath.Normalize(newValue, true, sep);
 
-        var result = await Ops.RenameDirectoryAsync(oldPath, newPath, Logger, ct);
+        var result = await ItemsOps.RenameDirectoryAsync(oldPath, newPath, Logger, ct);
 
         EditMode = false;
         EditedName.Value = FtpBrowserPath.NameOf(result, sep);
@@ -48,7 +48,7 @@ public class DirectoryItemViewModel : BrowserItemViewModel
 
     public override async ValueTask RemoveAsync(CancellationToken ct)
     {
-        await Ops.RemoveDirectoryAsync(Path, Logger, ct);
+        await ItemsOps.RemoveDirectoryAsync(Path, Logger, ct);
     }
 
     public override ValueTask<uint> CalculateCrc32Async(CancellationToken ct)
@@ -59,6 +59,6 @@ public class DirectoryItemViewModel : BrowserItemViewModel
 
     public override async ValueTask CreateDirectoryAsync(CancellationToken ct)
     {
-        await Ops.CreateDirectoryAsync(Path, Logger, ct);
+        await ItemsOps.CreateDirectoryAsync(Path, Logger, ct);
     }
 }

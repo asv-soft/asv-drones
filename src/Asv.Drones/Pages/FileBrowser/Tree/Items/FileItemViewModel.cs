@@ -54,12 +54,12 @@ public class FileItemViewModel : BrowserItemViewModel
         ArgumentException.ThrowIfNullOrEmpty(oldValue);
         ArgumentException.ThrowIfNullOrEmpty(newValue);
 
-        var sep = Ops.Separator;
+        var sep = ItemsOps.Separator;
 
         var oldPath = FtpBrowserPath.Normalize(oldValue, false, sep);
         var newPath = FtpBrowserPath.Normalize(newValue, false, sep);
 
-        var result = await Ops.RenameFileAsync(oldPath, newPath, Logger, ct);
+        var result = await ItemsOps.RenameFileAsync(oldPath, newPath, Logger, ct);
 
         EditMode = false;
         EditedName.Value = FtpBrowserPath.NameOf(result, sep);
@@ -69,12 +69,12 @@ public class FileItemViewModel : BrowserItemViewModel
 
     public override async ValueTask RemoveAsync(CancellationToken ct)
     {
-        await Ops.RemoveFileAsync(Path, Logger, ct);
+        await ItemsOps.RemoveFileAsync(Path, Logger, ct);
     }
 
     public override async ValueTask<uint> CalculateCrc32Async(CancellationToken ct)
     {
-        var crc32 = await Ops.CalculateCrc32Async(Path, Logger, ct);
+        var crc32 = await ItemsOps.CalculateCrc32Async(Path, Logger, ct);
         Crc32 = crc32;
         Crc32Status = Crc32Status.Default;
         return crc32;
@@ -82,7 +82,7 @@ public class FileItemViewModel : BrowserItemViewModel
 
     public override async ValueTask CreateDirectoryAsync(CancellationToken ct)
     {
-        var path = FtpBrowserPath.ParentDirOf(Path, Ops.Separator);
-        await Ops.CreateDirectoryAsync(path, Logger, ct);
+        var path = FtpBrowserPath.ParentDirOf(Path, ItemsOps.Separator);
+        await ItemsOps.CreateDirectoryAsync(path, Logger, ct);
     }
 }

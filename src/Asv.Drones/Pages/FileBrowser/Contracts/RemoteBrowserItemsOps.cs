@@ -1,14 +1,14 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Asv.Mavlink;
 using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
 
-public sealed class RemoteFileBrowserOps(FtpClientService ftp) : IFileBrowserOps
+public sealed class RemoteBrowserItemsOps(FtpClientService ftp) : IBrowserItemsOps
 {
-    private readonly FtpClientService _ftp =
-        ftp ?? throw new System.ArgumentNullException(nameof(ftp));
+    private readonly FtpClientService _ftp = ftp ?? throw new ArgumentNullException(nameof(ftp));
 
     public char Separator => MavlinkFtpHelper.DirectorySeparator;
 
