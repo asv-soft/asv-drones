@@ -7,7 +7,6 @@ using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reflection;
 using Asv.Avalonia;
-using Asv.Avalonia.FileAssociation;
 using Asv.Avalonia.GeoMap;
 using Asv.Avalonia.IO;
 using Asv.Avalonia.Plugins;
@@ -79,6 +78,11 @@ public partial class App : Application, IContainerHost, IShellHost
         // TODO: load plugin manager before creating container
         _container = containerCfg.CreateContainer();
         DataTemplates.Add(new CompositionViewLocator(_container));
+
+        if (!Design.IsDesignMode)
+        {
+            _container.GetExport<IAppStartupService>().AppCtor();
+        }
     }
 
     private IEnumerable<Assembly> DefaultAssemblies
@@ -130,12 +134,10 @@ public partial class App : Application, IContainerHost, IShellHost
 #if DEBUG
         this.AttachDevTools();
 #endif
-        
-        // this is for file association from OS
-        var svc = _container.GetExport<IFileAssociationService>();
-        AppHost.Instance.Services.GetRequiredService<ISoloRunFeature>()
-            .Args.Where(x => x.Tags.Count > 1 )
-            .Subscribe(x => svc.Open(x.Tags.Skip(1).First()));
+        if (!Design.IsDesignMode)
+        {
+            _container.GetExport<IAppStartupService>().AppCtor();
+        }
     }
 
     public T GetExport<T>()

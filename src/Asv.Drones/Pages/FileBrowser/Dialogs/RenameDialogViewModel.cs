@@ -11,7 +11,7 @@ namespace Asv.Drones;
 
 public class RenameDialogViewModel : DialogViewModelBase
 {
-    private const string DialogId = "rename.dialog";
+    private const string DialogId = $"{BaseId}.rename";
     private const int MaxNameLenght = 255;
     private const string AllowedCharacters =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-()[]{} ";

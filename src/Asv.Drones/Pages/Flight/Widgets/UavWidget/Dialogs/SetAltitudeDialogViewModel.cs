@@ -9,7 +9,7 @@ namespace Asv.Drones;
 
 public class SetAltitudeDialogViewModel : DialogViewModelBase
 {
-    public const string DialogId = "dialog.altitude";
+    public const string DialogId = $"{BaseId}.altitude";
 
     public SetAltitudeDialogViewModel()
         : this(new NullUnitBase([new NullUnitItemInternational()]), DesignTime.LoggerFactory)

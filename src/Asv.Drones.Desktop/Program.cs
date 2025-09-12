@@ -23,8 +23,9 @@ sealed class Program
     public static void Main(string[] args)
     {
         var builder = AppHost.CreateBuilder(args);
-        var dataFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
-        
+        var dataFolder =
+            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
+
         builder
             .UseAvalonia(BuildAvaloniaApp)
             .UseAppPath(opt =>
@@ -52,7 +53,6 @@ sealed class Program
             });
         using var host = builder.Build();
         host.ExitIfNotFirstInstance();
-
         host.StartWithClassicDesktopLifetime(args, ShutdownMode.OnMainWindowClose);
     }
 

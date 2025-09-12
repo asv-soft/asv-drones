@@ -242,7 +242,7 @@ public class PacketViewerViewModel
             .Merge(
                 _filtersBySourceSet.ObserveChanged().Select(_ => Unit.Default),
                 _filtersByTypeSet.ObserveChanged().Select(_ => Unit.Default),
-                Search.Text.Select(_ => Unit.Default),
+                Search.Text.ViewValue.Select(_ => Unit.Default),
                 _filterChangeTrigger.Select(_ => Unit.Default)
             )
             .ThrottleLast(TimeSpan.FromMilliseconds(500))
@@ -250,7 +250,7 @@ public class PacketViewerViewModel
             {
                 var allSourcesSelected = _filtersBySourceSet.All(x => x.IsChecked.ViewValue.Value);
                 var allTypesSelected = _filtersByTypeSet.All(x => x.IsChecked.ViewValue.Value);
-                var hasNoSearchString = string.IsNullOrEmpty(Search.Text.Value);
+                var hasNoSearchString = string.IsNullOrEmpty(Search.Text.ViewValue.Value);
 
                 if (hasNoSearchString && allSourcesSelected && allTypesSelected)
                 {
@@ -304,13 +304,13 @@ public class PacketViewerViewModel
                     return false;
                 }
 
-                if (string.IsNullOrWhiteSpace(Search.Text.Value))
+                if (string.IsNullOrWhiteSpace(Search.Text.ViewValue.Value))
                 {
                     return true;
                 }
 
                 return packet.Message.Contains(
-                    Search.Text.Value,
+                    Search.Text.ViewValue.Value,
                     StringComparison.OrdinalIgnoreCase
                 );
             }
