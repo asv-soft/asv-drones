@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Mavlink;
@@ -15,22 +14,19 @@ public class BurstDownloadDialogViewModel : DialogViewModelBase
         : base(DialogId, DesignTime.LoggerFactory)
     {
         PacketSize = new BindableReactiveProperty<byte?>(MavlinkFtpHelper.MaxDataSize);
-        PacketSize.EnableValidationRoutable(
-            arg =>
-            {
-                if (arg is >= 1 and <= MavlinkFtpHelper.MaxDataSize)
-                {
-                    return ValidationResult.Success;
-                }
-
-                return ValidationResult.FailAsOutOfRange(
-                    "1",
-                    MavlinkFtpHelper.MaxDataSize.ToString()
-                );
-            },
-            this,
-            isForceValidation: true
-        );
+        PacketSize
+            .EnableValidationRoutable(
+                arg =>
+                    arg is >= 1 and <= MavlinkFtpHelper.MaxDataSize
+                        ? ValidationResult.Success
+                        : ValidationResult.FailAsOutOfRange(
+                            "1",
+                            MavlinkFtpHelper.MaxDataSize.ToString()
+                        ),
+                this,
+                isForceValidation: true
+            )
+            .DisposeItWith(Disposable);
     }
 
     public BindableReactiveProperty<byte?> PacketSize { get; }
@@ -38,24 +34,11 @@ public class BurstDownloadDialogViewModel : DialogViewModelBase
     public override void ApplyDialog(ContentDialog dialog)
     {
         dialog.DefaultButton = ContentDialogButton.Primary;
-        _sub1 = IsValid.Subscribe(b => dialog.IsPrimaryButtonEnabled = b);
+        IsValid.Subscribe(b => dialog.IsPrimaryButtonEnabled = b).DisposeItWith(Disposable);
     }
 
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
         return [];
-    }
-
-    private IDisposable? _sub1;
-
-    protected override void Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            _sub1?.Dispose();
-            PacketSize.Dispose();
-        }
-
-        base.Dispose(disposing);
     }
 }

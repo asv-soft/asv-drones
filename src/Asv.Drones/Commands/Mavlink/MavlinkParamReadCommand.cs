@@ -1,13 +1,8 @@
-﻿using System;
-using System.Composition;
-using System.Diagnostics;
+﻿using System.Composition;
 using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
-using Asv.Avalonia.IO;
-using Asv.Drones;
 using Asv.Drones.Api;
-using Asv.IO;
 using Asv.Mavlink;
 using Material.Icons;
 
