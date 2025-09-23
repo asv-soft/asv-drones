@@ -96,6 +96,42 @@ namespace Asv.Drones {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Command that download an element by burst.
+        /// </summary>
+        public static string BurstDownloadItemCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("BurstDownloadItemCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Burst-Download.
+        /// </summary>
+        public static string BurstDownloadItemCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("BurstDownloadItemCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command that checks a cyclic redundancy of a file (crc32).
+        /// </summary>
+        public static string CalculateCrc32Command_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("CalculateCrc32Command_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Calculate CRC32.
+        /// </summary>
+        public static string CalculateCrc32Command_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("CalculateCrc32Command_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Command that clears all packets.
         /// </summary>
         public static string ClearAllPacketsCommand_CommandInfo_Description {
@@ -114,6 +150,42 @@ namespace Asv.Drones {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Command that creates a folder.
+        /// </summary>
+        public static string CreateDirectoryCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("CreateDirectoryCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a folder.
+        /// </summary>
+        public static string CreateDirectoryCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("CreateDirectoryCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command that downloads remote entries.
+        /// </summary>
+        public static string DownloadItemCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("DownloadItemCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        public static string DownloadItemCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("DownloadItemCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Command that exports packets to a CSV file.
         /// </summary>
         public static string ExportPacketsToCsvCommand_CommandInfo_Description {
@@ -128,6 +200,24 @@ namespace Asv.Drones {
         public static string ExportPacketsToCsvCommand_CommandInfo_Name {
             get {
                 return ResourceManager.GetString("ExportPacketsToCsvCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect to the device&apos;s FTP service....
+        /// </summary>
+        public static string FileBrowserView_AwaitingScreen_Description {
+            get {
+                return ResourceManager.GetString("FileBrowserView_AwaitingScreen_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connecting.
+        /// </summary>
+        public static string FileBrowserView_AwaitingScreen_Header {
+            get {
+                return ResourceManager.GetString("FileBrowserView_AwaitingScreen_Header", resourceCulture);
             }
         }
         
@@ -299,6 +389,24 @@ namespace Asv.Drones {
         public static string FileBrowserViewModel_UploadingDialog_Title {
             get {
                 return ResourceManager.GetString("FileBrowserViewModel_UploadingDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command that finds a file selected in a remote tree in a local tree.
+        /// </summary>
+        public static string FindFileOnLocalCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("FindFileOnLocalCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find file.
+        /// </summary>
+        public static string FindFileOnLocalCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("FindFileOnLocalCommand_CommandInfo_Name", resourceCulture);
             }
         }
         
@@ -906,6 +1014,42 @@ namespace Asv.Drones {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Command that removes item.
+        /// </summary>
+        public static string RemoveItemCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("RemoveItemCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove item.
+        /// </summary>
+        public static string RemoveItemCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("RemoveItemCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command that commits an item renaming.
+        /// </summary>
+        public static string RenameItemCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("RenameItemCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commit item rename.
+        /// </summary>
+        public static string RenameItemCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("RenameItemCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TAB.
         /// </summary>
         public static string SavePacketMessagesDialogView_Separator_Tab {
@@ -1235,6 +1379,24 @@ namespace Asv.Drones {
         public static string UpdateParamsCommand_CommandInfo_Name {
             get {
                 return ResourceManager.GetString("UpdateParamsCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command that uploads files to the remote device.
+        /// </summary>
+        public static string UploadItemCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("UploadItemCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        public static string UploadItemCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("UploadItemCommand_CommandInfo_Name", resourceCulture);
             }
         }
         

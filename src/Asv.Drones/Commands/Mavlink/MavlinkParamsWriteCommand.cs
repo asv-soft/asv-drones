@@ -50,7 +50,7 @@ public class MavlinkParamsWriteCommand : MavlinkMicroserviceCommand<IParamsClien
         if (string.IsNullOrWhiteSpace(arg.SubjectId))
         {
             throw new ArgumentException(
-                $"{nameof(arg.SubjectId)} cannot be null or empty.",
+                $@"{nameof(arg.SubjectId)} cannot be null or empty.",
                 nameof(arg.SubjectId)
             );
         }
@@ -69,7 +69,7 @@ public class MavlinkParamsWriteCommand : MavlinkMicroserviceCommand<IParamsClien
         if (string.IsNullOrWhiteSpace(stringValue))
         {
             throw new ArgumentException(
-                $"{nameof(arg.Value)} must be of type {CommandArg.Id.String}.",
+                $@"{nameof(arg.Value)} must be of type {CommandArg.Id.String}.",
                 nameof(arg.Value)
             );
         }
