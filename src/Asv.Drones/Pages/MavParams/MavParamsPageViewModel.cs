@@ -388,11 +388,10 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
 
     public BindableReactiveProperty<ParamItemViewModel?> SelectedItem { get; }
 
-    private bool _isDeviceInitialized;
     public bool IsDeviceInitialized
     {
-        get => _isDeviceInitialized;
-        set => SetField(ref _isDeviceInitialized, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     protected override async ValueTask InternalCatchEvent(AsyncRoutedEvent e)

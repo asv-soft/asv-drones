@@ -464,4 +464,10 @@
     <data name="FindFileOnLocalCommand_CommandInfo_Description" xml:space="preserve">
         <value>Команда, которая находит файл, выбранный в удаленном дереве, в локальном дереве</value>
     </data>
+    <data name="SetupPageViewModel_Title" xml:space="preserve">
+        <value>Настройка</value>
+    </data>
+    <data name="SetupFrameTypeViewModel_Name" xml:space="preserve">
+        <value>Тип рамы</value>
+    </data>
 </root>

@@ -9,7 +9,8 @@ namespace Asv.Drones;
 
 [ExportExtensionFor<IHomePageItem>]
 [method: ImportingConstructor]
-public class HomePageFileBrowserExtension(ILoggerFactory loggerFactory) : HomePageDeviceItemAction
+public class HomePageFileBrowserDeviceItemAction(ILoggerFactory loggerFactory)
+    : HomePageDeviceItemAction
 {
     protected override IActionViewModel? TryCreateAction(
         IClientDevice device,
