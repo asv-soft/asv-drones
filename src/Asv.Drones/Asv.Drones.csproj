@@ -37,12 +37,6 @@
     </ItemGroup>
     
     <ItemGroup>
-
-        <!--<PackageReference Include="Asv.Avalonia" Version="$(AsvAvaloniaVersion)" />
-        <PackageReference Include="Asv.Avalonia.GeoMap" Version="$(AsvAvaloniaVersion)" />
-        <PackageReference Include="Asv.Avalonia.IO" Version="$(AsvAvaloniaVersion)" />
-        <PackageReference Include="Asv.Avalonia.Plugins" Version="$(AsvAvaloniaVersion)" />-->
-
         <PackageReference Include="Asv.Mavlink" Version="$(AsvMavlinkVersion)" />
         <PackageReference Include="Asv.Gnss" Version="$(AsvGnssVersion)" />
         
@@ -85,5 +79,8 @@
       <Compile Remove="Services\Files\IFtpClientService.cs" />
       <Compile Remove="Services\Files\FtpClientService.cs" />
       <Compile Remove="Services\Files\LocalFilesMixin.cs" />
+      <Compile Update="Pages\Setup\Subpage\FrameType\SetupFrameTypeView.axaml.cs">
+        <DependentUpon>SetupFrameTypeView.axaml</DependentUpon>
+      </Compile>
     </ItemGroup>
 </Project>

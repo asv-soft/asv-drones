@@ -476,4 +476,10 @@
     <data name="FindFileOnLocalCommand_CommandInfo_Description" xml:space="preserve">
         <value>Command that finds a file selected in a remote tree in a local tree</value>
     </data>
+    <data name="SetupPageViewModel_Title" xml:space="preserve">
+        <value>Setup</value>
+    </data>
+    <data name="SetupFrameTypeViewModel_Name" xml:space="preserve">
+        <value>Frame type</value>
+    </data>
 </root>
