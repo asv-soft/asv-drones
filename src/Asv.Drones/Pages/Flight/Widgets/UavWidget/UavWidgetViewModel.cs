@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Common;
@@ -43,12 +44,25 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         : base(WidgetId, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
+        Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            GnssStatusBrush = new SolidColorBrush();
+            LinkQualityStatusBrush = new SolidColorBrush();
+            BatteryStatusBrush = new SolidColorBrush();
+            AltitudeStatusBrush = new SolidColorBrush();
+
+            AltitudeStatusBrush.Color = GreenColor;
+            BatteryStatusBrush.Color = RedColor;
+            GnssStatusBrush.Color = OrangeColor;
+            LinkQualityStatusBrush.Color = GreenColor;
+            GnssStatusBrush.Color = GreenColor;
+        });
+        TakeOff = new ReactiveCommand();
+        AutoMode = new ReactiveCommand();
+        Rtl = new ReactiveCommand();
+        Guided = new ReactiveCommand();
+        StartMission = new ReactiveCommand();
         InitArgs("1");
-        AltitudeStatusBrush.Color = GreenColor;
-        BatteryStatusBrush.Color = RedColor;
-        GnssStatusBrush.Color = OrangeColor;
-        LinkQualityStatusBrush.Color = GreenColor;
-        GnssStatusBrush.Color = GreenColor;
         MissionProgress = new MissionProgressViewModel().DisposeItWith(Disposable);
 
         var unitService = NullUnitService.Instance;
@@ -693,11 +707,11 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
     }
 
     public ReactiveCommand TakeOff { get; }
-    public BindableAsyncCommand AutoMode { get; }
-    public BindableAsyncCommand Rtl { get; }
-    public BindableAsyncCommand Land { get; }
-    public BindableAsyncCommand Guided { get; }
-    public BindableAsyncCommand StartMission { get; }
+    public ICommand AutoMode { get; }
+    public ICommand Rtl { get; }
+    public ICommand Land { get; }
+    public ICommand Guided { get; }
+    public ICommand StartMission { get; }
 
     public MissionProgressViewModel MissionProgress { get; }
 
@@ -712,12 +726,12 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
     public BindableReactiveProperty<string> BatteryChargeSymbol { get; }
     public BindableReactiveProperty<string> BatteryVoltageSymbol { get; }
 
-    private SolidColorBrush _batteryStatusBrush;
     public SolidColorBrush BatteryStatusBrush
     {
-        get => _batteryStatusBrush;
-        set => SetField(ref _batteryStatusBrush, value);
+        get;
+        set => SetField(ref field, value);
     }
+
     #endregion
 
     #region Gnss
@@ -727,31 +741,28 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
     public BindableReactiveProperty<string> VdopCount { get; }
     public BindableReactiveProperty<string> RtkMode { get; }
 
-    private SolidColorBrush _gnssStatusBrush;
-
     public SolidColorBrush GnssStatusBrush
     {
-        get => _gnssStatusBrush;
-        set => SetField(ref _gnssStatusBrush, value);
+        get;
+        set => SetField(ref field, value);
     }
+
     #endregion
 
     public BindableReactiveProperty<string> LinkState { get; }
     public HistoricalUnitProperty LinkQuality { get; }
     public BindableReactiveProperty<string> LinkQualitySymbol { get; }
 
-    private SolidColorBrush _altitudeStatusBrush;
     public SolidColorBrush AltitudeStatusBrush
     {
-        get => _altitudeStatusBrush;
-        set => SetField(ref _altitudeStatusBrush, value);
+        get;
+        set => SetField(ref field, value);
     }
 
-    private SolidColorBrush _linkQualityStatusBrush;
     public SolidColorBrush LinkQualityStatusBrush
     {
-        get => _linkQualityStatusBrush;
-        set => SetField(ref _linkQualityStatusBrush, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public BindableReactiveProperty<string> CurrentFlightMode { get; }
