@@ -40,4 +40,9 @@ public class GnssDeviceManagerExtension : IDeviceManagerExtension
         brush = null;
         return false;
     }
+
+    public void Run(IDeviceManager deviceManager)
+    {
+        // do nothing
+    }
 }
