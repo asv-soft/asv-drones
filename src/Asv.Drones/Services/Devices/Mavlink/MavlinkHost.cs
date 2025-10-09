@@ -70,7 +70,7 @@ public class MavlinkHost : IDeviceManagerExtension, IMavlinkHost, IStartupTask
     {
         var config = _cfgSvc.Get<MavlinkHeartbeatServerConfig>();
         var core = new CoreServices(_seq, deviceManager.Router, deviceManager.ProtocolFactory);
-
+        
         Heartbeat = new HeartbeatServer(Identity, config, core);
         Heartbeat.Set(m =>
         {
