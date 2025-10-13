@@ -774,8 +774,8 @@ public class FileBrowserViewModel
         );
 
         var toRemove = _localItems.Where(ls =>
-            newItems.All(n => n.Path != ls.Path || n.Size != ls.Size)
-        );
+            newItems.All(n => n.Path != ls.Path || n.Size != ls.Size)).ToArray();
+        
         foreach (var item in toRemove)
         {
             _localItems.Remove(item);

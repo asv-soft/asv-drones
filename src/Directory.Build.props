@@ -4,10 +4,10 @@
     <ProductVersion>2.0.1</ProductVersion>
     <TargetFramework>net9.0</TargetFramework>
     <ApiVersion>2.0.0-dev.2</ApiVersion>
-    <AvaloniaVersion>11.3.6</AvaloniaVersion>
-    <AsvAvaloniaVersion>1.0.3-dev.18</AsvAvaloniaVersion>
-    <AsvMavlinkVersion>4.0.18-dev.6</AsvMavlinkVersion>
-    <AsvGnssVersion>2.0.2-dev.6</AsvGnssVersion>
+    <AvaloniaVersion>11.3.7</AvaloniaVersion>
+    <AsvAvaloniaVersion>1.0.3-dev.20</AsvAvaloniaVersion>
+    <AsvMavlinkVersion>4.0.18-dev.8</AsvMavlinkVersion>
+    <AsvGnssVersion>2.0.2-dev.8</AsvGnssVersion>
     <ScottPlotVersion>5.0.55</ScottPlotVersion>
   </PropertyGroup>
 </Project>
