@@ -5,6 +5,7 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Asv.Avalonia;
 using Asv.Common;
 using Microsoft.Extensions.Logging;
 
@@ -19,12 +20,22 @@ public class LocalFilesService(IFileSystem? fileSystem = null)
         string root,
         FileBrowserBackend backend,
         ILoggerFactory loggerFactory,
+        IDictionary<string, DirectoryItemViewModelConfig>? directoryCfgs,
         CancellationToken ct = default,
         ILogger? log = null
     )
     {
         var result = new ConcurrentBag<IBrowserItemViewModel>();
-        ProcessBrowserDirectory(path, root, ref result, backend, loggerFactory, ct, log);
+        ProcessBrowserDirectory(
+            path,
+            root,
+            ref result,
+            backend,
+            loggerFactory,
+            directoryCfgs,
+            ct,
+            log
+        );
         log?.LogTrace("Directory processed ({Path})", path);
         return result.ToList();
     }
@@ -35,6 +46,7 @@ public class LocalFilesService(IFileSystem? fileSystem = null)
         ref ConcurrentBag<IBrowserItemViewModel> items,
         FileBrowserBackend backend,
         ILoggerFactory loggerFactory,
+        IDictionary<string, DirectoryItemViewModelConfig>? directoryCfgs,
         CancellationToken ct = default,
         ILogger? log = null
     )
@@ -64,19 +76,30 @@ public class LocalFilesService(IFileSystem? fileSystem = null)
             var id = PathHelper.EncodePathToId(dir);
             var parent = info.Parent?.FullName ?? root;
 
+            DirectoryItemViewModelConfig? cfg = null;
+            directoryCfgs?.TryGetValue(dir, out cfg);
             var vm = new DirectoryItemViewModel(
                 id,
                 parent,
                 dir,
                 info.Name,
                 FtpBrowserSourceType.Local,
-                loggerFactory
+                loggerFactory,
+                cfg
             );
 
             vm.AttachBackend(backend);
 
             items.Add(vm);
-            ProcessBrowserDirectory(dir, root, ref items, backend, loggerFactory, ct);
+            ProcessBrowserDirectory(
+                dir,
+                root,
+                ref items,
+                backend,
+                loggerFactory,
+                directoryCfgs,
+                ct
+            );
         }
 
         foreach (var file in _fileSystem.Directory.EnumerateFiles(path))

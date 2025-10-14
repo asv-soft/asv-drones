@@ -87,7 +87,6 @@ public class SavePacketMessagesDialogViewModel : DialogViewModelBase
 
     #region Dispose
 
-    private readonly IDisposable _sub1;
     private readonly IDisposable _sub2;
     private readonly IDisposable _sub3;
     private readonly IDisposable _sub4;
@@ -97,7 +96,6 @@ public class SavePacketMessagesDialogViewModel : DialogViewModelBase
     {
         if (isDisposing)
         {
-            _sub1.Dispose();
             _sub2.Dispose();
             _sub3.Dispose();
             _sub4.Dispose();

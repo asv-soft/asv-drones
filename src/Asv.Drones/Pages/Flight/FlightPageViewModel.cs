@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Composition;
-using System.Linq;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
-using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Api;
 using Material.Icons;
@@ -15,18 +13,23 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class FlightPageViewModelConfig : PageConfig { }
+public sealed class FlightPageViewModelConfig
+{
+    public GeoPoint MapCenter { get; set; } = GeoPoint.Zero;
+    public int Zoom { get; set; } = 0;
+    public string? SelectedAnchorId { get; set; }
+}
 
 [ExportPage(PageId)]
-public class FlightPageViewModel
-    : PageViewModel<IFlightMode, FileBrowserViewModelConfig>,
-        IFlightMode
+public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
 {
     public const string PageId = "flight";
     public const MaterialIconKind PageIcon = MaterialIconKind.MapSearch;
 
+    private FlightPageViewModelConfig? _config;
+
     public FlightPageViewModel()
-        : this(DesignTime.CommandService, DesignTime.Configuration, DesignTime.LoggerFactory, DesignTime.DialogService)
+        : this(DesignTime.CommandService, DesignTime.LoggerFactory, DesignTime.DialogService)
     {
         DesignTime.ThrowIfNotDesignMode();
         var drone = new MapAnchor<IMapAnchor>(DesignTime.Id, DesignTime.LoggerFactory)
@@ -51,11 +54,10 @@ public class FlightPageViewModel
     [ImportingConstructor]
     public FlightPageViewModel(
         ICommandService cmd,
-        IConfiguration cfg,
         ILoggerFactory loggerFactory,
         IDialogService dialogService
     )
-        : base(PageId, cmd, cfg, loggerFactory, dialogService)
+        : base(PageId, cmd, loggerFactory, dialogService)
     {
         Title = RS.FlightPageViewModel_Title;
         Icon = PageIcon;
@@ -81,18 +83,6 @@ public class FlightPageViewModel
 
     public BindableReactiveProperty<IMapAnchor?> SelectedAnchor { get; }
 
-    public override ValueTask<IRoutable> Navigate(NavigationId id)
-    {
-        var anchor = AnchorsView.FirstOrDefault(x => x.Id == id);
-        if (anchor != null)
-        {
-            SelectedAnchor.Value = anchor;
-            return ValueTask.FromResult<IRoutable>(anchor);
-        }
-
-        return ValueTask.FromResult<IRoutable>(this);
-    }
-
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
         foreach (var item in AnchorsView)
@@ -104,6 +94,40 @@ public class FlightPageViewModel
         {
             yield return widget;
         }
+    }
+
+    protected override ValueTask InternalCatchEvent(AsyncRoutedEvent e)
+    {
+        switch (e)
+        {
+            case SaveLayoutEvent saveLayoutEvent:
+                if (_config is null)
+                {
+                    break;
+                }
+
+                this.HandleSaveLayout(
+                    saveLayoutEvent,
+                    _config,
+                    cfg =>
+                    {
+                        // TODO: add save layout when flight mode is fixed
+                    },
+                    FlushingStrategy.FlushBothViewModelAndView
+                );
+                break;
+            case LoadLayoutEvent loadLayoutEvent:
+                _config = this.HandleLoadLayout<FlightPageViewModelConfig>(
+                    loadLayoutEvent,
+                    cfg =>
+                    {
+                        // TODO: add load layout when flight mode is fixed
+                    }
+                );
+                break;
+        }
+
+        return base.InternalCatchEvent(e);
     }
 
     protected override void AfterLoadExtensions()

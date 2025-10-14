@@ -100,10 +100,13 @@
                 <RowDefinition Height="*"/> 
             </Grid.RowDefinitions>
             <Expander 
+                x:Name="SourcesExpander"
                 Grid.Row="0" 
                 Header="{x:Static drones:RS.PacketViewerView_ExpanderFilterBySources_Header}" 
                 VerticalAlignment="Top"
-                HorizontalAlignment="Stretch">
+                HorizontalAlignment="Stretch"
+                Expanded="Expander_StateChanged"
+                Collapsed="Expander_StateChanged">
                 <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
                     <CheckBox
                         Grid.Row="0" 
@@ -143,9 +146,12 @@
             </Expander>
             <Expander 
                 Grid.Row="1" 
+                x:Name="TypesExpander"
                 Header="{x:Static drones:RS.PacketViewerView_ExpanderFilterByTypes_Header}" 
                 VerticalAlignment="Stretch"
-                HorizontalAlignment="Stretch">
+                HorizontalAlignment="Stretch"
+                Expanded="Expander_StateChanged"
+                Collapsed="Expander_StateChanged">
                 <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
                     <CheckBox
                         Grid.Row="0" 

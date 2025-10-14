@@ -80,10 +80,10 @@
     <Panel>
         <avalonia1:AwaitingScreen Header="{x:Static drones:RS.FileBrowserView_AwaitingScreen_Header}" 
                                   Description="{x:Static drones:RS.FileBrowserView_AwaitingScreen_Description}" 
-                                  IsVisible="{Binding !IsDeviceInitialized}"/>
+                                  IsVisible="{Binding !IsDeviceInitialized.Value}"/>
         <Grid RowDefinitions="*, Auto" 
-              IsVisible="{Binding IsDeviceInitialized}">
-            <Grid Grid.Row="0">
+              IsVisible="{Binding IsDeviceInitialized.Value} ">
+            <Grid Grid.Row="0" x:Name="MainGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" MinWidth="300"/>
                     <ColumnDefinition Width="30"/>
@@ -92,7 +92,8 @@
 
                 <Border Grid.Row="0"
                         Grid.Column="0"
-                        Padding="8">
+                        Padding="8"
+                        x:Name="LocalFilesColumn">
                     <DockPanel>
                         <StackPanel KeyboardNavigation.TabNavigation="None"
                                     DockPanel.Dock="Top" 
@@ -209,12 +210,15 @@
                 <!--Middle space-->
                 <GridSplitter Grid.Row="0"
                               Grid.Column="1" 
+                              x:Name="GridSplitterColumn"
                               Width="30"
                               KeyboardNavigation.TabNavigation="None"
+                              DragCompleted="GridSplitter_Dragged"
                               IsTabStop="False"/>
                 
                 <StackPanel Grid.Row="0"
                             Grid.Column="1"
+                            x:Name="RemoteFilesColumn"
                             KeyboardNavigation.TabNavigation="None"
                             IsEnabled="{Binding !IsUiBlocked.Value}"
                             IsTabStop="False"

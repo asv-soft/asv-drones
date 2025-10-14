@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Common;
 using Microsoft.Extensions.Logging;
 using R3;
 
 namespace Asv.Drones;
+
+public class PacketFilterViewModelBaseConfig
+{
+    public bool IsChecked { get; set; } = true;
+}
 
 public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
     where TFilter : PacketFilterViewModelBase<TFilter>
@@ -19,6 +25,7 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
     private readonly ReactiveProperty<double> _messageRate;
     private readonly IncrementalRateCounter _packetRate = new(BaseMovingAverageSize);
     private volatile int _cnt;
+    protected PacketFilterViewModelBaseConfig? Config;
 
     public abstract string FilterValue { get; }
 
@@ -43,18 +50,11 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
             loggerFactory,
             "F1"
         )
-        {
-            Parent = this,
-            
-        }.DisposeItWith(Disposable);
-        IsChecked = new HistoricalBoolProperty(
-            nameof(IsChecked),
-            _isChecked,
-            loggerFactory
-        ) {
-            Parent = this,
-            
-        }.DisposeItWith(Disposable);
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
+        IsChecked = new HistoricalBoolProperty(nameof(IsChecked), _isChecked, loggerFactory)
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
         MessageRateTextUnit = MessageRateText
             .Unit.CurrentUnitItem.Select(item => item.Symbol)
             .ToBindableReactiveProperty<string>()
@@ -75,6 +75,33 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
         yield return IsChecked;
+    }
+
+    protected override ValueTask InternalCatchEvent(AsyncRoutedEvent e)
+    {
+        switch (e)
+        {
+            case SaveLayoutEvent saveLayoutEvent:
+                if (Config is null)
+                {
+                    break;
+                }
+
+                this.HandleSaveLayout(
+                    saveLayoutEvent,
+                    Config,
+                    cfg => cfg.IsChecked = IsChecked.ViewValue.Value
+                );
+                break;
+            case LoadLayoutEvent loadLayoutEvent:
+                Config = this.HandleLoadLayout<PacketFilterViewModelBaseConfig>(
+                    loadLayoutEvent,
+                    cfg => IsChecked.ModelValue.Value = cfg.IsChecked
+                );
+                break;
+        }
+
+        return base.InternalCatchEvent(e);
     }
 
     private void UpdateRateText()

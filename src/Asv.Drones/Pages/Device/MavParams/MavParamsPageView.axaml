@@ -15,18 +15,18 @@
         <avalonia1:AwaitingScreen 
             Header="{x:Static drones:RS.MavParamsPageView_AwaitingScreen_Header}" 
             Description="{x:Static drones:RS.MavParamsPageView_AwaitingScreen_Description}" 
-            IsVisible="{Binding !IsDeviceInitialized}"/>
-        <Grid IsVisible="{Binding IsDeviceInitialized}">
+            IsVisible="{Binding !IsDeviceInitialized.Value}"/>
+        <Grid IsVisible="{Binding IsDeviceInitialized.Value}" x:Name="MainGrid">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="220" Width="*" />
+                <ColumnDefinition MinWidth="220" Width="*"/>
                 <ColumnDefinition Width="5" />
                 <ColumnDefinition MinWidth="500" Width="*" />
             </Grid.ColumnDefinitions>
-            <DockPanel Margin="5" Grid.Column="0" LastChildFill="True">
+            <DockPanel Margin="5" Grid.Column="0" LastChildFill="True" x:Name="AllParamsColumn">
                 <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                     <ToggleButton 
                         ToolTip.Tip="{x:Static drones:RS.ParametersEditorPageView_StarsToggleButton_ToolTip}"
-                        IsChecked="{CompiledBinding ShowStaredOnly.ViewValue.Value}"
+                        IsChecked="{CompiledBinding IsStarredOnly.ViewValue.Value}"
                         Margin="4 0 0 4" 
                         DockPanel.Dock="Right" 
                         Width="30"
@@ -85,8 +85,12 @@
                     </ListBox>
                 </ScrollViewer>
             </DockPanel>
-            <GridSplitter Background="Transparent" Grid.Column="1" />
-            <Panel Grid.Column="2">
+            <GridSplitter 
+                x:Name="GridSplitterColumn"
+                Background="Transparent" 
+                Grid.Column="1" 
+                DragCompleted="GridSplitter_Dragged"/>
+            <Panel Grid.Column="2" x:Name="ViewedParamsColumn">
                 <StackPanel IsVisible="{Binding IsRefreshing.Value}" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock Text="{x:Static drones:RS.MavParamsPageView_Loading_Text}" />
                     <ProgressBar Width="100" Value="{Binding Progress.Value}" Minimum="0" Maximum="1" />

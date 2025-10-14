@@ -7,6 +7,11 @@ using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
 
+public class DirectoryItemViewModelConfig
+{
+    public bool IsExpanded { get; set; }
+}
+
 public class DirectoryItemViewModel : BrowserItemViewModel
 {
     public DirectoryItemViewModel(
@@ -15,13 +20,15 @@ public class DirectoryItemViewModel : BrowserItemViewModel
         string path,
         string name,
         FtpBrowserSourceType type,
-        ILoggerFactory loggerFactory
+        ILoggerFactory loggerFactory,
+        DirectoryItemViewModelConfig? layoutConfig = null
     )
         : base(id, parentPath, path, type, loggerFactory)
     {
         HasChildren = true;
         Name = name;
         FtpEntryType = FtpEntryType.Directory;
+        IsExpanded = layoutConfig?.IsExpanded ?? IsExpanded;
     }
 
     public override async ValueTask<string> RenameAsync(
