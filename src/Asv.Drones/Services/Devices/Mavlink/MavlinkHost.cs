@@ -42,16 +42,11 @@ public class MavlinkHost : IDeviceManagerExtension, IMavlinkHost, IStartupTask
         builder.RegisterMavlinkV2Protocol();
         builder.Features.RegisterMavlinkV2WrapFeature();
         builder.Features.RegisterBroadcastFeature<MavlinkMessage>();
-        
     }
 
     public void Configure(IDeviceExplorerBuilder builder)
     {
-        builder.Factories.RegisterDefaultDevices(
-            Identity,
-            _seq,
-            _cfgSvc
-        );
+        builder.Factories.RegisterDefaultDevices(Identity, _seq, _cfgSvc);
     }
 
     public bool TryGetIcon(DeviceId id, out MaterialIconKind? icon)
@@ -78,10 +73,7 @@ public class MavlinkHost : IDeviceManagerExtension, IMavlinkHost, IStartupTask
             m.Type = MavType.MavTypeGcs;
             m.BaseMode = MavModeFlag.MavModeFlagCustomModeEnabled;
         });
-        core.Connection.OnTxMessage.Subscribe(x =>
-        {
-
-        });
+        core.Connection.OnTxMessage.Subscribe(x => { });
         Heartbeat.Start();
     }
 
@@ -100,8 +92,6 @@ public class MavlinkHost : IDeviceManagerExtension, IMavlinkHost, IStartupTask
     public void Initialize()
     {
         // do nothing
-
-        
     }
 
     public MavlinkIdentity Identity { get; }

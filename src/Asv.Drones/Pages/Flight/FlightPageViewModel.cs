@@ -15,18 +15,16 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class FlightPageViewModelConfig : PageConfig { }
+public sealed class FlightPageViewModelConfig { }
 
 [ExportPage(PageId)]
-public class FlightPageViewModel
-    : PageViewModel<IFlightMode, FileBrowserViewModelConfig>,
-        IFlightMode
+public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
 {
     public const string PageId = "flight";
     public const MaterialIconKind PageIcon = MaterialIconKind.MapSearch;
 
     public FlightPageViewModel()
-        : this(DesignTime.CommandService, DesignTime.Configuration, DesignTime.LoggerFactory)
+        : this(DesignTime.CommandService, NullLayoutService.Instance, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
         var drone = new MapAnchor<IMapAnchor>(DesignTime.Id, DesignTime.LoggerFactory)
@@ -51,10 +49,10 @@ public class FlightPageViewModel
     [ImportingConstructor]
     public FlightPageViewModel(
         ICommandService cmd,
-        IConfiguration cfg,
+        ILayoutService layoutService,
         ILoggerFactory loggerFactory
     )
-        : base(PageId, cmd, cfg, loggerFactory)
+        : base(PageId, cmd, layoutService, loggerFactory)
     {
         Title = RS.FlightPageViewModel_Title;
         Icon = PageIcon;

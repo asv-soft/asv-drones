@@ -10,8 +10,12 @@ namespace Asv.Drones;
 
 public abstract class SetupSubpage : TreeSubpage<ISetupPage>, ISetupSubpage
 {
-    protected SetupSubpage(NavigationId id, ILoggerFactory loggerFactory)
-        : base(id, loggerFactory)
+    protected SetupSubpage(
+        NavigationId id,
+        ILayoutService layoutService,
+        ILoggerFactory loggerFactory
+    )
+        : base(id, layoutService, loggerFactory)
     {
         Target = new ReactiveProperty<DeviceWrapper?>(null).DisposeItWith(Disposable);
     }

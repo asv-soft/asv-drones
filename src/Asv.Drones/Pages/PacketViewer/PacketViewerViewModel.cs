@@ -21,11 +21,10 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class PacketViewerViewModelConfig : PageConfig { }
+public sealed class PacketViewerViewModelConfig { }
 
 [ExportPage(PageId)]
-public class PacketViewerViewModel
-    : PageViewModel<PacketViewerViewModel, PacketViewerViewModelConfig>
+public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
 {
     public const string PageId = "packet-viewer";
     public const MaterialIconKind PageIcon = MaterialIconKind.Package;
@@ -65,7 +64,7 @@ public class PacketViewerViewModel
             NullUnitService.Instance,
             [],
             NullDeviceManager.Instance,
-            DesignTime.Configuration,
+            NullLayoutService.Instance,
             DesignTime.Navigation
         )
     {
@@ -88,10 +87,10 @@ public class PacketViewerViewModel
         IUnitService unit,
         [ImportMany] IEnumerable<IPacketConverter> converters,
         IDeviceManager deviceManager,
-        IConfiguration cfg,
+        ILayoutService layout,
         INavigationService navigationService
     )
-        : base(PageId, cmd, cfg, loggerFactory)
+        : base(PageId, cmd, layout, loggerFactory)
     {
         Title = RS.PacketViewerViewModel_Title;
         _app = app;

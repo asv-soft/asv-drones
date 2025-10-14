@@ -14,8 +14,8 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
     public const string PageId = "frame_type";
 
     [ImportingConstructor]
-    public SetupFrameTypeViewModel(ILoggerFactory loggerFactory)
-        : base(PageId, loggerFactory)
+    public SetupFrameTypeViewModel(ILayoutService layoutService, ILoggerFactory loggerFactory)
+        : base(PageId, layoutService, loggerFactory)
     {
         FullIdDebug = new BindableReactiveProperty<string>(
             NavigationId.NormalizeTypeId(this.GetPathToRoot().ToString())

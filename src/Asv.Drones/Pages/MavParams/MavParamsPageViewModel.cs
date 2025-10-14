@@ -20,35 +20,36 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class MavParamsPageViewModelConfig : PageConfig
+public sealed class MavParamsPageViewModelConfig
 {
     public List<ParamItemViewModelConfig> Params { get; set; } = [];
 }
 
 [ExportPage(PageId)]
 public class MavParamsPageViewModel // TODO: change config to new safe changes logic
-    : DevicePageViewModel<IMavParamsPageViewModel, MavParamsPageViewModelConfig>,
-        IMavParamsPageViewModel
+    : DevicePageViewModel<IMavParamsPageViewModel>, IMavParamsPageViewModel
 {
     public const string PageId = "mav-params";
     public const MaterialIconKind PageIcon = MaterialIconKind.CogTransferOutline;
+
+    private readonly ILayoutService _layoutService;
+    private readonly ILoggerFactory _loggerFactory;
+    private readonly INavigationService _nav;
+    private readonly ObservableList<ParamItemViewModel> _viewedParamsList; // TODO: Separate views for this collection and all params
+    private readonly ReactiveProperty<bool> _showStarredOnly;
 
     private DeviceId _deviceId;
     private IParamsClientEx? _paramsClient;
     private CancellationTokenSource? _cancellationTokenSource;
     private ISynchronizedView<KeyValuePair<string, ParamItem>, ParamItemViewModel> _view;
-
-    private readonly ILoggerFactory _loggerFactory;
-    private readonly INavigationService _nav;
-    private readonly ObservableList<ParamItemViewModel> _viewedParamsList; // TODO: Separate views for this collection and all params
-    private readonly ReactiveProperty<bool> _showStarredOnly;
+    private MavParamsPageViewModelConfig _config;
 
     public MavParamsPageViewModel()
         : this(
             NullDeviceManager.Instance,
             NullCommandService.Instance,
             NullLoggerFactory.Instance,
-            new InMemoryConfiguration(),
+            NullLayoutService.Instance,
             NullNavigationService.Instance
         )
     {
@@ -80,20 +81,21 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
         IDeviceManager devices,
         ICommandService cmd,
         ILoggerFactory loggerFactory,
-        IConfiguration cfg,
+        ILayoutService layoutService,
         INavigationService nav
     )
-        : base(PageId, devices, cmd, cfg, loggerFactory)
+        : base(PageId, devices, cmd, layoutService, loggerFactory)
     {
         ArgumentNullException.ThrowIfNull(devices);
         ArgumentNullException.ThrowIfNull(cmd);
-        ArgumentNullException.ThrowIfNull(cfg);
+        ArgumentNullException.ThrowIfNull(layoutService);
         ArgumentNullException.ThrowIfNull(loggerFactory);
         ArgumentNullException.ThrowIfNull(nav);
 
         Title = RS.MavParamsPageViewModel_Title;
 
         _loggerFactory = loggerFactory;
+        _layoutService = layoutService;
         _nav = nav;
         _showStarredOnly = new ReactiveProperty<bool>().DisposeItWith(Disposable);
         _viewedParamsList = [];
@@ -146,9 +148,6 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
 
         Disposable.AddAction(() =>
         {
-            Config.Params = Config.Params.Where(_ => _.IsStarred || _.IsPinned).ToList();
-            CfgService.Set(Config);
-
             if (_cancellationTokenSource is not null)
             {
                 if (_cancellationTokenSource.Token.CanBeCanceled)
@@ -230,7 +229,7 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
             kvp.Key,
             kvp.Value,
             _loggerFactory,
-            Config.Params.FirstOrDefault(_ => _.Name == kvp.Key)
+            _config.Params.FirstOrDefault(_ => _.Name == kvp.Key)
         ));
         _view.RegisterTo(cancel);
         _view.DisposeMany().RegisterTo(cancel);
@@ -250,7 +249,7 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
             .ObserveAdd(cancellationToken: cancel)
             .Subscribe(e =>
             {
-                foreach (var item in Config.Params)
+                foreach (var item in _config.Params)
                 {
                     if (e.Value.View.Name == item.Name)
                     {
@@ -443,14 +442,14 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
 
     private void UpdateConfig(ParamItemViewModel param)
     {
-        var existItem = Config.Params.FirstOrDefault(_ => _.Name == param.Name);
+        var existItem = _config.Params.FirstOrDefault(_ => _.Name == param.Name);
 
         if (existItem is not null)
         {
-            Config.Params.Remove(existItem);
+            _config.Params.Remove(existItem);
         }
 
-        Config.Params.Add(param.GetConfig());
+        _config.Params.Add(param.GetConfig());
     }
 
     private async Task<bool> TryCloseWithApproval()
@@ -509,6 +508,19 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
                 yield return paramItemViewModel;
             }
         }
+    }
+
+    protected override ValueTask HandleSaveLayout()
+    {
+        _config.Params = _config.Params.Where(_ => _.IsStarred || _.IsPinned).ToList();
+        _layoutService.SetInMemory(this, _config);
+        return base.HandleSaveLayout();
+    }
+
+    protected override ValueTask HandleLoadLayout()
+    {
+        _config = _layoutService.Get<MavParamsPageViewModelConfig>(this);
+        return base.HandleLoadLayout();
     }
 
     protected override void AfterLoadExtensions() { }

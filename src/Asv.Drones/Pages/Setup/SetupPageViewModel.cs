@@ -10,12 +10,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
 
-public sealed class SetupPageViewModelConfig : PageConfig { }
+public sealed class SetupPageViewModelConfig { }
 
 [ExportPage(PageId)]
-public class SetupPageViewModel
-    : TreeDevicePageViewModel<ISetupPage, ISetupSubpage, SetupPageViewModelConfig>,
-        ISetupPage
+public class SetupPageViewModel : TreeDevicePageViewModel<ISetupPage, ISetupSubpage>, ISetupPage
 {
     public const string PageId = "setup";
     public const MaterialIconKind PageIcon = MaterialIconKind.Cogs;
@@ -25,10 +23,10 @@ public class SetupPageViewModel
         ICommandService cmd,
         IDeviceManager devices,
         IContainerHost container,
-        IConfiguration cfg,
+        ILayoutService layoutService,
         ILoggerFactory loggerFactory
     )
-        : base(PageId, devices, cmd, container, cfg, loggerFactory)
+        : base(PageId, devices, cmd, container, layoutService, loggerFactory)
     {
         Icon = PageIcon;
     }

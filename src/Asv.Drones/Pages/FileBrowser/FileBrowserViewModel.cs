@@ -21,11 +21,11 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class FileBrowserViewModelConfig : PageConfig { }
+public sealed class FileBrowserViewModelConfig { }
 
 [ExportPage(PageId)]
 public class FileBrowserViewModel
-    : DevicePageViewModel<IFileBrowserViewModel, FileBrowserViewModelConfig>,
+    : DevicePageViewModel<IFileBrowserViewModel>,
         IFileBrowserViewModel,
         ISupportRefresh,
         ITransferFtpEntries
@@ -56,7 +56,7 @@ public class FileBrowserViewModel
             NullDeviceManager.Instance,
             NullDialogService.Instance,
             NullAppPath.Instance,
-            DesignTime.Configuration,
+            NullLayoutService.Instance,
             NullLoggerFactory.Instance,
             DesignTime.Navigation
         )
@@ -179,11 +179,11 @@ public class FileBrowserViewModel
         IDeviceManager devices,
         IDialogService dialogService,
         IAppPath appPath,
-        IConfiguration cfg,
+        ILayoutService layoutService,
         ILoggerFactory loggerFactory,
         INavigationService navigation
     )
-        : base(PageId, devices, cmd, cfg, loggerFactory)
+        : base(PageId, devices, cmd, layoutService, loggerFactory)
     {
         _localRootPath = appPath.UserDataFolder;
         _remoteRootPath = MavlinkFtpHelper.DirectorySeparator.ToString();
@@ -773,9 +773,10 @@ public class FileBrowserViewModel
             _loggerFactory
         );
 
-        var toRemove = _localItems.Where(ls =>
-            newItems.All(n => n.Path != ls.Path || n.Size != ls.Size)).ToArray();
-        
+        var toRemove = _localItems
+            .Where(ls => newItems.All(n => n.Path != ls.Path || n.Size != ls.Size))
+            .ToArray();
+
         foreach (var item in toRemove)
         {
             _localItems.Remove(item);
