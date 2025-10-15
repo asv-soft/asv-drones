@@ -30,7 +30,7 @@ public class MissionProgressViewModel : RoutableViewModel
     private bool _isOnMission;
 
     public MissionProgressViewModel()
-        : base(ViewModelId, DesignTime.LoggerFactory)
+        : base(ViewModelId, NullLayoutService.Instance, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
         _cts = new CancellationTokenSource().DisposeItWith(Disposable);
@@ -52,6 +52,7 @@ public class MissionProgressViewModel : RoutableViewModel
             nameof(MissionDistance),
             missionDistance,
             nullUnit,
+            NullLayoutService.Instance,
             DesignTime.LoggerFactory,
             this,
             "N2"
@@ -61,6 +62,7 @@ public class MissionProgressViewModel : RoutableViewModel
             nameof(HomeDistance),
             homeDistance,
             nullUnit,
+            NullLayoutService.Instance,
             DesignTime.LoggerFactory,
             this,
             "N2"
@@ -70,6 +72,7 @@ public class MissionProgressViewModel : RoutableViewModel
             nameof(TargetDistance),
             targetDistance,
             nullUnit,
+            NullLayoutService.Instance,
             DesignTime.LoggerFactory,
             this,
             "N2"
@@ -79,6 +82,7 @@ public class MissionProgressViewModel : RoutableViewModel
             nameof(TotalDistance),
             totalDistance,
             nullUnit,
+            NullLayoutService.Instance,
             DesignTime.LoggerFactory,
             this,
             "N2"
@@ -94,10 +98,11 @@ public class MissionProgressViewModel : RoutableViewModel
     public MissionProgressViewModel(
         IClientDevice device,
         IUnitService unitService,
+        ILayoutService layoutService,
         ILoggerFactory loggerFactory,
         IRoutable parent
     )
-        : base(ViewModelId, loggerFactory)
+        : base(ViewModelId, layoutService, loggerFactory)
     {
         ArgumentNullException.ThrowIfNull(device);
         ArgumentNullException.ThrowIfNull(unitService);
@@ -194,6 +199,7 @@ public class MissionProgressViewModel : RoutableViewModel
             nameof(MissionDistance),
             missionDistance,
             _distanceUnit,
+            layoutService,
             loggerFactory,
             this,
             "N2"
@@ -203,6 +209,7 @@ public class MissionProgressViewModel : RoutableViewModel
             nameof(HomeDistance),
             homeDistance,
             _distanceUnit,
+            layoutService,
             loggerFactory,
             this,
             "N2"
@@ -212,6 +219,7 @@ public class MissionProgressViewModel : RoutableViewModel
             nameof(TargetDistance),
             targetDistance,
             _distanceUnit,
+            layoutService,
             loggerFactory,
             this,
             "N2"
@@ -221,6 +229,7 @@ public class MissionProgressViewModel : RoutableViewModel
             nameof(TotalDistance),
             totalDistance,
             _distanceUnit,
+            layoutService,
             loggerFactory,
             this,
             "N2"

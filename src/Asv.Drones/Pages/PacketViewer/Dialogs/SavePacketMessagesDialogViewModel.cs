@@ -15,14 +15,17 @@ public class SavePacketMessagesDialogViewModel : DialogViewModelBase
     public const string DefaultShieldSymbol = ",";
 
     public SavePacketMessagesDialogViewModel()
-        : this(DesignTime.LoggerFactory)
+        : this(NullLayoutService.Instance, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
     }
 
     [ImportingConstructor]
-    public SavePacketMessagesDialogViewModel(ILoggerFactory loggerFactory)
-        : base(ViewModelId, loggerFactory)
+    public SavePacketMessagesDialogViewModel(
+        ILayoutService layoutService,
+        ILoggerFactory loggerFactory
+    )
+        : base(ViewModelId, layoutService, loggerFactory)
     {
         IsSemicolon = new BindableReactiveProperty<bool>(true).DisposeItWith(Disposable);
         IsComa = new BindableReactiveProperty<bool>(false).DisposeItWith(Disposable);

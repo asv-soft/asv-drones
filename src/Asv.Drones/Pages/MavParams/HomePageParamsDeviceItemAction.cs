@@ -10,7 +10,10 @@ namespace Asv.Drones;
 
 [ExportExtensionFor<IHomePageItem>]
 [method: ImportingConstructor]
-public class HomePageParamsDeviceItemAction(ILoggerFactory loggerFactory) : HomePageDeviceItemAction
+public class HomePageParamsDeviceItemAction(
+    ILayoutService layoutService,
+    ILoggerFactory loggerFactory
+) : HomePageDeviceItemAction
 {
     protected override IActionViewModel? TryCreateAction(
         IClientDevice device,
@@ -22,7 +25,7 @@ public class HomePageParamsDeviceItemAction(ILoggerFactory loggerFactory) : Home
             return null;
         }
 
-        return new ActionViewModel("params", loggerFactory)
+        return new ActionViewModel("params", layoutService, loggerFactory)
         {
             Icon = MaterialIconKind.CogTransferOutline,
             Header = RS.HomePageParamsDeviceItemAction_ActionViewModel_Header,

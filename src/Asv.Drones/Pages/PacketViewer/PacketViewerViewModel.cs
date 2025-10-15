@@ -87,10 +87,10 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         IUnitService unit,
         [ImportMany] IEnumerable<IPacketConverter> converters,
         IDeviceManager deviceManager,
-        ILayoutService layout,
+        ILayoutService layoutService,
         INavigationService navigationService
     )
-        : base(PageId, cmd, layout, loggerFactory)
+        : base(PageId, cmd, layoutService, loggerFactory)
     {
         Title = RS.PacketViewerViewModel_Title;
         _app = app;
@@ -130,11 +130,13 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         IsPaused = new HistoricalBoolProperty(
             nameof(IsPaused),
             _isPaused,
+            layoutService,
             loggerFactory,
             this
         ).DisposeItWith(Disposable);
         Search = new SearchBoxViewModel(
             nameof(Search),
+            layoutService,
             loggerFactory,
             (_, _, _) => Task.CompletedTask,
             TimeSpan.FromMilliseconds(500)
@@ -145,12 +147,14 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         IsCheckedAllSources = new HistoricalBoolProperty(
             nameof(IsCheckedAllSources),
             _isCheckedAllSources,
+            layoutService,
             loggerFactory,
             this
         ).DisposeItWith(Disposable);
         IsCheckedAllTypes = new HistoricalBoolProperty(
             nameof(IsCheckedAllTypes),
             _isCheckedAllTypes,
+            layoutService,
             loggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -317,7 +321,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
 
     internal async ValueTask ExportToCsvImpl()
     {
-        using var vm = new SavePacketMessagesDialogViewModel(_loggerFactory);
+        using var vm = new SavePacketMessagesDialogViewModel(LayoutService, _loggerFactory);
         var dialog = new ContentDialog(vm, _navigationService)
         {
             Title = RS.PacketViewerViewModel_SavePacketMessagesDialog_Title,
@@ -380,7 +384,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
             var converter =
                 _converters.FirstOrDefault(c => c.CanConvert(packet))
                 ?? new DefaultMavlinkPacketConverter();
-            var vm = new PacketMessageViewModel(packet, converter);
+            var vm = new PacketMessageViewModel(packet, converter, LayoutService, _loggerFactory);
             _disposables.Add(vm);
             yield return vm;
         }
@@ -401,7 +405,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
             return;
         }
 
-        var newFilter = new SourcePacketFilterViewModel(vm, _unit, _loggerFactory);
+        var newFilter = new SourcePacketFilterViewModel(vm, _unit, LayoutService, _loggerFactory);
         _disposables.Add(newFilter);
         var isAdded = _filtersBySourceSet.Add(newFilter);
 
@@ -422,7 +426,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
             return;
         }
 
-        var newFilter = new TypePacketFilterViewModel(vm, _unit, _loggerFactory);
+        var newFilter = new TypePacketFilterViewModel(vm, _unit, LayoutService, _loggerFactory);
         _disposables.Add(newFilter);
         var isAdded = _filtersByTypeSet.Add(newFilter);
 

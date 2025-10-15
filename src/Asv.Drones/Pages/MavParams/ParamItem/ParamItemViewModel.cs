@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
 using Asv.Common;
@@ -27,7 +28,7 @@ public class ParamItemViewModel : RoutableViewModel
     private bool _internalUpdate;
 
     public ParamItemViewModel()
-        : base(DesignTime.Id, DesignTime.LoggerFactory) // use base class instead of ParamItem, because there is no way to create an empty Param item
+        : base(DesignTime.Id, NullLayoutService.Instance, DesignTime.LoggerFactory) // use base class instead of ParamItem, because there is no way to create an empty Param item
     {
         DesignTime.ThrowIfNotDesignMode();
 
@@ -41,10 +42,11 @@ public class ParamItemViewModel : RoutableViewModel
     public ParamItemViewModel(
         NavigationId id,
         ParamItem paramItem,
+        ILayoutService layoutService,
         ILoggerFactory loggerFactory,
         ParamItemViewModelConfig? config
     )
-        : base(id, loggerFactory)
+        : base(id, layoutService, loggerFactory)
     {
         ArgumentNullException.ThrowIfNull(paramItem);
         ArgumentNullException.ThrowIfNull(loggerFactory);
@@ -60,9 +62,21 @@ public class ParamItemViewModel : RoutableViewModel
         _isPinned = new ReactiveProperty<bool>(config?.IsPinned ?? false);
         _isStarred = new ReactiveProperty<bool>(config?.IsStarred ?? false);
 
-        IsPinned = new HistoricalBoolProperty(nameof(IsPinned), _isPinned, loggerFactory, this);
+        IsPinned = new HistoricalBoolProperty(
+            nameof(IsPinned),
+            _isPinned,
+            layoutService,
+            loggerFactory,
+            this
+        );
         IsPinned.ForceValidate();
-        IsStarred = new HistoricalBoolProperty(nameof(IsStarred), _isStarred, loggerFactory, this);
+        IsStarred = new HistoricalBoolProperty(
+            nameof(IsStarred),
+            _isStarred,
+            layoutService,
+            loggerFactory,
+            this
+        );
         IsStarred.ForceValidate();
 
         Value = new BindableReactiveProperty<string?>();
@@ -304,6 +318,19 @@ public class ParamItemViewModel : RoutableViewModel
         }
 
         return Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase);
+    }
+
+    protected override ValueTask InternalCatchEvent(AsyncRoutedEvent e)
+    {
+        switch (e)
+        {
+            case SaveLayoutEvent:
+            case LoadLayoutEvent:
+                break;
+            default:
+                break;
+        }
+        return base.InternalCatchEvent(e);
     }
 
     public ParamItemViewModelConfig GetConfig()

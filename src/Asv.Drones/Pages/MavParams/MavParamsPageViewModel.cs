@@ -103,6 +103,7 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
 
         Search = new SearchBoxViewModel(
             nameof(Search),
+            layoutService,
             loggerFactory,
             UpdateImpl,
             TimeSpan.FromMilliseconds(500)
@@ -113,6 +114,7 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
         ShowStaredOnly = new HistoricalBoolProperty(
             nameof(ShowStaredOnly),
             _showStarredOnly,
+            layoutService,
             loggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -228,6 +230,7 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
         _view = _paramsClient.Items.CreateView(kvp => new ParamItemViewModel(
             kvp.Key,
             kvp.Value,
+            LayoutService,
             _loggerFactory,
             _config.Params.FirstOrDefault(_ => _.Name == kvp.Key)
         ));
@@ -461,7 +464,7 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
             return true;
         }
 
-        using var vm = new TryCloseWithApprovalDialogViewModel(_loggerFactory);
+        using var vm = new TryCloseWithApprovalDialogViewModel(_layoutService, _loggerFactory);
         var dialog = new ContentDialog(vm, _nav)
         {
             Title = RS.ParamPageViewModel_DataLossDialog_Title,

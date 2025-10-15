@@ -27,7 +27,11 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
         : this(DesignTime.CommandService, NullLayoutService.Instance, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
-        var drone = new MapAnchor<IMapAnchor>(DesignTime.Id, DesignTime.LoggerFactory)
+        var drone = new MapAnchor<IMapAnchor>(
+            DesignTime.Id,
+            NullLayoutService.Instance,
+            DesignTime.LoggerFactory
+        )
         {
             Icon = MaterialIconKind.Navigation,
             Location = new GeoPoint(53, 53, 100),

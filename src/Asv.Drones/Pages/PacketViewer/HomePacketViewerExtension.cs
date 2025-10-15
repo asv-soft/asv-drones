@@ -8,13 +8,14 @@ namespace Asv.Drones;
 
 [ExportExtensionFor<IHomePage>]
 [method: ImportingConstructor]
-public class HomePacketViewerExtension(ILoggerFactory loggerFactory) : IExtensionFor<IHomePage>
+public class HomePacketViewerExtension(ILayoutService layoutService, ILoggerFactory loggerFactory)
+    : IExtensionFor<IHomePage>
 {
     public void Extend(IHomePage context, CompositeDisposable contextDispose)
     {
         context.Tools.Add(
             OpenPacketViewerCommand
-                .StaticInfo.CreateAction(loggerFactory)
+                .StaticInfo.CreateAction(layoutService, loggerFactory)
                 .DisposeItWith(contextDispose)
         );
     }

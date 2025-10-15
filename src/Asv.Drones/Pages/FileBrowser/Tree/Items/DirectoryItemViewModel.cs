@@ -15,9 +15,10 @@ public class DirectoryItemViewModel : BrowserItemViewModel
         string path,
         string name,
         FtpBrowserSourceType type,
+        ILayoutService layoutService,
         ILoggerFactory loggerFactory
     )
-        : base(id, parentPath, path, type, loggerFactory)
+        : base(id, parentPath, path, type, layoutService, loggerFactory)
     {
         HasChildren = true;
         Name = name;

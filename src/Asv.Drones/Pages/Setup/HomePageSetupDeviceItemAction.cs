@@ -8,14 +8,17 @@ namespace Asv.Drones;
 
 [ExportExtensionFor<IHomePageItem>]
 [method: ImportingConstructor]
-public class HomePageSetupDeviceItemAction(ILoggerFactory loggerFactory) : HomePageDeviceItemAction
+public class HomePageSetupDeviceItemAction(
+    ILayoutService layoutService,
+    ILoggerFactory loggerFactory
+) : HomePageDeviceItemAction
 {
     protected override IActionViewModel? TryCreateAction(
         IClientDevice device,
         HomePageDeviceItem context
     )
     {
-        return new ActionViewModel(SetupPageViewModel.PageId, loggerFactory)
+        return new ActionViewModel(SetupPageViewModel.PageId, layoutService, loggerFactory)
         {
             Header = OpenSetupCommand.StaticInfo.Name,
             Description = OpenSetupCommand.StaticInfo.Description,

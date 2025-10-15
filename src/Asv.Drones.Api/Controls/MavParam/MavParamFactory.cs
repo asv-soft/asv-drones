@@ -11,6 +11,7 @@ public static class MavParamFactory
         IMavParamTypeMetadata metadata,
         Observable<MavParamValue> update,
         InitialReadParamDelegate initReadCallback,
+        ILayoutService layoutService,
         ILoggerFactory loggerFactory,
         IUnitService measureService
     )
@@ -22,6 +23,7 @@ public static class MavParamFactory
                 info,
                 update,
                 initReadCallback,
+                layoutService,
                 loggerFactory,
                 measureService
             ),
@@ -29,6 +31,7 @@ public static class MavParamFactory
                 info,
                 update,
                 initReadCallback,
+                layoutService,
                 loggerFactory,
                 measureService,
                 true
@@ -37,6 +40,7 @@ public static class MavParamFactory
                 info,
                 update,
                 initReadCallback,
+                layoutService,
                 loggerFactory,
                 measureService,
                 false
@@ -45,21 +49,30 @@ public static class MavParamFactory
                 info,
                 update,
                 initReadCallback,
+                layoutService,
                 loggerFactory
             ),
             MavParamWidgetType.ComboBox => new MavParamComboBoxViewModel(
                 info,
                 update,
                 initReadCallback,
+                layoutService,
                 loggerFactory
             ),
-            _ => new MavParamTextBoxViewModel(info, update, initReadCallback, loggerFactory),
+            _ => new MavParamTextBoxViewModel(
+                info,
+                update,
+                initReadCallback,
+                layoutService,
+                loggerFactory
+            ),
         };
     }
 
     public static MavParamViewModel Create(
         IMavParamTypeMetadata param,
         IParamsClientEx svc,
+        ILayoutService layoutService,
         ILoggerFactory loggerFactory,
         IUnitService measureService
     )
@@ -68,6 +81,7 @@ public static class MavParamFactory
             param,
             svc.Filter(param.Name),
             svc.GetFromCacheOrReadOnce,
+            layoutService,
             loggerFactory,
             measureService
         );

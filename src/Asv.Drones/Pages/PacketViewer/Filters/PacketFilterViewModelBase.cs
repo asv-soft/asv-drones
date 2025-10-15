@@ -29,9 +29,10 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
     protected PacketFilterViewModelBase(
         string idArg,
         IUnitService unitService,
+        ILayoutService layoutService,
         ILoggerFactory loggerFactory
     )
-        : base(new NavigationId(BaseId, idArg), loggerFactory)
+        : base(new NavigationId(BaseId, idArg), layoutService, loggerFactory)
     {
         _unit = unitService.Units[FrequencyBase.Id];
         _isChecked = new ReactiveProperty<bool>(true).DisposeItWith(Disposable);
@@ -40,6 +41,7 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
             nameof(MessageRateText),
             _messageRate,
             _unit,
+            layoutService,
             loggerFactory,
             this,
             "F1"
@@ -47,6 +49,7 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
         IsChecked = new HistoricalBoolProperty(
             nameof(IsChecked),
             _isChecked,
+            layoutService,
             loggerFactory,
             this
         ).DisposeItWith(Disposable);

@@ -9,8 +9,10 @@ namespace Asv.Drones;
 
 [ExportExtensionFor<IHomePageItem>]
 [method: ImportingConstructor]
-public class HomePageFileBrowserDeviceItemAction(ILoggerFactory loggerFactory)
-    : HomePageDeviceItemAction
+public class HomePageFileBrowserDeviceItemAction(
+    ILayoutService layoutService,
+    ILoggerFactory loggerFactory
+) : HomePageDeviceItemAction
 {
     protected override IActionViewModel? TryCreateAction(
         IClientDevice device,
@@ -22,7 +24,7 @@ public class HomePageFileBrowserDeviceItemAction(ILoggerFactory loggerFactory)
             return null;
         }
 
-        return new ActionViewModel("browser", loggerFactory)
+        return new ActionViewModel("browser", layoutService, loggerFactory)
         {
             Header = OpenFileBrowserCommand.StaticInfo.Name,
             Description = OpenFileBrowserCommand.StaticInfo.Description,

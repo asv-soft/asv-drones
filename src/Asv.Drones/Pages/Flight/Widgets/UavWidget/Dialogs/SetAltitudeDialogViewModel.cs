@@ -12,13 +12,21 @@ public class SetAltitudeDialogViewModel : DialogViewModelBase
     public const string DialogId = $"{BaseId}.altitude";
 
     public SetAltitudeDialogViewModel()
-        : this(new NullUnitBase([new NullUnitItemInternational()]), DesignTime.LoggerFactory)
+        : this(
+            new NullUnitBase([new NullUnitItemInternational()]),
+            NullLayoutService.Instance,
+            DesignTime.LoggerFactory
+        )
     {
         DesignTime.ThrowIfNotDesignMode();
     }
 
-    public SetAltitudeDialogViewModel(IUnit unit, ILoggerFactory loggerFactory)
-        : base(DialogId, loggerFactory)
+    public SetAltitudeDialogViewModel(
+        IUnit unit,
+        ILayoutService layoutService,
+        ILoggerFactory loggerFactory
+    )
+        : base(DialogId, layoutService, loggerFactory)
     {
         AltitudeUnit =
             unit as AltitudeBase

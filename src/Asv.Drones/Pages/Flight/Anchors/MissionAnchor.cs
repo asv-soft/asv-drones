@@ -1,4 +1,5 @@
-﻿using Asv.Avalonia.GeoMap;
+﻿using Asv.Avalonia;
+using Asv.Avalonia.GeoMap;
 using Asv.Common;
 using Avalonia.Media;
 using Material.Icons;
@@ -8,8 +9,14 @@ namespace Asv.Drones;
 
 public class MissionAnchor : MapAnchor<MissionAnchor>
 {
-    public MissionAnchor(int index, GeoPoint current, GeoPoint next, ILoggerFactory loggerFactory)
-        : base($"wayPoint{index}", loggerFactory) // TODO: Use a more descriptive ID with drone ID
+    public MissionAnchor(
+        int index,
+        GeoPoint current,
+        GeoPoint next,
+        ILayoutService layoutService,
+        ILoggerFactory loggerFactory
+    )
+        : base($"wayPoint{index}", layoutService, loggerFactory) // TODO: Use a more descriptive ID with drone ID
     {
         Location = current;
         Title = index.ToString();
@@ -22,8 +29,13 @@ public class MissionAnchor : MapAnchor<MissionAnchor>
         Polygon.Add(next);
     }
 
-    public MissionAnchor(int index, GeoPoint current, ILoggerFactory loggerFactory)
-        : base($"wayPoint{index}", loggerFactory)
+    public MissionAnchor(
+        int index,
+        GeoPoint current,
+        ILayoutService layoutService,
+        ILoggerFactory loggerFactory
+    )
+        : base($"wayPoint{index}", layoutService, loggerFactory)
     {
         Location = current;
         Title = index.ToString();

@@ -16,6 +16,7 @@ public class FlightWidgetsExtension(
     IDeviceManager conn,
     INavigationService navigationService,
     IUnitService unitService,
+    ILayoutService layoutService,
     ILoggerFactory loggerFactory
 ) : IExtensionFor<IFlightMode>
 {
@@ -39,7 +40,14 @@ public class FlightWidgetsExtension(
             return null;
         }
 
-        return new UavWidgetViewModel(device, navigationService, unitService, conn, loggerFactory);
+        return new UavWidgetViewModel(
+            device,
+            navigationService,
+            unitService,
+            conn,
+            layoutService,
+            loggerFactory
+        );
     }
 
     private bool RemoveWidget(IClientDevice model, UavWidgetViewModel vm)

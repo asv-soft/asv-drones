@@ -17,7 +17,8 @@ namespace Asv.Drones;
 
 [ExportExtensionFor<ISetupPage>]
 [method: ImportingConstructor]
-public class SetupPageExtension(ILoggerFactory loggerFactory) : IExtensionFor<ISetupPage>
+public class SetupPageExtension(ILayoutService layoutService, ILoggerFactory loggerFactory)
+    : IExtensionFor<ISetupPage>
 {
     public void Extend(ISetupPage context, CompositeDisposable contextDispose)
     {
@@ -66,6 +67,7 @@ public class SetupPageExtension(ILoggerFactory loggerFactory) : IExtensionFor<IS
                 MaterialIconKind.ThemeLightDark,
                 SetupFrameTypeViewModel.PageId,
                 NavigationId.Empty,
+                layoutService,
                 loggerFactory
             ).DisposeItWith(contextDispose)
         );
