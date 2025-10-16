@@ -15,9 +15,9 @@ namespace Asv.Drones;
 
 public class ParamItemViewModelConfig
 {
-    public bool IsStarred { get; init; }
-    public string Name { get; init; }
-    public bool IsPinned { get; init; }
+    public string Name { get; set; } = string.Empty;
+    public bool IsStarred { get; set; }
+    public bool IsPinned { get; set; }
 }
 
 public class ParamItemViewModel : RoutableViewModel
@@ -25,6 +25,7 @@ public class ParamItemViewModel : RoutableViewModel
     private readonly ParamItem _paramItem;
     private readonly ReactiveProperty<bool> _isPinned;
     private readonly ReactiveProperty<bool> _isStarred;
+    private ParamItemViewModelConfig _config;
     private bool _internalUpdate;
 
     public ParamItemViewModel()
@@ -43,8 +44,7 @@ public class ParamItemViewModel : RoutableViewModel
         NavigationId id,
         ParamItem paramItem,
         ILayoutService layoutService,
-        ILoggerFactory loggerFactory,
-        ParamItemViewModelConfig? config
+        ILoggerFactory loggerFactory
     )
         : base(id, layoutService, loggerFactory)
     {
@@ -59,8 +59,8 @@ public class ParamItemViewModel : RoutableViewModel
         ValueDescription = paramItem.Info.UnitsDisplayName ?? string.Empty;
         IsRebootRequired = paramItem.Info.IsRebootRequired;
 
-        _isPinned = new ReactiveProperty<bool>(config?.IsPinned ?? false);
-        _isStarred = new ReactiveProperty<bool>(config?.IsStarred ?? false);
+        _isPinned = new ReactiveProperty<bool>(false);
+        _isStarred = new ReactiveProperty<bool>(false);
 
         IsPinned = new HistoricalBoolProperty(
             nameof(IsPinned),
@@ -320,39 +320,26 @@ public class ParamItemViewModel : RoutableViewModel
         return Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase);
     }
 
-    protected override ValueTask InternalCatchEvent(AsyncRoutedEvent e)
-    {
-        switch (e)
-        {
-            case SaveLayoutEvent:
-            case LoadLayoutEvent:
-                break;
-            default:
-                break;
-        }
-        return base.InternalCatchEvent(e);
-    }
-
-    public ParamItemViewModelConfig GetConfig()
-    {
-        return new ParamItemViewModelConfig
-        {
-            IsStarred = IsStarred.ViewValue.Value,
-            IsPinned = IsPinned.ViewValue.Value,
-            Name = Name,
-        };
-    }
-
-    public void SetConfig(ParamItemViewModelConfig item)
-    {
-        IsStarred.ViewValue.Value = item.IsStarred;
-        IsPinned.ViewValue.Value = item.IsPinned;
-    }
-
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
         yield return IsPinned;
         yield return IsStarred;
+    }
+
+    protected override ValueTask HandleSaveLayout()
+    {
+        _config.IsPinned = IsPinned.ViewValue.Value;
+        _config.IsStarred = IsStarred.ViewValue.Value;
+        LayoutService.SetInMemory(this, _config);
+        return base.HandleSaveLayout();
+    }
+
+    protected override ValueTask HandleLoadLayout()
+    {
+        _config = LayoutService.Get<ParamItemViewModelConfig>(this);
+        IsPinned.ModelValue.Value = _config.IsPinned;
+        IsStarred.ModelValue.Value = _config.IsStarred;
+        return base.HandleLoadLayout();
     }
 
     #region Dispose

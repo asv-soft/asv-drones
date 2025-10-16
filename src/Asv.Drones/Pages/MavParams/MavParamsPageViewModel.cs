@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
-using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
@@ -20,10 +19,7 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class MavParamsPageViewModelConfig
-{
-    public List<ParamItemViewModelConfig> Params { get; set; } = [];
-}
+public sealed class MavParamsPageViewModelConfig { }
 
 [ExportPage(PageId)]
 public class MavParamsPageViewModel // TODO: change config to new safe changes logic
@@ -32,7 +28,6 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
     public const string PageId = "mav-params";
     public const MaterialIconKind PageIcon = MaterialIconKind.CogTransferOutline;
 
-    private readonly ILayoutService _layoutService;
     private readonly ILoggerFactory _loggerFactory;
     private readonly INavigationService _nav;
     private readonly ObservableList<ParamItemViewModel> _viewedParamsList; // TODO: Separate views for this collection and all params
@@ -95,7 +90,6 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
         Title = RS.MavParamsPageViewModel_Title;
 
         _loggerFactory = loggerFactory;
-        _layoutService = layoutService;
         _nav = nav;
         _showStarredOnly = new ReactiveProperty<bool>().DisposeItWith(Disposable);
         _viewedParamsList = [];
@@ -231,8 +225,7 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
             kvp.Key,
             kvp.Value,
             LayoutService,
-            _loggerFactory,
-            _config.Params.FirstOrDefault(_ => _.Name == kvp.Key)
+            _loggerFactory
         ));
         _view.RegisterTo(cancel);
         _view.DisposeMany().RegisterTo(cancel);
@@ -250,28 +243,24 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
 
         _view
             .ObserveAdd(cancellationToken: cancel)
-            .Subscribe(e =>
-            {
-                foreach (var item in _config.Params)
+            .SubscribeAwait(
+                async (e, ct) =>
                 {
-                    if (e.Value.View.Name == item.Name)
-                    {
-                        e.Value.View.SetConfig(item);
-                    }
+                    await e.Value.View.RequestLoadLayout(ct);
 
                     if (!e.Value.View.IsPinned.ViewValue.Value)
                     {
-                        continue;
+                        return;
                     }
 
                     if (_viewedParamsList.Contains(e.Value.View))
                     {
-                        continue;
+                        return;
                     }
 
                     _viewedParamsList.Add(e.Value.View);
                 }
-            })
+            )
             .RegisterTo(cancel);
 
         AllParams = _view.ToNotifyCollectionChanged();
@@ -308,7 +297,7 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
         SelectedItem.Value = null;
         IsRefreshing.Value = true;
         _cancellationTokenSource = new CancellationTokenSource();
-        var viewed = _viewedParamsList.Select(item => item.GetConfig()).ToArray();
+        var viewed = _viewedParamsList.ToArray();
         _viewedParamsList.Clear();
 
         _paramsClient
@@ -338,7 +327,6 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
                 continue;
             }
 
-            existItem.SetConfig(item);
             _viewedParamsList.Add(existItem);
         }
 
@@ -400,8 +388,6 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
     {
         if (e is ParamItemChangedEvent { Source: ParamItemViewModel param } paramChanged)
         {
-            UpdateConfig(param);
-
             if (paramChanged.Caller is HistoricalBoolProperty caller)
             {
                 if (caller.Id == param.IsPinned.Id)
@@ -443,18 +429,6 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
         }
     }
 
-    private void UpdateConfig(ParamItemViewModel param)
-    {
-        var existItem = _config.Params.FirstOrDefault(_ => _.Name == param.Name);
-
-        if (existItem is not null)
-        {
-            _config.Params.Remove(existItem);
-        }
-
-        _config.Params.Add(param.GetConfig());
-    }
-
     private async Task<bool> TryCloseWithApproval()
     {
         var notSyncedParams = _viewedParamsList.Where(param => !param.IsSynced.Value).ToArray();
@@ -464,7 +438,7 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
             return true;
         }
 
-        using var vm = new TryCloseWithApprovalDialogViewModel(_layoutService, _loggerFactory);
+        using var vm = new TryCloseWithApprovalDialogViewModel(LayoutService, _loggerFactory);
         var dialog = new ContentDialog(vm, _nav)
         {
             Title = RS.ParamPageViewModel_DataLossDialog_Title,
@@ -515,14 +489,13 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
 
     protected override ValueTask HandleSaveLayout()
     {
-        _config.Params = _config.Params.Where(_ => _.IsStarred || _.IsPinned).ToList();
-        _layoutService.SetInMemory(this, _config);
+        // LayoutService.SetInMemory(this, _config);
         return base.HandleSaveLayout();
     }
 
     protected override ValueTask HandleLoadLayout()
     {
-        _config = _layoutService.Get<MavParamsPageViewModelConfig>(this);
+        _config = LayoutService.Get<MavParamsPageViewModelConfig>(this);
         return base.HandleLoadLayout();
     }
 
