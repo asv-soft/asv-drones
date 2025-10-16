@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
+using System.Reactive.Concurrency;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -11,6 +12,7 @@ using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
+using Avalonia.Threading;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -37,8 +39,8 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
     private IParamsClientEx? _paramsClient;
     private CancellationTokenSource? _cancellationTokenSource;
     private ISynchronizedView<KeyValuePair<string, ParamItem>, ParamItemViewModel> _view;
-    private MavParamsPageViewModelConfig _config;
 
+    // private MavParamsPageViewModelConfig _config;
     public MavParamsPageViewModel()
         : this(
             NullDeviceManager.Instance,
@@ -93,7 +95,9 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
         _nav = nav;
         _showStarredOnly = new ReactiveProperty<bool>().DisposeItWith(Disposable);
         _viewedParamsList = [];
-        ViewedParams = _viewedParamsList.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);
+        ViewedParams = _viewedParamsList
+            .ToNotifyCollectionChangedSlim(SynchronizationContextCollectionEventDispatcher.Current)
+            .DisposeItWith(Disposable);
 
         Search = new SearchBoxViewModel(
             nameof(Search),
@@ -142,18 +146,7 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
             })
             .DisposeItWith(Disposable);
 
-        Disposable.AddAction(() =>
-        {
-            if (_cancellationTokenSource is not null)
-            {
-                if (_cancellationTokenSource.Token.CanBeCanceled)
-                {
-                    _cancellationTokenSource?.Cancel(false);
-                }
-                _cancellationTokenSource?.Dispose();
-                _cancellationTokenSource = null;
-            }
-        });
+        Disposable.AddAction(StopUpdateParamsImpl);
 
         UpdateParams = new BindableAsyncCommand(UpdateParamsCommand.Id, this);
 
@@ -191,6 +184,15 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
                     )
                 );
             })
+            .DisposeItWith(Disposable);
+
+        Progress
+            .Where(p => p.ApproximatelyEquals(1.0))
+            .Subscribe(_ => IsRefreshing.Value = false)
+            .DisposeItWith(Disposable);
+        IsRefreshing
+            .Where(isRefreshing => isRefreshing)
+            .Subscribe(_ => Progress.Value = 0)
             .DisposeItWith(Disposable);
     }
 
@@ -263,7 +265,9 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
             )
             .RegisterTo(cancel);
 
-        AllParams = _view.ToNotifyCollectionChanged();
+        AllParams = _view.ToNotifyCollectionChanged(
+            SynchronizationContextCollectionEventDispatcher.Current
+        );
         AllParams.RegisterTo(cancel);
         _allParams?.RegisterTo(cancel);
         Search.Refresh();
@@ -271,68 +275,54 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
 
     internal void StopUpdateParamsImpl()
     {
-        if (!IsRefreshing.Value)
+        if (_cancellationTokenSource is not null)
+        {
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = null;
+        }
+
+        IsRefreshing.Value = false;
+    }
+
+    internal async Task UpdateParamsImpl(CancellationToken cancel = default)
+    {
+        if (IsRefreshing.Value)
         {
             return;
         }
 
-        if (_cancellationTokenSource != null)
-        {
-            if (_cancellationTokenSource.Token.CanBeCanceled)
-            {
-                _cancellationTokenSource?.Cancel(false);
-            }
-            _cancellationTokenSource?.Dispose();
-            _cancellationTokenSource = null;
-        }
-    }
-
-    internal void UpdateParamsImpl()
-    {
         if (_paramsClient is null)
         {
             return;
         }
 
-        SelectedItem.Value = null;
-        IsRefreshing.Value = true;
-        _cancellationTokenSource = new CancellationTokenSource();
-        var viewed = _viewedParamsList.ToArray();
-        _viewedParamsList.Clear();
-
-        _paramsClient
-            .ReadAll(
-                new Progress<double>(i => Progress.Value = i),
-                cancel: _cancellationTokenSource.Token
-            )
-            .SafeFireAndForget(ex =>
-            {
-                if (ex is TaskCanceledException)
-                {
-                    Logger.LogInformation("User canceled updating params");
-                    return;
-                }
-
-                Logger.LogError(ex, "Error to read all param items");
-            });
-
-        foreach (var item in viewed)
+        cancel.ThrowIfCancellationRequested();
+        if (_cancellationTokenSource is not null)
         {
-            var existItem = _view.FirstOrDefault(currentItem =>
-                currentItem.Name == item.Name && currentItem.IsPinned.ViewValue.Value
-            );
-
-            if (existItem is null)
-            {
-                continue;
-            }
-
-            _viewedParamsList.Add(existItem);
+            StopUpdateParamsImpl();
         }
 
-        IsRefreshing.Value = false;
-        _cancellationTokenSource.Dispose();
-        _cancellationTokenSource = null;
+        SelectedItem.Value = null;
+        IsRefreshing.Value = true;
+
+        _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancel);
+        _cancellationTokenSource.Token.Register(() => IsRefreshing.Value = false);
+        try
+        {
+            await _paramsClient.ReadAll(
+                new Progress<double>(i => Progress.Value = i),
+                cancel: _cancellationTokenSource.Token
+            );
+        }
+        catch (OperationCanceledException)
+        {
+            Logger.LogInformation("User canceled updating params");
+        }
+        catch (Exception e)
+        {
+            Logger.LogError(e, "Error to read all param items");
+        }
     }
 
     protected override void AfterDeviceInitialized(IClientDevice device, CancellationToken cancel)
@@ -485,18 +475,6 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
                 yield return paramItemViewModel;
             }
         }
-    }
-
-    protected override ValueTask HandleSaveLayout()
-    {
-        // LayoutService.SetInMemory(this, _config);
-        return base.HandleSaveLayout();
-    }
-
-    protected override ValueTask HandleLoadLayout()
-    {
-        _config = LayoutService.Get<MavParamsPageViewModelConfig>(this);
-        return base.HandleLoadLayout();
     }
 
     protected override void AfterLoadExtensions() { }
