@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
-using System.Reactive.Concurrency;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -12,7 +11,6 @@ using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
-using Avalonia.Threading;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -21,11 +19,16 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class MavParamsPageViewModelConfig { }
+public sealed class MavParamsPageViewModelConfig
+{
+    public string SearchText { get; set; } = string.Empty;
+    public bool IsStarredOnly { get; set; }
+}
 
 [ExportPage(PageId)]
-public class MavParamsPageViewModel // TODO: change config to new safe changes logic
-    : DevicePageViewModel<IMavParamsPageViewModel>, IMavParamsPageViewModel
+public class MavParamsPageViewModel
+    : DevicePageViewModel<IMavParamsPageViewModel>,
+        IMavParamsPageViewModel
 {
     public const string PageId = "mav-params";
     public const MaterialIconKind PageIcon = MaterialIconKind.CogTransferOutline;
@@ -33,14 +36,18 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
     private readonly ILoggerFactory _loggerFactory;
     private readonly INavigationService _nav;
     private readonly ObservableList<ParamItemViewModel> _viewedParamsList; // TODO: Separate views for this collection and all params
-    private readonly ReactiveProperty<bool> _showStarredOnly;
+    private readonly ReactiveProperty<bool> _isStarredOnly;
+    private readonly SynchronizedViewFilter<
+        KeyValuePair<string, ParamItem>,
+        ParamItemViewModel
+    > _fullFilter;
 
     private DeviceId _deviceId;
     private IParamsClientEx? _paramsClient;
     private CancellationTokenSource? _cancellationTokenSource;
     private ISynchronizedView<KeyValuePair<string, ParamItem>, ParamItemViewModel> _view;
+    private MavParamsPageViewModelConfig _config;
 
-    // private MavParamsPageViewModelConfig _config;
     public MavParamsPageViewModel()
         : this(
             NullDeviceManager.Instance,
@@ -93,7 +100,7 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
 
         _loggerFactory = loggerFactory;
         _nav = nav;
-        _showStarredOnly = new ReactiveProperty<bool>().DisposeItWith(Disposable);
+        _isStarredOnly = new ReactiveProperty<bool>().DisposeItWith(Disposable);
         _viewedParamsList = [];
         ViewedParams = _viewedParamsList
             .ToNotifyCollectionChangedSlim(SynchronizationContextCollectionEventDispatcher.Current)
@@ -109,9 +116,9 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
 
-        ShowStaredOnly = new HistoricalBoolProperty(
-            nameof(ShowStaredOnly),
-            _showStarredOnly,
+        IsStarredOnly = new HistoricalBoolProperty(
+            nameof(IsStarredOnly),
+            _isStarredOnly,
             layoutService,
             loggerFactory,
             this
@@ -168,22 +175,9 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
             }
         ).DisposeItWith(Disposable);
 
-        ShowStaredOnly
+        IsStarredOnly
             .ViewValue.ThrottleLast(TimeSpan.FromMilliseconds(500))
-            .Subscribe(x =>
-            {
-                if (!x && string.IsNullOrWhiteSpace(Search.Text.ViewValue.Value))
-                {
-                    _view?.ResetFilter();
-                    return;
-                }
-
-                _view?.AttachFilter(
-                    new SynchronizedViewFilter<KeyValuePair<string, ParamItem>, ParamItemViewModel>(
-                        (_, model) => model.Filter(Search.Text.ViewValue.Value, x)
-                    )
-                );
-            })
+            .Subscribe(x => UpdateFilter())
             .DisposeItWith(Disposable);
 
         Progress
@@ -194,23 +188,36 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
             .Where(isRefreshing => isRefreshing)
             .Subscribe(_ => Progress.Value = 0)
             .DisposeItWith(Disposable);
+
+        _fullFilter = new SynchronizedViewFilter<
+            KeyValuePair<string, ParamItem>,
+            ParamItemViewModel
+        >(
+            (_, model) =>
+                model.Filter(
+                    Search.Text.ViewValue.Value ?? string.Empty,
+                    IsStarredOnly.ViewValue.Value
+                )
+        );
     }
 
     private Task UpdateImpl(string? query, IProgress<double> progress, CancellationToken cancel)
     {
-        if (string.IsNullOrWhiteSpace(query) && !ShowStaredOnly.ViewValue.Value)
+        UpdateFilter();
+        return Task.CompletedTask;
+    }
+
+    private void UpdateFilter()
+    {
+        if (
+            string.IsNullOrWhiteSpace(Search.Text.ViewValue.Value) && !IsStarredOnly.ViewValue.Value
+        )
         {
             _view.ResetFilter();
-            return Task.CompletedTask;
+            return;
         }
 
-        _view.AttachFilter(
-            new SynchronizedViewFilter<KeyValuePair<string, ParamItem>, ParamItemViewModel>(
-                (_, model) => model.Filter(query ?? string.Empty, ShowStaredOnly.ViewValue.Value)
-            )
-        );
-
-        return Task.CompletedTask;
+        _view.AttachFilter(_fullFilter);
     }
 
     private void InternalInit(CancellationToken cancel)
@@ -221,7 +228,6 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
         }
 
         Total = _paramsClient.RemoteCount.ToReadOnlyBindableReactiveProperty();
-        _total.RegisterTo(cancel);
         Total.RegisterTo(cancel);
         _view = _paramsClient.Items.CreateView(kvp => new ParamItemViewModel(
             kvp.Key,
@@ -269,7 +275,6 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
             SynchronizationContextCollectionEventDispatcher.Current
         );
         AllParams.RegisterTo(cancel);
-        _allParams?.RegisterTo(cancel);
         Search.Refresh();
     }
 
@@ -340,7 +345,7 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
         InternalInit(cancel);
     }
 
-    public HistoricalBoolProperty ShowStaredOnly { get; }
+    public HistoricalBoolProperty IsStarredOnly { get; }
     public BindableReactiveProperty<bool> IsRefreshing { get; }
     public BindableReactiveProperty<double> Progress { get; }
     public ICommand UpdateParams { get; }
@@ -348,19 +353,13 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
     public ReactiveCommand RemoveAllPins { get; }
     public SearchBoxViewModel Search { get; }
 
-    private INotifyCollectionChangedSynchronizedViewList<ParamItemViewModel>? _allParams;
     public INotifyCollectionChangedSynchronizedViewList<ParamItemViewModel>? AllParams
     {
-        get => _allParams;
-        private set => SetField(ref _allParams, value);
+        get;
+        private set;
     }
 
-    private IReadOnlyBindableReactiveProperty<int> _total;
-    public IReadOnlyBindableReactiveProperty<int> Total
-    {
-        get => _total;
-        private set => SetField(ref _total, value);
-    }
+    public IReadOnlyBindableReactiveProperty<int> Total { get; private set; }
 
     public INotifyCollectionChangedSynchronizedViewList<ParamItemViewModel> ViewedParams { get; }
 
@@ -419,8 +418,9 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
         }
     }
 
-    private async Task<bool> TryCloseWithApproval()
+    private async Task<bool> TryCloseWithApproval(CancellationToken cancel = default)
     {
+        cancel.ThrowIfCancellationRequested();
         var notSyncedParams = _viewedParamsList.Where(param => !param.IsSynced.Value).ToArray();
 
         if (notSyncedParams.Length == 0)
@@ -466,7 +466,7 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
         yield return Search;
-        yield return ShowStaredOnly;
+        yield return IsStarredOnly;
 
         if (AllParams is not null)
         {
@@ -475,6 +475,22 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
                 yield return paramItemViewModel;
             }
         }
+    }
+
+    protected override ValueTask HandleSaveLayout(CancellationToken cancel = default)
+    {
+        _config.SearchText = Search.Text.ViewValue.Value ?? string.Empty;
+        _config.IsStarredOnly = IsStarredOnly.ViewValue.Value;
+        LayoutService.SetInMemory(this, _config);
+        return base.HandleSaveLayout(cancel);
+    }
+
+    protected override ValueTask HandleLoadLayout(CancellationToken cancel = default)
+    {
+        _config = LayoutService.Get<MavParamsPageViewModelConfig>(this);
+        Search.Text.ModelValue.Value = _config.SearchText;
+        IsStarredOnly.ModelValue.Value = _config.IsStarredOnly;
+        return base.HandleLoadLayout(cancel);
     }
 
     protected override void AfterLoadExtensions() { }

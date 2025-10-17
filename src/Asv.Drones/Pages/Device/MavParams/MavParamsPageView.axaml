@@ -26,7 +26,7 @@
                 <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                     <ToggleButton 
                         ToolTip.Tip="{x:Static drones:RS.ParametersEditorPageView_StarsToggleButton_ToolTip}"
-                        IsChecked="{CompiledBinding ShowStaredOnly.ViewValue.Value}"
+                        IsChecked="{CompiledBinding IsStarredOnly.ViewValue.Value}"
                         Margin="4 0 0 4" 
                         DockPanel.Dock="Right" 
                         Width="30"

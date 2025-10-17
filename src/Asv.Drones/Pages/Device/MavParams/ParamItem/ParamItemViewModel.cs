@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
@@ -25,6 +26,7 @@ public class ParamItemViewModel : RoutableViewModel
     private readonly ParamItem _paramItem;
     private readonly ReactiveProperty<bool> _isPinned;
     private readonly ReactiveProperty<bool> _isStarred;
+    private readonly Subject<bool> _isInitialized;
     private ParamItemViewModelConfig _config;
     private bool _internalUpdate;
 
@@ -59,9 +61,11 @@ public class ParamItemViewModel : RoutableViewModel
         ValueDescription = paramItem.Info.UnitsDisplayName ?? string.Empty;
         IsRebootRequired = paramItem.Info.IsRebootRequired;
 
+        _isInitialized = new Subject<bool>();
         _isPinned = new ReactiveProperty<bool>(false);
         _isStarred = new ReactiveProperty<bool>(false);
 
+        IsInitialized = _isInitialized.ToReadOnlyBindableReactiveProperty();
         IsPinned = new HistoricalBoolProperty(
             nameof(IsPinned),
             _isPinned,
@@ -297,6 +301,7 @@ public class ParamItemViewModel : RoutableViewModel
     public string Description { get; }
     public bool IsRebootRequired { get; }
     public BindableReactiveProperty<bool> IsSynced { get; }
+    public IReadOnlyBindableReactiveProperty<bool> IsInitialized { get; }
     public BindableReactiveProperty<MaterialIconKind> StarKind { get; }
     public HistoricalBoolProperty IsPinned { get; }
     public BindableReactiveProperty<string?> Value { get; }
@@ -326,20 +331,25 @@ public class ParamItemViewModel : RoutableViewModel
         yield return IsStarred;
     }
 
-    protected override ValueTask HandleSaveLayout()
+    protected override ValueTask HandleSaveLayout(CancellationToken cancel = default)
     {
-        _config.IsPinned = IsPinned.ViewValue.Value;
-        _config.IsStarred = IsStarred.ViewValue.Value;
-        LayoutService.SetInMemory(this, _config);
-        return base.HandleSaveLayout();
+        if (IsInitialized.Value)
+        {
+            _config.IsPinned = IsPinned.ViewValue.Value;
+            _config.IsStarred = IsStarred.ViewValue.Value;
+            LayoutService.SetInMemory(this, _config);
+        }
+
+        return base.HandleSaveLayout(cancel);
     }
 
-    protected override ValueTask HandleLoadLayout()
+    protected override ValueTask HandleLoadLayout(CancellationToken cancel = default)
     {
         _config = LayoutService.Get<ParamItemViewModelConfig>(this);
         IsPinned.ModelValue.Value = _config.IsPinned;
         IsStarred.ModelValue.Value = _config.IsStarred;
-        return base.HandleLoadLayout();
+        _isInitialized.OnNext(true);
+        return base.HandleLoadLayout(cancel);
     }
 
     #region Dispose
@@ -357,6 +367,7 @@ public class ParamItemViewModel : RoutableViewModel
             _sub1.Dispose();
             _sub2.Dispose();
             _sub3.Dispose();
+            _isInitialized.Dispose();
             _isPinned.Dispose();
             _isStarred.Dispose();
             IsSynced.Dispose();
@@ -365,6 +376,7 @@ public class ParamItemViewModel : RoutableViewModel
             Value.Dispose();
             PinItem.Dispose();
             StarKind.Dispose();
+            IsInitialized.Dispose();
         }
 
         base.Dispose(disposing);
