@@ -16,10 +16,9 @@ public class FileItemViewModel : BrowserItemViewModel
         string name,
         long size,
         FtpBrowserSourceType type,
-        ILayoutService layoutService,
         ILoggerFactory loggerFactory
     )
-        : base(id, parentPath, path, type, layoutService, loggerFactory)
+        : base(id, parentPath, path, type, loggerFactory)
     {
         HasChildren = false;
         Name = name;

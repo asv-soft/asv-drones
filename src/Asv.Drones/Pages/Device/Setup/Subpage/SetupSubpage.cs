@@ -15,7 +15,7 @@ public abstract class SetupSubpage : TreeSubpage<ISetupPage>, ISetupSubpage
         ILayoutService layoutService,
         ILoggerFactory loggerFactory
     )
-        : base(id, layoutService, loggerFactory)
+        : base(id, loggerFactory)
     {
         Target = new ReactiveProperty<DeviceWrapper?>(null).DisposeItWith(Disposable);
     }

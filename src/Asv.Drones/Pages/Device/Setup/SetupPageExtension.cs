@@ -67,7 +67,6 @@ public class SetupPageExtension(ILayoutService layoutService, ILoggerFactory log
                 MaterialIconKind.ThemeLightDark,
                 SetupFrameTypeViewModel.PageId,
                 NavigationId.Empty,
-                layoutService,
                 loggerFactory
             ).DisposeItWith(contextDispose)
         );

@@ -13,11 +13,10 @@ public class MavParamAltitudeTextBoxViewModel : MavParamTextBoxViewModel
         MavParamInfo param,
         Observable<MavParamValue> update,
         InitialReadParamDelegate initReadCallback,
-        ILayoutService layoutService,
         ILoggerFactory loggerFactory,
         IUnitService measureService
     )
-        : base(param, update, initReadCallback, layoutService, loggerFactory)
+        : base(param, update, initReadCallback, loggerFactory)
     {
         _unit =
             measureService[AltitudeBase.Id]?.CurrentUnitItem.CurrentValue

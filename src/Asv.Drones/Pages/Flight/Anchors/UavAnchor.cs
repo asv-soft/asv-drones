@@ -18,7 +18,7 @@ public class UavAnchor : MapAnchor<UavAnchor>
     public DeviceId DeviceId { get; }
 
     public UavAnchor()
-        : base(DesignTime.Id, NullLayoutService.Instance, DesignTime.LoggerFactory)
+        : base(DesignTime.Id, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
     }
@@ -28,10 +28,9 @@ public class UavAnchor : MapAnchor<UavAnchor>
         IDeviceManager mng,
         IClientDevice dev,
         IPositionClientEx pos,
-        ILayoutService layoutService,
         ILoggerFactory loggerFactory
     )
-        : base(UavAnchorIdBase, layoutService, loggerFactory)
+        : base(UavAnchorIdBase, loggerFactory)
     {
         DeviceId = deviceId;
         InitArgs(deviceId.AsString());

@@ -6,15 +6,8 @@ namespace Asv.Drones;
 public sealed class TypePacketFilterViewModel(
     PacketMessageViewModel pkt,
     IUnitService unitService,
-    ILayoutService layoutService,
     ILoggerFactory loggerFactory
-)
-    : PacketFilterViewModelBase<TypePacketFilterViewModel>(
-        pkt.Type,
-        unitService,
-        layoutService,
-        loggerFactory
-    )
+) : PacketFilterViewModelBase<TypePacketFilterViewModel>(pkt.Type, unitService, loggerFactory)
 {
     public override string FilterValue { get; } = pkt.Type;
 }

@@ -12,11 +12,8 @@ namespace Asv.Drones;
 
 [ExportExtensionFor<IFlightMode>]
 [method: ImportingConstructor]
-public class FlightUavAnchorsExtension(
-    IDeviceManager conn,
-    ILayoutService layoutService,
-    ILoggerFactory loggerFactory
-) : IExtensionFor<IFlightMode>
+public class FlightUavAnchorsExtension(IDeviceManager conn, ILoggerFactory loggerFactory)
+    : IExtensionFor<IFlightMode>
 {
     public void Extend(IFlightMode context, CompositeDisposable contextDispose)
     {
@@ -27,9 +24,7 @@ public class FlightUavAnchorsExtension(
     private UavAnchor? TryCreateAnchor(IClientDevice device)
     {
         var pos = device.GetMicroservice<IPositionClientEx>();
-        return pos != null
-            ? new UavAnchor(device.Id, conn, device, pos, layoutService, loggerFactory)
-            : null;
+        return pos != null ? new UavAnchor(device.Id, conn, device, pos, loggerFactory) : null;
     }
 
     private static bool RemoveAnchor(IClientDevice dev, UavAnchor anchor)

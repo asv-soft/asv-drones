@@ -19,23 +19,13 @@ public class LocalFilesService(IFileSystem? fileSystem = null)
         string path,
         string root,
         FileBrowserBackend backend,
-        ILayoutService layoutService,
         ILoggerFactory loggerFactory,
         CancellationToken ct = default,
         ILogger? log = null
     )
     {
         var result = new ConcurrentBag<IBrowserItemViewModel>();
-        ProcessBrowserDirectory(
-            path,
-            root,
-            ref result,
-            backend,
-            layoutService,
-            loggerFactory,
-            ct,
-            log
-        );
+        ProcessBrowserDirectory(path, root, ref result, backend, loggerFactory, ct, log);
         log?.LogTrace("Directory processed ({Path})", path);
         return result.ToList();
     }
@@ -45,7 +35,6 @@ public class LocalFilesService(IFileSystem? fileSystem = null)
         string root,
         ref ConcurrentBag<IBrowserItemViewModel> items,
         FileBrowserBackend backend,
-        ILayoutService layoutService,
         ILoggerFactory loggerFactory,
         CancellationToken ct = default,
         ILogger? log = null
@@ -62,7 +51,6 @@ public class LocalFilesService(IFileSystem? fileSystem = null)
             root,
             rootInfo.Name,
             FtpBrowserSourceType.Local,
-            layoutService,
             loggerFactory
         );
 
@@ -83,22 +71,13 @@ public class LocalFilesService(IFileSystem? fileSystem = null)
                 dir,
                 info.Name,
                 FtpBrowserSourceType.Local,
-                layoutService,
                 loggerFactory
             );
 
             vm.AttachBackend(backend);
 
             items.Add(vm);
-            ProcessBrowserDirectory(
-                dir,
-                root,
-                ref items,
-                backend,
-                layoutService,
-                loggerFactory,
-                ct
-            );
+            ProcessBrowserDirectory(dir, root, ref items, backend, loggerFactory, ct);
         }
 
         foreach (var file in _fileSystem.Directory.EnumerateFiles(path))
@@ -117,7 +96,6 @@ public class LocalFilesService(IFileSystem? fileSystem = null)
                     info.Name,
                     info.Length,
                     FtpBrowserSourceType.Local,
-                    layoutService,
                     loggerFactory
                 );
                 vm.AttachBackend(backend);

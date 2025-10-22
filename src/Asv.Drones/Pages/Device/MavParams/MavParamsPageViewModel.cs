@@ -21,6 +21,8 @@ namespace Asv.Drones;
 
 public sealed class MavParamsPageViewModelConfig
 {
+    public IDictionary<string, ParamItemViewModelConfig> Params { get; } =
+        new Dictionary<string, ParamItemViewModelConfig>();
     public string SearchText { get; set; } = string.Empty;
     public bool IsStarredOnly { get; set; }
 }
@@ -33,6 +35,7 @@ public class MavParamsPageViewModel
     public const string PageId = "mav-params";
     public const MaterialIconKind PageIcon = MaterialIconKind.CogTransferOutline;
 
+    private readonly ILayoutService _layoutService;
     private readonly ILoggerFactory _loggerFactory;
     private readonly INavigationService _nav;
     private readonly ObservableList<ParamItemViewModel> _viewedParamsList; // TODO: Separate views for this collection and all params
@@ -46,7 +49,7 @@ public class MavParamsPageViewModel
     private IParamsClientEx? _paramsClient;
     private CancellationTokenSource? _cancellationTokenSource;
     private ISynchronizedView<KeyValuePair<string, ParamItem>, ParamItemViewModel> _view;
-    private MavParamsPageViewModelConfig _config;
+    private MavParamsPageViewModelConfig? _config;
 
     public MavParamsPageViewModel()
         : this(
@@ -98,6 +101,7 @@ public class MavParamsPageViewModel
 
         Title = RS.MavParamsPageViewModel_Title;
 
+        _layoutService = layoutService;
         _loggerFactory = loggerFactory;
         _nav = nav;
         _isStarredOnly = new ReactiveProperty<bool>().DisposeItWith(Disposable);
@@ -108,7 +112,6 @@ public class MavParamsPageViewModel
 
         Search = new SearchBoxViewModel(
             nameof(Search),
-            layoutService,
             loggerFactory,
             UpdateImpl,
             TimeSpan.FromMilliseconds(500)
@@ -119,7 +122,6 @@ public class MavParamsPageViewModel
         IsStarredOnly = new HistoricalBoolProperty(
             nameof(IsStarredOnly),
             _isStarredOnly,
-            layoutService,
             loggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -213,11 +215,11 @@ public class MavParamsPageViewModel
             string.IsNullOrWhiteSpace(Search.Text.ViewValue.Value) && !IsStarredOnly.ViewValue.Value
         )
         {
-            _view.ResetFilter();
+            _view?.ResetFilter();
             return;
         }
 
-        _view.AttachFilter(_fullFilter);
+        _view?.AttachFilter(_fullFilter);
     }
 
     private void InternalInit(CancellationToken cancel)
@@ -232,7 +234,8 @@ public class MavParamsPageViewModel
         _view = _paramsClient.Items.CreateView(kvp => new ParamItemViewModel(
             kvp.Key,
             kvp.Value,
-            LayoutService,
+            GetConfigFor,
+            SetConfigFor,
             _loggerFactory
         ));
         _view.RegisterTo(cancel);
@@ -254,7 +257,7 @@ public class MavParamsPageViewModel
             .SubscribeAwait(
                 async (e, ct) =>
                 {
-                    await e.Value.View.RequestLoadLayout(ct);
+                    await e.Value.View.RequestLoadLayout(_layoutService, ct);
 
                     if (!e.Value.View.IsPinned.ViewValue.Value)
                     {
@@ -330,6 +333,27 @@ public class MavParamsPageViewModel
         }
     }
 
+    private ParamItemViewModelConfig? GetConfigFor(string name)
+    {
+        if (_config is null)
+        {
+            return null;
+        }
+
+        _config.Params.TryGetValue(name, out var config);
+        return config;
+    }
+
+    private void SetConfigFor(string name, ParamItemViewModelConfig config)
+    {
+        if (_config is null)
+        {
+            return;
+        }
+
+        _config.Params[name] = config;
+    }
+
     protected override void AfterDeviceInitialized(IClientDevice device, CancellationToken cancel)
     {
         IsDeviceInitialized = true;
@@ -373,27 +397,81 @@ public class MavParamsPageViewModel
         set => SetField(ref field, value);
     }
 
+    public override IEnumerable<IRoutable> GetRoutableChildren()
+    {
+        yield return Search;
+        yield return IsStarredOnly;
+
+        if (AllParams is not null)
+        {
+            foreach (var paramItemViewModel in AllParams)
+            {
+                yield return paramItemViewModel;
+            }
+        }
+    }
+
+    protected override void AfterLoadExtensions() { }
+
     protected override async ValueTask InternalCatchEvent(AsyncRoutedEvent e)
     {
-        if (e is ParamItemChangedEvent { Source: ParamItemViewModel param } paramChanged)
+        switch (e)
         {
-            if (paramChanged.Caller is HistoricalBoolProperty caller)
+            case ParamItemChangedEvent { Source: ParamItemViewModel param } paramChanged:
             {
-                if (caller.Id == param.IsPinned.Id)
+                if (paramChanged.Caller is HistoricalBoolProperty caller)
                 {
-                    UpdateViewedItems(param);
+                    if (caller.Id == param.IsPinned.Id)
+                    {
+                        UpdateViewedItems(param);
+                    }
                 }
+
+                e.IsHandled = true;
+                break;
             }
 
-            e.IsHandled = true;
-        }
-
-        if (e is PageCloseAttemptEvent { Source: MavParamsPageViewModel } closeEvent)
-        {
-            var isCloseReady = await TryCloseWithApproval();
-            if (!isCloseReady)
+            case PageCloseAttemptEvent { Source: MavParamsPageViewModel } closeEvent:
             {
-                closeEvent.AddRestriction(new Restriction(this));
+                var isCloseReady = await TryCloseWithApproval();
+                if (!isCloseReady)
+                {
+                    closeEvent.AddRestriction(new Restriction(this));
+                }
+
+                break;
+            }
+
+            case SaveLayoutEvent saveLayoutEvent:
+            {
+                if (_config is null)
+                {
+                    break;
+                }
+
+                saveLayoutEvent.HandleSaveLayout(
+                    this,
+                    _config,
+                    cfg =>
+                    {
+                        cfg.SearchText = Search.Text.ViewValue.Value ?? string.Empty;
+                        cfg.IsStarredOnly = IsStarredOnly.ViewValue.Value;
+                    }
+                );
+                break;
+            }
+
+            case LoadLayoutEvent loadLayoutEvent:
+            {
+                _config = loadLayoutEvent.HandleLoadLayout<MavParamsPageViewModelConfig>(
+                    this,
+                    cfg =>
+                    {
+                        Search.Text.ModelValue.Value = cfg.SearchText;
+                        IsStarredOnly.ModelValue.Value = cfg.IsStarredOnly;
+                    }
+                );
+                break;
             }
         }
 
@@ -428,7 +506,7 @@ public class MavParamsPageViewModel
             return true;
         }
 
-        using var vm = new TryCloseWithApprovalDialogViewModel(LayoutService, _loggerFactory);
+        using var vm = new TryCloseWithApprovalDialogViewModel(_loggerFactory);
         var dialog = new ContentDialog(vm, _nav)
         {
             Title = RS.ParamPageViewModel_DataLossDialog_Title,
@@ -440,60 +518,21 @@ public class MavParamsPageViewModel
 
         var result = await dialog.ShowAsync();
 
+        if (result == ContentDialogResult.None)
+        {
+            return false;
+        }
+
         if (result == ContentDialogResult.Primary)
         {
             foreach (var param in notSyncedParams)
             {
                 param.Write.Execute(Unit.Default);
             }
-
-            return true;
-        }
-
-        if (result == ContentDialogResult.Secondary)
-        {
-            return true;
-        }
-
-        if (result == ContentDialogResult.None)
-        {
-            return false;
         }
 
         return true;
     }
-
-    public override IEnumerable<IRoutable> GetRoutableChildren()
-    {
-        yield return Search;
-        yield return IsStarredOnly;
-
-        if (AllParams is not null)
-        {
-            foreach (var paramItemViewModel in AllParams)
-            {
-                yield return paramItemViewModel;
-            }
-        }
-    }
-
-    protected override ValueTask HandleSaveLayout(CancellationToken cancel = default)
-    {
-        _config.SearchText = Search.Text.ViewValue.Value ?? string.Empty;
-        _config.IsStarredOnly = IsStarredOnly.ViewValue.Value;
-        LayoutService.SetInMemory(this, _config);
-        return base.HandleSaveLayout(cancel);
-    }
-
-    protected override ValueTask HandleLoadLayout(CancellationToken cancel = default)
-    {
-        _config = LayoutService.Get<MavParamsPageViewModelConfig>(this);
-        Search.Text.ModelValue.Value = _config.SearchText;
-        IsStarredOnly.ModelValue.Value = _config.IsStarredOnly;
-        return base.HandleLoadLayout(cancel);
-    }
-
-    protected override void AfterLoadExtensions() { }
 
     public override IExportInfo Source => SystemModule.Instance;
 }

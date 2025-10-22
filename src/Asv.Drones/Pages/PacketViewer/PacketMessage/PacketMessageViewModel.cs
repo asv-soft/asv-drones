@@ -26,7 +26,7 @@ public class PacketMessageViewModel : RoutableViewModel
     }
 
     public PacketMessageViewModel()
-        : base(DesignTime.Id, NullLayoutService.Instance, DesignTime.LoggerFactory)
+        : base(DesignTime.Id, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
         DateTime = DateTime.Now;
@@ -50,7 +50,6 @@ public class PacketMessageViewModel : RoutableViewModel
                 packet.Sequence,
                 packet.Id
             ),
-            layoutService,
             loggerFactory
         )
     {

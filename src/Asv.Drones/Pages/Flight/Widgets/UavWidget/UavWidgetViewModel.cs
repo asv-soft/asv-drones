@@ -41,7 +41,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
     private static readonly Color YellowColor = Color.Parse("#dfc34a");
 
     public UavWidgetViewModel()
-        : base(WidgetId, NullLayoutService.Instance, DesignTime.LoggerFactory)
+        : base(WidgetId, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
         Dispatcher.UIThread.InvokeAsync(() =>
@@ -94,7 +94,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(LinkQuality),
             linkQuality,
             unitItem,
-            NullLayoutService.Instance,
             DesignTime.LoggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -103,7 +102,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(AltitudeAgl),
             altitudeAgl,
             unitItem,
-            NullLayoutService.Instance,
             DesignTime.LoggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -112,7 +110,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(AltitudeMsl),
             altitudeMsl,
             unitItem,
-            NullLayoutService.Instance,
             DesignTime.LoggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -121,7 +118,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(Azimuth),
             azimuth,
             unitItem,
-            NullLayoutService.Instance,
             DesignTime.LoggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -130,7 +126,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(Heading),
             heading,
             unitItem,
-            NullLayoutService.Instance,
             DesignTime.LoggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -139,7 +134,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(HomeAzimuth),
             homeAzimuth,
             unitItem,
-            NullLayoutService.Instance,
             DesignTime.LoggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -148,7 +142,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(Velocity),
             velocity,
             unitItem,
-            NullLayoutService.Instance,
             DesignTime.LoggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -157,7 +150,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(BatteryAmperage),
             batteryAmperage,
             unitItem,
-            NullLayoutService.Instance,
             DesignTime.LoggerFactory,
             this,
             "N2"
@@ -167,7 +159,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(BatteryVoltage),
             batteryVoltage,
             unitItem,
-            NullLayoutService.Instance,
             DesignTime.LoggerFactory,
             this,
             "N2"
@@ -177,7 +168,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(BatteryCharge),
             batteryCharge,
             unitItem,
-            NullLayoutService.Instance,
             DesignTime.LoggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -186,7 +176,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(BatteryConsumed),
             batteryConsumed,
             unitItem,
-            NullLayoutService.Instance,
             DesignTime.LoggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -252,7 +241,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         ILayoutService layoutService,
         ILoggerFactory loggerFactory
     )
-        : base(WidgetId, layoutService, loggerFactory)
+        : base(WidgetId, loggerFactory)
     {
         ArgumentNullException.ThrowIfNull(device);
         Dispatcher.UIThread.InvokeAsync(() =>
@@ -278,7 +267,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         MissionProgress = new MissionProgressViewModel(
             device,
             unitService,
-            layoutService,
             loggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -316,11 +304,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         TakeOff = new ReactiveCommand(
             async (_, ct) =>
             {
-                using var vm = new SetAltitudeDialogViewModel(
-                    _altitudeUnit,
-                    layoutService,
-                    loggerFactory
-                );
+                using var vm = new SetAltitudeDialogViewModel(_altitudeUnit, loggerFactory);
                 var dialog = new ContentDialog(vm, navigation)
                 {
                     Title = RS.UavWidgetViewModel_SetAltitudeDialog_Title,
@@ -433,7 +417,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(LinkQuality),
             linkQuality,
             _progressUnit,
-            layoutService,
             loggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -441,7 +424,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(AltitudeAgl),
             altitudeAgl,
             _altitudeUnit,
-            layoutService,
             loggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -449,7 +431,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(AltitudeMsl),
             altitudeMsl,
             _altitudeUnit,
-            layoutService,
             loggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -457,7 +438,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(Azimuth),
             azimuth,
             _angleUnit,
-            layoutService,
             loggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -465,7 +445,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(Heading),
             heading,
             _angleUnit,
-            layoutService,
             loggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -473,7 +452,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(HomeAzimuth),
             homeAzimuth,
             _angleUnit,
-            layoutService,
             loggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -481,7 +459,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(Velocity),
             velocity,
             _velocityUnit,
-            layoutService,
             loggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -489,7 +466,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(BatteryAmperage),
             batteryAmperage,
             _amperageUnit,
-            layoutService,
             loggerFactory,
             this,
             "N2"
@@ -498,7 +474,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(BatteryVoltage),
             batteryVoltage,
             _voltageUnit,
-            layoutService,
             loggerFactory,
             this,
             "N2"
@@ -507,7 +482,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(BatteryCharge),
             batteryCharge,
             _progressUnit,
-            layoutService,
             loggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -515,7 +489,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             nameof(BatteryConsumed),
             batteryConsumed,
             _capacityUnit,
-            layoutService,
             loggerFactory,
             this
         ).DisposeItWith(Disposable);
@@ -609,6 +582,11 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             .Timer(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(4))
             .Subscribe(_ => StatusText.Value = string.Empty)
             .DisposeItWith(Disposable);
+    }
+
+    protected override void AfterLoadExtensions()
+    {
+        // do nothing
     }
 
     private async Task BatteryStatus(double percent)
@@ -727,11 +705,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         yield return BatteryCharge;
         yield return BatteryConsumed;
         yield return MissionProgress;
-    }
-
-    protected override void AfterLoadExtensions()
-    {
-        // do nothing
     }
 
     public ReactiveCommand TakeOff { get; }

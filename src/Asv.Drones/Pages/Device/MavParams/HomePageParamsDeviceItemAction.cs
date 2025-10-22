@@ -25,7 +25,7 @@ public class HomePageParamsDeviceItemAction(
             return null;
         }
 
-        return new ActionViewModel("params", layoutService, loggerFactory)
+        return new ActionViewModel("params", loggerFactory)
         {
             Icon = MaterialIconKind.CogTransferOutline,
             Header = RS.HomePageParamsDeviceItemAction_ActionViewModel_Header,

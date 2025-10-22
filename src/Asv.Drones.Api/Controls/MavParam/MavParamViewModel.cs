@@ -28,10 +28,9 @@ public class MavParamViewModel
         MavParamInfo metadata,
         Observable<MavParamValue> update,
         InitialReadParamDelegate initReadCallback,
-        ILayoutService layoutService,
         ILoggerFactory loggerFactory
     )
-        : base(metadata.Id, layoutService, loggerFactory)
+        : base(metadata.Id, loggerFactory)
     {
         Info = metadata;
         update

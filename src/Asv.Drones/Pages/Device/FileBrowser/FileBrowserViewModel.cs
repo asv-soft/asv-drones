@@ -80,7 +80,6 @@ public class FileBrowserViewModel
                     "/folder/",
                     "folder",
                     FtpBrowserSourceType.Remote,
-                    LayoutService,
                     _loggerFactory
                 ),
                 new FileItemViewModel(
@@ -90,7 +89,6 @@ public class FileBrowserViewModel
                     "file.txt",
                     111,
                     FtpBrowserSourceType.Remote,
-                    LayoutService,
                     _loggerFactory
                 ),
                 new FileItemViewModel(
@@ -100,7 +98,6 @@ public class FileBrowserViewModel
                     "file2.txt",
                     2222,
                     FtpBrowserSourceType.Remote,
-                    LayoutService,
                     _loggerFactory
                 ),
                 new FileItemViewModel(
@@ -110,7 +107,6 @@ public class FileBrowserViewModel
                     "file3.txt",
                     333333,
                     FtpBrowserSourceType.Remote,
-                    LayoutService,
                     _loggerFactory
                 ),
                 new FileItemViewModel(
@@ -120,7 +116,6 @@ public class FileBrowserViewModel
                     "file4.txt",
                     44444444,
                     FtpBrowserSourceType.Remote,
-                    LayoutService,
                     _loggerFactory
                 ),
             },
@@ -135,7 +130,6 @@ public class FileBrowserViewModel
                     "/folder/",
                     "folder",
                     FtpBrowserSourceType.Remote,
-                    LayoutService,
                     _loggerFactory
                 ),
                 new FileItemViewModel(
@@ -145,7 +139,6 @@ public class FileBrowserViewModel
                     "file.txt",
                     128,
                     FtpBrowserSourceType.Remote,
-                    LayoutService,
                     _loggerFactory
                 ),
                 new FileItemViewModel(
@@ -155,7 +148,6 @@ public class FileBrowserViewModel
                     "file2.txt",
                     64544,
                     FtpBrowserSourceType.Remote,
-                    LayoutService,
                     _loggerFactory
                 ),
                 new FileItemViewModel(
@@ -165,7 +157,6 @@ public class FileBrowserViewModel
                     "file3.txt",
                     23512612,
                     FtpBrowserSourceType.Remote,
-                    LayoutService,
                     _loggerFactory
                 ),
                 new FileItemViewModel(
@@ -175,7 +166,6 @@ public class FileBrowserViewModel
                     "file4.txt",
                     23423,
                     FtpBrowserSourceType.Remote,
-                    LayoutService,
                     _loggerFactory
                 ),
             },
@@ -285,7 +275,6 @@ public class FileBrowserViewModel
 
         LocalSearch = new SearchBoxViewModel(
             nameof(LocalSearch),
-            layoutService,
             loggerFactory,
             PerformLocalSearch,
             TimeSpan.FromMilliseconds(SearchThrottleMs)
@@ -295,7 +284,6 @@ public class FileBrowserViewModel
 
         RemoteSearch = new SearchBoxViewModel(
             nameof(RemoteSearch),
-            layoutService,
             loggerFactory,
             PerformRemoteSearch,
             TimeSpan.FromMilliseconds(SearchThrottleMs)
@@ -782,7 +770,6 @@ public class FileBrowserViewModel
             _localRootPath,
             _localRootPath,
             _backend,
-            LayoutService,
             _loggerFactory
         );
 
@@ -1092,7 +1079,6 @@ public class FileBrowserViewModel
                     dirPath,
                     entry.Name,
                     FtpBrowserSourceType.Remote,
-                    LayoutService,
                     _loggerFactory
                 );
                 break;
@@ -1107,7 +1093,6 @@ public class FileBrowserViewModel
                     entry.Name,
                     ((FtpFile)entry).Size,
                     FtpBrowserSourceType.Remote,
-                    LayoutService,
                     _loggerFactory
                 );
                 break;

@@ -16,7 +16,7 @@ namespace Asv.Drones;
 
 public class ParamItemViewModelConfig
 {
-    public string Name { get; set; } = string.Empty;
+    public string? Name { get; set; }
     public bool IsStarred { get; set; }
     public bool IsPinned { get; set; }
 }
@@ -26,12 +26,13 @@ public class ParamItemViewModel : RoutableViewModel
     private readonly ParamItem _paramItem;
     private readonly ReactiveProperty<bool> _isPinned;
     private readonly ReactiveProperty<bool> _isStarred;
-    private readonly Subject<bool> _isInitialized;
-    private ParamItemViewModelConfig _config;
+    private readonly Func<string, ParamItemViewModelConfig?> _getCfgCallback;
+    private readonly Action<string, ParamItemViewModelConfig> _setCfgCallback;
     private bool _internalUpdate;
 
+    // private ParamItemViewModelConfig? _config;
     public ParamItemViewModel()
-        : base(DesignTime.Id, NullLayoutService.Instance, DesignTime.LoggerFactory) // use base class instead of ParamItem, because there is no way to create an empty Param item
+        : base(DesignTime.Id, DesignTime.LoggerFactory) // use base class instead of ParamItem, because there is no way to create an empty Param item
     {
         DesignTime.ThrowIfNotDesignMode();
 
@@ -45,15 +46,20 @@ public class ParamItemViewModel : RoutableViewModel
     public ParamItemViewModel(
         NavigationId id,
         ParamItem paramItem,
-        ILayoutService layoutService,
+        Func<string, ParamItemViewModelConfig?> getCfgCallback,
+        Action<string, ParamItemViewModelConfig> setCfgCallback,
         ILoggerFactory loggerFactory
     )
-        : base(id, layoutService, loggerFactory)
+        : base(id, loggerFactory)
     {
         ArgumentNullException.ThrowIfNull(paramItem);
         ArgumentNullException.ThrowIfNull(loggerFactory);
+        ArgumentNullException.ThrowIfNull(getCfgCallback);
+        ArgumentNullException.ThrowIfNull(setCfgCallback);
 
         _paramItem = paramItem;
+        _getCfgCallback = getCfgCallback;
+        _setCfgCallback = setCfgCallback;
         Name = paramItem.Name;
         DisplayName = paramItem.Info.DisplayName ?? string.Empty;
         Units = paramItem.Info.Units ?? string.Empty;
@@ -61,26 +67,12 @@ public class ParamItemViewModel : RoutableViewModel
         ValueDescription = paramItem.Info.UnitsDisplayName ?? string.Empty;
         IsRebootRequired = paramItem.Info.IsRebootRequired;
 
-        _isInitialized = new Subject<bool>();
         _isPinned = new ReactiveProperty<bool>(false);
         _isStarred = new ReactiveProperty<bool>(false);
 
-        IsInitialized = _isInitialized.ToReadOnlyBindableReactiveProperty();
-        IsPinned = new HistoricalBoolProperty(
-            nameof(IsPinned),
-            _isPinned,
-            layoutService,
-            loggerFactory,
-            this
-        );
+        IsPinned = new HistoricalBoolProperty(nameof(IsPinned), _isPinned, loggerFactory, this);
         IsPinned.ForceValidate();
-        IsStarred = new HistoricalBoolProperty(
-            nameof(IsStarred),
-            _isStarred,
-            layoutService,
-            loggerFactory,
-            this
-        );
+        IsStarred = new HistoricalBoolProperty(nameof(IsStarred), _isStarred, loggerFactory, this);
         IsStarred.ForceValidate();
 
         Value = new BindableReactiveProperty<string?>();
@@ -286,11 +278,10 @@ public class ParamItemViewModel : RoutableViewModel
 
     public string Name { get; }
 
-    private readonly string _displayName;
     public string DisplayName
     {
-        get => _displayName;
-        init => SetField(ref _displayName, value);
+        get;
+        init => SetField(ref field, value);
     }
 
     public string Units { get; }
@@ -301,7 +292,6 @@ public class ParamItemViewModel : RoutableViewModel
     public string Description { get; }
     public bool IsRebootRequired { get; }
     public BindableReactiveProperty<bool> IsSynced { get; }
-    public IReadOnlyBindableReactiveProperty<bool> IsInitialized { get; }
     public BindableReactiveProperty<MaterialIconKind> StarKind { get; }
     public HistoricalBoolProperty IsPinned { get; }
     public BindableReactiveProperty<string?> Value { get; }
@@ -331,27 +321,48 @@ public class ParamItemViewModel : RoutableViewModel
         yield return IsStarred;
     }
 
-    protected override ValueTask HandleSaveLayout(CancellationToken cancel = default)
-    {
-        if (IsInitialized.Value)
-        {
-            _config.IsPinned = IsPinned.ViewValue.Value;
-            _config.IsStarred = IsStarred.ViewValue.Value;
-            LayoutService.SetInMemory(this, _config);
-        }
-
-        return base.HandleSaveLayout(cancel);
-    }
-
-    protected override ValueTask HandleLoadLayout(CancellationToken cancel = default)
-    {
-        _config = LayoutService.Get<ParamItemViewModelConfig>(this);
-        IsPinned.ModelValue.Value = _config.IsPinned;
-        IsStarred.ModelValue.Value = _config.IsStarred;
-        _isInitialized.OnNext(true);
-        return base.HandleLoadLayout(cancel);
-    }
-
+    // protected override ValueTask HandleSaveLayout(CancellationToken cancel = default)
+    // {
+    //     if (_config is null)
+    //     {
+    //         if (!IsPinned.ViewValue.Value && !IsStarred.ViewValue.Value)
+    //         {
+    //             return base.HandleSaveLayout(cancel);
+    //         }
+    //
+    //         _config = new ParamItemViewModelConfig
+    //         {
+    //             IsPinned = IsPinned.ViewValue.Value,
+    //             IsStarred = IsStarred.ViewValue.Value,
+    //             Name = Name,
+    //         };
+    //     }
+    //     else
+    //     {
+    //         _config.IsPinned = IsPinned.ViewValue.Value;
+    //         _config.IsStarred = IsStarred.ViewValue.Value;
+    //         _config.Name = Name;
+    //     }
+    //
+    //     _setCfgCallback(Name, _config);
+    //
+    //     return base.HandleSaveLayout(cancel);
+    // }
+    //
+    // protected override ValueTask HandleLoadLayout(CancellationToken cancel = default)
+    // {
+    //     _config = _getCfgCallback(Name);
+    //
+    //     if (_config is null)
+    //     {
+    //         return base.HandleLoadLayout(cancel);
+    //     }
+    //
+    //     IsPinned.ModelValue.Value = _config.IsPinned;
+    //     IsStarred.ModelValue.Value = _config.IsStarred;
+    //
+    //     return base.HandleLoadLayout(cancel);
+    // }
     #region Dispose
 
     private readonly IDisposable _sub;
@@ -367,7 +378,6 @@ public class ParamItemViewModel : RoutableViewModel
             _sub1.Dispose();
             _sub2.Dispose();
             _sub3.Dispose();
-            _isInitialized.Dispose();
             _isPinned.Dispose();
             _isStarred.Dispose();
             IsSynced.Dispose();
@@ -376,7 +386,6 @@ public class ParamItemViewModel : RoutableViewModel
             Value.Dispose();
             PinItem.Dispose();
             StarKind.Dispose();
-            IsInitialized.Dispose();
         }
 
         base.Dispose(disposing);

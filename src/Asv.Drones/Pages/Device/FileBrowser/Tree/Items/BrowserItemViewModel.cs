@@ -25,10 +25,9 @@ public abstract class BrowserItemViewModel : RoutableViewModel, IBrowserItemView
         string? parentPath,
         string path,
         FtpBrowserSourceType type,
-        ILayoutService layoutService,
         ILoggerFactory loggerFactory
     )
-        : base(id, layoutService, loggerFactory)
+        : base(id, loggerFactory)
     {
         ParentPath = parentPath;
         Path = path;

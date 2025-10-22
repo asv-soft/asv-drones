@@ -9,16 +9,13 @@ public class TryCloseWithApprovalDialogViewModel : DialogViewModelBase
     public const string DialogId = $"{BaseId}.close-with-approval";
 
     public TryCloseWithApprovalDialogViewModel()
-        : this(NullLayoutService.Instance, DesignTime.LoggerFactory)
+        : this(DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
     }
 
-    public TryCloseWithApprovalDialogViewModel(
-        ILayoutService layoutService,
-        ILoggerFactory loggerFactory
-    )
-        : base(DialogId, layoutService, loggerFactory)
+    public TryCloseWithApprovalDialogViewModel(ILoggerFactory loggerFactory)
+        : base(DialogId, loggerFactory)
     {
         Message = RS.ParamPageViewModel_DataLossDialog_Content;
     }

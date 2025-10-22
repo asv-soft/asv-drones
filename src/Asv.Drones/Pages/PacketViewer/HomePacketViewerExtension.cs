@@ -15,7 +15,7 @@ public class HomePacketViewerExtension(ILayoutService layoutService, ILoggerFact
     {
         context.Tools.Add(
             OpenPacketViewerCommand
-                .StaticInfo.CreateAction(layoutService, loggerFactory)
+                .StaticInfo.CreateAction(loggerFactory)
                 .DisposeItWith(contextDispose)
         );
     }

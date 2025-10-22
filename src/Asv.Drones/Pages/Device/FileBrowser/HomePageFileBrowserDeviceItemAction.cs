@@ -24,7 +24,7 @@ public class HomePageFileBrowserDeviceItemAction(
             return null;
         }
 
-        return new ActionViewModel("browser", layoutService, loggerFactory)
+        return new ActionViewModel("browser", loggerFactory)
         {
             Header = OpenFileBrowserCommand.StaticInfo.Name,
             Description = OpenFileBrowserCommand.StaticInfo.Description,

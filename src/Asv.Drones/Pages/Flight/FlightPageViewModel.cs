@@ -24,14 +24,10 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
     public const MaterialIconKind PageIcon = MaterialIconKind.MapSearch;
 
     public FlightPageViewModel()
-        : this(DesignTime.CommandService, NullLayoutService.Instance, DesignTime.LoggerFactory)
+        : this(DesignTime.CommandService, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
-        var drone = new MapAnchor<IMapAnchor>(
-            DesignTime.Id,
-            NullLayoutService.Instance,
-            DesignTime.LoggerFactory
-        )
+        var drone = new MapAnchor<IMapAnchor>(DesignTime.Id, DesignTime.LoggerFactory)
         {
             Icon = MaterialIconKind.Navigation,
             Location = new GeoPoint(53, 53, 100),
@@ -51,12 +47,8 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
     }
 
     [ImportingConstructor]
-    public FlightPageViewModel(
-        ICommandService cmd,
-        ILayoutService layoutService,
-        ILoggerFactory loggerFactory
-    )
-        : base(PageId, cmd, layoutService, loggerFactory)
+    public FlightPageViewModel(ICommandService cmd, ILoggerFactory loggerFactory)
+        : base(PageId, cmd, loggerFactory)
     {
         Title = RS.FlightPageViewModel_Title;
         Icon = PageIcon;
