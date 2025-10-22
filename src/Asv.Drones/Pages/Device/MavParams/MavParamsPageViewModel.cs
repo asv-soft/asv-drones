@@ -21,7 +21,7 @@ namespace Asv.Drones;
 
 public sealed class MavParamsPageViewModelConfig
 {
-    public IDictionary<string, ParamItemViewModelConfig> Params { get; } =
+    public IDictionary<string, ParamItemViewModelConfig> Params { get; set; } =
         new Dictionary<string, ParamItemViewModelConfig>();
     public string SearchText { get; set; } = string.Empty;
     public bool IsStarredOnly { get; set; }
@@ -231,13 +231,13 @@ public class MavParamsPageViewModel
 
         Total = _paramsClient.RemoteCount.ToReadOnlyBindableReactiveProperty();
         Total.RegisterTo(cancel);
-        _view = _paramsClient.Items.CreateView(kvp => new ParamItemViewModel(
-            kvp.Key,
-            kvp.Value,
-            GetConfigFor,
-            SetConfigFor,
-            _loggerFactory
-        ));
+        _view = _paramsClient.Items.CreateView(kvp =>
+        {
+            ParamItemViewModelConfig? config = null;
+            _config?.Params.TryGetValue(kvp.Key, out config);
+
+            return new ParamItemViewModel(kvp.Key, kvp.Value, _loggerFactory, config);
+        });
         _view.RegisterTo(cancel);
         _view.DisposeMany().RegisterTo(cancel);
         _view.SetRoutableParent(this).RegisterTo(cancel);
@@ -331,27 +331,6 @@ public class MavParamsPageViewModel
         {
             Logger.LogError(e, "Error to read all param items");
         }
-    }
-
-    private ParamItemViewModelConfig? GetConfigFor(string name)
-    {
-        if (_config is null)
-        {
-            return null;
-        }
-
-        _config.Params.TryGetValue(name, out var config);
-        return config;
-    }
-
-    private void SetConfigFor(string name, ParamItemViewModelConfig config)
-    {
-        if (_config is null)
-        {
-            return;
-        }
-
-        _config.Params[name] = config;
     }
 
     protected override void AfterDeviceInitialized(IClientDevice device, CancellationToken cancel)
@@ -456,6 +435,17 @@ public class MavParamsPageViewModel
                     {
                         cfg.SearchText = Search.Text.ViewValue.Value ?? string.Empty;
                         cfg.IsStarredOnly = IsStarredOnly.ViewValue.Value;
+                        cfg.Params = _view
+                            .Where(p => p.IsLayoutChanged.CurrentValue)
+                            .ToDictionary(
+                                p => p.Name,
+                                p => new ParamItemViewModelConfig
+                                {
+                                    Name = p.Name,
+                                    IsPinned = p.IsPinned.ViewValue.Value,
+                                    IsStarred = p.IsStarred.ViewValue.Value,
+                                }
+                            );
                     }
                 );
                 break;

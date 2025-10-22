@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
@@ -26,8 +25,6 @@ public class ParamItemViewModel : RoutableViewModel
     private readonly ParamItem _paramItem;
     private readonly ReactiveProperty<bool> _isPinned;
     private readonly ReactiveProperty<bool> _isStarred;
-    private readonly Func<string, ParamItemViewModelConfig?> _getCfgCallback;
-    private readonly Action<string, ParamItemViewModelConfig> _setCfgCallback;
     private bool _internalUpdate;
 
     // private ParamItemViewModelConfig? _config;
@@ -46,20 +43,15 @@ public class ParamItemViewModel : RoutableViewModel
     public ParamItemViewModel(
         NavigationId id,
         ParamItem paramItem,
-        Func<string, ParamItemViewModelConfig?> getCfgCallback,
-        Action<string, ParamItemViewModelConfig> setCfgCallback,
-        ILoggerFactory loggerFactory
+        ILoggerFactory loggerFactory,
+        ParamItemViewModelConfig? initialConfig = null
     )
         : base(id, loggerFactory)
     {
         ArgumentNullException.ThrowIfNull(paramItem);
         ArgumentNullException.ThrowIfNull(loggerFactory);
-        ArgumentNullException.ThrowIfNull(getCfgCallback);
-        ArgumentNullException.ThrowIfNull(setCfgCallback);
 
         _paramItem = paramItem;
-        _getCfgCallback = getCfgCallback;
-        _setCfgCallback = setCfgCallback;
         Name = paramItem.Name;
         DisplayName = paramItem.Info.DisplayName ?? string.Empty;
         Units = paramItem.Info.Units ?? string.Empty;
@@ -67,13 +59,16 @@ public class ParamItemViewModel : RoutableViewModel
         ValueDescription = paramItem.Info.UnitsDisplayName ?? string.Empty;
         IsRebootRequired = paramItem.Info.IsRebootRequired;
 
-        _isPinned = new ReactiveProperty<bool>(false);
-        _isStarred = new ReactiveProperty<bool>(false);
+        _isPinned = new ReactiveProperty<bool>(initialConfig?.IsPinned ?? false);
+        _isStarred = new ReactiveProperty<bool>(initialConfig?.IsStarred ?? false);
 
         IsPinned = new HistoricalBoolProperty(nameof(IsPinned), _isPinned, loggerFactory, this);
         IsPinned.ForceValidate();
         IsStarred = new HistoricalBoolProperty(nameof(IsStarred), _isStarred, loggerFactory, this);
         IsStarred.ForceValidate();
+        IsLayoutChanged = Observable
+            .Merge(IsPinned.ViewValue, IsStarred.ViewValue)
+            .ToReadOnlyReactiveProperty();
 
         Value = new BindableReactiveProperty<string?>();
         IsSynced = new BindableReactiveProperty<bool>();
@@ -296,6 +291,7 @@ public class ParamItemViewModel : RoutableViewModel
     public HistoricalBoolProperty IsPinned { get; }
     public BindableReactiveProperty<string?> Value { get; }
     public HistoricalBoolProperty IsStarred { get; }
+    public ReadOnlyReactiveProperty<bool> IsLayoutChanged { get; }
 
     public bool Filter(string? searchText, bool starredOnly)
     {
@@ -315,54 +311,43 @@ public class ParamItemViewModel : RoutableViewModel
         return Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase);
     }
 
+    protected override ValueTask InternalCatchEvent(AsyncRoutedEvent e)
+    {
+        switch (e)
+        {
+            case LoadLayoutEvent loadLayoutEvent:
+            {
+                if (Parent is not MavParamsPageViewModel parent)
+                {
+                    break;
+                }
+
+                loadLayoutEvent.HandleLoadLayout<MavParamsPageViewModelConfig>(
+                    parent,
+                    cfg =>
+                    {
+                        if (!cfg.Params.TryGetValue(Name, out var paramItemConfig))
+                        {
+                            return;
+                        }
+
+                        IsPinned.ModelValue.Value = paramItemConfig.IsPinned;
+                        IsStarred.ModelValue.Value = paramItemConfig.IsStarred;
+                    }
+                );
+                break;
+            }
+        }
+
+        return base.InternalCatchEvent(e);
+    }
+
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
         yield return IsPinned;
         yield return IsStarred;
     }
 
-    // protected override ValueTask HandleSaveLayout(CancellationToken cancel = default)
-    // {
-    //     if (_config is null)
-    //     {
-    //         if (!IsPinned.ViewValue.Value && !IsStarred.ViewValue.Value)
-    //         {
-    //             return base.HandleSaveLayout(cancel);
-    //         }
-    //
-    //         _config = new ParamItemViewModelConfig
-    //         {
-    //             IsPinned = IsPinned.ViewValue.Value,
-    //             IsStarred = IsStarred.ViewValue.Value,
-    //             Name = Name,
-    //         };
-    //     }
-    //     else
-    //     {
-    //         _config.IsPinned = IsPinned.ViewValue.Value;
-    //         _config.IsStarred = IsStarred.ViewValue.Value;
-    //         _config.Name = Name;
-    //     }
-    //
-    //     _setCfgCallback(Name, _config);
-    //
-    //     return base.HandleSaveLayout(cancel);
-    // }
-    //
-    // protected override ValueTask HandleLoadLayout(CancellationToken cancel = default)
-    // {
-    //     _config = _getCfgCallback(Name);
-    //
-    //     if (_config is null)
-    //     {
-    //         return base.HandleLoadLayout(cancel);
-    //     }
-    //
-    //     IsPinned.ModelValue.Value = _config.IsPinned;
-    //     IsStarred.ModelValue.Value = _config.IsStarred;
-    //
-    //     return base.HandleLoadLayout(cancel);
-    // }
     #region Dispose
 
     private readonly IDisposable _sub;
