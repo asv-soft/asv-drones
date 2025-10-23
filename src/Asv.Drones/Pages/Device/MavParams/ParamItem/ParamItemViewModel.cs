@@ -27,7 +27,6 @@ public class ParamItemViewModel : RoutableViewModel
     private readonly ReactiveProperty<bool> _isStarred;
     private bool _internalUpdate;
 
-    // private ParamItemViewModelConfig? _config;
     public ParamItemViewModel()
         : base(DesignTime.Id, DesignTime.LoggerFactory) // use base class instead of ParamItem, because there is no way to create an empty Param item
     {
