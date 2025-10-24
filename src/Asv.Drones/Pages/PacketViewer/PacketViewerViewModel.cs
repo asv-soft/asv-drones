@@ -384,7 +384,8 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
                         cfg.SearchText = Search.Text.ViewValue.Value ?? string.Empty;
                         cfg.IsCheckedAllSources = IsCheckedAllSources.ViewValue.Value;
                         cfg.IsCheckedAllTypes = IsCheckedAllTypes.ViewValue.Value;
-                    }
+                    },
+                    FlushingStrategy.FlushBothViewModelAndView
                 );
                 break;
             case LoadLayoutEvent loadLayoutEvent:
