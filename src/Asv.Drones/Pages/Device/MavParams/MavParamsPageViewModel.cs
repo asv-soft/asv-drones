@@ -179,7 +179,7 @@ public class MavParamsPageViewModel
 
         IsStarredOnly
             .ViewValue.ThrottleLast(TimeSpan.FromMilliseconds(500))
-            .Subscribe(x => UpdateFilter())
+            .Subscribe(_ => UpdateFilter())
             .DisposeItWith(Disposable);
 
         Progress

@@ -85,7 +85,11 @@
                     </ListBox>
                 </ScrollViewer>
             </DockPanel>
-            <GridSplitter Background="Transparent" Grid.Column="1" />
+            <GridSplitter 
+                x:Name="MainGridSplitter" 
+                Background="Transparent" 
+                Grid.Column="1" 
+                DragCompleted="GridSplitter_Dragged"/>
             <Panel Grid.Column="2">
                 <StackPanel IsVisible="{Binding IsRefreshing.Value}" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock Text="{x:Static drones:RS.MavParamsPageView_Loading_Text}" />

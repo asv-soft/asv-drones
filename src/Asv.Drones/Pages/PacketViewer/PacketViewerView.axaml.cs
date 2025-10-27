@@ -48,6 +48,16 @@ public partial class PacketViewerView : UserControl
         base.OnDetachedFromVisualTree(e);
     }
 
+    private void Expander_StateChanged(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not Expander exp)
+        {
+            return;
+        }
+
+        SaveLayout();
+    }
+
     private void LoadLayout()
     {
         _config = _layoutService.Get<PacketViewerViewConfig>(this);
@@ -65,15 +75,5 @@ public partial class PacketViewerView : UserControl
         _config.IsSourcesExpanded = SourcesExpander.IsExpanded;
         _config.IsTypesExpanded = TypesExpander.IsExpanded;
         _layoutService.SetInMemory(this, _config);
-    }
-
-    private void Expander_StateChanged(object? sender, RoutedEventArgs e)
-    {
-        if (sender is not Expander exp)
-        {
-            return;
-        }
-
-        SaveLayout();
     }
 }
