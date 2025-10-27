@@ -72,22 +72,12 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>RS.resx</DependentUpon>
       </Compile>
+      <Compile Update="Pages\FileBrowser\Dialogs\BurstDownloadDialogView.axaml.cs">
+        <DependentUpon>BurstDownloadDialogView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
       <Compile Remove="Services\Files\IFtpClientService.cs" />
       <Compile Remove="Services\Files\FtpClientService.cs" />
       <Compile Remove="Services\Files\LocalFilesMixin.cs" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Pages\Device\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <AdditionalFiles Include="Pages\Device\FileBrowser\Dialogs\BurstDownloadDialogView.axaml" />
-      <AdditionalFiles Include="Pages\Device\FileBrowser\FileBrowserView.axaml" />
-      <AdditionalFiles Include="Pages\Device\MavParams\Dialog\TryCloseWithApprovalDialogView.axaml" />
-      <AdditionalFiles Include="Pages\Device\MavParams\MavParamsPageView.axaml" />
-      <AdditionalFiles Include="Pages\Device\MavParams\ParamItem\ParamItemView.axaml" />
-      <AdditionalFiles Include="Pages\Device\Setup\SetupPageView.axaml" />
-      <AdditionalFiles Include="Pages\Device\Setup\Subpage\FrameType\SetupFrameTypeView.axaml" />
     </ItemGroup>
 </Project>

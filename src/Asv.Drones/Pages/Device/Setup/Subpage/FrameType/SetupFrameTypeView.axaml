@@ -1,13 +1,139 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:drones="clr-namespace:Asv.Drones"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="drones:SetupFrameTypeViewModel"
-             x:Class="Asv.Drones.SetupFrameTypeView">
-    <Grid>
-        <TextBlock Text="{CompiledBinding FullIdDebug.Value}"/>
-        <TextBox Text="{CompiledBinding SomeText.Value}"/>
-    </Grid>
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:drones="clr-namespace:Asv.Drones"
+    xmlns:avalonia="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
+    xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="700"
+    x:DataType="drones:SetupFrameTypeViewModel"
+    x:Class="Asv.Drones.SetupFrameTypeView">
+    <Design.DataContext>
+        <drones:SetupFrameTypeViewModel />
+    </Design.DataContext>
+    <Panel>
+        <avalonia:AwaitingScreen
+            Header="{x:Static drones:RS.SetupFrameTypeView_Loader_Header}"
+            Description="{x:Static drones:RS.SetupFrameTypeView_Loader_Description}"
+            IsVisible="{CompiledBinding IsUpdating.Value}" />
+
+        <Grid HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"
+              Margin="2"
+              RowDefinitions="Auto,8,*"
+              ColumnDefinitions="1*,8,Auto"
+              IsVisible="{Binding !IsUpdating.Value}">
+            <Grid Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                <avalonia:SearchBoxView Grid.Column="0"
+                                        x:Name="FrameSearchBox"
+                                        Margin="0"
+                                        HorizontalAlignment="Stretch"
+                                        DataContext="{Binding Search}" />
+                <Button Grid.Column="1"
+                        Command="{Binding RefreshCommand}"
+                        ToolTip.Tip="{x:Static drones:RS.SetupFrameTypeView_CurrentFrame_Refresh}"
+                        CornerRadius="{StaticResource ControlCornerRadius}"
+                        Width="{Binding #FrameSearchBox.Bounds.Height}"
+                        Height="{Binding #FrameSearchBox.Bounds.Height}"
+                        Margin="0">
+                    <icons:MaterialIcon Kind="Sync" />
+                </Button>
+            </Grid>
+
+            <ListBox Grid.Column="0"
+                     Grid.Row="2"
+                     CornerRadius="{StaticResource ControlCornerRadius}"
+                     ItemsSource="{Binding Frames}"
+                     SelectedItem="{Binding SelectedFrame.Value}"
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Stretch"
+                     Margin="0" />
+
+            <Border Grid.Column="2" Grid.Row="2" 
+                    VerticalAlignment="Top"
+                    Padding="8"
+                    Background="{DynamicResource SystemControlBackgroundListLowBrush}"
+                    BorderBrush="{DynamicResource ThemeAccentBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{StaticResource ControlCornerRadius}">
+                <Grid ColumnDefinitions="*" RowDefinitions="*,12,*" HorizontalAlignment="Left">
+                    <StackPanel Grid.Column="0" Grid.Row="0"
+                                Orientation="Vertical"
+                                Spacing="4"
+                                VerticalAlignment="Top">
+                        <TextBlock
+                            Text="{x:Static drones:RS.SetupFrameTypeView_CurrentFrame}"
+                            TextWrapping="Wrap"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            FontWeight="SemiBold"
+                            FontSize="18" />
+                        <TextBlock
+                            Text="{Binding CurrentFrameLabel.Value, FallbackValue='-'}"
+                            TextWrapping="Wrap"
+                            VerticalAlignment="Center"
+                            FontSize="16" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" Spacing="16">
+                        <Border
+                            BorderBrush="{DynamicResource BorderBrush}"
+                            BorderThickness="1"
+                            Background="{DynamicResource SystemControlBackgroundListLowBrush}"
+                            Height="180"
+                            Width="180"
+                            CornerRadius="8"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Left">
+                            <ItemsControl ItemsSource="{CompiledBinding CurrentFrame.Value.Meta, 
+                                            FallbackValue={CompiledBinding MetaFallBack}}"
+                                          HorizontalAlignment="Stretch"
+                                          Padding="6">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="2" Orientation="Vertical">
+                                            <TextBlock Text="{Binding Key}"
+                                                       FontSize="12"
+                                                       FontWeight="SemiBold"
+                                                       TextTrimming="CharacterEllipsis" />
+                                            <TextBlock Text="{Binding Value}"
+                                                       FontSize="13"
+                                                       TextWrapping="Wrap"
+                                                       Margin="0,0,0,3" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Border>
+
+                        <StackPanel Orientation="Vertical" Spacing="4">
+                            <TextBlock Text="{x:Static drones:RS.SetupFrameTypeView_CurrentFrame_Meta}"
+                                       FontSize="16"
+                                       FontWeight="SemiBold"
+                                       TextTrimming="CharacterEllipsis" />
+                            <ItemsControl ItemsSource="{CompiledBinding CurrentFrame.Value.Meta, 
+                                            FallbackValue={CompiledBinding MetaFallBack}}"
+                                          HorizontalAlignment="Stretch">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock Text="{CompiledBinding Key}"
+                                                       FontSize="13"
+                                                       FontWeight="SemiBold"
+                                                       TextTrimming="CharacterEllipsis" />
+                                            <TextBlock Text="{CompiledBinding Value}"
+                                                       FontSize="14"
+                                                       TextWrapping="Wrap"
+                                                       Margin="0,0,0,3" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Panel>
 </UserControl>

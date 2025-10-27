@@ -15,8 +15,8 @@ public class OpenSetupCommand(INavigationService nav)
     public static readonly ICommandInfo StaticInfo = new CommandInfo
     {
         Id = Id,
-        Name = "Open Setup page",
-        Description = "Command that opens setup page for the drone",
+        Name = RS.OpenSetupCommand_CommandInfo_Name,
+        Description = RS.OpenSetupCommand_CommandInfo_Description,
         Icon = SetupPageViewModel.PageIcon,
         DefaultHotKey = null,
         Source = SystemModule.Instance,

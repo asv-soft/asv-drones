@@ -22,41 +22,39 @@ public class SetupPageExtension(ILoggerFactory loggerFactory) : IExtensionFor<IS
     public void Extend(ISetupPage context, CompositeDisposable contextDispose)
     {
         context
-            .Target.SubscribeAwait(
+            .Target.Where(w => w is not null)
+            .SubscribeAwait(
                 async (wrapper, ct) =>
                 {
-                    await TryAddSetupFrameTypeSubpage(context, wrapper, contextDispose, ct);
-                }
+                    if (wrapper is null)
+                    {
+                        return;
+                    }
+
+                    await TryAddSetupFrameTypeSubpage(context, wrapper.Value, contextDispose, ct);
+                },
+                AwaitOperation.Drop
             )
             .DisposeItWith(contextDispose);
     }
 
-    private async ValueTask TryAddSetupFrameTypeSubpage(
+    private ValueTask TryAddSetupFrameTypeSubpage(
         ISetupPage context,
-        DeviceWrapper? wrapper,
+        DeviceWrapper wrapper,
         CompositeDisposable contextDispose,
         CancellationToken ct
     )
     {
         ct.ThrowIfCancellationRequested();
 
-        var paramsClient = wrapper?.Device.GetMicroservice<IParamsClient>();
-        if (paramsClient is null)
-        {
-            return;
-        }
+        var frameClient = wrapper.Device.GetMicroservice<IFrameClient>();
 
-        var param = await paramsClient.Read("FRAME_TYPE", ct);
-
-        // TODO: make read return nullable result
-        if (param is null)
+        if (
+            frameClient is null
+            || context.Nodes.Any(node => node.Id == SetupFrameTypeViewModel.PageId)
+        )
         {
-            return;
-        }
-
-        if (context.Nodes.Any(node => node.Id == SetupFrameTypeViewModel.PageId))
-        {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         context.Nodes.Add(
@@ -69,5 +67,7 @@ public class SetupPageExtension(ILoggerFactory loggerFactory) : IExtensionFor<IS
                 loggerFactory
             ).DisposeItWith(contextDispose)
         );
+
+        return ValueTask.CompletedTask;
     }
 }

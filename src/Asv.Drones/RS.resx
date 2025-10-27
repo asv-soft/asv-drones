@@ -482,4 +482,46 @@
     <data name="SetupFrameTypeViewModel_Name" xml:space="preserve">
         <value>Frame type</value>
     </data>
+    <data name="ChangeFrameTypeCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that changes frame type</value>
+    </data>
+    <data name="ChangeFrameTypeCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Change frame type</value>
+    </data>
+    <data name="SetupFrameTypeView_Loader_Header" xml:space="preserve">
+        <value>Loading...</value>
+    </data>
+    <data name="SetupFrameTypeView_Loader_Description" xml:space="preserve">
+        <value>Please wait</value>
+    </data>
+    <data name="SetupFrameTypeView_CurrentFrame" xml:space="preserve">
+        <value>Current frame</value>
+    </data>
+    <data name="SetupFrameTypeView_FrameMetadata" xml:space="preserve">
+        <value>Metadata</value>
+    </data>
+    <data name="SetupFrameTypeView_ApplyFrame" xml:space="preserve">
+        <value>Set</value>
+    </data>
+    <data name="SetupFrameTypeViewModel_ApplyConfirmation_Title" xml:space="preserve">
+        <value>Change frame type</value>
+    </data>
+    <data name="SetupFrameTypeViewModel_ApplyConfirmation_Message" xml:space="preserve">
+        <value>Do you want to change frame type?</value>
+    </data>
+    <data name="SetupFrameTypeViewModel_CurrentFrame_Unknown" xml:space="preserve">
+        <value>Unknown</value>
+    </data>
+    <data name="OpenSetupCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Open Setup page</value>
+    </data>
+    <data name="OpenSetupCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Command that opens setup page for the drone</value>
+    </data>
+    <data name="SetupFrameTypeView_CurrentFrame_Refresh" xml:space="preserve">
+        <value>Refresh current frame</value>
+    </data>
+    <data name="SetupFrameTypeView_CurrentFrame_Meta" xml:space="preserve">
+        <value>Description</value>
+    </data>
 </root>
