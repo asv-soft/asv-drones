@@ -1,13 +1,196 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:drones="clr-namespace:Asv.Drones"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="drones:SetupFrameTypeViewModel"
-             x:Class="Asv.Drones.SetupFrameTypeView">
-    <Grid>
-        <TextBlock Text="{CompiledBinding FullIdDebug.Value}"/>
-        <TextBox Text="{CompiledBinding SomeText.Value}"/>
-    </Grid>
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:drones="clr-namespace:Asv.Drones"
+    xmlns:avalonia="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
+    xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="700"
+    x:DataType="drones:SetupFrameTypeViewModel"
+    x:Class="Asv.Drones.SetupFrameTypeView">
+    <Design.DataContext>
+        <drones:SetupFrameTypeViewModel />
+    </Design.DataContext>
+    <ScrollViewer
+        HorizontalScrollBarVisibility="Auto"
+        VerticalScrollBarVisibility="Auto"
+        Padding="12">
+        <Grid
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            MinWidth="600"
+            MaxWidth="800"
+            RowDefinitions="Auto,*,Auto">
+
+            <Border Grid.Row="0"
+                    BorderBrush="{DynamicResource AsvPopupCommonColor}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="12"
+                    Margin="0,0,0,12">
+                <Grid ColumnDefinitions="*,Auto,Auto">
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="6" VerticalAlignment="Top">
+                        <TextBlock
+                            Text="{x:Static drones:RS.SetupFrameTypeView_CurrentFrame}"
+                            VerticalAlignment="Center"
+                            FontWeight="SemiBold"
+                            FontSize="16" />
+                        <TextBlock
+                            Text="{Binding CurrentFrameLabel.Value}"
+                            VerticalAlignment="Center"
+                            FontSize="16" />
+                    </StackPanel>
+
+                    <Button Grid.Column="1"
+                            Command="{Binding RefreshCommand}"
+                            ToolTip.Tip="Refresh current frame"
+                            VerticalAlignment="Top"
+                            Padding="8"
+                            Margin="0,0,12,0">
+                        <icons:MaterialIcon
+                            Kind="Refresh"
+                            Width="20"
+                            Height="20" />
+                    </Button>
+
+                    <Border Grid.Column="2"
+                            BorderBrush="{DynamicResource BorderBrush}"
+                            BorderThickness="1"
+                            Background="{DynamicResource AsvPopupCommonColor}"
+                            Height="140"
+                            Width="140"
+                            CornerRadius="8"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Right"
+                            Margin="12,0,0,0">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="6">
+                            <ItemsControl ItemsSource="{Binding CurrentFrame.Value.Meta}"
+                                          HorizontalAlignment="Stretch">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="2,1" Orientation="Vertical">
+                                            <TextBlock Text="{Binding Key}"
+                                                       FontSize="9"
+                                                       FontWeight="SemiBold"
+                                                       TextTrimming="CharacterEllipsis" />
+                                            <TextBlock Text="{Binding Value}"
+                                                       FontSize="10"
+                                                       TextWrapping="Wrap"
+                                                       Margin="0,0,0,3" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="2"
+                    Padding="0"
+                    BorderBrush="{DynamicResource AsvPopupCommonColor}"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                <Panel>
+                    <avalonia:AwaitingScreen
+                        Header="{x:Static drones:RS.SetupFrameTypeView_Loader_Header}"
+                        Description="{x:Static drones:RS.SetupFrameTypeView_Loader_Description}"
+                        IsVisible="{Binding IsLoading.Value}"
+                        Margin="12" />
+
+                    <ScrollViewer MaxHeight="600"
+                                  VerticalScrollBarVisibility="Auto"
+                                  IsVisible="{Binding !IsLoading.Value}">
+                        <ItemsControl
+                            ItemsSource="{Binding Frames}"
+                            HorizontalAlignment="Stretch"
+                            x:Name="FramesItemsControl">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="8"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="8"
+                                            Padding="8"
+                                            Background="Transparent">
+                                        <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                                            <Border Grid.Column="0"
+                                                    BorderBrush="{DynamicResource BorderBrush}"
+                                                    BorderThickness="1"
+                                                    Background="{DynamicResource AsvPopupCommonColor}"
+                                                    Height="120"
+                                                    Width="120"
+                                                    CornerRadius="8"
+                                                    VerticalAlignment="Top"
+                                                    Margin="0,0,12,0">
+                                                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="6">
+                                                    <ItemsControl ItemsSource="{Binding Model.Meta}"
+                                                                  HorizontalAlignment="Stretch">
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <StackPanel Margin="2,1" Orientation="Vertical">
+                                                                    <TextBlock Text="{Binding Key}"
+                                                                               FontSize="9"
+                                                                               FontWeight="SemiBold"
+                                                                               TextTrimming="CharacterEllipsis" />
+                                                                    <TextBlock Text="{Binding Value}"
+                                                                               FontSize="10"
+                                                                               TextWrapping="Wrap"
+                                                                               Margin="0,0,0,3" />
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </ScrollViewer>
+                                            </Border>
+
+                                            <StackPanel Grid.Column="1"
+                                                        VerticalAlignment="Center"
+                                                        Margin="12,0,12,0">
+                                                <TextBlock
+                                                    Text="{Binding Model.Id}"
+                                                    FontSize="14"
+                                                    FontWeight="Medium"
+                                                    TextWrapping="Wrap" />
+                                            </StackPanel>
+
+                                            <icons:MaterialIcon
+                                                Grid.Column="2"
+                                                Kind="CheckCircle"
+                                                Width="20"
+                                                Height="20"
+                                                VerticalAlignment="Center"
+                                                Foreground="Green"
+                                                Margin="0,0,12,0"
+                                                IsVisible="{Binding IsCurrent.Value}" />
+
+                                            <Button Grid.Column="3"
+                                                    Command="{Binding $parent[ItemsControl].((drones:SetupFrameTypeViewModel)DataContext).ApplyCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    VerticalAlignment="Center"
+                                                    Padding="24,10"
+                                                    FontSize="14">
+                                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                                    <icons:MaterialIcon
+                                                        Kind="Check"
+                                                        Width="16"
+                                                        Height="16"
+                                                        VerticalAlignment="Center" />
+                                                    <TextBlock
+                                                        Text="{x:Static drones:RS.SetupFrameTypeView_ApplyFrame}"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14" />
+                                                </StackPanel>
+                                            </Button>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Panel>
+            </Border>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

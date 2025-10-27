@@ -95,9 +95,9 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             linkQuality,
             unitItem,
             DesignTime.LoggerFactory
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         LinkQuality.ForceValidate();
         AltitudeAgl = new HistoricalUnitProperty(
@@ -105,10 +105,9 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             altitudeAgl,
             unitItem,
             DesignTime.LoggerFactory
-            
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         AltitudeAgl.ForceValidate();
         AltitudeMsl = new HistoricalUnitProperty(
@@ -116,10 +115,9 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             altitudeMsl,
             unitItem,
             DesignTime.LoggerFactory
-            
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         AltitudeMsl.ForceValidate();
         Azimuth = new HistoricalUnitProperty(
@@ -127,10 +125,9 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             azimuth,
             unitItem,
             DesignTime.LoggerFactory
-            
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         Azimuth.ForceValidate();
         Heading = new HistoricalUnitProperty(
@@ -138,9 +135,9 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             heading,
             unitItem,
             DesignTime.LoggerFactory
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         Heading.ForceValidate();
         HomeAzimuth = new HistoricalUnitProperty(
@@ -148,9 +145,9 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             homeAzimuth,
             unitItem,
             DesignTime.LoggerFactory
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         HomeAzimuth.ForceValidate();
         Velocity = new HistoricalUnitProperty(
@@ -158,9 +155,9 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             velocity,
             unitItem,
             DesignTime.LoggerFactory
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         Velocity.ForceValidate();
         BatteryAmperage = new HistoricalUnitProperty(
@@ -169,9 +166,9 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             unitItem,
             DesignTime.LoggerFactory,
             "N2"
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         BatteryAmperage.ForceValidate();
         BatteryVoltage = new HistoricalUnitProperty(
@@ -180,9 +177,9 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             unitItem,
             DesignTime.LoggerFactory,
             "N2"
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         BatteryVoltage.ForceValidate();
         BatteryCharge = new HistoricalUnitProperty(
@@ -190,9 +187,9 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             batteryCharge,
             unitItem,
             DesignTime.LoggerFactory
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         BatteryCharge.ForceValidate();
         BatteryConsumed = new HistoricalUnitProperty(
@@ -200,9 +197,9 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             batteryConsumed,
             unitItem,
             DesignTime.LoggerFactory
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         BatteryConsumed.ForceValidate();
 
@@ -442,63 +439,53 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             linkQuality,
             _progressUnit,
             loggerFactory
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         AltitudeAgl = new HistoricalUnitProperty(
             nameof(AltitudeAgl),
             altitudeAgl,
             _altitudeUnit,
             loggerFactory
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         AltitudeMsl = new HistoricalUnitProperty(
             nameof(AltitudeMsl),
             altitudeMsl,
             _altitudeUnit,
             loggerFactory
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
-        Azimuth = new HistoricalUnitProperty(
-            nameof(Azimuth),
-            azimuth,
-            _angleUnit,
-            loggerFactory
-        ) {
+        Azimuth = new HistoricalUnitProperty(nameof(Azimuth), azimuth, _angleUnit, loggerFactory)
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
-        Heading = new HistoricalUnitProperty(
-            nameof(Heading),
-            heading,
-            _angleUnit,
-            loggerFactory
-        ) {
+        Heading = new HistoricalUnitProperty(nameof(Heading), heading, _angleUnit, loggerFactory)
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         HomeAzimuth = new HistoricalUnitProperty(
             nameof(HomeAzimuth),
             homeAzimuth,
             _angleUnit,
             loggerFactory
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         Velocity = new HistoricalUnitProperty(
             nameof(Velocity),
             velocity,
             _velocityUnit,
             loggerFactory
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         BatteryAmperage = new HistoricalUnitProperty(
             nameof(BatteryAmperage),
@@ -506,9 +493,9 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             _amperageUnit,
             loggerFactory,
             "N2"
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         BatteryVoltage = new HistoricalUnitProperty(
             nameof(BatteryVoltage),
@@ -516,27 +503,27 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             _voltageUnit,
             loggerFactory,
             "N2"
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         BatteryCharge = new HistoricalUnitProperty(
             nameof(BatteryCharge),
             batteryCharge,
             _progressUnit,
             loggerFactory
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         BatteryConsumed = new HistoricalUnitProperty(
             nameof(BatteryConsumed),
             batteryConsumed,
             _capacityUnit,
             loggerFactory
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
 
         BatteryConsumedSymbol = BatteryConsumed

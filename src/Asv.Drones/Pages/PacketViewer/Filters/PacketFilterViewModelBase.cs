@@ -45,15 +45,10 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
         )
         {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
-        IsChecked = new HistoricalBoolProperty(
-            nameof(IsChecked),
-            _isChecked,
-            loggerFactory
-        ) {
+        IsChecked = new HistoricalBoolProperty(nameof(IsChecked), _isChecked, loggerFactory)
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         MessageRateTextUnit = MessageRateText
             .Unit.CurrentUnitItem.Select(item => item.Symbol)

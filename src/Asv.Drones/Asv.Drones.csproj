@@ -79,8 +79,5 @@
       <Compile Remove="Services\Files\IFtpClientService.cs" />
       <Compile Remove="Services\Files\FtpClientService.cs" />
       <Compile Remove="Services\Files\LocalFilesMixin.cs" />
-      <Compile Update="Pages\Setup\Subpage\FrameType\SetupFrameTypeView.axaml.cs">
-        <DependentUpon>SetupFrameTypeView.axaml</DependentUpon>
-      </Compile>
     </ItemGroup>
 </Project>

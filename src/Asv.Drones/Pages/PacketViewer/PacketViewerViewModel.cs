@@ -128,13 +128,9 @@ public class PacketViewerViewModel
         FiltersBySource = _filtersBySourceSet.ToNotifyCollectionChanged().DisposeItWith(Disposable);
         FiltersByType = _filtersByTypeSet.ToNotifyCollectionChanged().DisposeItWith(Disposable);
 
-        IsPaused = new HistoricalBoolProperty(
-            nameof(IsPaused),
-            _isPaused,
-            loggerFactory
-        ) {
+        IsPaused = new HistoricalBoolProperty(nameof(IsPaused), _isPaused, loggerFactory)
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         Search = new SearchBoxViewModel(
             nameof(Search),
@@ -149,17 +145,17 @@ public class PacketViewerViewModel
             nameof(IsCheckedAllSources),
             _isCheckedAllSources,
             loggerFactory
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         IsCheckedAllTypes = new HistoricalBoolProperty(
             nameof(IsCheckedAllTypes),
             _isCheckedAllTypes,
             loggerFactory
-        ) {
+        )
+        {
             Parent = this,
-            
         }.DisposeItWith(Disposable);
         SelectedPacket = new BindableReactiveProperty<PacketMessageViewModel?>(null).DisposeItWith(
             Disposable
