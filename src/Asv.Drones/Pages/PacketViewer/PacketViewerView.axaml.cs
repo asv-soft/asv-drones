@@ -19,20 +19,16 @@ public partial class PacketViewerView : UserControl
 
     private PacketViewerViewConfig? _config;
 
-    [ImportingConstructor]
-    public PacketViewerView(ILayoutService layoutService)
-        : this()
+    public PacketViewerView()
+        : this(NullLayoutService.Instance)
     {
-        _layoutService = layoutService;
+        DesignTime.ThrowIfNotDesignMode();
     }
 
-    public PacketViewerView()
+    [ImportingConstructor]
+    public PacketViewerView(ILayoutService layoutService)
     {
-        if (Design.IsDesignMode)
-        {
-            _layoutService = NullLayoutService.Instance;
-        }
-
+        _layoutService = layoutService;
         InitializeComponent();
     }
 
@@ -40,12 +36,6 @@ public partial class PacketViewerView : UserControl
     {
         LoadLayout();
         base.OnAttachedToVisualTree(e);
-    }
-
-    protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
-    {
-        SaveLayout();
-        base.OnDetachedFromVisualTree(e);
     }
 
     private void Expander_StateChanged(object? sender, RoutedEventArgs e)
@@ -72,8 +62,31 @@ public partial class PacketViewerView : UserControl
             return;
         }
 
+        if (DataContext is null)
+        {
+            return;
+        }
+
+        if (!HasChanges())
+        {
+            return;
+        }
+
         _config.IsSourcesExpanded = SourcesExpander.IsExpanded;
         _config.IsTypesExpanded = TypesExpander.IsExpanded;
         _layoutService.SetInMemory(this, _config);
+    }
+
+    private bool HasChanges()
+    {
+        if (
+            _config?.IsSourcesExpanded == SourcesExpander.IsExpanded
+            && _config.IsTypesExpanded == TypesExpander.IsExpanded
+        )
+        {
+            return false;
+        }
+
+        return true;
     }
 }

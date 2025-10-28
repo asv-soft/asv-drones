@@ -446,7 +446,8 @@ public class MavParamsPageViewModel
                                     IsStarred = p.IsStarred.ViewValue.Value,
                                 }
                             );
-                    }
+                    },
+                    FlushingStrategy.FlushBothViewModelAndView
                 );
                 break;
             }

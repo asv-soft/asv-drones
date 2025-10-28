@@ -16,7 +16,7 @@
             Header="{x:Static drones:RS.MavParamsPageView_AwaitingScreen_Header}" 
             Description="{x:Static drones:RS.MavParamsPageView_AwaitingScreen_Description}" 
             IsVisible="{Binding !IsDeviceInitialized}"/>
-        <Grid IsVisible="{Binding IsDeviceInitialized}">
+        <Grid IsVisible="{Binding IsDeviceInitialized}" x:Name="MainGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="220" Width="*" />
                 <ColumnDefinition Width="5" />
@@ -86,7 +86,6 @@
                 </ScrollViewer>
             </DockPanel>
             <GridSplitter 
-                x:Name="MainGridSplitter" 
                 Background="Transparent" 
                 Grid.Column="1" 
                 DragCompleted="GridSplitter_Dragged"/>
