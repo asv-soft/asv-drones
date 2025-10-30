@@ -31,23 +31,12 @@ public class SetupPageViewModel : TreeDevicePageViewModel<ISetupPage, ISetupSubp
         Icon = PageIcon;
     }
 
-    public bool IsDeviceInitialized
-    {
-        get;
-        set => SetField(ref field, value);
-    }
-
     protected override void AfterDeviceInitialized(
         IClientDevice device,
         CancellationToken onDisconnectedToken
     )
     {
-        IsDeviceInitialized = true;
         Title = $"{RS.SetupPageViewModel_Title}[{device.Id}]";
-        onDisconnectedToken.Register(() =>
-        {
-            IsDeviceInitialized = false;
-        });
     }
 
     public override IExportInfo Source => SystemModule.Instance;

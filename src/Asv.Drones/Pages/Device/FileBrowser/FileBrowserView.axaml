@@ -80,9 +80,9 @@
     <Panel>
         <avalonia1:AwaitingScreen Header="{x:Static drones:RS.FileBrowserView_AwaitingScreen_Header}" 
                                   Description="{x:Static drones:RS.FileBrowserView_AwaitingScreen_Description}" 
-                                  IsVisible="{Binding !IsDeviceInitialized}"/>
+                                  IsVisible="{Binding !IsDeviceInitialized.Value}"/>
         <Grid RowDefinitions="*, Auto" 
-              IsVisible="{Binding IsDeviceInitialized}">
+              IsVisible="{Binding IsDeviceInitialized.Value} ">
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" MinWidth="300"/>

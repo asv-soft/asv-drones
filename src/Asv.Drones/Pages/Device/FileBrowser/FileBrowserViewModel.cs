@@ -21,7 +21,13 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class FileBrowserViewModelConfig { }
+public sealed class FileBrowserViewModelConfig
+{
+    public string LocalSearchText { get; set; } = string.Empty;
+    public string RemoteSearchText { get; set; } = string.Empty;
+    public string? LocalSelectedItemKey { get; set; }
+    public string? RemoteSelectedItemKey { get; set; }
+}
 
 [ExportPage(PageId)]
 public class FileBrowserViewModel
@@ -35,8 +41,6 @@ public class FileBrowserViewModel
     private const int SearchThrottleMs = 500;
 
     private readonly LocalFilesService _localFilesService;
-    private FtpClientService? _ftpService;
-    private FileBrowserBackend? _backend;
 
     private readonly YesOrNoDialogPrefab _yesNoDialog;
     private readonly ILoggerFactory _loggerFactory;
@@ -50,6 +54,10 @@ public class FileBrowserViewModel
     private readonly ObservableList<IBrowserItemViewModel> _localItems;
     private readonly ObservableList<IBrowserItemViewModel> _remoteItems;
 
+    private FtpClientService? _ftpService;
+    private FileBrowserBackend? _backend;
+    private FileBrowserViewModelConfig? _config;
+
     public FileBrowserViewModel()
         : this(
             DesignTime.CommandService,
@@ -61,16 +69,6 @@ public class FileBrowserViewModel
             DesignTime.Navigation
         )
     {
-        DesignTime.ThrowIfNotDesignMode();
-        TimeProvider
-            .System.CreateTimer(
-                _ => IsDeviceInitialized = true,
-                null,
-                TimeSpan.FromSeconds(5),
-                Timeout.InfiniteTimeSpan
-            )
-            .DisposeItWith(Disposable);
-
         RemoteItemsTree = new BrowserTree(
             new ObservableList<IBrowserItemViewModel>
             {
@@ -291,12 +289,10 @@ public class FileBrowserViewModel
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
 
-        IsDeviceInitialized = false;
-
         InitCommands();
     }
 
-    #region Props
+    #region Properties
 
     public BrowserTree LocalItemsTree { get; }
     public BrowserTree RemoteItemsTree { get; }
@@ -309,12 +305,6 @@ public class FileBrowserViewModel
     public BindableReactiveProperty<bool> IsUiBlocked { get; }
     public BindableReactiveProperty<bool> IsProgressVisible { get; }
     public BindableReactiveProperty<bool> IsTransferInProgress { get; }
-
-    public bool IsDeviceInitialized
-    {
-        get;
-        set => SetField(ref field, value);
-    }
 
     #endregion
 
@@ -720,6 +710,7 @@ public class FileBrowserViewModel
 
         var items = await _ftpService.Refresh(ct);
 
+        var selected = RemoteSelectedItem.Value?.Key;
         var toRemove = _rawRemoteEntries.Where(oldItem =>
             items.All(newItem =>
             {
@@ -758,14 +749,23 @@ public class FileBrowserViewModel
             })
         );
         _rawRemoteEntries.AddRange(toAdd);
+
+        if (selected is null)
+        {
+            return;
+        }
+
+        RemoteSelectedItem.Value =
+            RemoteItemsTree.FindNode(item => item.Key == selected) as BrowserNode;
     }
 
     private ValueTask RefreshLocalImpl(Unit arg, CancellationToken ct)
     {
-        if (_backend == null)
+        if (_backend is null)
         {
             return ValueTask.CompletedTask;
         }
+
         var newItems = _localFilesService.LoadBrowserItems(
             _localRootPath,
             _localRootPath,
@@ -773,6 +773,7 @@ public class FileBrowserViewModel
             _loggerFactory
         );
 
+        var selected = LocalSelectedItem.Value?.Key;
         var toRemove = _localItems
             .Where(ls => newItems.All(n => n.Path != ls.Path || n.Size != ls.Size))
             .ToArray();
@@ -791,6 +792,14 @@ public class FileBrowserViewModel
 
         _localItems.AddRange(toAdd);
         toDispose.ForEach(i => i.Dispose());
+
+        if (selected is null)
+        {
+            return ValueTask.CompletedTask;
+        }
+
+        LocalSelectedItem.Value =
+            LocalItemsTree.FindNode(item => item.Key == selected) as BrowserNode;
 
         return ValueTask.CompletedTask;
     }
@@ -1109,6 +1118,64 @@ public class FileBrowserViewModel
 
     #region Routable
 
+    protected override ValueTask InternalCatchEvent(AsyncRoutedEvent e)
+    {
+        switch (e)
+        {
+            case SaveLayoutEvent saveLayoutEvent:
+            {
+                if (!IsDeviceInitialized.Value)
+                {
+                    if (saveLayoutEvent.IsFlushToFile)
+                    {
+                        saveLayoutEvent.LayoutService.FlushFromMemoryViewModelAndView(this);
+                    }
+                    break;
+                }
+
+                if (_config is null)
+                {
+                    break;
+                }
+
+                saveLayoutEvent.HandleSaveLayout(
+                    this,
+                    _config,
+                    cfg =>
+                    {
+                        cfg.LocalSearchText = LocalSearch.Text.ViewValue.Value ?? string.Empty;
+                        cfg.RemoteSearchText = RemoteSearch.Text.ViewValue.Value ?? string.Empty;
+                        cfg.LocalSelectedItemKey = LocalSelectedItem.Value?.Key;
+                        cfg.RemoteSelectedItemKey = RemoteSelectedItem.Value?.Key;
+                    },
+                    FlushingStrategy.FlushBothViewModelAndView
+                );
+                break;
+            }
+
+            case LoadLayoutEvent loadLayoutEvent:
+            {
+                _config = loadLayoutEvent.HandleLoadLayout<FileBrowserViewModelConfig>(
+                    this,
+                    cfg =>
+                    {
+                        LocalSearch.Text.ModelValue.Value = cfg.LocalSearchText;
+                        RemoteSearch.Text.ModelValue.Value = cfg.RemoteSearchText;
+                        LocalSelectedItem.Value =
+                            LocalItemsTree.FindNode(n => n.Key == cfg.LocalSelectedItemKey)
+                            as BrowserNode;
+                        RemoteSelectedItem.Value =
+                            RemoteItemsTree.FindNode(n => n.Key == cfg.LocalSelectedItemKey)
+                            as BrowserNode;
+                    }
+                );
+                break;
+            }
+        }
+
+        return base.InternalCatchEvent(e);
+    }
+
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
         yield return LocalSearch;
@@ -1151,7 +1218,6 @@ public class FileBrowserViewModel
         CancellationToken onDisconnectedToken
     )
     {
-        IsDeviceInitialized = true;
         Title = $"{RS.FileBrowserViewModel_Title}[{device.Id}]";
         Icon = DeviceIconMixin.GetIcon(device.Id) ?? PageIcon;
 
@@ -1191,8 +1257,6 @@ public class FileBrowserViewModel
             _rawRemoteEntries.Clear();
             _remoteItems.Clear();
             RemoteSelectedItem.OnNext(null);
-
-            IsDeviceInitialized = false;
             _ftpService = null;
         });
 

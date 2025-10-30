@@ -71,16 +71,6 @@ public class MavParamsPageViewModel
 
         AllParams = list.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);
         ViewedParams = viewedList.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);
-
-        IsDeviceInitialized = false;
-        TimeProvider
-            .System.CreateTimer(
-                _ => IsDeviceInitialized = true,
-                null,
-                TimeSpan.FromSeconds(5),
-                Timeout.InfiniteTimeSpan
-            )
-            .DisposeItWith(Disposable);
     }
 
     [ImportingConstructor]
@@ -335,7 +325,6 @@ public class MavParamsPageViewModel
 
     protected override void AfterDeviceInitialized(IClientDevice device, CancellationToken cancel)
     {
-        IsDeviceInitialized = true;
         Title = $"{RS.MavParamsPageViewModel_Title}[{device.Id}]";
         _paramsClient = device.GetMicroservice<IParamsClientEx>();
         DeviceName = device
@@ -344,7 +333,6 @@ public class MavParamsPageViewModel
         DeviceName.RegisterTo(cancel);
         _deviceId = device.Id;
         Icon = DeviceIconMixin.GetIcon(_deviceId) ?? PageIcon;
-        cancel.Register(() => IsDeviceInitialized = false);
         InternalInit(cancel);
     }
 
@@ -369,12 +357,6 @@ public class MavParamsPageViewModel
     public IReadOnlyBindableReactiveProperty<string> DeviceName { get; private set; }
 
     public BindableReactiveProperty<ParamItemViewModel?> SelectedItem { get; }
-
-    public bool IsDeviceInitialized
-    {
-        get;
-        set => SetField(ref field, value);
-    }
 
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
@@ -423,6 +405,15 @@ public class MavParamsPageViewModel
 
             case SaveLayoutEvent saveLayoutEvent:
             {
+                if (!IsDeviceInitialized.Value)
+                {
+                    if (saveLayoutEvent.IsFlushToFile)
+                    {
+                        saveLayoutEvent.LayoutService.FlushFromMemoryViewModelAndView(this);
+                    }
+                    break;
+                }
+
                 if (_config is null)
                 {
                     break;

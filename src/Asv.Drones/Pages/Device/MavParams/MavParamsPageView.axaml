@@ -15,8 +15,8 @@
         <avalonia1:AwaitingScreen 
             Header="{x:Static drones:RS.MavParamsPageView_AwaitingScreen_Header}" 
             Description="{x:Static drones:RS.MavParamsPageView_AwaitingScreen_Description}" 
-            IsVisible="{Binding !IsDeviceInitialized}"/>
-        <Grid IsVisible="{Binding IsDeviceInitialized}" x:Name="MainGrid">
+            IsVisible="{Binding !IsDeviceInitialized.Value}"/>
+        <Grid IsVisible="{Binding IsDeviceInitialized.Value}" x:Name="MainGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="220" Width="*" />
                 <ColumnDefinition Width="5" />
