@@ -1,6 +1,7 @@
 ﻿using Asv.Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using R3;
 
 namespace Asv.Drones.Api;
 
@@ -16,7 +17,10 @@ public partial class MavParamTextBoxView : UserControl
     {
         if (sender is TextBox textBox)
         {
-            textBox.SelectAll();
+            Observable.TimerFrame(1).Subscribe(x =>
+            {
+                textBox.SelectAll();
+            });
         }
     }
 }

@@ -111,9 +111,11 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
         ShowStaredOnly = new HistoricalBoolProperty(
             nameof(ShowStaredOnly),
             _showStarredOnly,
-            loggerFactory,
-            this
-        ).DisposeItWith(Disposable);
+            loggerFactory
+        ) {
+            Parent = this,
+            
+        }.DisposeItWith(Disposable);
         IsRefreshing = new BindableReactiveProperty<bool>().DisposeItWith(Disposable);
         SelectedItem = new BindableReactiveProperty<ParamItemViewModel?>().DisposeItWith(
             Disposable

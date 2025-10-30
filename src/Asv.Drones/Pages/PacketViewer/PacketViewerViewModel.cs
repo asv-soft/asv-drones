@@ -131,9 +131,11 @@ public class PacketViewerViewModel
         IsPaused = new HistoricalBoolProperty(
             nameof(IsPaused),
             _isPaused,
-            loggerFactory,
-            this
-        ).DisposeItWith(Disposable);
+            loggerFactory
+        ) {
+            Parent = this,
+            
+        }.DisposeItWith(Disposable);
         Search = new SearchBoxViewModel(
             nameof(Search),
             loggerFactory,
@@ -146,15 +148,19 @@ public class PacketViewerViewModel
         IsCheckedAllSources = new HistoricalBoolProperty(
             nameof(IsCheckedAllSources),
             _isCheckedAllSources,
-            loggerFactory,
-            this
-        ).DisposeItWith(Disposable);
+            loggerFactory
+        ) {
+            Parent = this,
+            
+        }.DisposeItWith(Disposable);
         IsCheckedAllTypes = new HistoricalBoolProperty(
             nameof(IsCheckedAllTypes),
             _isCheckedAllTypes,
-            loggerFactory,
-            this
-        ).DisposeItWith(Disposable);
+            loggerFactory
+        ) {
+            Parent = this,
+            
+        }.DisposeItWith(Disposable);
         SelectedPacket = new BindableReactiveProperty<PacketMessageViewModel?>(null).DisposeItWith(
             Disposable
         );

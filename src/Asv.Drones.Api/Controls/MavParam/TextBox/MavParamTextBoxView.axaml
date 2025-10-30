@@ -69,7 +69,7 @@
                  IsReadOnly="{Binding IsBusy}"
                  VerticalContentAlignment="Center"
                  GotFocus="PART_TextBox_OnGotFocus"
-                 avalonia:NavigationHelper.IsSelected ="{Binding IsFocused, Mode=OneWay}"
+                 avalonia:NavigationHelper.IsFocused ="{Binding IsFocused, Mode=OneWay}"
                  Text="{Binding TextValue.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  MinHeight="0" >
             <TextBox.KeyBindings>

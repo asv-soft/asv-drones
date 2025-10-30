@@ -53,36 +53,45 @@ public class MissionProgressViewModel : RoutableViewModel
             missionDistance,
             nullUnit,
             DesignTime.LoggerFactory,
-            this,
             "N2"
-        ).DisposeItWith(Disposable);
+        ) {
+                Parent = this,
+            
+            }.DisposeItWith(Disposable);
         MissionDistance.ForceValidate();
         HomeDistance = new HistoricalUnitProperty(
             nameof(HomeDistance),
             homeDistance,
             nullUnit,
             DesignTime.LoggerFactory,
-            this,
+            
             "N2"
-        ).DisposeItWith(Disposable);
+        ) {
+            Parent = this,
+            
+        }.DisposeItWith(Disposable);
         HomeDistance.ForceValidate();
         TargetDistance = new HistoricalUnitProperty(
             nameof(TargetDistance),
             targetDistance,
             nullUnit,
             DesignTime.LoggerFactory,
-            this,
             "N2"
-        ).DisposeItWith(Disposable);
+        ) {
+            Parent = this,
+            
+        }.DisposeItWith(Disposable);
         TargetDistance.ForceValidate();
         TotalDistance = new HistoricalUnitProperty(
             nameof(TotalDistance),
             totalDistance,
             nullUnit,
             DesignTime.LoggerFactory,
-            this,
             "N2"
-        ).DisposeItWith(Disposable);
+        ) {
+            Parent = this,
+            
+        }.DisposeItWith(Disposable);
         TotalDistance.ForceValidate();
 
         IsDownloaded.Value = true;
@@ -195,36 +204,45 @@ public class MissionProgressViewModel : RoutableViewModel
             missionDistance,
             _distanceUnit,
             loggerFactory,
-            this,
             "N2"
-        ).DisposeItWith(Disposable);
+        ) {
+            Parent = this,
+            
+        }.DisposeItWith(Disposable);
         MissionDistance.ForceValidate();
         HomeDistance = new HistoricalUnitProperty(
             nameof(HomeDistance),
             homeDistance,
             _distanceUnit,
             loggerFactory,
-            this,
             "N2"
-        ).DisposeItWith(Disposable);
+        ) {
+                     Parent = this,
+                     
+                 }.DisposeItWith(Disposable);
         HomeDistance.ForceValidate();
         TargetDistance = new HistoricalUnitProperty(
             nameof(TargetDistance),
             targetDistance,
             _distanceUnit,
             loggerFactory,
-            this,
+            
             "N2"
-        ).DisposeItWith(Disposable);
+        ) {
+            Parent = this,
+            
+        }.DisposeItWith(Disposable);
         TargetDistance.ForceValidate();
         TotalDistance = new HistoricalUnitProperty(
             nameof(TotalDistance),
             totalDistance,
             _distanceUnit,
             loggerFactory,
-            this,
             "N2"
-        ).DisposeItWith(Disposable);
+        ) {
+            Parent = this,
+            
+        }.DisposeItWith(Disposable);
         TotalDistance.ForceValidate();
 
         mode.CurrentMode.Subscribe(m =>

@@ -41,15 +41,20 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
             _messageRate,
             _unit,
             loggerFactory,
-            this,
             "F1"
-        ).DisposeItWith(Disposable);
+        )
+        {
+            Parent = this,
+            
+        }.DisposeItWith(Disposable);
         IsChecked = new HistoricalBoolProperty(
             nameof(IsChecked),
             _isChecked,
-            loggerFactory,
-            this
-        ).DisposeItWith(Disposable);
+            loggerFactory
+        ) {
+            Parent = this,
+            
+        }.DisposeItWith(Disposable);
         MessageRateTextUnit = MessageRateText
             .Unit.CurrentUnitItem.Select(item => item.Symbol)
             .ToBindableReactiveProperty<string>()
