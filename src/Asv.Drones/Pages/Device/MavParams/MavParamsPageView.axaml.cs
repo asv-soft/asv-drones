@@ -11,13 +11,7 @@ using R3;
 
 namespace Asv.Drones;
 
-public struct GridLengthCfg
-{
-    public required double Width { get; init; }
-    public required GridUnitType GridUnitType { get; init; }
-}
-
-public class MavParamsPageViewConfig
+public class MavParamsPageViewConfig : IAppVersionLayoutConfig, IColumnWidthLayoutConfig
 {
     public string? AppVersion { get; set; }
     public IList<GridLengthCfg> ColumnsWidth { get; set; } = new List<GridLengthCfg>();

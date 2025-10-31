@@ -83,7 +83,7 @@
                                   IsVisible="{Binding !IsDeviceInitialized.Value}"/>
         <Grid RowDefinitions="*, Auto" 
               IsVisible="{Binding IsDeviceInitialized.Value} ">
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="0" x:Name="MainGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" MinWidth="300"/>
                     <ColumnDefinition Width="30"/>
@@ -211,6 +211,7 @@
                               Grid.Column="1" 
                               Width="30"
                               KeyboardNavigation.TabNavigation="None"
+                              DragCompleted="GridSplitter_Dragged"
                               IsTabStop="False"/>
                 
                 <StackPanel Grid.Row="0"
