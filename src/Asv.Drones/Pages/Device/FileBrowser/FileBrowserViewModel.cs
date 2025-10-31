@@ -27,6 +27,10 @@ public sealed class FileBrowserViewModelConfig
     public string RemoteSearchText { get; set; } = string.Empty;
     public string? LocalSelectedItemKey { get; set; }
     public string? RemoteSelectedItemKey { get; set; }
+    public IDictionary<string, DirectoryItemViewModelConfig> LocalDirectories { get; set; } =
+        new Dictionary<string, DirectoryItemViewModelConfig>();
+    public IDictionary<string, DirectoryItemViewModelConfig> RemoteDirectories { get; set; } =
+        new Dictionary<string, DirectoryItemViewModelConfig>();
 }
 
 [ExportPage(PageId)]
@@ -245,7 +249,7 @@ public class FileBrowserViewModel
         var remoteSync = new RemoteEntriesSync(
             _rawRemoteEntries,
             _remoteItems,
-            EntryToBrowserItem,
+            RemoteEntryToBrowserItem,
             _loggerFactory
         ).DisposeItWith(Disposable);
         remoteSync.Start();
@@ -770,7 +774,8 @@ public class FileBrowserViewModel
             _localRootPath,
             _localRootPath,
             _backend,
-            _loggerFactory
+            _loggerFactory,
+            _config?.LocalDirectories
         );
 
         var selected = LocalSelectedItem.Value?.Key;
@@ -788,6 +793,7 @@ public class FileBrowserViewModel
         );
 
         var toAdd = newItems.Where(n => !existing.Contains((n.Path, n.Size)));
+
         var toDispose = newItems.Where(n => existing.Contains((n.Path, n.Size)));
 
         _localItems.AddRange(toAdd);
@@ -989,15 +995,11 @@ public class FileBrowserViewModel
 
     #endregion
 
-    #region Refresh
-
     public void Refresh()
     {
         RefreshLocalCommand.Execute(Unit.Default);
         RefreshRemoteCommand.Execute(Unit.Default);
     }
-
-    #endregion
 
     #region Helpers
 
@@ -1066,7 +1068,7 @@ public class FileBrowserViewModel
         }
     }
 
-    private IBrowserItemViewModel EntryToBrowserItem(string key, IFtpEntry entry)
+    private IBrowserItemViewModel RemoteEntryToBrowserItem(string key, IFtpEntry entry)
     {
         if (_backend == null)
         {
@@ -1081,14 +1083,17 @@ public class FileBrowserViewModel
         {
             case FtpEntryType.Directory:
             {
+                DirectoryItemViewModelConfig? config = null;
                 var dirPath = FtpBrowserPath.Normalize(key, true, sep);
+                _config?.RemoteDirectories.TryGetValue(dirPath, out config);
                 vm = new DirectoryItemViewModel(
                     PathHelper.EncodePathToId(dirPath),
                     FtpBrowserPath.ParentDirOf(dirPath, sep),
                     dirPath,
                     entry.Name,
                     FtpBrowserSourceType.Remote,
-                    _loggerFactory
+                    _loggerFactory,
+                    config
                 );
                 break;
             }
@@ -1147,6 +1152,28 @@ public class FileBrowserViewModel
                         cfg.RemoteSearchText = RemoteSearch.Text.ViewValue.Value ?? string.Empty;
                         cfg.LocalSelectedItemKey = LocalSelectedItem.Value?.Key;
                         cfg.RemoteSelectedItemKey = RemoteSelectedItem.Value?.Key;
+                        cfg.LocalDirectories = _localItems
+                            .Where(item =>
+                                item is { FtpEntryType: FtpEntryType.Directory, IsExpanded: true }
+                            )
+                            .ToDictionary(
+                                item => item.Path,
+                                item => new DirectoryItemViewModelConfig
+                                {
+                                    IsExpanded = item.IsExpanded,
+                                }
+                            );
+                        cfg.RemoteDirectories = _remoteItems
+                            .Where(item =>
+                                item is { FtpEntryType: FtpEntryType.Directory, IsExpanded: true }
+                            )
+                            .ToDictionary(
+                                item => item.Path,
+                                item => new DirectoryItemViewModelConfig
+                                {
+                                    IsExpanded = item.IsExpanded,
+                                }
+                            );
                     },
                     FlushingStrategy.FlushBothViewModelAndView
                 );
@@ -1167,6 +1194,20 @@ public class FileBrowserViewModel
                         RemoteSelectedItem.Value =
                             RemoteItemsTree.FindNode(n => n.Key == cfg.LocalSelectedItemKey)
                             as BrowserNode;
+                        _localItems
+                            .Where(item => item is { FtpEntryType: FtpEntryType.Directory })
+                            .ForEach(it =>
+                            {
+                                cfg.LocalDirectories.TryGetValue(it.Path, out var config);
+                                it.IsExpanded = config?.IsExpanded ?? it.IsExpanded;
+                            });
+                        _remoteItems
+                            .Where(item => item is { FtpEntryType: FtpEntryType.Directory })
+                            .ForEach(it =>
+                            {
+                                cfg.RemoteDirectories.TryGetValue(it.Path, out var config);
+                                it.IsExpanded = config?.IsExpanded ?? it.IsExpanded;
+                            });
                     }
                 );
                 break;
@@ -1260,7 +1301,6 @@ public class FileBrowserViewModel
             _ftpService = null;
         });
 
-        RefreshRemoteCommand.Execute(Unit.Default);
-        RefreshLocalCommand.Execute(Unit.Default);
+        Refresh();
     }
 }
