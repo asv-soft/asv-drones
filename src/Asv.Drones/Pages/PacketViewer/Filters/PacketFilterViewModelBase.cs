@@ -89,15 +89,15 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
                     break;
                 }
 
-                saveLayoutEvent.HandleSaveLayout(
-                    this,
+                this.HandleSaveLayout(
+                    saveLayoutEvent,
                     Config,
                     cfg => cfg.IsChecked = IsChecked.ViewValue.Value
                 );
                 break;
             case LoadLayoutEvent loadLayoutEvent:
-                Config = loadLayoutEvent.HandleLoadLayout<PacketFilterViewModelBaseConfig>(
-                    this,
+                Config = this.HandleLoadLayout<PacketFilterViewModelBaseConfig>(
+                    loadLayoutEvent,
                     cfg => IsChecked.ModelValue.Value = cfg.IsChecked
                 );
                 break;

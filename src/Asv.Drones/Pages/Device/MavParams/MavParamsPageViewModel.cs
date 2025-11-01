@@ -419,8 +419,8 @@ public class MavParamsPageViewModel
                     break;
                 }
 
-                saveLayoutEvent.HandleSaveLayout(
-                    this,
+                this.HandleSaveLayout(
+                    saveLayoutEvent,
                     _config,
                     cfg =>
                     {
@@ -445,8 +445,8 @@ public class MavParamsPageViewModel
 
             case LoadLayoutEvent loadLayoutEvent:
             {
-                _config = loadLayoutEvent.HandleLoadLayout<MavParamsPageViewModelConfig>(
-                    this,
+                _config = this.HandleLoadLayout<MavParamsPageViewModelConfig>(
+                    loadLayoutEvent,
                     cfg =>
                     {
                         Search.Text.ModelValue.Value = cfg.SearchText;

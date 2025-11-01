@@ -1143,8 +1143,8 @@ public class FileBrowserViewModel
                     break;
                 }
 
-                saveLayoutEvent.HandleSaveLayout(
-                    this,
+                this.HandleSaveLayout(
+                    saveLayoutEvent,
                     _config,
                     cfg =>
                     {
@@ -1182,8 +1182,8 @@ public class FileBrowserViewModel
 
             case LoadLayoutEvent loadLayoutEvent:
             {
-                _config = loadLayoutEvent.HandleLoadLayout<FileBrowserViewModelConfig>(
-                    this,
+                _config = this.HandleLoadLayout<FileBrowserViewModelConfig>(
+                    loadLayoutEvent,
                     cfg =>
                     {
                         LocalSearch.Text.ModelValue.Value = cfg.LocalSearchText;

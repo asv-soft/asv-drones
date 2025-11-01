@@ -321,8 +321,8 @@ public class ParamItemViewModel : RoutableViewModel
                     break;
                 }
 
-                loadLayoutEvent.HandleLoadLayout<MavParamsPageViewModelConfig>(
-                    parent,
+                parent.HandleLoadLayout<MavParamsPageViewModelConfig>(
+                    loadLayoutEvent,
                     cfg =>
                     {
                         if (!cfg.Params.TryGetValue(Name, out var paramItemConfig))

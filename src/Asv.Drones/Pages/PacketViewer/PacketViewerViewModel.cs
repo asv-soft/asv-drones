@@ -376,8 +376,8 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
                     break;
                 }
 
-                saveLayoutEvent.HandleSaveLayout(
-                    this,
+                this.HandleSaveLayout(
+                    saveLayoutEvent,
                     _config,
                     cfg =>
                     {
@@ -389,8 +389,8 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
                 );
                 break;
             case LoadLayoutEvent loadLayoutEvent:
-                _config = loadLayoutEvent.HandleLoadLayout<PacketViewerViewModelConfig>(
-                    this,
+                _config = this.HandleLoadLayout<PacketViewerViewModelConfig>(
+                    loadLayoutEvent,
                     cfg =>
                     {
                         Search.Text.ModelValue.Value = cfg.SearchText;

@@ -102,8 +102,8 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
                     break;
                 }
 
-                saveLayoutEvent.HandleSaveLayout(
-                    this,
+                this.HandleSaveLayout(
+                    saveLayoutEvent,
                     _config,
                     cfg =>
                     {
@@ -113,8 +113,8 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
                 );
                 break;
             case LoadLayoutEvent loadLayoutEvent:
-                _config = loadLayoutEvent.HandleLoadLayout<FlightPageViewModelConfig>(
-                    this,
+                _config = this.HandleLoadLayout<FlightPageViewModelConfig>(
+                    loadLayoutEvent,
                     cfg =>
                     {
                         // TODO: add load layout when flight mode is fixed
