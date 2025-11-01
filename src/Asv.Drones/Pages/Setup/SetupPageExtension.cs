@@ -31,7 +31,7 @@ public class SetupPageExtension(ILoggerFactory loggerFactory) : IExtensionFor<IS
             .DisposeItWith(contextDispose);
     }
 
-    private async ValueTask TryAddSetupFrameTypeSubpage(
+    private ValueTask TryAddSetupFrameTypeSubpage(
         ISetupPage context,
         DeviceWrapper? wrapper,
         CompositeDisposable contextDispose,
@@ -40,23 +40,14 @@ public class SetupPageExtension(ILoggerFactory loggerFactory) : IExtensionFor<IS
     {
         ct.ThrowIfCancellationRequested();
 
-        var paramsClient = wrapper?.Device.GetMicroservice<IParamsClient>();
-        if (paramsClient is null)
-        {
-            return;
-        }
+        var frameClient = wrapper?.Device.GetMicroservice<IFrameClient>();
 
-        var param = await paramsClient.Read("FRAME_TYPE", ct);
-
-        // TODO: make read return nullable result
-        if (param is null)
+        if (
+            frameClient is null
+            || context.Nodes.Any(node => node.Id == SetupFrameTypeViewModel.PageId)
+        )
         {
-            return;
-        }
-
-        if (context.Nodes.Any(node => node.Id == SetupFrameTypeViewModel.PageId))
-        {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         context.Nodes.Add(
@@ -69,5 +60,7 @@ public class SetupPageExtension(ILoggerFactory loggerFactory) : IExtensionFor<IS
                 loggerFactory
             ).DisposeItWith(contextDispose)
         );
+
+        return ValueTask.CompletedTask;
     }
 }

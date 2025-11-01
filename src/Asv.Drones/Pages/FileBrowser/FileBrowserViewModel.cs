@@ -773,9 +773,10 @@ public class FileBrowserViewModel
             _loggerFactory
         );
 
-        var toRemove = _localItems.Where(ls =>
-            newItems.All(n => n.Path != ls.Path || n.Size != ls.Size)).ToArray();
-        
+        var toRemove = _localItems
+            .Where(ls => newItems.All(n => n.Path != ls.Path || n.Size != ls.Size))
+            .ToArray();
+
         foreach (var item in toRemove)
         {
             _localItems.Remove(item);
