@@ -26,7 +26,7 @@ public class FlightPageViewModel
     public const MaterialIconKind PageIcon = MaterialIconKind.MapSearch;
 
     public FlightPageViewModel()
-        : this(DesignTime.CommandService, DesignTime.Configuration, DesignTime.LoggerFactory)
+        : this(DesignTime.CommandService, DesignTime.Configuration, DesignTime.LoggerFactory, DesignTime.DialogService)
     {
         DesignTime.ThrowIfNotDesignMode();
         var drone = new MapAnchor<IMapAnchor>(DesignTime.Id, DesignTime.LoggerFactory)
@@ -52,9 +52,10 @@ public class FlightPageViewModel
     public FlightPageViewModel(
         ICommandService cmd,
         IConfiguration cfg,
-        ILoggerFactory loggerFactory
+        ILoggerFactory loggerFactory,
+        IDialogService dialogService
     )
-        : base(PageId, cmd, cfg, loggerFactory)
+        : base(PageId, cmd, cfg, loggerFactory, dialogService)
     {
         Title = RS.FlightPageViewModel_Title;
         Icon = PageIcon;

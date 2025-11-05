@@ -26,9 +26,10 @@ public class SetupPageViewModel
         IDeviceManager devices,
         IContainerHost container,
         IConfiguration cfg,
-        ILoggerFactory loggerFactory
+        ILoggerFactory loggerFactory,
+        IDialogService dialogService
     )
-        : base(PageId, devices, cmd, container, cfg, loggerFactory)
+        : base(PageId, devices, cmd, container, cfg, loggerFactory, dialogService)
     {
         Icon = PageIcon;
     }

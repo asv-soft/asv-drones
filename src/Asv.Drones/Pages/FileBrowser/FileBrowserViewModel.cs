@@ -183,7 +183,7 @@ public class FileBrowserViewModel
         ILoggerFactory loggerFactory,
         INavigationService navigation
     )
-        : base(PageId, devices, cmd, cfg, loggerFactory)
+        : base(PageId, devices, cmd, cfg, loggerFactory, dialogService)
     {
         _localRootPath = appPath.UserDataFolder;
         _remoteRootPath = MavlinkFtpHelper.DirectorySeparator.ToString();

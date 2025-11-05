@@ -66,7 +66,8 @@ public class PacketViewerViewModel
             [],
             NullDeviceManager.Instance,
             DesignTime.Configuration,
-            DesignTime.Navigation
+            DesignTime.Navigation,
+            DesignTime.DialogService
         )
     {
         DesignTime.ThrowIfNotDesignMode();
@@ -89,9 +90,10 @@ public class PacketViewerViewModel
         [ImportMany] IEnumerable<IPacketConverter> converters,
         IDeviceManager deviceManager,
         IConfiguration cfg,
-        INavigationService navigationService
+        INavigationService navigationService,
+        IDialogService dialogService
     )
-        : base(PageId, cmd, cfg, loggerFactory)
+        : base(PageId, cmd, cfg, loggerFactory, dialogService)
     {
         Title = RS.PacketViewerViewModel_Title;
         _app = app;

@@ -49,7 +49,8 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
             NullCommandService.Instance,
             NullLoggerFactory.Instance,
             new InMemoryConfiguration(),
-            NullNavigationService.Instance
+            NullNavigationService.Instance,
+            DesignTime.DialogService
         )
     {
         DesignTime.ThrowIfNotDesignMode();
@@ -81,9 +82,10 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
         ICommandService cmd,
         ILoggerFactory loggerFactory,
         IConfiguration cfg,
-        INavigationService nav
+        INavigationService nav,
+        IDialogService dialogService
     )
-        : base(PageId, devices, cmd, cfg, loggerFactory)
+        : base(PageId, devices, cmd, cfg, loggerFactory, dialogService)
     {
         ArgumentNullException.ThrowIfNull(devices);
         ArgumentNullException.ThrowIfNull(cmd);
