@@ -1,4 +1,5 @@
-﻿using Asv.Avalonia.GeoMap;
+﻿using Asv.Avalonia;
+using Asv.Avalonia.GeoMap;
 using Asv.Common;
 using Avalonia.Media;
 using Material.Icons;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
 using Asv.Common;
@@ -14,9 +15,9 @@ namespace Asv.Drones;
 
 public class ParamItemViewModelConfig
 {
-    public bool IsStarred { get; init; }
-    public string Name { get; init; }
-    public bool IsPinned { get; init; }
+    public string? Name { get; set; }
+    public bool IsStarred { get; set; }
+    public bool IsPinned { get; set; }
 }
 
 public class ParamItemViewModel : RoutableViewModel
@@ -42,7 +43,7 @@ public class ParamItemViewModel : RoutableViewModel
         NavigationId id,
         ParamItem paramItem,
         ILoggerFactory loggerFactory,
-        ParamItemViewModelConfig? config
+        ParamItemViewModelConfig? initialConfig = null
     )
         : base(id, loggerFactory)
     {
@@ -57,19 +58,24 @@ public class ParamItemViewModel : RoutableViewModel
         ValueDescription = paramItem.Info.UnitsDisplayName ?? string.Empty;
         IsRebootRequired = paramItem.Info.IsRebootRequired;
 
-        _isPinned = new ReactiveProperty<bool>(config?.IsPinned ?? false);
-        _isStarred = new ReactiveProperty<bool>(config?.IsStarred ?? false);
+        _isPinned = new ReactiveProperty<bool>(initialConfig?.IsPinned ?? false);
+        _isStarred = new ReactiveProperty<bool>(initialConfig?.IsStarred ?? false);
 
-        IsPinned = new HistoricalBoolProperty(nameof(IsPinned), _isPinned, loggerFactory) 
-        {
-            Parent = this,
-        };
+        IsPinned = new HistoricalBoolProperty(
+            nameof(IsPinned),
+            _isPinned,
+            loggerFactory
+        ).SetRoutableParent(this);
         IsPinned.ForceValidate();
-        IsStarred = new HistoricalBoolProperty(nameof(IsStarred), _isStarred, loggerFactory)
-        {
-            Parent = this,
-        };
+        IsStarred = new HistoricalBoolProperty(
+            nameof(IsStarred),
+            _isStarred,
+            loggerFactory
+        ).SetRoutableParent(this);
         IsStarred.ForceValidate();
+        IsLayoutChanged = Observable
+            .Merge(IsPinned.ViewValue, IsStarred.ViewValue)
+            .ToReadOnlyReactiveProperty();
 
         Value = new BindableReactiveProperty<string?>();
         IsSynced = new BindableReactiveProperty<bool>();
@@ -274,11 +280,10 @@ public class ParamItemViewModel : RoutableViewModel
 
     public string Name { get; }
 
-    private readonly string _displayName;
     public string DisplayName
     {
-        get => _displayName;
-        init => SetField(ref _displayName, value);
+        get;
+        init => SetField(ref field, value);
     }
 
     public string Units { get; }
@@ -293,6 +298,7 @@ public class ParamItemViewModel : RoutableViewModel
     public HistoricalBoolProperty IsPinned { get; }
     public BindableReactiveProperty<string?> Value { get; }
     public HistoricalBoolProperty IsStarred { get; }
+    public ReadOnlyReactiveProperty<bool> IsLayoutChanged { get; }
 
     public bool Filter(string? searchText, bool starredOnly)
     {
@@ -312,20 +318,35 @@ public class ParamItemViewModel : RoutableViewModel
         return Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase);
     }
 
-    public ParamItemViewModelConfig GetConfig()
+    protected override ValueTask InternalCatchEvent(AsyncRoutedEvent e)
     {
-        return new ParamItemViewModelConfig
+        switch (e)
         {
-            IsStarred = IsStarred.ViewValue.Value,
-            IsPinned = IsPinned.ViewValue.Value,
-            Name = Name,
-        };
-    }
+            case LoadLayoutEvent loadLayoutEvent:
+            {
+                if (Parent is not MavParamsPageViewModel parent)
+                {
+                    break;
+                }
 
-    public void SetConfig(ParamItemViewModelConfig item)
-    {
-        IsStarred.ViewValue.Value = item.IsStarred;
-        IsPinned.ViewValue.Value = item.IsPinned;
+                parent.HandleLoadLayout<MavParamsPageViewModelConfig>(
+                    loadLayoutEvent,
+                    cfg =>
+                    {
+                        if (!cfg.Params.TryGetValue(Name, out var paramItemConfig))
+                        {
+                            return;
+                        }
+
+                        IsPinned.ModelValue.Value = paramItemConfig.IsPinned;
+                        IsStarred.ModelValue.Value = paramItemConfig.IsStarred;
+                    }
+                );
+                break;
+            }
+        }
+
+        return base.InternalCatchEvent(e);
     }
 
     public override IEnumerable<IRoutable> GetRoutableChildren()

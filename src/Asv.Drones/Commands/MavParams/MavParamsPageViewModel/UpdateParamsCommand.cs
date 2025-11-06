@@ -22,13 +22,13 @@ public class UpdateParamsCommand : ContextCommand<MavParamsPageViewModel>
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override ValueTask<CommandArg?> InternalExecute(
+    protected override async ValueTask<CommandArg?> InternalExecute(
         MavParamsPageViewModel context,
         CommandArg newValue,
         CancellationToken cancel
     )
     {
-        context.UpdateParamsImpl();
-        return default;
+        await context.UpdateParamsImpl(cancel);
+        return null;
     }
 }

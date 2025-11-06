@@ -11,7 +11,7 @@
         <avalonia:AwaitingScreen 
             Header="{x:Static drones:RS.MavParamsPageView_AwaitingScreen_Header}" 
             Description="{x:Static drones:RS.MavParamsPageView_AwaitingScreen_Description}" 
-            IsVisible="{Binding !IsDeviceInitialized}"/>
-        <avalonia:TreePageView IsVisible="{Binding IsDeviceInitialized}"/>
+            IsVisible="{Binding !IsDeviceInitialized.Value}"/>
+        <avalonia:TreePageView IsVisible="{Binding IsDeviceInitialized.Value}"/>
     </Grid>
 </UserControl>

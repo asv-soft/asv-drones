@@ -28,7 +28,7 @@ public class ExportPacketsToCsvCommand : ContextCommand<PacketViewerViewModel>
         CancellationToken cancel
     )
     {
-        await context.ExportToCsvImpl();
+        await context.ExportToCsvImpl(cancel);
         return null;
     }
 }

@@ -48,10 +48,13 @@
                 </ControlTheme>
             </ItemsControl.ItemContainerTheme>
         </geoMap:MapItemsControl>
-        <ItemsControl ItemsSource="{Binding WidgetsView}">
+        <ItemsControl
+            ItemsSource="{Binding WidgetsView}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <avalonia1:WorkspacePanel/>
+                    <avalonia1:WorkspacePanel 
+                        AttachedToVisualTree="WorkspacePanel_OnAttachedToVisualTree"
+                        WorkspaceChanged="OnWorkspaceChanged"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>

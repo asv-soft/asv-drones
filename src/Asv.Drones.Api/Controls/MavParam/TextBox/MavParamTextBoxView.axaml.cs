@@ -17,10 +17,12 @@ public partial class MavParamTextBoxView : UserControl
     {
         if (sender is TextBox textBox)
         {
-            Observable.TimerFrame(1).Subscribe(x =>
-            {
-                textBox.SelectAll();
-            });
+            Observable
+                .TimerFrame(1)
+                .Subscribe(x =>
+                {
+                    textBox.SelectAll();
+                });
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Asv.Avalonia;
 using Asv.Drones.Api;
 using Asv.Mavlink;
+using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
 
@@ -17,11 +18,10 @@ public class PacketMessageViewModel : RoutableViewModel
     public string Type { get; }
     public string Description { get; }
 
-    private bool _highlight;
     public bool Highlight
     {
-        get => _highlight;
-        set => SetField(ref _highlight, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public PacketMessageViewModel()
@@ -36,7 +36,11 @@ public class PacketMessageViewModel : RoutableViewModel
         Size = 10;
     }
 
-    public PacketMessageViewModel(MavlinkMessage packet, IPacketConverter converter)
+    public PacketMessageViewModel(
+        MavlinkMessage packet,
+        IPacketConverter converter,
+        ILoggerFactory loggerFactory
+    )
         : base(
             NavigationId.GenerateByHash(
                 packet.SystemId,
@@ -44,7 +48,7 @@ public class PacketMessageViewModel : RoutableViewModel
                 packet.Sequence,
                 packet.Id
             ),
-            DesignTime.LoggerFactory
+            loggerFactory
         )
     {
         DateTime = DateTime.Now;

@@ -12,6 +12,7 @@ using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
+using Avalonia.Controls;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -20,35 +21,44 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class MavParamsPageViewModelConfig : PageConfig
+public sealed class MavParamsPageViewModelConfig
 {
-    public List<ParamItemViewModelConfig> Params { get; set; } = [];
+    public IDictionary<string, ParamItemViewModelConfig> Params { get; set; } =
+        new Dictionary<string, ParamItemViewModelConfig>();
+    public string SearchText { get; set; } = string.Empty;
+    public bool IsStarredOnly { get; set; }
 }
 
 [ExportPage(PageId)]
-public class MavParamsPageViewModel // TODO: change config to new safe changes logic
-    : DevicePageViewModel<IMavParamsPageViewModel, MavParamsPageViewModelConfig>,
+public class MavParamsPageViewModel
+    : DevicePageViewModel<IMavParamsPageViewModel>,
         IMavParamsPageViewModel
 {
     public const string PageId = "mav-params";
     public const MaterialIconKind PageIcon = MaterialIconKind.CogTransferOutline;
 
+    private readonly ILayoutService _layoutService;
+    private readonly ILoggerFactory _loggerFactory;
+    private readonly INavigationService _nav;
+    private readonly ObservableList<ParamItemViewModel> _viewedParamsList; // TODO: Separate views for this collection and all params
+    private readonly ReactiveProperty<bool> _isStarredOnly;
+    private readonly SynchronizedViewFilter<
+        KeyValuePair<string, ParamItem>,
+        ParamItemViewModel
+    > _fullFilter;
+
     private DeviceId _deviceId;
     private IParamsClientEx? _paramsClient;
     private CancellationTokenSource? _cancellationTokenSource;
     private ISynchronizedView<KeyValuePair<string, ParamItem>, ParamItemViewModel> _view;
-
-    private readonly ILoggerFactory _loggerFactory;
-    private readonly INavigationService _nav;
-    private readonly ObservableList<ParamItemViewModel> _viewedParamsList; // TODO: Separate views for this collection and all params
-    private readonly ReactiveProperty<bool> _showStarredOnly;
+    private MavParamsPageViewModelConfig? _config;
 
     public MavParamsPageViewModel()
         : this(
             NullDeviceManager.Instance,
             NullCommandService.Instance,
             NullLoggerFactory.Instance,
-            new InMemoryConfiguration(),
+            NullLayoutService.Instance,
             NullNavigationService.Instance,
             DesignTime.DialogService
         )
@@ -64,16 +74,6 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
 
         AllParams = list.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);
         ViewedParams = viewedList.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);
-
-        IsDeviceInitialized = false;
-        TimeProvider
-            .System.CreateTimer(
-                _ => IsDeviceInitialized = true,
-                null,
-                TimeSpan.FromSeconds(5),
-                Timeout.InfiniteTimeSpan
-            )
-            .DisposeItWith(Disposable);
     }
 
     [ImportingConstructor]
@@ -81,25 +81,28 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
         IDeviceManager devices,
         ICommandService cmd,
         ILoggerFactory loggerFactory,
-        IConfiguration cfg,
+        ILayoutService layoutService,
         INavigationService nav,
         IDialogService dialogService
     )
-        : base(PageId, devices, cmd, cfg, loggerFactory, dialogService)
+        : base(PageId, devices, cmd, layoutService, loggerFactory, dialogService)
     {
         ArgumentNullException.ThrowIfNull(devices);
         ArgumentNullException.ThrowIfNull(cmd);
-        ArgumentNullException.ThrowIfNull(cfg);
+        ArgumentNullException.ThrowIfNull(layoutService);
         ArgumentNullException.ThrowIfNull(loggerFactory);
         ArgumentNullException.ThrowIfNull(nav);
 
         Title = RS.MavParamsPageViewModel_Title;
 
+        _layoutService = layoutService;
         _loggerFactory = loggerFactory;
         _nav = nav;
-        _showStarredOnly = new ReactiveProperty<bool>().DisposeItWith(Disposable);
+        _isStarredOnly = new ReactiveProperty<bool>().DisposeItWith(Disposable);
         _viewedParamsList = [];
-        ViewedParams = _viewedParamsList.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);
+        ViewedParams = _viewedParamsList
+            .ToNotifyCollectionChangedSlim(SynchronizationContextCollectionEventDispatcher.Current)
+            .DisposeItWith(Disposable);
 
         Search = new SearchBoxViewModel(
             nameof(Search),
@@ -110,14 +113,13 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
 
-        ShowStaredOnly = new HistoricalBoolProperty(
-            nameof(ShowStaredOnly),
-            _showStarredOnly,
+        IsStarredOnly = new HistoricalBoolProperty(
+            nameof(IsStarredOnly),
+            _isStarredOnly,
             loggerFactory
-        ) {
-            Parent = this,
-            
-        }.DisposeItWith(Disposable);
+        )
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
         IsRefreshing = new BindableReactiveProperty<bool>().DisposeItWith(Disposable);
         SelectedItem = new BindableReactiveProperty<ParamItemViewModel?>().DisposeItWith(
             Disposable
@@ -148,21 +150,7 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
             })
             .DisposeItWith(Disposable);
 
-        Disposable.AddAction(() =>
-        {
-            Config.Params = Config.Params.Where(_ => _.IsStarred || _.IsPinned).ToList();
-            CfgService.Set(Config);
-
-            if (_cancellationTokenSource is not null)
-            {
-                if (_cancellationTokenSource.Token.CanBeCanceled)
-                {
-                    _cancellationTokenSource?.Cancel(false);
-                }
-                _cancellationTokenSource?.Dispose();
-                _cancellationTokenSource = null;
-            }
-        });
+        Disposable.AddAction(StopUpdateParamsImpl);
 
         UpdateParams = new BindableAsyncCommand(UpdateParamsCommand.Id, this);
 
@@ -184,40 +172,49 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
             }
         ).DisposeItWith(Disposable);
 
-        ShowStaredOnly
+        IsStarredOnly
             .ViewValue.ThrottleLast(TimeSpan.FromMilliseconds(500))
-            .Subscribe(x =>
-            {
-                if (!x && string.IsNullOrWhiteSpace(Search.Text.ViewValue.Value))
-                {
-                    _view?.ResetFilter();
-                    return;
-                }
-
-                _view?.AttachFilter(
-                    new SynchronizedViewFilter<KeyValuePair<string, ParamItem>, ParamItemViewModel>(
-                        (_, model) => model.Filter(Search.Text.ViewValue.Value, x)
-                    )
-                );
-            })
+            .Subscribe(_ => UpdateFilter())
             .DisposeItWith(Disposable);
+
+        Progress
+            .Where(p => p.ApproximatelyEquals(1.0))
+            .Subscribe(_ => IsRefreshing.Value = false)
+            .DisposeItWith(Disposable);
+        IsRefreshing
+            .Where(isRefreshing => isRefreshing)
+            .Subscribe(_ => Progress.Value = 0)
+            .DisposeItWith(Disposable);
+
+        _fullFilter = new SynchronizedViewFilter<
+            KeyValuePair<string, ParamItem>,
+            ParamItemViewModel
+        >(
+            (_, model) =>
+                model.Filter(
+                    Search.Text.ViewValue.Value ?? string.Empty,
+                    IsStarredOnly.ViewValue.Value
+                )
+        );
     }
 
     private Task UpdateImpl(string? query, IProgress<double> progress, CancellationToken cancel)
     {
-        if (string.IsNullOrWhiteSpace(query) && !ShowStaredOnly.ViewValue.Value)
+        UpdateFilter();
+        return Task.CompletedTask;
+    }
+
+    private void UpdateFilter()
+    {
+        if (
+            string.IsNullOrWhiteSpace(Search.Text.ViewValue.Value) && !IsStarredOnly.ViewValue.Value
+        )
         {
-            _view.ResetFilter();
-            return Task.CompletedTask;
+            _view?.ResetFilter();
+            return;
         }
 
-        _view.AttachFilter(
-            new SynchronizedViewFilter<KeyValuePair<string, ParamItem>, ParamItemViewModel>(
-                (_, model) => model.Filter(query ?? string.Empty, ShowStaredOnly.ViewValue.Value)
-            )
-        );
-
-        return Task.CompletedTask;
+        _view?.AttachFilter(_fullFilter);
     }
 
     private void InternalInit(CancellationToken cancel)
@@ -228,14 +225,14 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
         }
 
         Total = _paramsClient.RemoteCount.ToReadOnlyBindableReactiveProperty();
-        _total.RegisterTo(cancel);
         Total.RegisterTo(cancel);
-        _view = _paramsClient.Items.CreateView(kvp => new ParamItemViewModel(
-            kvp.Key,
-            kvp.Value,
-            _loggerFactory,
-            Config.Params.FirstOrDefault(_ => _.Name == kvp.Key)
-        ));
+        _view = _paramsClient.Items.CreateView(kvp =>
+        {
+            ParamItemViewModelConfig? config = null;
+            _config?.Params.TryGetValue(kvp.Key, out config);
+
+            return new ParamItemViewModel(kvp.Key, kvp.Value, _loggerFactory, config);
+        });
         _view.RegisterTo(cancel);
         _view.DisposeMany().RegisterTo(cancel);
         _view.SetRoutableParent(this).RegisterTo(cancel);
@@ -252,106 +249,87 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
 
         _view
             .ObserveAdd(cancellationToken: cancel)
-            .Subscribe(e =>
-            {
-                foreach (var item in Config.Params)
+            .SubscribeAwait(
+                async (e, ct) =>
                 {
-                    if (e.Value.View.Name == item.Name)
-                    {
-                        e.Value.View.SetConfig(item);
-                    }
+                    await e.Value.View.RequestLoadLayout(_layoutService, ct);
 
                     if (!e.Value.View.IsPinned.ViewValue.Value)
                     {
-                        continue;
+                        return;
                     }
 
                     if (_viewedParamsList.Contains(e.Value.View))
                     {
-                        continue;
+                        return;
                     }
 
                     _viewedParamsList.Add(e.Value.View);
                 }
-            })
+            )
             .RegisterTo(cancel);
 
-        AllParams = _view.ToNotifyCollectionChanged();
+        AllParams = _view.ToNotifyCollectionChanged(
+            SynchronizationContextCollectionEventDispatcher.Current
+        );
         AllParams.RegisterTo(cancel);
-        _allParams?.RegisterTo(cancel);
         Search.Refresh();
     }
 
     internal void StopUpdateParamsImpl()
     {
-        if (!IsRefreshing.Value)
+        if (_cancellationTokenSource is not null)
+        {
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = null;
+        }
+
+        IsRefreshing.Value = false;
+    }
+
+    internal async Task UpdateParamsImpl(CancellationToken cancel = default)
+    {
+        if (IsRefreshing.Value)
         {
             return;
         }
 
-        if (_cancellationTokenSource != null)
-        {
-            if (_cancellationTokenSource.Token.CanBeCanceled)
-            {
-                _cancellationTokenSource?.Cancel(false);
-            }
-            _cancellationTokenSource?.Dispose();
-            _cancellationTokenSource = null;
-        }
-    }
-
-    internal void UpdateParamsImpl()
-    {
         if (_paramsClient is null)
         {
             return;
         }
 
-        SelectedItem.Value = null;
-        IsRefreshing.Value = true;
-        _cancellationTokenSource = new CancellationTokenSource();
-        var viewed = _viewedParamsList.Select(item => item.GetConfig()).ToArray();
-        _viewedParamsList.Clear();
-
-        _paramsClient
-            .ReadAll(
-                new Progress<double>(i => Progress.Value = i),
-                cancel: _cancellationTokenSource.Token
-            )
-            .SafeFireAndForget(ex =>
-            {
-                if (ex is TaskCanceledException)
-                {
-                    Logger.LogInformation("User canceled updating params");
-                    return;
-                }
-
-                Logger.LogError(ex, "Error to read all param items");
-            });
-
-        foreach (var item in viewed)
+        cancel.ThrowIfCancellationRequested();
+        if (_cancellationTokenSource is not null)
         {
-            var existItem = _view.FirstOrDefault(currentItem =>
-                currentItem.Name == item.Name && currentItem.IsPinned.ViewValue.Value
-            );
-
-            if (existItem is null)
-            {
-                continue;
-            }
-
-            existItem.SetConfig(item);
-            _viewedParamsList.Add(existItem);
+            StopUpdateParamsImpl();
         }
 
-        IsRefreshing.Value = false;
-        _cancellationTokenSource.Dispose();
-        _cancellationTokenSource = null;
+        SelectedItem.Value = null;
+        IsRefreshing.Value = true;
+
+        _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancel);
+        _cancellationTokenSource.Token.Register(() => IsRefreshing.Value = false);
+        try
+        {
+            await _paramsClient.ReadAll(
+                new Progress<double>(i => Progress.Value = i),
+                cancel: _cancellationTokenSource.Token
+            );
+        }
+        catch (OperationCanceledException)
+        {
+            Logger.LogInformation("User canceled updating params");
+        }
+        catch (Exception e)
+        {
+            Logger.LogError(e, "Error to read all param items");
+        }
     }
 
     protected override void AfterDeviceInitialized(IClientDevice device, CancellationToken cancel)
     {
-        IsDeviceInitialized = true;
         Title = $"{RS.MavParamsPageViewModel_Title}[{device.Id}]";
         _paramsClient = device.GetMicroservice<IParamsClientEx>();
         DeviceName = device
@@ -360,11 +338,10 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
         DeviceName.RegisterTo(cancel);
         _deviceId = device.Id;
         Icon = DeviceIconMixin.GetIcon(_deviceId) ?? PageIcon;
-        cancel.Register(() => IsDeviceInitialized = false);
         InternalInit(cancel);
     }
 
-    public HistoricalBoolProperty ShowStaredOnly { get; }
+    public HistoricalBoolProperty IsStarredOnly { get; }
     public BindableReactiveProperty<bool> IsRefreshing { get; }
     public BindableReactiveProperty<double> Progress { get; }
     public ICommand UpdateParams { get; }
@@ -372,19 +349,13 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
     public ReactiveCommand RemoveAllPins { get; }
     public SearchBoxViewModel Search { get; }
 
-    private INotifyCollectionChangedSynchronizedViewList<ParamItemViewModel>? _allParams;
     public INotifyCollectionChangedSynchronizedViewList<ParamItemViewModel>? AllParams
     {
-        get => _allParams;
-        private set => SetField(ref _allParams, value);
+        get;
+        private set;
     }
 
-    private IReadOnlyBindableReactiveProperty<int> _total;
-    public IReadOnlyBindableReactiveProperty<int> Total
-    {
-        get => _total;
-        private set => SetField(ref _total, value);
-    }
+    public IReadOnlyBindableReactiveProperty<int> Total { get; private set; }
 
     public INotifyCollectionChangedSynchronizedViewList<ParamItemViewModel> ViewedParams { get; }
 
@@ -392,35 +363,102 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
 
     public BindableReactiveProperty<ParamItemViewModel?> SelectedItem { get; }
 
-    public bool IsDeviceInitialized
+    public override IEnumerable<IRoutable> GetRoutableChildren()
     {
-        get;
-        set => SetField(ref field, value);
+        yield return Search;
+        yield return IsStarredOnly;
+
+        if (AllParams is not null)
+        {
+            foreach (var paramItemViewModel in AllParams)
+            {
+                yield return paramItemViewModel;
+            }
+        }
     }
+
+    protected override void AfterLoadExtensions() { }
 
     protected override async ValueTask InternalCatchEvent(AsyncRoutedEvent e)
     {
-        if (e is ParamItemChangedEvent { Source: ParamItemViewModel param } paramChanged)
+        switch (e)
         {
-            UpdateConfig(param);
-
-            if (paramChanged.Caller is HistoricalBoolProperty caller)
+            case ParamItemChangedEvent { Source: ParamItemViewModel param } paramChanged:
             {
-                if (caller.Id == param.IsPinned.Id)
+                if (paramChanged.Caller is HistoricalBoolProperty caller)
                 {
-                    UpdateViewedItems(param);
+                    if (caller.Id == param.IsPinned.Id)
+                    {
+                        UpdateViewedItems(param);
+                    }
                 }
+
+                e.IsHandled = true;
+                break;
             }
 
-            e.IsHandled = true;
-        }
-
-        if (e is PageCloseAttemptEvent { Source: MavParamsPageViewModel } closeEvent)
-        {
-            var isCloseReady = await TryCloseWithApproval();
-            if (!isCloseReady)
+            case PageCloseAttemptEvent { Source: MavParamsPageViewModel } closeEvent:
             {
-                closeEvent.AddRestriction(new Restriction(this));
+                var isCloseReady = await TryCloseWithApproval();
+                if (!isCloseReady)
+                {
+                    closeEvent.AddRestriction(new Restriction(this));
+                }
+
+                break;
+            }
+
+            case SaveLayoutEvent saveLayoutEvent:
+            {
+                if (!IsDeviceInitialized.Value)
+                {
+                    if (saveLayoutEvent.IsFlushToFile)
+                    {
+                        saveLayoutEvent.LayoutService.FlushFromMemoryViewModelAndView(this);
+                    }
+                    break;
+                }
+
+                if (_config is null)
+                {
+                    break;
+                }
+
+                this.HandleSaveLayout(
+                    saveLayoutEvent,
+                    _config,
+                    cfg =>
+                    {
+                        cfg.SearchText = Search.Text.ViewValue.Value ?? string.Empty;
+                        cfg.IsStarredOnly = IsStarredOnly.ViewValue.Value;
+                        cfg.Params = _view
+                            .Where(p => p.IsLayoutChanged.CurrentValue)
+                            .ToDictionary(
+                                p => p.Name,
+                                p => new ParamItemViewModelConfig
+                                {
+                                    Name = p.Name,
+                                    IsPinned = p.IsPinned.ViewValue.Value,
+                                    IsStarred = p.IsStarred.ViewValue.Value,
+                                }
+                            );
+                    },
+                    FlushingStrategy.FlushBothViewModelAndView
+                );
+                break;
+            }
+
+            case LoadLayoutEvent loadLayoutEvent:
+            {
+                _config = this.HandleLoadLayout<MavParamsPageViewModelConfig>(
+                    loadLayoutEvent,
+                    cfg =>
+                    {
+                        Search.Text.ModelValue.Value = cfg.SearchText;
+                        IsStarredOnly.ModelValue.Value = cfg.IsStarredOnly;
+                    }
+                );
+                break;
             }
         }
 
@@ -445,20 +483,9 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
         }
     }
 
-    private void UpdateConfig(ParamItemViewModel param)
+    private async Task<bool> TryCloseWithApproval(CancellationToken cancel = default)
     {
-        var existItem = Config.Params.FirstOrDefault(_ => _.Name == param.Name);
-
-        if (existItem is not null)
-        {
-            Config.Params.Remove(existItem);
-        }
-
-        Config.Params.Add(param.GetConfig());
-    }
-
-    private async Task<bool> TryCloseWithApproval()
-    {
+        cancel.ThrowIfCancellationRequested();
         var notSyncedParams = _viewedParamsList.Where(param => !param.IsSynced.Value).ToArray();
 
         if (notSyncedParams.Length == 0)
@@ -478,44 +505,21 @@ public class MavParamsPageViewModel // TODO: change config to new safe changes l
 
         var result = await dialog.ShowAsync();
 
+        if (result == ContentDialogResult.None)
+        {
+            return false;
+        }
+
         if (result == ContentDialogResult.Primary)
         {
             foreach (var param in notSyncedParams)
             {
                 param.Write.Execute(Unit.Default);
             }
-
-            return true;
-        }
-
-        if (result == ContentDialogResult.Secondary)
-        {
-            return true;
-        }
-
-        if (result == ContentDialogResult.None)
-        {
-            return false;
         }
 
         return true;
     }
-
-    public override IEnumerable<IRoutable> GetRoutableChildren()
-    {
-        yield return Search;
-        yield return ShowStaredOnly;
-
-        if (AllParams is not null)
-        {
-            foreach (var paramItemViewModel in AllParams)
-            {
-                yield return paramItemViewModel;
-            }
-        }
-    }
-
-    protected override void AfterLoadExtensions() { }
 
     public override IExportInfo Source => SystemModule.Instance;
 }
