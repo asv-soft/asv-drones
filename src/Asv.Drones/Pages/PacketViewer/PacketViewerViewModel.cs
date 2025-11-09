@@ -106,6 +106,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         _converters = converters;
         _deviceManager = deviceManager;
         _navigationService = navigationService;
+        _loggerFactory = loggerFactory;
         _disposables = new CompositeDisposable();
         _filterChangeTrigger = new ReactiveProperty<bool>(false).DisposeItWith(Disposable);
 
