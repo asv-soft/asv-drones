@@ -962,5 +962,89 @@ namespace Asv.Drones {
                 return ResourceManager.GetString("SetupFrameTypeViewModel_Name", resourceCulture);
             }
         }
+        
+        public static string ChangeFrameTypeCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("ChangeFrameTypeCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        public static string ChangeFrameTypeCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("ChangeFrameTypeCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        public static string SetupFrameTypeView_Loader_Header {
+            get {
+                return ResourceManager.GetString("SetupFrameTypeView_Loader_Header", resourceCulture);
+            }
+        }
+        
+        public static string SetupFrameTypeView_Loader_Description {
+            get {
+                return ResourceManager.GetString("SetupFrameTypeView_Loader_Description", resourceCulture);
+            }
+        }
+        
+        public static string SetupFrameTypeView_CurrentFrame {
+            get {
+                return ResourceManager.GetString("SetupFrameTypeView_CurrentFrame", resourceCulture);
+            }
+        }
+        
+        public static string SetupFrameTypeView_FrameMetadata {
+            get {
+                return ResourceManager.GetString("SetupFrameTypeView_FrameMetadata", resourceCulture);
+            }
+        }
+        
+        public static string SetupFrameTypeView_ApplyFrame {
+            get {
+                return ResourceManager.GetString("SetupFrameTypeView_ApplyFrame", resourceCulture);
+            }
+        }
+        
+        public static string SetupFrameTypeViewModel_ApplyConfirmation_Title {
+            get {
+                return ResourceManager.GetString("SetupFrameTypeViewModel_ApplyConfirmation_Title", resourceCulture);
+            }
+        }
+        
+        public static string SetupFrameTypeViewModel_ApplyConfirmation_Message {
+            get {
+                return ResourceManager.GetString("SetupFrameTypeViewModel_ApplyConfirmation_Message", resourceCulture);
+            }
+        }
+        
+        public static string SetupFrameTypeViewModel_CurrentFrame_Unknown {
+            get {
+                return ResourceManager.GetString("SetupFrameTypeViewModel_CurrentFrame_Unknown", resourceCulture);
+            }
+        }
+        
+        public static string OpenSetupCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("OpenSetupCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        public static string OpenSetupCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("OpenSetupCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+        
+        public static string SetupFrameTypeView_CurrentFrame_Refresh {
+            get {
+                return ResourceManager.GetString("SetupFrameTypeView_CurrentFrame_Refresh", resourceCulture);
+            }
+        }
+        
+        public static string SetupFrameTypeView_CurrentFrame_Meta {
+            get {
+                return ResourceManager.GetString("SetupFrameTypeView_CurrentFrame_Meta", resourceCulture);
+            }
+        }
     }
 }

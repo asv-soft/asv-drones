@@ -470,4 +470,46 @@
     <data name="SetupFrameTypeViewModel_Name" xml:space="preserve">
         <value>Тип рамы</value>
     </data>
+    <data name="ChangeFrameTypeCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда, которая изменяет тип рамы</value>
+    </data>
+    <data name="ChangeFrameTypeCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Изменить тип рамы</value>
+    </data>
+    <data name="SetupFrameTypeView_Loader_Header" xml:space="preserve">
+        <value>Загрузка...</value>
+    </data>
+    <data name="SetupFrameTypeView_Loader_Description" xml:space="preserve">
+        <value>Пожалуйста, подождите</value>
+    </data>
+    <data name="SetupFrameTypeView_ApplyFrame" xml:space="preserve">
+        <value>Установить</value>
+    </data>
+    <data name="SetupFrameTypeView_FrameMetadata" xml:space="preserve">
+        <value>Мета-данные</value>
+    </data>
+    <data name="SetupFrameTypeView_CurrentFrame" xml:space="preserve">
+        <value>Текущая рама</value>
+    </data>
+    <data name="SetupFrameTypeViewModel_ApplyConfirmation_Title" xml:space="preserve">
+        <value>Смена типа рамы</value>
+    </data>
+    <data name="SetupFrameTypeViewModel_ApplyConfirmation_Message" xml:space="preserve">
+        <value>Вы хотите сменить тип рамы?</value>
+    </data>
+    <data name="SetupFrameTypeViewModel_CurrentFrame_Unknown" xml:space="preserve">
+        <value>Неизвестно</value>
+    </data>
+    <data name="OpenSetupCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Открыть страницу настройки</value>
+    </data>
+    <data name="OpenSetupCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Команда открывает страницу для настройки дрона</value>
+    </data>
+    <data name="SetupFrameTypeView_CurrentFrame_Refresh" xml:space="preserve">
+        <value>Обновить текущую раму</value>
+    </data>
+    <data name="SetupFrameTypeView_CurrentFrame_Meta" xml:space="preserve">
+        <value>Описание</value>
+    </data>
 </root>
