@@ -7,7 +7,7 @@ namespace Asv.Drones.Api;
 
 public interface IFlightMode : IPage
 {
-    ObservableList<IMapWidget> Widgets { get; }
+    ObservableList<IWorkspaceWidget> Widgets { get; }
     ObservableList<IMapAnchor> Anchors { get; }
     BindableReactiveProperty<IMapAnchor?> SelectedAnchor { get; }
 }

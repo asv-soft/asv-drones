@@ -68,7 +68,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         var unitService = NullUnitService.Instance;
 
         Icon = MaterialIconKind.AccountFile;
-        IconBrush = Brush.Parse("Blue");
         var unitItem = unitService.Units[NullUnitBase.Id];
         _altitudeUnit = unitService.Units[NullUnitBase.Id];
         _velocityUnit = unitService.Units[NullUnitBase.Id];
@@ -264,7 +263,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         Device = device;
         Position = WorkspaceDock.Left;
         Icon = dev.GetIcon(device.Id);
-        IconBrush = dev.GetDeviceBrush(device.Id);
+        IconColor = dev.GetDeviceColor(device.Id);
         _altitudeUnit = unitService.Units[AltitudeBase.Id];
         _velocityUnit = unitService.Units[VelocityBase.Id];
         _angleUnit = unitService.Units[AngleBase.Id];
@@ -806,4 +805,8 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         get => _position;
         private init => SetField(ref _position, value);
     }
+
+    public bool IsExpanded { get; set; }
+    public bool CanExpand { get; set; }
+    public MenuTree? MenuView { get; set; }
 }

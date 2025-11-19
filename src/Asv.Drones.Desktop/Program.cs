@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
+using Asv.Avalonia.IO;
 using Asv.Avalonia.Plugins;
 using Asv.Common;
 using Asv.Drones.Api;
@@ -28,6 +29,7 @@ sealed class Program
 
         builder
             .UseAvalonia(BuildAvaloniaApp)
+            .UseTimeProvider()
             .UseAppPath(opt =>
             {
                 opt.WithRelativeFolder(Path.Combine(dataFolder, "data"));
@@ -45,6 +47,7 @@ sealed class Program
                 options.WithLogLevel(LogLevel.Trace);
             })
             .UseAsvMap()
+            .UseIo(opt => opt.WithDevices())
             .RegisterMavlinkCommands()
             .UsePluginManager(options =>
             {

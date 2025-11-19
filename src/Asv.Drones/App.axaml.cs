@@ -70,7 +70,9 @@ public partial class App : Application, IContainerHost, IShellHost
                 .WithExport<IDataTemplateHost>(this)
                 .WithExport<IShellHost>(this)
                 .WithExport(TimeProvider.System)
+                .WithDependenciesFromIoModule()
                 .WithDefaultConventions(conventions);
+            
         }
 
         containerCfg = containerCfg.WithAssemblies(DefaultAssemblies.Distinct());
@@ -92,7 +94,6 @@ public partial class App : Application, IContainerHost, IShellHost
             yield return GetType().Assembly; // Asv.Drones
             yield return typeof(ApiModule).Assembly; // Asv.Drones.Api
             yield return typeof(AppHost).Assembly; // Asv.Avalonia
-            yield return typeof(IoModule).Assembly; // Asv.Avalonia.IO
             yield return typeof(PluginManagerModule).Assembly; // Asv.Avalonia.Plugins
             yield return typeof(GeoMapModule).Assembly;
         }
