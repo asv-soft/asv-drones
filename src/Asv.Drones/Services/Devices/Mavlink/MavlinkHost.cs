@@ -55,9 +55,9 @@ public class MavlinkHost : IDeviceManagerExtension, IMavlinkHost, IStartupTask
         return icon != null;
     }
 
-    public bool TryGetDeviceBrush(DeviceId id, out IBrush? brush)
+    public bool TryGetDeviceBrush(DeviceId id, out AsvColorKind brush)
     {
-        brush = null;
+        brush = AsvColorKind.None;
         return false;
     }
 
