@@ -2,7 +2,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:map="clr-namespace:Asv.Avalonia.GeoMap;assembly=Asv.Avalonia.Map"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:avalonia1="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
              xmlns:drones="clr-namespace:Asv.Drones"
@@ -31,7 +30,7 @@
             </geoMap:MapItemsControl.Styles>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <avalonia:MaterialIcon Width="40" Height="40" Foreground="{Binding Foreground}" Kind="{Binding Icon}"  />
+                    <avalonia:MaterialIcon Width="40" Height="40" avalonia1:AsvPallete.Color="{CompiledBinding IconColor}" Kind="{Binding Icon}"  />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerTheme>
@@ -69,7 +68,7 @@
                         HorizontalAlignment="Stretch" >
                         <DockPanel>
                             <Grid ColumnDefinitions="Auto,5,*, Auto" DockPanel.Dock="Top">
-                                <avalonia:MaterialIcon Kind="{Binding Icon}" Foreground="{Binding IconBrush}"/>
+                                <avalonia:MaterialIcon Kind="{Binding Icon}" avalonia1:AsvPallete.Color="{CompiledBinding IconColor}"/>
                                 <TextBlock VerticalAlignment="Center" Grid.Column="2" Text="{Binding Header}"/>
                                 <ToggleButton IsChecked="True" x:Name="PART_Expand" Grid.Column="3" Padding="0" Theme="{StaticResource TransparentButton}">
                                     <Panel Width="20" Height="20">

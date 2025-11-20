@@ -1,4 +1,5 @@
 ﻿using System.Composition;
+using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Gnss;
 using Asv.IO;
@@ -35,9 +36,9 @@ public class GnssDeviceManagerExtension : IDeviceManagerExtension
         return false;
     }
 
-    public bool TryGetDeviceBrush(DeviceId id, out IBrush? brush)
+    public bool TryGetDeviceBrush(DeviceId id, out AsvColorKind brush)
     {
-        brush = null;
+        brush = AsvColorKind.None;
         return false;
     }
 

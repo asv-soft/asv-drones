@@ -1,9 +1,9 @@
-﻿using Asv.Avalonia.GeoMap;
+﻿using Asv.Avalonia;
 using Asv.IO;
 
 namespace Asv.Drones.Api;
 
-public interface IUavFlightWidget : IMapWidget
+public interface IUavFlightWidget : IWorkspaceWidget
 {
     IClientDevice Device { get; }
 }

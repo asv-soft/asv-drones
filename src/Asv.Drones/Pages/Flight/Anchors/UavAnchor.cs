@@ -37,7 +37,7 @@ public class UavAnchor : MapAnchor<UavAnchor>
         IsReadOnly = true;
         IsVisible = true;
         Icon = mng.GetIcon(deviceId) ?? MaterialIconKind.Memory;
-        Foreground = mng.GetDeviceBrush(deviceId) ?? throw new InvalidOperationException();
+        IconColor = mng.GetDeviceColor(deviceId);
         CenterX = DeviceIconMixin.GetIconCenterX(deviceId);
         CenterY = DeviceIconMixin.GetIconCenterY(deviceId);
         dev.Name.Subscribe(x => Title = x ?? string.Empty).DisposeItWith(Disposable);
