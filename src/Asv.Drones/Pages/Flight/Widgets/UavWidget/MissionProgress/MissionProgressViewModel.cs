@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
+using Asv.Avalonia.IO;
 using Asv.Common;
 using Asv.IO;
 using Asv.Mavlink;
@@ -46,7 +47,7 @@ public class MissionProgressViewModel : RoutableViewModel
         DownloadProgress = new BindableReactiveProperty<double>().DisposeItWith(Disposable);
 
         var unitService = NullUnitService.Instance;
-        var nullUnit = unitService.Units[NullUnitBase.Id];
+        var nullUnit = unitService.Units.Values.First();
 
         MissionDistance = new HistoricalUnitProperty(
             nameof(MissionDistance),

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
@@ -69,14 +70,14 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
 
         Icon = MaterialIconKind.AccountFile;
         IconColor = AsvColorKind.Info4;
-        var unitItem = unitService.Units[NullUnitBase.Id];
-        _altitudeUnit = unitService.Units[NullUnitBase.Id];
-        _velocityUnit = unitService.Units[NullUnitBase.Id];
-        _angleUnit = unitService.Units[NullUnitBase.Id];
-        _capacityUnit = unitService.Units[NullUnitBase.Id];
-        _amperageUnit = unitService.Units[NullUnitBase.Id];
-        _voltageUnit = unitService.Units[NullUnitBase.Id];
-        _progressUnit = unitService.Units[NullUnitBase.Id];
+        var unitItem = unitService.Units.Values.First();
+        _altitudeUnit = unitItem;
+        _velocityUnit = unitItem;
+        _angleUnit = unitItem;
+        _capacityUnit = unitItem;
+        _amperageUnit = unitItem;
+        _voltageUnit = unitItem;
+        _progressUnit = unitItem;
 
         var linkQuality = new ReactiveProperty<double>(100).DisposeItWith(Disposable);
         var altitudeAgl = new ReactiveProperty<double>(10).DisposeItWith(Disposable);
