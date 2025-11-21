@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
@@ -69,14 +70,14 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
 
         Icon = MaterialIconKind.AccountFile;
         IconColor = AsvColorKind.Info4;
-        var unitItem = unitService.Units[NullUnitBase.Id];
-        _altitudeUnit = unitService.Units[NullUnitBase.Id];
-        _velocityUnit = unitService.Units[NullUnitBase.Id];
-        _angleUnit = unitService.Units[NullUnitBase.Id];
-        _capacityUnit = unitService.Units[NullUnitBase.Id];
-        _amperageUnit = unitService.Units[NullUnitBase.Id];
-        _voltageUnit = unitService.Units[NullUnitBase.Id];
-        _progressUnit = unitService.Units[NullUnitBase.Id];
+        var unitItem = unitService.Units.Values.First();
+        _altitudeUnit = unitItem;
+        _velocityUnit = unitItem;
+        _angleUnit = unitItem;
+        _capacityUnit = unitItem;
+        _amperageUnit = unitItem;
+        _voltageUnit = unitItem;
+        _progressUnit = unitItem;
 
         var linkQuality = new ReactiveProperty<double>(100).DisposeItWith(Disposable);
         var altitudeAgl = new ReactiveProperty<double>(10).DisposeItWith(Disposable);
@@ -90,7 +91,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         var batteryCharge = new ReactiveProperty<double>(123).DisposeItWith(Disposable);
         var batteryConsumed = new ReactiveProperty<double>(39).DisposeItWith(Disposable);
 
-        LinkQuality = new HistoricalUnitProperty(
+        LinkQuality = new BindableUnitProperty(
             nameof(LinkQuality),
             linkQuality,
             unitItem,
@@ -99,7 +100,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
         LinkQuality.ForceValidate();
-        AltitudeAgl = new HistoricalUnitProperty(
+        AltitudeAgl = new BindableUnitProperty(
             nameof(AltitudeAgl),
             altitudeAgl,
             unitItem,
@@ -108,7 +109,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
         AltitudeAgl.ForceValidate();
-        AltitudeMsl = new HistoricalUnitProperty(
+        AltitudeMsl = new BindableUnitProperty(
             nameof(AltitudeMsl),
             altitudeMsl,
             unitItem,
@@ -117,7 +118,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
         AltitudeMsl.ForceValidate();
-        Azimuth = new HistoricalUnitProperty(
+        Azimuth = new BindableUnitProperty(
             nameof(Azimuth),
             azimuth,
             unitItem,
@@ -126,7 +127,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
         Azimuth.ForceValidate();
-        Heading = new HistoricalUnitProperty(
+        Heading = new BindableUnitProperty(
             nameof(Heading),
             heading,
             unitItem,
@@ -135,7 +136,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
         Heading.ForceValidate();
-        HomeAzimuth = new HistoricalUnitProperty(
+        HomeAzimuth = new BindableUnitProperty(
             nameof(HomeAzimuth),
             homeAzimuth,
             unitItem,
@@ -144,7 +145,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
         HomeAzimuth.ForceValidate();
-        Velocity = new HistoricalUnitProperty(
+        Velocity = new BindableUnitProperty(
             nameof(Velocity),
             velocity,
             unitItem,
@@ -153,7 +154,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
         Velocity.ForceValidate();
-        BatteryAmperage = new HistoricalUnitProperty(
+        BatteryAmperage = new BindableUnitProperty(
             nameof(BatteryAmperage),
             batteryAmperage,
             unitItem,
@@ -163,7 +164,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
         BatteryAmperage.ForceValidate();
-        BatteryVoltage = new HistoricalUnitProperty(
+        BatteryVoltage = new BindableUnitProperty(
             nameof(BatteryVoltage),
             batteryVoltage,
             unitItem,
@@ -173,7 +174,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
         BatteryVoltage.ForceValidate();
-        BatteryCharge = new HistoricalUnitProperty(
+        BatteryCharge = new BindableUnitProperty(
             nameof(BatteryCharge),
             batteryCharge,
             unitItem,
@@ -182,7 +183,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
         BatteryCharge.ForceValidate();
-        BatteryConsumed = new HistoricalUnitProperty(
+        BatteryConsumed = new BindableUnitProperty(
             nameof(BatteryConsumed),
             batteryConsumed,
             unitItem,
@@ -274,12 +275,9 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         _progressUnit = unitService.Units[ProgressBase.Id];
         device.Name.Subscribe(x => Header = x).DisposeItWith(Disposable);
         InitArgs(device.Id.AsString());
-        MissionProgress = new MissionProgressViewModel(
-            device,
-            unitService,
-            loggerFactory,
-            this
-        ).DisposeItWith(Disposable);
+        MissionProgress = new MissionProgressViewModel(device, unitService, loggerFactory)
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
         var positionClientEx =
             device.GetMicroservice<IPositionClientEx>()
             ?? throw new ArgumentException(
@@ -423,7 +421,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             )
             .DisposeItWith(Disposable);
 
-        LinkQuality = new HistoricalUnitProperty(
+        LinkQuality = new BindableUnitProperty(
             nameof(LinkQuality),
             linkQuality,
             _progressUnit,
@@ -431,7 +429,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         )
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        AltitudeAgl = new HistoricalUnitProperty(
+        AltitudeAgl = new BindableUnitProperty(
             nameof(AltitudeAgl),
             altitudeAgl,
             _altitudeUnit,
@@ -439,7 +437,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         )
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        AltitudeMsl = new HistoricalUnitProperty(
+        AltitudeMsl = new BindableUnitProperty(
             nameof(AltitudeMsl),
             altitudeMsl,
             _altitudeUnit,
@@ -447,13 +445,13 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         )
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        Azimuth = new HistoricalUnitProperty(nameof(Azimuth), azimuth, _angleUnit, loggerFactory)
+        Azimuth = new BindableUnitProperty(nameof(Azimuth), azimuth, _angleUnit, loggerFactory)
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        Heading = new HistoricalUnitProperty(nameof(Heading), heading, _angleUnit, loggerFactory)
+        Heading = new BindableUnitProperty(nameof(Heading), heading, _angleUnit, loggerFactory)
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        HomeAzimuth = new HistoricalUnitProperty(
+        HomeAzimuth = new BindableUnitProperty(
             nameof(HomeAzimuth),
             homeAzimuth,
             _angleUnit,
@@ -461,7 +459,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         )
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        Velocity = new HistoricalUnitProperty(
+        Velocity = new BindableUnitProperty(
             nameof(Velocity),
             velocity,
             _velocityUnit,
@@ -469,7 +467,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         )
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        BatteryAmperage = new HistoricalUnitProperty(
+        BatteryAmperage = new BindableUnitProperty(
             nameof(BatteryAmperage),
             batteryAmperage,
             _amperageUnit,
@@ -478,7 +476,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         )
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        BatteryVoltage = new HistoricalUnitProperty(
+        BatteryVoltage = new BindableUnitProperty(
             nameof(BatteryVoltage),
             batteryVoltage,
             _voltageUnit,
@@ -487,7 +485,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         )
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        BatteryCharge = new HistoricalUnitProperty(
+        BatteryCharge = new BindableUnitProperty(
             nameof(BatteryCharge),
             batteryCharge,
             _progressUnit,
@@ -495,7 +493,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         )
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        BatteryConsumed = new HistoricalUnitProperty(
+        BatteryConsumed = new BindableUnitProperty(
             nameof(BatteryConsumed),
             batteryConsumed,
             _capacityUnit,
@@ -506,7 +504,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
 
         BatteryConsumedSymbol = BatteryConsumed
             .Unit.CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
+            .ToReadOnlyBindableReactiveProperty<string>()
             .DisposeItWith(Disposable);
         BatteryAmperageSymbol = BatteryAmperage
             .Unit.CurrentUnitItem.Select(item => item.Symbol)
@@ -724,11 +722,11 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
 
     #region BatteryRtt
 
-    public HistoricalUnitProperty BatteryConsumed { get; }
-    public HistoricalUnitProperty BatteryAmperage { get; }
-    public HistoricalUnitProperty BatteryCharge { get; }
-    public HistoricalUnitProperty BatteryVoltage { get; }
-    public BindableReactiveProperty<string> BatteryConsumedSymbol { get; }
+    public BindableUnitProperty BatteryConsumed { get; }
+    public BindableUnitProperty BatteryAmperage { get; }
+    public BindableUnitProperty BatteryCharge { get; }
+    public BindableUnitProperty BatteryVoltage { get; }
+    public IReadOnlyBindableReactiveProperty<string> BatteryConsumedSymbol { get; }
     public BindableReactiveProperty<string> BatteryAmperageSymbol { get; }
     public BindableReactiveProperty<string> BatteryChargeSymbol { get; }
     public BindableReactiveProperty<string> BatteryVoltageSymbol { get; }
@@ -757,7 +755,6 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
     #endregion
 
     public BindableReactiveProperty<string> LinkState { get; }
-    public HistoricalUnitProperty LinkQuality { get; }
     public BindableReactiveProperty<string> LinkQualitySymbol { get; }
 
     public SolidColorBrush AltitudeStatusBrush
@@ -781,12 +778,13 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
     public BindableReactiveProperty<uint> Clipping2 { get; }
     public BindableReactiveProperty<double> Roll { get; }
     public BindableReactiveProperty<double> Pitch { get; }
-    public HistoricalUnitProperty Velocity { get; }
-    public HistoricalUnitProperty AltitudeAgl { get; }
-    public HistoricalUnitProperty AltitudeMsl { get; }
-    public HistoricalUnitProperty Heading { get; }
-    public HistoricalUnitProperty HomeAzimuth { get; }
-    public HistoricalUnitProperty Azimuth { get; }
+    public BindableUnitProperty LinkQuality { get; }
+    public BindableUnitProperty Velocity { get; }
+    public BindableUnitProperty AltitudeAgl { get; }
+    public BindableUnitProperty AltitudeMsl { get; }
+    public BindableUnitProperty Heading { get; }
+    public BindableUnitProperty HomeAzimuth { get; }
+    public BindableUnitProperty Azimuth { get; }
     public BindableReactiveProperty<string> VelocitySymbol { get; }
     public BindableReactiveProperty<string> AltitudeSymbol { get; }
     public BindableReactiveProperty<string> AzimuthSymbol { get; }

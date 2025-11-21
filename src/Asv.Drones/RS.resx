@@ -524,4 +524,10 @@
     <data name="SetupFrameTypeView_CurrentFrame_Meta" xml:space="preserve">
         <value>Description</value>
     </data>
+    <data name="MissionProgressView_RefreshButton_Text" xml:space="preserve">
+        <value>Refresh mission</value>
+    </data>
+    <data name="MissionProgressView_DownloadButton_Text" xml:space="preserve">
+        <value>Download Mission</value>
+    </data>
 </root>

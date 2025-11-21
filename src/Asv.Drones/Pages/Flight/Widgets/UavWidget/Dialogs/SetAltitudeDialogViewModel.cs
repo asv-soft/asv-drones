@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Asv.Avalonia;
 using Asv.Common;
 using Microsoft.Extensions.Logging;
@@ -12,7 +13,10 @@ public class SetAltitudeDialogViewModel : DialogViewModelBase
     public const string DialogId = $"{BaseId}.altitude";
 
     public SetAltitudeDialogViewModel()
-        : this(new NullUnitBase([new NullUnitItemInternational()]), DesignTime.LoggerFactory)
+        : this(
+            NullUnitService.Instance.Units.Values.First(u => u.UnitId == AltitudeBase.Id),
+            DesignTime.LoggerFactory
+        )
     {
         DesignTime.ThrowIfNotDesignMode();
     }
@@ -20,53 +24,52 @@ public class SetAltitudeDialogViewModel : DialogViewModelBase
     public SetAltitudeDialogViewModel(IUnit unit, ILoggerFactory loggerFactory)
         : base(DialogId, loggerFactory)
     {
-        AltitudeUnit =
+        var altitudeUnit =
             unit as AltitudeBase
             ?? throw new InvalidCastException($"Unit must be an {nameof(AltitudeBase)}");
-        AltitudeUnitSymbol = AltitudeUnit
-            .CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
+
+        Altitude = new BindableReactiveProperty<string>(string.Empty).DisposeItWith(Disposable);
+        AltitudeUnitSymbol = altitudeUnit
+            .CurrentUnitItem.ObserveOnUIThreadDispatcher()
+            .Select(item => item.Symbol)
+            .ToReadOnlyBindableReactiveProperty<string>()
             .DisposeItWith(Disposable);
-        _sub1 = Altitude.EnableValidationRoutable(
-            s =>
-            {
-                var valid = AltitudeUnit.CurrentUnitItem.Value.ValidateValue(s);
-                return valid;
-            },
-            this,
-            true
-        );
+
+        Altitude
+            .EnableValidationRoutable(
+                s =>
+                {
+                    var valid = altitudeUnit.CurrentUnitItem.Value.ValidateValue(s);
+                    return valid;
+                },
+                this,
+                true
+            )
+            .DisposeItWith(Disposable);
     }
 
     public override void ApplyDialog(ContentDialog dialog)
     {
-        _sub2?.Dispose();
-        _sub2 = null;
-
-        _sub2 = IsValid.Subscribe(enabled => dialog.IsPrimaryButtonEnabled = enabled);
+        _sub2.Disposable = IsValid.Subscribe(enabled => dialog.IsPrimaryButtonEnabled = enabled);
     }
-
-    public AltitudeBase AltitudeUnit { get; }
-    public BindableReactiveProperty<string> Altitude { get; } = new();
-    public BindableReactiveProperty<string> AltitudeUnitSymbol { get; }
 
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
         return [];
     }
 
+    public BindableReactiveProperty<string> Altitude { get; }
+    public IReadOnlyBindableReactiveProperty<string> AltitudeUnitSymbol { get; }
+
     #region Dispose
 
-    private readonly IDisposable _sub1;
-    private IDisposable? _sub2;
+    private readonly SerialDisposable _sub2 = new();
 
     protected override void Dispose(bool disposing)
     {
         if (disposing)
         {
-            _sub1.Dispose();
-            _sub2?.Dispose();
-            Altitude.Dispose();
+            _sub2.Dispose();
         }
 
         base.Dispose(disposing);
