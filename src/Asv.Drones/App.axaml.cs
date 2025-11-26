@@ -36,46 +36,14 @@ public partial class App : Application, IContainerHost, IShellHost
         var conventions = new ConventionBuilder();
         var containerCfg = new ContainerConfiguration();
 
-        if (Design.IsDesignMode)
-        {
-            containerCfg
-                .WithExport(NullContainerHost.Instance)
-                .WithExport<IConfiguration>(new InMemoryConfiguration())
-                .WithExport(NullLoggerFactory.Instance)
-                .WithExport(NullAppPath.Instance)
-                .WithExport(NullPluginManager.Instance)
-                .WithExport(NullLogReaderService.Instance)
-                .WithExport(NullAppInfo.Instance)
-                .WithExport<IDataTemplateHost>(this)
-                .WithExport<IShellHost>(this)
-                .WithExport<IMeterFactory>(new DefaultMeterFactory())
-                .WithExport(TimeProvider.System)
-                .WithDefaultConventions(conventions);
-        }
-        else
-        {
-            var pluginManager = AppHost.Instance.GetService<IPluginManager>();
-            var logReader = AppHost.Instance.GetService<ILogReaderService>();
-
-            containerCfg
-                .WithExport<IContainerHost>(this)
-                .WithExport(AppHost.Instance.GetService<IConfiguration>())
-                .WithExport(AppHost.Instance.GetService<ILoggerFactory>())
-                .WithExport(AppHost.Instance.GetService<IAppPath>())
-                .WithExport(AppHost.Instance.GetService<IAppInfo>())
-                .WithExport(AppHost.Instance.GetService<IMeterFactory>())
-                .WithExport(pluginManager)
-                .WithExport(logReader)
-                .WithAssemblies(pluginManager.PluginsAssemblies)
-                .WithExport<IDataTemplateHost>(this)
-                .WithExport<IShellHost>(this)
-                .WithExport(TimeProvider.System)
-                .WithDependenciesFromIoModule()
-                .WithDefaultConventions(conventions);
-            
-        }
-
-        containerCfg = containerCfg.WithAssemblies(DefaultAssemblies.Distinct());
+        containerCfg
+            .WithDependenciesFromSystemModule()
+            .WithDependenciesFromIoModule()
+            .WithDependenciesFromPluginManagerModule()
+            .WithDependenciesFromGeoMapModule()
+            .WithDependenciesFromApi()
+            .WithDependenciesFromTheApp(this)
+            .WithDefaultConventions(conventions);
 
         // TODO: load plugin manager before creating container
         _container = containerCfg.CreateContainer();
@@ -84,18 +52,6 @@ public partial class App : Application, IContainerHost, IShellHost
         if (!Design.IsDesignMode)
         {
             _container.GetExport<IAppStartupService>().AppCtor();
-        }
-    }
-
-    private IEnumerable<Assembly> DefaultAssemblies
-    {
-        get
-        {
-            yield return GetType().Assembly; // Asv.Drones
-            yield return typeof(ApiModule).Assembly; // Asv.Drones.Api
-            yield return typeof(AppHost).Assembly; // Asv.Avalonia
-            yield return typeof(PluginManagerModule).Assembly; // Asv.Avalonia.Plugins
-            yield return typeof(GeoMapModule).Assembly;
         }
     }
 
@@ -178,4 +134,26 @@ public partial class App : Application, IContainerHost, IShellHost
 
     public TopLevel TopLevel { get; private set; }
     public IExportInfo Source => SystemModule.Instance;
+}
+
+public static class ContainerConfigurationMixin
+{
+    public static ContainerConfiguration WithDependenciesFromTheApp(
+        this ContainerConfiguration containerConfiguration,
+        App app
+    )
+    {
+        containerConfiguration.WithExport<IDataTemplateHost>(app).WithExport<IShellHost>(app);
+
+        if (Design.IsDesignMode)
+        {
+            containerConfiguration.WithExport(NullContainerHost.Instance);
+        }
+        else
+        {
+            containerConfiguration.WithExport<IContainerHost>(app);
+        }
+
+        return containerConfiguration.WithAssemblies([app.GetType().Assembly]);
+    }
 }

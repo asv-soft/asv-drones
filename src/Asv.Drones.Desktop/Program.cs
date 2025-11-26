@@ -29,7 +29,6 @@ sealed class Program
 
         builder
             .UseAvalonia(BuildAvaloniaApp)
-            .UseTimeProvider()
             .UseAppPath(opt =>
             {
                 opt.WithRelativeFolder(Path.Combine(dataFolder, "data"));
@@ -46,8 +45,8 @@ sealed class Program
                 options.WithLogViewer();
                 options.WithLogLevel(LogLevel.Trace);
             })
-            .UseAsvMap()
-            .UseIo(opt => opt.WithDevices())
+            .UseAsvGeoMap()
+            .UseIo(opts => opts.WithDevices())
             .RegisterMavlinkCommands()
             .UsePluginManager(options =>
             {

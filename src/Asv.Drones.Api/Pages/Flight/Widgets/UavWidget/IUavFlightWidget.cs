@@ -1,5 +1,4 @@
 ﻿using Asv.Avalonia;
-using Asv.Avalonia.GeoMap;
 using Asv.IO;
 
 namespace Asv.Drones.Api;

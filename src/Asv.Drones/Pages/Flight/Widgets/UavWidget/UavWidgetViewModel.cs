@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
+using Asv.Avalonia.GeoMap;
 using Asv.Avalonia.IO;
 using Asv.Common;
 using Asv.Drones.Api;
@@ -17,10 +18,9 @@ using Observable = R3.Observable;
 
 namespace Asv.Drones;
 
-public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>, IUavFlightWidget
+public class UavWidgetViewModel : MapWidget, IUavFlightWidget
 {
     private const string WidgetId = "widget-uav";
-    private WorkspaceDock _position;
 
     private readonly IUnit _velocityUnit;
     private readonly IUnit _altitudeUnit;
@@ -46,7 +46,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         DesignTime.ThrowIfNotDesignMode();
         Dispatcher.UIThread.InvokeAsync(() =>
         {
-            GnssStatusBrush = new SolidColorBrush();
+            GnssStatusBrush = new SolidColorBrush(); // TODO: implement asv color instead of color brush
             LinkQualityStatusBrush = new SolidColorBrush();
             BatteryStatusBrush = new SolidColorBrush();
             AltitudeStatusBrush = new SolidColorBrush();
@@ -68,6 +68,7 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
         var unitService = NullUnitService.Instance;
 
         Icon = MaterialIconKind.AccountFile;
+        IconColor = AsvColorKind.Info4;
         var unitItem = unitService.Units[NullUnitBase.Id];
         _altitudeUnit = unitService.Units[NullUnitBase.Id];
         _velocityUnit = unitService.Units[NullUnitBase.Id];
@@ -594,11 +595,6 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
             .DisposeItWith(Disposable);
     }
 
-    protected override void AfterLoadExtensions()
-    {
-        // do nothing
-    }
-
     private async Task BatteryStatus(double percent)
     {
         await Dispatcher.UIThread.InvokeAsync(() =>
@@ -799,14 +795,4 @@ public class UavWidgetViewModel : ExtendableHeadlinedViewModel<IUavFlightWidget>
     public BindableReactiveProperty<TimeSpan> ArmedTime { get; }
 
     public IClientDevice Device { get; }
-
-    public WorkspaceDock Position
-    {
-        get => _position;
-        private init => SetField(ref _position, value);
-    }
-
-    public bool IsExpanded { get; set; }
-    public bool CanExpand { get; set; }
-    public MenuTree? MenuView { get; set; }
 }

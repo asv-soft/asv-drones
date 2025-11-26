@@ -73,9 +73,9 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
         SelectedAnchor = new BindableReactiveProperty<IMapAnchor?>().DisposeItWith(Disposable);
     }
 
-    public NotifyCollectionChangedSynchronizedViewList<IWorkspaceWidget> WidgetsView { get; }
+    public NotifyCollectionChangedSynchronizedViewList<IUavFlightWidget> WidgetsView { get; }
 
-    public ObservableList<IWorkspaceWidget> Widgets { get; }
+    public ObservableList<IUavFlightWidget> Widgets { get; }
 
     public NotifyCollectionChangedSynchronizedViewList<IMapAnchor> AnchorsView { get; }
 
