@@ -77,7 +77,7 @@ public class SavePacketMessagesDialogViewModel : DialogViewModelBase
     {
         ArgumentNullException.ThrowIfNull(dialog);
 
-        _sub5 = IsValid.Subscribe(isValid =>
+        _sub5.Disposable = IsValid.Subscribe(isValid =>
         {
             dialog.IsPrimaryButtonEnabled = isValid;
         });
@@ -90,7 +90,7 @@ public class SavePacketMessagesDialogViewModel : DialogViewModelBase
     private readonly IDisposable _sub2;
     private readonly IDisposable _sub3;
     private readonly IDisposable _sub4;
-    private IDisposable _sub5;
+    private readonly SerialDisposable _sub5 = new();
 
     protected override void Dispose(bool isDisposing)
     {

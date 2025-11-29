@@ -17,7 +17,6 @@ public sealed class FlightPageViewModelConfig
 {
     public GeoPoint MapCenter { get; set; } = GeoPoint.Zero;
     public int Zoom { get; set; } = 0;
-    public string? SelectedAnchorId { get; set; }
 }
 
 [ExportPage(PageId)]
@@ -71,17 +70,17 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
 
         WidgetsView = Widgets.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);
         SelectedAnchor = new BindableReactiveProperty<IMapAnchor?>().DisposeItWith(Disposable);
+        Zoom = new BindableReactiveProperty<int>(1).DisposeItWith(Disposable);
+        MapCenter = new BindableReactiveProperty<GeoPoint>(GeoPoint.Zero).DisposeItWith(Disposable);
     }
 
     public NotifyCollectionChangedSynchronizedViewList<IUavFlightWidget> WidgetsView { get; }
-
     public ObservableList<IUavFlightWidget> Widgets { get; }
-
     public NotifyCollectionChangedSynchronizedViewList<IMapAnchor> AnchorsView { get; }
-
     public ObservableList<IMapAnchor> Anchors { get; }
-
     public BindableReactiveProperty<IMapAnchor?> SelectedAnchor { get; }
+    public BindableReactiveProperty<int> Zoom { get; }
+    public BindableReactiveProperty<GeoPoint> MapCenter { get; }
 
     public override IEnumerable<IRoutable> GetRoutableChildren()
     {
@@ -111,7 +110,8 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
                     _config,
                     cfg =>
                     {
-                        // TODO: add save layout when flight mode is fixed
+                        cfg.MapCenter = MapCenter.Value;
+                        cfg.Zoom = Zoom.Value;
                     },
                     FlushingStrategy.FlushBothViewModelAndView
                 );
@@ -121,7 +121,13 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
                     loadLayoutEvent,
                     cfg =>
                     {
-                        // TODO: add load layout when flight mode is fixed
+                        MapCenter.Value = cfg.MapCenter;
+                        Zoom.Value = cfg.Zoom switch
+                        {
+                            < 1 => 1, // TODO: use constants from asv.avalonia.geomap
+                            > 19 => 19,
+                            _ => cfg.Zoom,
+                        };
                     }
                 );
                 break;

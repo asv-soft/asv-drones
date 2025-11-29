@@ -48,7 +48,7 @@ jobs:
           
       - name: Compare tag with NuGet package version
         run: |
-          if [ api-v"${{ env.PropsVersion }}" != "${{ env.VERSION }}" ]; then
+          if [ "${{ env.PropsVersion }}" != "${{ env.VERSION }}" ]; then
             echo "Error: Tag does not match NuGet package version"
             exit 1
           fi

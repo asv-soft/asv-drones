@@ -72,6 +72,7 @@
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=pages_005Cflight/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=pages_005Cflight_005Canchors/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=pages_005Cflight_005Ccommands/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=pages_005Cflight_005Cmove_005Fto_005Fasv_005Favalonia_005Fio/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=pages_005Cflight_005Cwidgets/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=pages_005Cflight_005Cwidgets_005Cuavwidget/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=pages_005Cflight_005Cwidgets_005Cuavwidget_005Cactions/@EntryIndexedValue">True</s:Boolean>
@@ -82,6 +83,8 @@
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=pages_005Cflight_005Cwidgets_005Cuavwidget_005Cdialogs/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=pages_005Cflight_005Cwidgets_005Cuavwidget_005Cmissionprogress/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=pages_005Cflight_005Cwidgets_005Cuavwidget_005Cmissionprogress_005Ccommands/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=pages_005Cflight_005C_005Fmove_005Fto_005Fasv_005Favalonia_005Fio/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=pages_005Cflight_005C_005Fmove_005Fto_005Fasv_005Favalonia_005Fio_005Cdesigntime/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=pages_005Cmavparams/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=pages_005Cmavparams_005Ccommands/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=pages_005Cmavparams_005Ccommands_005Cmavparamspageviewmodel/@EntryIndexedValue">True</s:Boolean>

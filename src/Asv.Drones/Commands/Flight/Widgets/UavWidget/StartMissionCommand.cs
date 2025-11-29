@@ -5,6 +5,7 @@ using Asv.Avalonia;
 using Asv.IO;
 using Asv.Mavlink;
 using Material.Icons;
+using R3;
 
 namespace Asv.Drones;
 
@@ -43,6 +44,8 @@ public class StartMissionCommand : ContextCommand<UavWidgetViewModel>
         {
             return null;
         }
+
+        context.MissionProgress.UpdateMission.Execute(Unit.Default);
 
         await mission.SetCurrent(0, cancel);
         await control.SetAutoMode(cancel);

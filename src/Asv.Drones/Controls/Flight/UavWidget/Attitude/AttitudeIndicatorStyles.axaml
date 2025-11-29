@@ -4,6 +4,7 @@
        <Design.PreviewWith>
         <drones:AttitudeIndicator Width="500" Height="500" RollAngle="0" PitchAngle="0" Velocity="13" Altitude="160"
                                Heading="57" HomeAzimuth="37" VibrationX="0.6150423" VibrationY="0.4214542"
+                               CornerRadius="55"
                                VibrationZ="0.234787" />
     </Design.PreviewWith>
 
@@ -13,6 +14,7 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Viewbox>
+                    <Border CornerRadius="{TemplateBinding CornerRadius}">
                     <Canvas x:Name="Canvas"
                             Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InternalWidth}"
                             Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InternalHeight}"
@@ -453,6 +455,7 @@
                                    Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=StatusText, Mode=TwoWay}"
                                    Width="1000" TextAlignment="Center" HorizontalAlignment="Center" />
                     </Canvas>
+                    </Border>
                 </Viewbox>
             </ControlTemplate>
         </Setter>
