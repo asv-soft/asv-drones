@@ -61,6 +61,7 @@ public class MavlinkHost : IDeviceManagerExtension, IMavlinkHost, IStartupTask
         return false;
     }
 
+
     public void Run(IDeviceManager deviceManager)
     {
         var config = _cfgSvc.Get<MavlinkHeartbeatServerConfig>();

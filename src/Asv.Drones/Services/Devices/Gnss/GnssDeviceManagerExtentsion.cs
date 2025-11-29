@@ -42,6 +42,7 @@ public class GnssDeviceManagerExtension : IDeviceManagerExtension
         return false;
     }
 
+
     public void Run(IDeviceManager deviceManager)
     {
         // do nothing
