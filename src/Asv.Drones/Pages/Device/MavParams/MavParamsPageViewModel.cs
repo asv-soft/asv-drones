@@ -46,6 +46,7 @@ public class MavParamsPageViewModel
         KeyValuePair<string, ParamItem>,
         ParamItemViewModel
     > _fullFilter;
+    private readonly Lock _cancelLock = new();
 
     private DeviceId _deviceId;
     private IParamsClientEx? _paramsClient;
@@ -278,14 +279,20 @@ public class MavParamsPageViewModel
 
     internal void StopUpdateParamsImpl()
     {
-        if (_cancellationTokenSource is not null)
+        using (_cancelLock.EnterScope())
         {
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource?.Dispose();
-            _cancellationTokenSource = null;
+            if (_cancellationTokenSource is not null)
+            {
+                _cancellationTokenSource?.Cancel();
+                _cancellationTokenSource?.Dispose();
+                _cancellationTokenSource = null;
+            }
         }
 
-        IsRefreshing.Value = false;
+        if (!IsRefreshing.IsDisposed)
+        {
+            IsRefreshing.Value = false;
+        }
     }
 
     internal async Task UpdateParamsImpl(CancellationToken cancel = default)
@@ -309,8 +316,11 @@ public class MavParamsPageViewModel
         SelectedItem.Value = null;
         IsRefreshing.Value = true;
 
-        _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancel);
-        _cancellationTokenSource.Token.Register(() => IsRefreshing.Value = false);
+        using (_cancelLock.EnterScope())
+        {
+            _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancel);
+        }
+
         try
         {
             await _paramsClient.ReadAll(
