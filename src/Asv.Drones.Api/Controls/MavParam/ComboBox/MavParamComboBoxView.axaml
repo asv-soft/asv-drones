@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:api="clr-namespace:Asv.Drones.Api"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:avalonia1="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
              mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="300"
              x:Class="Asv.Drones.Api.MavParamComboBoxView"
              x:DataType="api:MavParamComboBoxViewModel">
@@ -21,7 +22,9 @@
                         <avalonia:MaterialIcon 
                             Foreground="{StaticResource SystemAccentColor}"
                             IsVisible="{Binding Icon, Converter={x:Static ObjectConverters.IsNotNull}}" 
-                            Kind="{Binding Icon}"/>
+                            Kind="{Binding Icon}"
+                            avalonia1:AsvPallete.Color="{Binding IconColor}"
+                            />
                         <TextBlock VerticalAlignment="Center" Text="{Binding Title}"/>
                     </StackPanel>
                 </DataTemplate>

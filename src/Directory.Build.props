@@ -5,7 +5,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <ApiVersion>2.0.2</ApiVersion>
     <AvaloniaVersion>11.3.8</AvaloniaVersion>
-    <AsvAvaloniaVersion>1.0.3</AsvAvaloniaVersion>
+    <AsvAvaloniaVersion>1.0.4-dev.0</AsvAvaloniaVersion>
     <AsvMavlinkVersion>4.0.18</AsvMavlinkVersion>
     <AsvGnssVersion>2.0.2</AsvGnssVersion>
     <ScottPlotVersion>5.0.57</ScottPlotVersion>

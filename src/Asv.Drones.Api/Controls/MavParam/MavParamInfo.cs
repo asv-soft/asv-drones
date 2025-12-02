@@ -84,6 +84,7 @@ public partial class MavParamInfo
     public const string WidgetTypeKey = "widget";
     public const string FormatStringKey = "format";
     public const string IconKey = "icon";
+    public const string IconColorKey = "icon-color";
     public const string OrderKey = "order";
 
     #endregion
@@ -172,6 +173,10 @@ public partial class MavParamInfo
         ?? MavParamWidgetType.TextBox;
     public MaterialIconKind? Icon =>
         GetAdditionalAsEnum<MaterialIconKind>(_additionalInfo, IconKey);
+
+    public AsvColorKind? IconColor => 
+        GetAdditionalAsEnum<AsvColorKind>(_additionalInfo, IconColorKey);
+    
     public int Order => GetAdditionalAsInt(_additionalInfo, OrderKey);
     public string Title => Metadata.ShortDesc ?? Metadata.Name;
 
@@ -186,7 +191,9 @@ public partial class MavParamInfo
         {
             ParseAdditionalInfo(value.Item2, out var dict, out var desc);
             var icon = GetAdditionalAsEnum<MaterialIconKind>(dict, IconKey);
-            yield return new MavParamValueItem(icon, desc, value.Item1, Convert(value.Item1));
+            var iconColor = GetAdditionalAsEnum<AsvColorKind>(_additionalInfo, IconKey);
+            
+            yield return new MavParamValueItem(icon, iconColor,  desc, value.Item1, Convert(value.Item1));
         }
     }
 
@@ -539,12 +546,14 @@ public partial class MavParamInfo
 
 public class MavParamValueItem(
     MaterialIconKind? icon,
+    AsvColorKind? iconColor, 
     string title,
     MavParamValue mavlinkValue,
     ValueType value
 )
 {
     public MaterialIconKind? Icon => icon;
+    public AsvColorKind IconColor => iconColor ?? AsvColorKind.None;
     public string Title => title;
     public MavParamValue MavValue => mavlinkValue;
     public ValueType Value => value;
