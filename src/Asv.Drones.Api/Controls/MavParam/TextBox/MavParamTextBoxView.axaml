@@ -1,147 +1,187 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:avalonia="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
-             xmlns:avalonia1="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             xmlns:rsga="clr-namespace:Asv.Drones.Api"
-             mc:Ignorable="d"
-             d:DesignWidth="250" d:DesignHeight="300"
-             x:Class="Asv.Drones.Api.MavParamTextBoxView"
-             x:DataType="rsga:MavParamTextBoxViewModel">
+﻿<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:avalonia="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
+    xmlns:avalonia1="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    xmlns:rsga="clr-namespace:Asv.Drones.Api"
+    mc:Ignorable="d"
+    d:DesignWidth="250"
+    d:DesignHeight="300"
+    x:Class="Asv.Drones.Api.MavParamTextBoxView"
+    x:DataType="rsga:MavParamTextBoxViewModel"
+>
     <Design.DataContext>
-        <rsga:MavParamTextBoxViewModel/>
+        <rsga:MavParamTextBoxViewModel />
     </Design.DataContext>
     <UserControl.Styles>
         <Style Selector="TextBox">
             <Style Selector="^:error /template/ Border#PART_BorderElement">
-                <Setter Property="BorderBrush" Value="{DynamicResource AsvForegroundErrorColor}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource AsvForegroundErrorColor}" />
             </Style>
         </Style>
-        
+
         <Style Selector="DataValidationErrors">
             <Setter Property="Template">
                 <ControlTemplate>
                     <Panel>
-                        <ContentPresenter Name="PART_ContentPresenter"
-                                          Background="{TemplateBinding Background}"
-                                          BorderBrush="{TemplateBinding BorderBrush}"
-                                          BorderThickness="{TemplateBinding BorderThickness}"
-                                          CornerRadius="{TemplateBinding CornerRadius}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          Content="{TemplateBinding Content}"
-                                          Padding="{TemplateBinding Padding}"/>
-                        <ContentControl HorizontalAlignment="Right"
-                                        Margin="0,0,4,0"
-                                        ContentTemplate="{TemplateBinding ErrorTemplate}"
-                                        DataContext="{TemplateBinding Owner}"
-                                        Content="{Binding (DataValidationErrors.Errors)}"
-                                        IsVisible="{Binding (DataValidationErrors.HasErrors)}"/>
-                        
+                        <ContentPresenter
+                            Name="PART_ContentPresenter"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Content="{TemplateBinding Content}"
+                            Padding="{TemplateBinding Padding}"
+                        />
+                        <ContentControl
+                            HorizontalAlignment="Right"
+                            Margin="0,0,4,0"
+                            ContentTemplate="{TemplateBinding ErrorTemplate}"
+                            DataContext="{TemplateBinding Owner}"
+                            Content="{Binding (DataValidationErrors.Errors)}"
+                            IsVisible="{Binding (DataValidationErrors.HasErrors)}"
+                        />
                     </Panel>
                 </ControlTemplate>
             </Setter>
             <Setter Property="ErrorTemplate">
                 <DataTemplate x:DataType="{x:Type x:Object}">
-                    <Canvas Width="14" Height="14" Margin="4 0 1 0" 
-                            Background="Transparent">
+                    <Canvas Width="14" Height="14" Margin="4 0 1 0" Background="Transparent">
                         <Canvas.Styles>
                             <Style Selector="ToolTip">
-                                <Setter Property="Background" Value="{DynamicResource AsvForegroundErrorBrush}"/>
-                                <Setter Property="BorderBrush" Value="{DynamicResource AsvForegroundErrorBrush}"/>
+                                <Setter
+                                    Property="Background"
+                                    Value="{DynamicResource AsvForegroundErrorBrush}"
+                                />
+                                <Setter
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource AsvForegroundErrorBrush}"
+                                />
                             </Style>
                         </Canvas.Styles>
                         <ToolTip.Tip>
-                            <ItemsControl ItemsSource="{Binding}"/>
+                            <ItemsControl ItemsSource="{Binding}" />
                         </ToolTip.Tip>
-                        <Path Data="M14,7 A7,7 0 0,0 0,7 M0,7 A7,7 0 1,0 14,7 M7,3l0,5 M7,9l0,2" 
-                              Stroke="{DynamicResource AsvForegroundErrorBrush}" 
-                              StrokeThickness="2"/>
+                        <Path
+                            Data="M14,7 A7,7 0 0,0 0,7 M0,7 A7,7 0 1,0 14,7 M7,3l0,5 M7,9l0,2"
+                            Stroke="{DynamicResource AsvForegroundErrorBrush}"
+                            StrokeThickness="2"
+                        />
                     </Canvas>
                 </DataTemplate>
             </Setter>
         </Style>
     </UserControl.Styles>
     <Panel VerticalAlignment="Top" HorizontalAlignment="Stretch">
-        <TextBox 
-                 MinWidth="200" 
-                 
-                 IsReadOnly="{Binding IsBusy}"
-                 VerticalContentAlignment="Center"
-                 GotFocus="PART_TextBox_OnGotFocus"
-                 avalonia:NavigationHelper.IsFocused ="{Binding IsFocused, Mode=OneWay}"
-                 Text="{Binding TextValue.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 MinHeight="0" >
+        <TextBox
+            MinWidth="200"
+            IsReadOnly="{Binding IsBusy}"
+            VerticalContentAlignment="Center"
+            GotFocus="PART_TextBox_OnGotFocus"
+            avalonia:NavigationHelper.IsFocused="{Binding IsFocused, Mode=OneWay}"
+            Text="{Binding TextValue.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            MinHeight="0"
+        >
             <TextBox.KeyBindings>
                 <KeyBinding Gesture="Enter" Command="{Binding Write}" />
             </TextBox.KeyBindings>
             <ToolTip.Tip>
                 <StackPanel Spacing="8">
-                    <TextBlock Classes="h1" Text="{Binding Info.Title}"/>
-                    <TextBlock Classes="description" Text="{Binding Info.Description}"/>
+                    <TextBlock Classes="h1" Text="{Binding Info.Title}" />
+                    <TextBlock Classes="description" Text="{Binding Info.Description}" />
                 </StackPanel>
             </ToolTip.Tip>
             <TextBox.InnerLeftContent>
-                <Panel >
-                    <Ellipse Opacity="0" Margin="10,0,0,0" Classes.fadeout="{Binding !IsRemoteChange}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="5" Height="5" Fill="{DynamicResource AsvForegroundInfo3Brush}"/>
+                <Panel>
+                    <Ellipse
+                        Opacity="0"
+                        Margin="10,0,0,0"
+                        Classes.fadeout="{Binding !IsRemoteChange}"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        Width="5"
+                        Height="5"
+                        Fill="{DynamicResource AsvForegroundInfo3Brush}"
+                    />
                     <Button
                         IsEnabled="{Binding !IsBusy}"
-                        TabIndex="0" IsTabStop="True" 
+                        TabIndex="0"
+                        IsTabStop="True"
                         Padding="0"
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Left"
-                        Theme="{DynamicResource TransparentButton}" 
-                        Command="{Binding Refresh}">
+                        Theme="{DynamicResource TransparentButton}"
+                        Command="{Binding Refresh}"
+                    >
                         <avalonia1:MaterialIcon
                             HorizontalAlignment="Stretch"
                             Margin="3,0"
-                            Width="20" Height="20" 
+                            Width="20"
+                            Height="20"
                             Foreground="{DynamicResource AsvForegroundUnknownBrush}"
-                            Kind="Sync" 
+                            Kind="Sync"
                         />
                     </Button>
                 </Panel>
-                
-                
-                
             </TextBox.InnerLeftContent>
             <TextBox.InnerRightContent>
                 <StackPanel Orientation="Horizontal" Spacing="4" Margin="0,0,25,0">
-                    <Button Padding="0"
-                            VerticalAlignment="Stretch"
-                            HorizontalAlignment="Right"
-                            Theme="{DynamicResource TransparentButton}"
-                            Command="{Binding Write}">
+                    <Button
+                        Padding="0"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Right"
+                        Theme="{DynamicResource TransparentButton}"
+                        Command="{Binding Write}"
+                    >
                         <Button.IsVisible>
                             <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                <Binding Path="!IsSync"/>
-                                <Binding Path="!IsBusy"/>
-                                <Binding Path="!HasValidationErrors"/>
+                                <Binding Path="!IsSync" />
+                                <Binding Path="!IsBusy" />
+                                <Binding Path="!HasValidationErrors" />
                             </MultiBinding>
                         </Button.IsVisible>
                         <avalonia1:MaterialIcon
-                            Width="20" Height="20" 
-                            Kind="Pencil" 
+                            Width="20"
+                            Height="20"
+                            Kind="Pencil"
                             Foreground="{DynamicResource AsvForegroundSuccessBrush}"
                         />
                     </Button>
                     <TextBlock
-                        
                         Foreground="{DynamicResource TextFillColorDisabledBrush}"
                         Theme="{DynamicResource BodyTextBlockStyle}"
-                        VerticalAlignment="Center" 
-                        Text="{Binding Units}" />
+                        VerticalAlignment="Center"
+                        Text="{Binding Units}"
+                    />
                 </StackPanel>
             </TextBox.InnerRightContent>
-            
         </TextBox>
-        <ProgressBar MinWidth="0"
-                     IsVisible="{Binding IsBusy}" 
-                     Background="Transparent" Margin="0,0,30,0" 
-                     Height="20" Opacity="0.5" VerticalAlignment="Center" HorizontalAlignment="Stretch" 
-                     Minimum="0" Maximum="1"
-                     IsIndeterminate="True"/>
-        <avalonia1:MaterialIcon HorizontalAlignment="Right" Classes="blink" ToolTip.Tip="{Binding NetworkErrorMessage}" IsVisible="{Binding IsNetworkError}"  Kind="CloseNetwork" Foreground="{DynamicResource AsvForegroundErrorBrush}"  Margin="0,0,4,0" Width="18" Height="18"/>
-        
+        <ProgressBar
+            MinWidth="0"
+            IsVisible="{Binding IsBusy}"
+            Background="Transparent"
+            Margin="0,0,30,0"
+            Height="20"
+            Opacity="0.5"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Stretch"
+            Minimum="0"
+            Maximum="1"
+            IsIndeterminate="True"
+        />
+        <avalonia1:MaterialIcon
+            HorizontalAlignment="Right"
+            Classes="blink"
+            ToolTip.Tip="{Binding NetworkErrorMessage}"
+            IsVisible="{Binding IsNetworkError}"
+            Kind="CloseNetwork"
+            Foreground="{DynamicResource AsvForegroundErrorBrush}"
+            Margin="0,0,4,0"
+            Width="18"
+            Height="18"
+        />
     </Panel>
 </UserControl>

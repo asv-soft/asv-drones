@@ -1,72 +1,121 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             xmlns:drones="clr-namespace:Asv.Drones"
-             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="300"
-             x:Class="Asv.Drones.ParamItemView"
-             x:CompileBindings="True"
-             Width="400"
-             MinHeight="300"
-             x:DataType="drones:ParamItemViewModel">
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    xmlns:drones="clr-namespace:Asv.Drones"
+    mc:Ignorable="d"
+    d:DesignWidth="450"
+    d:DesignHeight="300"
+    x:Class="Asv.Drones.ParamItemView"
+    x:CompileBindings="True"
+    Width="400"
+    MinHeight="300"
+    x:DataType="drones:ParamItemViewModel"
+>
     <Design.DataContext>
         <drones:ParamItemViewModel />
     </Design.DataContext>
-    <Border Padding="{DynamicResource ButtonPadding}"
-            Background="Transparent"
-            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-            BorderThickness="1"
-            CornerRadius="{StaticResource ControlCornerRadius}"
-            Margin="8">
+    <Border
+        Padding="{DynamicResource ButtonPadding}"
+        Background="Transparent"
+        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="{StaticResource ControlCornerRadius}"
+        Margin="8"
+    >
         <StackPanel>
             <DockPanel>
-                <Button Command="{CompiledBinding PinItem}"
-                        ToolTip.Tip="{x:Static drones:RS.ParametersEditorParameterView_PinToggleButton_ToolTip}"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        DockPanel.Dock="Right">
+                <Button
+                    Command="{CompiledBinding PinItem}"
+                    ToolTip.Tip="{x:Static drones:RS.ParametersEditorParameterView_PinToggleButton_ToolTip}"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    DockPanel.Dock="Right"
+                >
                     <Panel>
-                        <avalonia:MaterialIcon IsVisible="{CompiledBinding IsPinned.ViewValue.Value}" Width="25" Height="25" Kind="Pin" />
-                        <avalonia:MaterialIcon IsVisible="{CompiledBinding !IsPinned.ViewValue.Value}" Width="25" Height="25"
-                                               Kind="PinOutline" />
+                        <avalonia:MaterialIcon
+                            IsVisible="{CompiledBinding IsPinned.ViewValue.Value}"
+                            Width="25"
+                            Height="25"
+                            Kind="Pin"
+                        />
+                        <avalonia:MaterialIcon
+                            IsVisible="{CompiledBinding !IsPinned.ViewValue.Value}"
+                            Width="25"
+                            Height="25"
+                            Kind="PinOutline"
+                        />
                     </Panel>
                 </Button>
                 <Panel DockPanel.Dock="Right" IsVisible="{Binding !IsSynced.Value}">
-                    <avalonia:MaterialIcon Width="25" Foreground="Green" Height="25" Kind="FloppyDisk" />
+                    <avalonia:MaterialIcon
+                        Width="25"
+                        Foreground="Green"
+                        Height="25"
+                        Kind="FloppyDisk"
+                    />
                 </Panel>
-                <TextBlock Text="{CompiledBinding Name}"
-                           FontWeight="Bold"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center" />
+                <TextBlock
+                    Text="{CompiledBinding Name}"
+                    FontWeight="Bold"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                />
             </DockPanel>
-            <TextBlock Text="{CompiledBinding DisplayName, Mode=OneTime}" TextWrapping="Wrap" Margin="10 5" />
+            <TextBlock
+                Text="{CompiledBinding DisplayName, Mode=OneTime}"
+                TextWrapping="Wrap"
+                Margin="10 5"
+            />
             <TextBox Margin="10 5" Text="{CompiledBinding Value.Value}">
                 <TextBox.InnerRightContent>
-                    <TextBlock Text="{CompiledBinding Units, Mode=OneTime}" Margin="10 0" VerticalAlignment="Center" />
+                    <TextBlock
+                        Text="{CompiledBinding Units, Mode=OneTime}"
+                        Margin="10 0"
+                        VerticalAlignment="Center"
+                    />
                 </TextBox.InnerRightContent>
             </TextBox>
             <Grid Margin="10 5" ColumnDefinitions="*, 5, *">
-                <Button ToolTip.Tip="{x:Static drones:RS.ParametersEditorParameterView_UpdateButton_ToolTip}"
-                        Command="{CompiledBinding Read}"
-                        HorizontalAlignment="Stretch"
-                        Grid.Column="0"
-                        Content="{x:Static drones:RS.ParametersEditorParameterView_UpdateButton}" />
-                <Button ToolTip.Tip="{x:Static drones:RS.ParametersEditorParameterView_WriteButton_ToolTip}"
-                        Command="{CompiledBinding Write}"
-                        HorizontalAlignment="Stretch"
-                        Grid.Column="2"
-                        Content="{x:Static drones:RS.ParametersEditorParameterView_WriteButton}" />
+                <Button
+                    ToolTip.Tip="{x:Static drones:RS.ParametersEditorParameterView_UpdateButton_ToolTip}"
+                    Command="{CompiledBinding Read}"
+                    HorizontalAlignment="Stretch"
+                    Grid.Column="0"
+                    Content="{x:Static drones:RS.ParametersEditorParameterView_UpdateButton}"
+                />
+                <Button
+                    ToolTip.Tip="{x:Static drones:RS.ParametersEditorParameterView_WriteButton_ToolTip}"
+                    Command="{CompiledBinding Write}"
+                    HorizontalAlignment="Stretch"
+                    Grid.Column="2"
+                    Content="{x:Static drones:RS.ParametersEditorParameterView_WriteButton}"
+                />
             </Grid>
-            <TextBlock Text="{CompiledBinding ValueDescription, Mode=OneTime}" TextWrapping="Wrap" Margin="10 5" />
-            <TextBlock Text="{CompiledBinding Description, Mode=OneTime}" TextWrapping="Wrap" Margin="10 5" />
-            <Border IsVisible="{CompiledBinding IsRebootRequired, Mode=OneTime}"
-                    Margin="10 5"
-                    HorizontalAlignment="Left"
-                    Padding="5"
-                    Background="Red"
-                    CornerRadius="{StaticResource ControlCornerRadius}">
-                <TextBlock FontWeight="Bold" Text="{x:Static drones:RS.ParametersEditorParameterView_RebootRequired}" />
+            <TextBlock
+                Text="{CompiledBinding ValueDescription, Mode=OneTime}"
+                TextWrapping="Wrap"
+                Margin="10 5"
+            />
+            <TextBlock
+                Text="{CompiledBinding Description, Mode=OneTime}"
+                TextWrapping="Wrap"
+                Margin="10 5"
+            />
+            <Border
+                IsVisible="{CompiledBinding IsRebootRequired, Mode=OneTime}"
+                Margin="10 5"
+                HorizontalAlignment="Left"
+                Padding="5"
+                Background="Red"
+                CornerRadius="{StaticResource ControlCornerRadius}"
+            >
+                <TextBlock
+                    FontWeight="Bold"
+                    Text="{x:Static drones:RS.ParametersEditorParameterView_RebootRequired}"
+                />
             </Border>
         </StackPanel>
     </Border>
