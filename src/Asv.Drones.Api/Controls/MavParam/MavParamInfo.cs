@@ -174,9 +174,9 @@ public partial class MavParamInfo
     public MaterialIconKind? Icon =>
         GetAdditionalAsEnum<MaterialIconKind>(_additionalInfo, IconKey);
 
-    public AsvColorKind? IconColor => 
+    public AsvColorKind? IconColor =>
         GetAdditionalAsEnum<AsvColorKind>(_additionalInfo, IconColorKey);
-    
+
     public int Order => GetAdditionalAsInt(_additionalInfo, OrderKey);
     public string Title => Metadata.ShortDesc ?? Metadata.Name;
 
@@ -192,8 +192,14 @@ public partial class MavParamInfo
             ParseAdditionalInfo(value.Item2, out var dict, out var desc);
             var icon = GetAdditionalAsEnum<MaterialIconKind>(dict, IconKey);
             var iconColor = GetAdditionalAsEnum<AsvColorKind>(_additionalInfo, IconKey);
-            
-            yield return new MavParamValueItem(icon, iconColor,  desc, value.Item1, Convert(value.Item1));
+
+            yield return new MavParamValueItem(
+                icon,
+                iconColor,
+                desc,
+                value.Item1,
+                Convert(value.Item1)
+            );
         }
     }
 
@@ -461,24 +467,15 @@ public partial class MavParamInfo
         int multiply;
         switch (lastChar)
         {
-            case 'M'
-            or 'm'
-            or 'М'
-            or 'м':
+            case 'M' or 'm' or 'М' or 'м':
                 multiply = 1_000_000;
                 valueAsString = valueAsString[..^1];
                 break;
-            case 'K'
-            or 'k'
-            or 'К'
-            or 'к':
+            case 'K' or 'k' or 'К' or 'к':
                 multiply = 1_000;
                 valueAsString = valueAsString[..^1];
                 break;
-            case 'G'
-            or 'g'
-            or 'Г'
-            or 'г':
+            case 'G' or 'g' or 'Г' or 'г':
                 multiply = 1_000_000_000;
                 valueAsString = valueAsString[..^1];
                 break;
@@ -546,7 +543,7 @@ public partial class MavParamInfo
 
 public class MavParamValueItem(
     MaterialIconKind? icon,
-    AsvColorKind? iconColor, 
+    AsvColorKind? iconColor,
     string title,
     MavParamValue mavlinkValue,
     ValueType value

@@ -1,24 +1,33 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:avalonia="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
-             xmlns:avalonia1="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             xmlns:drones="clr-namespace:Asv.Drones"
-             mc:Ignorable="d"
-             x:Class="Asv.Drones.UavWidgetView"
-             x:DataType="drones:UavWidgetViewModel">
+﻿<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:avalonia="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
+    xmlns:avalonia1="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    xmlns:drones="clr-namespace:Asv.Drones"
+    mc:Ignorable="d"
+    x:Class="Asv.Drones.UavWidgetView"
+    x:DataType="drones:UavWidgetViewModel"
+>
     <Design.DataContext>
         <drones:UavWidgetViewModel />
     </Design.DataContext>
-    <Grid RowDefinitions="*,*,*" ColumnDefinitions="460" Margin="5" RowSpacing="10" HorizontalAlignment="Stretch">
-        <StackPanel 
-            Grid.Column="0" 
-            Grid.Row="0" 
+    <Grid
+        RowDefinitions="*,*,*"
+        ColumnDefinitions="460"
+        Margin="5"
+        RowSpacing="10"
+        HorizontalAlignment="Stretch"
+    >
+        <StackPanel
+            Grid.Column="0"
+            Grid.Row="0"
             Margin="5 0 0 0"
             HorizontalAlignment="Stretch"
-            Orientation="Horizontal">
-            <drones:AttitudeIndicator 
+            Orientation="Horizontal"
+        >
+            <drones:AttitudeIndicator
                 MinWidth="150"
                 MaxWidth="250"
                 Name="Attitude"
@@ -39,79 +48,77 @@
                 VibrationZ="{Binding VibrationZ.Value}"
                 Clipping0="{Binding Clipping0.Value}"
                 Clipping1="{Binding Clipping1.Value}"
-                Clipping2="{Binding Clipping2.Value}" />
-            <StackPanel 
-            Orientation="Vertical" 
-            VerticalAlignment="Top">
-            <StackPanel.Styles>
-                <Style Selector="Button">
-                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                    <Setter Property="Theme" Value="{StaticResource TransparentButton}"/>
-                    <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}"/>
-                </Style>
-            </StackPanel.Styles>
-            <Button HorizontalContentAlignment="Stretch"
-                    Command="{Binding AutoMode}">
-                <StackPanel Spacing="5" Orientation="Horizontal">
-                    <avalonia1:MaterialIcon Kind="Automatic" />
-                    <TextBlock Text="{x:Static drones:RS.UavAction_AutoMode_Name}" />
-                </StackPanel>
-            </Button>
-            <Button HorizontalContentAlignment="Stretch"
-                    Command="{Binding Guided}">
-                <StackPanel Spacing="5" Orientation="Horizontal">
-                    <avalonia1:MaterialIcon Kind="Controller" />
-                    <TextBlock Text="{x:Static drones:RS.UavAction_GuidedMode}" />
-                </StackPanel>
-            </Button>
-            <Button HorizontalContentAlignment="Stretch"
-                    Command="{Binding TakeOff}">
-                <StackPanel Spacing="5" Orientation="Horizontal">
-                    <avalonia1:MaterialIcon Kind="AeroplaneTakeoff" />
-                    <TextBlock Text="{x:Static drones:RS.UavAction_TakeOff}" />
-                </StackPanel>
-            </Button>
-            <Button HorizontalContentAlignment="Stretch"
-                    Command="{Binding Land}">
-                <StackPanel Spacing="5" Orientation="Horizontal">
-                    <avalonia1:MaterialIcon Kind="FlightLand" />
-                    <TextBlock Text="{x:Static drones:RS.UavAction_Land}" />
-                </StackPanel>
-            </Button>
-            <Button HorizontalContentAlignment="Stretch"
-                    Command="{Binding Rtl}">
-                <StackPanel Spacing="5" Orientation="Horizontal">
-                    <avalonia1:MaterialIcon Kind="Home" />
-                    <TextBlock Text="{x:Static drones:RS.UavAction_Rtl_Name}" />
-                </StackPanel>
-            </Button>
-            <Button HorizontalContentAlignment="Stretch"
-                    Command="{Binding StartMission}">
-                <StackPanel Spacing="5" Orientation="Horizontal">
-                    <avalonia1:MaterialIcon Kind="MapMarkerPath" />
-                    <TextBlock Text="{x:Static drones:RS.UavAction_StartMission}" />
-                </StackPanel>
-            </Button>
+                Clipping2="{Binding Clipping2.Value}"
+            />
+            <StackPanel Orientation="Vertical" VerticalAlignment="Top">
+                <StackPanel.Styles>
+                    <Style Selector="Button">
+                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                        <Setter Property="Theme" Value="{StaticResource TransparentButton}" />
+                        <Setter
+                            Property="CornerRadius"
+                            Value="{StaticResource ControlCornerRadius}"
+                        />
+                    </Style>
+                </StackPanel.Styles>
+                <Button HorizontalContentAlignment="Stretch" Command="{Binding AutoMode}">
+                    <StackPanel Spacing="5" Orientation="Horizontal">
+                        <avalonia1:MaterialIcon Kind="Automatic" />
+                        <TextBlock Text="{x:Static drones:RS.UavAction_AutoMode_Name}" />
+                    </StackPanel>
+                </Button>
+                <Button HorizontalContentAlignment="Stretch" Command="{Binding Guided}">
+                    <StackPanel Spacing="5" Orientation="Horizontal">
+                        <avalonia1:MaterialIcon Kind="Controller" />
+                        <TextBlock Text="{x:Static drones:RS.UavAction_GuidedMode}" />
+                    </StackPanel>
+                </Button>
+                <Button HorizontalContentAlignment="Stretch" Command="{Binding TakeOff}">
+                    <StackPanel Spacing="5" Orientation="Horizontal">
+                        <avalonia1:MaterialIcon Kind="AeroplaneTakeoff" />
+                        <TextBlock Text="{x:Static drones:RS.UavAction_TakeOff}" />
+                    </StackPanel>
+                </Button>
+                <Button HorizontalContentAlignment="Stretch" Command="{Binding Land}">
+                    <StackPanel Spacing="5" Orientation="Horizontal">
+                        <avalonia1:MaterialIcon Kind="FlightLand" />
+                        <TextBlock Text="{x:Static drones:RS.UavAction_Land}" />
+                    </StackPanel>
+                </Button>
+                <Button HorizontalContentAlignment="Stretch" Command="{Binding Rtl}">
+                    <StackPanel Spacing="5" Orientation="Horizontal">
+                        <avalonia1:MaterialIcon Kind="Home" />
+                        <TextBlock Text="{x:Static drones:RS.UavAction_Rtl_Name}" />
+                    </StackPanel>
+                </Button>
+                <Button HorizontalContentAlignment="Stretch" Command="{Binding StartMission}">
+                    <StackPanel Spacing="5" Orientation="Horizontal">
+                        <avalonia1:MaterialIcon Kind="MapMarkerPath" />
+                        <TextBlock Text="{x:Static drones:RS.UavAction_StartMission}" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
         </StackPanel>
-        </StackPanel>
-        <WrapPanel Grid.Column="0" 
-                   Grid.Row="1" 
-                   Orientation="Horizontal"
-                   LineSpacing="10"
-                   MinWidth="200"
-                   MaxWidth="460"
-                   ItemWidth="200"
-                   ItemHeight="90"
-                   ItemsAlignment="Start"
-                   HorizontalAlignment="Stretch">
+        <WrapPanel
+            Grid.Column="0"
+            Grid.Row="1"
+            Orientation="Horizontal"
+            LineSpacing="10"
+            MinWidth="200"
+            MaxWidth="460"
+            ItemWidth="200"
+            ItemHeight="90"
+            ItemsAlignment="Start"
+            HorizontalAlignment="Stretch"
+        >
             <WrapPanel.Styles>
                 <Style Selector="Viewbox">
                     <Setter Property="Stretch" Value="Uniform"></Setter>
                     <Setter Property="StretchDirection" Value="Both"></Setter>
                 </Style>
                 <Style Selector="avalonia|TelemBox">
-                    <Setter Property="Width" Value="190"/>
-                    <Setter Property="Height" Value="90"/>
+                    <Setter Property="Width" Value="190" />
+                    <Setter Property="Height" Value="90" />
                 </Style>
             </WrapPanel.Styles>
             <Viewbox>
@@ -120,10 +127,14 @@
                     SecondaryBrush="{DynamicResource NavySecondaryBrush}"
                     Title="{x:Static drones:RS.UavRttItem_Mode}"
                     Icon="FlightMode"
-                    CornerRadius="{StaticResource ControlCornerRadius}">
+                    CornerRadius="{StaticResource ControlCornerRadius}"
+                >
                     <avalonia:TelemBox.CustomContent>
-                        <TextBlock TextAlignment="Center" FontSize="{DynamicResource FontSizeNormal}"
-                                   Text="{Binding CurrentFlightMode.Value}" />
+                        <TextBlock
+                            TextAlignment="Center"
+                            FontSize="{DynamicResource FontSizeNormal}"
+                            Text="{Binding CurrentFlightMode.Value}"
+                        />
                     </avalonia:TelemBox.CustomContent>
                 </avalonia:TelemBox>
             </Viewbox>
@@ -134,26 +145,30 @@
                     Title="{x:Static drones:RS.UavRttItem_Altitude}"
                     Units="{Binding AltitudeSymbol.Value}"
                     Icon="Altimeter"
-                    CornerRadius="{StaticResource ControlCornerRadius}">
+                    CornerRadius="{StaticResource ControlCornerRadius}"
+                >
                     <avalonia:TelemBox.CustomContent>
                         <Grid ColumnDefinitions="2*,*" RowDefinitions="*,*">
-                            <TextBlock 
-                                HorizontalAlignment="Center" 
-                                Grid.RowSpan="2" 
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Grid.RowSpan="2"
                                 FontSize="{DynamicResource FontSizeNormal}"
-                                Text="{Binding AltitudeAgl.ViewValue.Value}" />
-                            <TextBlock 
-                                Grid.Row="0" 
-                                Grid.Column="1" 
-                                TextAlignment="Center" 
+                                Text="{Binding AltitudeAgl.ViewValue.Value}"
+                            />
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                TextAlignment="Center"
                                 FontSize="{DynamicResource FontSizeSmall}"
-                                Text="MSL" />
-                            <TextBlock 
-                                Grid.Row="1" 
-                                Grid.Column="1" 
-                                TextAlignment="Center" 
+                                Text="MSL"
+                            />
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                TextAlignment="Center"
                                 FontSize="{DynamicResource FontSizeSmall}"
-                                Text="{Binding AltitudeMsl.ViewValue.Value}" />
+                                Text="{Binding AltitudeMsl.ViewValue.Value}"
+                            />
                         </Grid>
                     </avalonia:TelemBox.CustomContent>
                 </avalonia:TelemBox>
@@ -165,22 +180,26 @@
                     Title="{x:Static drones:RS.UavRttItem_Velocity}"
                     Units="{Binding VelocitySymbol.Value}"
                     Icon="Speedometer"
-                    CornerRadius="{StaticResource ControlCornerRadius}">
+                    CornerRadius="{StaticResource ControlCornerRadius}"
+                >
                     <avalonia:TelemBox.CustomContent>
                         <Grid ColumnDefinitions="2*,*,*" RowDefinitions="*,*">
-                            <TextBlock Grid.Row="0" 
-                                       Grid.Column="0"
-                                       Grid.RowSpan="2" 
-                                       TextAlignment="Right"
-                                       FontSize="{DynamicResource FontSizeNormal}"
-                                       Text="{Binding Velocity.ViewValue.Value}" />
-                            <TextBlock Grid.Row="0" 
-                                       Grid.Column="2"
-                                       TextAlignment="Center" 
-                                       FontSize="{DynamicResource FontSizeSmall}"
-                                       Text="GS" />
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Grid.RowSpan="2"
+                                TextAlignment="Right"
+                                FontSize="{DynamicResource FontSizeNormal}"
+                                Text="{Binding Velocity.ViewValue.Value}"
+                            />
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                TextAlignment="Center"
+                                FontSize="{DynamicResource FontSizeSmall}"
+                                Text="GS"
+                            />
                         </Grid>
-
                     </avalonia:TelemBox.CustomContent>
                 </avalonia:TelemBox>
             </Viewbox>
@@ -192,15 +211,16 @@
                     Units="{Binding AzimuthSymbol.Value}"
                     IsBusy="False"
                     Icon="SunAzimuth"
-                    CornerRadius="{StaticResource ControlCornerRadius}">
+                    CornerRadius="{StaticResource ControlCornerRadius}"
+                >
                     <avalonia:TelemBox.CustomContent>
                         <Grid ColumnDefinitions="2*,*" RowDefinitions="*,*">
-                            <TextBlock 
-                                Grid.ColumnSpan="2" 
-                                Grid.RowSpan="2" 
-                                TextAlignment="Center" 
+                            <TextBlock
+                                Grid.ColumnSpan="2"
+                                Grid.RowSpan="2"
+                                TextAlignment="Center"
                                 FontSize="{DynamicResource FontSizeNormal}"
-                                Text="{Binding Azimuth.ViewValue.Value}" 
+                                Text="{Binding Azimuth.ViewValue.Value}"
                             />
                         </Grid>
                     </avalonia:TelemBox.CustomContent>
@@ -213,27 +233,61 @@
                     Title="{x:Static drones:RS.UavRttItem_Battery}"
                     IsBusy="False"
                     Icon="Battery10"
-                    CornerRadius="{StaticResource ControlCornerRadius}">
+                    CornerRadius="{StaticResource ControlCornerRadius}"
+                >
                     <avalonia:TelemBox.CustomContent>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,*">
-                            <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Spacing="2"
-                                        Orientation="Horizontal">
-                                <TextBlock TextAlignment="Right" FontSize="{DynamicResource FontSizeNormal}"
-                                           Text="{Binding BatteryCharge.ViewValue.Value}" />
-                                <TextBlock TextAlignment="Right" FontSize="{DynamicResource FontSizeNormal}"
-                                           Text="{Binding BatteryChargeSymbol.Value}" />
+                            <StackPanel
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Grid.RowSpan="2"
+                                Spacing="2"
+                                Orientation="Horizontal"
+                            >
+                                <TextBlock
+                                    TextAlignment="Right"
+                                    FontSize="{DynamicResource FontSizeNormal}"
+                                    Text="{Binding BatteryCharge.ViewValue.Value}"
+                                />
+                                <TextBlock
+                                    TextAlignment="Right"
+                                    FontSize="{DynamicResource FontSizeNormal}"
+                                    Text="{Binding BatteryChargeSymbol.Value}"
+                                />
                             </StackPanel>
-                            <StackPanel Grid.Row="0" Grid.Column="2" Spacing="2" Orientation="Horizontal">
-                                <TextBlock TextAlignment="Center" FontSize="{DynamicResource FontSizeSmall}"
-                                           Text="{Binding BatteryAmperage.ViewValue.Value}" />
-                                <TextBlock TextAlignment="Center" FontSize="{DynamicResource FontSizeSmall}"
-                                           Text="{Binding BatteryAmperageSymbol.Value}" />
+                            <StackPanel
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                Spacing="2"
+                                Orientation="Horizontal"
+                            >
+                                <TextBlock
+                                    TextAlignment="Center"
+                                    FontSize="{DynamicResource FontSizeSmall}"
+                                    Text="{Binding BatteryAmperage.ViewValue.Value}"
+                                />
+                                <TextBlock
+                                    TextAlignment="Center"
+                                    FontSize="{DynamicResource FontSizeSmall}"
+                                    Text="{Binding BatteryAmperageSymbol.Value}"
+                                />
                             </StackPanel>
-                            <StackPanel Grid.Row="1" Grid.Column="2" Spacing="2" Orientation="Horizontal">
-                                <TextBlock TextAlignment="Center" FontSize="{DynamicResource FontSizeSmall}"
-                                           Text="{Binding BatteryVoltage.ViewValue.Value}" />
-                                <TextBlock TextAlignment="Center" FontSize="{DynamicResource FontSizeSmall}"
-                                           Text="{Binding BatteryVoltageSymbol.Value}" />
+                            <StackPanel
+                                Grid.Row="1"
+                                Grid.Column="2"
+                                Spacing="2"
+                                Orientation="Horizontal"
+                            >
+                                <TextBlock
+                                    TextAlignment="Center"
+                                    FontSize="{DynamicResource FontSizeSmall}"
+                                    Text="{Binding BatteryVoltage.ViewValue.Value}"
+                                />
+                                <TextBlock
+                                    TextAlignment="Center"
+                                    FontSize="{DynamicResource FontSizeSmall}"
+                                    Text="{Binding BatteryVoltageSymbol.Value}"
+                                />
                             </StackPanel>
                         </Grid>
                     </avalonia:TelemBox.CustomContent>
@@ -253,16 +307,31 @@
                     Units="{Binding RtkMode.Value}"
                     IsBusy="False"
                     Icon="GpsFixed"
-                    CornerRadius="{StaticResource ControlCornerRadius}">
+                    CornerRadius="{StaticResource ControlCornerRadius}"
+                >
                     <avalonia:TelemBox.CustomContent>
                         <Grid ColumnDefinitions="*,*" RowDefinitions="*,*">
-                            <TextBlock Grid.RowSpan="2" VerticalAlignment="Center" TextAlignment="Right"
-                                       FontSize="{DynamicResource FontSizeNormal}"
-                                       Text="{Binding SatelliteCount.Value}" />
-                            <TextBlock Grid.Row="0" Grid.Column="1" TextAlignment="Center" FontSize="{DynamicResource FontSizeSmall}"
-                                       Text="{Binding HdopCount.Value}" />
-                            <TextBlock Grid.Row="1" Grid.Column="1" TextAlignment="Center" FontSize="{DynamicResource FontSizeSmall}"
-                                       Text="{Binding VdopCount.Value}" />
+                            <TextBlock
+                                Grid.RowSpan="2"
+                                VerticalAlignment="Center"
+                                TextAlignment="Right"
+                                FontSize="{DynamicResource FontSizeNormal}"
+                                Text="{Binding SatelliteCount.Value}"
+                            />
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                TextAlignment="Center"
+                                FontSize="{DynamicResource FontSizeSmall}"
+                                Text="{Binding HdopCount.Value}"
+                            />
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                TextAlignment="Center"
+                                FontSize="{DynamicResource FontSizeSmall}"
+                                Text="{Binding VdopCount.Value}"
+                            />
                         </Grid>
                     </avalonia:TelemBox.CustomContent>
                 </avalonia:TelemBox>
@@ -275,23 +344,37 @@
                     Units="{Binding LinkState.Value}"
                     IsBusy="False"
                     Icon="Wifi"
-                    CornerRadius="{StaticResource ControlCornerRadius}">
+                    CornerRadius="{StaticResource ControlCornerRadius}"
+                >
                     <avalonia:TelemBox.CustomContent>
-                        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" ColumnDefinitions="Auto,5,Auto">
-                            <TextBlock Grid.Column="0" VerticalAlignment="Center" TextAlignment="Center"
-                                       FontSize="{DynamicResource FontSizeNormal}"
-                                       Text="{Binding LinkQuality.ViewValue.Value}" />
-                            <TextBlock Grid.Column="2" VerticalAlignment="Center" TextAlignment="Center"
-                                       FontSize="{DynamicResource FontSizeNormal}"
-                                       Text="{Binding LinkQualitySymbol.Value}" />
+                        <Grid
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            ColumnDefinitions="Auto,5,Auto"
+                        >
+                            <TextBlock
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                TextAlignment="Center"
+                                FontSize="{DynamicResource FontSizeNormal}"
+                                Text="{Binding LinkQuality.ViewValue.Value}"
+                            />
+                            <TextBlock
+                                Grid.Column="2"
+                                VerticalAlignment="Center"
+                                TextAlignment="Center"
+                                FontSize="{DynamicResource FontSizeNormal}"
+                                Text="{Binding LinkQualitySymbol.Value}"
+                            />
                         </Grid>
                     </avalonia:TelemBox.CustomContent>
                 </avalonia:TelemBox>
             </Viewbox>
         </WrapPanel>
-        <drones:MissionProgressView 
-            Grid.Column="0" 
+        <drones:MissionProgressView
+            Grid.Column="0"
             Grid.Row="2"
-            DataContext="{Binding MissionProgress}" />
+            DataContext="{Binding MissionProgress}"
+        />
     </Grid>
 </UserControl>

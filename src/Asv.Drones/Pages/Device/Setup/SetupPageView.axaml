@@ -1,17 +1,22 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:avalonia="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
-             xmlns:drones="clr-namespace:Asv.Drones"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="drones:SetupPageViewModel"
-             x:Class="Asv.Drones.SetupPageView">
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:avalonia="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
+    xmlns:drones="clr-namespace:Asv.Drones"
+    mc:Ignorable="d"
+    d:DesignWidth="800"
+    d:DesignHeight="450"
+    x:DataType="drones:SetupPageViewModel"
+    x:Class="Asv.Drones.SetupPageView"
+>
     <Grid>
-        <avalonia:AwaitingScreen 
-            Header="{x:Static drones:RS.MavParamsPageView_AwaitingScreen_Header}" 
-            Description="{x:Static drones:RS.MavParamsPageView_AwaitingScreen_Description}" 
-            IsVisible="{Binding !IsDeviceInitialized.Value}"/>
-        <avalonia:TreePageView IsVisible="{Binding IsDeviceInitialized.Value}"/>
+        <avalonia:AwaitingScreen
+            Header="{x:Static drones:RS.MavParamsPageView_AwaitingScreen_Header}"
+            Description="{x:Static drones:RS.MavParamsPageView_AwaitingScreen_Description}"
+            IsVisible="{Binding !IsDeviceInitialized.Value}"
+        />
+        <avalonia:TreePageView IsVisible="{Binding IsDeviceInitialized.Value}" />
     </Grid>
 </UserControl>
