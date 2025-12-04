@@ -1,0 +1,132 @@
+﻿<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    xmlns:avalonia1="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
+    xmlns:drones="clr-namespace:Asv.Drones"
+    xmlns:geoMap="clr-namespace:Asv.Avalonia.GeoMap;assembly=Asv.Avalonia.GeoMap"
+    mc:Ignorable="d"
+    d:DesignWidth="1024"
+    d:DesignHeight="500"
+    x:Class="Asv.Drones.FlightPageView"
+    x:DataType="drones:FlightPageViewModel"
+>
+    <Design.DataContext>
+        <drones:FlightPageViewModel />
+    </Design.DataContext>
+    <Panel>
+        <geoMap:MapItemsControl
+            CenterMap="{CompiledBinding MapCenter.Value, Mode=TwoWay}"
+            Zoom="{CompiledBinding Zoom.Value, Mode=TwoWay}"
+            SelectionMode="Multiple"
+            ItemsSource="{Binding AnchorsView}"
+            SelectedItem="{Binding SelectedAnchor.Value, Mode=TwoWay}"
+        >
+            <geoMap:MapItemsControl.AnnotationTemplate>
+                <DataTemplate>
+                    <Border
+                        BorderThickness="1"
+                        BorderBrush="White"
+                        x:Name="PART_Annotation"
+                        IsVisible="{Binding !!Title.Length}"
+                        Padding="3"
+                        CornerRadius="3"
+                        Background="#4a148c"
+                    >
+                        <TextBlock Text="{ReflectionBinding Title}" />
+                    </Border>
+                </DataTemplate>
+            </geoMap:MapItemsControl.AnnotationTemplate>
+            <geoMap:MapItemsControl.Styles>
+                <Style Selector="Border.active">
+                    <Setter Property="BorderThickness" Value="5" />
+                </Style>
+            </geoMap:MapItemsControl.Styles>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <avalonia:MaterialIcon
+                        Width="40"
+                        Height="40"
+                        avalonia1:AsvPallete.Color="{CompiledBinding IconColor}"
+                        Kind="{Binding Icon}"
+                    />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerTheme>
+                <ControlTheme TargetType="geoMap:MapItem" x:DataType="geoMap:IMapAnchor">
+                    <Setter Property="Location" Value="{Binding Location}" />
+                    <Setter Property="Rotation" Value="{Binding Azimuth}" />
+                    <Setter Property="CenterX" Value="{Binding CenterX}" />
+                    <Setter Property="CenterY" Value="{Binding CenterY}" />
+                    <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+                    <Setter Property="IsVisible" Value="{Binding IsVisible}" />
+                    <Setter Property="Polygon" Value="{Binding PolygonView}" />
+                    <Setter Property="IsPolygonClosed" Value="{Binding IsPolygonClosed}" />
+                    <Setter Property="Pen" Value="{Binding PolygonPen}" />
+                </ControlTheme>
+            </ItemsControl.ItemContainerTheme>
+        </geoMap:MapItemsControl>
+        <ItemsControl ItemsSource="{Binding WidgetsView}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <avalonia1:WorkspacePanel
+                        AttachedToVisualTree="WorkspacePanel_OnAttachedToVisualTree"
+                        WorkspaceChanged="OnWorkspaceChanged"
+                    />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        Background="{DynamicResource SystemAltMediumHighColor}"
+                        Opacity="0.9"
+                        BorderThickness="{DynamicResource ThemeBorderThickness}"
+                        CornerRadius="{DynamicResource ControlCornerRadius}"
+                        Padding="8"
+                        BorderBrush="{DynamicResource SystemControlTransientBorderBrush}"
+                        HorizontalAlignment="Stretch"
+                    >
+                        <DockPanel>
+                            <Grid ColumnDefinitions="Auto,5,*, Auto" DockPanel.Dock="Top">
+                                <avalonia:MaterialIcon
+                                    Kind="{Binding Icon}"
+                                    avalonia1:AsvPallete.Color="{CompiledBinding IconColor}"
+                                />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Grid.Column="2"
+                                    Text="{Binding Header}"
+                                />
+                                <ToggleButton
+                                    IsChecked="True"
+                                    x:Name="PART_Expand"
+                                    Grid.Column="3"
+                                    Padding="0"
+                                    Theme="{StaticResource TransparentButton}"
+                                >
+                                    <Panel Width="20" Height="20">
+                                        <avalonia:MaterialIcon
+                                            IsVisible="{Binding ElementName=PART_Expand, Path=IsChecked}"
+                                            Kind="MenuUp"
+                                        />
+                                        <avalonia:MaterialIcon
+                                            IsVisible="{Binding ElementName=PART_Expand, Path=!IsChecked}"
+                                            Kind="MenuDown"
+                                        />
+                                    </Panel>
+                                </ToggleButton>
+                            </Grid>
+                            <ContentControl
+                                Margin="0,4,0,0"
+                                IsVisible="{Binding ElementName=PART_Expand, Path=IsChecked}"
+                                Content="{Binding}"
+                            />
+                        </DockPanel>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Panel>
+</UserControl>

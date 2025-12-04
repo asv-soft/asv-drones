@@ -62,6 +62,10 @@
       </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Shell\" />
+    </ItemGroup>
+
 
 
 </Project>

@@ -1,0 +1,111 @@
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:drones="clr-namespace:Asv.Drones"
+    xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    mc:Ignorable="d"
+    d:DesignWidth="267"
+    x:DataType="drones:DroneFrameItemViewModel"
+    x:Class="Asv.Drones.DroneFrameItemView"
+>
+    <Design.DataContext>
+        <drones:DroneFrameItemViewModel />
+    </Design.DataContext>
+    <Grid ColumnDefinitions="*, Auto" ClipToBounds="False" MaxHeight="100">
+        <ScrollViewer
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollBarVisibility="Disabled"
+        >
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Border
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="1"
+                    Background="{DynamicResource SystemControlBackgroundListLowBrush}"
+                    Height="90"
+                    Width="90"
+                    CornerRadius="8"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    Margin="0,0,12,0"
+                >
+                    <ItemsControl
+                        ItemsSource="{Binding Model.Meta}"
+                        HorizontalAlignment="Stretch"
+                        Padding="6"
+                    >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="2" Orientation="Vertical">
+                                    <TextBlock
+                                        Text="{Binding Key}"
+                                        FontSize="9"
+                                        FontWeight="SemiBold"
+                                        TextTrimming="CharacterEllipsis"
+                                    />
+                                    <TextBlock
+                                        Text="{Binding Value}"
+                                        FontSize="10"
+                                        TextWrapping="Wrap"
+                                        Margin="0,0,0,3"
+                                    />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Border>
+                <StackPanel
+                    Spacing="4"
+                    Orientation="Horizontal"
+                    Width="200"
+                    HorizontalAlignment="Center"
+                >
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        Text="{Binding Model.Id}"
+                        FontSize="14"
+                        FontWeight="Medium"
+                        TextWrapping="Wrap"
+                    />
+                    <avalonia:MaterialIcon
+                        Kind="CheckCircle"
+                        Width="20"
+                        Height="20"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        Foreground="Green"
+                        IsVisible="{Binding IsCurrent.Value}"
+                    />
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Button
+            Grid.Column="1"
+            Command="{Binding ApplyCommand}"
+            CommandParameter="{Binding}"
+            IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Right"
+            FontSize="14"
+        >
+            <StackPanel Orientation="Horizontal" Spacing="6">
+                <avalonia:MaterialIcon
+                    Kind="Check"
+                    Width="16"
+                    Height="16"
+                    VerticalAlignment="Center"
+                />
+                <TextBlock
+                    Text="{x:Static drones:RS.SetupFrameTypeView_ApplyFrame}"
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                />
+            </StackPanel>
+        </Button>
+    </Grid>
+</UserControl>
