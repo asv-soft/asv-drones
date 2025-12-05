@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\.github\workflows\drones-release-windows.yml = ..\.github\workflows\drones-release-windows.yml
 		..\win-64-install.nsi = ..\win-64-install.nsi
 		Directory.Build.props = Directory.Build.props
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asv.Drones.Api", "Asv.Drones.Api\Asv.Drones.Api.csproj", "{F77AFD17-2E1E-45EB-8E1D-43555E3E6AD8}"

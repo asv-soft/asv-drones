@@ -4,15 +4,13 @@
       {
          "name": "Run csharpier",
          "command": "dotnet",
-         "args": [ "csharpier", "." ],
-         "include": [ "**/*.cs" ],
+         "args": [ "csharpier", "format", "." ],
          "group": "prettier"
       },
       {
          "name": "Run csharpier check",
          "command": "dotnet",
-         "args": [ "csharpier", "--check", "." ],
-         "include": [ "**/*.cs" ],
+         "args": [ "csharpier", "check", "." ],
          "group": "check"
       }
    ]
