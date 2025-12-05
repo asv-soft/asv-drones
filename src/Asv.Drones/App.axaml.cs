@@ -93,7 +93,7 @@ public partial class App : Application, IContainerHost, IShellHost
 #endif
         if (!Design.IsDesignMode)
         {
-            _container.GetExport<IAppStartupService>().AppCtor();
+            _container.GetExport<IAppStartupService>().OnFrameworkInitializationCompleted();
         }
     }
 
