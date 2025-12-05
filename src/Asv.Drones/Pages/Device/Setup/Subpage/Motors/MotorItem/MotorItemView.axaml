@@ -1,0 +1,146 @@
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:drones="clr-namespace:Asv.Drones"
+    xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    mc:Ignorable="d"
+    d:DesignWidth="800"
+    x:DataType="drones:MotorItemViewModel"
+    x:Class="Asv.Drones.MotorItemView"
+>
+    <UserControl.Styles>
+        <Style Selector="ToggleButton ContentPresenter.tbchecked">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="ToggleButton:checked ContentPresenter.tbchecked">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="ToggleButton ContentPresenter.tbunchecked">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="ToggleButton:checked ContentPresenter.tbunchecked">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+    </UserControl.Styles>
+    <Design.DataContext>
+        <drones:MotorItemViewModel />
+    </Design.DataContext>
+
+    <Grid ColumnDefinitions="Auto,*,Auto,Auto" MaxHeight="100" ClipToBounds="False" Margin="8">
+        <StackPanel
+            Grid.Column="0"
+            Orientation="Horizontal"
+            VerticalAlignment="Center"
+            Spacing="4"
+            MaxWidth="80"
+        >
+            <Label
+                Content="{x:Static drones:RS.MotorItemView_Label_MotorId}"
+                FontSize="14"
+                FontWeight="Medium"
+                VerticalAlignment="Center"
+            />
+            <TextBlock
+                Text="{Binding Motor.Id}"
+                FontSize="14"
+                FontWeight="Medium"
+                VerticalAlignment="Center"
+            />
+        </StackPanel>
+
+        <Grid
+            Grid.Column="1"
+            MaxWidth="800"
+            VerticalAlignment="Center"
+            Margin="12,0"
+            RowDefinitions="Auto,Auto"
+        >
+            <ProgressBar
+                Grid.Row="0"
+                Minimum="1000"
+                Maximum="2000"
+                Value="{Binding Pwm.Value}"
+                ShowProgressText="True"
+                HorizontalAlignment="Stretch"
+                Margin="0,0,0,6"
+            />
+
+            <Grid Grid.Row="1" ColumnDefinitions="*,*" HorizontalAlignment="Stretch">
+                <StackPanel
+                    Grid.Column="0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Spacing="4"
+                >
+                    <Label
+                        Content="{x:Static drones:RS.MotorItemView_MonitoringLabel_Servo}"
+                        FontSize="12"
+                    />
+                    <Label Content="{Binding ServoChannel}" FontSize="12" />
+                </StackPanel>
+                <StackPanel
+                    Grid.Column="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Spacing="4"
+                >
+                    <Label
+                        Content="{x:Static drones:RS.MotorItemView_MonitoringLabel_Pwm}"
+                        FontSize="12"
+                    />
+                    <Label Content="{Binding Pwm.Value}" FontSize="12" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <StackPanel
+            Grid.Column="2"
+            Orientation="Horizontal"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Spacing="1"
+        >
+            <TextBox
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Right"
+                Text="{CompiledBinding Throttle.ViewValue.Value}"
+                Width="32"
+                FontSize="14"
+            />
+            <Label
+                VerticalAlignment="Center"
+                Content="{CompiledBinding ThrottleSymbol.Value}"
+                FontSize="14"
+            />
+        </StackPanel>
+
+        <ToggleButton
+            Grid.Column="3"
+            Margin="4,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            IsChecked="{Binding IsTestIdle.Value}"
+            Command="{Binding RunTestCommand}"
+            CommandParameter="{Binding}"
+            IsEnabled="{Binding IsEnabled.Value}"
+            ToolTip.Tip="{x:Static drones:RS.MotorItemView_ToolTip_StartStop}"
+        >
+            <Panel>
+                <ContentPresenter Classes="tbchecked">
+                    <ContentPresenter.Content>
+                        <avalonia:MaterialIcon Kind="Play" />
+                    </ContentPresenter.Content>
+                </ContentPresenter>
+                <ContentPresenter Classes="tbunchecked">
+                    <ContentPresenter.Content>
+                        <avalonia:MaterialIcon Kind="Stop" />
+                    </ContentPresenter.Content>
+                </ContentPresenter>
+            </Panel>
+        </ToggleButton>
+    </Grid>
+</UserControl>

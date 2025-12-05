@@ -672,6 +672,42 @@ namespace Asv.Drones {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Motor.
+        /// </summary>
+        public static string MotorItemView_Label_MotorId {
+            get {
+                return ResourceManager.GetString("MotorItemView_Label_MotorId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PWM.
+        /// </summary>
+        public static string MotorItemView_MonitoringLabel_Pwm {
+            get {
+                return ResourceManager.GetString("MotorItemView_MonitoringLabel_Pwm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Servo.
+        /// </summary>
+        public static string MotorItemView_MonitoringLabel_Servo {
+            get {
+                return ResourceManager.GetString("MotorItemView_MonitoringLabel_Servo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to START/STOP.
+        /// </summary>
+        public static string MotorItemView_ToolTip_StartStop {
+            get {
+                return ResourceManager.GetString("MotorItemView_ToolTip_StartStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to N/A.
         /// </summary>
         public static string NotANumber {
@@ -1226,6 +1262,33 @@ namespace Asv.Drones {
         public static string SetupFrameTypeViewModel_Name {
             get {
                 return ResourceManager.GetString("SetupFrameTypeViewModel_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to s.
+        /// </summary>
+        public static string SetupMotorsView_DurationLabel_TimeUnit {
+            get {
+                return ResourceManager.GetString("SetupMotorsView_DurationLabel_TimeUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duration.
+        /// </summary>
+        public static string SetupMotorsView_TestDuration {
+            get {
+                return ResourceManager.GetString("SetupMotorsView_TestDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Motor Test.
+        /// </summary>
+        public static string SetupMotorsViewModel_Name {
+            get {
+                return ResourceManager.GetString("SetupMotorsViewModel_Name", resourceCulture);
             }
         }
         
