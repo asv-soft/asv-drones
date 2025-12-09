@@ -19,15 +19,15 @@ public class HeadingScaleItem : ScaleItem
         var v = value < 0 ? ((int)Math.Round(value) % 360) + 360 : (int)Math.Round(value) % 360;
         return v switch
         {
-            0 => "N",
-            45 => "NE",
-            90 => "E",
-            135 => "SE",
-            180 => "S",
-            225 => "SW",
-            270 => "W",
-            315 => "NW",
-            360 => "N",
+            0 => RS.HeadingScaleItem_Direction_N,
+            45 => RS.HeadingScaleItem_Direction_NE,
+            90 => RS.HeadingScaleItem_Direction_E,
+            135 => RS.HeadingScaleItem_Direction_SE,
+            180 => RS.HeadingScaleItem_Direction_S,
+            225 => RS.HeadingScaleItem_Direction_SW,
+            270 => RS.HeadingScaleItem_Direction_W,
+            315 => RS.HeadingScaleItem_Direction_NW,
+            360 => RS.HeadingScaleItem_Direction_N,
             _ => v.ToString("F0"),
         };
     }

@@ -4,7 +4,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-    xmlns:conv="clr-namespace:Avalonia.Data.Converters;assembly=Avalonia.Base"
     xmlns:drones="clr-namespace:Asv.Drones"
     xmlns:avalonia1="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
     mc:Ignorable="d"
@@ -18,35 +17,10 @@
         <drones:FileBrowserViewModel />
     </Design.DataContext>
     <UserControl.Resources>
-        <!--TODO: move dictionary to Themes.axaml (Asv.Avalonia)-->
-        <!--These resources ARE being used, despite the fact that inspector writes the opposite-->
-        <ResourceDictionary>
-            <ResourceDictionary.ThemeDictionaries>
-                <ResourceDictionary x:Key="Light">
-                    <SolidColorBrush x:Key="Crc32CorrectBrush" Color="#FF2E7D32" />
-                    <SolidColorBrush x:Key="Crc32IncorrectBrush" Color="#FFC62828" />
-                    <SolidColorBrush x:Key="IconBrushDelete" Color="#FFC62828" />
-                </ResourceDictionary>
-                <ResourceDictionary x:Key="Dark">
-                    <SolidColorBrush x:Key="Crc32CorrectBrush" Color="#FF34C759" />
-                    <SolidColorBrush x:Key="Crc32IncorrectBrush" Color="#FFFF453A" />
-                    <SolidColorBrush x:Key="IconBrushDelete" Color="#FFFF453A" />
-                </ResourceDictionary>
-            </ResourceDictionary.ThemeDictionaries>
-        </ResourceDictionary>
-        <SolidColorBrush
-            x:Key="IconBrushDefault"
-            Color="{DynamicResource SystemAccentColorLight2}"
-        />
-        <SolidColorBrush x:Key="IconBrushDisabled" Color="{DynamicResource SystemBaseLowColor}" />
-        <SolidColorBrush x:Key="FolderBrush" Color="{DynamicResource SystemAccentColorDark2}" />
-        <SolidColorBrush x:Key="FileBrush" Color="{DynamicResource SystemAccentColorLight2}" />
-        <SolidColorBrush x:Key="ProgressBrush" Color="{DynamicResource SystemAccentColorLight2}" />
-        <SolidColorBrush
-            x:Key="Crc32DefaultBrush"
-            Color="{DynamicResource SystemAccentColorLight2}"
-        />
-        <x:Double x:Key="IconSize">15</x:Double>
+        <drones:Crc32StatusToColorConverter x:Key="Crc32StatusToColorConverter" />
+        <avalonia1:AsvColorKind x:Key="IconColor">Info5</avalonia1:AsvColorKind>
+        <avalonia1:AsvColorKind x:Key="FolderColor">Info10</avalonia1:AsvColorKind>
+        <avalonia1:AsvColorKind x:Key="FileColor">Info5</avalonia1:AsvColorKind>
     </UserControl.Resources>
     <UserControl.Styles>
         <Style Selector="TreeViewItem" x:DataType="drones:BrowserNode">
@@ -56,31 +30,31 @@
         </Style>
         <Style Selector="avalonia|MaterialIcon.folder">
             <Setter Property="Kind" Value="FolderOutline" />
-            <Setter Property="Foreground" Value="{DynamicResource FolderBrush}" />
+            <Setter Property="avalonia1:AsvPallete.Color" Value="{StaticResource FolderColor}" />
         </Style>
         <Style Selector="avalonia|MaterialIcon.folder.selected">
             <Setter Property="Kind" Value="Folder" />
-            <Setter Property="Foreground" Value="{DynamicResource FolderBrush}" />
+            <Setter Property="avalonia1:AsvPallete.Color" Value="{StaticResource FolderColor}" />
         </Style>
         <Style Selector="avalonia|MaterialIcon.folder.expanded">
             <Setter Property="Kind" Value="FolderOpenOutline" />
-            <Setter Property="Foreground" Value="{DynamicResource FolderBrush}" />
+            <Setter Property="avalonia1:AsvPallete.Color" Value="{StaticResource FolderColor}" />
         </Style>
         <Style Selector="avalonia|MaterialIcon.file">
             <Setter Property="Kind" Value="FileMarkerOutline" />
-            <Setter Property="Foreground" Value="{DynamicResource FileBrush}" />
+            <Setter Property="avalonia1:AsvPallete.Color" Value="{StaticResource FileColor}" />
         </Style>
         <Style Selector="avalonia|MaterialIcon.file.selected" x:DataType="drones:BrowserNode">
             <Setter Property="Kind" Value="FileMarker" />
         </Style>
         <Style Selector="Button avalonia|MaterialIcon, Button avalonia|MaterialIconExt">
-            <Setter Property="Button.Foreground" Value="{DynamicResource IconBrushDefault}" />
+            <Setter Property="avalonia1:AsvPallete.Color" Value="{StaticResource IconColor}" />
         </Style>
         <Style Selector="Button.delete avalonia|MaterialIcon, Button.delete avalonia|MaterialIconExt">
-            <Setter Property="Button.Foreground" Value="{DynamicResource IconBrushDelete}" />
+            <Setter Property="avalonia1:AsvPallete.Color" Value="Error" />
         </Style>
         <Style Selector="Button:disabled avalonia|MaterialIcon, Button:disabled avalonia|MaterialIconExt">
-            <Setter Property="Button.Foreground" Value="{DynamicResource IconBrushDisabled}" />
+            <Setter Property="avalonia1:AsvPallete.Color" Value="Unknown" />
             <Setter Property="Button.Opacity" Value="0.4" />
         </Style>
         <Style Selector="Button">
@@ -113,7 +87,10 @@
                                     Command="{Binding CreateLocalFolderCommand}"
                                     CommandParameter="{Binding LocalSelectedItem.Value}"
                                 >
-                                    <avalonia:MaterialIcon Kind="FolderPlusOutline" />
+                                    <avalonia:MaterialIcon
+                                        Kind="FolderPlusOutline"
+                                        avalonia1:AsvPallete.Color="{StaticResource FolderColor}"
+                                    />
                                 </Button>
                                 <Button
                                     Command="{Binding LocalRenameCommand}"
@@ -149,7 +126,7 @@
                                 >
                                     <avalonia:MaterialIcon
                                         Kind="Refresh"
-                                        Foreground="{DynamicResource SystemAccentColorLight2}"
+                                        avalonia1:AsvPallete.Color="{StaticResource IconColor}"
                                     />
                                 </Button>
                             </Grid>
@@ -177,8 +154,7 @@
                                                                 RelativeSource={RelativeSource AncestorType=TreeViewItem}}"
                                             Classes.selected="{Binding IsSelected,
                                                                 RelativeSource={RelativeSource AncestorType=TreeViewItem}}"
-                                            Width="{DynamicResource IconSize}"
-                                            Height="{DynamicResource IconSize}"
+                                            Classes="small"
                                         />
                                         <TextBlock
                                             Grid.Column="1"
@@ -209,36 +185,8 @@
                                             VerticalAlignment="Center"
                                             HorizontalAlignment="Right"
                                             Text="{Binding Base.Crc32Hex}"
-                                            Classes.correct="{Binding Base.Crc32Status, 
-                                                    Converter={x:Static conv:ObjectConverters.Equal}, 
-                                                    ConverterParameter={x:Static drones:Crc32Status.Correct}}"
-                                            Classes.incorrect="{Binding Base.Crc32Status, 
-                                                    Converter={x:Static conv:ObjectConverters.Equal}, 
-                                                    ConverterParameter={x:Static drones:Crc32Status.Incorrect}}"
-                                        >
-                                            <TextBlock.Styles>
-                                                <Style Selector="TextBlock">
-                                                    <Setter
-                                                        Property="Foreground"
-                                                        Value="{DynamicResource Crc32DefaultBrush}"
-                                                    />
-                                                </Style>
-
-                                                <Style Selector="TextBlock.correct">
-                                                    <Setter
-                                                        Property="Foreground"
-                                                        Value="{DynamicResource Crc32CorrectBrush}"
-                                                    />
-                                                </Style>
-
-                                                <Style Selector="TextBlock.incorrect">
-                                                    <Setter
-                                                        Property="Foreground"
-                                                        Value="{DynamicResource Crc32IncorrectBrush}"
-                                                    />
-                                                </Style>
-                                            </TextBlock.Styles>
-                                        </TextBlock>
+                                            avalonia1:AsvPallete.Color="{CompiledBinding Base.Crc32Status, Converter={StaticResource Crc32StatusToColorConverter}}"
+                                        ></TextBlock>
                                         <TextBlock
                                             Grid.Column="3"
                                             Margin="0,0,8,0"
@@ -298,13 +246,7 @@
                         HorizontalOffset="12"
                         Topmost="True"
                     >
-                        <Border Padding="10" CornerRadius="6">
-                            <Border.Background>
-                                <SolidColorBrush
-                                    Color="{DynamicResource SystemAltHighColor}"
-                                    Opacity="0.5"
-                                />
-                            </Border.Background>
+                        <Border Padding="10" CornerRadius="6" avalonia1:AsvPallete.Color="None">
                             <StackPanel>
                                 <Button
                                     Content="{x:Static drones:RS.FileBrowserView_Button_Download_Content}"
@@ -336,7 +278,10 @@
                                     Command="{Binding CreateRemoteFolderCommand}"
                                     CommandParameter="{Binding RemoteSelectedItem.Value}"
                                 >
-                                    <avalonia:MaterialIcon Kind="FolderPlusOutline" />
+                                    <avalonia:MaterialIcon
+                                        Kind="FolderPlusOutline"
+                                        avalonia1:AsvPallete.Color="{StaticResource FolderColor}"
+                                    />
                                 </Button>
                                 <Button
                                     Command="{Binding RemoteRenameCommand}"
@@ -381,7 +326,7 @@
                                 >
                                     <avalonia:MaterialIcon
                                         Kind="Refresh"
-                                        Foreground="{DynamicResource SystemAccentColorLight2}"
+                                        avalonia1:AsvPallete.Color="{StaticResource IconColor}"
                                     />
                                 </Button>
                             </Grid>
@@ -409,8 +354,7 @@
                                                                 RelativeSource={RelativeSource AncestorType=TreeViewItem}}"
                                             Classes.selected="{Binding IsSelected,
                                                                 RelativeSource={RelativeSource AncestorType=TreeViewItem}}"
-                                            Width="{DynamicResource IconSize}"
-                                            Height="{DynamicResource IconSize}"
+                                            Classes="small"
                                         />
                                         <TextBlock
                                             Grid.Column="1"
@@ -441,36 +385,8 @@
                                             VerticalAlignment="Center"
                                             HorizontalAlignment="Right"
                                             Text="{Binding Base.Crc32Hex}"
-                                            Classes.correct="{Binding Base.Crc32Status, 
-                                                    Converter={x:Static conv:ObjectConverters.Equal}, 
-                                                    ConverterParameter={x:Static drones:Crc32Status.Correct}}"
-                                            Classes.incorrect="{Binding Base.Crc32Status, 
-                                                    Converter={x:Static conv:ObjectConverters.Equal}, 
-                                                    ConverterParameter={x:Static drones:Crc32Status.Incorrect}}"
-                                        >
-                                            <TextBlock.Styles>
-                                                <Style Selector="TextBlock">
-                                                    <Setter
-                                                        Property="Foreground"
-                                                        Value="{DynamicResource Crc32DefaultBrush}"
-                                                    />
-                                                </Style>
-
-                                                <Style Selector="TextBlock.correct">
-                                                    <Setter
-                                                        Property="Foreground"
-                                                        Value="{DynamicResource Crc32CorrectBrush}"
-                                                    />
-                                                </Style>
-
-                                                <Style Selector="TextBlock.incorrect">
-                                                    <Setter
-                                                        Property="Foreground"
-                                                        Value="{DynamicResource Crc32IncorrectBrush}"
-                                                    />
-                                                </Style>
-                                            </TextBlock.Styles>
-                                        </TextBlock>
+                                            avalonia1:AsvPallete.Color="{CompiledBinding Base.Crc32Status, Converter={StaticResource Crc32StatusToColorConverter}}"
+                                        ></TextBlock>
                                         <TextBlock
                                             Grid.Column="3"
                                             Margin="0,0,8,0"
@@ -494,7 +410,7 @@
                 <ProgressBar
                     Grid.Column="0"
                     Height="10"
-                    Foreground="{DynamicResource ProgressBrush}"
+                    avalonia1:AsvPallete.Color="{StaticResource IconColor}"
                     Value="{Binding Progress.Value}"
                     Minimum="0"
                     Maximum="1"

@@ -82,6 +82,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Commands\Behaviour\" />
       <Folder Include="Shell\" />
     </ItemGroup>
 
@@ -94,6 +95,8 @@
       <AdditionalFiles Include="Shell\Pages\Device\Setup\SetupPageView.axaml" />
       <AdditionalFiles Include="Shell\Pages\Device\Setup\Subpage\FrameType\DroneFrameItem\DroneFrameItemView.axaml" />
       <AdditionalFiles Include="Shell\Pages\Device\Setup\Subpage\FrameType\SetupFrameTypeView.axaml" />
+      <AdditionalFiles Include="Shell\Pages\Device\Setup\Subpage\Motors\MotorItem\MotorItemView.axaml" />
+      <AdditionalFiles Include="Shell\Pages\Device\Setup\Subpage\Motors\SetupMotorsView.axaml" />
       <AdditionalFiles Include="Shell\Pages\Flight\FlightPageView.axaml" />
       <AdditionalFiles Include="Shell\Pages\Flight\Widgets\UavWidget\Dialogs\SetAltitudeDialogView.axaml" />
       <AdditionalFiles Include="Shell\Pages\Flight\Widgets\UavWidget\MissionProgress\MissionProgressView.axaml" />

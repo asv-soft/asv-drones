@@ -640,7 +640,7 @@ public class FileBrowserViewModel
             }
         }
 
-        using var viewModel = new BurstDownloadDialogViewModel();
+        using var viewModel = new BurstDownloadDialogViewModel(_loggerFactory);
         var dialog = new ContentDialog(viewModel, _navigation)
         {
             Title = RS.FileBrowserViewModel_BurstDownloadDialog_Title,
