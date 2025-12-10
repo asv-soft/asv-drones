@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Asv.Avalonia;
+using Asv.Common;
 using Asv.Mavlink;
 using Asv.Mavlink.Common;
 using Material.Icons;
@@ -287,9 +288,10 @@ public partial class MavParamInfo
 
     public string? GetError(ValueType? value)
     {
-        if (value == null)
+        if (value is null)
         {
-            return "Value is required";
+            return IsNullOrWhiteSpaceValidationException.Instance.LocalizedMessage
+                ?? IsNullOrWhiteSpaceValidationException.Instance.Message;
         }
         switch (Metadata.Type)
         {
@@ -297,7 +299,13 @@ public partial class MavParamInfo
                 var byteVal = System.Convert.ToByte(value);
                 if (byteVal > System.Convert.ToByte(Max) || byteVal < System.Convert.ToByte(Min))
                 {
-                    return $"Value must be in range {Min}..{Max}";
+                    return ValidationResult
+                        .FailAsOutOfRange(
+                            Min.ToString() ?? string.Empty,
+                            Max.ToString() ?? string.Empty
+                        )
+                        .ValidationException?.GetExceptionWithLocalizationOrSelf()
+                        .Message;
                 }
                 break;
             case MavParamType.MavParamTypeInt8:
@@ -307,7 +315,13 @@ public partial class MavParamInfo
                     || sbyteVal < System.Convert.ToSByte(Min)
                 )
                 {
-                    return $"Value must be in range {Min}..{Max}";
+                    return ValidationResult
+                        .FailAsOutOfRange(
+                            Min.ToString() ?? string.Empty,
+                            Max.ToString() ?? string.Empty
+                        )
+                        .ValidationException?.GetExceptionWithLocalizationOrSelf()
+                        .Message;
                 }
                 break;
             case MavParamType.MavParamTypeUint16:
@@ -317,7 +331,13 @@ public partial class MavParamInfo
                     || ushortVal < System.Convert.ToUInt16(Min)
                 )
                 {
-                    return $"Value must be in range {Min}..{Max}";
+                    return ValidationResult
+                        .FailAsOutOfRange(
+                            Min.ToString() ?? string.Empty,
+                            Max.ToString() ?? string.Empty
+                        )
+                        .ValidationException?.GetExceptionWithLocalizationOrSelf()
+                        .Message;
                 }
                 break;
             case MavParamType.MavParamTypeInt16:
@@ -327,7 +347,13 @@ public partial class MavParamInfo
                     || shortVal < System.Convert.ToInt16(Min)
                 )
                 {
-                    return $"Value must be in range {Min}..{Max}";
+                    return ValidationResult
+                        .FailAsOutOfRange(
+                            Min.ToString() ?? string.Empty,
+                            Max.ToString() ?? string.Empty
+                        )
+                        .ValidationException?.GetExceptionWithLocalizationOrSelf()
+                        .Message;
                 }
                 break;
             case MavParamType.MavParamTypeUint32:
@@ -337,14 +363,26 @@ public partial class MavParamInfo
                     || uintVal < System.Convert.ToUInt32(Min)
                 )
                 {
-                    return $"Value must be in range {Min}..{Max}";
+                    return ValidationResult
+                        .FailAsOutOfRange(
+                            Min.ToString() ?? string.Empty,
+                            Max.ToString() ?? string.Empty
+                        )
+                        .ValidationException?.GetExceptionWithLocalizationOrSelf()
+                        .Message;
                 }
                 break;
             case MavParamType.MavParamTypeInt32:
                 var intVal = System.Convert.ToInt32(value);
                 if (intVal > System.Convert.ToInt32(Max) || intVal < System.Convert.ToInt32(Min))
                 {
-                    return $"Value must be in range {Min}..{Max}";
+                    return ValidationResult
+                        .FailAsOutOfRange(
+                            Min.ToString() ?? string.Empty,
+                            Max.ToString() ?? string.Empty
+                        )
+                        .ValidationException?.GetExceptionWithLocalizationOrSelf()
+                        .Message;
                 }
                 break;
             case MavParamType.MavParamTypeReal32:
@@ -354,7 +392,13 @@ public partial class MavParamInfo
                     || floatVal < System.Convert.ToSingle(Min)
                 )
                 {
-                    return $"Value must be in range {Min}..{Max}";
+                    return ValidationResult
+                        .FailAsOutOfRange(
+                            Min.ToString() ?? string.Empty,
+                            Max.ToString() ?? string.Empty
+                        )
+                        .ValidationException?.GetExceptionWithLocalizationOrSelf()
+                        .Message;
                 }
                 break;
             case MavParamType.MavParamTypeUint64:
@@ -453,7 +497,7 @@ public partial class MavParamInfo
         value = DefaultValue;
         if (string.IsNullOrWhiteSpace(valueAsString))
         {
-            return new Exception("Value is empty");
+            return IsNullOrWhiteSpaceValidationException.Instance.GetExceptionWithLocalizationOrSelf();
         }
         valueAsString = valueAsString
             .Replace(',', Units.DecimalSeparator)
@@ -462,7 +506,7 @@ public partial class MavParamInfo
 
         if (valueAsString.Length == 0)
         {
-            return new Exception("Value is empty");
+            return IsNullOrWhiteSpaceValidationException.Instance.GetExceptionWithLocalizationOrSelf();
         }
         var lastChar = valueAsString[^1];
         int multiply;
@@ -498,7 +542,7 @@ public partial class MavParamInfo
         }
         else
         {
-            return new Exception("Value must be a number with optional suffix (K, M, G)");
+            return new Exception(RS.MavParamInfo_ValidationException_InvalidFormat);
         }
 
         switch (Metadata.Type)
@@ -533,7 +577,7 @@ public partial class MavParamInfo
                 throw new ArgumentOutOfRangeException();
         }
 
-        if (IsValid(value) == false)
+        if (!IsValid(value))
         {
             return new Exception(GetError(value));
         }

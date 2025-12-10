@@ -46,7 +46,7 @@ public class MavParamViewModel
             .Subscribe(_ => IsSync = false)
             .DisposeItWith(Disposable);
 
-        // this is random delay for inital read to avoid many requests at the same time
+        // this is random delay for initial read to avoid many requests at the same time
         Observable
             .Timer(TimeSpan.FromMilliseconds(Random.Shared.Next(1, 1000)))
             .Take(1)

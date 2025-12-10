@@ -5,14 +5,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:drones="clr-namespace:Asv.Drones"
     mc:Ignorable="d"
-    d:DesignWidth="800"
-    d:DesignHeight="450"
     x:Class="Asv.Drones.BurstDownloadDialogView"
     x:DataType="drones:BurstDownloadDialogViewModel"
 >
     <StackPanel Spacing="10" Margin="10">
-        <TextBlock Text="Enter the size of a download block" />
-        <!--TODO: localization-->
+        <TextBlock Text="{x:Static drones:RS.BurstDownloadDialogView_Description_Text}" />
         <NumericUpDown
             Increment="1"
             Minimum="0"

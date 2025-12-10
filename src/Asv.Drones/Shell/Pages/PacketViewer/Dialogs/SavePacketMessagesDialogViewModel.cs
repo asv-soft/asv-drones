@@ -59,18 +59,16 @@ public class SavePacketMessagesDialogViewModel : DialogViewModelBase
     public BindableReactiveProperty<bool> IsComa { get; }
     public BindableReactiveProperty<bool> IsTab { get; }
 
-    private string _separator;
     public string Separator
     {
-        get => _separator;
-        set => SetField(ref _separator, value);
+        get;
+        set => SetField(ref field, value);
     }
 
-    private string _shieldSymbol;
     public string ShieldSymbol
     {
-        get => _shieldSymbol;
-        set => SetField(ref _shieldSymbol, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public override void ApplyDialog(ContentDialog dialog)

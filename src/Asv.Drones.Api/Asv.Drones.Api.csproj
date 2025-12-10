@@ -66,6 +66,21 @@
       <Folder Include="Shell\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Update="RS.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>RS.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="RS.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>RS.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 
 
 </Project>
