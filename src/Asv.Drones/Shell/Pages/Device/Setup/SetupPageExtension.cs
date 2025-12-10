@@ -32,6 +32,7 @@ public class SetupPageExtension(ILoggerFactory loggerFactory) : IExtensionFor<IS
                     }
 
                     await TryAddSetupFrameTypeSubpage(context, wrapper.Value, contextDispose, ct);
+                    await TryAddSetupMotorsSubpage(context, wrapper.Value, contextDispose, ct);
                 },
                 AwaitOperation.Drop
             )
@@ -63,6 +64,36 @@ public class SetupPageExtension(ILoggerFactory loggerFactory) : IExtensionFor<IS
                 RS.SetupFrameTypeViewModel_Name,
                 MaterialIconKind.ThemeLightDark,
                 SetupFrameTypeViewModel.PageId,
+                NavigationId.Empty,
+                loggerFactory
+            ).DisposeItWith(contextDispose)
+        );
+
+        return ValueTask.CompletedTask;
+    }
+
+    private ValueTask TryAddSetupMotorsSubpage(
+        ISetupPage context,
+        DeviceWrapper wrapper,
+        CompositeDisposable contextDispose,
+        CancellationToken ct
+    )
+    {
+        ct.ThrowIfCancellationRequested();
+
+        var client = wrapper.Device.GetMicroservice<IMotorTestClient>();
+
+        if (client is null || context.Nodes.Any(node => node.Id == SetupMotorsViewModel.PageId))
+        {
+            return ValueTask.CompletedTask;
+        }
+
+        context.Nodes.Add(
+            new TreePage(
+                SetupMotorsViewModel.PageId,
+                RS.SetupMotorsViewModel_Name,
+                SetupMotorsViewModel.Icon,
+                SetupMotorsViewModel.PageId,
                 NavigationId.Empty,
                 loggerFactory
             ).DisposeItWith(contextDispose)

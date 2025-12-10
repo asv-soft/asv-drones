@@ -530,4 +530,25 @@
     <data name="MissionProgressView_DownloadButton_Text" xml:space="preserve">
         <value>Download Mission</value>
     </data>
+    <data name="SetupMotorsView_TestDuration" xml:space="preserve">
+        <value>Duration</value>
+    </data>
+    <data name="SetupMotorsView_DurationLabel_TimeUnit" xml:space="preserve">
+        <value>s</value>
+    </data>
+    <data name="MotorItemView_Label_MotorId" xml:space="preserve">
+        <value>Motor</value>
+    </data>
+    <data name="MotorItemView_MonitoringLabel_Servo" xml:space="preserve">
+        <value>Servo</value>
+    </data>
+    <data name="MotorItemView_MonitoringLabel_Pwm" xml:space="preserve">
+        <value>PWM</value>
+    </data>
+    <data name="MotorItemView_ToolTip_StartStop" xml:space="preserve">
+        <value>START/STOP</value>
+    </data>
+    <data name="SetupMotorsViewModel_Name" xml:space="preserve">
+        <value>Motor Test</value>
+    </data>
 </root>

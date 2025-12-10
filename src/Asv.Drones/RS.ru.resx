@@ -518,4 +518,25 @@
     <data name="MissionProgressView_DownloadButton_Text" xml:space="preserve">
         <value>Скачать миссию</value>
     </data>
+    <data name="SetupMotorsView_TestDuration" xml:space="preserve">
+        <value>Время теста</value>
+    </data>
+    <data name="SetupMotorsView_DurationLabel_TimeUnit" xml:space="preserve">
+        <value>сек</value>
+    </data>
+    <data name="MotorItemView_Label_MotorId" xml:space="preserve">
+        <value>Мотор</value>
+    </data>
+    <data name="MotorItemView_MonitoringLabel_Servo" xml:space="preserve">
+        <value>Сервопривод </value>
+    </data>
+    <data name="MotorItemView_MonitoringLabel_Pwm" xml:space="preserve">
+        <value>ШИМ</value>
+    </data>
+    <data name="MotorItemView_ToolTip_StartStop" xml:space="preserve">
+        <value>ЗАПУСТИТЬ/ОСТАНОВИТЬ</value>
+    </data>
+    <data name="SetupMotorsViewModel_Name" xml:space="preserve">
+        <value>Тест моторов</value>
+    </data>
 </root>
