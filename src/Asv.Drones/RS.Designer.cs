@@ -96,6 +96,15 @@ namespace Asv.Drones {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter the size of a download block.
+        /// </summary>
+        public static string BurstDownloadDialogView_Description_Text {
+            get {
+                return ResourceManager.GetString("BurstDownloadDialogView_Description_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Command that download an element by burst.
         /// </summary>
         public static string BurstDownloadItemCommand_CommandInfo_Description {
@@ -506,6 +515,78 @@ namespace Asv.Drones {
         public static string GpsFixType_GpsFixTypeStatic {
             get {
                 return ResourceManager.GetString("GpsFixType_GpsFixTypeStatic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E.
+        /// </summary>
+        public static string HeadingScaleItem_Direction_E {
+            get {
+                return ResourceManager.GetString("HeadingScaleItem_Direction_E", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to N.
+        /// </summary>
+        public static string HeadingScaleItem_Direction_N {
+            get {
+                return ResourceManager.GetString("HeadingScaleItem_Direction_N", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NE.
+        /// </summary>
+        public static string HeadingScaleItem_Direction_NE {
+            get {
+                return ResourceManager.GetString("HeadingScaleItem_Direction_NE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NW.
+        /// </summary>
+        public static string HeadingScaleItem_Direction_NW {
+            get {
+                return ResourceManager.GetString("HeadingScaleItem_Direction_NW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to S.
+        /// </summary>
+        public static string HeadingScaleItem_Direction_S {
+            get {
+                return ResourceManager.GetString("HeadingScaleItem_Direction_S", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SE.
+        /// </summary>
+        public static string HeadingScaleItem_Direction_SE {
+            get {
+                return ResourceManager.GetString("HeadingScaleItem_Direction_SE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SW.
+        /// </summary>
+        public static string HeadingScaleItem_Direction_SW {
+            get {
+                return ResourceManager.GetString("HeadingScaleItem_Direction_SW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to W.
+        /// </summary>
+        public static string HeadingScaleItem_Direction_W {
+            get {
+                return ResourceManager.GetString("HeadingScaleItem_Direction_W", resourceCulture);
             }
         }
         
@@ -987,56 +1068,56 @@ namespace Asv.Drones {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to On/ off pin for this parameter.
-        /// </summary>
-        public static string ParametersEditorParameterView_PinToggleButton_ToolTip {
-            get {
-                return ResourceManager.GetString("ParametersEditorParameterView_PinToggleButton_ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Reboot required.
         /// </summary>
-        public static string ParametersEditorParameterView_RebootRequired {
+        public static string ParamItemView_InlineNotification_RebootRequired {
             get {
-                return ResourceManager.GetString("ParametersEditorParameterView_RebootRequired", resourceCulture);
+                return ResourceManager.GetString("ParamItemView_InlineNotification_RebootRequired", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update.
+        ///   Looks up a localized string similar to On/ off pin for this parameter.
         /// </summary>
-        public static string ParametersEditorParameterView_UpdateButton {
+        public static string ParamItemView_PinToggleButton_ToolTip {
             get {
-                return ResourceManager.GetString("ParametersEditorParameterView_UpdateButton", resourceCulture);
+                return ResourceManager.GetString("ParamItemView_PinToggleButton_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        public static string ParamItemView_UpdateButton_Text {
+            get {
+                return ResourceManager.GetString("ParamItemView_UpdateButton_Text", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Update this parameter from UAV.
         /// </summary>
-        public static string ParametersEditorParameterView_UpdateButton_ToolTip {
+        public static string ParamItemView_UpdateButton_ToolTip {
             get {
-                return ResourceManager.GetString("ParametersEditorParameterView_UpdateButton_ToolTip", resourceCulture);
+                return ResourceManager.GetString("ParamItemView_UpdateButton_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Write.
+        ///   Looks up a localized string similar to Set.
         /// </summary>
-        public static string ParametersEditorParameterView_WriteButton {
+        public static string ParamItemView_WriteButton_Text {
             get {
-                return ResourceManager.GetString("ParametersEditorParameterView_WriteButton", resourceCulture);
+                return ResourceManager.GetString("ParamItemView_WriteButton_Text", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Write this parameter to UAV.
         /// </summary>
-        public static string ParametersEditorParameterView_WriteButton_ToolTip {
+        public static string ParamItemView_WriteButton_ToolTip {
             get {
-                return ResourceManager.GetString("ParametersEditorParameterView_WriteButton_ToolTip", resourceCulture);
+                return ResourceManager.GetString("ParamItemView_WriteButton_ToolTip", resourceCulture);
             }
         }
         

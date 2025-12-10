@@ -118,13 +118,15 @@ public sealed class MotorItemViewModel : RoutableViewModel
         if (!double.TryParse(value, out var throttle))
         {
             _isEnabled.Value = false;
-            return new NotNumberValidationException();
+            return new NotNumberValidationException().GetExceptionWithLocalizationOrSelf();
         }
 
         if (throttle is < 0 or > 100)
         {
             _isEnabled.Value = false;
-            return new ValidationException("Value is not in range");
+            return ValidationResult
+                .FailAsOutOfRange("0", "100")
+                .ValidationException?.GetExceptionWithLocalizationOrSelf();
         }
 
         _isEnabled.Value = true;
@@ -137,13 +139,15 @@ public sealed class MotorItemViewModel : RoutableViewModel
         if (!double.TryParse(value, out var throttle))
         {
             _isEnabled.Value = false;
-            return new NotNumberValidationException();
+            return new NotNumberValidationException().GetExceptionWithLocalizationOrSelf();
         }
 
         if (throttle is < 0 or > 1)
         {
             _isEnabled.Value = false;
-            return new ValidationException("Value is not in range");
+            return ValidationResult
+                .FailAsOutOfRange("0", "1")
+                .ValidationException?.GetExceptionWithLocalizationOrSelf();
         }
 
         _isEnabled.Value = true;

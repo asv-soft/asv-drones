@@ -7,14 +7,29 @@
     xmlns:drones="clr-namespace:Asv.Drones"
     xmlns:avalonia1="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
     mc:Ignorable="d"
-    d:DesignWidth="800"
-    d:DesignHeight="450"
     x:Class="Asv.Drones.MavParamsPageView"
     x:DataType="drones:MavParamsPageViewModel"
 >
     <Design.DataContext>
         <drones:MavParamsPageViewModel />
     </Design.DataContext>
+    <UserControl.Resources>
+        <x:Double x:Key="ButtonSize">30</x:Double>
+    </UserControl.Resources>
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        </Style>
+        <Style Selector="ToggleButton">
+            <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        </Style>
+        <Style Selector="ListBox">
+            <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        </Style>
+        <Style Selector="ScrollViewer">
+            <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        </Style>
+    </UserControl.Styles>
     <Panel>
         <avalonia1:AwaitingScreen
             Header="{x:Static drones:RS.MavParamsPageView_AwaitingScreen_Header}"
@@ -28,44 +43,62 @@
                 <ColumnDefinition MinWidth="500" Width="*" />
             </Grid.ColumnDefinitions>
             <DockPanel Margin="5" Grid.Column="0" LastChildFill="True" x:Name="AllParamsColumn">
-                <DockPanel DockPanel.Dock="Top" LastChildFill="True">
-                    <ToggleButton
-                        ToolTip.Tip="{x:Static drones:RS.ParametersEditorPageView_StarsToggleButton_ToolTip}"
-                        IsChecked="{CompiledBinding IsStarredOnly.ViewValue.Value}"
-                        Margin="4 0 0 4"
-                        DockPanel.Dock="Right"
-                        Width="30"
-                        Height="30"
-                    >
-                        <avalonia:MaterialIcon Kind="Star" />
-                    </ToggleButton>
-                    <Button
-                        ToolTip.Tip="{x:Static drones:RS.ParametersEditorPageView_UpdateButton_ToolTip}"
-                        Command="{Binding UpdateParams}"
-                        Margin="4 0 0 4"
-                        DockPanel.Dock="Right"
-                        Width="30"
-                        Height="30"
-                    >
-                        <avalonia:MaterialIcon Kind="Sync" />
-                    </Button>
-                    <Button
-                        ToolTip.Tip="{x:Static drones:RS.ParametersEditorPageView_PinsOffButton_ToolTip}"
-                        Command="{Binding RemoveAllPins}"
-                        Margin="4 0 0 4"
-                        Padding="4"
-                        DockPanel.Dock="Right"
-                        Width="30"
-                        Height="30"
-                    >
-                        <avalonia:MaterialIcon Kind="PinOff" />
-                    </Button>
+                <Grid
+                    DockPanel.Dock="Top"
+                    Grid.IsSharedSizeScope="True"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    ColumnDefinitions="*, Auto, Auto, Auto"
+                    ColumnSpacing="6"
+                    Margin="0 0 0 4"
+                >
                     <avalonia1:SearchBoxView
-                        DockPanel.Dock="Right"
+                        Grid.Column="0"
+                        x:Name="SearchBox"
                         Margin="0"
+                        VerticalAlignment="Stretch"
                         DataContext="{Binding Search}"
                     />
-                </DockPanel>
+                    <Button
+                        Grid.Column="1"
+                        ToolTip.Tip="{x:Static drones:RS.ParametersEditorPageView_PinsOffButton_ToolTip}"
+                        Command="{Binding RemoveAllPins}"
+                        Width="{CompiledBinding #SearchBox.Bounds.Height}"
+                        Height="{CompiledBinding #SearchBox.Bounds.Height}"
+                    >
+                        <avalonia:MaterialIcon
+                            Kind="PinOff"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                        />
+                    </Button>
+                    <Button
+                        Grid.Column="2"
+                        ToolTip.Tip="{x:Static drones:RS.ParametersEditorPageView_UpdateButton_ToolTip}"
+                        Command="{Binding UpdateParams}"
+                        Width="{CompiledBinding #SearchBox.Bounds.Height}"
+                        Height="{CompiledBinding #SearchBox.Bounds.Height}"
+                    >
+                        <avalonia:MaterialIcon
+                            Kind="Sync"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                        />
+                    </Button>
+                    <ToggleButton
+                        Grid.Column="3"
+                        ToolTip.Tip="{x:Static drones:RS.ParametersEditorPageView_StarsToggleButton_ToolTip}"
+                        IsChecked="{CompiledBinding IsStarredOnly.ViewValue.Value}"
+                        Width="{CompiledBinding #SearchBox.Bounds.Height}"
+                        Height="{CompiledBinding #SearchBox.Bounds.Height}"
+                    >
+                        <avalonia:MaterialIcon
+                            Kind="Star"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                        />
+                    </ToggleButton>
+                </Grid>
                 <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
                     <TextBlock Text="{Binding Total.Value, StringFormat={x:Static drones:RS.ParametersEditorPageViewModel_Total}}" />
                 </StackPanel>
@@ -88,29 +121,30 @@
                                         Margin="10 0 0 0"
                                         BorderThickness="0"
                                         DockPanel.Dock="Right"
+                                        Height="{StaticResource ButtonSize}"
+                                        Width="{StaticResource ButtonSize}"
                                         IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
                                         DoubleTapped="Button_DoubleTapped"
                                     >
                                         <avalonia:MaterialIcon
-                                            Width="20"
-                                            Height="20"
+                                            Classes="medium"
                                             Kind="{Binding StarKind.Value}"
                                         />
                                     </ToggleButton>
                                     <avalonia:MaterialIcon
                                         IsVisible="{Binding IsPinned.ViewValue.Value}"
-                                        Width="20"
+                                        Classes="medium"
                                         Margin="10 0 0 0"
                                         DockPanel.Dock="Right"
                                         Kind="Pin"
                                     />
                                     <avalonia:MaterialIcon
                                         IsVisible="{Binding !IsSynced.Value}"
-                                        Width="20"
+                                        Classes="medium"
                                         Margin="10 0 0 0"
                                         DockPanel.Dock="Right"
                                         Kind="FloppyDisk"
-                                        Foreground="Green"
+                                        avalonia1:AsvPallete.Color="Success"
                                     />
                                     <TextBlock
                                         HorizontalAlignment="Stretch"

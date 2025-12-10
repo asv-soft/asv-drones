@@ -11,22 +11,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="ParametersEditorParameterView_PinToggleButton_ToolTip" xml:space="preserve">
+    <data name="ParamItemView_PinToggleButton_ToolTip" xml:space="preserve">
         <value>Включить/ выключить закрепление этого параметра</value>
     </data>
-    <data name="ParametersEditorParameterView_UpdateButton_ToolTip" xml:space="preserve">
+    <data name="ParamItemView_UpdateButton_ToolTip" xml:space="preserve">
         <value>Обновить этот парметр из БПЛА</value>
     </data>
-    <data name="ParametersEditorParameterView_UpdateButton" xml:space="preserve">
+    <data name="ParamItemView_UpdateButton_Text" xml:space="preserve">
         <value>Обновить</value>
     </data>
-    <data name="ParametersEditorParameterView_WriteButton_ToolTip" xml:space="preserve">
+    <data name="ParamItemView_WriteButton_ToolTip" xml:space="preserve">
         <value>Записать этот парметр в БПЛА</value>
     </data>
-    <data name="ParametersEditorParameterView_WriteButton" xml:space="preserve">
-        <value>Записать</value>
+    <data name="ParamItemView_WriteButton_Text" xml:space="preserve">
+        <value>Установить</value>
     </data>
-    <data name="ParametersEditorParameterView_RebootRequired" xml:space="preserve">
+    <data name="ParamItemView_InlineNotification_RebootRequired" xml:space="preserve">
         <value>Требуется перезагрузка</value>
     </data>
     <data name="ParametersEditorPageView_StarsToggleButton_ToolTip" xml:space="preserve">
@@ -538,5 +538,32 @@
     </data>
     <data name="SetupMotorsViewModel_Name" xml:space="preserve">
         <value>Тест моторов</value>
+    </data>
+    <data name="HeadingScaleItem_Direction_E" xml:space="preserve">
+        <value>В</value>
+    </data>
+    <data name="HeadingScaleItem_Direction_N" xml:space="preserve">
+        <value>С</value>
+    </data>
+    <data name="HeadingScaleItem_Direction_NE" xml:space="preserve">
+        <value>СВ</value>
+    </data>
+    <data name="HeadingScaleItem_Direction_NW" xml:space="preserve">
+        <value>СЗ</value>
+    </data>
+    <data name="HeadingScaleItem_Direction_S" xml:space="preserve">
+        <value>Ю</value>
+    </data>
+    <data name="HeadingScaleItem_Direction_SE" xml:space="preserve">
+        <value>ЮВ</value>
+    </data>
+    <data name="HeadingScaleItem_Direction_SW" xml:space="preserve">
+        <value>ЮЗ</value>
+    </data>
+    <data name="HeadingScaleItem_Direction_W" xml:space="preserve">
+        <value>З</value>
+    </data>
+    <data name="BurstDownloadDialogView_Description_Text" xml:space="preserve">
+        <value>Введите размер блока для загрузки</value>
     </data>
 </root>

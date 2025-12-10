@@ -23,22 +23,22 @@
             PublicKeyToken=b77a5c561934e089
         </value>
     </resheader>
-    <data name="ParametersEditorParameterView_PinToggleButton_ToolTip" xml:space="preserve">
+    <data name="ParamItemView_PinToggleButton_ToolTip" xml:space="preserve">
         <value>On/ off pin for this parameter</value>
     </data>
-    <data name="ParametersEditorParameterView_UpdateButton_ToolTip" xml:space="preserve">
+    <data name="ParamItemView_UpdateButton_ToolTip" xml:space="preserve">
         <value>Update this parameter from UAV</value>
     </data>
-    <data name="ParametersEditorParameterView_UpdateButton" xml:space="preserve">
-        <value>Update</value>
+    <data name="ParamItemView_UpdateButton_Text" xml:space="preserve">
+        <value>Refresh</value>
     </data>
-    <data name="ParametersEditorParameterView_WriteButton_ToolTip" xml:space="preserve">
+    <data name="ParamItemView_WriteButton_ToolTip" xml:space="preserve">
         <value>Write this parameter to UAV</value>
     </data>
-    <data name="ParametersEditorParameterView_WriteButton" xml:space="preserve">
-        <value>Write</value>
+    <data name="ParamItemView_WriteButton_Text" xml:space="preserve">
+        <value>Set</value>
     </data>
-    <data name="ParametersEditorParameterView_RebootRequired" xml:space="preserve">
+    <data name="ParamItemView_InlineNotification_RebootRequired" xml:space="preserve">
         <value>Reboot required</value>
     </data>
     <data name="ParametersEditorPageView_StarsToggleButton_ToolTip" xml:space="preserve">
@@ -550,5 +550,32 @@
     </data>
     <data name="SetupMotorsViewModel_Name" xml:space="preserve">
         <value>Motor Test</value>
+    </data>
+    <data name="HeadingScaleItem_Direction_N" xml:space="preserve">
+        <value>N</value>
+    </data>
+    <data name="HeadingScaleItem_Direction_NE" xml:space="preserve">
+        <value>NE</value>
+    </data>
+    <data name="HeadingScaleItem_Direction_E" xml:space="preserve">
+        <value>E</value>
+    </data>
+    <data name="HeadingScaleItem_Direction_SE" xml:space="preserve">
+        <value>SE</value>
+    </data>
+    <data name="HeadingScaleItem_Direction_S" xml:space="preserve">
+        <value>S</value>
+    </data>
+    <data name="HeadingScaleItem_Direction_SW" xml:space="preserve">
+        <value>SW</value>
+    </data>
+    <data name="HeadingScaleItem_Direction_W" xml:space="preserve">
+        <value>W</value>
+    </data>
+    <data name="HeadingScaleItem_Direction_NW" xml:space="preserve">
+        <value>NW</value>
+    </data>
+    <data name="BurstDownloadDialogView_Description_Text" xml:space="preserve">
+        <value>Enter the size of a download block</value>
     </data>
 </root>
