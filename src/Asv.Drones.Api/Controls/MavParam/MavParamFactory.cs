@@ -18,6 +18,12 @@ public static class MavParamFactory
         var info = new MavParamInfo(metadata);
         return info.WidgetType switch
         {
+            MavParamWidgetType.AsciiChars => new MavParamAsciiCharViewModel(
+                info,
+                update,
+                initReadCallback,
+                loggerFactory
+                ),
             MavParamWidgetType.Altitude => new MavParamAltitudeTextBoxViewModel(
                 info,
                 update,

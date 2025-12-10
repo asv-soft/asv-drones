@@ -17,6 +17,7 @@ public enum MavParamWidgetType
     Latitude,
     Longitude,
     Altitude,
+    AsciiChars,
 }
 
 public partial class MavParamInfo
