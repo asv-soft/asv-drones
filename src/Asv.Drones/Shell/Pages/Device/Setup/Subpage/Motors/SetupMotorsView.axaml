@@ -41,7 +41,7 @@
                 <Label
                     FontWeight="Bold"
                     VerticalAlignment="Center"
-                    Content="{x:Static drones:RS.SetupMotorsView_DurationLabel_TimeUnit}"
+                    Content="{CompiledBinding DurationSymbol.Value}"
                 />
             </StackPanel>
             <ListBox

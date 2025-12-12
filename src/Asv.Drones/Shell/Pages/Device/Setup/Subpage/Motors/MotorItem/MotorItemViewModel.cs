@@ -31,23 +31,30 @@ public sealed class MotorItemViewModel : RoutableViewModel
 
     public MotorItemViewModel(
         ITestMotor motor,
-        ReactiveProperty<int> timeout,
-        IUnitService unitService,
+        ReactiveProperty<double> duration,
+        IUnitService unit,
         ILoggerFactory loggerFactory
     )
         : base(new NavigationId(BaseId, motor.Id.ToString()), loggerFactory)
     {
         Motor = motor;
-        Timeout = timeout;
+        Timeout = duration;
 
         _isEnabled = new SynchronizedReactiveProperty<bool>().DisposeItWith(Disposable);
         IsEnabled = _isEnabled.ToBindableReactiveProperty().DisposeItWith(Disposable);
 
-        var unit = unitService.Units[ProgressBase.Id];
-
         _throttle = new SynchronizedReactiveProperty<double>(0).DisposeItWith(Disposable);
-        Throttle = new HistoricalUnitProperty(nameof(Throttle), _throttle, unit, loggerFactory)
+        Throttle = new HistoricalUnitProperty(
+            nameof(Throttle),
+            _throttle,
+            unit.Units[ThrottleBase.Id],
+            loggerFactory
+        )
             .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
+
+        Throttle
+            .ViewValue.Subscribe(_ => _isEnabled.Value = !Throttle.ViewValue.HasErrors)
             .DisposeItWith(Disposable);
 
         Pwm = motor.Pwm.ToBindableReactiveProperty().DisposeItWith(Disposable);
@@ -63,24 +70,6 @@ public sealed class MotorItemViewModel : RoutableViewModel
             .ToReadOnlyBindableReactiveProperty<string>()
             .DisposeItWith(Disposable);
 
-        // TODO: Refactor to ThrottleUnit
-        Throttle
-            .Unit.CurrentUnitItem.Subscribe(item =>
-            {
-                switch (item.UnitItemId)
-                {
-                    case PercentProgressUnit.Id:
-                        Throttle.ViewValue.EnableValidation(PercentUnitValidate);
-                        break;
-                    case InPartsProgressUnit.Id:
-                        Throttle.ViewValue.EnableValidation(InPartsUnitValidate);
-                        break;
-                }
-
-                Throttle.ForceValidate();
-            })
-            .DisposeItWith(Disposable);
-
         RunTestCommand = new ReactiveCommand(
             async (_, cts) => await RunMotorTest(motor, cts)
         ).DisposeItWith(Disposable);
@@ -94,7 +83,7 @@ public sealed class MotorItemViewModel : RoutableViewModel
     public HistoricalUnitProperty Throttle { get; }
     public IReadOnlyBindableReactiveProperty<string> ThrottleSymbol { get; }
 
-    public ReactiveProperty<int> Timeout { get; }
+    public ReactiveProperty<double> Timeout { get; }
     public BindableReactiveProperty<bool> IsEnabled { get; }
 
     public override IEnumerable<IRoutable> GetRoutableChildren()
@@ -106,52 +95,10 @@ public sealed class MotorItemViewModel : RoutableViewModel
     {
         if (IsTestIdle.Value)
         {
-            await motor.StartTest((int)Throttle.ModelValue.CurrentValue, Timeout.Value, cts);
+            await motor.StartTest((int)Throttle.ModelValue.CurrentValue, (int)Timeout.Value, cts);
             return;
         }
 
         await motor.StopTest(cts);
-    }
-
-    private Exception? PercentUnitValidate(string? value)
-    {
-        if (!double.TryParse(value, out var throttle))
-        {
-            _isEnabled.Value = false;
-            return new NotNumberValidationException().GetExceptionWithLocalizationOrSelf();
-        }
-
-        if (throttle is < 0 or > 100)
-        {
-            _isEnabled.Value = false;
-            return ValidationResult
-                .FailAsOutOfRange("0", "100")
-                .ValidationException?.GetExceptionWithLocalizationOrSelf();
-        }
-
-        _isEnabled.Value = true;
-
-        return null;
-    }
-
-    private Exception? InPartsUnitValidate(string? value)
-    {
-        if (!double.TryParse(value, out var throttle))
-        {
-            _isEnabled.Value = false;
-            return new NotNumberValidationException().GetExceptionWithLocalizationOrSelf();
-        }
-
-        if (throttle is < 0 or > 1)
-        {
-            _isEnabled.Value = false;
-            return ValidationResult
-                .FailAsOutOfRange("0", "1")
-                .ValidationException?.GetExceptionWithLocalizationOrSelf();
-        }
-
-        _isEnabled.Value = true;
-
-        return null;
     }
 }

@@ -12,12 +12,10 @@ public class MavParamAsciiCharViewModel : MavParamTextBoxViewModel
         MavParamInfo param,
         Observable<MavParamValue> update,
         InitialReadParamDelegate initReadCallback,
-        ILoggerFactory loggerFactory)
-        : base(param, update, initReadCallback, loggerFactory)
-    {
-        
-    }
-    
+        ILoggerFactory loggerFactory
+    )
+        : base(param, update, initReadCallback, loggerFactory) { }
+
     protected override string ValueToText(ValueType remoteValue)
     {
         Span<byte> raw = stackalloc byte[4];
@@ -35,18 +33,17 @@ public class MavParamAsciiCharViewModel : MavParamTextBoxViewModel
 
     protected override Exception? TextToValue(string valueAsString, out ValueType value)
     {
-
         if (string.IsNullOrWhiteSpace(valueAsString))
         {
             value = 0;
             return null;
         }
 
-
-        var filtered = string.Concat(valueAsString.Where(c => 
-            !char.IsControl(c) && 
-            !char.IsWhiteSpace(c) && 
-            char.IsLetterOrDigit(c)));
+        var filtered = string.Concat(
+            valueAsString.Where(c =>
+                !char.IsControl(c) && !char.IsWhiteSpace(c) && char.IsLetterOrDigit(c)
+            )
+        );
 
         if (filtered.Length == 0)
         {
