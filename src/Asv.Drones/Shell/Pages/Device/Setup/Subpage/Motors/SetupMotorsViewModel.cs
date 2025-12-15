@@ -23,9 +23,8 @@ public sealed class SetupMotorsViewModel : SetupSubpage
     private const int DefaultTestDurationInSeconds = 3;
     private readonly ILoggerFactory _loggerFactory;
     private readonly IUnitService _unit;
-    private readonly ReactiveProperty<string?> _duration;
+    private readonly ReactiveProperty<double> _duration;
     private readonly SynchronizedReactiveProperty<bool> _isEnabled;
-    private readonly SynchronizedReactiveProperty<int> _timeout;
 
     private ISynchronizedView<ITestMotor, MotorItemViewModel>? _motorsView;
     private IMotorTestClient? _motorTestClient;
@@ -43,20 +42,30 @@ public sealed class SetupMotorsViewModel : SetupSubpage
         _isEnabled = new SynchronizedReactiveProperty<bool>().DisposeItWith(Disposable);
         IsEnabled = _isEnabled.ToBindableReactiveProperty().DisposeItWith(Disposable);
 
-        _timeout = new SynchronizedReactiveProperty<int>().DisposeItWith(Disposable);
-        Timeout = _timeout.ToBindableReactiveProperty().DisposeItWith(Disposable);
-
-        _duration = new ReactiveProperty<string?>(
-            DefaultTestDurationInSeconds.ToString()
-        ).DisposeItWith(Disposable);
-        Duration = new HistoricalStringProperty(nameof(Duration), _duration, loggerFactory)
+        _duration = new ReactiveProperty<double>(DefaultTestDurationInSeconds).DisposeItWith(
+            Disposable
+        );
+        Duration = new HistoricalUnitProperty(
+            nameof(Duration),
+            _duration,
+            unit.Units[TimeSpanBase.Id],
+            loggerFactory
+        )
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        Duration.AddValidationRule(Validate);
-        Duration.ForceValidate();
+
+        Duration
+            .ViewValue.Subscribe(_ => _isEnabled.Value = !Duration.ViewValue.HasErrors)
+            .DisposeItWith(Disposable);
+
+        DurationSymbol = Duration
+            .Unit.CurrentUnitItem.Select(item => item.Symbol)
+            .ToReadOnlyBindableReactiveProperty<string>()
+            .DisposeItWith(Disposable);
     }
 
-    public HistoricalStringProperty Duration { get; }
+    public HistoricalUnitProperty Duration { get; }
+    public IReadOnlyBindableReactiveProperty<string> DurationSymbol { get; }
 
     public BindableReactiveProperty<bool> IsEnabled { get; }
 
@@ -65,8 +74,6 @@ public sealed class SetupMotorsViewModel : SetupSubpage
         get;
         private set;
     }
-
-    public BindableReactiveProperty<int> Timeout { get; }
 
     public override ValueTask Init(ISetupPage context)
     {
@@ -77,7 +84,7 @@ public sealed class SetupMotorsViewModel : SetupSubpage
         _motorsView = _motorTestClient
             .TestMotors.CreateView(motor => new MotorItemViewModel(
                 motor,
-                Timeout,
+                _duration,
                 _unit,
                 _loggerFactory
             ))
@@ -111,36 +118,6 @@ public sealed class SetupMotorsViewModel : SetupSubpage
         }
 
         yield return Duration;
-    }
-
-    private ValidationResult Validate(string? value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            _isEnabled.Value = false;
-            return ValidationResult.FailAsNullOrWhiteSpace;
-        }
-
-        _isEnabled.Value = true;
-
-        if (!int.TryParse(value, out var i))
-        {
-            _isEnabled.Value = false;
-            return ValidationResult.FailAsNotNumber;
-        }
-
-        if (i < 0)
-        {
-            _isEnabled.Value = false;
-            return ValidationResult.FailAsOutOfRange(
-                ushort.MinValue.ToString(),
-                ushort.MaxValue.ToString()
-            );
-        }
-
-        _timeout.Value = i;
-
-        return ValidationResult.Success;
     }
 
     public override IExportInfo Source => SystemModule.Instance;

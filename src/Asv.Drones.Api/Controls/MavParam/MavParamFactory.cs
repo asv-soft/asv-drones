@@ -23,7 +23,7 @@ public static class MavParamFactory
                 update,
                 initReadCallback,
                 loggerFactory
-                ),
+            ),
             MavParamWidgetType.Altitude => new MavParamAltitudeTextBoxViewModel(
                 info,
                 update,
