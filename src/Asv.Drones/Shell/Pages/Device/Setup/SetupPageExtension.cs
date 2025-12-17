@@ -19,7 +19,7 @@ namespace Asv.Drones;
 [method: ImportingConstructor]
 public class SetupPageExtension(ILoggerFactory loggerFactory) : IExtensionFor<ISetupPage>
 {
-    public void Extend(ISetupPage context, CompositeDisposable contextDispose)
+    public void Extend(ISetupPage context, DisposableBag contextDispose)
     {
         context
             .Target.Where(w => w is not null)
@@ -42,7 +42,7 @@ public class SetupPageExtension(ILoggerFactory loggerFactory) : IExtensionFor<IS
     private ValueTask TryAddSetupFrameTypeSubpage(
         ISetupPage context,
         DeviceWrapper wrapper,
-        CompositeDisposable contextDispose,
+        DisposableBag contextDispose,
         CancellationToken ct
     )
     {
@@ -75,7 +75,7 @@ public class SetupPageExtension(ILoggerFactory loggerFactory) : IExtensionFor<IS
     private ValueTask TryAddSetupMotorsSubpage(
         ISetupPage context,
         DeviceWrapper wrapper,
-        CompositeDisposable contextDispose,
+        DisposableBag contextDispose,
         CancellationToken ct
     )
     {

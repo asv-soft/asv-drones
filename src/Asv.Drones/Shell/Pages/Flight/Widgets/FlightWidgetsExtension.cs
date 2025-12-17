@@ -19,7 +19,7 @@ public class FlightWidgetsExtension(
     ILoggerFactory loggerFactory
 ) : IExtensionFor<IFlightMode>
 {
-    public void Extend(IFlightMode context, CompositeDisposable contextDispose)
+    public void Extend(IFlightMode context, DisposableBag contextDispose)
     {
         conn.Explorer.InitializedDevices.PopulateTo(context.Widgets, TryCreateWidget, RemoveWidget)
             .DisposeItWith(contextDispose);

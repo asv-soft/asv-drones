@@ -151,8 +151,6 @@ public class MavParamsPageViewModel
             })
             .DisposeItWith(Disposable);
 
-        Disposable.AddAction(StopUpdateParamsImpl);
-
         UpdateParams = new BindableAsyncCommand(UpdateParamsCommand.Id, this);
 
         StopUpdateParams = new BindableAsyncCommand(StopUpdateParamsCommand.Id, this);
@@ -532,6 +530,16 @@ public class MavParamsPageViewModel
     }
 
     public override IExportInfo Source => SystemModule.Instance;
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            StopUpdateParamsImpl();
+        }
+
+        base.Dispose(disposing);
+    }
 }
 
 file class ParamsKvpComparer : IComparer<KeyValuePair<string, ParamItem>>

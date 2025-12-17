@@ -10,7 +10,7 @@ namespace Asv.Drones;
 [method: ImportingConstructor]
 public class HomePageFlightExtension(ILoggerFactory loggerFactory) : IExtensionFor<IHomePage>
 {
-    public void Extend(IHomePage context, CompositeDisposable contextDispose)
+    public void Extend(IHomePage context, DisposableBag contextDispose)
     {
         context.Tools.Add(
             OpenFlightModeCommand

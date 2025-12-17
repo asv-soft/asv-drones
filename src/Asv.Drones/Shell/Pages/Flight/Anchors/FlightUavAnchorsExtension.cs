@@ -15,7 +15,7 @@ namespace Asv.Drones;
 public class FlightUavAnchorsExtension(IDeviceManager conn, ILoggerFactory loggerFactory)
     : IExtensionFor<IFlightMode>
 {
-    public void Extend(IFlightMode context, CompositeDisposable contextDispose)
+    public void Extend(IFlightMode context, DisposableBag contextDispose)
     {
         conn.Explorer.InitializedDevices.PopulateTo(context.Anchors, TryCreateAnchor, RemoveAnchor)
             .DisposeItWith(contextDispose);

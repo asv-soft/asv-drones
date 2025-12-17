@@ -107,7 +107,6 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         _deviceManager = deviceManager;
         _navigationService = navigationService;
         _loggerFactory = loggerFactory;
-        _disposables = new CompositeDisposable();
         _filterChangeTrigger = new ReactiveProperty<bool>(false).DisposeItWith(Disposable);
 
         _isPaused = new ReactiveProperty<bool>().DisposeItWith(Disposable);
@@ -232,11 +231,11 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
                 async (filter, ct) =>
                 {
                     await filter.Value.RequestLoadLayout(layoutService, ct);
-                    var sub = filter.Value.IsChecked.ViewValue.Subscribe(_ =>
-                        _filterChangeTrigger.Value = !_filterChangeTrigger.Value
-                    );
-
-                    _disposables.Add(sub);
+                    var sub = filter
+                        .Value.IsChecked.ViewValue.Subscribe(_ =>
+                            _filterChangeTrigger.Value = !_filterChangeTrigger.Value
+                        )
+                        .DisposeItWith(Disposable);
                 }
             )
             .DisposeItWith(Disposable);
@@ -246,11 +245,11 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
                 async (filter, ct) =>
                 {
                     await filter.Value.RequestLoadLayout(layoutService, ct);
-                    var sub = filter.Value.IsChecked.ViewValue.Subscribe(_ =>
-                        _filterChangeTrigger.Value = !_filterChangeTrigger.Value
-                    );
-
-                    _disposables.Add(sub);
+                    var sub = filter
+                        .Value.IsChecked.ViewValue.Subscribe(_ =>
+                            _filterChangeTrigger.Value = !_filterChangeTrigger.Value
+                        )
+                        .DisposeItWith(Disposable);
                 }
             )
             .DisposeItWith(Disposable);
@@ -463,8 +462,9 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
             var converter =
                 _converters.FirstOrDefault(c => c.CanConvert(packet))
                 ?? new DefaultMavlinkPacketConverter();
-            var vm = new PacketMessageViewModel(packet, converter, _loggerFactory);
-            _disposables.Add(vm);
+            var vm = new PacketMessageViewModel(packet, converter, _loggerFactory).DisposeItWith(
+                Disposable
+            );
             yield return vm;
         }
     }
@@ -484,8 +484,9 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
             return;
         }
 
-        var newFilter = new SourcePacketFilterViewModel(vm, _unit, _loggerFactory);
-        _disposables.Add(newFilter);
+        var newFilter = new SourcePacketFilterViewModel(vm, _unit, _loggerFactory).DisposeItWith(
+            Disposable
+        );
         var isAdded = _filtersBySourceSet.Add(newFilter);
 
         if (!isAdded)
@@ -505,8 +506,9 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
             return;
         }
 
-        var newFilter = new TypePacketFilterViewModel(vm, _unit, _loggerFactory);
-        _disposables.Add(newFilter);
+        var newFilter = new TypePacketFilterViewModel(vm, _unit, _loggerFactory).DisposeItWith(
+            Disposable
+        );
         var isAdded = _filtersByTypeSet.Add(newFilter);
 
         if (!isAdded)
@@ -519,8 +521,6 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
 
     #region Dispose
 
-    private readonly CompositeDisposable _disposables;
-
     protected override void Dispose(bool disposing)
     {
         if (disposing)
@@ -528,7 +528,6 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
             _packetsBuffer.RemoveAll();
             _filtersBySourceSet.ClearWithItemsDispose();
             _filtersByTypeSet.ClearWithItemsDispose();
-            _disposables.Dispose();
         }
 
         base.Dispose(disposing);
