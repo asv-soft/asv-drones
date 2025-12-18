@@ -11,7 +11,6 @@ using Asv.Mavlink;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
-using CompositeDisposable = R3.CompositeDisposable;
 
 namespace Asv.Drones;
 
