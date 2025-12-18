@@ -6,6 +6,7 @@ using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
 using Asv.Common;
 using Asv.Drones.Api;
+using Asv.IO;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using ObservableCollections;

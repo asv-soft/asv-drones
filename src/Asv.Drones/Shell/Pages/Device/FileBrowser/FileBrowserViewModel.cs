@@ -246,13 +246,12 @@ public class FileBrowserViewModel
 
         // TODO: The sync may be done by ObservableTree in Asv.Avalonia instead
         _rawRemoteEntries = new ObservableDictionary<string, IFtpEntry>();
-        var remoteSync = new RemoteEntriesSync(
+        _ = new RemoteEntriesSync(
             _rawRemoteEntries,
             _remoteItems,
             RemoteEntryToBrowserItem,
             _loggerFactory
         ).DisposeItWith(Disposable);
-        remoteSync.Start();
 
         LocalItemsTree = new BrowserTree(_localItems, _localRootPath).DisposeItWith(Disposable);
         RemoteItemsTree = new BrowserTree(

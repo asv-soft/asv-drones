@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Asv.Avalonia;
+using Asv.IO;
 using Asv.Mavlink;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -20,7 +21,7 @@ public sealed class RemoteEntriesSync : IDisposable
     private readonly Func<string, IFtpEntry, IBrowserItemViewModel> _factory;
     private readonly ILogger _log;
 
-    private readonly CompositeDisposable _subscriptions = new();
+    private readonly IDisposable _subscriptions;
     private readonly char _separator;
 
     public RemoteEntriesSync(
@@ -39,97 +40,77 @@ public sealed class RemoteEntriesSync : IDisposable
         _target = target;
         _factory = factory;
         _log = (loggerFactory ?? NullLoggerFactory.Instance).CreateLogger<RemoteEntriesSync>();
-    }
 
-    /// <summary>Start syncing. Safe to call once; subsequent calls are no-op.</summary>
-    public void Start()
-    {
-        if (_subscriptions.Count > 0)
-        {
-            return;
-        }
+        var sub1 = _source
+            .ObserveAdd()
+            .Subscribe(kv =>
+            {
+                var pair = kv.Value;
+                var isDir = pair.Value.Type is FtpEntryType.Directory;
+                var key = FtpBrowserPath.Normalize(pair.Key, isDir, _separator);
 
-        _subscriptions.Add(
-            _source
-                .ObserveAdd()
-                .Subscribe(kv =>
+                var existing = _target.FirstOrDefault(i => i.Path == key);
+                if (existing != null)
                 {
-                    var pair = kv.Value;
-                    var isDir = pair.Value.Type is FtpEntryType.Directory;
-                    var key = FtpBrowserPath.Normalize(pair.Key, isDir, _separator);
+                    TrySyncMetadata(existing, pair.Value);
+                    return;
+                }
 
-                    var existing = _target.FirstOrDefault(i => i.Path == key);
-                    if (existing != null)
-                    {
-                        TrySyncMetadata(existing, pair.Value);
-                        return;
-                    }
+                _target.Add(_factory(key, pair.Value));
+            });
 
-                    _target.Add(_factory(key, pair.Value));
-                })
-        );
+        var sub2 = _source
+            .ObserveRemove()
+            .Subscribe(kv =>
+            {
+                var pair = kv.Value;
+                var isDir = pair.Value.Type is FtpEntryType.Directory;
+                var key = FtpBrowserPath.Normalize(pair.Key, isDir, _separator);
 
-        _subscriptions.Add(
-            _source
-                .ObserveRemove()
-                .Subscribe(kv =>
+                var victim = _target.FirstOrDefault(i => i.Path == key);
+                if (victim != null)
                 {
-                    var pair = kv.Value;
-                    var isDir = pair.Value.Type is FtpEntryType.Directory;
-                    var key = FtpBrowserPath.Normalize(pair.Key, isDir, _separator);
+                    _target.Remove(victim);
+                }
+            });
 
-                    var victim = _target.FirstOrDefault(i => i.Path == key);
-                    if (victim != null)
-                    {
-                        _target.Remove(victim);
-                    }
-                })
-        );
+        var sub3 = _source
+            .ObserveReplace()
+            .Subscribe(kv =>
+            {
+                var oldPair = kv.OldValue;
+                var newPair = kv.NewValue;
 
-        _subscriptions.Add(
-            _source
-                .ObserveReplace()
-                .Subscribe(kv =>
+                var isOldDir = oldPair.Value.Type is FtpEntryType.Directory;
+                var oldKey = FtpBrowserPath.Normalize(oldPair.Key, isOldDir, _separator);
+
+                var isNewDir = newPair.Value.Type is FtpEntryType.Directory;
+                var newKey = FtpBrowserPath.Normalize(newPair.Key, isNewDir, _separator);
+
+                var victim =
+                    _target.FirstOrDefault(i => i.Path == oldKey)
+                    ?? _target.FirstOrDefault(i => i.Path == newKey);
+
+                if (victim != null)
                 {
-                    var oldPair = kv.OldValue;
-                    var newPair = kv.NewValue;
+                    _target.Remove(victim);
+                }
 
-                    var isOldDir = oldPair.Value.Type is FtpEntryType.Directory;
-                    var oldKey = FtpBrowserPath.Normalize(oldPair.Key, isOldDir, _separator);
+                var existing = _target.FirstOrDefault(i => i.Path == newKey);
+                if (existing != null)
+                {
+                    TrySyncMetadata(existing, newPair.Value);
+                    return;
+                }
 
-                    var isNewDir = newPair.Value.Type is FtpEntryType.Directory;
-                    var newKey = FtpBrowserPath.Normalize(newPair.Key, isNewDir, _separator);
+                _target.Add(_factory(newKey, newPair.Value));
+            });
 
-                    var victim =
-                        _target.FirstOrDefault(i => i.Path == oldKey)
-                        ?? _target.FirstOrDefault(i => i.Path == newKey);
+        var sub4 = _source.ObserveReset().Subscribe(_ => _target.RemoveAll());
 
-                    if (victim != null)
-                    {
-                        _target.Remove(victim);
-                    }
-
-                    var existing = _target.FirstOrDefault(i => i.Path == newKey);
-                    if (existing != null)
-                    {
-                        TrySyncMetadata(existing, newPair.Value);
-                        return;
-                    }
-
-                    _target.Add(_factory(newKey, newPair.Value));
-                })
-        );
-
-        _subscriptions.Add(_source.ObserveReset().Subscribe(_ => _target.RemoveAll()));
+        _subscriptions = Disposable.Combine(sub1, sub2, sub3, sub4);
 
         _log.LogDebug("RemoteEntriesSync started");
-    }
-
-    /// <summary>Stop syncing and release subscriptions.</summary>
-    public void Stop()
-    {
-        _subscriptions.Dispose();
-        _log.LogDebug("RemoteEntriesSync stopped");
     }
 
     private static void TrySyncMetadata(IBrowserItemViewModel vm, IFtpEntry entry)
@@ -140,5 +121,9 @@ public sealed class RemoteEntriesSync : IDisposable
         }
     }
 
-    public void Dispose() => Stop();
+    public void Dispose()
+    {
+        _subscriptions.Dispose();
+        _log.LogDebug("RemoteEntriesSync stopped");
+    }
 }
