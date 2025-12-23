@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:api="clr-namespace:Asv.Drones.Api"
     xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    xmlns:avalonia1="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
     mc:Ignorable="d"
     d:DesignWidth="250"
     d:DesignHeight="300"
@@ -62,7 +63,7 @@
                     Width="25"
                     Height="25"
                     Kind="{Binding Info.Icon}"
-                    Foreground="{StaticResource SystemAccentColor}"
+                    avalonia1:AsvPallete.Color="{Binding Info.IconColor}"
                 />
                 <TextBlock VerticalAlignment="Center" Text="{Binding Info.Title}" />
             </StackPanel>
