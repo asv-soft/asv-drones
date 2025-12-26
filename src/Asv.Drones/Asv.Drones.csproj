@@ -76,33 +76,6 @@
         <DependentUpon>BurstDownloadDialogView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Remove="Services\Files\IFtpClientService.cs" />
-      <Compile Remove="Services\Files\FtpClientService.cs" />
-      <Compile Remove="Services\Files\LocalFilesMixin.cs" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Commands\Behaviour\" />
-      <Folder Include="Shell\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <AdditionalFiles Include="Shell\Pages\Device\FileBrowser\Dialogs\BurstDownloadDialogView.axaml" />
-      <AdditionalFiles Include="Shell\Pages\Device\FileBrowser\FileBrowserView.axaml" />
-      <AdditionalFiles Include="Shell\Pages\Device\MavParams\Dialog\TryCloseWithApprovalDialogView.axaml" />
-      <AdditionalFiles Include="Shell\Pages\Device\MavParams\MavParamsPageView.axaml" />
-      <AdditionalFiles Include="Shell\Pages\Device\MavParams\ParamItem\ParamItemView.axaml" />
-      <AdditionalFiles Include="Shell\Pages\Device\Setup\SetupPageView.axaml" />
-      <AdditionalFiles Include="Shell\Pages\Device\Setup\Subpage\FrameType\DroneFrameItem\DroneFrameItemView.axaml" />
-      <AdditionalFiles Include="Shell\Pages\Device\Setup\Subpage\FrameType\SetupFrameTypeView.axaml" />
-      <AdditionalFiles Include="Shell\Pages\Device\Setup\Subpage\Motors\MotorItem\MotorItemView.axaml" />
-      <AdditionalFiles Include="Shell\Pages\Device\Setup\Subpage\Motors\SetupMotorsView.axaml" />
-      <AdditionalFiles Include="Shell\Pages\Flight\FlightPageView.axaml" />
-      <AdditionalFiles Include="Shell\Pages\Flight\Widgets\UavWidget\Dialogs\SetAltitudeDialogView.axaml" />
-      <AdditionalFiles Include="Shell\Pages\Flight\Widgets\UavWidget\MissionProgress\MissionProgressView.axaml" />
-      <AdditionalFiles Include="Shell\Pages\Flight\Widgets\UavWidget\UavWidgetView.axaml" />
-      <AdditionalFiles Include="Shell\Pages\PacketViewer\Dialogs\SavePacketMessagesDialogView.axaml" />
-      <AdditionalFiles Include="Shell\Pages\PacketViewer\PacketMessage\PacketMessageView.axaml" />
-      <AdditionalFiles Include="Shell\Pages\PacketViewer\PacketViewerView.axaml" />
-    </ItemGroup>
 </Project>
