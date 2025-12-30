@@ -202,7 +202,7 @@ public class MavParamViewModel
         set => SetField(ref field, value);
     } = true;
 
-    public override IEnumerable<IRoutable> GetRoutableChildren()
+    public override IEnumerable<IRoutable> GetChildren()
     {
         yield break;
     }

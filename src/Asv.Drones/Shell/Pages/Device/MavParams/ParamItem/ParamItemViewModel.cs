@@ -268,14 +268,16 @@ public class ParamItemViewModel : RoutableViewModel
 
         IsPinned
             .ViewValue.SubscribeAwait(
-                async (_, _) => await Rise(new ParamItemChangedEvent(this, IsPinned))
+                async (_, ct) => await this.Rise(new ParamItemChangedEvent(this, IsPinned), ct)
             )
             .DisposeItWith(Disposable);
         IsStarred
             .ViewValue.SubscribeAwait(
-                async (_, _) => await Rise(new ParamItemChangedEvent(this, IsStarred))
+                async (_, ct) => await this.Rise(new ParamItemChangedEvent(this, IsStarred), ct)
             )
             .DisposeItWith(Disposable);
+
+        Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
     }
 
     public string Name { get; }
@@ -318,38 +320,7 @@ public class ParamItemViewModel : RoutableViewModel
         return Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase);
     }
 
-    protected override ValueTask InternalCatchEvent(AsyncRoutedEvent e)
-    {
-        switch (e)
-        {
-            case LoadLayoutEvent loadLayoutEvent:
-            {
-                if (Parent is not MavParamsPageViewModel parent)
-                {
-                    break;
-                }
-
-                parent.HandleLoadLayout<MavParamsPageViewModelConfig>(
-                    loadLayoutEvent,
-                    cfg =>
-                    {
-                        if (!cfg.Params.TryGetValue(Name, out var paramItemConfig))
-                        {
-                            return;
-                        }
-
-                        IsPinned.ModelValue.Value = paramItemConfig.IsPinned;
-                        IsStarred.ModelValue.Value = paramItemConfig.IsStarred;
-                    }
-                );
-                break;
-            }
-        }
-
-        return base.InternalCatchEvent(e);
-    }
-
-    public override IEnumerable<IRoutable> GetRoutableChildren()
+    public override IEnumerable<IRoutable> GetChildren()
     {
         yield return IsPinned;
         yield return IsStarred;
@@ -384,4 +355,35 @@ public class ParamItemViewModel : RoutableViewModel
     }
 
     #endregion
+
+    private ValueTask InternalCatchEvent(IRoutable src, AsyncRoutedEvent<IRoutable> e)
+    {
+        switch (e)
+        {
+            case LoadLayoutEvent loadLayoutEvent:
+            {
+                if (Parent is not MavParamsPageViewModel parent)
+                {
+                    break;
+                }
+
+                parent.HandleLoadLayout<MavParamsPageViewModelConfig>(
+                    loadLayoutEvent,
+                    cfg =>
+                    {
+                        if (!cfg.Params.TryGetValue(Name, out var paramItemConfig))
+                        {
+                            return;
+                        }
+
+                        IsPinned.ModelValue.Value = paramItemConfig.IsPinned;
+                        IsStarred.ModelValue.Value = paramItemConfig.IsStarred;
+                    }
+                );
+                break;
+            }
+        }
+
+        return ValueTask.CompletedTask;
+    }
 }

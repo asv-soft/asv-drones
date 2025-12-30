@@ -73,6 +73,8 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
         SelectedAnchor = new BindableReactiveProperty<IMapAnchor?>().DisposeItWith(Disposable);
         Zoom = new BindableReactiveProperty<int>(1).DisposeItWith(Disposable);
         MapCenter = new BindableReactiveProperty<GeoPoint>(GeoPoint.Zero).DisposeItWith(Disposable);
+
+        Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
     }
 
     public NotifyCollectionChangedSynchronizedViewList<IUavFlightWidget> WidgetsView { get; }
@@ -83,7 +85,7 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
     public BindableReactiveProperty<int> Zoom { get; }
     public BindableReactiveProperty<GeoPoint> MapCenter { get; }
 
-    public override IEnumerable<IRoutable> GetRoutableChildren()
+    public override IEnumerable<IRoutable> GetChildren()
     {
         foreach (var item in AnchorsView)
         {
@@ -96,7 +98,7 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
         }
     }
 
-    protected override ValueTask InternalCatchEvent(AsyncRoutedEvent e)
+    private ValueTask InternalCatchEvent(IRoutable src, AsyncRoutedEvent<IRoutable> e)
     {
         switch (e)
         {
@@ -134,7 +136,7 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
                 break;
         }
 
-        return base.InternalCatchEvent(e);
+        return ValueTask.CompletedTask;
     }
 
     protected override void AfterLoadExtensions()

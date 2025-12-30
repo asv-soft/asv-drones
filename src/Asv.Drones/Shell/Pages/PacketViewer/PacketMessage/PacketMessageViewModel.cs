@@ -59,7 +59,7 @@ public class PacketMessageViewModel : RoutableViewModel
         Size = packet.GetByteSize();
     }
 
-    public override IEnumerable<IRoutable> GetRoutableChildren()
+    public override IEnumerable<IRoutable> GetChildren()
     {
         return [];
     }
