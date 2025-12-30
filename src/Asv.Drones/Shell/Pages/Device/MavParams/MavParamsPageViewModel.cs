@@ -197,6 +197,8 @@ public class MavParamsPageViewModel
                     IsStarredOnly.ViewValue.Value
                 )
         );
+
+        Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
     }
 
     private Task UpdateImpl(string? query, IProgress<double> progress, CancellationToken cancel)
@@ -373,7 +375,7 @@ public class MavParamsPageViewModel
 
     public BindableReactiveProperty<ParamItemViewModel?> SelectedItem { get; }
 
-    public override IEnumerable<IRoutable> GetRoutableChildren()
+    public override IEnumerable<IRoutable> GetChildren()
     {
         yield return Search;
         yield return IsStarredOnly;
@@ -389,13 +391,13 @@ public class MavParamsPageViewModel
 
     protected override void AfterLoadExtensions() { }
 
-    protected override async ValueTask InternalCatchEvent(AsyncRoutedEvent e)
+    private async ValueTask InternalCatchEvent(IRoutable src, AsyncRoutedEvent<IRoutable> e)
     {
         switch (e)
         {
-            case ParamItemChangedEvent { Source: ParamItemViewModel param } paramChanged:
+            case ParamItemChangedEvent { Sender: ParamItemViewModel param } paramChanged:
             {
-                if (paramChanged.Caller is HistoricalBoolProperty caller)
+                if (paramChanged.TrackedObject is HistoricalBoolProperty caller)
                 {
                     if (caller.Id == param.IsPinned.Id)
                     {
@@ -407,7 +409,7 @@ public class MavParamsPageViewModel
                 break;
             }
 
-            case PageCloseAttemptEvent { Source: MavParamsPageViewModel } closeEvent:
+            case PageCloseAttemptEvent { Sender: MavParamsPageViewModel } closeEvent:
             {
                 var isCloseReady = await TryCloseWithApproval();
                 if (!isCloseReady)
@@ -471,8 +473,6 @@ public class MavParamsPageViewModel
                 break;
             }
         }
-
-        await base.InternalCatchEvent(e);
     }
 
     private void UpdateViewedItems(ParamItemViewModel param)

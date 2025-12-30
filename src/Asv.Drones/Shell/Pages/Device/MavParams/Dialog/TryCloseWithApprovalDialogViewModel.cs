@@ -22,7 +22,7 @@ public class TryCloseWithApprovalDialogViewModel : DialogViewModelBase
 
     public string Message { get; }
 
-    public override IEnumerable<IRoutable> GetRoutableChildren()
+    public override IEnumerable<IRoutable> GetChildren()
     {
         return [];
     }

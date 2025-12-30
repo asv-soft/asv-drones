@@ -65,6 +65,8 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
             .Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1))
             .Subscribe(_ => UpdateRateText())
             .DisposeItWith(Disposable);
+
+        Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
     }
 
     public void IncreaseRatesCounterSafe()
@@ -72,12 +74,12 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
         Interlocked.Increment(ref _cnt);
     }
 
-    public override IEnumerable<IRoutable> GetRoutableChildren()
+    public override IEnumerable<IRoutable> GetChildren()
     {
         yield return IsChecked;
     }
 
-    protected override ValueTask InternalCatchEvent(AsyncRoutedEvent e)
+    private ValueTask InternalCatchEvent(IRoutable src, AsyncRoutedEvent<IRoutable> e)
     {
         switch (e)
         {
@@ -101,7 +103,7 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
                 break;
         }
 
-        return base.InternalCatchEvent(e);
+        return ValueTask.CompletedTask;
     }
 
     private void UpdateRateText()

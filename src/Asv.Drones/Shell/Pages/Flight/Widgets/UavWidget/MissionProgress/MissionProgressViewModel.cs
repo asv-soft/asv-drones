@@ -337,7 +337,7 @@ public class MissionProgressViewModel : RoutableViewModel
     public BindableReactiveProperty<double> PathProgress { get; }
     public BindableReactiveProperty<string> DistanceUnitSymbol { get; }
 
-    public override IEnumerable<IRoutable> GetRoutableChildren()
+    public override IEnumerable<IRoutable> GetChildren()
     {
         yield return MissionDistance;
         yield return HomeDistance;

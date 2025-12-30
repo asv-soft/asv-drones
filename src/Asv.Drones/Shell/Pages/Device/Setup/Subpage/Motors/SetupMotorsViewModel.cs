@@ -100,9 +100,9 @@ public sealed class SetupMotorsViewModel : SetupSubpage
         return ValueTask.CompletedTask;
     }
 
-    public override IEnumerable<IRoutable> GetRoutableChildren()
+    public override IEnumerable<IRoutable> GetChildren()
     {
-        foreach (var childRoutable in base.GetRoutableChildren())
+        foreach (var childRoutable in base.GetChildren())
         {
             yield return childRoutable;
         }

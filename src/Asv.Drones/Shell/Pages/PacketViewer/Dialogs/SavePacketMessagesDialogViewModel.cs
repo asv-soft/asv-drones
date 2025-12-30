@@ -81,7 +81,7 @@ public class SavePacketMessagesDialogViewModel : DialogViewModelBase
         });
     }
 
-    public override IEnumerable<IRoutable> GetRoutableChildren() => [];
+    public override IEnumerable<IRoutable> GetChildren() => [];
 
     #region Dispose
 

@@ -695,7 +695,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         };
     }
 
-    public override IEnumerable<IRoutable> GetRoutableChildren()
+    public override IEnumerable<IRoutable> GetChildren()
     {
         yield return LinkQuality;
         yield return AltitudeAgl;
