@@ -2,9 +2,9 @@
 
     <PropertyGroup>
         <TargetFramework>$(TargetFramework)</TargetFramework>
-        <FileVersion>$(ProductVersion)</FileVersion>
-        <Version>$(ProductVersion)</Version>
-        <PackageVersion>$(ProductVersion)</PackageVersion>
+        <FileVersion>$(ApiVersion)</FileVersion>
+        <Version>$(ApiVersion)</Version>
+        <PackageVersion>$(ApiVersion)</PackageVersion>
 
         <Authors>https://github.com/asv-soft</Authors>
         <Company>https://github.com/asv-soft</Company>
