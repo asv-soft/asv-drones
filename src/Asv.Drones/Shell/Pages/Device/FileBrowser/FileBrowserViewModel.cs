@@ -293,6 +293,8 @@ public class FileBrowserViewModel
             .DisposeItWith(Disposable);
 
         InitCommands();
+
+        Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
     }
 
     #region Properties
@@ -1122,7 +1124,7 @@ public class FileBrowserViewModel
 
     #region Routable
 
-    protected override ValueTask InternalCatchEvent(AsyncRoutedEvent e)
+    private ValueTask InternalCatchEvent(IRoutable src, AsyncRoutedEvent<IRoutable> e)
     {
         switch (e)
         {
@@ -1213,10 +1215,10 @@ public class FileBrowserViewModel
             }
         }
 
-        return base.InternalCatchEvent(e);
+        return ValueTask.CompletedTask;
     }
 
-    public override IEnumerable<IRoutable> GetRoutableChildren()
+    public override IEnumerable<IRoutable> GetChildren()
     {
         yield return LocalSearch;
         yield return RemoteSearch;

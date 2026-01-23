@@ -50,7 +50,7 @@ sealed class Program
             .RegisterMavlinkCommands()
             .UsePluginManager(options =>
             {
-                options.WithApiPackage("Asv.Drones.Api", SemVersion.Parse("2.0.2"));
+                options.WithApiPackage("Asv.Drones.Api", SemVersion.Parse("2.1.0-dev.1"));
                 options.WithPluginPrefix("Asv.Drones.Plugin.");
             });
         using var host = builder.Build();

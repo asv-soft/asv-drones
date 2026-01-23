@@ -51,7 +51,7 @@ public class BurstDownloadDialogViewModel : DialogViewModelBase
         _sub.Disposable = IsValid.Subscribe(b => dialog.IsPrimaryButtonEnabled = b);
     }
 
-    public override IEnumerable<IRoutable> GetRoutableChildren()
+    public override IEnumerable<IRoutable> GetChildren()
     {
         return [];
     }

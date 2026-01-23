@@ -106,6 +106,8 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
             KeyValuePair<string, IDroneFrame>,
             DroneFrameItemViewModel
         >((_, model) => model.Filter(Search.Text.ViewValue.Value));
+
+        Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
     }
 
     public IReadOnlyBindableReactiveProperty<bool> IsUpdating { get; }
@@ -176,11 +178,11 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
         return ValueTask.CompletedTask;
     }
 
-    public override IEnumerable<IRoutable> GetRoutableChildren()
+    public override IEnumerable<IRoutable> GetChildren()
     {
         yield return Search;
 
-        foreach (var childRoutable in base.GetRoutableChildren())
+        foreach (var childRoutable in base.GetChildren())
         {
             yield return childRoutable;
         }
@@ -234,11 +236,11 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
         }
     }
 
-    protected override async ValueTask InternalCatchEvent(AsyncRoutedEvent e)
+    private async ValueTask InternalCatchEvent(IRoutable src, AsyncRoutedEvent<IRoutable> e)
     {
         switch (e)
         {
-            case CurrentDroneFrameChangeEvent { Source: DroneFrameItemViewModel param }:
+            case CurrentDroneFrameChangeEvent { Sender: DroneFrameItemViewModel param }:
             {
                 await this.ExecuteCommand(
                     ChangeFrameTypeCommand.Id,
@@ -249,8 +251,6 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
                 break;
             }
         }
-
-        await base.InternalCatchEvent(e);
     }
 
     private Task UpdateImpl(string? query, IProgress<double> progress, CancellationToken cancel)

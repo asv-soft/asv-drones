@@ -196,7 +196,7 @@ public abstract class BrowserItemViewModel : RoutableViewModel, IBrowserItemView
         _ops = backend.ResolveOps(Type);
     }
 
-    public override IEnumerable<IRoutable> GetRoutableChildren()
+    public override IEnumerable<IRoutable> GetChildren()
     {
         return [];
     }

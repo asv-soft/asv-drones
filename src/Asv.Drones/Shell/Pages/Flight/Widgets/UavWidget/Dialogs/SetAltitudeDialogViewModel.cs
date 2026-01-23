@@ -53,7 +53,7 @@ public class SetAltitudeDialogViewModel : DialogViewModelBase
         _sub2.Disposable = IsValid.Subscribe(enabled => dialog.IsPrimaryButtonEnabled = enabled);
     }
 
-    public override IEnumerable<IRoutable> GetRoutableChildren()
+    public override IEnumerable<IRoutable> GetChildren()
     {
         return [];
     }

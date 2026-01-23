@@ -36,11 +36,11 @@ public sealed class DroneFrameItemViewModel : RoutableViewModel
         IsCurrent = new BindableReactiveProperty<bool>(false).DisposeItWith(Disposable);
 
         ApplyCommand = new ReactiveCommand(
-            async (_, _) =>
+            async (_, ct) =>
             {
                 if (!IsCurrent.Value)
                 {
-                    await Rise(new CurrentDroneFrameChangeEvent(this));
+                    await this.Rise(new CurrentDroneFrameChangeEvent(this), ct);
                 }
             }
         ).DisposeItWith(Disposable);
@@ -60,7 +60,7 @@ public sealed class DroneFrameItemViewModel : RoutableViewModel
         return Model.Id.Contains(searchText, StringComparison.InvariantCultureIgnoreCase);
     }
 
-    public override IEnumerable<IRoutable> GetRoutableChildren()
+    public override IEnumerable<IRoutable> GetChildren()
     {
         return [];
     }

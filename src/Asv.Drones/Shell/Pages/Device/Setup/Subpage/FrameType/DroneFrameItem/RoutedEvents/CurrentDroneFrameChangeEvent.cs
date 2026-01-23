@@ -1,4 +1,5 @@
 using Asv.Avalonia;
+using Asv.Common;
 
 namespace Asv.Drones;
 
@@ -7,4 +8,4 @@ namespace Asv.Drones;
 /// </summary>
 /// <param name="source">.</param>
 public sealed class CurrentDroneFrameChangeEvent(DroneFrameItemViewModel source)
-    : AsyncRoutedEvent(source, RoutingStrategy.Bubble) { }
+    : AsyncRoutedEvent<IRoutable>(source, RoutingStrategy.Bubble) { }

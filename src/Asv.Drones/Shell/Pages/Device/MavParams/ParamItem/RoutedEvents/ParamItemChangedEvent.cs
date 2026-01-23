@@ -1,4 +1,5 @@
 using Asv.Avalonia;
+using Asv.Common;
 
 namespace Asv.Drones;
 
@@ -6,8 +7,8 @@ namespace Asv.Drones;
 /// Represents an event triggered when param item changes.
 /// </summary>
 /// <param name="source">.</param>
-public sealed class ParamItemChangedEvent(IRoutable source, object caller)
-    : AsyncRoutedEvent(source, RoutingStrategy.Bubble)
+public sealed class ParamItemChangedEvent(IRoutable source, object trackedObject)
+    : AsyncRoutedEvent<IRoutable>(source, RoutingStrategy.Bubble)
 {
-    public object Caller => caller;
+    public object TrackedObject => trackedObject;
 }

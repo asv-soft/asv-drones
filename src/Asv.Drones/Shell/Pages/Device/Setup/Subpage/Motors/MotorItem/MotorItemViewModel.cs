@@ -86,7 +86,7 @@ public sealed class MotorItemViewModel : RoutableViewModel
     public ReactiveProperty<double> Timeout { get; }
     public BindableReactiveProperty<bool> IsEnabled { get; }
 
-    public override IEnumerable<IRoutable> GetRoutableChildren()
+    public override IEnumerable<IRoutable> GetChildren()
     {
         yield return Throttle;
     }

@@ -277,9 +277,11 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
                 packetsView.AttachFilter(viewFilter);
             })
             .DisposeItWith(Disposable);
+
+        Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
     }
 
-    public override IEnumerable<IRoutable> GetRoutableChildren()
+    public override IEnumerable<IRoutable> GetChildren()
     {
         foreach (var item in _packetsBuffer)
         {
@@ -364,44 +366,6 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         }
     }
 
-    protected override ValueTask InternalCatchEvent(AsyncRoutedEvent e)
-    {
-        switch (e)
-        {
-            case SaveLayoutEvent saveLayoutEvent:
-                if (_config is null)
-                {
-                    break;
-                }
-
-                this.HandleSaveLayout(
-                    saveLayoutEvent,
-                    _config,
-                    cfg =>
-                    {
-                        cfg.SearchText = Search.Text.ViewValue.Value ?? string.Empty;
-                        cfg.IsCheckedAllSources = IsCheckedAllSources.ViewValue.Value;
-                        cfg.IsCheckedAllTypes = IsCheckedAllTypes.ViewValue.Value;
-                    },
-                    FlushingStrategy.FlushBothViewModelAndView
-                );
-                break;
-            case LoadLayoutEvent loadLayoutEvent:
-                _config = this.HandleLoadLayout<PacketViewerViewModelConfig>(
-                    loadLayoutEvent,
-                    cfg =>
-                    {
-                        Search.Text.ModelValue.Value = cfg.SearchText;
-                        IsCheckedAllSources.ModelValue.Value = cfg.IsCheckedAllSources;
-                        IsCheckedAllTypes.ModelValue.Value = cfg.IsCheckedAllTypes;
-                    }
-                );
-                break;
-        }
-
-        return base.InternalCatchEvent(e);
-    }
-
     protected override void AfterLoadExtensions() { }
 
     private ISynchronizedViewFilter<
@@ -451,6 +415,44 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
                 );
             }
         );
+    }
+
+    private ValueTask InternalCatchEvent(IRoutable src, AsyncRoutedEvent<IRoutable> e)
+    {
+        switch (e)
+        {
+            case SaveLayoutEvent saveLayoutEvent:
+                if (_config is null)
+                {
+                    break;
+                }
+
+                this.HandleSaveLayout(
+                    saveLayoutEvent,
+                    _config,
+                    cfg =>
+                    {
+                        cfg.SearchText = Search.Text.ViewValue.Value ?? string.Empty;
+                        cfg.IsCheckedAllSources = IsCheckedAllSources.ViewValue.Value;
+                        cfg.IsCheckedAllTypes = IsCheckedAllTypes.ViewValue.Value;
+                    },
+                    FlushingStrategy.FlushBothViewModelAndView
+                );
+                break;
+            case LoadLayoutEvent loadLayoutEvent:
+                _config = this.HandleLoadLayout<PacketViewerViewModelConfig>(
+                    loadLayoutEvent,
+                    cfg =>
+                    {
+                        Search.Text.ModelValue.Value = cfg.SearchText;
+                        IsCheckedAllSources.ModelValue.Value = cfg.IsCheckedAllSources;
+                        IsCheckedAllTypes.ModelValue.Value = cfg.IsCheckedAllTypes;
+                    }
+                );
+                break;
+        }
+
+        return ValueTask.CompletedTask;
     }
 
     private IEnumerable<PacketMessageViewModel> ConvertToPacketMessage(
