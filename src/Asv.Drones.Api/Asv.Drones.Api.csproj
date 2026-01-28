@@ -63,6 +63,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Core\" />
       <Folder Include="Shell\" />
     </ItemGroup>
 
@@ -79,6 +80,12 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>RS.resx</DependentUpon>
       </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Core\Controls\MavParam\Button\MavParamButtonView.axaml" />
+      <AdditionalFiles Include="Core\Controls\MavParam\ComboBox\MavParamComboBoxView.axaml" />
+      <AdditionalFiles Include="Core\Controls\MavParam\TextBox\MavParamTextBoxView.axaml" />
     </ItemGroup>
 
 

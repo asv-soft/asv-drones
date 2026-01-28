@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Composition;
 using Asv.Avalonia;
 using Asv.Common;
