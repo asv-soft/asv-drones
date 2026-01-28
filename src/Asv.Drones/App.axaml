@@ -9,12 +9,12 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <MergeResourceInclude Source="avares://Asv.Drones/Controls/Flight/UavWidget/RouteIndicator/RouteIndicatorStyles.axaml" />
+                <MergeResourceInclude Source="avares://Asv.Drones/Core/Controls/Flight/UavWidget/RouteIndicator/RouteIndicatorStyles.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
     <Application.Styles>
-        <StyleInclude Source="avares://Asv.Drones/Controls/Flight/UavWidget/Attitude/AttitudeIndicatorStyles.axaml" />
+        <StyleInclude Source="avares://Asv.Drones/Core/Controls/Flight/UavWidget/Attitude/AttitudeIndicatorStyles.axaml" />
         <StyleInclude Source="avares://Asv.Avalonia/Styling/Theme.axaml" />
         <StyleInclude Source="avares://Asv.Avalonia.GeoMap/Theme.axaml" />
     </Application.Styles>

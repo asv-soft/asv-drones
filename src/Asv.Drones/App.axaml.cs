@@ -1,34 +1,25 @@
 using System;
-using System.Collections.Generic;
 using System.Composition;
 using System.Composition.Convention;
 using System.Composition.Hosting;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Reflection;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
 using Asv.Avalonia.IO;
 using Asv.Avalonia.Plugins;
-using Asv.Cfg;
-using Asv.Common;
 using Asv.Drones.Api;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Templates;
 using Avalonia.Markup.Xaml;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using R3;
 
 namespace Asv.Drones;
 
 public partial class App : Application, IContainerHost, IShellHost
 {
-    private readonly CompositionHost _container;
     private IShell _shell;
+    private readonly CompositionHost _container;
     private readonly Subject<IShell> _onShellLoaded = new();
 
     public App()
@@ -45,7 +36,6 @@ public partial class App : Application, IContainerHost, IShellHost
             .WithDependenciesFromTheApp(this)
             .WithDefaultConventions(conventions);
 
-        // TODO: load plugin manager before creating container
         _container = containerCfg.CreateContainer();
         DataTemplates.Add(new CompositionViewLocator(_container));
 
@@ -134,6 +124,14 @@ public partial class App : Application, IContainerHost, IShellHost
 
     public TopLevel TopLevel { get; private set; }
     public IExportInfo Source => SystemModule.Instance;
+
+    public void Dispose()
+    {
+        _container.Dispose();
+        _shell.Dispose();
+        _onShellLoaded.Dispose();
+        GC.SuppressFinalize(this);
+    }
 }
 
 public static class ContainerConfigurationMixin

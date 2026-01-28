@@ -78,4 +78,13 @@
       </Compile>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Core\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Core\Controls\Flight\UavWidget\Attitude\AttitudeIndicatorStyles.axaml" />
+      <AdditionalFiles Include="Core\Controls\Flight\UavWidget\RouteIndicator\RouteIndicatorStyles.axaml" />
+    </ItemGroup>
+
 </Project>
