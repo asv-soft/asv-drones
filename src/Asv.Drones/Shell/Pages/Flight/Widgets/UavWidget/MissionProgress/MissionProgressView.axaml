@@ -64,89 +64,36 @@
                         <Setter Property="Stretch" Value="Uniform"></Setter>
                         <Setter Property="StretchDirection" Value="Both"></Setter>
                     </Style>
-                    <Style Selector="avalonia|TelemBox">
+                    <Style Selector="avalonia|RttBox">
                         <Setter Property="Width" Value="190" />
                         <Setter Property="Height" Value="90" />
-                        <Setter Property="IsBusy" Value="False" />
+                        <!-- <Setter Property="Is" Value="False" /> -->
                         <Setter Property="HorizontalAlignment" Value="Stretch" />
                     </Style>
                 </WrapPanel.Styles>
                 <Viewbox>
-                    <avalonia:TelemBox
-                        MainBrush="{DynamicResource NavyMainBrush}"
-                        SecondaryBrush="{DynamicResource NavySecondaryBrush}"
-                        Title="{x:Static drones:RS.MissionProgressView_MissionDistanceRTT}"
-                        Units="{Binding DistanceUnitSymbol.Value}"
-                        FontSize="{DynamicResource FontSizeNormal}"
-                        Icon="MapMarkerDistance"
+                    <avalonia:SplitDigitRttBoxView
                         CornerRadius="{DynamicResource ControlCornerRadius}"
-                    >
-                        <avalonia:TelemBox.CustomContent>
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                TextAlignment="Center"
-                                Text="{Binding MissionDistance.ViewValue.Value}"
-                            />
-                        </avalonia:TelemBox.CustomContent>
-                    </avalonia:TelemBox>
-                </Viewbox>
-
-                <Viewbox>
-                    <avalonia:TelemBox
-                        MainBrush="{DynamicResource NavyMainBrush}"
-                        SecondaryBrush="{DynamicResource NavySecondaryBrush}"
-                        Title="{x:Static drones:RS.MissionProgressView_TotalDistanceRTT}"
-                        Units="{Binding DistanceUnitSymbol.Value}"
-                        Icon="LocationDistance"
-                        CornerRadius="{DynamicResource ControlCornerRadius}"
-                    >
-                        <avalonia:TelemBox.CustomContent>
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                TextAlignment="Center"
-                                FontSize="{DynamicResource FontSizeNormal}"
-                                Text="{Binding TotalDistance.ViewValue.Value}"
-                            />
-                        </avalonia:TelemBox.CustomContent>
-                    </avalonia:TelemBox>
+                        DataContext="{CompiledBinding  MissionDistanceRttBox}"
+                    />
                 </Viewbox>
                 <Viewbox>
-                    <avalonia:TelemBox
-                        MainBrush="{DynamicResource NavyMainBrush}"
-                        SecondaryBrush="{DynamicResource NavySecondaryBrush}"
-                        Title="{x:Static drones:RS.MissionProgressView_HomeDistance}"
-                        Units="{Binding DistanceUnitSymbol.Value}"
-                        Icon="Home"
+                    <avalonia:SplitDigitRttBoxView
                         CornerRadius="{DynamicResource ControlCornerRadius}"
-                    >
-                        <avalonia:TelemBox.CustomContent>
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                TextAlignment="Center"
-                                FontSize="{DynamicResource FontSizeNormal}"
-                                Text="{Binding HomeDistance.ViewValue.Value}"
-                            />
-                        </avalonia:TelemBox.CustomContent>
-                    </avalonia:TelemBox>
+                        DataContext="{CompiledBinding TotalDistanceRttBox}"
+                    />
                 </Viewbox>
                 <Viewbox>
-                    <avalonia:TelemBox
-                        MainBrush="{DynamicResource NavyMainBrush}"
-                        SecondaryBrush="{DynamicResource NavySecondaryBrush}"
-                        Title="{x:Static drones:RS.MissionProgressView_TargetDistance}"
-                        Units="{Binding DistanceUnitSymbol.Value}"
-                        Icon="Target"
+                    <avalonia:SplitDigitRttBoxView
                         CornerRadius="{DynamicResource ControlCornerRadius}"
-                    >
-                        <avalonia:TelemBox.CustomContent>
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                TextAlignment="Center"
-                                FontSize="{DynamicResource FontSizeNormal}"
-                                Text="{Binding TargetDistance.ViewValue.Value}"
-                            />
-                        </avalonia:TelemBox.CustomContent>
-                    </avalonia:TelemBox>
+                        DataContext="{CompiledBinding HomeDistanceRttBox}"
+                    />
+                </Viewbox>
+                <Viewbox>
+                    <avalonia:SplitDigitRttBoxView
+                        CornerRadius="{DynamicResource ControlCornerRadius}"
+                        DataContext="{CompiledBinding TargetDistanceRttBox}"
+                    />
                 </Viewbox>
             </WrapPanel>
         </StackPanel>
