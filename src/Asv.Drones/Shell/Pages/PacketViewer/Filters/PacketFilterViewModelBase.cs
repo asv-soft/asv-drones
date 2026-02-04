@@ -40,7 +40,7 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
     )
         : base(new NavigationId(BaseId, idArg), loggerFactory)
     {
-        _unit = unitService.Units[FrequencyBase.Id];
+        _unit = unitService.Units[FrequencyUnit.Id];
         _isChecked = new ReactiveProperty<bool>(true).DisposeItWith(Disposable);
         _messageRate = new ReactiveProperty<double>().DisposeItWith(Disposable);
         MessageRateText = new HistoricalUnitProperty(

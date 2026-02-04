@@ -48,7 +48,7 @@ public sealed class SetupMotorsViewModel : SetupSubpage
         Duration = new HistoricalUnitProperty(
             nameof(Duration),
             _duration,
-            unit.Units[TimeSpanBase.Id],
+            unit.Units[TimeSpanUnit.Id],
             loggerFactory
         )
             .SetRoutableParent(this)

@@ -28,6 +28,7 @@ sealed class Program
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
 
         builder
+            .UseUnitService()
             .UseAvalonia(BuildAvaloniaApp)
             .UseAppPath(opt =>
             {

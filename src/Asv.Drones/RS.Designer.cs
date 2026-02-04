@@ -1572,6 +1572,78 @@ namespace Asv.Drones {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amperage.
+        /// </summary>
+        public static string UavWidgetViewModel_BatteryRttBox_BatteryAmperage_Header {
+            get {
+                return ResourceManager.GetString("UavWidgetViewModel_BatteryRttBox_BatteryAmperage_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Charge.
+        /// </summary>
+        public static string UavWidgetViewModel_BatteryRttBox_BatteryCharge_Header {
+            get {
+                return ResourceManager.GetString("UavWidgetViewModel_BatteryRttBox_BatteryCharge_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Capacity.
+        /// </summary>
+        public static string UavWidgetViewModel_BatteryRttBox_BatteryConsumed_Header {
+            get {
+                return ResourceManager.GetString("UavWidgetViewModel_BatteryRttBox_BatteryConsumed_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voltage.
+        /// </summary>
+        public static string UavWidgetViewModel_BatteryRttBox_BatteryVoltage_Header {
+            get {
+                return ResourceManager.GetString("UavWidgetViewModel_BatteryRttBox_BatteryVoltage_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hdop.
+        /// </summary>
+        public static string UavWidgetViewModel_GnssRttBox_Hdop_Header {
+            get {
+                return ResourceManager.GetString("UavWidgetViewModel_GnssRttBox_Hdop_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mode.
+        /// </summary>
+        public static string UavWidgetViewModel_GnssRttBox_Mode_Header {
+            get {
+                return ResourceManager.GetString("UavWidgetViewModel_GnssRttBox_Mode_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satellites.
+        /// </summary>
+        public static string UavWidgetViewModel_GnssRttBox_SatellitesCount_Header {
+            get {
+                return ResourceManager.GetString("UavWidgetViewModel_GnssRttBox_SatellitesCount_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vdop.
+        /// </summary>
+        public static string UavWidgetViewModel_GnssRttBox_Vdop_Header {
+            get {
+                return ResourceManager.GetString("UavWidgetViewModel_GnssRttBox_Vdop_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input Altitude.
         /// </summary>
         public static string UavWidgetViewModel_SetAltitudeDialog_Title {

@@ -47,7 +47,7 @@ public sealed class MotorItemViewModel : RoutableViewModel
         Throttle = new HistoricalUnitProperty(
             nameof(Throttle),
             _throttle,
-            unit.Units[ThrottleBase.Id],
+            unit.Units[ThrottleUnit.Id],
             loggerFactory
         )
             .SetRoutableParent(this)

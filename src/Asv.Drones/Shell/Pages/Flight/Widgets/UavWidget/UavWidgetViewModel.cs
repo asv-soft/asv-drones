@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
@@ -10,8 +8,6 @@ using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
-using Avalonia.Media;
-using Avalonia.Threading;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
@@ -22,62 +18,97 @@ namespace Asv.Drones;
 public class UavWidgetViewModel : MapWidget, IUavFlightWidget
 {
     private const string WidgetId = "widget-uav";
+    private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
-    private readonly IUnit _velocityUnit;
     private readonly IUnit _altitudeUnit;
-    private readonly IUnit _angleUnit;
     private readonly IUnit _capacityUnit;
     private readonly IUnit _amperageUnit;
     private readonly IUnit _voltageUnit;
     private readonly IUnit _progressUnit;
+
     private readonly IGnssClientEx? _gnssClient;
     private const int CriticalAltitude = 40;
     private const int DangerHighSpeed = 10;
     private const int DangerSatelliteCount = 10;
     private static readonly Range WarningSatelliteAmount = 15..20;
 
-    private static readonly Color GreenColor = Color.Parse("#21c088");
-    private static readonly Color OrangeColor = Color.Parse("#e48f4d");
-    private static readonly Color RedColor = Color.Parse("#cc5058");
-    private static readonly Color YellowColor = Color.Parse("#dfc34a");
+#pragma warning disable SA1313
+    private record BatteryRttBoxData(
+        double Charge,
+        double Amperage,
+        double Voltage,
+        double Consumed,
+        IUnitItem ProgressUnit,
+        IUnitItem AmperageUnit,
+        IUnitItem CapacityUnit,
+        IUnitItem VoltageUnit
+    );
+
+    private record AltitudeRttBoxData(
+        double AltitudeAgl,
+        double AltitudeMsl,
+        IUnitItem AltitudeUnit
+    );
+
+    private record GnssRttBoxData(
+        int Sattelites,
+        double HdopCount,
+        double VdopCount,
+        Mavlink.Common.GpsFixType Mode
+    );
+#pragma warning restore SA1313
 
     public UavWidgetViewModel()
         : base(WidgetId, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
-        Dispatcher.UIThread.InvokeAsync(() =>
-        {
-            GnssStatusBrush = new SolidColorBrush(); // TODO: implement asv color instead of color brush
-            LinkQualityStatusBrush = new SolidColorBrush();
-            BatteryStatusBrush = new SolidColorBrush();
-            AltitudeStatusBrush = new SolidColorBrush();
-
-            AltitudeStatusBrush.Color = GreenColor;
-            BatteryStatusBrush.Color = RedColor;
-            GnssStatusBrush.Color = OrangeColor;
-            LinkQualityStatusBrush.Color = GreenColor;
-            GnssStatusBrush.Color = GreenColor;
-        });
         TakeOff = new ReactiveCommand();
         AutoMode = new ReactiveCommand();
         Rtl = new ReactiveCommand();
         Guided = new ReactiveCommand();
         StartMission = new ReactiveCommand();
+        Land = new ReactiveCommand();
         InitArgs("1");
         MissionProgress = new MissionProgressViewModel().DisposeItWith(Disposable);
+
+        NullUnitService.Instance.Extend(
+            new VelocityUnit(
+                DesignTime.Configuration,
+                [new VelocityMetersPerSecondUnitItem(), new VelocityMilesPerHourUnitItem()]
+            )
+        );
+        NullUnitService.Instance.Extend(
+            new ProgressUnit(
+                DesignTime.Configuration,
+                [new ProgressPercentUnitItem(), new ProgressInPartsUnitItem()]
+            )
+        );
+        NullUnitService.Instance.Extend(
+            new CapacityUnit(DesignTime.Configuration, [new CapacityMilliAmperePerHourUnitItem()])
+        );
+        NullUnitService.Instance.Extend(
+            new AmperageUnit(
+                DesignTime.Configuration,
+                [new AmperageAmpereUnitItem(), new AmperageMilliAmpereUnitItem()]
+            )
+        );
+        NullUnitService.Instance.Extend(
+            new VoltageUnit(
+                DesignTime.Configuration,
+                [new VoltageVoltUnitItem(), new VoltageMilliVoltUnitItem()]
+            )
+        );
 
         var unitService = NullUnitService.Instance;
 
         Icon = MaterialIconKind.AccountFile;
-        IconColor = AsvColorKind.Info4;
-        var unitItem = unitService.Units.Values.First();
-        _altitudeUnit = unitItem;
-        _velocityUnit = unitItem;
-        _angleUnit = unitItem;
-        _capacityUnit = unitItem;
-        _amperageUnit = unitItem;
-        _voltageUnit = unitItem;
-        _progressUnit = unitItem;
+        IconColor = AsvColorKind.Info5;
+
+        _altitudeUnit = unitService.Units[AltitudeUnit.Id];
+        _capacityUnit = unitService.Units[CapacityUnit.Id];
+        _amperageUnit = unitService.Units[AmperageUnit.Id];
+        _voltageUnit = unitService.Units[VoltageUnit.Id];
+        _progressUnit = unitService.Units[ProgressUnit.Id];
 
         var linkQuality = new ReactiveProperty<double>(100).DisposeItWith(Disposable);
         var altitudeAgl = new ReactiveProperty<double>(10).DisposeItWith(Disposable);
@@ -85,122 +116,221 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         var heading = new ReactiveProperty<double>(29).DisposeItWith(Disposable);
         var azimuth = new ReactiveProperty<double>(39).DisposeItWith(Disposable);
         var homeAzimuth = new ReactiveProperty<double>(30).DisposeItWith(Disposable);
+        var satelliteCount = new ReactiveProperty<int>(10).DisposeItWith(Disposable);
+        var hdopCount = new ReactiveProperty<double>(2).DisposeItWith(Disposable);
+        var vdopCount = new ReactiveProperty<double>(4).DisposeItWith(Disposable);
+        var gpsFixType = new ReactiveProperty<Mavlink.Common.GpsFixType>(
+            Mavlink.Common.GpsFixType.GpsFixTypeDgps
+        ).DisposeItWith(Disposable);
         var velocity = new ReactiveProperty<double>(199).DisposeItWith(Disposable);
         var batteryAmperage = new ReactiveProperty<double>(39).DisposeItWith(Disposable);
         var batteryVoltage = new ReactiveProperty<double>(34).DisposeItWith(Disposable);
         var batteryCharge = new ReactiveProperty<double>(123).DisposeItWith(Disposable);
         var batteryConsumed = new ReactiveProperty<double>(39).DisposeItWith(Disposable);
+        var currentFlightMode = new ReactiveProperty<string>("Unknown").DisposeItWith(Disposable);
 
-        LinkQuality = new BindableUnitProperty(
-            nameof(LinkQuality),
-            linkQuality,
-            unitItem,
-            DesignTime.LoggerFactory
+        CurrentFlightModeRttBox = new SingleRttBoxViewModel<string>(
+            nameof(CurrentFlightModeRttBox),
+            DesignTime.LoggerFactory,
+            currentFlightMode,
+            null
         )
+        {
+            Header = RS.UavRttItem_Mode,
+            Icon = MaterialIconKind.FlightMode,
+            UpdateAction = (model, mode) => model.ValueString = mode,
+            Status = DefaultStatusColor,
+        }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        LinkQuality.ForceValidate();
-        AltitudeAgl = new BindableUnitProperty(
-            nameof(AltitudeAgl),
-            altitudeAgl,
-            unitItem,
-            DesignTime.LoggerFactory
+
+        AltitudeRttBox = new TwoColumnRttBoxViewModel<AltitudeRttBoxData>(
+            nameof(AltitudeRttBox),
+            DesignTime.LoggerFactory,
+            altitudeAgl
+                .CombineLatest(
+                    altitudeMsl,
+                    _altitudeUnit.CurrentUnitItem,
+                    (agl, msl, unit) => new AltitudeRttBoxData(agl, msl, unit)
+                )
+                .ObserveOnUIThreadDispatcher()
+                .ThrottleLast(TimeSpan.FromMilliseconds(200)),
+            null
         )
+        {
+            Header = RS.UavRttItem_Altitude,
+            Icon = MaterialIconKind.Altimeter,
+            UpdateAction = (model, changes) =>
+            {
+                model.Left.ValueString = changes.AltitudeUnit.PrintFromSi(
+                    changes.AltitudeAgl,
+                    "F2"
+                );
+                model.Right.ValueString = changes.AltitudeUnit.PrintFromSi(
+                    changes.AltitudeMsl,
+                    "F2"
+                );
+
+                model.Left.UnitSymbol = changes.AltitudeUnit.Symbol;
+                model.Right.UnitSymbol = changes.AltitudeUnit.Symbol;
+            },
+            Status = DefaultStatusColor,
+        }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        AltitudeAgl.ForceValidate();
-        AltitudeMsl = new BindableUnitProperty(
-            nameof(AltitudeMsl),
-            altitudeMsl,
-            unitItem,
-            DesignTime.LoggerFactory
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        AltitudeMsl.ForceValidate();
-        Azimuth = new BindableUnitProperty(
-            nameof(Azimuth),
-            azimuth,
-            unitItem,
-            DesignTime.LoggerFactory
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        Azimuth.ForceValidate();
-        Heading = new BindableUnitProperty(
-            nameof(Heading),
-            heading,
-            unitItem,
-            DesignTime.LoggerFactory
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        Heading.ForceValidate();
-        HomeAzimuth = new BindableUnitProperty(
-            nameof(HomeAzimuth),
-            homeAzimuth,
-            unitItem,
-            DesignTime.LoggerFactory
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        HomeAzimuth.ForceValidate();
-        Velocity = new BindableUnitProperty(
-            nameof(Velocity),
+        AltitudeRttBox.Left.Header = "AGL";
+        AltitudeRttBox.Right.Header = "MSL";
+
+        VelocityRttBox = new SplitDigitRttBoxViewModel(
+            nameof(VelocityRttBox),
+            DesignTime.LoggerFactory,
+            unitService,
+            VelocityUnit.Id,
             velocity,
-            unitItem,
-            DesignTime.LoggerFactory
+            null
         )
+        {
+            Header = RS.UavRttItem_Velocity,
+            ShortHeader = "GS",
+            Icon = MaterialIconKind.Speedometer,
+            Status = DefaultStatusColor,
+            FormatString = "F2",
+        }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        Velocity.ForceValidate();
-        BatteryAmperage = new BindableUnitProperty(
-            nameof(BatteryAmperage),
-            batteryAmperage,
-            unitItem,
-            DesignTime.LoggerFactory,
-            "N2"
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        BatteryAmperage.ForceValidate();
-        BatteryVoltage = new BindableUnitProperty(
-            nameof(BatteryVoltage),
-            batteryVoltage,
-            unitItem,
-            DesignTime.LoggerFactory,
-            "N2"
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        BatteryVoltage.ForceValidate();
-        BatteryCharge = new BindableUnitProperty(
-            nameof(BatteryCharge),
-            batteryCharge,
-            unitItem,
-            DesignTime.LoggerFactory
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        BatteryCharge.ForceValidate();
-        BatteryConsumed = new BindableUnitProperty(
-            nameof(BatteryConsumed),
-            batteryConsumed,
-            unitItem,
-            DesignTime.LoggerFactory
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        BatteryConsumed.ForceValidate();
 
-        LinkState = new BindableReactiveProperty<string>("Connected").DisposeItWith(Disposable);
-        CurrentFlightMode = new BindableReactiveProperty<string>("Auto").DisposeItWith(Disposable);
+        AzimuthRttBox = new SplitDigitRttBoxViewModel(
+            nameof(AzimuthRttBox),
+            DesignTime.LoggerFactory,
+            unitService,
+            AngleUnit.Id,
+            azimuth,
+            null
+        )
+        {
+            Header = RS.UavRttItem_Azimuth,
+            Icon = MaterialIconKind.SunAzimuth,
+            Status = DefaultStatusColor,
+            FormatString = "F2",
+        }
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
+
+        BatteryRttBox = new KeyValueRttBoxViewModel<BatteryRttBoxData>(
+            nameof(BatteryRttBox),
+            DesignTime.LoggerFactory,
+            batteryCharge
+                .CombineLatest(
+                    batteryAmperage,
+                    batteryVoltage,
+                    batteryConsumed,
+                    _progressUnit.CurrentUnitItem,
+                    _amperageUnit.CurrentUnitItem,
+                    _capacityUnit.CurrentUnitItem,
+                    _voltageUnit.CurrentUnitItem,
+                    (bC, bA, bV, bCo, prog, amp, cap, vol) =>
+                        new BatteryRttBoxData(bC, bA, bV, bCo, prog, amp, cap, vol)
+                )
+                .ObserveOnUIThreadDispatcher()
+                .ThrottleLast(TimeSpan.FromMilliseconds(200)),
+            null
+        )
+        {
+            Header = RS.UavRttItem_Battery,
+            Icon = MaterialIconKind.Battery10,
+            UpdateAction = (model, changes) =>
+            {
+                model[
+                    0,
+                    RS.UavWidgetViewModel_BatteryRttBox_BatteryCharge_Header,
+                    changes.ProgressUnit.Symbol
+                ].ValueString = changes.ProgressUnit.PrintFromSi(changes.Charge, "F2");
+                model[
+                    1,
+                    RS.UavWidgetViewModel_BatteryRttBox_BatteryAmperage_Header,
+                    changes.AmperageUnit.Symbol
+                ].ValueString = changes.AmperageUnit.PrintFromSi(changes.Amperage, "F2");
+                model[
+                    2,
+                    RS.UavWidgetViewModel_BatteryRttBox_BatteryVoltage_Header,
+                    changes.VoltageUnit.Symbol
+                ].ValueString = changes.VoltageUnit.PrintFromSi(changes.Voltage, "F2");
+                model[
+                    3,
+                    RS.UavWidgetViewModel_BatteryRttBox_BatteryConsumed_Header,
+                    changes.CapacityUnit.Symbol
+                ].ValueString = changes.CapacityUnit.PrintFromSi(changes.Consumed, "F2");
+
+                ChangeBatteryStatus(changes.Charge);
+            },
+            Status = DefaultStatusColor,
+        }
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
+
+        GnssRttBox = new KeyValueRttBoxViewModel<GnssRttBoxData>(
+            nameof(GnssRttBox),
+            DesignTime.LoggerFactory,
+            satelliteCount
+                .CombineLatest(
+                    hdopCount,
+                    vdopCount,
+                    gpsFixType,
+                    (satellites, hdops, vdops, mode) =>
+                        new GnssRttBoxData(satellites, hdops, vdops, mode)
+                )
+                .ObserveOnUIThreadDispatcher()
+                .ThrottleLast(TimeSpan.FromMilliseconds(200)),
+            null
+        )
+        {
+            Header = RS.UavRttItem_GNSS,
+            Icon = MaterialIconKind.GpsFixed,
+            UpdateAction = (model, changes) =>
+            {
+                model[
+                    0,
+                    RS.UavWidgetViewModel_GnssRttBox_SatellitesCount_Header,
+                    null
+                ].ValueString = changes.Sattelites.ToString();
+                model[1, RS.UavWidgetViewModel_GnssRttBox_Hdop_Header, null].ValueString =
+                    changes.HdopCount.ToString("F2");
+                model[2, RS.UavWidgetViewModel_GnssRttBox_Vdop_Header, null].ValueString =
+                    changes.VdopCount.ToString("F2");
+                model[3, RS.UavWidgetViewModel_GnssRttBox_Mode_Header, null].ValueString =
+                    GpsFixTypeToString(changes.Mode);
+                ChangeGnssStatus(changes.Sattelites, changes.Mode);
+            },
+            Status = DefaultStatusColor,
+        }
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
+
+        LinkQualityRttBox = new SplitDigitRttBoxViewModel(
+            nameof(LinkQualityRttBox),
+            DesignTime.LoggerFactory,
+            unitService,
+            ProgressUnit.Id,
+            linkQuality,
+            null
+        )
+        {
+            Header = RS.UavRttItem_Link,
+            Icon = MaterialIconKind.Wifi,
+            Status = DefaultStatusColor,
+            FormatString = "F2",
+        }
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
+
+        AltitudeAgl = altitudeAgl.ToReadOnlyBindableReactiveProperty().DisposeItWith(Disposable);
+        AltitudeMsl = altitudeMsl.ToReadOnlyBindableReactiveProperty().DisposeItWith(Disposable);
+        Azimuth = azimuth.ToReadOnlyBindableReactiveProperty().DisposeItWith(Disposable);
+        Heading = heading.ToReadOnlyBindableReactiveProperty().DisposeItWith(Disposable);
+        HomeAzimuth = homeAzimuth.ToReadOnlyBindableReactiveProperty().DisposeItWith(Disposable);
+        Velocity = velocity.ToReadOnlyBindableReactiveProperty().DisposeItWith(Disposable);
         Roll = new BindableReactiveProperty<double>().DisposeItWith(Disposable);
         Pitch = new BindableReactiveProperty<double>().DisposeItWith(Disposable);
-        VdopCount = new BindableReactiveProperty<string>().DisposeItWith(Disposable);
-        HdopCount = new BindableReactiveProperty<string>().DisposeItWith(Disposable);
-        SatelliteCount = new BindableReactiveProperty<int>(10).DisposeItWith(Disposable);
-        RtkMode = new BindableReactiveProperty<string>("RTK Fixed").DisposeItWith(Disposable);
         IsArmed = new BindableReactiveProperty<bool>().DisposeItWith(Disposable);
         StatusText = new BindableReactiveProperty<string>().DisposeItWith(Disposable);
         VibrationX = new BindableReactiveProperty<float>().DisposeItWith(Disposable);
@@ -210,39 +340,17 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         Clipping1 = new BindableReactiveProperty<uint>().DisposeItWith(Disposable);
         Clipping2 = new BindableReactiveProperty<uint>().DisposeItWith(Disposable);
         ArmedTime = new BindableReactiveProperty<TimeSpan>().DisposeItWith(Disposable);
-
-        BatteryConsumedSymbol = BatteryConsumed
-            .Unit.CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        BatteryAmperageSymbol = BatteryAmperage
-            .Unit.CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        BatteryChargeSymbol = BatteryCharge
-            .Unit.CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        BatteryVoltageSymbol = BatteryVoltage
-            .Unit.CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        LinkQualitySymbol = LinkQuality
-            .Unit.CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        VelocitySymbol = Velocity
-            .Unit.CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        AltitudeSymbol = _altitudeUnit
-            .CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        AzimuthSymbol = Azimuth
-            .Unit.CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
+        Roll = new BindableReactiveProperty<double>().DisposeItWith(Disposable);
+        Pitch = new BindableReactiveProperty<double>().DisposeItWith(Disposable);
+        IsArmed = new BindableReactiveProperty<bool>().DisposeItWith(Disposable);
+        StatusText = new BindableReactiveProperty<string>().DisposeItWith(Disposable);
+        VibrationX = new BindableReactiveProperty<float>().DisposeItWith(Disposable);
+        VibrationY = new BindableReactiveProperty<float>().DisposeItWith(Disposable);
+        VibrationZ = new BindableReactiveProperty<float>().DisposeItWith(Disposable);
+        Clipping0 = new BindableReactiveProperty<uint>().DisposeItWith(Disposable);
+        Clipping1 = new BindableReactiveProperty<uint>().DisposeItWith(Disposable);
+        Clipping2 = new BindableReactiveProperty<uint>().DisposeItWith(Disposable);
+        ArmedTime = new BindableReactiveProperty<TimeSpan>().DisposeItWith(Disposable);
     }
 
     public UavWidgetViewModel(
@@ -255,24 +363,15 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         : base(WidgetId, loggerFactory)
     {
         ArgumentNullException.ThrowIfNull(device);
-        Dispatcher.UIThread.InvokeAsync(() =>
-        {
-            GnssStatusBrush = new SolidColorBrush();
-            LinkQualityStatusBrush = new SolidColorBrush();
-            BatteryStatusBrush = new SolidColorBrush();
-            AltitudeStatusBrush = new SolidColorBrush();
-        });
         Device = device;
         Position = WorkspaceDock.Left;
         Icon = dev.GetIcon(device.Id);
         IconColor = dev.GetDeviceColor(device.Id);
-        _altitudeUnit = unitService.Units[AltitudeBase.Id];
-        _velocityUnit = unitService.Units[VelocityBase.Id];
-        _angleUnit = unitService.Units[AngleBase.Id];
-        _capacityUnit = unitService.Units[CapacityBase.Id];
-        _amperageUnit = unitService.Units[AmperageBase.Id];
-        _voltageUnit = unitService.Units[VoltageBase.Id];
-        _progressUnit = unitService.Units[ProgressBase.Id];
+        _altitudeUnit = unitService.Units[AltitudeUnit.Id];
+        _capacityUnit = unitService.Units[CapacityUnit.Id];
+        _amperageUnit = unitService.Units[AmperageUnit.Id];
+        _voltageUnit = unitService.Units[VoltageUnit.Id];
+        _progressUnit = unitService.Units[ProgressUnit.Id];
         device.Name.Subscribe(x => Header = x).DisposeItWith(Disposable);
         InitArgs(device.Id.AsString());
         MissionProgress = new MissionProgressViewModel(device, unitService, loggerFactory)
@@ -343,242 +442,75 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         AutoMode = new BindableAsyncCommand(AutoModeCommand.Id, this);
         StartMission = new BindableAsyncCommand(StartMissionCommand.Id, this);
 
-        var linkQuality = new ReactiveProperty<double>().DisposeItWith(Disposable);
-        var altitudeAgl = new ReactiveProperty<double>().DisposeItWith(Disposable);
-        var altitudeMsl = new ReactiveProperty<double>().DisposeItWith(Disposable);
-        var heading = new ReactiveProperty<double>().DisposeItWith(Disposable);
-        var azimuth = new ReactiveProperty<double>().DisposeItWith(Disposable);
-        var homeAzimuth = new ReactiveProperty<double>().DisposeItWith(Disposable);
-        var velocity = new ReactiveProperty<double>().DisposeItWith(Disposable);
-        var batteryAmperage = new ReactiveProperty<double>().DisposeItWith(Disposable);
-        var batteryVoltage = new ReactiveProperty<double>().DisposeItWith(Disposable);
-        var batteryCharge = new ReactiveProperty<double>().DisposeItWith(Disposable);
-        var batteryConsumed = new ReactiveProperty<double>().DisposeItWith(Disposable);
+        var altitudeAgl = positionClientEx
+            .Base.GlobalPosition.ObserveOnUIThreadDispatcher()
+            .Select(pld => Math.Truncate((pld?.RelativeAlt ?? double.NaN) / 1000d));
 
-        heartbeatClient.LinkQuality.Subscribe(d => linkQuality.Value = d).DisposeItWith(Disposable);
-        positionClientEx
-            .Base.GlobalPosition.Subscribe(pld =>
-            {
-                altitudeAgl.Value = Math.Truncate((pld?.RelativeAlt ?? double.NaN) / 1000d);
-                altitudeMsl.Value = Math.Truncate((pld?.Alt ?? double.NaN) / 1000d);
-            })
-            .DisposeItWith(Disposable);
-        positionClientEx
-            .Yaw.Subscribe(d =>
-            {
-                azimuth.Value = Math.Round(d, 2);
-                heading.Value = Math.Truncate(d);
-            })
-            .DisposeItWith(Disposable);
-        positionClientEx
-            .Current.Where(_ => positionClientEx.Home.CurrentValue.HasValue)
+        var altitudeMsl = positionClientEx
+            .Base.GlobalPosition.ObserveOnUIThreadDispatcher()
+            .Select(pld => Math.Truncate((pld?.Alt ?? double.NaN) / 1000d));
+
+        var velocity = _gnssClient
+            .Main.GroundVelocity.ObserveOnUIThreadDispatcher()
+            .Select(Math.Truncate);
+
+        var azimuth = positionClientEx
+            .Yaw.ObserveOnUIThreadDispatcher()
+            .Select(d => Math.Round(d, 2));
+        var heading = positionClientEx.Yaw.ObserveOnUIThreadDispatcher().Select(Math.Truncate);
+
+        var homeAzimuth = positionClientEx
+            .Current.ObserveOnUIThreadDispatcher()
+            .Where(_ => positionClientEx.Home.CurrentValue.HasValue)
             .ThrottleLast(TimeSpan.FromMilliseconds(200))
-            .Subscribe(p =>
-                homeAzimuth.Value = p.Azimuth(positionClientEx.Home.CurrentValue ?? GeoPoint.NaN)
-            )
-            .DisposeItWith(Disposable);
-        _gnssClient
-            .Main.GroundVelocity.Subscribe(d =>
-            {
-                velocity.Value = Math.Truncate(d);
-                if (positionClientEx.Base.GlobalPosition.CurrentValue != null)
-                {
-                    SpeedAltitudeCheck(
-                            positionClientEx.Base.GlobalPosition.CurrentValue.RelativeAlt / 1000,
-                            Math.Round(_gnssClient.Main.GroundVelocity.CurrentValue)
-                        )
-                        .SafeFireAndForget(ex => Logger.LogError(ex, "Velocity error"));
-                }
-            })
-            .DisposeItWith(Disposable);
-        telemetryClient
-            .BatteryCurrent.Subscribe(d => batteryAmperage.Value = d)
-            .DisposeItWith(Disposable);
-        telemetryClient
-            .BatteryCharge.Subscribe(d =>
-            {
-                batteryCharge.Value = d;
-                BatteryStatus(d * 100)
-                    .SafeFireAndForget(ex => Logger.LogError(ex, "Battery charge error"));
-            })
-            .DisposeItWith(Disposable);
-        batteryAmperage
-            .Subscribe(_ =>
-            {
-                batteryConsumed.Value =
-                    telemetryClient.BatteryCurrent.CurrentValue == 0
-                        ? double.NaN
-                        : Math.Round(
-                            telemetryClient.BatteryCurrent.CurrentValue
-                                * positionClientEx.ArmedTime.CurrentValue.TotalHours,
-                            2
-                        );
-            })
-            .DisposeItWith(Disposable);
-        _gnssClient
-            .Main.Info.Subscribe(_ =>
-                GnssStatus().SafeFireAndForget(ex => Logger.LogError(ex, "Gnss status error"))
-            )
-            .DisposeItWith(Disposable);
+            .Select(p => p.Azimuth(positionClientEx.Home.CurrentValue ?? GeoPoint.NaN));
 
-        LinkQuality = new BindableUnitProperty(
-            nameof(LinkQuality),
-            linkQuality,
-            _progressUnit,
-            loggerFactory
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        AltitudeAgl = new BindableUnitProperty(
-            nameof(AltitudeAgl),
-            altitudeAgl,
-            _altitudeUnit,
-            loggerFactory
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        AltitudeMsl = new BindableUnitProperty(
-            nameof(AltitudeMsl),
-            altitudeMsl,
-            _altitudeUnit,
-            loggerFactory
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        Azimuth = new BindableUnitProperty(nameof(Azimuth), azimuth, _angleUnit, loggerFactory)
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        Heading = new BindableUnitProperty(nameof(Heading), heading, _angleUnit, loggerFactory)
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        HomeAzimuth = new BindableUnitProperty(
-            nameof(HomeAzimuth),
-            homeAzimuth,
-            _angleUnit,
-            loggerFactory
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        Velocity = new BindableUnitProperty(
-            nameof(Velocity),
-            velocity,
-            _velocityUnit,
-            loggerFactory
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        BatteryAmperage = new BindableUnitProperty(
-            nameof(BatteryAmperage),
-            batteryAmperage,
-            _amperageUnit,
-            loggerFactory,
-            "N2"
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        BatteryVoltage = new BindableUnitProperty(
-            nameof(BatteryVoltage),
-            batteryVoltage,
-            _voltageUnit,
-            loggerFactory,
-            "N2"
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        BatteryCharge = new BindableUnitProperty(
-            nameof(BatteryCharge),
-            batteryCharge,
-            _progressUnit,
-            loggerFactory
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        BatteryConsumed = new BindableUnitProperty(
-            nameof(BatteryConsumed),
-            batteryConsumed,
-            _capacityUnit,
-            loggerFactory
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
+        var batteryAmperage = telemetryClient.BatteryCurrent.ObserveOnUIThreadDispatcher();
+        var batteryCharge = telemetryClient.BatteryCharge.ObserveOnUIThreadDispatcher();
+        var batteryVoltage = telemetryClient.BatteryVoltage.ObserveOnUIThreadDispatcher();
+        var batteryConsumed = telemetryClient
+            .BatteryCurrent.ObserveOnUIThreadDispatcher()
+            .Select(d =>
+                d == 0
+                    ? double.NaN
+                    : Math.Round(d * positionClientEx.ArmedTime.CurrentValue.TotalHours, 2)
+            );
+        var vdop = _gnssClient
+            .Main.Info.ObserveOnUIThreadDispatcher()
+            .Select(info => info.Vdop ?? double.NaN);
+        var hdop = _gnssClient
+            .Main.Info.Select(info => info.Hdop ?? double.NaN)
+            .ObserveOnUIThreadDispatcher();
+        var satelliteCount = _gnssClient
+            .Main.Info.Select(info => info.SatellitesVisible)
+            .ObserveOnUIThreadDispatcher();
+        var rtkMode = _gnssClient
+            .Main.Info.Select(gpsInfo => gpsInfo.FixType)
+            .ObserveOnUIThreadDispatcher();
 
-        BatteryConsumedSymbol = BatteryConsumed
-            .Unit.CurrentUnitItem.Select(item => item.Symbol)
-            .ToReadOnlyBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        BatteryAmperageSymbol = BatteryAmperage
-            .Unit.CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        BatteryChargeSymbol = BatteryCharge
-            .Unit.CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        BatteryVoltageSymbol = BatteryVoltage
-            .Unit.CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        LinkQualitySymbol = LinkQuality
-            .Unit.CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        VelocitySymbol = Velocity
-            .Unit.CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        AltitudeSymbol = _altitudeUnit
-            .CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        AzimuthSymbol = Azimuth
-            .Unit.CurrentUnitItem.Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-
-        LinkState = heartbeatClient
-            .Link.State.Select(state =>
-            {
-                LinkStatus(state).SafeFireAndForget(ex => Logger.LogError(ex, "Link status error"));
-                return state.ToString();
-            })
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        CurrentFlightMode = modeClient
-            .CurrentMode.Select(mode => mode.Name)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
+        AltitudeAgl = altitudeAgl.ToReadOnlyBindableReactiveProperty().DisposeItWith(Disposable);
+        AltitudeMsl = altitudeMsl.ToReadOnlyBindableReactiveProperty().DisposeItWith(Disposable);
+        Azimuth = azimuth.ToReadOnlyBindableReactiveProperty().DisposeItWith(Disposable);
+        Heading = heading.ToReadOnlyBindableReactiveProperty().DisposeItWith(Disposable);
+        Velocity = velocity.ToReadOnlyBindableReactiveProperty().DisposeItWith(Disposable);
+        HomeAzimuth = homeAzimuth.ToReadOnlyBindableReactiveProperty().DisposeItWith(Disposable);
         Roll = positionClientEx.Roll.ToBindableReactiveProperty().DisposeItWith(Disposable);
         Pitch = positionClientEx.Pitch.ToBindableReactiveProperty().DisposeItWith(Disposable);
-        VdopCount = _gnssClient
-            .Main.Info.Select(info => info.Vdop is null ? RS.NotANumber : $"{info.Vdop.Value} VDOP")
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        HdopCount = _gnssClient
-            .Main.Info.Select(info => info.Hdop is null ? RS.NotANumber : $"{info.Hdop.Value} HDOP")
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-        SatelliteCount = _gnssClient
-            .Main.Info.Select(info => info.SatellitesVisible)
-            .ToBindableReactiveProperty()
-            .DisposeItWith(Disposable);
-        RtkMode = _gnssClient
-            .Main.Info.Select(gpsInfo => GpsFixTypeToString(gpsInfo.FixType))
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
         IsArmed = positionClientEx
             .IsArmed.DistinctUntilChanged()
+            .ObserveOnUIThreadDispatcher()
             .Select(b => b)
             .ToBindableReactiveProperty()
             .DisposeItWith(Disposable);
         StatusText = positionClientEx
-            .IsArmed.Select(b =>
+            .IsArmed.ObserveOnUIThreadDispatcher()
+            .Select(b =>
                 b
                     ? RS.UavWidgetViewModel_StatusText_Armed
                     : RS.UavWidgetViewModel_StatusText_DisArmed
             )
             .ToBindableReactiveProperty<string>()
             .DisposeItWith(Disposable);
-
         VibrationX = new BindableReactiveProperty<float>().DisposeItWith(Disposable);
         VibrationY = new BindableReactiveProperty<float>().DisposeItWith(Disposable);
         VibrationZ = new BindableReactiveProperty<float>().DisposeItWith(Disposable);
@@ -591,92 +523,327 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             .Timer(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(4))
             .Subscribe(_ => StatusText.Value = string.Empty)
             .DisposeItWith(Disposable);
-    }
+        heartbeatClient
+            .Link.State.ObserveOnUIThreadDispatcher()
+            .Skip(1)
+            .Subscribe(ChangeLinkStatus)
+            .DisposeItWith(Disposable);
 
-    private async Task BatteryStatus(double percent)
-    {
-        await Dispatcher.UIThread.InvokeAsync(() =>
+        CurrentFlightModeRttBox = new SingleRttBoxViewModel<string>(
+            nameof(CurrentFlightModeRttBox),
+            loggerFactory,
+            modeClient.CurrentMode.Select(mode => mode.Name),
+            null
+        )
         {
-            BatteryStatusBrush.Color = percent switch
-            {
-                > 70 => GreenColor,
-                > 50 => YellowColor,
-                > 40 => OrangeColor,
-                < 30 => RedColor,
-                _ => BatteryStatusBrush.Color,
-            };
-        });
-    }
+            Header = RS.UavRttItem_Mode,
+            Icon = MaterialIconKind.FlightMode,
+            UpdateAction = (model, mode) => model.ValueString = mode,
+            Status = DefaultStatusColor,
+        }
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
 
-    private async Task LinkStatus(LinkState state)
-    {
-        await Dispatcher.UIThread.InvokeAsync(() =>
-        {
-            LinkQualityStatusBrush.Color = state switch
-            {
-                Common.LinkState.Connected => GreenColor,
-                Common.LinkState.Disconnected => RedColor,
-                Common.LinkState.Downgrade => OrangeColor,
-                _ => LinkQualityStatusBrush.Color,
-            };
-        });
-    }
-
-    private async Task SpeedAltitudeCheck(int alt, double gs)
-    {
-        await Dispatcher.UIThread.InvokeAsync(() =>
-        {
-            if (gs > DangerHighSpeed && alt < CriticalAltitude)
-            {
-                StatusText.Value = RS.UavWidgetViewModel_StatusText_PullUp;
-                AltitudeStatusBrush.Color = YellowColor;
-            }
-            else
-            {
-                StatusText.Value = string.Empty;
-                AltitudeStatusBrush.Color = GreenColor;
-            }
-        });
-    }
-
-    private async Task GnssStatus()
-    {
-        await Dispatcher.UIThread.InvokeAsync(() =>
-        {
-            if (_gnssClient is null)
-            {
-                return;
-            }
-
-            if (
-                _gnssClient.Main.Info.CurrentValue.FixType
-                    == Mavlink.Common.GpsFixType.GpsFixTypeRtkFloat
-                || _gnssClient.Main.Info.CurrentValue.SatellitesVisible
-                    > WarningSatelliteAmount.Start.Value
-                || _gnssClient.Main.Info.CurrentValue.SatellitesVisible
-                    < WarningSatelliteAmount.End.Value
-            )
-            {
-                GnssStatusBrush.Color = OrangeColor;
-                return;
-            }
-
-            if (
-                (
-                    _gnssClient.Main.Info.CurrentValue.FixType
-                        != Mavlink.Common.GpsFixType.GpsFixTypeRtkFloat
-                    && _gnssClient.Main.Info.CurrentValue.FixType
-                        != Mavlink.Common.GpsFixType.GpsFixTypeRtkFixed
+        AltitudeRttBox = new TwoColumnRttBoxViewModel<AltitudeRttBoxData>(
+            nameof(AltitudeRttBox),
+            loggerFactory,
+            altitudeAgl
+                .CombineLatest(
+                    altitudeMsl,
+                    _altitudeUnit.CurrentUnitItem,
+                    (agl, msl, unit) => new AltitudeRttBoxData(agl, msl, unit)
                 )
-                || _gnssClient.Main.Info.CurrentValue.SatellitesVisible < DangerSatelliteCount
-            )
+                .ObserveOnUIThreadDispatcher()
+                .ThrottleLast(TimeSpan.FromMilliseconds(200)),
+            null
+        )
+        {
+            Header = RS.UavRttItem_Altitude,
+            Icon = MaterialIconKind.Altimeter,
+            UpdateAction = (model, changes) =>
             {
-                GnssStatusBrush.Color = RedColor;
-                return;
-            }
+                model.Left.ValueString = changes.AltitudeUnit.PrintFromSi(
+                    changes.AltitudeAgl,
+                    "F2"
+                );
+                model.Right.ValueString = changes.AltitudeUnit.PrintFromSi(
+                    changes.AltitudeMsl,
+                    "F2"
+                );
 
-            GnssStatusBrush.Color = GreenColor;
-        });
+                model.Left.UnitSymbol = changes.AltitudeUnit.Symbol;
+                model.Right.UnitSymbol = changes.AltitudeUnit.Symbol;
+
+                CheckSpeedAltitude(
+                    changes.AltitudeAgl,
+                    Math.Round(_gnssClient.Main.GroundVelocity.CurrentValue)
+                );
+            },
+            Status = DefaultStatusColor,
+        }
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
+        AltitudeRttBox.Left.Header = "AGL";
+        AltitudeRttBox.Right.Header = "MSL";
+
+        VelocityRttBox = new SplitDigitRttBoxViewModel(
+            nameof(VelocityRttBox),
+            loggerFactory,
+            unitService,
+            VelocityUnit.Id,
+            velocity,
+            null
+        )
+        {
+            Header = RS.UavRttItem_Velocity,
+            ShortHeader = "GS",
+            Icon = MaterialIconKind.Speedometer,
+            Status = DefaultStatusColor,
+            FormatString = "F2",
+        }
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
+
+        AzimuthRttBox = new SplitDigitRttBoxViewModel(
+            nameof(AzimuthRttBox),
+            loggerFactory,
+            unitService,
+            AngleUnit.Id,
+            azimuth,
+            null
+        )
+        {
+            Header = RS.UavRttItem_Azimuth,
+            Icon = MaterialIconKind.SunAzimuth,
+            Status = DefaultStatusColor,
+            FormatString = "F2",
+        }
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
+
+        BatteryRttBox = new KeyValueRttBoxViewModel<BatteryRttBoxData>(
+            nameof(BatteryRttBox),
+            loggerFactory,
+            batteryCharge
+                .CombineLatest(
+                    batteryAmperage,
+                    batteryVoltage,
+                    batteryConsumed,
+                    _progressUnit.CurrentUnitItem,
+                    _amperageUnit.CurrentUnitItem,
+                    _capacityUnit.CurrentUnitItem,
+                    _voltageUnit.CurrentUnitItem,
+                    (bC, bA, bV, bCo, prog, amp, cap, vol) =>
+                        new BatteryRttBoxData(bC, bA, bV, bCo, prog, amp, cap, vol)
+                )
+                .ObserveOnUIThreadDispatcher()
+                .ThrottleLast(TimeSpan.FromMilliseconds(200)),
+            null
+        )
+        {
+            Header = RS.UavRttItem_Battery,
+            Icon = MaterialIconKind.Battery10,
+            UpdateAction = (model, changes) =>
+            {
+                model[
+                    0,
+                    RS.UavWidgetViewModel_BatteryRttBox_BatteryCharge_Header,
+                    changes.ProgressUnit.Symbol
+                ].ValueString = changes.ProgressUnit.PrintFromSi(changes.Charge, "F2");
+                model[
+                    1,
+                    RS.UavWidgetViewModel_BatteryRttBox_BatteryAmperage_Header,
+                    changes.AmperageUnit.Symbol
+                ].ValueString = changes.AmperageUnit.PrintFromSi(changes.Amperage, "F2");
+                model[
+                    2,
+                    RS.UavWidgetViewModel_BatteryRttBox_BatteryVoltage_Header,
+                    changes.VoltageUnit.Symbol
+                ].ValueString = changes.VoltageUnit.PrintFromSi(changes.Voltage, "F2");
+                model[
+                    3,
+                    RS.UavWidgetViewModel_BatteryRttBox_BatteryConsumed_Header,
+                    changes.CapacityUnit.Symbol
+                ].ValueString = changes.CapacityUnit.PrintFromSi(changes.Consumed, "F2");
+
+                ChangeBatteryStatus(changes.Charge);
+            },
+            Status = DefaultStatusColor,
+        }
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
+
+        GnssRttBox = new KeyValueRttBoxViewModel<GnssRttBoxData>(
+            nameof(GnssRttBox),
+            loggerFactory,
+            satelliteCount
+                .CombineLatest(
+                    hdop,
+                    vdop,
+                    rtkMode,
+                    (satellites, hdopValue, vdopValue, mode) =>
+                        new GnssRttBoxData(satellites, hdopValue, vdopValue, mode)
+                )
+                .ObserveOnUIThreadDispatcher()
+                .ThrottleLast(TimeSpan.FromMilliseconds(200)),
+            null
+        )
+        {
+            Header = RS.UavRttItem_GNSS,
+            Icon = MaterialIconKind.GpsFixed,
+            UpdateAction = (model, changes) =>
+            {
+                model[
+                    0,
+                    RS.UavWidgetViewModel_GnssRttBox_SatellitesCount_Header,
+                    null
+                ].ValueString = changes.Sattelites.ToString();
+                model[1, RS.UavWidgetViewModel_GnssRttBox_Hdop_Header, null].ValueString =
+                    changes.HdopCount.ToString("F2");
+                model[2, RS.UavWidgetViewModel_GnssRttBox_Vdop_Header, null].ValueString =
+                    changes.VdopCount.ToString("F2");
+                model[3, RS.UavWidgetViewModel_GnssRttBox_Mode_Header, null].ValueString =
+                    GpsFixTypeToString(changes.Mode);
+                ChangeGnssStatus(changes.Sattelites, changes.Mode);
+            },
+            Status = DefaultStatusColor,
+        }
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
+
+        LinkQualityRttBox = new SplitDigitRttBoxViewModel(
+            nameof(LinkQualityRttBox),
+            loggerFactory,
+            unitService,
+            ProgressUnit.Id,
+            heartbeatClient.LinkQuality,
+            null
+        )
+        {
+            Header = RS.UavRttItem_Link,
+            Icon = MaterialIconKind.Wifi,
+            Status = DefaultStatusColor,
+            FormatString = "F2",
+        }
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
+    }
+
+    public ReactiveCommand TakeOff { get; }
+    public ICommand AutoMode { get; }
+    public ICommand Rtl { get; }
+    public ICommand Land { get; }
+    public ICommand Guided { get; }
+    public ICommand StartMission { get; }
+
+    public MissionProgressViewModel MissionProgress { get; }
+
+    public SingleRttBoxViewModel<string> CurrentFlightModeRttBox { get; }
+    public TwoColumnRttBoxViewModel AltitudeRttBox { get; }
+    public SplitDigitRttBoxViewModel VelocityRttBox { get; }
+    public SplitDigitRttBoxViewModel AzimuthRttBox { get; }
+    public SplitDigitRttBoxViewModel LinkQualityRttBox { get; }
+    public KeyValueRttBoxViewModel BatteryRttBox { get; }
+    public KeyValueRttBoxViewModel GnssRttBox { get; }
+
+    public BindableReactiveProperty<float> VibrationX { get; }
+    public BindableReactiveProperty<float> VibrationY { get; }
+    public BindableReactiveProperty<float> VibrationZ { get; }
+    public BindableReactiveProperty<uint> Clipping0 { get; }
+    public BindableReactiveProperty<uint> Clipping1 { get; }
+    public BindableReactiveProperty<uint> Clipping2 { get; }
+    public BindableReactiveProperty<double> Roll { get; }
+    public BindableReactiveProperty<double> Pitch { get; }
+    public IReadOnlyBindableReactiveProperty<double> Velocity { get; }
+    public IReadOnlyBindableReactiveProperty<double> AltitudeAgl { get; }
+    public IReadOnlyBindableReactiveProperty<double> AltitudeMsl { get; }
+    public IReadOnlyBindableReactiveProperty<double> Heading { get; }
+    public IReadOnlyBindableReactiveProperty<double> HomeAzimuth { get; }
+    public IReadOnlyBindableReactiveProperty<double> Azimuth { get; }
+    public BindableReactiveProperty<string> StatusText { get; }
+    public BindableReactiveProperty<bool> IsArmed { get; }
+    public BindableReactiveProperty<TimeSpan> ArmedTime { get; }
+
+    public IClientDevice Device { get; }
+
+    public override IEnumerable<IRoutable> GetChildren()
+    {
+        yield return MissionProgress;
+        yield return CurrentFlightModeRttBox;
+        yield return AltitudeRttBox;
+        yield return VelocityRttBox;
+        yield return AzimuthRttBox;
+        yield return LinkQualityRttBox;
+        yield return BatteryRttBox;
+        yield return GnssRttBox;
+    }
+
+    private void ChangeBatteryStatus(double percent)
+    {
+        BatteryRttBox.Status = percent switch
+        {
+            > 0.7d => DefaultStatusColor,
+            > 0.5d => AsvColorKind.Warning,
+            > 0.4d => AsvColorKind.Warning | AsvColorKind.Blink,
+            < 0.3d => AsvColorKind.Error | AsvColorKind.Blink,
+            _ => DefaultStatusColor,
+        };
+    }
+
+    private void ChangeLinkStatus(LinkState state)
+    {
+        LinkQualityRttBox.Status = state switch
+        {
+            Common.LinkState.Connected => AsvColorKind.Success,
+            Common.LinkState.Downgrade => AsvColorKind.Warning,
+            Common.LinkState.Disconnected => AsvColorKind.Error,
+            _ => AsvColorKind.None,
+        };
+    }
+
+    private void CheckSpeedAltitude(double alt, double gs)
+    {
+        if (gs > DangerHighSpeed && alt < CriticalAltitude)
+        {
+            StatusText.Value = RS.UavWidgetViewModel_StatusText_PullUp;
+            AltitudeRttBox.StatusText = RS.UavWidgetViewModel_StatusText_PullUp;
+            AltitudeRttBox.Status = AsvColorKind.Warning | AsvColorKind.Blink;
+        }
+        else
+        {
+            StatusText.Value = string.Empty;
+            AltitudeRttBox.StatusText = string.Empty;
+            AltitudeRttBox.Status = DefaultStatusColor;
+        }
+    }
+
+    private void ChangeGnssStatus(int satellitesCount, Mavlink.Common.GpsFixType mode)
+    {
+        if (_gnssClient is null)
+        {
+            return;
+        }
+
+        if (
+            mode == Mavlink.Common.GpsFixType.GpsFixTypeRtkFloat
+            || satellitesCount > WarningSatelliteAmount.Start.Value
+            || satellitesCount < WarningSatelliteAmount.End.Value
+        )
+        {
+            GnssRttBox.Status = AsvColorKind.Warning;
+            return;
+        }
+
+        if (
+            mode != Mavlink.Common.GpsFixType.GpsFixTypeRtkFixed
+            || _gnssClient.Main.Info.CurrentValue.SatellitesVisible < DangerSatelliteCount
+        )
+        {
+            GnssRttBox.Status = AsvColorKind.Error;
+            return;
+        }
+
+        GnssRttBox.Status = DefaultStatusColor;
     }
 
     private string GpsFixTypeToString(Mavlink.Common.GpsFixType type)
@@ -694,103 +861,4 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             _ => string.Empty,
         };
     }
-
-    public override IEnumerable<IRoutable> GetChildren()
-    {
-        yield return LinkQuality;
-        yield return AltitudeAgl;
-        yield return AltitudeMsl;
-        yield return Azimuth;
-        yield return Heading;
-        yield return HomeAzimuth;
-        yield return Velocity;
-        yield return BatteryAmperage;
-        yield return BatteryVoltage;
-        yield return BatteryCharge;
-        yield return BatteryConsumed;
-        yield return MissionProgress;
-    }
-
-    public ReactiveCommand TakeOff { get; }
-    public ICommand AutoMode { get; }
-    public ICommand Rtl { get; }
-    public ICommand Land { get; }
-    public ICommand Guided { get; }
-    public ICommand StartMission { get; }
-
-    public MissionProgressViewModel MissionProgress { get; }
-
-    #region BatteryRtt
-
-    public BindableUnitProperty BatteryConsumed { get; }
-    public BindableUnitProperty BatteryAmperage { get; }
-    public BindableUnitProperty BatteryCharge { get; }
-    public BindableUnitProperty BatteryVoltage { get; }
-    public IReadOnlyBindableReactiveProperty<string> BatteryConsumedSymbol { get; }
-    public BindableReactiveProperty<string> BatteryAmperageSymbol { get; }
-    public BindableReactiveProperty<string> BatteryChargeSymbol { get; }
-    public BindableReactiveProperty<string> BatteryVoltageSymbol { get; }
-
-    public SolidColorBrush BatteryStatusBrush
-    {
-        get;
-        set => SetField(ref field, value);
-    }
-
-    #endregion
-
-    #region Gnss
-
-    public BindableReactiveProperty<int> SatelliteCount { get; }
-    public BindableReactiveProperty<string> HdopCount { get; }
-    public BindableReactiveProperty<string> VdopCount { get; }
-    public BindableReactiveProperty<string> RtkMode { get; }
-
-    public SolidColorBrush GnssStatusBrush
-    {
-        get;
-        set => SetField(ref field, value);
-    }
-
-    #endregion
-
-    public BindableReactiveProperty<string> LinkState { get; }
-    public BindableReactiveProperty<string> LinkQualitySymbol { get; }
-
-    public SolidColorBrush AltitudeStatusBrush
-    {
-        get;
-        set => SetField(ref field, value);
-    }
-
-    public SolidColorBrush LinkQualityStatusBrush
-    {
-        get;
-        set => SetField(ref field, value);
-    }
-
-    public BindableReactiveProperty<string> CurrentFlightMode { get; }
-    public BindableReactiveProperty<float> VibrationX { get; }
-    public BindableReactiveProperty<float> VibrationY { get; }
-    public BindableReactiveProperty<float> VibrationZ { get; }
-    public BindableReactiveProperty<uint> Clipping0 { get; }
-    public BindableReactiveProperty<uint> Clipping1 { get; }
-    public BindableReactiveProperty<uint> Clipping2 { get; }
-    public BindableReactiveProperty<double> Roll { get; }
-    public BindableReactiveProperty<double> Pitch { get; }
-    public BindableUnitProperty LinkQuality { get; }
-    public BindableUnitProperty Velocity { get; }
-    public BindableUnitProperty AltitudeAgl { get; }
-    public BindableUnitProperty AltitudeMsl { get; }
-    public BindableUnitProperty Heading { get; }
-    public BindableUnitProperty HomeAzimuth { get; }
-    public BindableUnitProperty Azimuth { get; }
-    public BindableReactiveProperty<string> VelocitySymbol { get; }
-    public BindableReactiveProperty<string> AltitudeSymbol { get; }
-    public BindableReactiveProperty<string> AzimuthSymbol { get; }
-    public BindableReactiveProperty<string> StatusText { get; }
-    public BindableReactiveProperty<bool> IsArmed { get; }
-    public BindableReactiveProperty<TimeSpan> ArmedTime { get; }
-
-    public IClientDevice Device { get; }
 }

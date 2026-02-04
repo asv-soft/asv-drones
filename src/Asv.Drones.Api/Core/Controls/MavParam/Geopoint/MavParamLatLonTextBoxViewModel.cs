@@ -20,9 +20,9 @@ public class MavParamLatLonTextBoxViewModel : MavParamTextBoxViewModel
         : base(param, update, initReadCallback, loggerFactory)
     {
         _unit =
-            measureService[isLatitude ? LatitudeBase.Id : LongitudeBase.Id]
+            measureService[isLatitude ? LatitudeUnit.Id : LongitudeUnit.Id]
                 ?.CurrentUnitItem
-                .CurrentValue ?? throw new ArgumentNullException(LatitudeBase.Id);
+                .CurrentValue ?? throw new ArgumentNullException(LatitudeUnit.Id);
     }
 
     public override string? Units => null;

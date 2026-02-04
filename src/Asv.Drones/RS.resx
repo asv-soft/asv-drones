@@ -578,4 +578,28 @@
     <data name="BurstDownloadDialogView_Description_Text" xml:space="preserve">
         <value>Enter the size of a download block</value>
     </data>
+    <data name="UavWidgetViewModel_BatteryRttBox_BatteryCharge_Header" xml:space="preserve">
+        <value>Charge</value>
+    </data>
+    <data name="UavWidgetViewModel_BatteryRttBox_BatteryAmperage_Header" xml:space="preserve">
+        <value>Amperage</value>
+    </data>
+    <data name="UavWidgetViewModel_BatteryRttBox_BatteryVoltage_Header" xml:space="preserve">
+        <value>Voltage</value>
+    </data>
+    <data name="UavWidgetViewModel_BatteryRttBox_BatteryConsumed_Header" xml:space="preserve">
+        <value>Capacity</value>
+    </data>
+    <data name="UavWidgetViewModel_GnssRttBox_SatellitesCount_Header" xml:space="preserve">
+        <value>Satellites</value>
+    </data>
+    <data name="UavWidgetViewModel_GnssRttBox_Hdop_Header" xml:space="preserve">
+        <value>Hdop</value>
+    </data>
+    <data name="UavWidgetViewModel_GnssRttBox_Vdop_Header" xml:space="preserve">
+        <value>Vdop</value>
+    </data>
+    <data name="UavWidgetViewModel_GnssRttBox_Mode_Header" xml:space="preserve">
+        <value>Mode</value>
+    </data>
 </root>
