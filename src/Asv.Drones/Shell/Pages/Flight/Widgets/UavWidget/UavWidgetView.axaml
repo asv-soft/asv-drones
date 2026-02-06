@@ -7,19 +7,14 @@
     xmlns:avalonia1="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
     xmlns:drones="clr-namespace:Asv.Drones"
     mc:Ignorable="d"
+    d:DesignHeight="1000"
     x:Class="Asv.Drones.UavWidgetView"
     x:DataType="drones:UavWidgetViewModel"
 >
     <Design.DataContext>
         <drones:UavWidgetViewModel />
     </Design.DataContext>
-    <Grid
-        RowDefinitions="*,*,*"
-        ColumnDefinitions="460"
-        Margin="5"
-        RowSpacing="10"
-        HorizontalAlignment="Stretch"
-    >
+    <Grid RowDefinitions="Auto,Auto,*" Margin="5" RowSpacing="10" HorizontalAlignment="Left">
         <StackPanel
             Grid.Column="0"
             Grid.Row="0"

@@ -165,6 +165,7 @@ public class MissionProgressViewModel : RoutableViewModel
             Icon = MaterialIconKind.MapMarkerDistance,
             Header = RS.MissionProgressView_MissionDistanceRTT,
             Status = DefaultStatusColor,
+            FormatString = "F2",
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
@@ -181,6 +182,7 @@ public class MissionProgressViewModel : RoutableViewModel
             Icon = MaterialIconKind.LocationDistance,
             Header = RS.MissionProgressView_TotalDistanceRTT,
             Status = DefaultStatusColor,
+            FormatString = "F2",
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
@@ -197,6 +199,7 @@ public class MissionProgressViewModel : RoutableViewModel
             Icon = MaterialIconKind.Home,
             Header = RS.MissionProgressView_HomeDistance,
             Status = DefaultStatusColor,
+            FormatString = "F2",
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
@@ -213,6 +216,7 @@ public class MissionProgressViewModel : RoutableViewModel
             Icon = MaterialIconKind.Target,
             Header = RS.MissionProgressView_TargetDistance,
             Status = DefaultStatusColor,
+            FormatString = "F2",
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);

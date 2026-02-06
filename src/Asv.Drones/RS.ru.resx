@@ -566,4 +566,28 @@
     <data name="BurstDownloadDialogView_Description_Text" xml:space="preserve">
         <value>Введите размер блока для загрузки</value>
     </data>
+    <data name="UavWidgetViewModel_BatteryRttBox_BatteryCharge_Header" xml:space="preserve">
+        <value>Заряд</value>
+    </data>
+    <data name="UavWidgetViewModel_BatteryRttBox_BatteryConsumed_Header" xml:space="preserve">
+        <value>Емкость</value>
+    </data>
+    <data name="UavWidgetViewModel_BatteryRttBox_BatteryAmperage_Header" xml:space="preserve">
+        <value>Сила тока</value>
+    </data>
+    <data name="UavWidgetViewModel_BatteryRttBox_BatteryVoltage_Header" xml:space="preserve">
+        <value>Напряжение</value>
+    </data>
+    <data name="UavWidgetViewModel_GnssRttBox_SatellitesCount_Header" xml:space="preserve">
+        <value>Спутники</value>
+    </data>
+    <data name="UavWidgetViewModel_GnssRttBox_Hdop_Header" xml:space="preserve">
+        <value>Hdop</value>
+    </data>
+    <data name="UavWidgetViewModel_GnssRttBox_Vdop_Header" xml:space="preserve">
+        <value>Vdop</value>
+    </data>
+    <data name="UavWidgetViewModel_GnssRttBox_Mode_Header" xml:space="preserve">
+        <value>Режим</value>
+    </data>
 </root>

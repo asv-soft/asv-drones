@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
@@ -11,10 +8,6 @@ using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
-using Asv.Mavlink.Ardupilotmega;
-using Asv.Mavlink.Minimal;
-using Avalonia.Media;
-using Avalonia.Threading;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
@@ -27,9 +20,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
     private const string WidgetId = "widget-uav";
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
-    private readonly IUnit _velocityUnit;
     private readonly IUnit _altitudeUnit;
-    private readonly IUnit _angleUnit;
     private readonly IUnit _capacityUnit;
     private readonly IUnit _amperageUnit;
     private readonly IUnit _voltageUnit;
@@ -92,19 +83,32 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
                 [new PercentProgressUnit(), new InPartsProgressUnit()]
             )
         );
+        NullUnitService.Instance.Extend(
+            new CapacityBase(DesignTime.Configuration, [new MilliAmperePerHourCapacityUnit()])
+        );
+        NullUnitService.Instance.Extend(
+            new AmperageBase(
+                DesignTime.Configuration,
+                [new AmpereAmperageUnit(), new MilliAmpereAmperageUnit()]
+            )
+        );
+        NullUnitService.Instance.Extend(
+            new VoltageBase(
+                DesignTime.Configuration,
+                [new VoltVoltageUnit(), new MilliVoltVoltageUnit()]
+            )
+        );
 
         var unitService = NullUnitService.Instance;
 
         Icon = MaterialIconKind.AccountFile;
-        IconColor = AsvColorKind.Info4;
-        var unitItem = unitService.Units.Values.First();
-        _altitudeUnit = unitItem;
-        _velocityUnit = unitItem;
-        _angleUnit = unitItem;
-        _capacityUnit = unitItem;
-        _amperageUnit = unitItem;
-        _voltageUnit = unitItem;
-        _progressUnit = unitItem;
+        IconColor = AsvColorKind.Info5;
+
+        _altitudeUnit = unitService.Units[AltitudeBase.Id];
+        _capacityUnit = unitService.Units[CapacityBase.Id];
+        _amperageUnit = unitService.Units[AmperageBase.Id];
+        _voltageUnit = unitService.Units[VoltageBase.Id];
+        _progressUnit = unitService.Units[ProgressBase.Id];
 
         var linkQuality = new ReactiveProperty<double>(100).DisposeItWith(Disposable);
         var altitudeAgl = new ReactiveProperty<double>(10).DisposeItWith(Disposable);
@@ -115,9 +119,9 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         var satelliteCount = new ReactiveProperty<int>(10).DisposeItWith(Disposable);
         var hdopCount = new ReactiveProperty<double>(2).DisposeItWith(Disposable);
         var vdopCount = new ReactiveProperty<double>(4).DisposeItWith(Disposable);
-        var gpsFixType = new ReactiveProperty<GpsFixType>(GpsFixType.GpsFixTypeDgps).DisposeItWith(
-            Disposable
-        );
+        var gpsFixType = new ReactiveProperty<Mavlink.Common.GpsFixType>(
+            Mavlink.Common.GpsFixType.GpsFixTypeDgps
+        ).DisposeItWith(Disposable);
         var velocity = new ReactiveProperty<double>(199).DisposeItWith(Disposable);
         var batteryAmperage = new ReactiveProperty<double>(39).DisposeItWith(Disposable);
         var batteryVoltage = new ReactiveProperty<double>(34).DisposeItWith(Disposable);
@@ -135,18 +139,19 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             Header = RS.UavRttItem_Mode,
             Icon = MaterialIconKind.FlightMode,
             UpdateAction = (model, mode) => model.ValueString = mode,
+            Status = DefaultStatusColor,
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
 
-        AltitudeRttBox = new TwoColumnRttBoxViewModel<Unit>(
+        AltitudeRttBox = new TwoColumnRttBoxViewModel<AltitudeRttBoxData>(
             nameof(AltitudeRttBox),
             DesignTime.LoggerFactory,
-            Observable
-                .Merge(
-                    altitudeAgl.Select(_ => Unit.Default),
-                    altitudeMsl.Select(_ => Unit.Default),
-                    _altitudeUnit.CurrentUnitItem.Select(_ => Unit.Default)
+            altitudeAgl
+                .CombineLatest(
+                    altitudeMsl,
+                    _altitudeUnit.CurrentUnitItem,
+                    (agl, msl, unit) => new AltitudeRttBoxData(agl, msl, unit)
                 )
                 .ObserveOnUIThreadDispatcher()
                 .ThrottleLast(TimeSpan.FromMilliseconds(200)),
@@ -157,18 +162,19 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             Icon = MaterialIconKind.Altimeter,
             UpdateAction = (model, changes) =>
             {
-                model.Left.ValueString = _altitudeUnit.CurrentUnitItem.Value.PrintFromSi(
-                    altitudeAgl.Value,
+                model.Left.ValueString = changes.AltitudeUnit.PrintFromSi(
+                    changes.AltitudeAgl,
                     "F2"
                 );
-                model.Right.ValueString = _altitudeUnit.CurrentUnitItem.Value.PrintFromSi(
-                    altitudeMsl.Value,
+                model.Right.ValueString = changes.AltitudeUnit.PrintFromSi(
+                    changes.AltitudeMsl,
                     "F2"
                 );
 
-                model.Left.UnitSymbol = _altitudeUnit.CurrentUnitItem.Value.Symbol;
-                model.Right.UnitSymbol = _altitudeUnit.CurrentUnitItem.Value.Symbol;
+                model.Left.UnitSymbol = changes.AltitudeUnit.Symbol;
+                model.Right.UnitSymbol = changes.AltitudeUnit.Symbol;
             },
+            Status = DefaultStatusColor,
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
@@ -179,7 +185,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             nameof(VelocityRttBox),
             DesignTime.LoggerFactory,
             unitService,
-            AngleBase.Id,
+            VelocityBase.Id,
             velocity,
             null
         )
@@ -187,6 +193,8 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             Header = RS.UavRttItem_Velocity,
             ShortHeader = "GS",
             Icon = MaterialIconKind.Speedometer,
+            Status = DefaultStatusColor,
+            FormatString = "F2",
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
@@ -195,30 +203,33 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             nameof(AzimuthRttBox),
             DesignTime.LoggerFactory,
             unitService,
-            VelocityBase.Id,
+            AngleBase.Id,
             azimuth,
             null
         )
         {
             Header = RS.UavRttItem_Azimuth,
             Icon = MaterialIconKind.SunAzimuth,
+            Status = DefaultStatusColor,
+            FormatString = "F2",
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
 
-        BatteryRttBox = new KeyValueRttBoxViewModel<Unit>(
+        BatteryRttBox = new KeyValueRttBoxViewModel<BatteryRttBoxData>(
             nameof(BatteryRttBox),
             DesignTime.LoggerFactory,
-            Observable
-                .Merge(
-                    batteryCharge.Select(_ => Unit.Default),
-                    batteryAmperage.Select(_ => Unit.Default),
-                    batteryVoltage.Select(_ => Unit.Default),
-                    batteryConsumed.Select(_ => Unit.Default),
-                    _progressUnit.CurrentUnitItem.Select(_ => Unit.Default),
-                    _capacityUnit.CurrentUnitItem.Select(_ => Unit.Default),
-                    _voltageUnit.CurrentUnitItem.Select(_ => Unit.Default),
-                    _amperageUnit.CurrentUnitItem.Select(_ => Unit.Default)
+            batteryCharge
+                .CombineLatest(
+                    batteryAmperage,
+                    batteryVoltage,
+                    batteryConsumed,
+                    _progressUnit.CurrentUnitItem,
+                    _amperageUnit.CurrentUnitItem,
+                    _capacityUnit.CurrentUnitItem,
+                    _voltageUnit.CurrentUnitItem,
+                    (bC, bA, bV, bCo, prog, amp, cap, vol) =>
+                        new BatteryRttBoxData(bC, bA, bV, bCo, prog, amp, cap, vol)
                 )
                 .ObserveOnUIThreadDispatcher()
                 .ThrottleLast(TimeSpan.FromMilliseconds(200)),
@@ -227,30 +238,46 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         {
             Header = RS.UavRttItem_Battery,
             Icon = MaterialIconKind.Battery10,
-            UpdateAction = (model, _) =>
+            UpdateAction = (model, changes) =>
             {
-                model[0, "Charge", _progressUnit.CurrentUnitItem.Value.Symbol].ValueString =
-                    _progressUnit.CurrentUnitItem.Value.PrintFromSi(batteryCharge.Value, "F2");
-                model[1, "Amperage", _amperageUnit.CurrentUnitItem.Value.Symbol].ValueString =
-                    _amperageUnit.CurrentUnitItem.Value.PrintFromSi(batteryAmperage.Value, "F2");
-                model[2, "Voltage", _voltageUnit.CurrentUnitItem.Value.Symbol].ValueString =
-                    _voltageUnit.CurrentUnitItem.Value.PrintFromSi(batteryVoltage.Value, "F2");
-                model[3, "Consumed", _capacityUnit.CurrentUnitItem.Value.Symbol].ValueString =
-                    _capacityUnit.CurrentUnitItem.Value.PrintFromSi(batteryConsumed.Value, "F2");
+                model[
+                    0,
+                    RS.UavWidgetViewModel_BatteryRttBox_BatteryCharge_Header,
+                    changes.ProgressUnit.Symbol
+                ].ValueString = changes.ProgressUnit.PrintFromSi(changes.Charge, "F2");
+                model[
+                    1,
+                    RS.UavWidgetViewModel_BatteryRttBox_BatteryAmperage_Header,
+                    changes.AmperageUnit.Symbol
+                ].ValueString = changes.AmperageUnit.PrintFromSi(changes.Amperage, "F2");
+                model[
+                    2,
+                    RS.UavWidgetViewModel_BatteryRttBox_BatteryVoltage_Header,
+                    changes.VoltageUnit.Symbol
+                ].ValueString = changes.VoltageUnit.PrintFromSi(changes.Voltage, "F2");
+                model[
+                    3,
+                    RS.UavWidgetViewModel_BatteryRttBox_BatteryConsumed_Header,
+                    changes.CapacityUnit.Symbol
+                ].ValueString = changes.CapacityUnit.PrintFromSi(changes.Consumed, "F2");
+
+                ChangeBatteryStatus(changes.Charge);
             },
+            Status = DefaultStatusColor,
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
 
-        GnssRttBox = new KeyValueRttBoxViewModel<Unit>(
+        GnssRttBox = new KeyValueRttBoxViewModel<GnssRttBoxData>(
             nameof(GnssRttBox),
             DesignTime.LoggerFactory,
-            Observable
-                .Merge(
-                    satelliteCount.Select(_ => Unit.Default),
-                    hdopCount.Select(_ => Unit.Default),
-                    vdopCount.Select(_ => Unit.Default),
-                    gpsFixType.Select(_ => Unit.Default)
+            satelliteCount
+                .CombineLatest(
+                    hdopCount,
+                    vdopCount,
+                    gpsFixType,
+                    (satellites, hdops, vdops, mode) =>
+                        new GnssRttBoxData(satellites, hdops, vdops, mode)
                 )
                 .ObserveOnUIThreadDispatcher()
                 .ThrottleLast(TimeSpan.FromMilliseconds(200)),
@@ -259,13 +286,22 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         {
             Header = RS.UavRttItem_GNSS,
             Icon = MaterialIconKind.GpsFixed,
-            UpdateAction = (model, _) =>
+            UpdateAction = (model, changes) =>
             {
-                model[0, "Satellite count", null].ValueString = satelliteCount.Value.ToString();
-                model[1, "Hdop count", null].ValueString = hdopCount.Value.ToString("F2");
-                model[2, "Vdop count", null].ValueString = vdopCount.Value.ToString("F2");
-                model[3, "Rtk mode", null].ValueString = gpsFixType.Value.ToString();
+                model[
+                    0,
+                    RS.UavWidgetViewModel_GnssRttBox_SatellitesCount_Header,
+                    null
+                ].ValueString = changes.Sattelites.ToString();
+                model[1, RS.UavWidgetViewModel_GnssRttBox_Hdop_Header, null].ValueString =
+                    changes.HdopCount.ToString("F2");
+                model[2, RS.UavWidgetViewModel_GnssRttBox_Vdop_Header, null].ValueString =
+                    changes.VdopCount.ToString("F2");
+                model[3, RS.UavWidgetViewModel_GnssRttBox_Mode_Header, null].ValueString =
+                    GpsFixTypeToString(changes.Mode);
+                ChangeGnssStatus(changes.Sattelites, changes.Mode);
             },
+            Status = DefaultStatusColor,
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
@@ -281,6 +317,8 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         {
             Header = RS.UavRttItem_Link,
             Icon = MaterialIconKind.Wifi,
+            Status = DefaultStatusColor,
+            FormatString = "F2",
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
@@ -330,8 +368,6 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         Icon = dev.GetIcon(device.Id);
         IconColor = dev.GetDeviceColor(device.Id);
         _altitudeUnit = unitService.Units[AltitudeBase.Id];
-        _velocityUnit = unitService.Units[VelocityBase.Id];
-        _angleUnit = unitService.Units[AngleBase.Id];
         _capacityUnit = unitService.Units[CapacityBase.Id];
         _amperageUnit = unitService.Units[AmperageBase.Id];
         _voltageUnit = unitService.Units[VoltageBase.Id];
@@ -406,8 +442,6 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         AutoMode = new BindableAsyncCommand(AutoModeCommand.Id, this);
         StartMission = new BindableAsyncCommand(StartMissionCommand.Id, this);
 
-        var batteryVoltage = new ReactiveProperty<double>().DisposeItWith(Disposable);
-
         var altitudeAgl = positionClientEx
             .Base.GlobalPosition.ObserveOnUIThreadDispatcher()
             .Select(pld => Math.Truncate((pld?.RelativeAlt ?? double.NaN) / 1000d));
@@ -432,9 +466,8 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             .Select(p => p.Azimuth(positionClientEx.Home.CurrentValue ?? GeoPoint.NaN));
 
         var batteryAmperage = telemetryClient.BatteryCurrent.ObserveOnUIThreadDispatcher();
-
         var batteryCharge = telemetryClient.BatteryCharge.ObserveOnUIThreadDispatcher();
-
+        var batteryVoltage = telemetryClient.BatteryVoltage.ObserveOnUIThreadDispatcher();
         var batteryConsumed = telemetryClient
             .BatteryCurrent.ObserveOnUIThreadDispatcher()
             .Select(d =>
@@ -442,31 +475,18 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
                     ? double.NaN
                     : Math.Round(d * positionClientEx.ArmedTime.CurrentValue.TotalHours, 2)
             );
-        var vdopCount = _gnssClient
+        var vdop = _gnssClient
             .Main.Info.ObserveOnUIThreadDispatcher()
-            .Select(info => info.Vdop ?? double.NaN)
-            .ToReadOnlyReactiveProperty()
-            .DisposeItWith(Disposable);
-        var hdopCount = _gnssClient
+            .Select(info => info.Vdop ?? double.NaN);
+        var hdop = _gnssClient
             .Main.Info.Select(info => info.Hdop ?? double.NaN)
-            .ObserveOnUIThreadDispatcher()
-            .ToReadOnlyReactiveProperty()
-            .DisposeItWith(Disposable);
+            .ObserveOnUIThreadDispatcher();
         var satelliteCount = _gnssClient
             .Main.Info.Select(info => info.SatellitesVisible)
-            .ObserveOnUIThreadDispatcher()
-            .ToReadOnlyReactiveProperty()
-            .DisposeItWith(Disposable);
+            .ObserveOnUIThreadDispatcher();
         var rtkMode = _gnssClient
             .Main.Info.Select(gpsInfo => gpsInfo.FixType)
-            .ObserveOnUIThreadDispatcher()
-            .ToReadOnlyReactiveProperty()
-            .DisposeItWith(Disposable);
-        heartbeatClient
-            .Link.State.ObserveOnUIThreadDispatcher()
-            .Skip(1)
-            .Subscribe(ChangeLinkStatus)
-            .DisposeItWith(Disposable);
+            .ObserveOnUIThreadDispatcher();
 
         AltitudeAgl = altitudeAgl.ToReadOnlyBindableReactiveProperty().DisposeItWith(Disposable);
         AltitudeMsl = altitudeMsl.ToReadOnlyBindableReactiveProperty().DisposeItWith(Disposable);
@@ -502,6 +522,11 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         Observable
             .Timer(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(4))
             .Subscribe(_ => StatusText.Value = string.Empty)
+            .DisposeItWith(Disposable);
+        heartbeatClient
+            .Link.State.ObserveOnUIThreadDispatcher()
+            .Skip(1)
+            .Subscribe(ChangeLinkStatus)
             .DisposeItWith(Disposable);
 
         CurrentFlightModeRttBox = new SingleRttBoxViewModel<string>(
@@ -549,13 +574,10 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
                 model.Left.UnitSymbol = changes.AltitudeUnit.Symbol;
                 model.Right.UnitSymbol = changes.AltitudeUnit.Symbol;
 
-                if (positionClientEx.Base.GlobalPosition.CurrentValue is not null)
-                {
-                    SpeedAltitudeCheck(
-                        positionClientEx.Base.GlobalPosition.CurrentValue.RelativeAlt / 1000,
-                        Math.Round(_gnssClient.Main.GroundVelocity.CurrentValue)
-                    );
-                }
+                CheckSpeedAltitude(
+                    changes.AltitudeAgl,
+                    Math.Round(_gnssClient.Main.GroundVelocity.CurrentValue)
+                );
             },
             Status = DefaultStatusColor,
         }
@@ -577,6 +599,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             ShortHeader = "GS",
             Icon = MaterialIconKind.Speedometer,
             Status = DefaultStatusColor,
+            FormatString = "F2",
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
@@ -593,6 +616,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             Header = RS.UavRttItem_Azimuth,
             Icon = MaterialIconKind.SunAzimuth,
             Status = DefaultStatusColor,
+            FormatString = "F2",
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
@@ -621,14 +645,26 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             Icon = MaterialIconKind.Battery10,
             UpdateAction = (model, changes) =>
             {
-                model[0, "Charge", changes.ProgressUnit.Symbol].ValueString =
-                    changes.ProgressUnit.PrintFromSi(changes.Charge, "F2");
-                model[1, "Amperage", changes.AmperageUnit.Symbol].ValueString =
-                    changes.AmperageUnit.PrintFromSi(changes.Amperage, "F2");
-                model[2, "Voltage", changes.VoltageUnit.Symbol].ValueString =
-                    changes.VoltageUnit.PrintFromSi(changes.Voltage, "F2");
-                model[3, "Consumed", changes.CapacityUnit.Symbol].ValueString =
-                    changes.CapacityUnit.PrintFromSi(changes.Consumed, "F2");
+                model[
+                    0,
+                    RS.UavWidgetViewModel_BatteryRttBox_BatteryCharge_Header,
+                    changes.ProgressUnit.Symbol
+                ].ValueString = changes.ProgressUnit.PrintFromSi(changes.Charge, "F2");
+                model[
+                    1,
+                    RS.UavWidgetViewModel_BatteryRttBox_BatteryAmperage_Header,
+                    changes.AmperageUnit.Symbol
+                ].ValueString = changes.AmperageUnit.PrintFromSi(changes.Amperage, "F2");
+                model[
+                    2,
+                    RS.UavWidgetViewModel_BatteryRttBox_BatteryVoltage_Header,
+                    changes.VoltageUnit.Symbol
+                ].ValueString = changes.VoltageUnit.PrintFromSi(changes.Voltage, "F2");
+                model[
+                    3,
+                    RS.UavWidgetViewModel_BatteryRttBox_BatteryConsumed_Header,
+                    changes.CapacityUnit.Symbol
+                ].ValueString = changes.CapacityUnit.PrintFromSi(changes.Consumed, "F2");
 
                 ChangeBatteryStatus(changes.Charge);
             },
@@ -642,11 +678,11 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             loggerFactory,
             satelliteCount
                 .CombineLatest(
-                    hdopCount,
-                    vdopCount,
+                    hdop,
+                    vdop,
                     rtkMode,
-                    (satellites, hdops, vdops, mode) =>
-                        new GnssRttBoxData(satellites, hdops, vdops, mode)
+                    (satellites, hdopValue, vdopValue, mode) =>
+                        new GnssRttBoxData(satellites, hdopValue, vdopValue, mode)
                 )
                 .ObserveOnUIThreadDispatcher()
                 .ThrottleLast(TimeSpan.FromMilliseconds(200)),
@@ -657,11 +693,18 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             Icon = MaterialIconKind.GpsFixed,
             UpdateAction = (model, changes) =>
             {
-                model[0, "Satellites", null].ValueString = changes.Sattelites.ToString();
-                model[1, "Hdops", null].ValueString = changes.HdopCount.ToString("F2");
-                model[2, "Vdops", null].ValueString = changes.VdopCount.ToString("F2");
-                model[3, "Mode", null].ValueString = GpsFixTypeToString(changes.Mode);
-                ChangeGnssStatus();
+                model[
+                    0,
+                    RS.UavWidgetViewModel_GnssRttBox_SatellitesCount_Header,
+                    null
+                ].ValueString = changes.Sattelites.ToString();
+                model[1, RS.UavWidgetViewModel_GnssRttBox_Hdop_Header, null].ValueString =
+                    changes.HdopCount.ToString("F2");
+                model[2, RS.UavWidgetViewModel_GnssRttBox_Vdop_Header, null].ValueString =
+                    changes.VdopCount.ToString("F2");
+                model[3, RS.UavWidgetViewModel_GnssRttBox_Mode_Header, null].ValueString =
+                    GpsFixTypeToString(changes.Mode);
+                ChangeGnssStatus(changes.Sattelites, changes.Mode);
             },
             Status = DefaultStatusColor,
         }
@@ -680,6 +723,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             Header = RS.UavRttItem_Link,
             Icon = MaterialIconKind.Wifi,
             Status = DefaultStatusColor,
+            FormatString = "F2",
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
@@ -757,21 +801,23 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         };
     }
 
-    private void SpeedAltitudeCheck(int alt, double gs)
+    private void CheckSpeedAltitude(double alt, double gs)
     {
         if (gs > DangerHighSpeed && alt < CriticalAltitude)
         {
+            StatusText.Value = RS.UavWidgetViewModel_StatusText_PullUp;
             AltitudeRttBox.StatusText = RS.UavWidgetViewModel_StatusText_PullUp;
             AltitudeRttBox.Status = AsvColorKind.Warning | AsvColorKind.Blink;
         }
         else
         {
             StatusText.Value = string.Empty;
+            AltitudeRttBox.StatusText = string.Empty;
             AltitudeRttBox.Status = DefaultStatusColor;
         }
     }
 
-    private void ChangeGnssStatus()
+    private void ChangeGnssStatus(int satellitesCount, Mavlink.Common.GpsFixType mode)
     {
         if (_gnssClient is null)
         {
@@ -779,12 +825,9 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         }
 
         if (
-            _gnssClient.Main.Info.CurrentValue.FixType
-                == Mavlink.Common.GpsFixType.GpsFixTypeRtkFloat
-            || _gnssClient.Main.Info.CurrentValue.SatellitesVisible
-                > WarningSatelliteAmount.Start.Value
-            || _gnssClient.Main.Info.CurrentValue.SatellitesVisible
-                < WarningSatelliteAmount.End.Value
+            mode == Mavlink.Common.GpsFixType.GpsFixTypeRtkFloat
+            || satellitesCount > WarningSatelliteAmount.Start.Value
+            || satellitesCount < WarningSatelliteAmount.End.Value
         )
         {
             GnssRttBox.Status = AsvColorKind.Warning;
@@ -792,12 +835,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         }
 
         if (
-            (
-                _gnssClient.Main.Info.CurrentValue.FixType
-                    != Mavlink.Common.GpsFixType.GpsFixTypeRtkFloat
-                && _gnssClient.Main.Info.CurrentValue.FixType
-                    != Mavlink.Common.GpsFixType.GpsFixTypeRtkFixed
-            )
+            mode != Mavlink.Common.GpsFixType.GpsFixTypeRtkFixed
             || _gnssClient.Main.Info.CurrentValue.SatellitesVisible < DangerSatelliteCount
         )
         {

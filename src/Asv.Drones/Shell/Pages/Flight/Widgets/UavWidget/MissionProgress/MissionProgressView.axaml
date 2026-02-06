@@ -39,63 +39,33 @@
                     <TextBlock Text="{x:Static drones:RS.MissionProgressView_RefreshButton_Text}" />
                 </StackPanel>
             </Button>
-            <Viewbox Width="400">
-                <drones:RouteIndicator
-                    HorizontalAlignment="Stretch"
-                    Progress="{Binding PathProgress.Value}"
-                    StatusText="{Binding MissionFlightTime.Value}"
-                    Title="{x:Static drones:RS.MissionProgressView_Title}"
-                    FontSize="{DynamicResource FontSizeLarge}"
-                    SubStatusText="{x:Static drones:RS.MissionProgressView_SubStatusText}"
-                />
-            </Viewbox>
-            <WrapPanel
-                Orientation="Horizontal"
-                LineSpacing="10"
-                MinWidth="200"
-                MaxWidth="460"
-                ItemWidth="200"
-                ItemHeight="90"
-                ItemsAlignment="Start"
+            <drones:RouteIndicator
                 HorizontalAlignment="Stretch"
+                Progress="{Binding PathProgress.Value}"
+                StatusText="{Binding MissionFlightTime.Value}"
+                Title="{x:Static drones:RS.MissionProgressView_Title}"
+                FontSize="{DynamicResource FontSizeLarge}"
+                SubStatusText="{x:Static drones:RS.MissionProgressView_SubStatusText}"
+            />
+            <StackPanel
+                VerticalAlignment="Top"
+                Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                Spacing="4"
             >
-                <WrapPanel.Styles>
-                    <Style Selector="Viewbox">
-                        <Setter Property="Stretch" Value="Uniform"></Setter>
-                        <Setter Property="StretchDirection" Value="Both"></Setter>
-                    </Style>
-                    <Style Selector="avalonia|RttBox">
-                        <Setter Property="Width" Value="190" />
-                        <Setter Property="Height" Value="90" />
-                        <!-- <Setter Property="Is" Value="False" /> -->
-                        <Setter Property="HorizontalAlignment" Value="Stretch" />
-                    </Style>
-                </WrapPanel.Styles>
                 <Viewbox>
-                    <avalonia:SplitDigitRttBoxView
-                        CornerRadius="{DynamicResource ControlCornerRadius}"
-                        DataContext="{CompiledBinding  MissionDistanceRttBox}"
-                    />
+                    <avalonia:SplitDigitRttBoxView DataContext="{CompiledBinding  MissionDistanceRttBox}" />
                 </Viewbox>
                 <Viewbox>
-                    <avalonia:SplitDigitRttBoxView
-                        CornerRadius="{DynamicResource ControlCornerRadius}"
-                        DataContext="{CompiledBinding TotalDistanceRttBox}"
-                    />
+                    <avalonia:SplitDigitRttBoxView DataContext="{CompiledBinding TotalDistanceRttBox}" />
                 </Viewbox>
                 <Viewbox>
-                    <avalonia:SplitDigitRttBoxView
-                        CornerRadius="{DynamicResource ControlCornerRadius}"
-                        DataContext="{CompiledBinding HomeDistanceRttBox}"
-                    />
+                    <avalonia:SplitDigitRttBoxView DataContext="{CompiledBinding HomeDistanceRttBox}" />
                 </Viewbox>
                 <Viewbox>
-                    <avalonia:SplitDigitRttBoxView
-                        CornerRadius="{DynamicResource ControlCornerRadius}"
-                        DataContext="{CompiledBinding TargetDistanceRttBox}"
-                    />
+                    <avalonia:SplitDigitRttBoxView DataContext="{CompiledBinding TargetDistanceRttBox}" />
                 </Viewbox>
-            </WrapPanel>
+            </StackPanel>
         </StackPanel>
     </DockPanel>
 </UserControl>
