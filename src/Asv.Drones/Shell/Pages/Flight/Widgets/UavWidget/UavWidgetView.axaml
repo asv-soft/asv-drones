@@ -109,7 +109,6 @@
             Width="700"
         >
             <StackPanel
-                Margin="0 0 0 5"
                 Orientation="Vertical"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
@@ -127,9 +126,6 @@
                     <Viewbox VerticalAlignment="Top">
                         <avalonia:SplitDigitRttBoxView DataContext="{CompiledBinding VelocityRttBox}" />
                     </Viewbox>
-                    <Viewbox VerticalAlignment="Top">
-                        <avalonia:SplitDigitRttBoxView DataContext="{CompiledBinding AzimuthRttBox}" />
-                    </Viewbox>
                 </StackPanel>
                 <StackPanel
                     Orientation="Horizontal"
@@ -138,7 +134,7 @@
                     Spacing="4"
                 >
                     <Viewbox VerticalAlignment="Top">
-                        <avalonia:TwoColumnRttBoxView DataContext="{CompiledBinding AltitudeRttBox}" />
+                        <avalonia:SplitDigitRttBoxView DataContext="{CompiledBinding AzimuthRttBox}" />
                     </Viewbox>
                     <Viewbox VerticalAlignment="Top">
                         <avalonia:SplitDigitRttBoxView DataContext="{CompiledBinding LinkQualityRttBox}" />
@@ -156,6 +152,16 @@
                 </Viewbox>
                 <Viewbox VerticalAlignment="Top">
                     <avalonia:KeyValueRttBoxView DataContext="{CompiledBinding GnssRttBox}" />
+                </Viewbox>
+            </StackPanel>
+            <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Spacing="4"
+            >
+                <Viewbox VerticalAlignment="Top">
+                    <avalonia:TwoColumnRttBoxView DataContext="{CompiledBinding AltitudeRttBox}" />
                 </Viewbox>
             </StackPanel>
         </StackPanel>

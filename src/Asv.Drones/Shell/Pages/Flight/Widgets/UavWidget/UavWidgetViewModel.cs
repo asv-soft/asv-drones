@@ -25,6 +25,7 @@ namespace Asv.Drones;
 public class UavWidgetViewModel : MapWidget, IUavFlightWidget
 {
     private const string WidgetId = "widget-uav";
+    private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     private readonly IUnit _velocityUnit;
     private readonly IUnit _altitudeUnit;
@@ -594,6 +595,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             Header = RS.UavRttItem_Mode,
             Icon = MaterialIconKind.FlightMode,
             UpdateAction = (model, mode) => model.ValueString = mode,
+            Status = DefaultStatusColor,
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
@@ -622,6 +624,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
                 model.Left.UnitSymbol = _altitudeUnit.CurrentUnitItem.Value.Symbol;
                 model.Right.UnitSymbol = _altitudeUnit.CurrentUnitItem.Value.Symbol;
             },
+            Status = DefaultStatusColor,
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
@@ -640,6 +643,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             Header = RS.UavRttItem_Velocity,
             ShortHeader = "GS",
             Icon = MaterialIconKind.Speedometer,
+            Status = DefaultStatusColor,
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
@@ -655,6 +659,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         {
             Header = RS.UavRttItem_Azimuth,
             Icon = MaterialIconKind.SunAzimuth,
+            Status = DefaultStatusColor,
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
@@ -691,6 +696,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
                 model[3, "Consumed", _capacityUnit.CurrentUnitItem.Value.Symbol].ValueString =
                     _capacityUnit.CurrentUnitItem.Value.PrintFromSi(batteryConsumed.Value, "F2");
             },
+            Status = DefaultStatusColor,
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
@@ -714,12 +720,12 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             Icon = MaterialIconKind.GpsFixed,
             UpdateAction = (model, _) =>
             {
-                model[0, "Satellite count", null].ValueString =
-                    satelliteCount.CurrentValue.ToString();
-                model[1, "Hdop count", null].ValueString = hdopCount.CurrentValue.ToString("F2");
-                model[2, "Vdop count", null].ValueString = vdopCount.CurrentValue.ToString("F2");
-                model[3, "Rtk mode", null].ValueString = rtkMode.CurrentValue.ToString();
+                model[0, "Satellites", null].ValueString = satelliteCount.CurrentValue.ToString();
+                model[1, "Hdops", null].ValueString = hdopCount.CurrentValue.ToString("F2");
+                model[2, "Vdops", null].ValueString = vdopCount.CurrentValue.ToString("F2");
+                model[3, "Mode", null].ValueString = rtkMode.CurrentValue.ToString();
             },
+            Status = DefaultStatusColor,
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
@@ -735,6 +741,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         {
             Header = RS.UavRttItem_Link,
             Icon = MaterialIconKind.Wifi,
+            Status = DefaultStatusColor,
         }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
@@ -744,11 +751,11 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
     {
         BatteryRttBox.Status = percent switch
         {
-            > 70 => AsvColorKind.None,
+            > 70 => DefaultStatusColor,
             > 50 => AsvColorKind.Warning,
             > 40 => AsvColorKind.Warning | AsvColorKind.Blink,
             < 30 => AsvColorKind.Error | AsvColorKind.Blink,
-            _ => AsvColorKind.None,
+            _ => DefaultStatusColor,
         };
     }
 
@@ -773,7 +780,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         else
         {
             StatusText.Value = string.Empty;
-            AltitudeRttBox.Status = AsvColorKind.None;
+            AltitudeRttBox.Status = DefaultStatusColor;
         }
     }
 
@@ -811,7 +818,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             return;
         }
 
-        GnssRttBox.Status = AsvColorKind.None;
+        GnssRttBox.Status = DefaultStatusColor;
     }
 
     private string GpsFixTypeToString(Mavlink.Common.GpsFixType type)
