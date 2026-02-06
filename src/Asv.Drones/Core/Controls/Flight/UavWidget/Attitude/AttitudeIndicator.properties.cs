@@ -152,45 +152,45 @@ public partial class AttitudeIndicator
         set => SetValue(PitchAngleProperty, value);
     }
 
-    public static readonly StyledProperty<string?> VelocityProperty = AvaloniaProperty.Register<
+    public static readonly StyledProperty<double> VelocityProperty = AvaloniaProperty.Register<
         AttitudeIndicator,
-        string?
+        double
     >(nameof(Velocity));
 
-    public string? Velocity
+    public double Velocity
     {
         get => GetValue(VelocityProperty);
         set => SetValue(VelocityProperty, value);
     }
 
-    public static readonly StyledProperty<string?> AltitudeProperty = AvaloniaProperty.Register<
+    public static readonly StyledProperty<double> AltitudeProperty = AvaloniaProperty.Register<
         AttitudeIndicator,
-        string?
+        double
     >(nameof(Altitude));
 
-    public string? Altitude
+    public double Altitude
     {
         get => GetValue(AltitudeProperty);
         set => SetValue(AltitudeProperty, value);
     }
 
-    public static readonly StyledProperty<string?> HeadingProperty = AvaloniaProperty.Register<
+    public static readonly StyledProperty<double> HeadingProperty = AvaloniaProperty.Register<
         AttitudeIndicator,
-        string?
+        double
     >(nameof(Heading));
 
-    public string? Heading
+    public double Heading
     {
         get => GetValue(HeadingProperty);
         set => SetValue(HeadingProperty, value);
     }
 
-    public static readonly StyledProperty<string?> HomeAzimuthProperty = AvaloniaProperty.Register<
+    public static readonly StyledProperty<double> HomeAzimuthProperty = AvaloniaProperty.Register<
         AttitudeIndicator,
-        string?
+        double
     >(nameof(HomeAzimuth));
 
-    public string? HomeAzimuth
+    public double HomeAzimuth
     {
         get => GetValue(HomeAzimuthProperty);
         set => SetValue(HomeAzimuthProperty, value);

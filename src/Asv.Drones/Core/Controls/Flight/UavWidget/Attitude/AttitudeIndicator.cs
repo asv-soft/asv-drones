@@ -309,20 +309,9 @@ public partial class AttitudeIndicator : TemplatedControl
             return;
         }
 
-        double velocity;
-        if (indicator.Velocity is null)
-        {
-            velocity = double.NaN;
-        }
-        else
-        {
-            var isParsed = double.TryParse(indicator.Velocity, out velocity);
-            velocity = !isParsed ? double.NaN : velocity;
-        }
-
         foreach (var item in indicator.VelocityItems)
         {
-            item.UpdateValue(velocity);
+            item.UpdateValue(indicator.Velocity);
         }
     }
 
@@ -333,20 +322,9 @@ public partial class AttitudeIndicator : TemplatedControl
             return;
         }
 
-        double altitude;
-        if (indicator.Altitude is null)
-        {
-            altitude = double.NaN;
-        }
-        else
-        {
-            var isParsed = double.TryParse(indicator.Altitude, out altitude);
-            altitude = !isParsed ? double.NaN : altitude;
-        }
-
         foreach (var item in indicator.AltitudeItems)
         {
-            item.UpdateValue(altitude);
+            item.UpdateValue(indicator.Altitude);
         }
     }
 
@@ -357,25 +335,15 @@ public partial class AttitudeIndicator : TemplatedControl
             return;
         }
 
-        double heading;
-        if (indicator.Heading is null)
-        {
-            heading = double.NaN;
-        }
-        else
-        {
-            var isParsed = double.TryParse(indicator.Heading, out heading);
-            heading = !isParsed ? double.NaN : heading;
-        }
-
-        double.TryParse(indicator.HomeAzimuth, out var homeAzimuth);
-
         foreach (var item in indicator.HeadingItems)
         {
-            item.UpdateValue(heading);
+            item.UpdateValue(indicator.Heading);
         }
 
-        indicator.HomeAzimuthPosition = GetHomeAzimuthPosition(homeAzimuth, heading);
+        indicator.HomeAzimuthPosition = GetHomeAzimuthPosition(
+            indicator.HomeAzimuth,
+            indicator.Heading
+        );
     }
 
     private static void UpdateHomeAzimuthPosition(AvaloniaObject source)
@@ -385,25 +353,15 @@ public partial class AttitudeIndicator : TemplatedControl
             return;
         }
 
-        double heading;
-        if (indicator.Heading is null)
-        {
-            heading = double.NaN;
-        }
-        else
-        {
-            var isParsed = double.TryParse(indicator.Heading, out heading);
-            heading = !isParsed ? double.NaN : heading;
-        }
-
-        double.TryParse(indicator.HomeAzimuth, out var homeAzimuth);
-
         foreach (var item in indicator.HeadingItems)
         {
-            item.UpdateValue(heading);
+            item.UpdateValue(indicator.Heading);
         }
 
-        indicator.HomeAzimuthPosition = GetHomeAzimuthPosition(homeAzimuth, heading);
+        indicator.HomeAzimuthPosition = GetHomeAzimuthPosition(
+            indicator.HomeAzimuth,
+            indicator.Heading
+        );
     }
 
     private static double GetHomeAzimuthPosition(double? value, double headingValue)
