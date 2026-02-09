@@ -9,6 +9,7 @@ using Asv.Common;
 using Asv.IO;
 using Asv.Mavlink;
 using Asv.Mavlink.Common;
+using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
 
@@ -17,6 +18,7 @@ namespace Asv.Drones;
 public class MissionProgressViewModel : RoutableViewModel
 {
     public const string ViewModelId = "mission.progress";
+    private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     private readonly IClientDevice _device;
     private readonly IPositionClientEx _positionClient;
@@ -47,48 +49,70 @@ public class MissionProgressViewModel : RoutableViewModel
         ).DisposeItWith(Disposable);
 
         var unitService = NullUnitService.Instance;
-        var nullUnit = unitService.Units.Values.First();
 
-        MissionDistance = new BindableUnitProperty(
-            nameof(MissionDistance),
+        MissionDistanceRttBox = new SplitDigitRttBoxViewModel(
+            nameof(MissionDistanceRttBox),
+            DesignTime.LoggerFactory,
+            unitService,
+            DistanceUnit.Id,
             missionDistance,
-            nullUnit,
-            DesignTime.LoggerFactory,
-            "N2"
+            null
         )
+        {
+            Icon = MaterialIconKind.MapMarkerDistance,
+            Header = RS.MissionProgressView_MissionDistanceRTT,
+            Status = DefaultStatusColor,
+        }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        MissionDistance.ForceValidate();
-        HomeDistance = new BindableUnitProperty(
-            nameof(HomeDistance),
-            homeDistance,
-            nullUnit,
+
+        TotalDistanceRttBox = new SplitDigitRttBoxViewModel(
+            nameof(TotalDistanceRttBox),
             DesignTime.LoggerFactory,
-            "N2"
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        HomeDistance.ForceValidate();
-        TargetDistance = new BindableUnitProperty(
-            nameof(TargetDistance),
-            targetDistance,
-            nullUnit,
-            DesignTime.LoggerFactory,
-            "N2"
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        TargetDistance.ForceValidate();
-        TotalDistance = new BindableUnitProperty(
-            nameof(TotalDistance),
+            unitService,
+            DistanceUnit.Id,
             totalDistance,
-            nullUnit,
-            DesignTime.LoggerFactory,
-            "N2"
+            null
         )
+        {
+            Icon = MaterialIconKind.LocationDistance,
+            Header = RS.MissionProgressView_TotalDistanceRTT,
+            Status = DefaultStatusColor,
+        }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        TotalDistance.ForceValidate();
+
+        HomeDistanceRttBox = new SplitDigitRttBoxViewModel(
+            nameof(HomeDistanceRttBox),
+            DesignTime.LoggerFactory,
+            unitService,
+            DistanceUnit.Id,
+            homeDistance,
+            null
+        )
+        {
+            Icon = MaterialIconKind.Home,
+            Header = RS.MissionProgressView_HomeDistance,
+            Status = DefaultStatusColor,
+        }
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
+
+        TargetDistanceRttBox = new SplitDigitRttBoxViewModel(
+            nameof(TargetDistanceRttBox),
+            DesignTime.LoggerFactory,
+            unitService,
+            DistanceUnit.Id,
+            targetDistance,
+            null
+        )
+        {
+            Icon = MaterialIconKind.Target,
+            Header = RS.MissionProgressView_TargetDistance,
+            Status = DefaultStatusColor,
+        }
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
 
         IsDownloaded.Value = true;
         MissionFlightTime.Value = "15 min";
@@ -107,7 +131,6 @@ public class MissionProgressViewModel : RoutableViewModel
         ArgumentNullException.ThrowIfNull(unitService);
         ArgumentNullException.ThrowIfNull(loggerFactory);
         _device = device;
-        var distanceUnit = unitService.Units[DistanceBase.Id];
         _missionClient =
             device.GetMicroservice<IMissionClientEx>()
             ?? throw new Exception($"Unable to load {nameof(IMissionClientEx)} from {device.Id}");
@@ -129,46 +152,74 @@ public class MissionProgressViewModel : RoutableViewModel
         var targetDistance = new ReactiveProperty<double>().DisposeItWith(Disposable);
         var totalDistance = new ReactiveProperty<double>().DisposeItWith(Disposable);
         var homeDistance = new ReactiveProperty<double>().DisposeItWith(Disposable);
-        MissionDistance = new BindableUnitProperty(
-            nameof(MissionDistance),
+
+        MissionDistanceRttBox = new SplitDigitRttBoxViewModel(
+            nameof(MissionDistanceRttBox),
+            loggerFactory,
+            unitService,
+            DistanceUnit.Id,
             missionDistance,
-            distanceUnit,
-            loggerFactory,
-            "N2"
+            null
         )
+        {
+            Icon = MaterialIconKind.MapMarkerDistance,
+            Header = RS.MissionProgressView_MissionDistanceRTT,
+            Status = DefaultStatusColor,
+            FormatString = "F2",
+        }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        MissionDistance.ForceValidate();
-        HomeDistance = new BindableUnitProperty(
-            nameof(HomeDistance),
-            homeDistance,
-            distanceUnit,
+
+        TotalDistanceRttBox = new SplitDigitRttBoxViewModel(
+            nameof(TotalDistanceRttBox),
             loggerFactory,
-            "N2"
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        HomeDistance.ForceValidate();
-        TargetDistance = new BindableUnitProperty(
-            nameof(TargetDistance),
-            targetDistance,
-            distanceUnit,
-            loggerFactory,
-            "N2"
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-        TargetDistance.ForceValidate();
-        TotalDistance = new BindableUnitProperty(
-            nameof(TotalDistance),
+            unitService,
+            DistanceUnit.Id,
             totalDistance,
-            distanceUnit,
-            loggerFactory,
-            "N2"
+            null
         )
+        {
+            Icon = MaterialIconKind.LocationDistance,
+            Header = RS.MissionProgressView_TotalDistanceRTT,
+            Status = DefaultStatusColor,
+            FormatString = "F2",
+        }
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        TotalDistance.ForceValidate();
+
+        HomeDistanceRttBox = new SplitDigitRttBoxViewModel(
+            nameof(HomeDistanceRttBox),
+            loggerFactory,
+            unitService,
+            DistanceUnit.Id,
+            homeDistance,
+            null
+        )
+        {
+            Icon = MaterialIconKind.Home,
+            Header = RS.MissionProgressView_HomeDistance,
+            Status = DefaultStatusColor,
+            FormatString = "F2",
+        }
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
+
+        TargetDistanceRttBox = new SplitDigitRttBoxViewModel(
+            nameof(TargetDistanceRttBox),
+            loggerFactory,
+            unitService,
+            DistanceUnit.Id,
+            targetDistance,
+            null
+        )
+        {
+            Icon = MaterialIconKind.Target,
+            Header = RS.MissionProgressView_TargetDistance,
+            Status = DefaultStatusColor,
+            FormatString = "F2",
+        }
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
 
         PathProgress = new BindableReactiveProperty<double>(0).DisposeItWith(Disposable);
         IsDownloaded = new BindableReactiveProperty<bool>(false).DisposeItWith(Disposable);
@@ -181,26 +232,26 @@ public class MissionProgressViewModel : RoutableViewModel
             .AllMissionsDistance.ObserveOnUIThreadDispatcher()
             .Subscribe(d =>
             {
-                MissionDistance.ModelValue.Value = d * 1000;
+                missionDistance.Value = d * 1000;
                 var start = _missionClient.MissionItems.FirstOrDefault();
                 var stop = _missionClient.MissionItems.LastOrDefault(missionItem =>
                     missionItem.Command.Value != MavCmd.MavCmdNavReturnToLaunch
                 );
                 if (start != null && stop != null)
                 {
-                    MissionDistance.ModelValue.Value += GeoMath.Distance(
+                    missionDistance.Value += GeoMath.Distance(
                         start.Location.Value,
                         _positionClient.Home.CurrentValue
                     );
-                    MissionDistance.ModelValue.Value += GeoMath.Distance(
+                    missionDistance.Value += GeoMath.Distance(
                         stop.Location.Value,
                         _positionClient.Home.CurrentValue
                     );
                 }
 
-                if (MissionDistance.ModelValue.Value < 1)
+                if (missionDistance.Value < 1)
                 {
-                    MissionDistance.ModelValue.Value = d * 1000;
+                    missionDistance.Value = d * 1000;
                 }
             })
             .DisposeItWith(Disposable);
@@ -231,11 +282,11 @@ public class MissionProgressViewModel : RoutableViewModel
                 );
                 if (rtl is not null)
                 {
-                    TotalDistance.ModelValue.Value = v + (distanceBeforeMission * 2000);
+                    totalDistance.Value = v + (distanceBeforeMission * 2000);
                     return;
                 }
 
-                TotalDistance.ModelValue.Value = v + (distanceBeforeMission * 1000);
+                totalDistance.Value = v + (distanceBeforeMission * 1000);
             })
             .DisposeItWith(Disposable);
 
@@ -311,12 +362,6 @@ public class MissionProgressViewModel : RoutableViewModel
             .Subscribe(i => _currentIndex.Value = i)
             .DisposeItWith(Disposable);
 
-        DistanceUnitSymbol = distanceUnit
-            .CurrentUnitItem.ObserveOnUIThreadDispatcher()
-            .Select(item => item.Symbol)
-            .ToBindableReactiveProperty<string>()
-            .DisposeItWith(Disposable);
-
         Observable
             .Timer(TimeSpan.Zero, TimeSpan.FromSeconds(1))
             .ObserveOnUIThreadDispatcher()
@@ -325,24 +370,22 @@ public class MissionProgressViewModel : RoutableViewModel
     }
 
     public BindableAsyncCommand UpdateMission { get; set; }
-
     public BindableReactiveProperty<string> MissionFlightTime { get; }
-
     public BindableReactiveProperty<double> DownloadProgress { get; }
-    public BindableUnitProperty MissionDistance { get; }
-    public BindableUnitProperty TotalDistance { get; }
-    public BindableUnitProperty HomeDistance { get; }
-    public BindableUnitProperty TargetDistance { get; }
     public BindableReactiveProperty<bool> IsDownloaded { get; }
     public BindableReactiveProperty<double> PathProgress { get; }
-    public BindableReactiveProperty<string> DistanceUnitSymbol { get; }
+
+    public SplitDigitRttBoxViewModel MissionDistanceRttBox { get; }
+    public SplitDigitRttBoxViewModel TotalDistanceRttBox { get; }
+    public SplitDigitRttBoxViewModel HomeDistanceRttBox { get; }
+    public SplitDigitRttBoxViewModel TargetDistanceRttBox { get; }
 
     public override IEnumerable<IRoutable> GetChildren()
     {
-        yield return MissionDistance;
-        yield return HomeDistance;
-        yield return TargetDistance;
-        yield return TotalDistance;
+        yield return MissionDistanceRttBox;
+        yield return TotalDistanceRttBox;
+        yield return HomeDistanceRttBox;
+        yield return TargetDistanceRttBox;
     }
 
     internal async Task InitiateMissionPoints(CancellationToken cancel)

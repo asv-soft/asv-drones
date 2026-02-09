@@ -14,7 +14,7 @@ public class SetAltitudeDialogViewModel : DialogViewModelBase
 
     public SetAltitudeDialogViewModel()
         : this(
-            NullUnitService.Instance.Units.Values.First(u => u.UnitId == AltitudeBase.Id),
+            NullUnitService.Instance.Units.Values.First(u => u.UnitId == AltitudeUnit.Id),
             DesignTime.LoggerFactory
         )
     {
@@ -25,8 +25,8 @@ public class SetAltitudeDialogViewModel : DialogViewModelBase
         : base(DialogId, loggerFactory)
     {
         var altitudeUnit =
-            unit as AltitudeBase
-            ?? throw new InvalidCastException($"Unit must be an {nameof(AltitudeBase)}");
+            unit as AltitudeUnit
+            ?? throw new InvalidCastException($"Unit must be an {nameof(AltitudeUnit)}");
 
         Altitude = new BindableReactiveProperty<string>(string.Empty).DisposeItWith(Disposable);
         AltitudeUnitSymbol = altitudeUnit

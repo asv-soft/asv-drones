@@ -19,8 +19,8 @@ public class MavParamAltitudeTextBoxViewModel : MavParamTextBoxViewModel
         : base(param, update, initReadCallback, loggerFactory)
     {
         _unit =
-            measureService[AltitudeBase.Id]?.CurrentUnitItem.CurrentValue
-            ?? throw new ArgumentNullException(LatitudeBase.Id);
+            measureService[AltitudeUnit.Id]?.CurrentUnitItem.CurrentValue
+            ?? throw new ArgumentNullException(LatitudeUnit.Id);
     }
 
     protected override string ValueToText(ValueType remoteValue)
