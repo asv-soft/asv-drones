@@ -8,7 +8,6 @@
     xmlns:rsga="clr-namespace:Asv.Drones.Api"
     mc:Ignorable="d"
     d:DesignWidth="250"
-    d:DesignHeight="300"
     x:Class="Asv.Drones.Api.MavParamTextBoxView"
     x:DataType="rsga:MavParamTextBoxViewModel"
 >

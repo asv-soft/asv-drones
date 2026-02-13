@@ -63,7 +63,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Core\" />
+      <Folder Include="Core\Services\Devices\" />
       <Folder Include="Shell\" />
     </ItemGroup>
 

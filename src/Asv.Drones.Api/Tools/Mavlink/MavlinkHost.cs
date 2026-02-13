@@ -1,4 +1,3 @@
-using System;
 using System.Composition;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
@@ -6,11 +5,10 @@ using Asv.Cfg;
 using Asv.IO;
 using Asv.Mavlink;
 using Asv.Mavlink.Minimal;
-using Avalonia.Media;
 using Material.Icons;
 using R3;
 
-namespace Asv.Drones;
+namespace Asv.Drones.Api;
 
 public class MavlinkDeviceManagerExtensionConfig
 {

@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
+using Asv.Drones.Api;
 using Material.Icons;
 
 namespace Asv.Drones;
@@ -12,9 +13,9 @@ namespace Asv.Drones;
 /// <para>- <c>arg["new"]</c> as New Value.</para>
 /// </summary>
 [ExportCommand]
-public class CommitRenameCommand : ContextCommand<ISupportRename, DictArg>
+public class CommitRenameCommand : ContextCommand<ISupportRename, DictArg>, ICommitRenameCommand
 {
-    public const string Id = $"{BaseId}.rename.commit";
+    public const string Id = ICommitRenameCommand.CommandId;
 
     public const string OldValue = "old";
     public const string NewValue = "new";

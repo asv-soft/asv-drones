@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
+using Asv.Drones.Api;
 using Asv.Mavlink;
 using R3;
 

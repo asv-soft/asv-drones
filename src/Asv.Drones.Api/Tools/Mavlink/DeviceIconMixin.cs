@@ -3,7 +3,7 @@ using Asv.IO;
 using Asv.Mavlink;
 using Material.Icons;
 
-namespace Asv.Drones;
+namespace Asv.Drones.Api;
 
 public static class DeviceIconMixin
 {
