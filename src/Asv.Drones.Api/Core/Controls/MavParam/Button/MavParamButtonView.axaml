@@ -7,8 +7,7 @@
     xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
     xmlns:avalonia1="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
     mc:Ignorable="d"
-    d:DesignWidth="250"
-    d:DesignHeight="300"
+    d:DesignWidth="200"
     x:Class="Asv.Drones.Api.MavParamButtonView"
     x:DataType="api:MavParamButtonViewModel"
 >

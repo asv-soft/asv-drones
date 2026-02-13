@@ -1,14 +1,15 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
+using Asv.Drones.Api;
 using Material.Icons;
 
 namespace Asv.Drones;
 
 [ExportCommand]
-public class RemoveItemCommand : ContextCommand<ISupportRemove>
+public class RemoveItemCommand : ContextCommand<ISupportRemove>, IRemoveItemCommand
 {
-    public const string Id = $"{BaseId}.remove";
+    public const string Id = IRemoveItemCommand.CommandId;
 
     private static readonly ICommandInfo StaticInfo = new CommandInfo
     {
