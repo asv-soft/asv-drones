@@ -35,6 +35,7 @@ public class SetupPageViewModel : TreeDevicePageViewModel<ISetupPage, ISetupSubp
     )
     {
         Title = $"{RS.SetupPageViewModel_Title}[{device.Id}]";
+        TreeHeader = RS.SetupPageViewModel_Title;
     }
 
     public override IExportInfo Source => SystemModule.Instance;
