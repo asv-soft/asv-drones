@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:asv-avalonia="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:drones="clr-namespace:Asv.Drones"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Asv.Drones.NewUavWidgetView"
+             x:DataType="drones:NewUavWidgetViewModel">
+    <Design.DataContext>
+        <drones:NewUavWidgetViewModel />
+    </Design.DataContext>
+    <Grid RowDefinitions="Auto,Auto,*" Margin="5" RowSpacing="10" HorizontalAlignment="Left">
+        <StackPanel
+            Grid.Column="0"
+            Grid.Row="1"
+            Orientation="Vertical"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Spacing="3"
+            Width="700"
+        >
+            <StackPanel
+                Orientation="Vertical"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Spacing="4"
+            >
+                <drones:BatteryUavIndicator DataContext="{CompiledBinding BatteryUavIndicator}"/>
+                <drones:AltitudeUavIndicator DataContext="{CompiledBinding AltitudeUavIndicator}"/>
+                <drones:VelocityUavIndicator DataContext="{CompiledBinding VelocityUavIndicator}"/>
+                <drones:AngleUavRttIndicator DataContext="{CompiledBinding AngleUavRttIndicator}"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -6,11 +6,6 @@ namespace Asv.Drones;
 public partial class PitchItem : AvaloniaObject
 {
     private readonly int _pitch;
-    private string _title;
-    private double _value;
-    private Point _startLine;
-    private Point _stopLine;
-    private bool _isVisible;
 
     public PitchItem(
         int pitch,
