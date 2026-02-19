@@ -39,7 +39,7 @@
                     <TextBlock Text="{x:Static drones:RS.MissionProgressView_RefreshButton_Text}" />
                 </StackPanel>
             </Button>
-            <drones:RouteIndicator
+            <drones:RouteUavIndicator
                 HorizontalAlignment="Stretch"
                 Progress="{Binding PathProgress.Value}"
                 StatusText="{Binding MissionFlightTime.Value}"

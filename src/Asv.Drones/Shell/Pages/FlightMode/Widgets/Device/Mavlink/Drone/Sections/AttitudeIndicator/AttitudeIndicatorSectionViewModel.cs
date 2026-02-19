@@ -21,6 +21,9 @@ public class AttitudeIndicatorSectionViewModel
 
     public IReadOnlyBindableReactiveProperty<double> Roll { get; private set; }
     public IReadOnlyBindableReactiveProperty<double> Pitch { get; private set; }
+    public IReadOnlyBindableReactiveProperty<double> Heading { get; private set; }
+    public IReadOnlyBindableReactiveProperty<double> HomeAzimuth { get; private set; }
+
     public int Order => 0;
 
     public void InitWith(MavlinkClientDevice device)
@@ -36,6 +39,21 @@ public class AttitudeIndicatorSectionViewModel
         Roll = positionClientEx.Roll.ToReadOnlyBindableReactiveProperty().DisposeItWith(Disposable);
         Pitch = positionClientEx
             .Pitch.ToReadOnlyBindableReactiveProperty()
+            .DisposeItWith(Disposable);
+
+        Heading = positionClientEx
+            .Yaw.ObserveOnUIThreadDispatcher()
+            .ThrottleLast(TimeSpan.FromMilliseconds(200))
+            .Select(Math.Truncate)
+            .ToReadOnlyBindableReactiveProperty()
+            .DisposeItWith(Disposable);
+
+        HomeAzimuth = positionClientEx
+            .Current.ObserveOnUIThreadDispatcher()
+            .Where(_ => positionClientEx.Home.CurrentValue.HasValue)
+            .ThrottleLast(TimeSpan.FromMilliseconds(200))
+            .Select(p => p.Azimuth(positionClientEx.Home.CurrentValue ?? GeoPoint.NaN))
+            .ToReadOnlyBindableReactiveProperty()
             .DisposeItWith(Disposable);
     }
 
