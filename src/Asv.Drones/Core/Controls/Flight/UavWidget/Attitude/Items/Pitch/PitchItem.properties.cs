@@ -13,8 +13,8 @@ public partial class PitchItem
 
     public string Title
     {
-        get => _title;
-        set => SetAndRaise(TitleProperty, ref _title, value);
+        get;
+        set => SetAndRaise(TitleProperty, ref field, value);
     }
 
     public static readonly DirectProperty<PitchItem, double> ValueProperty =
@@ -26,8 +26,8 @@ public partial class PitchItem
 
     public double Value
     {
-        get => _value;
-        set => SetAndRaise(ValueProperty, ref _value, value);
+        get;
+        set => SetAndRaise(ValueProperty, ref field, value);
     }
 
     public static readonly DirectProperty<PitchItem, bool> IsVisibleProperty =
@@ -39,8 +39,8 @@ public partial class PitchItem
 
     public bool IsVisible
     {
-        get => _isVisible;
-        set => SetAndRaise(IsVisibleProperty, ref _isVisible, value);
+        get;
+        set => SetAndRaise(IsVisibleProperty, ref field, value);
     }
 
     public static readonly DirectProperty<PitchItem, Point> StartLineProperty =
@@ -52,8 +52,8 @@ public partial class PitchItem
 
     public Point StartLine
     {
-        get => _startLine;
-        set => SetAndRaise(StartLineProperty, ref _startLine, value);
+        get;
+        set => SetAndRaise(StartLineProperty, ref field, value);
     }
 
     public static readonly DirectProperty<PitchItem, Point> StopLineProperty =
@@ -65,7 +65,7 @@ public partial class PitchItem
 
     public Point StopLine
     {
-        get => _stopLine;
-        set => SetAndRaise(StopLineProperty, ref _stopLine, value);
+        get;
+        set => SetAndRaise(StopLineProperty, ref field, value);
     }
 }
