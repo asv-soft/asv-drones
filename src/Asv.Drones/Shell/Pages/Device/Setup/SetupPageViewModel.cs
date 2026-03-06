@@ -1,4 +1,4 @@
-using System.Composition;
+
 using System.Threading;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
@@ -38,5 +38,5 @@ public class SetupPageViewModel : TreeDevicePageViewModel<ISetupPage, ISetupSubp
         TreeHeader = RS.SetupPageViewModel_Title;
     }
 
-    public override IExportInfo Source => SystemModule.Instance;
+    
 }

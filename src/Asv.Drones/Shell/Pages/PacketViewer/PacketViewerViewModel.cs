@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Composition;
+
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -14,6 +14,8 @@ using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
 using Material.Icons;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using ObservableCollections;
@@ -28,7 +30,6 @@ public sealed class PacketViewerViewModelConfig
     public bool IsCheckedAllTypes { get; set; } = true;
 }
 
-[ExportPage(PageId)]
 public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
 {
     public const string PageId = "packet-viewer";
@@ -39,7 +40,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
     private readonly ReactiveProperty<bool> _isPaused;
     private readonly ReactiveProperty<bool> _isCheckedAllSources;
     private readonly ReactiveProperty<bool> _isCheckedAllTypes;
-    private readonly IAppPath _app;
+    private readonly IHostEnvironment _app;
     private readonly ILoggerFactory _loggerFactory;
     private readonly IUnitService _unit;
     private readonly IDeviceManager _deviceManager;
@@ -65,14 +66,15 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
     public PacketViewerViewModel()
         : this(
             DesignTime.CommandService,
-            NullAppPath.Instance,
+            AppHost.Instance.Services.GetRequiredService<IHostEnvironment>(),
             NullLayoutService.Instance,
             NullLoggerFactory.Instance,
             NullUnitService.Instance,
             [],
             NullDeviceManager.Instance,
             DesignTime.Navigation,
-            DesignTime.DialogService
+            DesignTime.DialogService,
+            DesignTime.ExtensionService
         )
     {
         DesignTime.ThrowIfNotDesignMode();
@@ -86,19 +88,19 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         );
     }
 
-    [ImportingConstructor]
     public PacketViewerViewModel(
         ICommandService cmd,
-        IAppPath app,
+        IHostEnvironment app,
         ILayoutService layoutService,
         ILoggerFactory loggerFactory,
         IUnitService unit,
-        [ImportMany] IEnumerable<IPacketConverter> converters,
+        IEnumerable<IPacketConverter> converters,
         IDeviceManager deviceManager,
         INavigationService navigationService,
-        IDialogService dialogService
+        IDialogService dialogService,
+        IExtensionService ext
     )
-        : base(PageId, cmd, loggerFactory, dialogService)
+        : base(PageId, cmd, loggerFactory, dialogService, ext)
     {
         Title = RS.PacketViewerViewModel_Title;
         _app = app;
@@ -329,7 +331,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         }
 
         var filePath = Path.Join(
-            _app.UserDataFolder,
+            _app.ContentRootPath,
             $"packets{DateTime.Now:yyyy-M-d h-mm-ss}.csv"
         );
 
@@ -531,5 +533,5 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
 
     #endregion
 
-    public override IExportInfo Source => SystemModule.Instance;
+    
 }

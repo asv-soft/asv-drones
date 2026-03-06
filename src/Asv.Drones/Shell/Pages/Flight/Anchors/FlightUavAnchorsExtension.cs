@@ -1,4 +1,4 @@
-﻿using System.Composition;
+﻿
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Common;
@@ -10,8 +10,6 @@ using R3;
 
 namespace Asv.Drones;
 
-[ExportExtensionFor<IFlightMode>]
-[method: ImportingConstructor]
 public class FlightUavAnchorsExtension(IDeviceManager conn, ILoggerFactory loggerFactory)
     : IExtensionFor<IFlightMode>
 {

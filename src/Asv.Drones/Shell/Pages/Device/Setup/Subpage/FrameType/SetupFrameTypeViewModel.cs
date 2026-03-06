@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Composition;
+
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -290,5 +290,5 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
         }
     }
 
-    public override IExportInfo Source => SystemModule.Instance;
+    
 }

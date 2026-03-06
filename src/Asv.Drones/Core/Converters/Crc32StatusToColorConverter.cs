@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Composition;
+
 using System.Globalization;
 using Asv.Avalonia;
 using Avalonia.Data.Converters;

@@ -1,4 +1,4 @@
-using System.Composition;
+
 using Asv.Avalonia;
 using Avalonia;
 using Avalonia.Controls;
@@ -12,7 +12,6 @@ public sealed class PacketViewerViewConfig
     public bool IsTypesExpanded { get; set; } = true;
 }
 
-[ExportViewFor(typeof(PacketViewerViewModel))]
 public partial class PacketViewerView : UserControl
 {
     private readonly ILayoutService _layoutService;
@@ -25,7 +24,6 @@ public partial class PacketViewerView : UserControl
         DesignTime.ThrowIfNotDesignMode();
     }
 
-    [ImportingConstructor]
     public PacketViewerView(ILayoutService layoutService)
     {
         _layoutService = layoutService;

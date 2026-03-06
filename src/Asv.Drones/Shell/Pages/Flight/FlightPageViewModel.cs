@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Composition;
+
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
@@ -20,7 +20,6 @@ public sealed class FlightPageViewModelConfig
     public int Zoom { get; set; } = 0;
 }
 
-[ExportPage(PageId)]
 public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
 {
     public const string PageId = "flight";
@@ -29,7 +28,7 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
     private FlightPageViewModelConfig? _config;
 
     public FlightPageViewModel()
-        : this(DesignTime.CommandService, DesignTime.LoggerFactory, DesignTime.DialogService)
+        : this(DesignTime.CommandService, DesignTime.LoggerFactory, DesignTime.DialogService, DesignTime.ExtensionService)
     {
         DesignTime.ThrowIfNotDesignMode();
         var drone = new MapAnchor<IMapAnchor>(DesignTime.Id, DesignTime.LoggerFactory)
@@ -51,13 +50,13 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
         Widgets.Add(new UavWidgetViewModel { Header = "Device11" });
     }
 
-    [ImportingConstructor]
     public FlightPageViewModel(
         ICommandService cmd,
         ILoggerFactory loggerFactory,
-        IDialogService dialogService
+        IDialogService dialogService,
+        IExtensionService ext
     )
-        : base(PageId, cmd, loggerFactory, dialogService)
+        : base(PageId, cmd, loggerFactory, dialogService, ext)
     {
         Title = RS.FlightPageViewModel_Title;
         Icon = PageIcon;
@@ -144,5 +143,5 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
         // nothing to do
     }
 
-    public override IExportInfo Source => SystemModule.Instance;
+    
 }

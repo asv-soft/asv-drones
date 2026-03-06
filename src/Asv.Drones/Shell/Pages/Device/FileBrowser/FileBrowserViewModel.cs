@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Composition;
+
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -1236,7 +1236,7 @@ public class FileBrowserViewModel
 
     protected override void AfterLoadExtensions() { }
 
-    public override IExportInfo Source => SystemModule.Instance;
+    
 
     #endregion
 

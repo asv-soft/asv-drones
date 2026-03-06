@@ -1,4 +1,4 @@
-﻿using System.Composition;
+﻿
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Gnss;
@@ -8,8 +8,6 @@ using Material.Icons;
 
 namespace Asv.Drones;
 
-[Export(typeof(IDeviceManagerExtension))]
-[Shared]
 public class GnssDeviceManagerExtension : IDeviceManagerExtension
 {
     public void Configure(IProtocolBuilder builder)

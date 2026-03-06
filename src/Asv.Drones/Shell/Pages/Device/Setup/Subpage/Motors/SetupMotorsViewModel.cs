@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Composition;
+
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Common;
@@ -120,5 +120,5 @@ public sealed class SetupMotorsViewModel : SetupSubpage
         yield return Duration;
     }
 
-    public override IExportInfo Source => SystemModule.Instance;
+    
 }

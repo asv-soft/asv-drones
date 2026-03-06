@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Composition;
+
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -531,7 +531,7 @@ public class MavParamsPageViewModel
         return true;
     }
 
-    public override IExportInfo Source => SystemModule.Instance;
+    
 }
 
 file class ParamsKvpComparer : IComparer<KeyValuePair<string, ParamItem>>

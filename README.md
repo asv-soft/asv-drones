@@ -255,7 +255,7 @@ Usually you place public members after private members, but we have some excepti
   ```
 - **Export information:** We place export information at the end of the class.
   ```c#
-  public override IExportInfo Source => SystemModule.Instance;
+  
   ```
 
 #### 5.1.5 Husky

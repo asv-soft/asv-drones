@@ -1,4 +1,4 @@
-using System.Composition;
+
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Cfg;
@@ -6,6 +6,7 @@ using Asv.IO;
 using Asv.Mavlink;
 using Asv.Mavlink.Minimal;
 using Material.Icons;
+using Microsoft.Extensions.Hosting;
 using R3;
 
 namespace Asv.Drones.Api;
@@ -16,17 +17,12 @@ public class MavlinkDeviceManagerExtensionConfig
     public byte ComponentId { get; set; } = 255;
 }
 
-[Export(typeof(IDeviceManagerExtension))]
-[Export(typeof(IMavlinkHost))]
-[Export(typeof(IStartupTask))]
-[Shared]
-public class MavlinkHost : IDeviceManagerExtension, IMavlinkHost, IStartupTask
+public class MavlinkHost : IDeviceManagerExtension, IMavlinkHost, IHostedService
 {
     private readonly IConfiguration _cfgSvc;
     private readonly IPacketSequenceCalculator _seq;
     private readonly MavlinkDeviceManagerExtensionConfig _cfg;
 
-    [ImportingConstructor]
     public MavlinkHost(IConfiguration cfgSvc, IPacketSequenceCalculator seq)
     {
         _cfgSvc = cfgSvc;
@@ -77,20 +73,14 @@ public class MavlinkHost : IDeviceManagerExtension, IMavlinkHost, IStartupTask
 
     public IHeartbeatServer? Heartbeat { get; set; }
 
-    public void AppCtor()
-    {
-        // do nothing
-    }
-
-    public void OnFrameworkInitializationCompleted()
-    {
-        // do nothing
-    }
-
-    public void Initialize()
-    {
-        // do nothing
-    }
-
     public MavlinkIdentity Identity { get; }
+    public Task StartAsync(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 }

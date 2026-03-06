@@ -5,7 +5,6 @@ using R3;
 
 namespace Asv.Drones.Api;
 
-[ExportViewFor(typeof(MavParamTextBoxViewModel))]
 public partial class MavParamTextBoxView : UserControl
 {
     public MavParamTextBoxView()

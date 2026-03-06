@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Composition;
+
 using Asv.Avalonia;
 using Asv.Common;
 using Microsoft.Extensions.Logging;
@@ -21,7 +21,6 @@ public class SavePacketMessagesDialogViewModel : DialogViewModelBase
         DesignTime.ThrowIfNotDesignMode();
     }
 
-    [ImportingConstructor]
     public SavePacketMessagesDialogViewModel(ILoggerFactory loggerFactory)
         : base(ViewModelId, loggerFactory)
     {

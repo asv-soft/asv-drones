@@ -1,4 +1,4 @@
-using System.Composition;
+
 using Asv.Avalonia;
 
 namespace Asv.Drones;

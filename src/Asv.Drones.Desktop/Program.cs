@@ -23,45 +23,23 @@ sealed class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        var builder = AppHost.CreateBuilder(args);
-        var dataFolder =
-            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
-
-        builder
-            .UseUnitService()
-            .UseAvalonia(BuildAvaloniaApp)
-            .UseAppPath(opt =>
-            {
-                opt.WithRelativeFolder(Path.Combine(dataFolder, "data"));
-            })
-            .UseJsonUserConfig(opt =>
-                opt.WithFileName("user_settings.json").WithAutoSave(TimeSpan.FromSeconds(1))
-            )
-            .UseAppInfo(opt => opt.FillFromAssembly(typeof(App).Assembly))
-            .UseSoloRun(opt => opt.WithArgumentForwarding())
-            .UseLogging(options =>
-            {
-                options.WithLogToFile(Path.Combine(dataFolder, "data", "logs"));
-                options.WithLogToConsole();
-                options.WithLogViewer();
-                options.WithLogLevel(LogLevel.Trace);
-            })
-            .UseAsvGeoMap()
-            .UseIo(opts => opts.WithDevices())
-            .RegisterMavlinkCommands()
-            .UsePluginManager(options =>
-            {
-                options.WithApiPackage("Asv.Drones.Api", SemVersion.Parse("2.1.0-dev.1"));
-                options.WithPluginPrefix("Asv.Drones.Plugin.");
-            });
-        using var host = builder.Build();
-        host.ExitIfNotFirstInstance();
-        host.StartWithClassicDesktopLifetime(args, ShutdownMode.OnMainWindowClose);
+        try
+        {
+            BuildAvaloniaApp()
+                .StartWithClassicDesktopLifetime(args, ShutdownMode.OnMainWindowClose);
+            AppHost.Instance.StopAsync().GetAwaiter().GetResult();
+            AppHost.Instance.Dispose();
+        }
+        catch (Exception e)
+        {
+            AppHost.HandleApplicationCrash(e);
+        }
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.
-    public static AppBuilder BuildAvaloniaApp() =>
-        AppBuilder
+    public static AppBuilder BuildAvaloniaApp()
+    {
+        return AppBuilder
             .Configure<App>()
             .UsePlatformDetect()
             .With(new Win32PlatformOptions { OverlayPopups = true }) // Windows
@@ -69,5 +47,28 @@ sealed class Program
             .With(new AvaloniaNativePlatformOptions { OverlayPopups = true }) // Mac
             .WithInterFont()
             .LogToTrace()
-            .UseR3();
+            .UseAsv(builder =>
+            {
+                builder
+                    .UseDefault()
+                    .UseOptionalLogViewer()
+                    .UseOptionalSoloRun(opt => opt.WithArgumentForwarding())
+                    .UsePluginManager(options =>
+                    {
+                        options.WithApiPackage(typeof(MavlinkHost).Assembly);
+                        options.WithPluginPrefix("Asv.Drones.Plugin.");
+                    })
+                    .UseDesktopShell()
+                    .UseModulePlugins(configure =>
+                    {
+                        configure
+                            .WithApiPackage(typeof(MavlinkHost).Assembly)
+                            .UseOptionalInstalled() // register installed plugins page
+                            .UseOptionalMarket();   // register market plugins page
+                    })
+                    .UseModuleGeoMap()
+                    .UseModuleIo()
+                    .UseDronesApp();
+            });
+    }
 }

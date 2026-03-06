@@ -1,4 +1,4 @@
-﻿using System.Composition;
+﻿
 using Asv.Avalonia;
 using Avalonia;
 using Avalonia.Controls;
@@ -14,7 +14,6 @@ public sealed class FlightPageViewConfig
     public double BottomRowActualHeight { get; set; } = -1;
 }
 
-[ExportViewFor(typeof(FlightPageViewModel))]
 public partial class FlightPageView : UserControl
 {
     private readonly ILayoutService _layoutService;
@@ -27,7 +26,6 @@ public partial class FlightPageView : UserControl
         DesignTime.ThrowIfNotDesignMode();
     }
 
-    [ImportingConstructor]
     public FlightPageView(ILayoutService layoutService)
     {
         _layoutService = layoutService;

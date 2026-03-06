@@ -1,4 +1,5 @@
 ﻿using Asv.Avalonia;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Asv.Drones.Api;
 
@@ -8,8 +9,8 @@ public static class Commands
     private static IMavlinkCommands? _mavlink;
 
     public static IMavlinkCommands Mavlink =>
-        _mavlink ??= AppHost.Instance.GetService<IMavlinkCommands>();
+        _mavlink ??= AppHost.Instance.Services.GetRequiredService<IMavlinkCommands>();
 
     public static IFlightModeCommands FlightMode =>
-        _flightMode ??= AppHost.Instance.GetService<IFlightModeCommands>();
+        _flightMode ??= AppHost.Instance.Services.GetRequiredService<IFlightModeCommands>();
 }

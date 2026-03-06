@@ -1,5 +1,5 @@
 using System;
-using System.Composition;
+
 using Asv.Drones.Api;
 using Asv.Mavlink;
 using Newtonsoft.Json;
@@ -9,7 +9,6 @@ namespace Asv.Drones;
 /// <summary>
 /// Default packet converter. Used when there is no specialized converter for some packet type.
 /// </summary>
-[Export(typeof(IPacketConverter))]
 public class DefaultMavlinkPacketConverter : IPacketConverter
 {
     public int Order => int.MaxValue;
