@@ -23,11 +23,11 @@ public record BatteryRttBoxData(
 public class BatteryUavIndicatorViewModel : KeyValueRttBoxViewModel<BatteryRttBoxData>
 {
     private readonly AsvColorKind defaultStatusColor;
-    
+
     [SetsRequiredMembers]
     public BatteryUavIndicatorViewModel(
-        NavigationId id, 
-        ILoggerFactory loggerFactory, 
+        NavigationId id,
+        ILoggerFactory loggerFactory,
         ReactiveProperty<double> batteryCharge,
         ReactiveProperty<double> batteryAmperage,
         ReactiveProperty<double> batteryVoltage,
@@ -36,8 +36,12 @@ public class BatteryUavIndicatorViewModel : KeyValueRttBoxViewModel<BatteryRttBo
         SynchronizedReactiveProperty<IUnitItem> amperageUnit,
         SynchronizedReactiveProperty<IUnitItem> capacityUnit,
         SynchronizedReactiveProperty<IUnitItem> voltageUnit,
-        AsvColorKind defaultStatusColor) 
-        : base(id, loggerFactory,  batteryCharge
+        AsvColorKind defaultStatusColor
+    )
+        : base(
+            id,
+            loggerFactory,
+            batteryCharge
                 .CombineLatest(
                     batteryAmperage,
                     batteryVoltage,
@@ -51,10 +55,11 @@ public class BatteryUavIndicatorViewModel : KeyValueRttBoxViewModel<BatteryRttBo
                 )
                 .ObserveOnUIThreadDispatcher()
                 .ThrottleLast(TimeSpan.FromMilliseconds(200)),
-            null)
+            null
+        )
     {
         this.defaultStatusColor = defaultStatusColor;
-        
+
         Header = RS.UavRttItem_Battery;
         Icon = MaterialIconKind.Battery10;
         UpdateAction = (model, changes) =>
@@ -84,7 +89,7 @@ public class BatteryUavIndicatorViewModel : KeyValueRttBoxViewModel<BatteryRttBo
         };
         Status = defaultStatusColor;
     }
-    
+
     private void ChangeBatteryStatus(double percent)
     {
         Status = percent switch

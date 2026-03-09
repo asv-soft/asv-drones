@@ -1,13 +1,10 @@
-﻿
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Material.Icons;
 
 namespace Asv.Drones;
 
-[ExportCommand]
-[Shared]
 public class UpdateMissionCommand : ContextCommand<MissionProgressViewModel>
 {
     #region StaticInfo
@@ -21,7 +18,6 @@ public class UpdateMissionCommand : ContextCommand<MissionProgressViewModel>
         Description = RS.UavAction_Land_Description,
         Icon = MaterialIconKind.Reload,
         DefaultHotKey = null,
-        Source = SystemModule.Instance,
     };
 
     #endregion

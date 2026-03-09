@@ -64,7 +64,7 @@ sealed class Program
                         configure
                             .WithApiPackage(typeof(MavlinkHost).Assembly)
                             .UseOptionalInstalled() // register installed plugins page
-                            .UseOptionalMarket();   // register market plugins page
+                            .UseOptionalMarket(); // register market plugins page
                     })
                     .UseModuleGeoMap()
                     .UseModuleIo()

@@ -5,7 +5,6 @@ using Material.Icons;
 
 namespace Asv.Drones;
 
-[ExportCommand]
 public class CalculateCrc32Command : ContextCommand<IBrowserItemViewModel>
 {
     public const string Id = $"{BaseId}.crc32";
@@ -17,7 +16,6 @@ public class CalculateCrc32Command : ContextCommand<IBrowserItemViewModel>
         Description = RS.CalculateCrc32Command_CommandInfo_Description,
         Icon = MaterialIconKind.KeyOutline,
         DefaultHotKey = "Ctrl + Q",
-        Source = SystemModule.Instance,
     };
 
     public override ICommandInfo Info => StaticInfo;

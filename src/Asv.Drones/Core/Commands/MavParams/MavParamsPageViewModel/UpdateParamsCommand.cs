@@ -5,7 +5,6 @@ using Material.Icons;
 
 namespace Asv.Drones;
 
-[ExportCommand]
 public class UpdateParamsCommand : ContextCommand<MavParamsPageViewModel>
 {
     public const string Id = $"{BaseId}.params.update";
@@ -17,7 +16,6 @@ public class UpdateParamsCommand : ContextCommand<MavParamsPageViewModel>
         Description = RS.UpdateParamsCommand_CommandInfo_Description,
         Icon = MaterialIconKind.Refresh,
         DefaultHotKey = null, // TODO: make a key bind when new key listener system appears
-        Source = SystemModule.Instance,
     };
 
     public override ICommandInfo Info => StaticInfo;

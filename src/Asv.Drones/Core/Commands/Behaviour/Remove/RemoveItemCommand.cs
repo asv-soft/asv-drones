@@ -6,7 +6,6 @@ using Material.Icons;
 
 namespace Asv.Drones;
 
-[ExportCommand]
 public class RemoveItemCommand : ContextCommand<ISupportRemove>, IRemoveItemCommand
 {
     public const string Id = IRemoveItemCommand.CommandId;
@@ -18,7 +17,6 @@ public class RemoveItemCommand : ContextCommand<ISupportRemove>, IRemoveItemComm
         Description = RS.RemoveItemCommand_CommandInfo_Description,
         Icon = MaterialIconKind.Delete,
         DefaultHotKey = "Shift + Delete",
-        Source = SystemModule.Instance,
     };
 
     public override ICommandInfo Info => StaticInfo;

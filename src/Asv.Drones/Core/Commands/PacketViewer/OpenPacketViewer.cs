@@ -1,10 +1,7 @@
-
 using Asv.Avalonia;
 
 namespace Asv.Drones;
 
-[ExportCommand]
-[method: ImportingConstructor]
 public class OpenPacketViewerCommand(INavigationService nav)
     : OpenPageCommandBase(PacketViewerViewModel.PageId, nav)
 {
@@ -18,7 +15,6 @@ public class OpenPacketViewerCommand(INavigationService nav)
         Description = RS.OpenPacketViewerCommand_CommandInfo_Description,
         Icon = PacketViewerViewModel.PageIcon,
         DefaultHotKey = null,
-        Source = SystemModule.Instance,
     };
     #endregion
 

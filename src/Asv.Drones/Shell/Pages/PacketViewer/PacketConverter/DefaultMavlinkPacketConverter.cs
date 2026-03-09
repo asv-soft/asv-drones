@@ -1,5 +1,4 @@
 using System;
-
 using Asv.Drones.Api;
 using Asv.Mavlink;
 using Newtonsoft.Json;

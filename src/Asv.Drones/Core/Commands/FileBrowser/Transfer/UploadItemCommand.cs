@@ -13,7 +13,6 @@ namespace Asv.Drones;
 /// <para>- <c>arg["dst"]</c> as <c>string</c> destinationPath.</para>
 /// <para>- <c>arg["typ"]</c> as <c>string</c> entryType.</para>
 /// </summary>
-[ExportCommand]
 public class UploadItemCommand : TransferCommandBase
 {
     public const string Id = $"{BaseIdTransferCmd}.upload";
@@ -25,7 +24,6 @@ public class UploadItemCommand : TransferCommandBase
         Description = RS.UploadItemCommand_CommandInfo_Description,
         Icon = MaterialIconKind.TransferRight,
         DefaultHotKey = null,
-        Source = SystemModule.Instance,
     };
 
     public override ICommandInfo Info => StaticInfo;

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -13,6 +12,8 @@ using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
 using Material.Icons;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using NuGet.Packaging;
@@ -33,7 +34,6 @@ public sealed class FileBrowserViewModelConfig
         new Dictionary<string, DirectoryItemViewModelConfig>();
 }
 
-[ExportPage(PageId)]
 public class FileBrowserViewModel
     : DevicePageViewModel<IFileBrowserViewModel>,
         IFileBrowserViewModel,
@@ -66,11 +66,12 @@ public class FileBrowserViewModel
         : this(
             DesignTime.CommandService,
             NullDeviceManager.Instance,
-            NullAppPath.Instance,
+            AppHost.Instance.Services.GetRequiredService<IHostEnvironment>(),
             NullLayoutService.Instance,
             NullLoggerFactory.Instance,
             DesignTime.Navigation,
-            NullDialogService.Instance
+            NullDialogService.Instance,
+            NullExtensionService.Instance
         )
     {
         RemoteItemsTree = new BrowserTree(
@@ -175,19 +176,19 @@ public class FileBrowserViewModel
         );
     }
 
-    [ImportingConstructor]
     public FileBrowserViewModel(
         ICommandService cmd,
         IDeviceManager devices,
-        IAppPath appPath,
+        IHostEnvironment appPath,
         ILayoutService layoutService,
         ILoggerFactory loggerFactory,
         INavigationService navigation,
-        IDialogService dialogService
+        IDialogService dialogService,
+        IExtensionService ext
     )
-        : base(PageId, devices, cmd, layoutService, loggerFactory, dialogService)
+        : base(PageId, devices, cmd, layoutService, loggerFactory, dialogService, ext)
     {
-        _localRootPath = appPath.UserDataFolder;
+        _localRootPath = appPath.ContentRootPath;
         _remoteRootPath = MavlinkFtpHelper.DirectorySeparator.ToString();
         _loggerFactory = loggerFactory;
         _navigation = navigation;
@@ -1235,8 +1236,6 @@ public class FileBrowserViewModel
     }
 
     protected override void AfterLoadExtensions() { }
-
-    
 
     #endregion
 

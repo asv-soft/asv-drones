@@ -85,13 +85,13 @@ public partial class UavAngleIndicator : TemplatedControl
             new PitchItem(-135, Scale, false)
         );
     }
-    
+
     public double Scale { get; }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
-        
+
         if (change.Property == RollAngleProperty)
         {
             UpdateRollAngle(change.Sender);

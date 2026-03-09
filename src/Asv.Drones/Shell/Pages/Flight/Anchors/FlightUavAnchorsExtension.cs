@@ -1,5 +1,4 @@
-﻿
-using Asv.Avalonia;
+﻿using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Common;
 using Asv.Drones.Api;

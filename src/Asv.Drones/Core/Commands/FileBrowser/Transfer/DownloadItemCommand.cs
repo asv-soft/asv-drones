@@ -14,7 +14,6 @@ namespace Asv.Drones;
 /// <para>- <c>arg["prt"]</c> as <c>int</c> partSize.</para>
 /// <para>- <c>arg["typ"]</c> as <c>string</c> entryType.</para>
 /// </summary>
-[ExportCommand]
 public class DownloadItemCommand : TransferCommandBase
 {
     public const string Id = $"{BaseIdTransferCmd}.download";
@@ -26,7 +25,6 @@ public class DownloadItemCommand : TransferCommandBase
         Description = RS.DownloadItemCommand_CommandInfo_Description,
         Icon = MaterialIconKind.TransferLeft,
         DefaultHotKey = null,
-        Source = SystemModule.Instance,
     };
 
     public override ICommandInfo Info => StaticInfo;

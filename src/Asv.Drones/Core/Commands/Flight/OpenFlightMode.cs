@@ -1,11 +1,8 @@
-﻿
-using Asv.Avalonia;
+﻿using Asv.Avalonia;
 using Asv.Drones.Api;
 
 namespace Asv.Drones;
 
-[ExportCommand]
-[method: ImportingConstructor]
 public class OpenFlightModeCommand(INavigationService nav)
     : OpenPageCommandBase(FlightMode.PageId, nav)
 {
@@ -19,7 +16,7 @@ public class OpenFlightModeCommand(INavigationService nav)
         Name = RS.OpenFlightModeCommand_CommandInfo_Name,
         Description = RS.OpenFlightModeCommand_CommandInfo_Description,
         Icon = FlightMode.PageIcon,
-        Source = SystemModule.Instance,
+
         DefaultHotKey = "Ctrl+F2",
     };
 

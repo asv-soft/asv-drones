@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 using System.Linq;
 using Asv.Avalonia;
 using Avalonia;
@@ -16,7 +15,6 @@ public class FileBrowserViewConfig : IGridColumnLayoutConfig
         new Dictionary<string, ColumnConfig>();
 }
 
-[ExportViewFor(typeof(FileBrowserViewModel))]
 public partial class FileBrowserView : UserControl
 {
     private readonly ILayoutService _layoutService;
@@ -32,7 +30,6 @@ public partial class FileBrowserView : UserControl
         DesignTime.ThrowIfNotDesignMode();
     }
 
-    [ImportingConstructor]
     public FileBrowserView(ILayoutService layoutService)
     {
         _layoutService = layoutService;

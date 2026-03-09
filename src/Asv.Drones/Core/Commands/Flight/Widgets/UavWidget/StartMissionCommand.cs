@@ -1,5 +1,4 @@
-﻿
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.IO;
@@ -9,8 +8,6 @@ using R3;
 
 namespace Asv.Drones;
 
-[ExportCommand]
-[Shared]
 public class StartMissionCommand : ContextCommand<UavWidgetViewModel>
 {
     #region Static
@@ -24,7 +21,6 @@ public class StartMissionCommand : ContextCommand<UavWidgetViewModel>
         Description = RS.UavAction_StartMission_Description,
         Icon = MaterialIconKind.MapMarkerPath,
         DefaultHotKey = null,
-        Source = SystemModule.Instance,
     };
 
     #endregion

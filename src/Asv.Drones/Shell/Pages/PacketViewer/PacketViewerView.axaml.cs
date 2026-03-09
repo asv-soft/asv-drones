@@ -1,4 +1,3 @@
-
 using Asv.Avalonia;
 using Avalonia;
 using Avalonia.Controls;

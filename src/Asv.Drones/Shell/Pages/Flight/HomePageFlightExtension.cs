@@ -1,5 +1,4 @@
-﻿
-using Asv.Avalonia;
+﻿using Asv.Avalonia;
 using Asv.Common;
 using Microsoft.Extensions.Logging;
 using R3;

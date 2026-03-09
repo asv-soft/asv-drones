@@ -12,7 +12,6 @@ namespace Asv.Drones;
 /// <para>- <c>arg["old"]</c> as Old Value.</para>
 /// <para>- <c>arg["new"]</c> as New Value.</para>
 /// </summary>
-[ExportCommand]
 public class CommitRenameCommand : ContextCommand<ISupportRename, DictArg>, ICommitRenameCommand
 {
     public const string Id = ICommitRenameCommand.CommandId;
@@ -27,7 +26,6 @@ public class CommitRenameCommand : ContextCommand<ISupportRename, DictArg>, ICom
         Description = RS.RenameItemCommand_CommandInfo_Description,
         Icon = MaterialIconKind.Check,
         DefaultHotKey = "Enter",
-        Source = SystemModule.Instance,
     };
 
     public override ICommandInfo Info => StaticInfo;

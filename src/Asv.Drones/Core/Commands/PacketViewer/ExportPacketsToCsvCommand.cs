@@ -5,7 +5,6 @@ using Material.Icons;
 
 namespace Asv.Drones;
 
-[ExportCommand]
 public class ExportPacketsToCsvCommand : ContextCommand<PacketViewerViewModel>
 {
     public const string Id = $"{BaseId}.packet-viewer.export-to-csv";
@@ -17,7 +16,6 @@ public class ExportPacketsToCsvCommand : ContextCommand<PacketViewerViewModel>
         Description = RS.ExportPacketsToCsvCommand_CommandInfo_Description,
         Icon = MaterialIconKind.ContentSave,
         DefaultHotKey = null, // TODO: make a key bind later
-        Source = SystemModule.Instance,
     };
 
     public override ICommandInfo Info => StaticInfo;

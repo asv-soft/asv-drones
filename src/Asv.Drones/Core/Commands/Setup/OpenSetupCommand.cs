@@ -1,10 +1,7 @@
-
 using Asv.Avalonia;
 
 namespace Asv.Drones;
 
-[ExportCommand]
-[method: ImportingConstructor]
 public class OpenSetupCommand(INavigationService nav)
     : OpenPageCommandBase(SetupPageViewModel.PageId, nav)
 {
@@ -19,7 +16,6 @@ public class OpenSetupCommand(INavigationService nav)
         Description = RS.OpenSetupCommand_CommandInfo_Description,
         Icon = SetupPageViewModel.PageIcon,
         DefaultHotKey = null,
-        Source = SystemModule.Instance,
     };
 
     #endregion

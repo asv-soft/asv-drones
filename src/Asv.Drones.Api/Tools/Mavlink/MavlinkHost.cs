@@ -1,4 +1,3 @@
-
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Cfg;
@@ -74,6 +73,7 @@ public class MavlinkHost : IDeviceManagerExtension, IMavlinkHost, IHostedService
     public IHeartbeatServer? Heartbeat { get; set; }
 
     public MavlinkIdentity Identity { get; }
+
     public Task StartAsync(CancellationToken cancellationToken)
     {
         return Task.CompletedTask;

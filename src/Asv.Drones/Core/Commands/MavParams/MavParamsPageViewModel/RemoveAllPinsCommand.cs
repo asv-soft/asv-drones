@@ -7,7 +7,6 @@ using Material.Icons;
 
 namespace Asv.Drones;
 
-[ExportCommand]
 public class RemoveAllPinsCommand : ContextCommand<MavParamsPageViewModel, DictArg>
 {
     public const string Id = $"{BaseId}.params.remove-all-pins";
@@ -19,7 +18,6 @@ public class RemoveAllPinsCommand : ContextCommand<MavParamsPageViewModel, DictA
         Description = RS.UnpinAllParamsCommand_CommandInfo_Description,
         Icon = MaterialIconKind.PinOff,
         DefaultHotKey = null, // TODO: make a key bind when new key listener system appears
-        Source = SystemModule.Instance,
     };
 
     public override ICommandInfo Info => StaticInfo;

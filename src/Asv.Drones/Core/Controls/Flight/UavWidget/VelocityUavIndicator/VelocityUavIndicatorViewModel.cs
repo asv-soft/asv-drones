@@ -10,19 +10,13 @@ namespace Asv.Drones;
 public class VelocityUavIndicatorViewModel : SplitDigitRttBoxViewModel
 {
     public VelocityUavIndicatorViewModel(
-        NavigationId id, 
+        NavigationId id,
         ILoggerFactory loggerFactory,
         IUnitService unitService,
         ReactiveProperty<double> velocity,
-        AsvColorKind defaultStatusColor)
-        : base(
-            id,
-            loggerFactory,
-            unitService,
-            VelocityUnit.Id,
-            velocity,
-            null
-        )
+        AsvColorKind defaultStatusColor
+    )
+        : base(id, loggerFactory, unitService, VelocityUnit.Id, velocity, null)
     {
         Header = RS.UavRttItem_Velocity;
         ShortHeader = "GS";

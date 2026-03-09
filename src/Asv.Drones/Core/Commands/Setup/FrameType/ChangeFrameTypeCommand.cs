@@ -5,7 +5,6 @@ using Material.Icons;
 
 namespace Asv.Drones;
 
-[ExportCommand]
 public class ChangeFrameTypeCommand : ContextCommand<SetupFrameTypeViewModel, StringArg>
 {
     public const string Id = $"{BaseId}.setup.frame-type.change";
@@ -17,7 +16,6 @@ public class ChangeFrameTypeCommand : ContextCommand<SetupFrameTypeViewModel, St
         Description = RS.ChangeFrameTypeCommand_CommandInfo_Description,
         Icon = MaterialIconKind.KeyChange,
         DefaultHotKey = null,
-        Source = SystemModule.Instance,
     };
 
     public override ICommandInfo Info => StaticInfo;

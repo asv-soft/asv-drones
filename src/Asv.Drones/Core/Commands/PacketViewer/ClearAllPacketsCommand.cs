@@ -5,7 +5,6 @@ using Material.Icons;
 
 namespace Asv.Drones;
 
-[ExportCommand]
 public sealed class ClearAllPacketsCommand : ContextCommand<PacketViewerViewModel>
 {
     public const string Id = $"{BaseId}.packet-viewer.clear-all";
@@ -17,7 +16,6 @@ public sealed class ClearAllPacketsCommand : ContextCommand<PacketViewerViewMode
         Description = RS.ClearAllPacketsCommand_CommandInfo_Description,
         Icon = MaterialIconKind.Bin,
         DefaultHotKey = null, // TODO: make a key bind later
-        Source = SystemModule.Instance,
     };
 
     public override ICommandInfo Info => StaticInfo;

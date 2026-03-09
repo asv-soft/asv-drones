@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,7 +28,6 @@ public sealed class MavParamsPageViewModelConfig
     public bool IsStarredOnly { get; set; }
 }
 
-[ExportPage(PageId)]
 public class MavParamsPageViewModel
     : DevicePageViewModel<IMavParamsPageViewModel>,
         IMavParamsPageViewModel
@@ -61,7 +59,8 @@ public class MavParamsPageViewModel
             NullLoggerFactory.Instance,
             NullLayoutService.Instance,
             NullNavigationService.Instance,
-            DesignTime.DialogService
+            DesignTime.DialogService,
+            DesignTime.ExtensionService
         )
     {
         DesignTime.ThrowIfNotDesignMode();
@@ -77,16 +76,16 @@ public class MavParamsPageViewModel
         ViewedParams = viewedList.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);
     }
 
-    [ImportingConstructor]
     public MavParamsPageViewModel(
         IDeviceManager devices,
         ICommandService cmd,
         ILoggerFactory loggerFactory,
         ILayoutService layoutService,
         INavigationService nav,
-        IDialogService dialogService
+        IDialogService dialogService,
+        IExtensionService ext
     )
-        : base(PageId, devices, cmd, layoutService, loggerFactory, dialogService)
+        : base(PageId, devices, cmd, layoutService, loggerFactory, dialogService, ext)
     {
         ArgumentNullException.ThrowIfNull(devices);
         ArgumentNullException.ThrowIfNull(cmd);
@@ -530,8 +529,6 @@ public class MavParamsPageViewModel
 
         return true;
     }
-
-    
 }
 
 file class ParamsKvpComparer : IComparer<KeyValuePair<string, ParamItem>>

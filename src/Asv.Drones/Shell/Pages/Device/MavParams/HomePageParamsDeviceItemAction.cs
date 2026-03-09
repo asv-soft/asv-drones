@@ -1,5 +1,4 @@
-﻿
-using Asv.Avalonia;
+﻿using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.IO;
 using Asv.Mavlink;
@@ -8,8 +7,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
 
-[ExportExtensionFor<IHomePageItem>]
-[method: ImportingConstructor]
 public class HomePageParamsDeviceItemAction(ILoggerFactory loggerFactory) : HomePageDeviceItemAction
 {
     protected override IActionViewModel? TryCreateAction(

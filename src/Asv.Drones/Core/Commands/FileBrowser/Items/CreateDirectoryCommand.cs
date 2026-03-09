@@ -5,7 +5,6 @@ using Material.Icons;
 
 namespace Asv.Drones;
 
-[ExportCommand]
 public class CreateDirectoryCommand : ContextCommand<IBrowserItemViewModel>
 {
     public const string Id = $"{BaseId}.create_directory";
@@ -17,7 +16,6 @@ public class CreateDirectoryCommand : ContextCommand<IBrowserItemViewModel>
         Description = RS.CreateDirectoryCommand_CommandInfo_Description,
         Icon = MaterialIconKind.FolderAdd,
         DefaultHotKey = "Ctrl + N",
-        Source = SystemModule.Instance,
     };
 
     public override ICommandInfo Info => StaticInfo;

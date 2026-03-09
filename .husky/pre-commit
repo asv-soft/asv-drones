@@ -20,3 +20,4 @@
 #echo 'Husky.Net is awesome!'
 
 dotnet husky run --group check
+dotnet husky run --group check

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,7 +17,6 @@ using R3;
 
 namespace Asv.Drones;
 
-[ExportSetup(PageId)]
 public sealed class SetupFrameTypeViewModel : SetupSubpage
 {
     public const string PageId = "frame-type";
@@ -70,7 +68,6 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
         ).DisposeItWith(Disposable);
     }
 
-    [ImportingConstructor]
     public SetupFrameTypeViewModel(ILoggerFactory loggerFactory, IDialogService dialogService)
         : base(PageId, loggerFactory)
     {
@@ -289,6 +286,4 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
             _isRefreshing.Value = false;
         }
     }
-
-    
 }

@@ -1,5 +1,4 @@
-﻿
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.IO;
@@ -8,8 +7,6 @@ using Material.Icons;
 
 namespace Asv.Drones;
 
-[ExportCommand]
-[Shared]
 public class RTLCommand : ContextCommand<UavWidgetViewModel>
 {
     #region Static
@@ -23,7 +20,6 @@ public class RTLCommand : ContextCommand<UavWidgetViewModel>
         Description = RS.UavAction_Rtl_Description,
         Icon = MaterialIconKind.Home,
         DefaultHotKey = null,
-        Source = SystemModule.Instance,
     };
 
     #endregion

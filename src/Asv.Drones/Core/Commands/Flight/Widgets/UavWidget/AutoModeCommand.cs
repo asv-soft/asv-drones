@@ -1,5 +1,4 @@
-﻿
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.IO;
@@ -8,8 +7,6 @@ using Material.Icons;
 
 namespace Asv.Drones;
 
-[ExportCommand]
-[Shared]
 public class AutoModeCommand : ContextCommand<UavWidgetViewModel> // TODO: make basic class for commands that change the uav mode
 {
     #region Static
@@ -23,7 +20,6 @@ public class AutoModeCommand : ContextCommand<UavWidgetViewModel> // TODO: make 
         Description = RS.UavAction_AutoMode_Description,
         Icon = MaterialIconKind.Automatic,
         DefaultHotKey = null,
-        Source = SystemModule.Instance,
     };
 
     #endregion

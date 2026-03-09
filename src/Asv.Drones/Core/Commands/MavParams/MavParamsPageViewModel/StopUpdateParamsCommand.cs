@@ -5,7 +5,6 @@ using Material.Icons;
 
 namespace Asv.Drones;
 
-[ExportCommand]
 public class StopUpdateParamsCommand : ContextCommand<MavParamsPageViewModel>
 {
     public const string Id = $"{BaseId}.params.stop-update";
@@ -17,7 +16,6 @@ public class StopUpdateParamsCommand : ContextCommand<MavParamsPageViewModel>
         Description = RS.StopUpdateParamsCommand_CommandInfo_Description,
         Icon = MaterialIconKind.CancelCircle,
         DefaultHotKey = null, // TODO: make a key bind when new key listener system appears
-        Source = SystemModule.Instance,
     };
 
     public override ICommandInfo Info => StaticInfo;

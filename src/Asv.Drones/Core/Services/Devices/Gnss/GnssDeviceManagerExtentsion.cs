@@ -1,5 +1,4 @@
-﻿
-using Asv.Avalonia;
+﻿using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Gnss;
 using Asv.IO;

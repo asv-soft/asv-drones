@@ -16,7 +16,6 @@ public class FindFileCommand : ContextCommand<FileBrowserViewModel>
         Description = RS.FindFileOnLocalCommand_CommandInfo_Description,
         Icon = MaterialIconKind.Magnify,
         DefaultHotKey = null,
-        Source = SystemModule.Instance,
     };
 
     public override ICommandInfo Info => StaticInfo;

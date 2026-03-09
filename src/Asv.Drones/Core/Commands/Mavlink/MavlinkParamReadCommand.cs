@@ -1,5 +1,4 @@
-﻿
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Drones.Api;
@@ -8,8 +7,6 @@ using Material.Icons;
 
 namespace Asv.Drones;
 
-[ExportCommand]
-[Shared]
 public class MavlinkParamReadCommand : MavlinkMicroserviceCommand<IParamsClientEx, StringArg>
 {
     public const string Id = $"{BaseId}.mavlink.param.read";
@@ -19,7 +16,7 @@ public class MavlinkParamReadCommand : MavlinkMicroserviceCommand<IParamsClientE
         Name = RS.ReadParamCommand_CommandInfo_Name,
         Description = RS.ReadParamCommand_CommandInfo_Description,
         Icon = MaterialIconKind.Set,
-        Source = ApiModule.Instance,
+
         DefaultHotKey = null,
     };
 

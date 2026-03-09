@@ -2,14 +2,16 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:drones="clr-namespace:Asv.Drones"
-    xmlns:angleIndicator="clr-namespace:Asv.Drones.AngleIndicator">
+    xmlns:angleIndicator="clr-namespace:Asv.Drones.AngleIndicator"
+>
     <Design.PreviewWith>
         <angleIndicator:UavAngleIndicator
             Width="500"
             Height="500"
             RollAngle="0"
             PitchAngle="0"
-            CornerRadius="500" />
+            CornerRadius="500"
+        />
     </Design.PreviewWith>
 
     <Style Selector="angleIndicator|UavAngleIndicator">
@@ -24,13 +26,15 @@
                             Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InternalWidth}"
                             Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InternalHeight}"
                             ClipToBounds="True"
-                            Background="Transparent">
+                            Background="Transparent"
+                        >
                             <Rectangle
                                 x:Name="Sky"
                                 Canvas.Top="-920"
                                 Canvas.Left="-210"
                                 Width="1420"
-                                Height="1420">
+                                Height="1420"
+                            >
                                 <Rectangle.Fill>
                                     <LinearGradientBrush EndPoint="0,0" StartPoint="0,1420">
                                         <GradientStop Color="#64b5f6" Offset="0" />
@@ -44,10 +48,12 @@
                                         <RotateTransform
                                             Angle="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RollAngle}"
                                             CenterX="0"
-                                            CenterY="710" />
+                                            CenterY="710"
+                                        />
                                         <TranslateTransform
                                             X="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchTranslateX}"
-                                            Y="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchTranslateY}" />
+                                            Y="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchTranslateY}"
+                                        />
                                     </TransformGroup>
                                 </Rectangle.RenderTransform>
                             </Rectangle>
@@ -55,12 +61,14 @@
                                 Canvas.Top="500"
                                 Canvas.Left="-210"
                                 Width="2000"
-                                Height="2000">
+                                Height="2000"
+                            >
                                 <Rectangle.Fill>
                                     <LinearGradientBrush
                                         StartPoint="50%,0%"
                                         EndPoint="50%,100%"
-                                        Opacity="0.2">
+                                        Opacity="0.2"
+                                    >
                                         <LinearGradientBrush.GradientStops>
                                             <GradientStop Offset="0" Color="#4679ba" />
                                             <GradientStop Offset="0.5" Color="#a2acc5" />
@@ -76,10 +84,12 @@
                                         <RotateTransform
                                             Angle="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RollAngle}"
                                             CenterX="0"
-                                            CenterY="-710" />
+                                            CenterY="-710"
+                                        />
                                         <TranslateTransform
                                             X="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchTranslateX}"
-                                            Y="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchTranslateY}" />
+                                            Y="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchTranslateY}"
+                                        />
                                     </TransformGroup>
                                 </Rectangle.RenderTransform>
                             </Rectangle>
@@ -92,7 +102,8 @@
                                         <RotateTransform
                                             Angle="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RollAngle}"
                                             CenterX="250"
-                                            CenterY="250" />
+                                            CenterY="250"
+                                        />
                                     </TransformGroup>
                                 </Path.RenderTransform>
                                 <Path.Data>
@@ -102,7 +113,8 @@
                                                 Size="300,300"
                                                 IsLargeArc="False"
                                                 SweepDirection="Clockwise"
-                                                Point="760,350" />
+                                                Point="760,350"
+                                            />
                                         </PathFigure>
                                     </PathGeometry>
                                 </Path.Data>
@@ -116,13 +128,15 @@
                                 Height="700"
                                 ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RollItems}"
                                 HorizontalAlignment="Center"
-                                VerticalAlignment="Center">
+                                VerticalAlignment="Center"
+                            >
                                 <ItemsControl.RenderTransform>
                                     <TransformGroup>
                                         <RotateTransform
                                             Angle="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RollAngle}"
                                             CenterX="0"
-                                            CenterY="0" />
+                                            CenterY="0"
+                                        />
                                     </TransformGroup>
                                 </ItemsControl.RenderTransform>
                                 <ItemsControl.ItemsPanel>
@@ -134,13 +148,15 @@
                                     <DataTemplate>
                                         <StackPanel
                                             x:DataType="drones:RollItem"
-                                            Orientation="Vertical">
+                                            Orientation="Vertical"
+                                        >
                                             <StackPanel.RenderTransform>
                                                 <TransformGroup>
                                                     <RotateTransform
                                                         CenterX="0"
                                                         CenterY="0"
-                                                        Angle="{CompiledBinding Value}" />
+                                                        Angle="{CompiledBinding Value}"
+                                                    />
                                                 </TransformGroup>
                                             </StackPanel.RenderTransform>
                                             <TextBlock
@@ -149,13 +165,15 @@
                                                 Foreground="#e0e0e0"
                                                 Margin="0,-5"
                                                 Width="100"
-                                                FontSize="37" />
+                                                FontSize="37"
+                                            />
                                             <Line
                                                 Stroke="#e0e0e0"
                                                 StartPoint="350,0"
                                                 EndPoint="350,10"
                                                 Margin="0,0,0,0"
-                                                StrokeThickness="5" />
+                                                StrokeThickness="5"
+                                            />
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -169,16 +187,19 @@
                                 Height="2840"
                                 ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchItems}"
                                 HorizontalAlignment="Center"
-                                VerticalAlignment="Center">
+                                VerticalAlignment="Center"
+                            >
                                 <ItemsControl.RenderTransform>
                                     <TransformGroup>
                                         <RotateTransform
                                             Angle="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RollAngle}"
                                             CenterX="0"
-                                            CenterY="0" />
+                                            CenterY="0"
+                                        />
                                         <TranslateTransform
                                             X="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchTranslateX}"
-                                            Y="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchTranslateY}" />
+                                            Y="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PitchTranslateY}"
+                                        />
                                     </TransformGroup>
                                 </ItemsControl.RenderTransform>
                                 <ItemsControl.ItemsPanel>
@@ -192,12 +213,14 @@
                                             x:DataType="drones:PitchItem"
                                             Orientation="Horizontal"
                                             HorizontalAlignment="Center"
-                                            IsVisible="{CompiledBinding IsVisible}">
+                                            IsVisible="{CompiledBinding IsVisible}"
+                                        >
                                             <StackPanel.RenderTransform>
                                                 <TransformGroup>
                                                     <TranslateTransform
                                                         X="0"
-                                                        Y="{CompiledBinding Value}" />
+                                                        Y="{CompiledBinding Value}"
+                                                    />
                                                 </TransformGroup>
                                             </StackPanel.RenderTransform>
                                             <TextBlock
@@ -206,14 +229,16 @@
                                                 Text="{CompiledBinding Title}"
                                                 TextAlignment="Right"
                                                 Width="90"
-                                                FontSize="35" />
+                                                FontSize="35"
+                                            />
                                             <Line
                                                 Stroke="#e0e0e0"
                                                 Width="300"
                                                 HorizontalAlignment="Center"
                                                 StartPoint="{Binding StartLine}"
                                                 EndPoint="{CompiledBinding StopLine}"
-                                                StrokeThickness="3" />
+                                                StrokeThickness="3"
+                                            />
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -225,7 +250,8 @@
                                 Height="20"
                                 Stretch="Fill"
                                 Fill="#e53935"
-                                StrokeThickness="0.5">
+                                StrokeThickness="0.5"
+                            >
                                 <Path.Data>
                                     <PathGeometry>
                                         <PathFigure StartPoint="0,1" IsClosed="True">
@@ -240,27 +266,32 @@
                                 StartPoint="150,500"
                                 EndPoint="250,500"
                                 Stroke="#e53935"
-                                StrokeThickness="10" />
+                                StrokeThickness="10"
+                            />
                             <Line
                                 StartPoint="750,500"
                                 EndPoint="850,500"
                                 Stroke="#e53935"
-                                StrokeThickness="10" />
+                                StrokeThickness="10"
+                            />
                             <Line
                                 StartPoint="400,500"
                                 EndPoint="600,500"
                                 Stroke="#e0e0e0"
-                                StrokeThickness="5" />
+                                StrokeThickness="5"
+                            />
                             <Line
                                 StartPoint="400,540"
                                 EndPoint="502,500"
                                 Stroke="#e53935"
-                                StrokeThickness="10" />
+                                StrokeThickness="10"
+                            />
                             <Line
                                 StartPoint="498,500"
                                 EndPoint="600,540"
                                 Stroke="#e53935"
-                                StrokeThickness="10" />
+                                StrokeThickness="10"
+                            />
                         </Canvas>
                     </Border>
                 </Viewbox>

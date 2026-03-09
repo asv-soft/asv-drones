@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
@@ -28,7 +27,12 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
     private FlightPageViewModelConfig? _config;
 
     public FlightPageViewModel()
-        : this(DesignTime.CommandService, DesignTime.LoggerFactory, DesignTime.DialogService, DesignTime.ExtensionService)
+        : this(
+            DesignTime.CommandService,
+            DesignTime.LoggerFactory,
+            DesignTime.DialogService,
+            DesignTime.ExtensionService
+        )
     {
         DesignTime.ThrowIfNotDesignMode();
         var drone = new MapAnchor<IMapAnchor>(DesignTime.Id, DesignTime.LoggerFactory)
@@ -142,6 +146,4 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
     {
         // nothing to do
     }
-
-    
 }

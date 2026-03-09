@@ -1,10 +1,7 @@
-﻿
-using Asv.Avalonia;
+﻿using Asv.Avalonia;
 
 namespace Asv.Drones;
 
-[ExportCommand]
-[method: ImportingConstructor]
 public class OpenFileBrowserCommand(INavigationService nav)
     : OpenPageCommandBase(FileBrowserViewModel.PageId, nav)
 {
@@ -19,7 +16,6 @@ public class OpenFileBrowserCommand(INavigationService nav)
         Description = RS.OpenFileBrowserCommand_CommandInfo_Description,
         Icon = FileBrowserViewModel.PageIcon,
         DefaultHotKey = null,
-        Source = SystemModule.Instance,
     };
 
     #endregion

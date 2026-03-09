@@ -1,4 +1,4 @@
-
+using System;
 using System.Threading;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
@@ -9,22 +9,21 @@ using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
 
-[ExportPage(PageId)]
 public class SetupPageViewModel : TreeDevicePageViewModel<ISetupPage, ISetupSubpage>, ISetupPage
 {
     public const string PageId = "setup";
     public const MaterialIconKind PageIcon = MaterialIconKind.Cogs;
 
-    [ImportingConstructor]
     public SetupPageViewModel(
         ICommandService cmd,
         IDeviceManager devices,
-        IContainerHost container,
+        IServiceProvider container,
         ILayoutService layoutService,
         ILoggerFactory loggerFactory,
-        IDialogService dialogService
+        IDialogService dialogService,
+        IExtensionService ext
     )
-        : base(PageId, devices, cmd, container, layoutService, loggerFactory, dialogService)
+        : base(PageId, devices, cmd, container, layoutService, loggerFactory, dialogService, ext)
     {
         Icon = PageIcon;
     }
@@ -37,6 +36,4 @@ public class SetupPageViewModel : TreeDevicePageViewModel<ISetupPage, ISetupSubp
         Title = $"{RS.SetupPageViewModel_Title}[{device.Id}]";
         TreeHeader = RS.SetupPageViewModel_Title;
     }
-
-    
 }

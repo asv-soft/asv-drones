@@ -1,10 +1,7 @@
-﻿
-using Asv.Avalonia;
+﻿using Asv.Avalonia;
 
 namespace Asv.Drones;
 
-[ExportCommand]
-[method: ImportingConstructor]
 public class OpenMavParamsCommand(INavigationService nav)
     : OpenPageCommandBase(MavParamsPageViewModel.PageId, nav)
 {
@@ -19,7 +16,6 @@ public class OpenMavParamsCommand(INavigationService nav)
         Description = RS.OpenMavParamsCommand_CommandInfo_Description,
         Icon = MavParamsPageViewModel.PageIcon,
         DefaultHotKey = null,
-        Source = SystemModule.Instance,
     };
 
     #endregion

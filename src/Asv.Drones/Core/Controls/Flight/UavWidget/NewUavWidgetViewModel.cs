@@ -20,10 +20,10 @@ public class NewUavWidgetViewModel : MapWidget, IUavFlightWidget
         : base(WidgetId, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
-        
+
         Icon = MaterialIconKind.AccountFile;
         IconColor = AsvColorKind.Info5;
-        
+
         var unitService = NullUnitService.Instance;
 
         unitService.Extend(
@@ -53,12 +53,7 @@ public class NewUavWidgetViewModel : MapWidget, IUavFlightWidget
                 [new VoltageVoltUnitItem(), new VoltageMilliVoltUnitItem()]
             )
         );
-        unitService.Extend(
-            new AngleUnit(
-                DesignTime.Configuration,
-                [new AngleDegreeUnitItem()]
-            )
-        );
+        unitService.Extend(new AngleUnit(DesignTime.Configuration, [new AngleDegreeUnitItem()]));
 
         var altitudeUnit = unitService.Units[AltitudeUnit.Id];
         var capacityUnit = unitService.Units[CapacityUnit.Id];
@@ -66,7 +61,7 @@ public class NewUavWidgetViewModel : MapWidget, IUavFlightWidget
         var voltageUnit = unitService.Units[VoltageUnit.Id];
         var progressUnit = unitService.Units[ProgressUnit.Id];
         var angleUnit = unitService.Units[AngleUnit.Id];
-        
+
         var altitudeAgl = new ReactiveProperty<double>(10).DisposeItWith(Disposable);
         var altitudeMsl = new ReactiveProperty<double>(14).DisposeItWith(Disposable);
         var heading = new ReactiveProperty<double>(29).DisposeItWith(Disposable);
@@ -79,38 +74,41 @@ public class NewUavWidgetViewModel : MapWidget, IUavFlightWidget
         var batteryConsumed = new ReactiveProperty<double>(39).DisposeItWith(Disposable);
         var roll = new ReactiveProperty<double>(10).DisposeItWith(Disposable);
         var pitch = new ReactiveProperty<double>(30).DisposeItWith(Disposable);
-        
+
         AltitudeUavIndicator = new AltitudeUavIndicatorViewModel(
-                nameof(AltitudeUavIndicator),
-            DesignTime.LoggerFactory, 
+            nameof(AltitudeUavIndicator),
+            DesignTime.LoggerFactory,
             altitudeAgl,
             altitudeMsl,
             altitudeUnit.CurrentUnitItem,
-            DefaultStatusColor)
+            DefaultStatusColor
+        )
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        
+
         BatteryUavIndicator = new BatteryUavIndicatorViewModel(
-                nameof(BatteryUavIndicator),
-            DesignTime.LoggerFactory, 
-            batteryCharge, 
-            batteryAmperage, 
-            batteryVoltage, 
+            nameof(BatteryUavIndicator),
+            DesignTime.LoggerFactory,
+            batteryCharge,
+            batteryAmperage,
+            batteryVoltage,
             batteryConsumed,
             progressUnit.CurrentUnitItem,
             amperageUnit.CurrentUnitItem,
             capacityUnit.CurrentUnitItem,
             voltageUnit.CurrentUnitItem,
-            DefaultStatusColor)
+            DefaultStatusColor
+        )
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
 
         VelocityUavIndicator = new VelocityUavIndicatorViewModel(
-                nameof(VelocityUavIndicator),
+            nameof(VelocityUavIndicator),
             DesignTime.LoggerFactory,
             unitService,
             velocity,
-            DefaultStatusColor)
+            DefaultStatusColor
+        )
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
 
@@ -121,16 +119,16 @@ public class NewUavWidgetViewModel : MapWidget, IUavFlightWidget
             roll,
             angleUnit.CurrentUnitItem,
             DefaultStatusColor
-            )
+        )
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
     }
-    
+
     public AltitudeUavIndicatorViewModel AltitudeUavIndicator { get; }
     public BatteryUavIndicatorViewModel BatteryUavIndicator { get; }
     public VelocityUavIndicatorViewModel VelocityUavIndicator { get; }
     public AngleUavRttIndicatorViewModel AngleUavRttIndicator { get; }
-    
+
     public IClientDevice Device => null!;
 
     public override IEnumerable<IRoutable> GetChildren()

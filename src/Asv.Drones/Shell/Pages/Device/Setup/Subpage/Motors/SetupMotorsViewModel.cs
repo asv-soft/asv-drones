@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Common;
@@ -15,7 +14,6 @@ using R3;
 
 namespace Asv.Drones;
 
-[ExportSetup(PageId)]
 public sealed class SetupMotorsViewModel : SetupSubpage
 {
     public const string PageId = "motor-test";
@@ -32,7 +30,6 @@ public sealed class SetupMotorsViewModel : SetupSubpage
     public SetupMotorsViewModel()
         : this(NullLoggerFactory.Instance, NullUnitService.Instance) { }
 
-    [ImportingConstructor]
     public SetupMotorsViewModel(ILoggerFactory loggerFactory, IUnitService unit)
         : base(PageId, loggerFactory)
     {
@@ -119,6 +116,4 @@ public sealed class SetupMotorsViewModel : SetupSubpage
 
         yield return Duration;
     }
-
-    
 }

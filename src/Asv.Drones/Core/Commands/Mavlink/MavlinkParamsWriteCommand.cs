@@ -1,5 +1,4 @@
 using System;
-
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,8 +9,6 @@ using Material.Icons;
 
 namespace Asv.Drones;
 
-[ExportCommand]
-[Shared]
 public class MavlinkParamsWriteCommand : MavlinkMicroserviceCommand<IParamsClientEx, ActionArg>
 {
     public const string Id = $"{BaseId}.mavlink.param.write";
@@ -21,7 +18,7 @@ public class MavlinkParamsWriteCommand : MavlinkMicroserviceCommand<IParamsClien
         Name = RS.WritePatamCommand_CommandInfo_Name,
         Description = RS.WriteParamCommand_CommandInfo_Description,
         Icon = MaterialIconKind.Set,
-        Source = ApiModule.Instance,
+
         DefaultHotKey = null,
     };
 

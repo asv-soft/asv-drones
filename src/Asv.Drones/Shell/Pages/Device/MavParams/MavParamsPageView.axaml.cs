@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 using System.Linq;
 using Asv.Avalonia;
 using Avalonia;
@@ -16,7 +15,6 @@ public class MavParamsPageViewConfig : IGridColumnLayoutConfig
         new Dictionary<string, ColumnConfig>();
 }
 
-[ExportViewFor(typeof(MavParamsPageViewModel))]
 public partial class MavParamsPageView : UserControl
 {
     private readonly ILayoutService _layoutService;
@@ -32,7 +30,6 @@ public partial class MavParamsPageView : UserControl
         DesignTime.ThrowIfNotDesignMode();
     }
 
-    [ImportingConstructor]
     public MavParamsPageView(ILayoutService layoutService)
     {
         _layoutService = layoutService;
