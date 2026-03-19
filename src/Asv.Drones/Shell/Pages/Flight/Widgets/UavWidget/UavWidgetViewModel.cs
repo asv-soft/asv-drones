@@ -397,17 +397,10 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             ?? throw new ArgumentException(
                 $"Unable to load {nameof(HeartbeatClient)} from {device.Id}"
             );
-        IModeClient? modeClientRaw = device switch
-        {
-            ArduCopterClientDevice => device.GetMicroservice<ArduCopterModeClient>(),
-            ArduPlaneClientDevice => device.GetMicroservice<ArduPlaneModeClient>(),
-            _ => null,
-        };
         var modeClient =
-            modeClientRaw
-            ?? throw new ArgumentException(
-                $"Unable to load {nameof(PositionClientEx)} from {device.Id}"
-            );
+            device.GetMicroservice<IModeClient>()
+            ?? throw new ArgumentException($"Unable to load {nameof(IModeClient)}");
+
         TakeOff = new ReactiveCommand(
             async (_, ct) =>
             {
@@ -518,7 +511,6 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         Clipping1 = new BindableReactiveProperty<uint>().DisposeItWith(Disposable);
         Clipping2 = new BindableReactiveProperty<uint>().DisposeItWith(Disposable);
         ArmedTime = new BindableReactiveProperty<TimeSpan>().DisposeItWith(Disposable);
-
         Observable
             .Timer(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(4))
             .Subscribe(_ => StatusText.Value = string.Empty)

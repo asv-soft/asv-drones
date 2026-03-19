@@ -56,7 +56,7 @@
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerTheme>
                 <ControlTheme TargetType="geoMap:MapItem" x:DataType="geoMap:IMapAnchor">
-                    <Setter Property="Location" Value="{Binding Location}" />
+                    <Setter Property="Location" Value="{Binding Location, Mode=TwoWay}" />
                     <Setter Property="Rotation" Value="{Binding Azimuth}" />
                     <Setter Property="CenterX" Value="{Binding CenterX}" />
                     <Setter Property="CenterY" Value="{Binding CenterY}" />
