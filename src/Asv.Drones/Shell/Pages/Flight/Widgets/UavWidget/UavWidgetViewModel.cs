@@ -59,7 +59,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
 #pragma warning restore SA1313
 
     public UavWidgetViewModel()
-        : base(WidgetId, DesignTime.LoggerFactory)
+        : base(WidgetId, DesignTime.LoggerFactory, NullMapService.Instance)
     {
         DesignTime.ThrowIfNotDesignMode();
         TakeOff = new ReactiveCommand();
@@ -360,7 +360,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
         IDeviceManager dev,
         ILoggerFactory loggerFactory
     )
-        : base(WidgetId, loggerFactory)
+        : base(WidgetId, loggerFactory, NullMapService.Instance)
     {
         ArgumentNullException.ThrowIfNull(device);
         Device = device;

@@ -17,7 +17,7 @@ public class NewUavWidgetViewModel : MapWidget, IUavFlightWidget
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public NewUavWidgetViewModel()
-        : base(WidgetId, DesignTime.LoggerFactory)
+        : base(WidgetId, DesignTime.LoggerFactory, NullMapService.Instance)
     {
         DesignTime.ThrowIfNotDesignMode();
 
