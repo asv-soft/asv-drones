@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asv.Drones.Api", "Asv.Drone
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{7F6DFB06-48A2-4D6A-BFB5-DE044280780A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asv.Drones.Android", "Asv.Drones.Android\Asv.Drones.Android.csproj", "{F5F2BC3A-0E14-410A-B712-4F6AB3796D8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asv.Drones.iOS", "Asv.Drones.iOS\Asv.Drones.iOS.csproj", "{8434A268-4F04-4F73-98EA-E8601C55B878}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{F77AFD17-2E1E-45EB-8E1D-43555E3E6AD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F77AFD17-2E1E-45EB-8E1D-43555E3E6AD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F77AFD17-2E1E-45EB-8E1D-43555E3E6AD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5F2BC3A-0E14-410A-B712-4F6AB3796D8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5F2BC3A-0E14-410A-B712-4F6AB3796D8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5F2BC3A-0E14-410A-B712-4F6AB3796D8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5F2BC3A-0E14-410A-B712-4F6AB3796D8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8434A268-4F04-4F73-98EA-E8601C55B878}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8434A268-4F04-4F73-98EA-E8601C55B878}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8434A268-4F04-4F73-98EA-E8601C55B878}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8434A268-4F04-4F73-98EA-E8601C55B878}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,5 +60,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{ABC31E74-02FF-46EB-B3B2-4E6AE43B456C} = {7F6DFB06-48A2-4D6A-BFB5-DE044280780A}
+		{F5F2BC3A-0E14-410A-B712-4F6AB3796D8F} = {7F6DFB06-48A2-4D6A-BFB5-DE044280780A}
+		{8434A268-4F04-4F73-98EA-E8601C55B878} = {7F6DFB06-48A2-4D6A-BFB5-DE044280780A}
 	EndGlobalSection
 EndGlobal

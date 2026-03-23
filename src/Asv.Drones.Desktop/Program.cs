@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
 using Asv.Avalonia.IO;
@@ -9,6 +10,7 @@ using Asv.Common;
 using Asv.Drones.Api;
 using Avalonia;
 using Avalonia.Controls;
+using DotNext;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using R3;
@@ -28,7 +30,7 @@ sealed class Program
             BuildAvaloniaApp()
                 .StartWithClassicDesktopLifetime(args, ShutdownMode.OnMainWindowClose);
             AppHost.Instance.StopAsync().GetAwaiter().GetResult();
-            AppHost.Instance.Dispose();
+            Task.Run(AppHost.Instance.Dispose).GetAwaiter().GetResult();
         }
         catch (Exception e)
         {
@@ -51,6 +53,7 @@ sealed class Program
             {
                 builder
                     .UseDefault()
+                    .UseAppInfo(configure => configure.FillFromAssembly(typeof(App).Assembly))
                     .UseOptionalLogViewer()
                     .UseOptionalSoloRun(opt => opt.WithArgumentForwarding())
                     .UsePluginManager(options =>
