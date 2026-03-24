@@ -114,9 +114,10 @@ public class MavlinkHost : IDeviceManagerExtension, IMavlinkHost, IHostedService
         Heartbeat.Start();
     }
 
-    public IHeartbeatServer? Heartbeat { get; set; }
+    public IHeartbeatServer? Heartbeat { get; private set; }
 
-    public IMavlinkContext Context { get; set; }
+    public IProtocolMessageFactory<MavlinkMessage, int> MessageFactory => _messageFactory;
+    public IMavlinkContext Context { get; private set; }
     public MavlinkIdentity Identity { get; }
 
     public Task StartAsync(CancellationToken cancellationToken)
