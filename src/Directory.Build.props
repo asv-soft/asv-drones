@@ -1,9 +1,9 @@
 <Project>
   <PropertyGroup>
     <Nullable>enable</Nullable>
-    <ProductVersion>2.1.0</ProductVersion>
+    <ProductVersion>2.1.1-dev.0</ProductVersion>
     <TargetFramework>net10.0</TargetFramework>
-    <ApiVersion>2.1.0</ApiVersion>
+    <ApiVersion>2.1.1-dev.0</ApiVersion>
     <AvaloniaVersion>11.3.10</AvaloniaVersion>
     <AsvAvaloniaVersion>2.0.0</AsvAvaloniaVersion>
     <AsvMavlinkVersion>4.1.0</AsvMavlinkVersion>

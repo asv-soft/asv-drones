@@ -30,6 +30,7 @@
             CA1510,
             CA1851
         </WarningsAsErrors>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
