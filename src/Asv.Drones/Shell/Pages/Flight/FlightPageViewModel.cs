@@ -16,7 +16,7 @@ namespace Asv.Drones;
 public sealed class FlightPageViewModelConfig
 {
     public GeoPoint MapCenter { get; set; } = GeoPoint.Zero;
-    public int Zoom { get; set; } = 0;
+    public int Zoom { get; set; } = IZoomService.MinZoomLevel;
 }
 
 public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
@@ -28,6 +28,7 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
 
     public FlightPageViewModel()
         : this(
+            NullMapService.Instance,
             DesignTime.CommandService,
             DesignTime.LoggerFactory,
             DesignTime.DialogService,
@@ -55,6 +56,7 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
     }
 
     public FlightPageViewModel(
+        IMapService mapService,
         ICommandService cmd,
         ILoggerFactory loggerFactory,
         IDialogService dialogService,
@@ -76,6 +78,9 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
         SelectedAnchor = new BindableReactiveProperty<IMapAnchor?>().DisposeItWith(Disposable);
         Zoom = new BindableReactiveProperty<int>(1).DisposeItWith(Disposable);
         MapCenter = new BindableReactiveProperty<GeoPoint>(GeoPoint.Zero).DisposeItWith(Disposable);
+        TileProvider = mapService
+            .CurrentProvider.ToReadOnlyBindableReactiveProperty<ITileProvider>()
+            .DisposeItWith(Disposable);
 
         Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
     }
@@ -87,6 +92,7 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
     public BindableReactiveProperty<IMapAnchor?> SelectedAnchor { get; }
     public BindableReactiveProperty<int> Zoom { get; }
     public BindableReactiveProperty<GeoPoint> MapCenter { get; }
+    public IReadOnlyBindableReactiveProperty<ITileProvider> TileProvider { get; }
 
     public override IEnumerable<IRoutable> GetChildren()
     {
@@ -130,8 +136,8 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
                         MapCenter.Value = cfg.MapCenter;
                         Zoom.Value = cfg.Zoom switch
                         {
-                            < 1 => 1, // TODO: use constants from asv.avalonia.geomap
-                            > 19 => 19,
+                            < IZoomService.MinZoomLevel => IZoomService.MinZoomLevel,
+                            > IZoomService.MaxZoomLevel => IZoomService.MaxZoomLevel,
                             _ => cfg.Zoom,
                         };
                     }

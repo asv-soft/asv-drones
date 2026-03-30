@@ -20,6 +20,7 @@
         <geoMap:MapItemsControl
             CenterMap="{CompiledBinding MapCenter.Value, Mode=TwoWay}"
             Zoom="{CompiledBinding Zoom.Value, Mode=TwoWay}"
+            Provider="{CompiledBinding TileProvider.Value}"
             SelectionMode="Multiple"
             ItemsSource="{Binding AnchorsView}"
             SelectedItem="{Binding SelectedAnchor.Value, Mode=TwoWay}"
