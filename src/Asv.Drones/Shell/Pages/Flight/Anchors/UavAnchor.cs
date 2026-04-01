@@ -41,6 +41,7 @@ public class UavAnchor : MapAnchor<UavAnchor>
         IconColor = mng.GetDeviceColor(deviceId);
         CenterX = DeviceIconMixin.GetIconCenterX(deviceId);
         CenterY = DeviceIconMixin.GetIconCenterY(deviceId);
+        UseMapRotation = true;
         dev.Name.Subscribe(x => Title = x ?? string.Empty).DisposeItWith(Disposable);
         pos.Current.Subscribe(x => Location = x).DisposeItWith(Disposable);
         pos.Yaw.Subscribe(x => Azimuth = x).DisposeItWith(Disposable);

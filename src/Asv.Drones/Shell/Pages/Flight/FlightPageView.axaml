@@ -24,6 +24,7 @@
             SelectionMode="Multiple"
             ItemsSource="{Binding AnchorsView}"
             SelectedItem="{Binding SelectedAnchor.Value, Mode=TwoWay}"
+            Rotation="{CompiledBinding Rotation.Value, Mode=TwoWay}"
         >
             <geoMap:MapItemsControl.AnnotationTemplate>
                 <DataTemplate>
@@ -129,5 +130,12 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <geoMap:MapCompass
+            Rotation="{Binding Rotation.Value}"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Margin="8"
+            TouchpadRotationSensitivity="1"
+        />
     </Panel>
 </UserControl>
