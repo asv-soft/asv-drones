@@ -81,6 +81,7 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
         TileProvider = mapService
             .CurrentProvider.ToReadOnlyBindableReactiveProperty<ITileProvider>()
             .DisposeItWith(Disposable);
+        Rotation = new BindableReactiveProperty<double>(0.0).DisposeItWith(Disposable);
 
         Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
     }
@@ -93,6 +94,7 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
     public BindableReactiveProperty<int> Zoom { get; }
     public BindableReactiveProperty<GeoPoint> MapCenter { get; }
     public IReadOnlyBindableReactiveProperty<ITileProvider> TileProvider { get; }
+    public BindableReactiveProperty<double> Rotation { get; }
 
     public override IEnumerable<IRoutable> GetChildren()
     {
