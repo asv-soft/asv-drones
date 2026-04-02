@@ -42,12 +42,17 @@ public class UavAnchor : MapAnchor<UavAnchor>
         CenterX = DeviceIconMixin.GetIconCenterX(deviceId);
         CenterY = DeviceIconMixin.GetIconCenterY(deviceId);
         UseMapRotation = true;
-        dev.Name.Subscribe(x => Title = x ?? string.Empty).DisposeItWith(Disposable);
-        pos.Current.Subscribe(x => Location = x).DisposeItWith(Disposable);
-        pos.Yaw.Subscribe(x => Azimuth = x).DisposeItWith(Disposable);
+        dev.Name.ObserveOnUIThreadDispatcher()
+            .Subscribe(x => Title = x ?? string.Empty)
+            .DisposeItWith(Disposable);
+        pos.Current.ObserveOnUIThreadDispatcher()
+            .Subscribe(x => Location = x)
+            .DisposeItWith(Disposable);
+        pos.Yaw.ObserveOnUIThreadDispatcher().Subscribe(x => Azimuth = x).DisposeItWith(Disposable);
         var currentUavLocation = pos.Current.CurrentValue;
         var currentHomeLocation = pos.Home.CurrentValue ?? GeoPoint.Zero;
-        pos.Home.Subscribe(x =>
+        pos.Home.ObserveOnUIThreadDispatcher()
+            .Subscribe(x =>
             {
                 Polygon.Remove(currentHomeLocation);
                 if (x is null)
@@ -59,7 +64,8 @@ public class UavAnchor : MapAnchor<UavAnchor>
                 currentHomeLocation = x.Value;
             })
             .DisposeItWith(Disposable);
-        pos.Current.ThrottleLast(TimeSpan.FromMilliseconds(CurrentUavPositionChangeThrottleMs))
+        pos.Current.ObserveOnUIThreadDispatcher()
+            .ThrottleLast(TimeSpan.FromMilliseconds(CurrentUavPositionChangeThrottleMs))
             .Subscribe(x =>
             {
                 Polygon.Remove(currentUavLocation);
