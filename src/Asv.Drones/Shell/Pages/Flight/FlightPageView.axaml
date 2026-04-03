@@ -17,59 +17,7 @@
         <drones:FlightPageViewModel />
     </Design.DataContext>
     <Panel>
-        <geoMap:MapItemsControl
-            CenterMap="{CompiledBinding MapCenter.Value, Mode=TwoWay}"
-            Zoom="{CompiledBinding Zoom.Value, Mode=TwoWay}"
-            Provider="{CompiledBinding TileProvider.Value}"
-            SelectionMode="Multiple"
-            ItemsSource="{Binding AnchorsView}"
-            SelectedItem="{Binding SelectedAnchor.Value, Mode=TwoWay}"
-            Rotation="{CompiledBinding Rotation.Value, Mode=TwoWay}"
-        >
-            <geoMap:MapItemsControl.AnnotationTemplate>
-                <DataTemplate>
-                    <Border
-                        BorderThickness="1"
-                        BorderBrush="White"
-                        x:Name="PART_Annotation"
-                        IsVisible="{Binding !!Title.Length}"
-                        Padding="3"
-                        CornerRadius="3"
-                        Background="#4a148c"
-                    >
-                        <TextBlock Text="{ReflectionBinding Title}" />
-                    </Border>
-                </DataTemplate>
-            </geoMap:MapItemsControl.AnnotationTemplate>
-            <geoMap:MapItemsControl.Styles>
-                <Style Selector="Border.active">
-                    <Setter Property="BorderThickness" Value="5" />
-                </Style>
-            </geoMap:MapItemsControl.Styles>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <avalonia:MaterialIcon
-                        Width="40"
-                        Height="40"
-                        avalonia1:AsvPallete.Color="{CompiledBinding IconColor}"
-                        Kind="{Binding Icon}"
-                    />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemContainerTheme>
-                <ControlTheme TargetType="geoMap:MapItem" x:DataType="geoMap:IMapAnchor">
-                    <Setter Property="Location" Value="{Binding Location, Mode=TwoWay}" />
-                    <Setter Property="Rotation" Value="{Binding Azimuth}" />
-                    <Setter Property="CenterX" Value="{Binding CenterX}" />
-                    <Setter Property="CenterY" Value="{Binding CenterY}" />
-                    <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
-                    <Setter Property="IsVisible" Value="{Binding IsVisible}" />
-                    <Setter Property="Polygon" Value="{Binding PolygonView}" />
-                    <Setter Property="IsPolygonClosed" Value="{Binding IsPolygonClosed}" />
-                    <Setter Property="Pen" Value="{Binding PolygonPen}" />
-                </ControlTheme>
-            </ItemsControl.ItemContainerTheme>
-        </geoMap:MapItemsControl>
+        <geoMap:MapView DataContext="{CompiledBinding MapViewModel}" />
         <ItemsControl ItemsSource="{Binding WidgetsView}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -131,7 +79,7 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         <geoMap:MapCompass
-            Rotation="{Binding Rotation.Value}"
+            Rotation="{Binding MapViewModel.Rotation.Value}"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Margin="8"
