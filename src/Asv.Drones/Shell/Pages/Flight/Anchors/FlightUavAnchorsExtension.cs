@@ -14,7 +14,11 @@ public class FlightUavAnchorsExtension(IDeviceManager conn, ILoggerFactory logge
 {
     public void Extend(IFlightMode context, CompositeDisposable contextDispose)
     {
-        conn.Explorer.InitializedDevices.PopulateTo(context.Anchors, TryCreateAnchor, RemoveAnchor)
+        conn.Explorer.InitializedDevices.PopulateTo(
+                context.MapViewModel.Anchors,
+                TryCreateAnchor,
+                RemoveAnchor
+            )
             .DisposeItWith(contextDispose);
     }
 

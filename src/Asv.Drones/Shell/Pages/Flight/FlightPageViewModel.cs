@@ -17,6 +17,7 @@ public sealed class FlightPageViewModelConfig
 {
     public GeoPoint MapCenter { get; set; } = GeoPoint.Zero;
     public int Zoom { get; set; } = IZoomService.MinZoomLevel;
+    public double Rotation { get; set; } = 0.0;
 }
 
 public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
@@ -41,7 +42,7 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
             Icon = MaterialIconKind.Navigation,
             Location = new GeoPoint(53, 53, 100),
         };
-        Anchors.Add(drone);
+        MapViewModel.Anchors.Add(drone);
         var azimuth = 0;
         TimeProvider.System.CreateTimer(
             x =>
@@ -66,42 +67,25 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
     {
         Title = RS.FlightPageViewModel_Title;
         Icon = PageIcon;
-        Anchors = [];
-        Anchors.SetRoutableParent(this).DisposeItWith(Disposable);
-        Anchors.DisposeRemovedItems().DisposeItWith(Disposable);
-        AnchorsView = Anchors.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);
+        MapViewModel = new MapViewModel(nameof(MapViewModel), loggerFactory, mapService)
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
+
         Widgets = [];
         Widgets.SetRoutableParent(this).DisposeItWith(Disposable);
         Widgets.DisposeRemovedItems().DisposeItWith(Disposable);
-
         WidgetsView = Widgets.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);
-        SelectedAnchor = new BindableReactiveProperty<IMapAnchor?>().DisposeItWith(Disposable);
-        Zoom = new BindableReactiveProperty<int>(1).DisposeItWith(Disposable);
-        MapCenter = new BindableReactiveProperty<GeoPoint>(GeoPoint.Zero).DisposeItWith(Disposable);
-        TileProvider = mapService
-            .CurrentProvider.ToReadOnlyBindableReactiveProperty<ITileProvider>()
-            .DisposeItWith(Disposable);
-        Rotation = new BindableReactiveProperty<double>(0.0).DisposeItWith(Disposable);
 
         Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
     }
 
     public NotifyCollectionChangedSynchronizedViewList<IUavFlightWidget> WidgetsView { get; }
     public ObservableList<IUavFlightWidget> Widgets { get; }
-    public NotifyCollectionChangedSynchronizedViewList<IMapAnchor> AnchorsView { get; }
-    public ObservableList<IMapAnchor> Anchors { get; }
-    public BindableReactiveProperty<IMapAnchor?> SelectedAnchor { get; }
-    public BindableReactiveProperty<int> Zoom { get; }
-    public BindableReactiveProperty<GeoPoint> MapCenter { get; }
-    public IReadOnlyBindableReactiveProperty<ITileProvider> TileProvider { get; }
-    public BindableReactiveProperty<double> Rotation { get; }
+    public IMap MapViewModel { get; }
 
     public override IEnumerable<IRoutable> GetChildren()
     {
-        foreach (var item in AnchorsView)
-        {
-            yield return item;
-        }
+        yield return MapViewModel;
 
         foreach (var widget in WidgetsView)
         {
@@ -124,8 +108,9 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
                     _config,
                     cfg =>
                     {
-                        cfg.MapCenter = MapCenter.Value;
-                        cfg.Zoom = Zoom.Value;
+                        cfg.MapCenter = MapViewModel.CenterMap.Value;
+                        cfg.Zoom = MapViewModel.Zoom.Value;
+                        cfg.Rotation = MapViewModel.Rotation.Value;
                     },
                     FlushingStrategy.FlushBothViewModelAndView
                 );
@@ -135,13 +120,14 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
                     loadLayoutEvent,
                     cfg =>
                     {
-                        MapCenter.Value = cfg.MapCenter;
-                        Zoom.Value = cfg.Zoom switch
+                        MapViewModel.CenterMap.Value = cfg.MapCenter;
+                        MapViewModel.Zoom.Value = cfg.Zoom switch
                         {
                             < IZoomService.MinZoomLevel => IZoomService.MinZoomLevel,
                             > IZoomService.MaxZoomLevel => IZoomService.MaxZoomLevel,
                             _ => cfg.Zoom,
                         };
+                        MapViewModel.Rotation.Value = cfg.Rotation;
                     }
                 );
                 break;
