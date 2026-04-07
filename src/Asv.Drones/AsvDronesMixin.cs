@@ -54,6 +54,7 @@ public static class AsvDronesMixin
         public Builder UseCommands()
         {
             builder
+                .RegisterMavlinkCommands()
                 .Commands.Register<OpenSetupCommand>()
                 .Register<ChangeFrameTypeCommand>()
                 .Register<OpenPacketViewerCommand>()
