@@ -8,7 +8,7 @@ public class OpenFlightModeCommand(INavigationService nav)
 {
     #region Static
 
-    public const string Id = $"{BaseId}.open.flight";
+    public const string Id = $"{BaseId}.open.{FlightMode.PageId}";
 
     public static readonly ICommandInfo StaticInfo = new CommandInfo
     {
@@ -16,7 +16,6 @@ public class OpenFlightModeCommand(INavigationService nav)
         Name = RS.OpenFlightModeCommand_CommandInfo_Name,
         Description = RS.OpenFlightModeCommand_CommandInfo_Description,
         Icon = FlightMode.PageIcon,
-
         DefaultHotKey = "Ctrl+F2",
     };
 

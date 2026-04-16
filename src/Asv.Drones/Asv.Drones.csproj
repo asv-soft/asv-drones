@@ -84,8 +84,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="Core\Controls\Flight\UavWidget\Attitude\AttitudeIndicatorStyles.axaml" />
-      <AdditionalFiles Include="Core\Controls\Flight\UavWidget\RouteIndicator\RouteIndicatorStyles.axaml" />
+      <AdditionalFiles Include="Core\Controls\UavWidget\AltitudeUavIndicator\AltitudeUavIndicator.axaml" />
+      <AdditionalFiles Include="Core\Controls\UavWidget\AngleUavIndicator\UavAngleIndicatorStyles.axaml" />
+      <AdditionalFiles Include="Core\Controls\UavWidget\AngleUavRttIndicator\AngleUavRttIndicator.axaml" />
+      <AdditionalFiles Include="Core\Controls\UavWidget\BatteryUavIndicator\BatteryUavIndicator.axaml" />
+      <AdditionalFiles Include="Core\Controls\UavWidget\NewUavWidgetView.axaml" />
+      <AdditionalFiles Include="Core\Controls\UavWidget\VelocityUavIndicator\VelocityUavIndicator.axaml" />
+      <AdditionalFiles Include="Shell\Pages\FlightMode\Widgets\Test\PluginFlightItemView.axaml" />
     </ItemGroup>
 
 </Project>

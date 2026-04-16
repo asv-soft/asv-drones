@@ -9,13 +9,13 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="avares://Asv.Drones/Core/Controls/Flight/UavWidget/RouteIndicator/RouteIndicatorStyles.axaml" />
+                <ResourceInclude Source="avares://Asv.Drones/Core/Controls/UavWidget/RouteIndicator/RouteIndicatorStyles.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
     <Application.Styles>
-        <StyleInclude Source="avares://Asv.Drones/Core/Controls/Flight/UavWidget/Attitude/AttitudeIndicatorStyles.axaml" />
-        <StyleInclude Source="avares://Asv.Drones/Core/Controls/Flight/UavWidget/AngleUavIndicator/UavAngleIndicatorStyles.axaml" />
+        <StyleInclude Source="avares://Asv.Drones/Core/Controls/UavWidget/Attitude/AttitudeIndicatorStyles.axaml" />
+        <StyleInclude Source="avares://Asv.Drones/Core/Controls/UavWidget/AngleUavIndicator/UavAngleIndicatorStyles.axaml" />
         <StyleInclude Source="avares://Asv.Avalonia/Styling/Theme.axaml" />
         <StyleInclude Source="avares://Asv.Avalonia.GeoMap/Theme.axaml" />
     </Application.Styles>
