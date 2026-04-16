@@ -32,6 +32,7 @@ public static class AsvDronesMixin
                 .UseMavParams()
                 .UseOptionalPacketViewer()
                 .UseFlightMode()
+                .UseExtendableFlightMode()
                 .UseCommands()
                 .UseFileBrowser()
                 .UseSetupPage();
@@ -67,6 +68,7 @@ public static class AsvDronesMixin
                 .Register<MavlinkParamsWriteCommand>()
                 .Register<MavlinkParamReadCommand>()
                 .Register<OpenFlightModeCommand>()
+                .Register<OpenFlightCommand>()
                 .Register<TakeOffCommand>()
                 .Register<StartMissionCommand>()
                 .Register<RTLCommand>()
@@ -157,6 +159,49 @@ public static class AsvDronesMixin
                 SetAltitudeDialogViewModel,
                 SetAltitudeDialogView
             >();
+            return this;
+        }
+
+        public Builder UseExtendableFlightMode()
+        {
+            builder.Shell.Pages.Register<FlightModePageViewModel, FlightModePageView>(
+                FlightModePageViewModel.PageId
+            );
+            builder.Shell.Pages.Home.UseExtension<HomePageFlightModeExtension>();
+            builder.Extensions.Register<IFlightModePage, FlightWidgetExtension>();
+
+            builder.Services.AddTransient<IDroneFlightWidget, DroneFlightWidgetViewModel>();
+            builder.ViewLocator.RegisterViewFor<
+                DroneFlightWidgetViewModel,
+                DroneFlightWidgetView
+            >();
+
+            builder.Extensions.Register<IDroneFlightWidget, TelemetryDroneFlightWidgetExtension>();
+            builder.ViewLocator.RegisterViewFor<TelemetryViewModel, TelemetryView>();
+
+            builder.Extensions.Register<IFlightModePage, FlightModeAnchorsExtension>();
+
+            builder.Services.AddKeyedTransient<IDashboardWidget, AttitudeIndicatorViewModel>(
+                AttitudeIndicatorViewModel.WidgetId
+            );
+            builder.Extensions.Register<
+                IDroneFlightWidget,
+                AttitudeIndicatorDroneFlightWidgetExtension
+            >();
+            builder.ViewLocator.RegisterViewFor<
+                AttitudeIndicatorViewModel,
+                AttitudeIndicatorView
+            >();
+
+            builder.Extensions.Register<
+                IDroneFlightWidget,
+                FlightControlDroneFlightWidgetExtension
+            >();
+            builder.ViewLocator.RegisterViewFor<FlightControlViewModel, FlightControlView>();
+
+            // Plugin extends flight mode
+            builder.ViewLocator.RegisterViewFor<PluginFlightItemViewModel, PluginFlightItemView>();
+            builder.Extensions.Register<IFlightModePage, PluginFlightItemWidgetExtension>();
             return this;
         }
 

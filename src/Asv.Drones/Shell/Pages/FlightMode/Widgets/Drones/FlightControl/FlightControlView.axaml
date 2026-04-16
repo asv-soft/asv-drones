@@ -1,0 +1,73 @@
+﻿<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:avalonia="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
+    xmlns:avalonia1="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    xmlns:drones="clr-namespace:Asv.Drones"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    x:Class="Asv.Drones.FlightControlView"
+    x:DataType="drones:FlightControlViewModel"
+>
+    <Design.DataContext>
+        <drones:FlightControlViewModel />
+    </Design.DataContext>
+    <!-- <Grid RowDefinitions="Auto,Auto,*" Margin="5" RowSpacing="10" HorizontalAlignment="Left"> -->
+    <StackPanel
+        Grid.Column="0"
+        Grid.Row="0"
+        Margin="5 0 0 0"
+        HorizontalAlignment="Stretch"
+        Orientation="Horizontal"
+    >
+        <StackPanel Orientation="Vertical" VerticalAlignment="Top">
+            <StackPanel.Styles>
+                <Style Selector="Button">
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="Theme" Value="{StaticResource TransparentButton}" />
+                    <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
+                </Style>
+            </StackPanel.Styles>
+            <Button HorizontalContentAlignment="Stretch" Command="{Binding AutoMode}">
+                <StackPanel Spacing="5" Orientation="Horizontal">
+                    <avalonia1:MaterialIcon Kind="Automatic" />
+                    <TextBlock Text="{x:Static drones:RS.UavAction_AutoMode_Name}" />
+                </StackPanel>
+            </Button>
+            <Button HorizontalContentAlignment="Stretch" Command="{Binding Guided}">
+                <StackPanel Spacing="5" Orientation="Horizontal">
+                    <avalonia1:MaterialIcon Kind="Controller" />
+                    <TextBlock Text="{x:Static drones:RS.UavAction_GuidedMode}" />
+                </StackPanel>
+            </Button>
+            <Button HorizontalContentAlignment="Stretch" Command="{Binding TakeOff}">
+                <StackPanel Spacing="5" Orientation="Horizontal">
+                    <avalonia1:MaterialIcon Kind="AeroplaneTakeoff" />
+                    <TextBlock Text="{x:Static drones:RS.UavAction_TakeOff}" />
+                </StackPanel>
+            </Button>
+            <Button HorizontalContentAlignment="Stretch" Command="{Binding Land}">
+                <StackPanel Spacing="5" Orientation="Horizontal">
+                    <avalonia1:MaterialIcon Kind="FlightLand" />
+                    <TextBlock Text="{x:Static drones:RS.UavAction_Land}" />
+                </StackPanel>
+            </Button>
+            <Button HorizontalContentAlignment="Stretch" Command="{Binding Rtl}">
+                <StackPanel Spacing="5" Orientation="Horizontal">
+                    <avalonia1:MaterialIcon Kind="Home" />
+                    <TextBlock Text="{x:Static drones:RS.UavAction_Rtl_Name}" />
+                </StackPanel>
+            </Button>
+            <!-- <Button HorizontalContentAlignment="Stretch" Command="{Binding StartMission}"> -->
+            <!--     <StackPanel Spacing="5" Orientation="Horizontal"> -->
+            <!--         <avalonia1:MaterialIcon Kind="MapMarkerPath" /> -->
+            <!--         <TextBlock Text="{x:Static drones:RS.UavAction_StartMission}" /> -->
+            <!--     </StackPanel> -->
+            <!-- </Button> -->
+        </StackPanel>
+    </StackPanel>
+
+    <!-- </Grid> -->
+</UserControl>
