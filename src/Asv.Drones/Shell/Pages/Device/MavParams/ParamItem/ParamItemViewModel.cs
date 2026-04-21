@@ -7,6 +7,7 @@ using Asv.Avalonia;
 using Asv.Common;
 using Asv.Mavlink;
 using Asv.Mavlink.Common;
+using Asv.Modeling;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;

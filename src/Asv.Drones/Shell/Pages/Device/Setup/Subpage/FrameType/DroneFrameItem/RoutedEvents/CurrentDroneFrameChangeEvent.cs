@@ -1,5 +1,6 @@
 using Asv.Avalonia;
 using Asv.Common;
+using Asv.Modeling;
 
 namespace Asv.Drones;
 
