@@ -11,6 +11,7 @@ using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
+using Asv.Modeling;
 using Avalonia.Controls;
 using Material.Icons;
 using Microsoft.Extensions.Logging;

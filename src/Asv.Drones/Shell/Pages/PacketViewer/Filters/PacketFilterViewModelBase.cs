@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Common;
+using Asv.Modeling;
 using Microsoft.Extensions.Logging;
 using R3;
 

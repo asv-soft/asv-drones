@@ -5,11 +5,10 @@ using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
 using Asv.Common;
 using Asv.Drones.Api;
-using Asv.IO;
+using Asv.Modeling;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using ObservableCollections;
-using R3;
 
 namespace Asv.Drones;
 

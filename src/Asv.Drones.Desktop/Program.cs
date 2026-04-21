@@ -54,6 +54,7 @@ sealed class Program
                 builder
                     .UseDefault()
                     .UseAppInfo(configure => configure.FillFromAssembly(typeof(App).Assembly))
+                    .UseOptionalLogToFile()
                     .UseOptionalLogViewer()
                     .UseOptionalSoloRun(opt => opt.WithArgumentForwarding())
                     .UsePluginManager(options =>
