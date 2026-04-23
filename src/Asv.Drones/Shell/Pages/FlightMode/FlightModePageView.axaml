@@ -1,0 +1,82 @@
+﻿<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    xmlns:avalonia1="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
+    xmlns:drones="clr-namespace:Asv.Drones"
+    xmlns:geoMap="clr-namespace:Asv.Avalonia.GeoMap;assembly=Asv.Avalonia.GeoMap"
+    mc:Ignorable="d"
+    d:DesignWidth="1024"
+    d:DesignHeight="500"
+    x:Class="Asv.Drones.FlightModePageView"
+    x:DataType="drones:FlightModePageViewModel"
+>
+    <Design.DataContext>
+        <drones:FlightModePageViewModel />
+    </Design.DataContext>
+    <Panel>
+        <geoMap:MapView DataContext="{CompiledBinding Map}" />
+        <ItemsControl ItemsSource="{Binding WidgetsView}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <avalonia1:WorkspacePanel
+                        AttachedToVisualTree="WorkspacePanel_OnAttachedToVisualTree"
+                        WorkspaceChanged="OnWorkspaceChanged"
+                    />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        Background="{DynamicResource SystemAltMediumHighColor}"
+                        Opacity="0.9"
+                        BorderThickness="{DynamicResource ThemeBorderThickness}"
+                        CornerRadius="{DynamicResource ControlCornerRadius}"
+                        Padding="8"
+                        BorderBrush="{DynamicResource SystemControlTransientBorderBrush}"
+                        HorizontalAlignment="Stretch"
+                    >
+                        <DockPanel>
+                            <Grid ColumnDefinitions="Auto,5,*, Auto" DockPanel.Dock="Top">
+                                <avalonia:MaterialIcon
+                                    Kind="{Binding Icon}"
+                                    avalonia1:AsvPallete.Color="{CompiledBinding IconColor}"
+                                />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Grid.Column="2"
+                                    Text="{Binding Header}"
+                                />
+                                <ToggleButton
+                                    IsChecked="True"
+                                    x:Name="PART_Expand"
+                                    Grid.Column="3"
+                                    Padding="0"
+                                    Theme="{StaticResource TransparentButton}"
+                                >
+                                    <Panel Width="20" Height="20">
+                                        <avalonia:MaterialIcon
+                                            IsVisible="{Binding ElementName=PART_Expand, Path=IsChecked}"
+                                            Kind="MenuUp"
+                                        />
+                                        <avalonia:MaterialIcon
+                                            IsVisible="{Binding ElementName=PART_Expand, Path=!IsChecked}"
+                                            Kind="MenuDown"
+                                        />
+                                    </Panel>
+                                </ToggleButton>
+                            </Grid>
+                            <ContentControl
+                                Margin="0,4,0,0"
+                                IsVisible="{Binding ElementName=PART_Expand, Path=IsChecked}"
+                                Content="{Binding}"
+                            />
+                        </DockPanel>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Panel>
+</UserControl>
