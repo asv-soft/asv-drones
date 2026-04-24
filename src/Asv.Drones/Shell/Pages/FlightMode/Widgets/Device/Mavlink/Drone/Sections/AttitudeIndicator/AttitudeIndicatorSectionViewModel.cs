@@ -14,10 +14,10 @@ public class AttitudeIndicatorSectionViewModel
     : RoutableViewModel,
         IFlightWidgetSection<MavlinkClientDevice>
 {
-    public const string WidgetId = "alt-indicator-widget-section";
+    public const string SectionId = "alt-indicator-widget-section";
 
     public AttitudeIndicatorSectionViewModel(ILoggerFactory loggerFactory)
-        : base(WidgetId, loggerFactory) { }
+        : base(SectionId, loggerFactory) { }
 
     public IReadOnlyBindableReactiveProperty<double> Roll { get; private set; }
     public IReadOnlyBindableReactiveProperty<double> Pitch { get; private set; }

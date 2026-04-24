@@ -2,6 +2,7 @@
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Drones.Api;
+using Asv.Drones.Plane;
 using Asv.Mavlink;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -173,14 +174,23 @@ public static class AsvDronesMixin
             // Anchors
             builder.Extensions.Register<IFlightModePage, FlightModeAnchorsExtension>();
 
-            // Drone Widget
-            builder.Extensions.Register<IFlightModePage, FlightModeDroneFlightWidgetExtension>();
+            // Factory for client device widgets
+            builder.Services.AddSingleton<IClientDeviceWidgetFactory, ClientDeviceWidgetFactory>();
+
+            // Create widgets for client devices
+            builder.Extensions.Register<IFlightModePage, FlightModeClientDeviceWidgetExtension>();
+
+            // Widget for all drones
+            builder.Services.AddSingleton<
+                IClientDeviceWidgetCreationHandler,
+                DroneWidgetCreationHandler
+            >();
             builder.Services.AddTransient<IDroneFlightWidget, DroneFlightWidgetViewModel>();
             builder.ViewLocator.RegisterViewFor<DroneFlightWidgetViewModel, FlightWidgetView>();
 
             // Sections for the drone Widget
             builder.Services.AddKeyedTransient<TelemetrySectionViewModel>(
-                TelemetrySectionViewModel.WidgetId
+                TelemetrySectionViewModel.SectionId
             );
             builder.Extensions.Register<
                 IDroneFlightWidget,
@@ -189,7 +199,7 @@ public static class AsvDronesMixin
             builder.ViewLocator.RegisterViewFor<TelemetrySectionViewModel, TelemetrySectionView>();
 
             builder.Services.AddKeyedTransient<AttitudeIndicatorSectionViewModel>(
-                AttitudeIndicatorSectionViewModel.WidgetId
+                AttitudeIndicatorSectionViewModel.SectionId
             );
             builder.Extensions.Register<
                 IDroneFlightWidget,
@@ -201,7 +211,7 @@ public static class AsvDronesMixin
             >();
 
             builder.Services.AddKeyedTransient<FlightControlSectionViewModel>(
-                FlightControlSectionViewModel.WidgetId
+                FlightControlSectionViewModel.SectionId
             );
             builder.Extensions.Register<
                 IDroneFlightWidget,
@@ -215,6 +225,22 @@ public static class AsvDronesMixin
             // Test plugin widget
             builder.ViewLocator.RegisterViewFor<PluginFlightItemViewModel, PluginFlightItemView>();
             builder.Extensions.Register<IFlightModePage, PluginFlightItemWidgetExtension>();
+
+            // Test plane widget
+            builder.Services.AddSingleton<
+                IClientDeviceWidgetCreationHandler,
+                PlaneWidgetCreationHandler
+            >();
+            builder.Services.AddTransient<IPlaneWidget, PlaneWidgetViewModel>();
+            builder.ViewLocator.RegisterViewFor<PlaneWidgetViewModel, FlightWidgetView>();
+
+            // Test plane section
+            builder.Services.AddKeyedTransient<PlaneSectionViewModel>(
+                PlaneSectionViewModel.SectionId
+            );
+            builder.Extensions.Register<IPlaneWidget, PlaneSectionExtension>();
+            builder.ViewLocator.RegisterViewFor<PlaneSectionViewModel, PlaneSectionView>();
+
             return this;
         }
 

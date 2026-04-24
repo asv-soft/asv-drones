@@ -16,12 +16,12 @@ public class FlightControlSectionViewModel
     : RoutableViewModel,
         IFlightWidgetSection<MavlinkClientDevice>
 {
-    public const string WidgetId = "flight-control-widget-section";
+    public const string SectionId = "flight-control-widget-section";
 
     private readonly IUnit _altitudeUnit;
 
     public FlightControlSectionViewModel()
-        : base(WidgetId, DesignTime.LoggerFactory)
+        : base(SectionId, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
         TakeOff = new ReactiveCommand();
@@ -38,7 +38,7 @@ public class FlightControlSectionViewModel
         IUnitService unitService,
         ILoggerFactory loggerFactory
     )
-        : base(WidgetId, loggerFactory)
+        : base(SectionId, loggerFactory)
     {
         _altitudeUnit = unitService.Units[AltitudeUnit.Id];
 

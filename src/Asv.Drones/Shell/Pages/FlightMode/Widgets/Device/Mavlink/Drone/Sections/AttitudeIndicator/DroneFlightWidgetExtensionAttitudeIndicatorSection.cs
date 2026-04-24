@@ -1,6 +1,7 @@
 ﻿using System;
 using Asv.Avalonia;
 using Asv.Drones.Api;
+using Asv.Mavlink;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using R3;
@@ -15,7 +16,7 @@ public sealed class DroneFlightWidgetExtensionAttitudeIndicatorSection(
     public void Extend(IDroneFlightWidget context, CompositeDisposable contextDispose)
     {
         var section = services.GetRequiredKeyedService<AttitudeIndicatorSectionViewModel>(
-            AttitudeIndicatorSectionViewModel.WidgetId
+            AttitudeIndicatorSectionViewModel.SectionId
         );
         context.Sections.Add(section);
         section.InitWith(context.Device ?? throw new NullReferenceException());
