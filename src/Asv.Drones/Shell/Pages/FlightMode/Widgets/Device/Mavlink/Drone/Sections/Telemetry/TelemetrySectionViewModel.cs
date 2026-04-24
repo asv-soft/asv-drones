@@ -14,14 +14,14 @@ public class TelemetrySectionViewModel
     : RoutableViewModel,
         IFlightWidgetSection<MavlinkClientDevice>
 {
-    public const string WidgetId = "telemetry-widget-sectioin";
+    public const string SectionId = "telemetry-widget-sectioin";
 
     private readonly ILoggerFactory _loggerFactory;
     private readonly IUnitService _unitService;
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public TelemetrySectionViewModel()
-        : base(WidgetId, DesignTime.LoggerFactory)
+        : base(SectionId, DesignTime.LoggerFactory)
     {
         DesignTime.ThrowIfNotDesignMode();
 
@@ -29,7 +29,7 @@ public class TelemetrySectionViewModel
     }
 
     public TelemetrySectionViewModel(ILoggerFactory loggerFactory, IUnitService unitService)
-        : base(WidgetId, loggerFactory)
+        : base(SectionId, loggerFactory)
     {
         _loggerFactory = loggerFactory;
         _unitService = unitService;

@@ -1,0 +1,17 @@
+﻿<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:plane="clr-namespace:Asv.Drones.Plane"
+    mc:Ignorable="d"
+    d:DesignWidth="800"
+    d:DesignHeight="450"
+    x:Class="Asv.Drones.Plane.PlaneSectionView"
+    x:DataType="plane:PlaneSectionViewModel"
+>
+    <StackPanel Orientation="Vertical">
+        <TextBlock Text="{CompiledBinding Type}" />
+        <TextBlock Text="{CompiledBinding Text}" />
+    </StackPanel>
+</UserControl>
