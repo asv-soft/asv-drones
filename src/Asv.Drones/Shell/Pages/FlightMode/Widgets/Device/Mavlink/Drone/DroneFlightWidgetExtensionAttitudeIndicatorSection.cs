@@ -1,7 +1,6 @@
 ﻿using System;
 using Asv.Avalonia;
 using Asv.Drones.Api;
-using Asv.Mavlink;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using R3;

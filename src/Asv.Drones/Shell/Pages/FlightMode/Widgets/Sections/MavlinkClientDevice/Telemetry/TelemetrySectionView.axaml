@@ -1,0 +1,88 @@
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:drones="clr-namespace:Asv.Drones"
+    xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    xmlns:asvAvalonia="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    x:Name="TelemetrySectionRoot"
+    x:Class="Asv.Drones.TelemetrySectionView"
+    x:DataType="drones:TelemetrySectionViewModel"
+>
+    <Design.DataContext>
+        <drones:TelemetrySectionViewModel />
+    </Design.DataContext>
+
+    <UserControl.Styles>
+        <Style Selector="asvAvalonia|RttBox">
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+        </Style>
+    </UserControl.Styles>
+
+    <DockPanel LastChildFill="True">
+        <StackPanel
+            DockPanel.Dock="Right"
+            Margin="4 0 0 0"
+            Orientation="Vertical"
+            VerticalAlignment="Top"
+            Spacing="4"
+            IsVisible="{Binding IsEditMode.Value}"
+        >
+            <Button
+                Theme="{StaticResource TransparentButton}"
+                Padding="4"
+                ToolTip.Tip="{x:Static drones:RS.TelemetrySectionView_DoneButton_ToolTip}"
+                Command="{Binding ToggleEdit}"
+            >
+                <icons:MaterialIcon Kind="Check" Classes="small" />
+            </Button>
+            <Button
+                Theme="{StaticResource TransparentButton}"
+                Padding="4"
+                ToolTip.Tip="{x:Static drones:RS.TelemetrySectionView_ResetButton_ToolTip}"
+                Command="{Binding Reset}"
+            >
+                <icons:MaterialIcon Kind="Restore" Classes="small" />
+            </Button>
+        </StackPanel>
+
+        <Border Background="Transparent">
+            <Border.ContextMenu>
+                <ContextMenu
+                    x:DataType="drones:TelemetrySectionViewModel"
+                    DataContext="{Binding DataContext, ElementName=TelemetrySectionRoot}"
+                >
+                    <MenuItem
+                        Header="{x:Static drones:RS.TelemetrySectionView_EditIndicatorsMenuItem_Header}"
+                        Command="{Binding ToggleEdit}"
+                        IsVisible="{Binding !IsEditMode.Value}"
+                    />
+                    <MenuItem
+                        Header="{x:Static drones:RS.TelemetrySectionView_ConfirmEditingMenuItem_Header}"
+                        Command="{Binding ToggleEdit}"
+                        IsVisible="{Binding IsEditMode.Value}"
+                    />
+                    <MenuItem
+                        Header="{x:Static drones:RS.TelemetrySectionView_ResetMenuItem_Header}"
+                        Command="{Binding Reset}"
+                    />
+                </ContextMenu>
+            </Border.ContextMenu>
+            <StackPanel Orientation="Vertical" Spacing="4">
+                <ItemsControl
+                    ItemsSource="{Binding DisplayItemsView}"
+                    Grid.IsSharedSizeScope="True"
+                >
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel ItemSpacing="4" LineSpacing="4" Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </StackPanel>
+        </Border>
+    </DockPanel>
+</UserControl>
