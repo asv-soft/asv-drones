@@ -6,6 +6,7 @@
     xmlns:avalonia="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
     xmlns:avalonia1="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
     xmlns:drones="clr-namespace:Asv.Drones"
+    xmlns:oldAttitudeIndicator="clr-namespace:Asv.Drones.OldAttitudeIndicator"
     mc:Ignorable="d"
     d:DesignHeight="1000"
     x:Class="Asv.Drones.UavWidgetView"
@@ -22,7 +23,7 @@
             HorizontalAlignment="Stretch"
             Orientation="Horizontal"
         >
-            <drones:AttitudeIndicator
+            <oldAttitudeIndicator:AttitudeIndicator
                 MinWidth="150"
                 MaxWidth="250"
                 Name="Attitude"

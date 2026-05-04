@@ -602,4 +602,34 @@
     <data name="UavWidgetViewModel_GnssRttBox_Mode_Header" xml:space="preserve">
         <value>Mode</value>
     </data>
+    <data name="HeadingUavIndicatorViewModel_Heading" xml:space="preserve">
+        <value>Heading</value>
+    </data>
+    <data name="HeadingUavIndicatorViewModel_Heading_Short" xml:space="preserve">
+        <value>HDG</value>
+    </data>
+    <data name="HomeAzimuthUavIndicatorViewModel_HomeAzimuth" xml:space="preserve">
+        <value>Home azimuth</value>
+    </data>
+    <data name="HomeAzimuthUavIndicatorViewModel_HomeAzimuth_Short" xml:space="preserve">
+        <value>HOME</value>
+    </data>
+    <data name="VelocityUavIndicatorViewModel_Velocity_Short" xml:space="preserve">
+        <value>GS</value>
+    </data>
+    <data name="AngleUavRttIndicatorViewModel_Angle" xml:space="preserve">
+        <value>Angle</value>
+    </data>
+    <data name="AltitudeUavIndicatorViewModel_Agl" xml:space="preserve">
+        <value>AGL</value>
+    </data>
+    <data name="AltitudeUavIndicatorViewModel_Msl" xml:space="preserve">
+        <value>MSL</value>
+    </data>
+    <data name="AngleUavRttIndicatorViewModel_Pitch" xml:space="preserve">
+        <value>Pitch</value>
+    </data>
+    <data name="AngleUavRttIndicatorViewModel_Roll" xml:space="preserve">
+        <value>Roll</value>
+    </data>
 </root>

@@ -1,0 +1,16 @@
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:asv-avalonia="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
+    xmlns:drones="clr-namespace:Asv.Drones"
+    mc:Ignorable="d"
+    x:Class="Asv.Drones.HomeAzimuthUavIndicator"
+    x:DataType="drones:HomeAzimuthUavIndicatorViewModel"
+>
+    <Design.DataContext>
+        <drones:HomeAzimuthUavIndicatorViewModel />
+    </Design.DataContext>
+    <asv-avalonia:SplitDigitRttBoxView />
+</UserControl>

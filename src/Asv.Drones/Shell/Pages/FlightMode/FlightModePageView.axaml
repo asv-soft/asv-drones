@@ -78,5 +78,12 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <geoMap:MapCompass
+            Rotation="{Binding Map.Rotation.Value}"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Margin="8"
+            TouchpadRotationSensitivity="1"
+        />
     </Panel>
 </UserControl>

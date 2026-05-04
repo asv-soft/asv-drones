@@ -34,6 +34,8 @@ public static class SetupMixin
             );
             builder.Shell.Pages.Home.UseItemExtension<HomePageSetupDeviceItemAction>();
             builder.Extensions.Register<ISetupPage, DefaultSetupExtension>();
+            UseFrameTypeSubPage();
+            UseMotorSubPage();
             return this;
         }
 

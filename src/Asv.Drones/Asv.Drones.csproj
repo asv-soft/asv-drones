@@ -81,16 +81,14 @@
 
     <ItemGroup>
       <Folder Include="Core\" />
+      <Folder Include="Core\Controls\DeviceTelemetry\AngleUavIndicator\Items\" />
+      <Folder Include="Core\Controls\DeviceTelemetry\Rtt\" />
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="Core\Controls\UavWidget\AltitudeUavIndicator\AltitudeUavIndicator.axaml" />
-      <AdditionalFiles Include="Core\Controls\UavWidget\AngleUavIndicator\UavAngleIndicatorStyles.axaml" />
-      <AdditionalFiles Include="Core\Controls\UavWidget\AngleUavRttIndicator\AngleUavRttIndicator.axaml" />
-      <AdditionalFiles Include="Core\Controls\UavWidget\BatteryUavIndicator\BatteryUavIndicator.axaml" />
-      <AdditionalFiles Include="Core\Controls\UavWidget\NewUavWidgetView.axaml" />
-      <AdditionalFiles Include="Core\Controls\UavWidget\VelocityUavIndicator\VelocityUavIndicator.axaml" />
+      <AdditionalFiles Include="Core\Controls\DeviceTelemetry\AngleUavIndicator\UavAngleIndicatorStyles.axaml" />
+      <AdditionalFiles Include="Core\Controls\DeviceTelemetry\Rtt\HeadingUavIndicator\HeadingUavIndicator.axaml" />
+      <AdditionalFiles Include="Core\Controls\DeviceTelemetry\Rtt\HomeAzimuthUavIndicator\HomeAzimuthUavIndicator.axaml" />
       <AdditionalFiles Include="Shell\Pages\FlightMode\Widgets\Test\PluginFlightItemView.axaml" />
     </ItemGroup>
-
 </Project>

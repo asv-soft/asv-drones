@@ -1570,7 +1570,97 @@ namespace Asv.Drones {
                 return ResourceManager.GetString("UavRttItem_Velocity", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to GS.
+        /// </summary>
+        public static string VelocityUavIndicatorViewModel_Velocity_Short {
+            get {
+                return ResourceManager.GetString("VelocityUavIndicatorViewModel_Velocity_Short", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Heading.
+        /// </summary>
+        public static string HeadingUavIndicatorViewModel_Heading {
+            get {
+                return ResourceManager.GetString("HeadingUavIndicatorViewModel_Heading", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to HDG.
+        /// </summary>
+        public static string HeadingUavIndicatorViewModel_Heading_Short {
+            get {
+                return ResourceManager.GetString("HeadingUavIndicatorViewModel_Heading_Short", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Home azimuth.
+        /// </summary>
+        public static string HomeAzimuthUavIndicatorViewModel_HomeAzimuth {
+            get {
+                return ResourceManager.GetString("HomeAzimuthUavIndicatorViewModel_HomeAzimuth", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to HOME.
+        /// </summary>
+        public static string HomeAzimuthUavIndicatorViewModel_HomeAzimuth_Short {
+            get {
+                return ResourceManager.GetString("HomeAzimuthUavIndicatorViewModel_HomeAzimuth_Short", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Angle.
+        /// </summary>
+        public static string AngleUavRttIndicatorViewModel_Angle {
+            get {
+                return ResourceManager.GetString("AngleUavRttIndicatorViewModel_Angle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to AGL.
+        /// </summary>
+        public static string AltitudeUavIndicatorViewModel_Agl {
+            get {
+                return ResourceManager.GetString("AltitudeUavIndicatorViewModel_Agl", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to MSL.
+        /// </summary>
+        public static string AltitudeUavIndicatorViewModel_Msl {
+            get {
+                return ResourceManager.GetString("AltitudeUavIndicatorViewModel_Msl", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Pitch.
+        /// </summary>
+        public static string AngleUavRttIndicatorViewModel_Pitch {
+            get {
+                return ResourceManager.GetString("AngleUavRttIndicatorViewModel_Pitch", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Roll.
+        /// </summary>
+        public static string AngleUavRttIndicatorViewModel_Roll {
+            get {
+                return ResourceManager.GetString("AngleUavRttIndicatorViewModel_Roll", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Amperage.
         /// </summary>
