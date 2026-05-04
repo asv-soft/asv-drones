@@ -2,15 +2,14 @@ using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Mavlink;
 using Asv.Modeling;
-using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones.Api;
 
 public class DroneFlightWidgetViewModelBase<TDrone, TSelf>(
     NavId id,
+    TDrone device,
     IDeviceManager deviceManager,
-    ILoggerFactory loggerFactory,
     IExtensionService ext
-) : MavlinkDeviceFlightWidgetViewModelBase<TDrone, TSelf>(id, deviceManager, loggerFactory, ext)
-    where TSelf : class, IFlightWidget<TDrone>
+) : MavlinkDeviceFlightWidgetViewModelBase<TDrone, TSelf>(id, device, deviceManager, ext)
+    where TSelf : class, IFlightWidget
     where TDrone : MavlinkClientDevice { }

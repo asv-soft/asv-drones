@@ -19,7 +19,11 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Viewbox>
-                    <Border CornerRadius="{TemplateBinding CornerRadius}" ClipToBounds="True">
+                    <Border
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        ClipToBounds="True"
+                        Background="#0d1b2a"
+                    >
                         <Canvas
                             x:Name="Canvas"
                             Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InternalWidth}"

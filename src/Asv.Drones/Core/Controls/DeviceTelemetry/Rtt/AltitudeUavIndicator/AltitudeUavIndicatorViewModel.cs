@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Asv.Avalonia;
-using Asv.Modeling;
+using Asv.Drones.Api;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
@@ -12,16 +12,17 @@ namespace Asv.Drones;
 public record AltitudeRttBoxData(double AltitudeAgl, double AltitudeMsl, IUnitItem AltitudeUnit);
 #pragma warning restore SA1313
 
-public class AltitudeUavIndicatorViewModel : TwoColumnRttBoxViewModel<AltitudeRttBoxData>
+public class AltitudeUavIndicatorViewModel
+    : TwoColumnRttBoxViewModel<AltitudeRttBoxData>,
+        ITelemetryItem
 {
     [SetsRequiredMembers]
     public AltitudeUavIndicatorViewModel()
         : this(
-            new NavId(nameof(AltitudeUavIndicator)),
-            DesignTime.LoggerFactory,
-            new ReactiveProperty<double>(10),
-            new ReactiveProperty<double>(14),
-            DeviceTelemetryDesignPreview.Unit(AltitudeUnit.Id).CurrentUnitItem,
+            nameof(AltitudeUavIndicator),
+            DeviceTelemetryDesignPreview
+                .UnitService.Units[AltitudeUnit.Id]
+                .CurrentUnitItem.Select(unit => new AltitudeRttBoxData(10d, 14d, unit)),
             DeviceTelemetryDesignPreview.DefaultStatusColor
         )
     {
@@ -30,27 +31,18 @@ public class AltitudeUavIndicatorViewModel : TwoColumnRttBoxViewModel<AltitudeRt
 
     [SetsRequiredMembers]
     public AltitudeUavIndicatorViewModel(
-        NavId id,
-        ILoggerFactory loggerFactory,
-        ReactiveProperty<double> altitudeAgl,
-        ReactiveProperty<double> altitudeMsl,
-        SynchronizedReactiveProperty<IUnitItem> currentUnitItem,
+        string id,
+        Observable<AltitudeRttBoxData> altitudeData,
         AsvColorKind defaultStatusColor,
         TimeSpan? networkErrorTimeout = null
     )
         : base(
-            id.TypeId,
-            altitudeAgl
-                .CombineLatest(
-                    altitudeMsl,
-                    currentUnitItem,
-                    (agl, msl, unit) => new AltitudeRttBoxData(agl, msl, unit)
-                )
-                .ObserveOnUIThreadDispatcher()
-                .ThrottleLast(TimeSpan.FromMilliseconds(200)),
+            id,
+            altitudeData.ObserveOnUIThreadDispatcher().ThrottleLast(TimeSpan.FromMilliseconds(200)),
             networkErrorTimeout
         )
     {
+        ItemId = id;
         Header = RS.UavRttItem_Altitude;
         Icon = MaterialIconKind.Altimeter;
         UpdateAction = (model, changes) =>
@@ -66,4 +58,6 @@ public class AltitudeUavIndicatorViewModel : TwoColumnRttBoxViewModel<AltitudeRt
         Left.Header = RS.AltitudeUavIndicatorViewModel_Agl;
         Right.Header = RS.AltitudeUavIndicatorViewModel_Msl;
     }
+
+    public string ItemId { get; }
 }

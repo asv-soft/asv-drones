@@ -632,4 +632,46 @@
     <data name="AngleUavRttIndicatorViewModel_Roll" xml:space="preserve">
         <value>Roll</value>
     </data>
+    <data name="AddTelemetryItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Add telemetry indicator</value>
+    </data>
+    <data name="AddTelemetryItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Add a telemetry indicator to the flight mode widget.</value>
+    </data>
+    <data name="RemoveTelemetryItemCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Remove telemetry indicator</value>
+    </data>
+    <data name="RemoveTelemetryItemCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Remove a telemetry indicator from the flight mode widget.</value>
+    </data>
+    <data name="ResetTelemetryItemsCommand_CommandInfo_Name" xml:space="preserve">
+        <value>Reset telemetry indicators</value>
+    </data>
+    <data name="ResetTelemetryItemsCommand_CommandInfo_Description" xml:space="preserve">
+        <value>Reset telemetry indicators to the default layout.</value>
+    </data>
+    <data name="AddTelemetryDisplayItemView_AddIndicatorButton_ToolTip" xml:space="preserve">
+        <value>Add indicator</value>
+    </data>
+    <data name="TelemetrySectionView_DoneButton_ToolTip" xml:space="preserve">
+        <value>Done</value>
+    </data>
+    <data name="TelemetrySectionView_ConfirmEditingMenuItem_Header" xml:space="preserve">
+        <value>Confirm changes</value>
+    </data>
+    <data name="TelemetrySectionView_EditIndicatorsMenuItem_Header" xml:space="preserve">
+        <value>Edit indicators</value>
+    </data>
+    <data name="TelemetrySectionView_ResetButton_ToolTip" xml:space="preserve">
+        <value>Reset to default</value>
+    </data>
+    <data name="TelemetrySectionView_ResetMenuItem_Header" xml:space="preserve">
+        <value>Reset to default</value>
+    </data>
+    <data name="TelemetrySectionViewModel_ConfigureTelemetryDialog_CloseButtonText" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="TelemetrySectionViewModel_ConfigureTelemetryDialog_Title" xml:space="preserve">
+        <value>Add indicator</value>
+    </data>
 </root>

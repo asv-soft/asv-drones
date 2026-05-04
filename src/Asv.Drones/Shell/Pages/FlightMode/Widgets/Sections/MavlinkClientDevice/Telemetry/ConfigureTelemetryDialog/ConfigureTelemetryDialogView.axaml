@@ -1,0 +1,54 @@
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:drones="clr-namespace:Asv.Drones"
+    mc:Ignorable="d"
+    x:Class="Asv.Drones.ConfigureTelemetryDialogView"
+    x:DataType="drones:ConfigureTelemetryDialogViewModel"
+    d:DesignWidth="760"
+    d:DesignHeight="460"
+>
+    <Design.DataContext>
+        <drones:ConfigureTelemetryDialogViewModel />
+    </Design.DataContext>
+
+    <ListBox
+        ItemsSource="{Binding Entries}"
+        Width="720"
+        MaxHeight="456"
+        Background="Transparent"
+        BorderThickness="0"
+        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+        ScrollViewer.VerticalScrollBarVisibility="Auto"
+    >
+        <ListBox.Styles>
+            <Style Selector="ListBoxItem">
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="0 0 0 8" />
+                <Setter Property="Background" Value="Transparent" />
+            </Style>
+        </ListBox.Styles>
+        <ListBox.ItemTemplate>
+            <DataTemplate DataType="drones:ConfigureTelemetryItemEntry">
+                <Button
+                    Padding="12"
+                    MinHeight="100"
+                    HorizontalAlignment="Stretch"
+                    CornerRadius="{DynamicResource ControlCornerRadius}"
+                    BorderBrush="{DynamicResource AsvForegroundUnknownBrush}"
+                    BorderThickness="1"
+                    Background="Transparent"
+                    Command="{Binding Select}"
+                >
+                    <ContentControl
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Content="{Binding Item}"
+                    />
+                </Button>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+</UserControl>

@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Asv.Avalonia;
-using Asv.Modeling;
+using Asv.Drones.Api;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
@@ -12,16 +12,17 @@ namespace Asv.Drones;
 public record AngleRttBoxData(double Pitch, double Roll, IUnitItem AngleUnit);
 #pragma warning restore SA1313
 
-public class AngleUavRttIndicatorViewModel : TwoColumnRttBoxViewModel<AngleRttBoxData>
+public class AngleUavRttIndicatorViewModel
+    : TwoColumnRttBoxViewModel<AngleRttBoxData>,
+        ITelemetryItem
 {
     [SetsRequiredMembers]
     public AngleUavRttIndicatorViewModel()
         : this(
-            new NavId(nameof(AngleUavRttIndicator)),
-            DesignTime.LoggerFactory,
-            new ReactiveProperty<double>(30),
-            new ReactiveProperty<double>(10),
-            DeviceTelemetryDesignPreview.Unit(AngleUnit.Id).CurrentUnitItem,
+            nameof(AngleUavRttIndicator),
+            DeviceTelemetryDesignPreview
+                .UnitService.Units[AngleUnit.Id]
+                .CurrentUnitItem.Select(unit => new AngleRttBoxData(30d, 10d, unit)),
             DeviceTelemetryDesignPreview.DefaultStatusColor
         )
     {
@@ -30,27 +31,18 @@ public class AngleUavRttIndicatorViewModel : TwoColumnRttBoxViewModel<AngleRttBo
 
     [SetsRequiredMembers]
     public AngleUavRttIndicatorViewModel(
-        NavId id,
-        ILoggerFactory loggerFactory,
-        ReactiveProperty<double> pitchAngle,
-        ReactiveProperty<double> rollAngle,
-        SynchronizedReactiveProperty<IUnitItem> currentAngleUnitItem,
+        string id,
+        Observable<AngleRttBoxData> angleData,
         AsvColorKind defaultStatusColor,
         TimeSpan? networkErrorTimeout = null
     )
         : base(
-            id.TypeId,
-            pitchAngle
-                .CombineLatest(
-                    rollAngle,
-                    currentAngleUnitItem,
-                    (agl, msl, unit) => new AngleRttBoxData(agl, msl, unit)
-                )
-                .ObserveOnUIThreadDispatcher()
-                .ThrottleLast(TimeSpan.FromMilliseconds(200)),
+            id,
+            angleData.ObserveOnUIThreadDispatcher().ThrottleLast(TimeSpan.FromMilliseconds(200)),
             networkErrorTimeout
         )
     {
+        ItemId = id;
         Header = RS.AngleUavRttIndicatorViewModel_Angle;
         Icon = MaterialIconKind.Altimeter;
         UpdateAction = (model, changes) =>
@@ -66,4 +58,6 @@ public class AngleUavRttIndicatorViewModel : TwoColumnRttBoxViewModel<AngleRttBo
         Left.Header = RS.AngleUavRttIndicatorViewModel_Pitch;
         Right.Header = RS.AngleUavRttIndicatorViewModel_Roll;
     }
+
+    public string ItemId { get; }
 }

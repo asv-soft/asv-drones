@@ -69,7 +69,6 @@ public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightMo
 
     protected override void AfterLoadExtensions()
     {
-        // nothing to do
         Layout.Register(
             nameof(Map.CenterMap),
             x => Map.CenterMap.Value = x,
