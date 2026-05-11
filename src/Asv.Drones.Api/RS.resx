@@ -21,4 +21,7 @@
     <data name="MavParamInfo_ValidationException_InvalidFormat" xml:space="preserve">
         <value>Value must be a number with optional suffix (K, M, G)</value>
     </data>
+    <data name="FlightWidgetAction_CreateCommand_Title" xml:space="preserve">
+        <value>Command failed</value>
+    </data>
 </root>

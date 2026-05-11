@@ -67,5 +67,11 @@ namespace Asv.Drones.Api {
                 return ResourceManager.GetString("MavParamInfo_ValidationException_InvalidFormat", resourceCulture);
             }
         }
+
+        internal static string FlightWidgetAction_CreateCommand_Title {
+            get {
+                return ResourceManager.GetString("FlightWidgetAction_CreateCommand_Title", resourceCulture);
+            }
+        }
     }
 }

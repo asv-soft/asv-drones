@@ -8,4 +8,5 @@ public interface IFlightWidget : IWorkspaceWidget
     int Order { get; }
     ObservableList<IFlightWidgetSection> Sections { get; }
     INotifyCollectionChangedSynchronizedViewList<IFlightWidgetSection> SectionsView { get; }
+    ObservableList<IMenuItem> Menu { get; }
 }

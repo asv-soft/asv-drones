@@ -143,24 +143,6 @@
     <data name="MissionProgressView_DownLoadingMission" xml:space="preserve">
         <value>Загрузка миссии</value>
     </data>
-    <data name="UavAction_AutoMode_Name" xml:space="preserve">
-        <value>Авто режим</value>
-    </data>
-    <data name="UavAction_GuidedMode" xml:space="preserve">
-        <value>Ручной режим</value>
-    </data>
-    <data name="UavAction_Land" xml:space="preserve">
-        <value>Посадка</value>
-    </data>
-    <data name="UavAction_Rtl_Name" xml:space="preserve">
-        <value>Домой</value>
-    </data>
-    <data name="UavAction_StartMission" xml:space="preserve">
-        <value>Начать миссию</value>
-    </data>
-    <data name="UavAction_TakeOff" xml:space="preserve">
-        <value>Взлететь</value>
-    </data>
     <data name="UavRttItem_Altitude" xml:space="preserve">
         <value>Высота</value>
     </data>
@@ -194,21 +176,6 @@
     <data name="FlightPageViewModel_Title" xml:space="preserve">
         <value>Полет</value>
     </data>
-    <data name="UavAction_TakeOff_Description" xml:space="preserve">
-        <value>Начать взлёт</value>
-    </data>
-    <data name="UavAction_Rtl_Description" xml:space="preserve">
-        <value>Возврат на точку запуска</value>
-    </data>
-    <data name="UavAction_AutoMode_Description" xml:space="preserve">
-        <value>Автоматический режим. Используйте для продолжения миссии после прерывания</value>
-    </data>
-    <data name="UavAction_Land_Description" xml:space="preserve">
-        <value>Незамедлительная посадка</value>
-    </data>
-    <data name="UavAction_GuidedMode_Description" xml:space="preserve">
-        <value>Устанавливает ручной режим</value>
-    </data>
     <data name="GpsFixType_GpsFixType2dFix" xml:space="preserve">
         <value>2Д позиция Фикс</value>
     </data>
@@ -232,9 +199,6 @@
     </data>
     <data name="GpsFixType_GpsFixTypeStatic" xml:space="preserve">
         <value>Статичный</value>
-    </data>
-    <data name="UavAction_StartMission_Description" xml:space="preserve">
-        <value>Запуск ранее загруженной миссии</value>
     </data>
     <data name="SetAltitudeDialogViewModel_ApplyDialog_SecondaryButton_Cancel" xml:space="preserve">
         <value>Отмена</value>
@@ -658,5 +622,56 @@
     </data>
     <data name="TelemetrySectionViewModel_ConfigureTelemetryDialog_Title" xml:space="preserve">
         <value>Добавить индикатор</value>
+    </data>
+    <data name="AutoModeAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Авто</value>
+    </data>
+    <data name="AutoModeAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Переключить в автоматический режим полёта.</value>
+    </data>
+    <data name="GuidedAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Управляемый</value>
+    </data>
+    <data name="GuidedAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Переключить в управляемый режим полёта.</value>
+    </data>
+    <data name="RtlAction_TryCreateAction_Header" xml:space="preserve">
+        <value>RTL</value>
+    </data>
+    <data name="RtlAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Возврат на точку взлёта.</value>
+    </data>
+    <data name="LandAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Посадка</value>
+    </data>
+    <data name="LandAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Посадить дрон в текущей точке.</value>
+    </data>
+    <data name="TakeOffAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Взлёт</value>
+    </data>
+    <data name="TakeOffAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Взлететь на заданную высоту.</value>
+    </data>
+    <data name="GotoAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Лететь к точке</value>
+    </data>
+    <data name="GotoAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Отправить дрон в указанную точку.</value>
+    </data>
+    <data name="RoiAction_TryCreateAction_Header" xml:space="preserve">
+        <value>ROI</value>
+    </data>
+    <data name="RoiAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Задать точку интереса (ROI).</value>
+    </data>
+    <data name="FindDroneAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Найти дрон</value>
+    </data>
+    <data name="FindDroneAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Центрировать карту на текущей позиции дрона.</value>
+    </data>
+    <data name="FlightModePageView_WorkspaceItem_ActionsHeader" xml:space="preserve">
+        <value>Действия</value>
     </data>
 </root>

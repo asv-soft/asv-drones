@@ -14,4 +14,7 @@
     <data name="MavParamInfo_ValidationException_InvalidFormat" xml:space="preserve">
         <value>Значение должно быть числом с опциональным суффиксом (K, M, G)</value>
     </data>
+    <data name="FlightWidgetAction_CreateCommand_Title" xml:space="preserve">
+        <value>Команда не выполнена</value>
+    </data>
 </root>

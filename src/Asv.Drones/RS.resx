@@ -143,27 +143,6 @@
     <data name="MissionProgressView_DownLoadingMission" xml:space="preserve">
         <value>Downloading mission</value>
     </data>
-    <data name="UavAction_AutoMode_Name" xml:space="preserve">
-        <value>Auto mode</value>
-    </data>
-    <data name="UavAction_GuidedMode" xml:space="preserve">
-        <value>Guided mode</value>
-    </data>
-    <data name="UavAction_TakeOff" xml:space="preserve">
-        <value>TakeOff</value>
-    </data>
-    <data name="UavAction_Rtl_Name" xml:space="preserve">
-        <value>RTL</value>
-    </data>
-    <data name="UavAction_Land" xml:space="preserve">
-        <value>Land</value>
-    </data>
-    <data name="UavAction_StartMission" xml:space="preserve">
-        <value>Start Mission</value>
-    </data>
-    <data name="UavAction_StartMission_Description" xml:space="preserve">
-        <value>Begins uploaded mission</value>
-    </data>
     <data name="UavRttItem_Mode" xml:space="preserve">
         <value>Mode</value>
     </data>
@@ -196,21 +175,6 @@
     </data>
     <data name="FlightPageViewModel_Title" xml:space="preserve">
         <value>Flight</value>
-    </data>
-    <data name="UavAction_TakeOff_Description" xml:space="preserve">
-        <value>Start takeoff</value>
-    </data>
-    <data name="UavAction_Rtl_Description" xml:space="preserve">
-        <value>Return to launch</value>
-    </data>
-    <data name="UavAction_Land_Description" xml:space="preserve">
-        <value>Immediately Land</value>
-    </data>
-    <data name="UavAction_AutoMode_Description" xml:space="preserve">
-        <value>Set an Auto mode. Use it to continue mission after interrupt</value>
-    </data>
-    <data name="UavAction_GuidedMode_Description" xml:space="preserve">
-        <value>Set a Guided mode</value>
     </data>
     <data name="GpsFixType_GpsFixType2dFix" xml:space="preserve">
         <value>2D position Fix</value>
@@ -670,5 +634,56 @@
     </data>
     <data name="TelemetrySectionViewModel_ConfigureTelemetryDialog_Title" xml:space="preserve">
         <value>Add indicator</value>
+    </data>
+    <data name="AutoModeAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Auto</value>
+    </data>
+    <data name="AutoModeAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Switch to auto flight mode.</value>
+    </data>
+    <data name="GuidedAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Guided</value>
+    </data>
+    <data name="GuidedAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Switch to guided flight mode.</value>
+    </data>
+    <data name="RtlAction_TryCreateAction_Header" xml:space="preserve">
+        <value>RTL</value>
+    </data>
+    <data name="RtlAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Return to launch.</value>
+    </data>
+    <data name="LandAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Land</value>
+    </data>
+    <data name="LandAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Land the drone at the current location.</value>
+    </data>
+    <data name="TakeOffAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Take off</value>
+    </data>
+    <data name="TakeOffAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Take off to the specified altitude.</value>
+    </data>
+    <data name="GotoAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Go to</value>
+    </data>
+    <data name="GotoAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Send the drone to the specified location.</value>
+    </data>
+    <data name="RoiAction_TryCreateAction_Header" xml:space="preserve">
+        <value>ROI</value>
+    </data>
+    <data name="RoiAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Set region of interest.</value>
+    </data>
+    <data name="FindDroneAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Find drone</value>
+    </data>
+    <data name="FindDroneAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Center the map on the drone's current position.</value>
+    </data>
+    <data name="FlightModePageView_WorkspaceItem_ActionsHeader" xml:space="preserve">
+        <value>Actions</value>
     </data>
 </root>
