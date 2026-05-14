@@ -55,6 +55,7 @@ public static class AsvDronesMixin
 
         public Builder UseCommands()
         {
+            builder.Services.AddSingleton<IMavlinkCommands, MavlinkCommands>();
             builder
                 .RegisterMavlinkCommands()
                 .Commands.Register<OpenSetupCommand>()
