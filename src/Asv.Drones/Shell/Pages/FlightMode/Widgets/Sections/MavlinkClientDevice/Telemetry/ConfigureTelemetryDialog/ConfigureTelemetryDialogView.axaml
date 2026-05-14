@@ -1,0 +1,82 @@
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:drones="clr-namespace:Asv.Drones"
+    mc:Ignorable="d"
+    x:Class="Asv.Drones.ConfigureTelemetryDialogView"
+    x:DataType="drones:ConfigureTelemetryDialogViewModel"
+    d:DesignWidth="760"
+    d:DesignHeight="460"
+>
+    <Design.DataContext>
+        <drones:ConfigureTelemetryDialogViewModel />
+    </Design.DataContext>
+
+    <UserControl.Styles>
+        <Style Selector="Button.telemetry-preview-card">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Theme" Value="{StaticResource TransparentButton}" />
+            <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        </Style>
+        <Style Selector="Button.telemetry-preview-card Border.preview-frame">
+            <Setter Property="BorderBrush" Value="{DynamicResource AsvForegroundUnknownBrush}" />
+        </Style>
+        <Style Selector="Button.telemetry-preview-card:pointerover Border.preview-frame">
+            <Setter Property="BorderBrush" Value="{DynamicResource AsvForegroundInfoBrush}" />
+        </Style>
+    </UserControl.Styles>
+
+    <ScrollViewer
+        MaxHeight="456"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto"
+    >
+        <ItemsControl ItemsSource="{Binding Entries}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Spacing="8" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="drones:ConfigureTelemetryItemEntry">
+                    <Button Classes="telemetry-preview-card" Command="{Binding Select}">
+                        <Border
+                            Classes="preview-frame"
+                            Padding="12"
+                            CornerRadius="{DynamicResource ControlCornerRadius}"
+                            BorderThickness="1"
+                            ClipToBounds="True"
+                        >
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                <TextBlock
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    FontWeight="SemiBold"
+                                    TextTrimming="CharacterEllipsis"
+                                    Text="{Binding DisplayName}"
+                                />
+                                <Viewbox
+                                    Grid.Column="1"
+                                    MaxHeight="100"
+                                    HorizontalAlignment="Right"
+                                    ClipToBounds="True"
+                                    Stretch="Uniform"
+                                    StretchDirection="DownOnly"
+                                >
+                                    <ContentControl Content="{Binding Item.Content}" />
+                                </Viewbox>
+                            </Grid>
+                        </Border>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </ScrollViewer>
+</UserControl>

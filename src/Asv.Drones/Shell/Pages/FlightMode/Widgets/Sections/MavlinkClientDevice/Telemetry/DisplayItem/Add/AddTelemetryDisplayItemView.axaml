@@ -1,0 +1,56 @@
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:drones="clr-namespace:Asv.Drones"
+    xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    mc:Ignorable="d"
+    x:Class="Asv.Drones.AddTelemetryDisplayItemView"
+    x:DataType="drones:AddTelemetryDisplayItemViewModel"
+>
+    <UserControl.Styles>
+        <Style Selector="Button.telemetry-add-tile">
+            <Setter Property="Theme" Value="{StaticResource TransparentButton}" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        </Style>
+        <Style Selector="Button.telemetry-add-tile Border.telemetry-add-frame">
+            <Setter Property="BorderBrush" Value="{DynamicResource AsvForegroundUnknownBrush}" />
+            <Setter Property="BorderThickness" Value="2" />
+        </Style>
+        <Style Selector="Button.telemetry-add-tile:pointerover Border.telemetry-add-frame">
+            <Setter Property="BorderBrush" Value="{DynamicResource AsvForegroundInfoBrush}" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="TelemetryTileW" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" SharedSizeGroup="TelemetryTileH" />
+        </Grid.RowDefinitions>
+        <Button
+            Classes="telemetry-add-tile"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Command="{Binding AddCommand}"
+            ToolTip.Tip="{x:Static drones:RS.AddTelemetryDisplayItemView_AddIndicatorButton_ToolTip}"
+        >
+            <Grid>
+                <Border
+                    Classes="telemetry-add-frame"
+                    CornerRadius="{DynamicResource ControlCornerRadius}"
+                />
+                <icons:MaterialIcon
+                    Kind="Plus"
+                    Classes="medium"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                />
+            </Grid>
+        </Button>
+    </Grid>
+</UserControl>

@@ -94,6 +94,24 @@ namespace Asv.Drones {
                 return ResourceManager.GetString("AltitudeIndicatorStyles_ToolTip_Vibration", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Add a telemetry indicator to the flight mode widget..
+        /// </summary>
+        public static string AddTelemetryItemCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("AddTelemetryItemCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Add telemetry indicator.
+        /// </summary>
+        public static string AddTelemetryItemCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("AddTelemetryItemCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Enter the size of a download block.
@@ -1201,6 +1219,24 @@ namespace Asv.Drones {
                 return ResourceManager.GetString("RemoveItemCommand_CommandInfo_Name", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Remove a telemetry indicator from the flight mode widget..
+        /// </summary>
+        public static string RemoveTelemetryItemCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("RemoveTelemetryItemCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Remove telemetry indicator.
+        /// </summary>
+        public static string RemoveTelemetryItemCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("RemoveTelemetryItemCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Command that commits an item renaming.
@@ -1217,6 +1253,24 @@ namespace Asv.Drones {
         public static string RenameItemCommand_CommandInfo_Name {
             get {
                 return ResourceManager.GetString("RenameItemCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Reset telemetry indicators to the default layout..
+        /// </summary>
+        public static string ResetTelemetryItemsCommand_CommandInfo_Description {
+            get {
+                return ResourceManager.GetString("ResetTelemetryItemsCommand_CommandInfo_Description", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Reset telemetry indicators.
+        /// </summary>
+        public static string ResetTelemetryItemsCommand_CommandInfo_Name {
+            get {
+                return ResourceManager.GetString("ResetTelemetryItemsCommand_CommandInfo_Name", resourceCulture);
             }
         }
         
@@ -1397,6 +1451,78 @@ namespace Asv.Drones {
         public static string StopUpdateParamsCommand_CommandInfo_Name {
             get {
                 return ResourceManager.GetString("StopUpdateParamsCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Add indicator.
+        /// </summary>
+        public static string AddTelemetryDisplayItemView_AddIndicatorButton_ToolTip {
+            get {
+                return ResourceManager.GetString("AddTelemetryDisplayItemView_AddIndicatorButton_ToolTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Done.
+        /// </summary>
+        public static string TelemetrySectionView_DoneButton_ToolTip {
+            get {
+                return ResourceManager.GetString("TelemetrySectionView_DoneButton_ToolTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm changes.
+        /// </summary>
+        public static string TelemetrySectionView_ConfirmEditingMenuItem_Header {
+            get {
+                return ResourceManager.GetString("TelemetrySectionView_ConfirmEditingMenuItem_Header", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Edit indicators.
+        /// </summary>
+        public static string TelemetrySectionView_EditIndicatorsMenuItem_Header {
+            get {
+                return ResourceManager.GetString("TelemetrySectionView_EditIndicatorsMenuItem_Header", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Reset to default.
+        /// </summary>
+        public static string TelemetrySectionView_ResetButton_ToolTip {
+            get {
+                return ResourceManager.GetString("TelemetrySectionView_ResetButton_ToolTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Reset to default.
+        /// </summary>
+        public static string TelemetrySectionView_ResetMenuItem_Header {
+            get {
+                return ResourceManager.GetString("TelemetrySectionView_ResetMenuItem_Header", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string TelemetrySectionViewModel_ConfigureTelemetryDialog_CloseButtonText {
+            get {
+                return ResourceManager.GetString("TelemetrySectionViewModel_ConfigureTelemetryDialog_CloseButtonText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Add indicator.
+        /// </summary>
+        public static string TelemetrySectionViewModel_ConfigureTelemetryDialog_Title {
+            get {
+                return ResourceManager.GetString("TelemetrySectionViewModel_ConfigureTelemetryDialog_Title", resourceCulture);
             }
         }
         

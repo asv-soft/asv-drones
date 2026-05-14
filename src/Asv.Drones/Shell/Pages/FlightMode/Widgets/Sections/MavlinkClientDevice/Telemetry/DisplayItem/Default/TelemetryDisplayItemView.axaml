@@ -1,0 +1,39 @@
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:drones="clr-namespace:Asv.Drones"
+    xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    mc:Ignorable="d"
+    x:Class="Asv.Drones.TelemetryDisplayItemView"
+    x:DataType="drones:TelemetryDisplayItemViewModel"
+>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="TelemetryTileW" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" SharedSizeGroup="TelemetryTileH" />
+        </Grid.RowDefinitions>
+        <ContentControl
+            Content="{Binding Item.Content}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch"
+        />
+        <Button
+            Theme="{StaticResource TransparentButton}"
+            Width="24"
+            Height="24"
+            Padding="2"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Command="{Binding RemoveCommand}"
+            IsVisible="{Binding IsEditMode.Value}"
+        >
+            <icons:MaterialIcon Kind="Close" Classes="small" />
+        </Button>
+    </Grid>
+</UserControl>

@@ -8,6 +8,9 @@
     x:Class="Asv.Drones.AttitudeIndicatorSectionView"
     x:DataType="drones:AttitudeIndicatorSectionViewModel"
 >
+    <Design.DataContext>
+        <drones:AttitudeIndicatorSectionViewModel />
+    </Design.DataContext>
     <WrapPanel Orientation="Horizontal" ItemWidth="220">
         <Viewbox>
             <drones:UavAngleIndicator

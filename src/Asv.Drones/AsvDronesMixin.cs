@@ -86,7 +86,10 @@ public static class AsvDronesMixin
                 .Register<CalculateCrc32Command>()
                 .Register<FindFileCommand>()
                 .Register<CommitRenameCommand>()
-                .Register<RemoveItemCommand>();
+                .Register<RemoveItemCommand>()
+                .Register<AddTelemetryItemCommand>()
+                .Register<RemoveTelemetryItemCommand>()
+                .Register<ResetTelemetryItemsCommand>();
             return this;
         }
 
@@ -197,7 +200,26 @@ public static class AsvDronesMixin
                 IDroneFlightWidget,
                 DroneFlightWidgetTelemetrySectionExtension
             >();
-            builder.ViewLocator.RegisterViewFor<TelemetrySectionViewModel, TelemetrySectionView>();
+            builder.ViewLocator.RegisterViewFor<ITelemetrySection, TelemetrySectionView>();
+            builder.ViewLocator.RegisterViewFor<
+                TelemetryDisplayItemViewModel,
+                TelemetryDisplayItemView
+            >();
+            builder.ViewLocator.RegisterViewFor<
+                AddTelemetryDisplayItemViewModel,
+                AddTelemetryDisplayItemView
+            >();
+            builder.ViewLocator.RegisterViewFor<
+                ConfigureTelemetryDialogViewModel,
+                ConfigureTelemetryDialogView
+            >();
+
+            builder.Services.AddSingleton<ITelemetryItemFactory, AltitudeTelemetryItemFactory>();
+            builder.Services.AddSingleton<ITelemetryItemFactory, BatteryTelemetryItemFactory>();
+            builder.Services.AddSingleton<ITelemetryItemFactory, VelocityTelemetryItemFactory>();
+            builder.Services.AddSingleton<ITelemetryItemFactory, AngleTelemetryItemFactory>();
+            builder.Services.AddSingleton<ITelemetryItemFactory, HeadingTelemetryItemFactory>();
+            builder.Services.AddSingleton<ITelemetryItemFactory, HomeAzimuthTelemetryItemFactory>();
 
             builder.Services.AddKeyedTransient<AttitudeIndicatorSectionViewModel>(
                 AttitudeIndicatorSectionViewModel.SectionId
@@ -241,6 +263,8 @@ public static class AsvDronesMixin
             );
             builder.Extensions.Register<IPlaneWidget, PlaneSectionExtension>();
             builder.ViewLocator.RegisterViewFor<PlaneSectionViewModel, PlaneSectionView>();
+
+            builder.Extensions.Register<IPlaneWidget, PlaneFlightWidgetTelemetrySectionExtension>();
 
             return this;
         }
