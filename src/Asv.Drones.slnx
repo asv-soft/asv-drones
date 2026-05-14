@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/Platforms/">
+    <Project Path="Asv.Drones.Android/Asv.Drones.Android.csproj" />
+    <Project Path="Asv.Drones.Desktop/Asv.Drones.Desktop.csproj" />
+    <Project Path="Asv.Drones.iOS/Asv.Drones.iOS.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="../.github/workflows/api-release-dev.yml" />
+    <File Path="../.github/workflows/api-release.yml" />
+    <File Path="../.github/workflows/drones-release-windows.yml" />
+    <File Path="../README.md" />
+    <File Path="../win-64-install.nsi" />
+    <File Path=".aiassistant/rules/comments.md" />
+    <File Path="Directory.Build.props" />
+  </Folder>
+  <Project Path="Asv.Drones.Api/Asv.Drones.Api.csproj" />
+  <Project Path="Asv.Drones/Asv.Drones.csproj" />
+</Solution>
