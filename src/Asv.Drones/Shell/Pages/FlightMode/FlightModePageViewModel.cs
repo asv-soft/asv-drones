@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Asv.Avalonia;
@@ -28,23 +28,23 @@ public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightMo
 
     public FlightModePageViewModel()
         : this(
+            DesignTime.PageContext,
             NullMapService.Instance,
-            DesignTime.CommandService,
             DesignTime.LoggerFactory,
             DesignTime.DialogService,
             DesignTime.ExtensionService
         ) { }
 
     public FlightModePageViewModel(
+        IPageContext context,
         IMapService mapService,
-        ICommandService cmd,
         ILoggerFactory loggerFactory,
         IDialogService dialogService,
         IExtensionService ext
     )
-        : base(PageId, cmd, loggerFactory, dialogService, ext)
+        : base(PageId, context, loggerFactory, dialogService, ext)
     {
-        Title = "Flight (BETA)";
+        Header = "Flight (BETA)";
         Icon = PageIcon;
 
         Widgets = [];
@@ -58,7 +58,7 @@ public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightMo
 
         WidgetsView = Widgets.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);
 
-        Map = new MapViewModel(nameof(Map), loggerFactory, mapService)
+        Map = new MapViewModel(nameof(Map), mapService)
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
 
@@ -69,7 +69,7 @@ public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightMo
     public NotifyCollectionChangedSynchronizedViewList<IFlightWidget> WidgetsView { get; }
     public IMap Map { get; }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         yield return Map;
 
@@ -79,7 +79,7 @@ public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightMo
         }
     }
 
-    private ValueTask InternalCatchEvent(IRoutable src, AsyncRoutedEvent<IRoutable> e)
+    private ValueTask InternalCatchEvent(IViewModel src, AsyncRoutedEvent<IViewModel> e)
     {
         switch (e)
         {

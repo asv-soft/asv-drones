@@ -2,6 +2,7 @@
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
+using Asv.Modeling;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using ObservableCollections;
@@ -13,7 +14,7 @@ public class PluginFlightItemViewModel : FlightWidgetViewModel<PluginFlightItemV
     private const string WidgetId = "test-widget";
 
     public PluginFlightItemViewModel(ILoggerFactory loggerFactory, IExtensionService ext)
-        : base(WidgetId, loggerFactory, ext) { }
+        : base(new NavId(WidgetId), loggerFactory, ext) { }
 
     public override int Order => 1;
 }

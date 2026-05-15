@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Mavlink;
+using Asv.Modeling;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using R3;
@@ -19,7 +20,7 @@ public sealed class MotorItemViewModel : RoutableViewModel
     private readonly SynchronizedReactiveProperty<bool> _isEnabled;
 
     public MotorItemViewModel()
-        : base(new NavigationId(BaseId, "1"), NullLoggerFactory.Instance)
+        : base(new NavId(BaseId, new NavArgs(("id", "1"))), NullLoggerFactory.Instance)
     {
         DesignTime.ThrowIfNotDesignMode();
 
@@ -35,7 +36,7 @@ public sealed class MotorItemViewModel : RoutableViewModel
         IUnitService unit,
         ILoggerFactory loggerFactory
     )
-        : base(new NavigationId(BaseId, motor.Id.ToString()), loggerFactory)
+        : base(new NavId(BaseId, new NavArgs(("id", motor.Id.ToString()))), loggerFactory)
     {
         Motor = motor;
         Timeout = duration;
@@ -86,7 +87,7 @@ public sealed class MotorItemViewModel : RoutableViewModel
     public ReactiveProperty<double> Timeout { get; }
     public BindableReactiveProperty<bool> IsEnabled { get; }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         yield return Throttle;
     }

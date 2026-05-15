@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Asv.Avalonia;
 using Microsoft.Extensions.Logging;
 
@@ -15,14 +15,14 @@ public class TryCloseWithApprovalDialogViewModel : DialogViewModelBase
     }
 
     public TryCloseWithApprovalDialogViewModel(ILoggerFactory loggerFactory)
-        : base(DialogId, loggerFactory)
+        : base(DialogId)
     {
         Message = RS.ParamPageViewModel_DataLossDialog_Content;
     }
 
     public string Message { get; }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         return [];
     }

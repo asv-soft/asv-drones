@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
 using Asv.Avalonia.IO;
@@ -19,7 +19,7 @@ public class UavAnchor : MapAnchor<UavAnchor>
     public DeviceId DeviceId { get; }
 
     public UavAnchor()
-        : base(DesignTime.Id, DesignTime.LoggerFactory)
+        : base(DesignTime.Id.TypeId, DesignTime.ExtensionService)
     {
         DesignTime.ThrowIfNotDesignMode();
     }
@@ -31,7 +31,7 @@ public class UavAnchor : MapAnchor<UavAnchor>
         IPositionClientEx pos,
         ILoggerFactory loggerFactory
     )
-        : base(UavAnchorIdBase, loggerFactory)
+        : base(UavAnchorIdBase)
     {
         DeviceId = deviceId;
         InitArgs(deviceId.AsString());

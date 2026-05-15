@@ -1,9 +1,10 @@
-﻿using System.Linq;
+using System.Linq;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
+using Asv.Modeling;
 using Microsoft.Extensions.Logging;
 using R3;
 
@@ -26,7 +27,7 @@ public class MotorsSetupPageExtension(ILoggerFactory loggerFactory) : IExtension
 
                 if (
                     client is null
-                    || context.Nodes.Any(node => node.Id == SetupMotorsViewModel.PageId)
+                    || context.Nodes.Any(node => node.Id.TypeId == SetupMotorsViewModel.PageId)
                 )
                 {
                     return;
@@ -37,8 +38,8 @@ public class MotorsSetupPageExtension(ILoggerFactory loggerFactory) : IExtension
                         SetupMotorsViewModel.PageId,
                         RS.SetupMotorsViewModel_Name,
                         SetupMotorsViewModel.Icon,
-                        SetupMotorsViewModel.PageId,
-                        NavigationId.Empty,
+                        new NavId(SetupMotorsViewModel.PageId),
+                        NavId.Empty,
                         loggerFactory
                     ).DisposeItWith(contextDispose)
                 );

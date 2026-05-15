@@ -21,7 +21,7 @@ public class SavePacketMessagesDialogViewModel : DialogViewModelBase
     }
 
     public SavePacketMessagesDialogViewModel(ILoggerFactory loggerFactory)
-        : base(ViewModelId, loggerFactory)
+        : base(ViewModelId)
     {
         IsSemicolon = new BindableReactiveProperty<bool>(true).DisposeItWith(Disposable);
         IsComa = new BindableReactiveProperty<bool>(false).DisposeItWith(Disposable);
@@ -80,7 +80,7 @@ public class SavePacketMessagesDialogViewModel : DialogViewModelBase
         });
     }
 
-    public override IEnumerable<IRoutable> GetChildren() => [];
+    public override IEnumerable<IViewModel> GetChildren() => [];
 
     #region Dispose
 

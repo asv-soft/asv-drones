@@ -1,7 +1,8 @@
-﻿using Asv.Avalonia;
+using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Drones.Api;
 using Asv.Mavlink;
+using Asv.Modeling;
 using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones.Plane;
@@ -22,7 +23,7 @@ public class PlaneWidgetViewModel
         ILoggerFactory loggerFactory,
         IExtensionService ext
     )
-        : base(WidgetId, deviceManager, loggerFactory, ext) { }
+        : base(new NavId(WidgetId), deviceManager, loggerFactory, ext) { }
 }
 
 public abstract class PlaneWidgetViewModelBase<TPlane, TSelf>
@@ -31,7 +32,7 @@ public abstract class PlaneWidgetViewModelBase<TPlane, TSelf>
     where TPlane : ArduPlaneClientDevice
 {
     protected PlaneWidgetViewModelBase(
-        NavigationId id,
+        NavId id,
         IDeviceManager deviceManager,
         ILoggerFactory loggerFactory,
         IExtensionService ext

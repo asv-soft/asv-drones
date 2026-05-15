@@ -1,4 +1,4 @@
-﻿using Asv.Avalonia;
+using Asv.Avalonia;
 
 namespace Asv.Drones.Api;
 
@@ -14,7 +14,7 @@ public interface IFlightWidgetSection<in TContext> : IFlightWidgetSection
     void InitWith(TContext context);
 }
 
-public interface IFlightWidgetSection : IRoutable
+public interface IFlightWidgetSection : IViewModel
 {
     int Order { get; }
 }

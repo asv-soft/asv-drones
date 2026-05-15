@@ -1,12 +1,13 @@
-﻿using Asv.Avalonia;
+using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Mavlink;
+using Asv.Modeling;
 using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones.Api;
 
 public abstract class MavlinkDeviceFlightWidgetViewModelBase<TMavlinkClientDevice, TSelf>(
-    NavigationId id,
+    NavId id,
     IDeviceManager deviceManager,
     ILoggerFactory loggerFactory,
     IExtensionService ext

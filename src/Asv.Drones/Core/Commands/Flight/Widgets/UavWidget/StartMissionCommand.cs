@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.IO;
@@ -27,7 +27,7 @@ public class StartMissionCommand : ContextCommand<UavWidgetViewModel>
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override async ValueTask<CommandArg?> InternalExecute(
+    public override async ValueTask<CommandArg?> InternalExecute(
         UavWidgetViewModel context,
         CommandArg newValue,
         CancellationToken cancel

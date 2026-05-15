@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Asv.Avalonia;
 using Asv.Drones.Api;
 using Asv.Mavlink;
@@ -14,7 +14,7 @@ public class PlaneSectionViewModel : RoutableViewModel, IFlightWidgetSection<Ard
         : this(DesignTime.LoggerFactory) { }
 
     public PlaneSectionViewModel(ILoggerFactory loggerFactory)
-        : base(SectionId, loggerFactory)
+        : base(SectionId)
     {
         Order = -1;
     }
@@ -39,7 +39,7 @@ public class PlaneSectionViewModel : RoutableViewModel, IFlightWidgetSection<Ard
 
     public int Order { get; }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         return [];
     }

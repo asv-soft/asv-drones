@@ -1,4 +1,9 @@
 {
+  "sdk": {
+    "version": "9.0.0",
+    "rollForward": "latestMajor",
+    "allowPrerelease": true
+  },
   "scripts": {
     "husky": "cd ../ & dotnet husky install",
     "husky-unix": "cd .. && dotnet husky install"

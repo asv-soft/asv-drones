@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Drones.Api;
@@ -20,18 +20,18 @@ public class MavlinkParamReadCommand : MavlinkMicroserviceCommand<IParamsClientE
         DefaultHotKey = null,
     };
 
-    public static ValueTask Execute(
-        IRoutable context,
+    public static async ValueTask Execute(
+        IViewModel context,
         string name,
         CancellationToken cancel = default
     )
     {
-        return context.ExecuteCommand(Id, CommandArg.CreateString(name), cancel: cancel);
+        await context.ExecuteCommand(Id, CommandArg.CreateString(name), cancel: cancel);
     }
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override async ValueTask<StringArg?> InternalExecute(
+    public override async ValueTask<StringArg?> InternalExecute(
         IParamsClientEx microservice,
         StringArg arg,
         CancellationToken cancel

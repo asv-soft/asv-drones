@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Material.Icons;
@@ -24,7 +24,7 @@ public class UpdateMissionCommand : ContextCommand<MissionProgressViewModel>
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override async ValueTask<CommandArg?> InternalExecute(
+    public override async ValueTask<CommandArg?> InternalExecute(
         MissionProgressViewModel context,
         CommandArg newValue,
         CancellationToken cancel

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Asv.Avalonia;
@@ -28,15 +28,15 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
 
     public FlightPageViewModel()
         : this(
+            DesignTime.PageContext,
             NullMapService.Instance,
-            DesignTime.CommandService,
             DesignTime.LoggerFactory,
             DesignTime.DialogService,
             DesignTime.ExtensionService
         )
     {
         DesignTime.ThrowIfNotDesignMode();
-        var drone = new MapAnchor<IMapAnchor>(DesignTime.Id, DesignTime.LoggerFactory)
+        var drone = new MapAnchor<IMapAnchor>(DesignTime.Id.TypeId)
         {
             Icon = MaterialIconKind.Navigation,
             Location = new GeoPoint(53, 53, 100),
@@ -56,17 +56,17 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
     }
 
     public FlightPageViewModel(
+        IPageContext context,
         IMapService mapService,
-        ICommandService cmd,
         ILoggerFactory loggerFactory,
         IDialogService dialogService,
         IExtensionService ext
     )
-        : base(PageId, cmd, loggerFactory, dialogService, ext)
+        : base(PageId, context, loggerFactory, dialogService, ext)
     {
-        Title = RS.FlightPageViewModel_Title;
+        Header = RS.FlightPageViewModel_Title;
         Icon = PageIcon;
-        MapViewModel = new MapViewModel(nameof(MapViewModel), loggerFactory, mapService)
+        MapViewModel = new MapViewModel(nameof(MapViewModel), mapService)
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
 
@@ -82,7 +82,7 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
     public ObservableList<IUavFlightWidget> Widgets { get; }
     public IMap MapViewModel { get; }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         yield return MapViewModel;
 
@@ -92,7 +92,7 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
         }
     }
 
-    private ValueTask InternalCatchEvent(IRoutable src, AsyncRoutedEvent<IRoutable> e)
+    private ValueTask InternalCatchEvent(IViewModel src, AsyncRoutedEvent<IViewModel> e)
     {
         switch (e)
         {

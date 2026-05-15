@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Mavlink;
@@ -18,7 +18,7 @@ public class BurstDownloadDialogViewModel : DialogViewModelBase
     }
 
     public BurstDownloadDialogViewModel(ILoggerFactory loggerFactory)
-        : base(DialogId, loggerFactory)
+        : base(DialogId)
     {
         PacketSize = new BindableReactiveProperty<byte?>(
             MavlinkFtpHelper.MaxDataSize
@@ -51,7 +51,7 @@ public class BurstDownloadDialogViewModel : DialogViewModelBase
         _sub.Disposable = IsValid.Subscribe(b => dialog.IsPrimaryButtonEnabled = b);
     }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         return [];
     }

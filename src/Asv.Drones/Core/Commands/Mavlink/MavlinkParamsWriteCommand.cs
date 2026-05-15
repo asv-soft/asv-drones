@@ -22,14 +22,14 @@ public class MavlinkParamsWriteCommand : MavlinkMicroserviceCommand<IParamsClien
         DefaultHotKey = null,
     };
 
-    public static ValueTask Execute(
-        IRoutable context,
+    public static async ValueTask Execute(
+        IViewModel context,
         string name,
         MavParamValue value,
         CancellationToken cancel = default
     )
     {
-        return context.ExecuteCommand(
+        await context.ExecuteCommand(
             Id,
             CommandArg.ChangeAction(name, CommandArg.CreateString(value.PrintValue())),
             cancel
@@ -38,7 +38,7 @@ public class MavlinkParamsWriteCommand : MavlinkMicroserviceCommand<IParamsClien
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override async ValueTask<ActionArg?> InternalExecute(
+    public override async ValueTask<ActionArg?> InternalExecute(
         IParamsClientEx microservice,
         ActionArg arg,
         CancellationToken cancel

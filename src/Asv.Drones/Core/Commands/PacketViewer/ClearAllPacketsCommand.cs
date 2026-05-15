@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Material.Icons;
@@ -20,7 +20,7 @@ public sealed class ClearAllPacketsCommand : ContextCommand<PacketViewerViewMode
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override ValueTask<CommandArg?> InternalExecute(
+    public override ValueTask<CommandArg?> InternalExecute(
         PacketViewerViewModel context,
         CommandArg newValue,
         CancellationToken cancel

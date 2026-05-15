@@ -51,6 +51,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
     private readonly ObservableHashSet<TypePacketFilterViewModel> _filtersByTypeSet;
     private readonly ReactiveProperty<bool> _filterChangeTrigger;
     private PacketViewerViewModelConfig? _config;
+    private ILogger Logger => _loggerFactory.CreateLogger(GetType());
 
     public ICommand ClearAll { get; }
     public ICommand ExportToCsv { get; }
@@ -65,14 +66,14 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
 
     public PacketViewerViewModel()
         : this(
-            DesignTime.CommandService,
+            DesignTime.PageContext,
             AppHost.Instance.Services.GetRequiredService<IHostEnvironment>(),
             NullLayoutService.Instance,
             NullLoggerFactory.Instance,
             NullUnitService.Instance,
             [],
             NullDeviceManager.Instance,
-            DesignTime.Navigation,
+            NullNavigationService.Instance,
             DesignTime.DialogService,
             DesignTime.ExtensionService
         )
@@ -89,7 +90,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
     }
 
     public PacketViewerViewModel(
-        ICommandService cmd,
+        IPageContext context,
         IHostEnvironment app,
         ILayoutService layoutService,
         ILoggerFactory loggerFactory,
@@ -100,9 +101,9 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         IDialogService dialogService,
         IExtensionService ext
     )
-        : base(PageId, cmd, loggerFactory, dialogService, ext)
+        : base(PageId, context, loggerFactory, dialogService, ext)
     {
-        Title = RS.PacketViewerViewModel_Title;
+        Header = RS.PacketViewerViewModel_Title;
         _app = app;
         _unit = unit;
         _converters = converters;
@@ -142,7 +143,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
             .ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current)
             .DisposeItWith(Disposable);
 
-        IsPaused = new HistoricalBoolProperty(nameof(IsPaused), _isPaused, loggerFactory)
+        IsPaused = new HistoricalBoolProperty(nameof(IsPaused), _isPaused)
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
         Search = new SearchBoxViewModel(
@@ -156,15 +157,13 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
 
         IsCheckedAllSources = new HistoricalBoolProperty(
             nameof(IsCheckedAllSources),
-            _isCheckedAllSources,
-            loggerFactory
+            _isCheckedAllSources
         )
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
         IsCheckedAllTypes = new HistoricalBoolProperty(
             nameof(IsCheckedAllTypes),
-            _isCheckedAllTypes,
-            loggerFactory
+            _isCheckedAllTypes
         )
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
@@ -283,7 +282,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
     }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         foreach (var item in _packetsBuffer)
         {
@@ -315,7 +314,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
     {
         cancel.ThrowIfCancellationRequested();
         using var vm = new SavePacketMessagesDialogViewModel(_loggerFactory);
-        var dialog = new ContentDialog(vm, _navigationService)
+        var dialog = new ContentDialog(vm)
         {
             Title = RS.PacketViewerViewModel_SavePacketMessagesDialog_Title,
             CloseButtonText = RS.PacketViewerViewModel_SavePacketMessagesDialog_CloseButtonText,
@@ -419,7 +418,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         );
     }
 
-    private ValueTask InternalCatchEvent(IRoutable src, AsyncRoutedEvent<IRoutable> e)
+    private ValueTask InternalCatchEvent(IViewModel src, AsyncRoutedEvent<IViewModel> e)
     {
         switch (e)
         {

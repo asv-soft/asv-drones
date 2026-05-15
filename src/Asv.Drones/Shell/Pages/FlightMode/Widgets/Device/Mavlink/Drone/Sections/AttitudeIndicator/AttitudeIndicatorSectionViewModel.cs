@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Asv.Avalonia;
 using Asv.Common;
@@ -17,7 +17,7 @@ public class AttitudeIndicatorSectionViewModel
     public const string SectionId = "alt-indicator-widget-section";
 
     public AttitudeIndicatorSectionViewModel(ILoggerFactory loggerFactory)
-        : base(SectionId, loggerFactory) { }
+        : base(SectionId) { }
 
     public IReadOnlyBindableReactiveProperty<double> Roll { get; private set; }
     public IReadOnlyBindableReactiveProperty<double> Pitch { get; private set; }
@@ -57,7 +57,7 @@ public class AttitudeIndicatorSectionViewModel
             .DisposeItWith(Disposable);
     }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         return [];
     }

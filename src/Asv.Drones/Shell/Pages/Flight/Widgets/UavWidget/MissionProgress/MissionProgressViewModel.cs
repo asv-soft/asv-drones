@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -123,7 +123,7 @@ public class MissionProgressViewModel : RoutableViewModel
         IUnitService unitService,
         ILoggerFactory loggerFactory
     )
-        : base(ViewModelId, loggerFactory)
+        : base(ViewModelId)
     {
         ArgumentNullException.ThrowIfNull(device);
         ArgumentNullException.ThrowIfNull(unitService);
@@ -378,7 +378,7 @@ public class MissionProgressViewModel : RoutableViewModel
     public SplitDigitRttBoxViewModel HomeDistanceRttBox { get; }
     public SplitDigitRttBoxViewModel TargetDistanceRttBox { get; }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         yield return MissionDistanceRttBox;
         yield return TotalDistanceRttBox;

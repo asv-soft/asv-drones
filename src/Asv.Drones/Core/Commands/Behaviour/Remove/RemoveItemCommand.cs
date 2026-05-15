@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Drones.Api;
@@ -21,7 +21,7 @@ public class RemoveItemCommand : ContextCommand<ISupportRemove>, IRemoveItemComm
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override async ValueTask<CommandArg?> InternalExecute(
+    public override async ValueTask<CommandArg?> InternalExecute(
         ISupportRemove context,
         CommandArg newValue,
         CancellationToken cancel

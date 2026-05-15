@@ -1,10 +1,11 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
+using Asv.Modeling;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
@@ -28,7 +29,7 @@ public class FrameTypeSetupPageExtension(ILoggerFactory loggerFactory) : IExtens
 
                 if (
                     frameClient is null
-                    || context.Nodes.Any(node => node.Id == SetupFrameTypeViewModel.PageId)
+                    || context.Nodes.Any(node => node.Id.TypeId == SetupFrameTypeViewModel.PageId)
                 )
                 {
                     return;
@@ -39,8 +40,8 @@ public class FrameTypeSetupPageExtension(ILoggerFactory loggerFactory) : IExtens
                         SetupFrameTypeViewModel.PageId,
                         RS.SetupFrameTypeViewModel_Name,
                         MaterialIconKind.ThemeLightDark,
-                        SetupFrameTypeViewModel.PageId,
-                        NavigationId.Empty,
+                        new NavId(SetupFrameTypeViewModel.PageId),
+                        NavId.Empty,
                         loggerFactory
                     ).DisposeItWith(contextDispose)
                 );

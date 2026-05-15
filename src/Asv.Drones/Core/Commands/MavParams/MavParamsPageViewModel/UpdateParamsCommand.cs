@@ -20,7 +20,7 @@ public class UpdateParamsCommand : ContextCommand<MavParamsPageViewModel>
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override async ValueTask<CommandArg?> InternalExecute(
+    public override async ValueTask<CommandArg?> InternalExecute(
         MavParamsPageViewModel context,
         CommandArg newValue,
         CancellationToken cancel

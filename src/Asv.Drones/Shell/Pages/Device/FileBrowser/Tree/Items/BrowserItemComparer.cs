@@ -52,7 +52,7 @@ public sealed class DirectoryItemComparer : IComparer<DirectoryItemViewModel>
             return 1;
         }
 
-        var idComparison = x.Id.CompareTo(y.Id);
+        var idComparison = string.CompareOrdinal(x.Id.ToString(), y.Id.ToString());
         return idComparison != 0 ? idComparison : string.CompareOrdinal(x.ParentPath, y.ParentPath);
     }
 }
@@ -78,7 +78,7 @@ public sealed class FileItemComparer : IComparer<FileItemViewModel>
             return 1;
         }
 
-        var idComparison = x.Id.CompareTo(y.Id);
+        var idComparison = string.CompareOrdinal(x.Id.ToString(), y.Id.ToString());
         if (idComparison != 0)
         {
             return idComparison;

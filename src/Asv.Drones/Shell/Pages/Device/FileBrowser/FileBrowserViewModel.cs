@@ -62,15 +62,16 @@ public class FileBrowserViewModel
     private FtpClientService? _ftpService;
     private FileBrowserBackend? _backend;
     private FileBrowserViewModelConfig? _config;
+    private ILogger Logger => _loggerFactory.CreateLogger(GetType());
 
     public FileBrowserViewModel()
         : this(
-            DesignTime.CommandService,
+            DesignTime.PageContext,
             NullDeviceManager.Instance,
             AppHost.Instance.Services.GetRequiredService<IHostEnvironment>(),
             NullLayoutService.Instance,
             NullLoggerFactory.Instance,
-            DesignTime.Navigation,
+            NullNavigationService.Instance,
             NullDialogService.Instance,
             NullExtensionService.Instance
         )
@@ -79,7 +80,7 @@ public class FileBrowserViewModel
             new ObservableList<IBrowserItemViewModel>
             {
                 new DirectoryItemViewModel(
-                    NavigationId.Empty,
+                    NavId.Empty,
                     "/",
                     "/folder/",
                     "folder",
@@ -87,7 +88,7 @@ public class FileBrowserViewModel
                     _loggerFactory
                 ),
                 new FileItemViewModel(
-                    NavigationId.Empty,
+                    NavId.Empty,
                     "/",
                     "/file.txt",
                     "file.txt",
@@ -96,7 +97,7 @@ public class FileBrowserViewModel
                     _loggerFactory
                 ),
                 new FileItemViewModel(
-                    NavigationId.Empty,
+                    NavId.Empty,
                     "/",
                     "/file2.txt",
                     "file2.txt",
@@ -105,7 +106,7 @@ public class FileBrowserViewModel
                     _loggerFactory
                 ),
                 new FileItemViewModel(
-                    NavigationId.Empty,
+                    NavId.Empty,
                     "/",
                     "/file3.txt",
                     "file3.txt",
@@ -114,7 +115,7 @@ public class FileBrowserViewModel
                     _loggerFactory
                 ),
                 new FileItemViewModel(
-                    NavigationId.Empty,
+                    NavId.Empty,
                     "/",
                     "/file4.txt",
                     "file4.txt",
@@ -129,7 +130,7 @@ public class FileBrowserViewModel
             new ObservableList<IBrowserItemViewModel>
             {
                 new DirectoryItemViewModel(
-                    NavigationId.Empty,
+                    NavId.Empty,
                     "/",
                     "/folder/",
                     "folder",
@@ -137,7 +138,7 @@ public class FileBrowserViewModel
                     _loggerFactory
                 ),
                 new FileItemViewModel(
-                    NavigationId.Empty,
+                    NavId.Empty,
                     "/",
                     "/file.txt",
                     "file.txt",
@@ -146,7 +147,7 @@ public class FileBrowserViewModel
                     _loggerFactory
                 ),
                 new FileItemViewModel(
-                    NavigationId.Empty,
+                    NavId.Empty,
                     "/",
                     "/file2.txt",
                     "file2.txt",
@@ -155,7 +156,7 @@ public class FileBrowserViewModel
                     _loggerFactory
                 ),
                 new FileItemViewModel(
-                    NavigationId.Empty,
+                    NavId.Empty,
                     "/",
                     "/file3.txt",
                     "file3.txt",
@@ -164,7 +165,7 @@ public class FileBrowserViewModel
                     _loggerFactory
                 ),
                 new FileItemViewModel(
-                    NavigationId.Empty,
+                    NavId.Empty,
                     "/",
                     "/file4.txt",
                     "file4.txt",
@@ -178,7 +179,7 @@ public class FileBrowserViewModel
     }
 
     public FileBrowserViewModel(
-        ICommandService cmd,
+        IPageContext context,
         IDeviceManager devices,
         IHostEnvironment appPath,
         ILayoutService layoutService,
@@ -187,7 +188,7 @@ public class FileBrowserViewModel
         IDialogService dialogService,
         IExtensionService ext
     )
-        : base(PageId, devices, cmd, layoutService, loggerFactory, dialogService, ext)
+        : base(PageId, context, devices, layoutService, loggerFactory, dialogService, ext)
     {
         _localRootPath = appPath.ContentRootPath;
         _remoteRootPath = MavlinkFtpHelper.DirectorySeparator.ToString();
@@ -644,7 +645,7 @@ public class FileBrowserViewModel
         }
 
         using var viewModel = new BurstDownloadDialogViewModel(_loggerFactory);
-        var dialog = new ContentDialog(viewModel, _navigation)
+        var dialog = new ContentDialog(viewModel)
         {
             Title = RS.FileBrowserViewModel_BurstDownloadDialog_Title,
             PrimaryButtonText = RS.FileBrowserViewModel_BurstDownloadDialog_PrimaryButtonText,
@@ -1126,7 +1127,7 @@ public class FileBrowserViewModel
 
     #region Routable
 
-    private ValueTask InternalCatchEvent(IRoutable src, AsyncRoutedEvent<IRoutable> e)
+    private ValueTask InternalCatchEvent(IViewModel src, AsyncRoutedEvent<IViewModel> e)
     {
         switch (e)
         {
@@ -1220,7 +1221,7 @@ public class FileBrowserViewModel
         return ValueTask.CompletedTask;
     }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         yield return LocalSearch;
         yield return RemoteSearch;
@@ -1260,7 +1261,7 @@ public class FileBrowserViewModel
         CancellationToken onDisconnectedToken
     )
     {
-        Title = $"{RS.FileBrowserViewModel_Title}[{device.Id}]";
+        Header = $"{RS.FileBrowserViewModel_Title}[{device.Id}]";
         Icon = DeviceIconMixin.GetIcon(device.Id) ?? PageIcon;
 
         var client = device.GetMicroservice<IFtpClient>();

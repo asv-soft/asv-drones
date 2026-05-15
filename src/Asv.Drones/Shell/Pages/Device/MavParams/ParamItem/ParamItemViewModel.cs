@@ -41,12 +41,12 @@ public class ParamItemViewModel : RoutableViewModel
     }
 
     public ParamItemViewModel(
-        NavigationId id,
+        NavId id,
         ParamItem paramItem,
         ILoggerFactory loggerFactory,
         ParamItemViewModelConfig? initialConfig = null
     )
-        : base(id, loggerFactory)
+        : base(id)
     {
         ArgumentNullException.ThrowIfNull(paramItem);
         ArgumentNullException.ThrowIfNull(loggerFactory);
@@ -62,17 +62,11 @@ public class ParamItemViewModel : RoutableViewModel
         _isPinned = new ReactiveProperty<bool>(initialConfig?.IsPinned ?? false);
         _isStarred = new ReactiveProperty<bool>(initialConfig?.IsStarred ?? false);
 
-        IsPinned = new HistoricalBoolProperty(
-            nameof(IsPinned),
-            _isPinned,
-            loggerFactory
-        ).SetRoutableParent(this);
+        IsPinned = new HistoricalBoolProperty(nameof(IsPinned), _isPinned).SetRoutableParent(this);
         IsPinned.ForceValidate();
-        IsStarred = new HistoricalBoolProperty(
-            nameof(IsStarred),
-            _isStarred,
-            loggerFactory
-        ).SetRoutableParent(this);
+        IsStarred = new HistoricalBoolProperty(nameof(IsStarred), _isStarred).SetRoutableParent(
+            this
+        );
         IsStarred.ForceValidate();
         IsLayoutChanged = Observable
             .Merge(IsPinned.ViewValue, IsStarred.ViewValue)
@@ -321,7 +315,7 @@ public class ParamItemViewModel : RoutableViewModel
         return Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase);
     }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         yield return IsPinned;
         yield return IsStarred;
@@ -357,7 +351,7 @@ public class ParamItemViewModel : RoutableViewModel
 
     #endregion
 
-    private ValueTask InternalCatchEvent(IRoutable src, AsyncRoutedEvent<IRoutable> e)
+    private ValueTask InternalCatchEvent(IViewModel src, AsyncRoutedEvent<IViewModel> e)
     {
         switch (e)
         {

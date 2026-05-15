@@ -1,4 +1,4 @@
-﻿using Asv.Avalonia;
+using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.IO;
 using Asv.Mavlink;
@@ -19,7 +19,7 @@ public class HomePageFileBrowserDeviceItemAction(ILoggerFactory loggerFactory)
             return null;
         }
 
-        return new ActionViewModel("browser", loggerFactory)
+        return new ActionViewModel("browser")
         {
             Header = OpenFileBrowserCommand.StaticInfo.Name,
             Description = OpenFileBrowserCommand.StaticInfo.Description,

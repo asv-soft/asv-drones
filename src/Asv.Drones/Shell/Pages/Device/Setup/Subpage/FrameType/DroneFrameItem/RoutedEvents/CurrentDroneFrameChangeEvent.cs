@@ -9,4 +9,4 @@ namespace Asv.Drones;
 /// </summary>
 /// <param name="source">.</param>
 public sealed class CurrentDroneFrameChangeEvent(DroneFrameItemViewModel source)
-    : AsyncRoutedEvent<IRoutable>(source, RoutingStrategy.Bubble) { }
+    : AsyncRoutedEvent<IViewModel>(source, RoutingStrategy.Bubble) { }

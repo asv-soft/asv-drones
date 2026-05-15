@@ -31,7 +31,7 @@ public sealed class DroneFrameItemViewModel : RoutableViewModel
     }
 
     public DroneFrameItemViewModel(IDroneFrame model, ILoggerFactory loggerFactory)
-        : base(new NavigationId(BaseId, model.Id), loggerFactory)
+        : base(new NavId(BaseId, new NavArgs(("id", model.Id))), loggerFactory)
     {
         Model = model;
         IsCurrent = new BindableReactiveProperty<bool>(false).DisposeItWith(Disposable);
@@ -61,7 +61,7 @@ public sealed class DroneFrameItemViewModel : RoutableViewModel
         return Model.Id.Contains(searchText, StringComparison.InvariantCultureIgnoreCase);
     }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         return [];
     }

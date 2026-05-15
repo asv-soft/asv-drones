@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Mavlink;
+using Asv.Modeling;
 using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
@@ -10,7 +11,7 @@ namespace Asv.Drones;
 public class FileItemViewModel : BrowserItemViewModel
 {
     public FileItemViewModel(
-        NavigationId id,
+        NavId id,
         string parentPath,
         string path,
         string name,

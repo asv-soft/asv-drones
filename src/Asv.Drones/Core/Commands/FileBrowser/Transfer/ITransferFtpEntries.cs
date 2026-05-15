@@ -1,11 +1,11 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Mavlink;
 
 namespace Asv.Drones;
 
-public interface ITransferFtpEntries : IRoutable
+public interface ITransferFtpEntries : IViewModel
 {
     ValueTask UploadItem(
         string source,

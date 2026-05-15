@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Asv.Avalonia;
+using Asv.Modeling;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
@@ -16,7 +17,7 @@ public class AngleUavRttIndicatorViewModel : TwoColumnRttBoxViewModel<AngleRttBo
     [SetsRequiredMembers]
     public AngleUavRttIndicatorViewModel()
         : this(
-            nameof(AngleUavRttIndicator),
+            new NavId(nameof(AngleUavRttIndicator)),
             DesignTime.LoggerFactory,
             new ReactiveProperty<double>(30),
             new ReactiveProperty<double>(10),
@@ -29,7 +30,7 @@ public class AngleUavRttIndicatorViewModel : TwoColumnRttBoxViewModel<AngleRttBo
 
     [SetsRequiredMembers]
     public AngleUavRttIndicatorViewModel(
-        NavigationId id,
+        NavId id,
         ILoggerFactory loggerFactory,
         ReactiveProperty<double> pitchAngle,
         ReactiveProperty<double> rollAngle,
@@ -38,8 +39,7 @@ public class AngleUavRttIndicatorViewModel : TwoColumnRttBoxViewModel<AngleRttBo
         TimeSpan? networkErrorTimeout = null
     )
         : base(
-            id,
-            loggerFactory,
+            id.TypeId,
             pitchAngle
                 .CombineLatest(
                     rollAngle,

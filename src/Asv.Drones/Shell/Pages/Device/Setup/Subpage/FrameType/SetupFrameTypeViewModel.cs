@@ -70,7 +70,7 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
     }
 
     public SetupFrameTypeViewModel(ILoggerFactory loggerFactory, IDialogService dialogService)
-        : base(PageId, loggerFactory)
+        : base(new NavId(PageId), loggerFactory)
     {
         _yesOrNoDialog = dialogService.GetDialogPrefab<YesOrNoDialogPrefab>();
         _loggerFactory = loggerFactory;
@@ -176,7 +176,7 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
         return ValueTask.CompletedTask;
     }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         yield return Search;
 
@@ -234,7 +234,7 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
         }
     }
 
-    private async ValueTask InternalCatchEvent(IRoutable src, AsyncRoutedEvent<IRoutable> e)
+    private async ValueTask InternalCatchEvent(IViewModel src, AsyncRoutedEvent<IViewModel> e)
     {
         switch (e)
         {

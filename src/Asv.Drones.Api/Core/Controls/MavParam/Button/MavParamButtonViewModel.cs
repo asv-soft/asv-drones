@@ -1,6 +1,7 @@
-﻿using Asv.Avalonia;
+using Asv.Avalonia;
 using Asv.Mavlink;
 using Asv.Mavlink.Common;
+using Asv.Modeling;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
@@ -13,11 +14,7 @@ public class MavParamButtonViewModel : MavParamViewModel
         : this(
             new MavParamInfo(
                 new MavParamTypeMetadata(
-                    "A"
-                        + NavigationId
-                            .GenerateRandomAsString(15)
-                            .Replace('.', '_')
-                            .Replace('-', '_'),
+                    "A" + NavId.GenerateRandomAsString(15).Replace('.', '_').Replace('-', '_'),
                     MavParamType.MavParamTypeInt32
                 )
                 {

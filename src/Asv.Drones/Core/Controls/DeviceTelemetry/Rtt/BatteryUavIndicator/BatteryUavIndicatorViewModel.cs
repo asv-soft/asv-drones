@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Asv.Avalonia;
+using Asv.Modeling;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
@@ -27,7 +28,7 @@ public class BatteryUavIndicatorViewModel : KeyValueRttBoxViewModel<BatteryRttBo
     [SetsRequiredMembers]
     public BatteryUavIndicatorViewModel()
         : this(
-            nameof(BatteryUavIndicator),
+            new NavId(nameof(BatteryUavIndicator)),
             DesignTime.LoggerFactory,
             new ReactiveProperty<double>(0.76),
             new ReactiveProperty<double>(12.4),
@@ -45,7 +46,7 @@ public class BatteryUavIndicatorViewModel : KeyValueRttBoxViewModel<BatteryRttBo
 
     [SetsRequiredMembers]
     public BatteryUavIndicatorViewModel(
-        NavigationId id,
+        NavId id,
         ILoggerFactory loggerFactory,
         ReactiveProperty<double> batteryCharge,
         ReactiveProperty<double> batteryAmperage,
@@ -59,7 +60,7 @@ public class BatteryUavIndicatorViewModel : KeyValueRttBoxViewModel<BatteryRttBo
         TimeSpan? networkErrorTimeout = null
     )
         : base(
-            id,
+            id.TypeId,
             loggerFactory,
             batteryCharge
                 .CombineLatest(

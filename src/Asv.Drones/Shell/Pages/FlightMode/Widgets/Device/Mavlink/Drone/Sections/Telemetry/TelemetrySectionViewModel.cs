@@ -5,6 +5,7 @@ using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
+using Asv.Modeling;
 using Microsoft.Extensions.Logging;
 using R3;
 
@@ -29,7 +30,7 @@ public class TelemetrySectionViewModel
     }
 
     public TelemetrySectionViewModel(ILoggerFactory loggerFactory, IUnitService unitService)
-        : base(SectionId, loggerFactory)
+        : base(SectionId)
     {
         _loggerFactory = loggerFactory;
         _unitService = unitService;
@@ -137,7 +138,7 @@ public class TelemetrySectionViewModel
         var angleUnit = _unitService.Units[AngleUnit.Id];
 
         AltitudeUavIndicator = new AltitudeUavIndicatorViewModel(
-            nameof(AltitudeUavIndicator),
+            new NavId(nameof(AltitudeUavIndicator)),
             _loggerFactory,
             altitudeAgl,
             altitudeMsl,
@@ -148,7 +149,7 @@ public class TelemetrySectionViewModel
             .DisposeItWith(Disposable);
 
         BatteryUavIndicator = new BatteryUavIndicatorViewModel(
-            nameof(BatteryUavIndicator),
+            new NavId(nameof(BatteryUavIndicator)),
             _loggerFactory,
             batteryCharge,
             batteryAmperage,
@@ -164,7 +165,7 @@ public class TelemetrySectionViewModel
             .DisposeItWith(Disposable);
 
         VelocityUavIndicator = new VelocityUavIndicatorViewModel(
-            nameof(VelocityUavIndicator),
+            new NavId(nameof(VelocityUavIndicator)),
             _loggerFactory,
             _unitService,
             velocity,
@@ -174,7 +175,7 @@ public class TelemetrySectionViewModel
             .DisposeItWith(Disposable);
 
         AngleUavRttIndicator = new AngleUavRttIndicatorViewModel(
-            nameof(AngleUavRttIndicator),
+            new NavId(nameof(AngleUavRttIndicator)),
             _loggerFactory,
             pitch,
             roll,
@@ -185,7 +186,7 @@ public class TelemetrySectionViewModel
             .DisposeItWith(Disposable);
     }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         yield return AltitudeUavIndicator;
         yield return BatteryUavIndicator;

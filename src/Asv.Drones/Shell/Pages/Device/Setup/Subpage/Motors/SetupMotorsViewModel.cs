@@ -32,7 +32,7 @@ public sealed class SetupMotorsViewModel : SetupSubpage
         : this(NullLoggerFactory.Instance, NullUnitService.Instance) { }
 
     public SetupMotorsViewModel(ILoggerFactory loggerFactory, IUnitService unit)
-        : base(PageId, loggerFactory)
+        : base(new NavId(PageId), loggerFactory)
     {
         _loggerFactory = loggerFactory;
         _unit = unit;
@@ -98,7 +98,7 @@ public sealed class SetupMotorsViewModel : SetupSubpage
         return ValueTask.CompletedTask;
     }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         foreach (var childRoutable in base.GetChildren())
         {

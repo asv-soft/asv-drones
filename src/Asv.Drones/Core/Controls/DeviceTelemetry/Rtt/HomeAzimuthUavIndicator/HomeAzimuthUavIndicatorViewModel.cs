@@ -1,5 +1,6 @@
 using System;
 using Asv.Avalonia;
+using Asv.Modeling;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
@@ -10,7 +11,7 @@ public class HomeAzimuthUavIndicatorViewModel : SplitDigitRttBoxViewModel
 {
     public HomeAzimuthUavIndicatorViewModel()
         : this(
-            nameof(HomeAzimuthUavIndicator),
+            new NavId(nameof(HomeAzimuthUavIndicator)),
             DesignTime.LoggerFactory,
             DeviceTelemetryDesignPreview.UnitService,
             new ReactiveProperty<double>(30),
@@ -21,14 +22,21 @@ public class HomeAzimuthUavIndicatorViewModel : SplitDigitRttBoxViewModel
     }
 
     public HomeAzimuthUavIndicatorViewModel(
-        NavigationId id,
+        NavId id,
         ILoggerFactory loggerFactory,
         IUnitService unitService,
         ReactiveProperty<double> homeAzimuth,
         AsvColorKind defaultStatusColor,
         TimeSpan? networkErrorTimeout = null
     )
-        : base(id, loggerFactory, unitService, AngleUnit.Id, homeAzimuth, networkErrorTimeout)
+        : base(
+            id.TypeId,
+            loggerFactory,
+            unitService,
+            AngleUnit.Id,
+            homeAzimuth,
+            networkErrorTimeout
+        )
     {
         Header = RS.HomeAzimuthUavIndicatorViewModel_HomeAzimuth;
         ShortHeader = RS.HomeAzimuthUavIndicatorViewModel_HomeAzimuth_Short;

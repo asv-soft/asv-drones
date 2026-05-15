@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Asv.Avalonia;
 using Asv.Drones.Api;
 using Asv.Mavlink;
+using Asv.Modeling;
 using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
@@ -42,12 +43,7 @@ public class PacketMessageViewModel : RoutableViewModel
         ILoggerFactory loggerFactory
     )
         : base(
-            NavigationId.GenerateByHash(
-                packet.SystemId,
-                packet.ComponentId,
-                packet.Sequence,
-                packet.Id
-            ),
+            NavId.GenerateByHash(packet.SystemId, packet.ComponentId, packet.Sequence, packet.Id),
             loggerFactory
         )
     {
@@ -59,7 +55,7 @@ public class PacketMessageViewModel : RoutableViewModel
         Size = packet.GetByteSize();
     }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         return [];
     }

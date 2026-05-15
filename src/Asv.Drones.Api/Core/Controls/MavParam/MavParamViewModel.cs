@@ -1,4 +1,4 @@
-﻿using System.Collections.Specialized;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Globalization;
 using Asv.Avalonia;
@@ -202,7 +202,7 @@ public class MavParamViewModel
         set => SetField(ref field, value);
     } = true;
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         yield break;
     }

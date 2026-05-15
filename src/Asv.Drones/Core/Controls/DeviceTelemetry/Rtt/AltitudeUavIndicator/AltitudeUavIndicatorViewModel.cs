@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Asv.Avalonia;
+using Asv.Modeling;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
@@ -16,7 +17,7 @@ public class AltitudeUavIndicatorViewModel : TwoColumnRttBoxViewModel<AltitudeRt
     [SetsRequiredMembers]
     public AltitudeUavIndicatorViewModel()
         : this(
-            nameof(AltitudeUavIndicator),
+            new NavId(nameof(AltitudeUavIndicator)),
             DesignTime.LoggerFactory,
             new ReactiveProperty<double>(10),
             new ReactiveProperty<double>(14),
@@ -29,7 +30,7 @@ public class AltitudeUavIndicatorViewModel : TwoColumnRttBoxViewModel<AltitudeRt
 
     [SetsRequiredMembers]
     public AltitudeUavIndicatorViewModel(
-        NavigationId id,
+        NavId id,
         ILoggerFactory loggerFactory,
         ReactiveProperty<double> altitudeAgl,
         ReactiveProperty<double> altitudeMsl,
@@ -38,8 +39,7 @@ public class AltitudeUavIndicatorViewModel : TwoColumnRttBoxViewModel<AltitudeRt
         TimeSpan? networkErrorTimeout = null
     )
         : base(
-            id,
-            loggerFactory,
+            id.TypeId,
             altitudeAgl
                 .CombineLatest(
                     altitudeMsl,

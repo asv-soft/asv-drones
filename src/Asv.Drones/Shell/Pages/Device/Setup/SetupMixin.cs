@@ -20,11 +20,6 @@ public static class SetupMixin
         }
     }
 
-    extension(ShellMixin.PageBuilder builder)
-    {
-        public Builder SetupPage => new(builder.Parent.Parent);
-    }
-
     public class Builder(IHostApplicationBuilder builder)
     {
         public Builder UseDefault()

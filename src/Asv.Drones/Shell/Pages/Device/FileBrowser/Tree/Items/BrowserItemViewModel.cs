@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Mavlink;
+using Asv.Modeling;
 using Microsoft.Extensions.Logging;
 using R3;
 
@@ -21,13 +22,13 @@ public abstract class BrowserItemViewModel : RoutableViewModel, IBrowserItemView
         );
 
     protected BrowserItemViewModel(
-        NavigationId id,
+        NavId id,
         string? parentPath,
         string path,
         FtpBrowserSourceType type,
         ILoggerFactory loggerFactory
     )
-        : base(id, loggerFactory)
+        : base(id)
     {
         ParentPath = parentPath;
         Path = path;
@@ -196,7 +197,7 @@ public abstract class BrowserItemViewModel : RoutableViewModel, IBrowserItemView
         _ops = backend.ResolveOps(Type);
     }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         return [];
     }

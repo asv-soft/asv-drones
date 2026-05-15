@@ -12,7 +12,7 @@ public class HomePageSetupDeviceItemAction(ILoggerFactory loggerFactory) : HomeP
         HomePageDeviceItem context
     )
     {
-        return new ActionViewModel(SetupPageViewModel.PageId, loggerFactory)
+        return new ActionViewModel(SetupPageViewModel.PageId)
         {
             Header = OpenSetupCommand.StaticInfo.Name,
             Description = OpenSetupCommand.StaticInfo.Description,

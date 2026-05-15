@@ -1,7 +1,8 @@
-﻿using Asv.Avalonia;
+using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Common;
 using Asv.IO;
+using Asv.Modeling;
 using Microsoft.Extensions.Logging;
 using R3;
 
@@ -15,7 +16,7 @@ public abstract class DeviceFlightWidgetViewModelBase<TDeviceContext, TSelf>
     private readonly IDeviceManager _deviceManager;
 
     protected DeviceFlightWidgetViewModelBase(
-        NavigationId id,
+        NavId id,
         IDeviceManager deviceManager,
         ILoggerFactory loggerFactory,
         IExtensionService ext

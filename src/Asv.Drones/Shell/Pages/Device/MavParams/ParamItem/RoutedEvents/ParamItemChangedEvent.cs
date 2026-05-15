@@ -8,8 +8,8 @@ namespace Asv.Drones;
 /// Represents an event triggered when param item changes.
 /// </summary>
 /// <param name="source">.</param>
-public sealed class ParamItemChangedEvent(IRoutable source, object trackedObject)
-    : AsyncRoutedEvent<IRoutable>(source, RoutingStrategy.Bubble)
+public sealed class ParamItemChangedEvent(IViewModel source, object trackedObject)
+    : AsyncRoutedEvent<IViewModel>(source, RoutingStrategy.Bubble)
 {
     public object TrackedObject => trackedObject;
 }

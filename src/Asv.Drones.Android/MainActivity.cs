@@ -1,7 +1,8 @@
-﻿using Android.App;
+using System;
+using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using Avalonia;
+using Android.Runtime;
 using Avalonia.Android;
 
 namespace Asv.Drones.Android;
@@ -15,13 +16,15 @@ namespace Asv.Drones.Android;
         | ConfigChanges.ScreenSize
         | ConfigChanges.UiMode
 )]
-public class MainActivity : AvaloniaMainActivity<App>
+public class MainActivity : AvaloniaMainActivity { }
+
+[Application]
+public class AndroidApp : AvaloniaAndroidApplication<App>
 {
-    protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
+    protected AndroidApp(IntPtr javaReference, JniHandleOwnership transfer)
+        : base(javaReference, transfer)
     {
         // this is required to use the AndroidHttpClientHandler in main thread
         StrictMode.SetThreadPolicy(new StrictMode.ThreadPolicy.Builder().PermitAll().Build());
-
-        return base.CustomizeAppBuilder(builder).WithInterFont();
     }
 }

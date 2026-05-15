@@ -1,12 +1,13 @@
-﻿using Asv.Avalonia;
+using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Mavlink;
+using Asv.Modeling;
 using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones.Api;
 
 public class DroneFlightWidgetViewModelBase<TDrone, TSelf>(
-    NavigationId id,
+    NavId id,
     IDeviceManager deviceManager,
     ILoggerFactory loggerFactory,
     IExtensionService ext

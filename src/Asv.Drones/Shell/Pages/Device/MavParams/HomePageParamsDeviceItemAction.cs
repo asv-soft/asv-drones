@@ -1,4 +1,4 @@
-﻿using Asv.Avalonia;
+using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.IO;
 using Asv.Mavlink;
@@ -19,7 +19,7 @@ public class HomePageParamsDeviceItemAction(ILoggerFactory loggerFactory) : Home
             return null;
         }
 
-        return new ActionViewModel("params", loggerFactory)
+        return new ActionViewModel("params")
         {
             Icon = MaterialIconKind.CogTransferOutline,
             Header = RS.HomePageParamsDeviceItemAction_ActionViewModel_Header,

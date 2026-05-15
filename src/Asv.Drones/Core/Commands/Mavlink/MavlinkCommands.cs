@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Drones.Api;
@@ -11,7 +11,7 @@ public class MavlinkCommands : IMavlinkCommands
     public ICommandInfo WriteParamInfo => MavlinkParamsWriteCommand.StaticInfo;
 
     public ValueTask WriteParam(
-        IRoutable context,
+        IViewModel context,
         string name,
         MavParamValue value,
         CancellationToken cancel = default
@@ -20,7 +20,7 @@ public class MavlinkCommands : IMavlinkCommands
     public ICommandInfo ReadParamInfo => MavlinkParamReadCommand.StaticInfo;
 
     public ValueTask ReadParam(
-        IRoutable context,
+        IViewModel context,
         string name,
         CancellationToken cancel = default
     ) => MavlinkParamReadCommand.Execute(context, name, cancel);

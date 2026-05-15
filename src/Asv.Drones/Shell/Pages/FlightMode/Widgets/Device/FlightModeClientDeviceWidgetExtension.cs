@@ -30,6 +30,6 @@ public class FlightModeClientDeviceWidgetExtension(
 
     private static bool IsRemoveWidget(IClientDevice model, IFlightWidget vm)
     {
-        return model.Id.ToString() == vm.Id.Args;
+        return model.Id.ToString() == vm.Id.TypeId;
     }
 }

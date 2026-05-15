@@ -38,7 +38,7 @@ public class FlightControlSectionViewModel
         IUnitService unitService,
         ILoggerFactory loggerFactory
     )
-        : base(SectionId, loggerFactory)
+        : base(SectionId)
     {
         _altitudeUnit = unitService.Units[AltitudeUnit.Id];
 
@@ -46,7 +46,7 @@ public class FlightControlSectionViewModel
             async (_, ct) =>
             {
                 using var vm = new SetAltitudeDialogViewModel(_altitudeUnit, loggerFactory);
-                var dialog = new ContentDialog(vm, navigation)
+                var dialog = new ContentDialog(vm)
                 {
                     Title = RS.UavWidgetViewModel_SetAltitudeDialog_Title,
                     PrimaryButtonText =
@@ -93,7 +93,7 @@ public class FlightControlSectionViewModel
         InitArgs(device.Id.AsString());
     }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         return [];
     }

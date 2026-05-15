@@ -15,7 +15,7 @@ public class SetupPageViewModel : TreeDevicePageViewModel<ISetupPage, ISetupSubp
     public const MaterialIconKind PageIcon = MaterialIconKind.Cogs;
 
     public SetupPageViewModel(
-        ICommandService cmd,
+        IPageContext context,
         IDeviceManager devices,
         IServiceProvider container,
         ILayoutService layoutService,
@@ -23,7 +23,16 @@ public class SetupPageViewModel : TreeDevicePageViewModel<ISetupPage, ISetupSubp
         IDialogService dialogService,
         IExtensionService ext
     )
-        : base(PageId, devices, cmd, container, layoutService, loggerFactory, dialogService, ext)
+        : base(
+            PageId,
+            context,
+            devices,
+            container,
+            layoutService,
+            loggerFactory,
+            dialogService,
+            ext
+        )
     {
         Icon = PageIcon;
     }
@@ -33,7 +42,7 @@ public class SetupPageViewModel : TreeDevicePageViewModel<ISetupPage, ISetupSubp
         CancellationToken onDisconnectedToken
     )
     {
-        Title = $"{RS.SetupPageViewModel_Title}[{device.Id}]";
+        Header = $"{RS.SetupPageViewModel_Title}[{device.Id}]";
         TreeHeader = RS.SetupPageViewModel_Title;
     }
 }

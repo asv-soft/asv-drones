@@ -2,6 +2,7 @@
 using Asv.Avalonia.IO;
 using Asv.Drones.Api;
 using Asv.Mavlink;
+using Asv.Modeling;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
@@ -13,7 +14,7 @@ public class DroneFlightWidgetViewModel(
     IExtensionService ext
 )
     : DroneFlightWidgetViewModelBase<MavlinkClientDevice, IDroneFlightWidget>(
-        WidgetId,
+        new NavId(WidgetId),
         deviceManager,
         loggerFactory,
         ext

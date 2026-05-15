@@ -146,7 +146,6 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
 
         AltitudeRttBox = new TwoColumnRttBoxViewModel<AltitudeRttBoxData>(
             nameof(AltitudeRttBox),
-            DesignTime.LoggerFactory,
             altitudeAgl
                 .CombineLatest(
                     altitudeMsl,
@@ -405,7 +404,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
             async (_, ct) =>
             {
                 using var vm = new SetAltitudeDialogViewModel(_altitudeUnit, loggerFactory);
-                var dialog = new ContentDialog(vm, navigation)
+                var dialog = new ContentDialog(vm)
                 {
                     Title = RS.UavWidgetViewModel_SetAltitudeDialog_Title,
                     PrimaryButtonText =
@@ -538,7 +537,6 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
 
         AltitudeRttBox = new TwoColumnRttBoxViewModel<AltitudeRttBoxData>(
             nameof(AltitudeRttBox),
-            loggerFactory,
             altitudeAgl
                 .CombineLatest(
                     altitudeMsl,
@@ -758,7 +756,7 @@ public class UavWidgetViewModel : MapWidget, IUavFlightWidget
 
     public IClientDevice Device { get; }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         yield return MissionProgress;
         yield return CurrentFlightModeRttBox;

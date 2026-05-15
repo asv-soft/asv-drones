@@ -7,11 +7,11 @@ public interface IMavlinkCommands
 {
     ICommandInfo WriteParamInfo { get; }
     ValueTask WriteParam(
-        IRoutable context,
+        IViewModel context,
         string name,
         MavParamValue value,
         CancellationToken cancel = default
     );
     ICommandInfo ReadParamInfo { get; }
-    ValueTask ReadParam(IRoutable context, string name, CancellationToken cancel = default);
+    ValueTask ReadParam(IViewModel context, string name, CancellationToken cancel = default);
 }

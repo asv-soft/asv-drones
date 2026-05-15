@@ -20,7 +20,7 @@ public class StopUpdateParamsCommand : ContextCommand<MavParamsPageViewModel>
 
     public override ICommandInfo Info => StaticInfo;
 
-    protected override ValueTask<CommandArg?> InternalExecute(
+    public override ValueTask<CommandArg?> InternalExecute(
         MavParamsPageViewModel context,
         CommandArg newValue,
         CancellationToken cancel

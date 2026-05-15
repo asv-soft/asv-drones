@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,7 +39,7 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
         IUnitService unitService,
         ILoggerFactory loggerFactory
     )
-        : base(new NavigationId(BaseId, idArg), loggerFactory)
+        : base(new NavId(BaseId, new NavArgs(("id", idArg))), loggerFactory)
     {
         _unit = unitService.Units[FrequencyUnit.Id];
         _isChecked = new ReactiveProperty<bool>(true).DisposeItWith(Disposable);
@@ -53,7 +53,7 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
         )
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-        IsChecked = new HistoricalBoolProperty(nameof(IsChecked), _isChecked, loggerFactory)
+        IsChecked = new HistoricalBoolProperty(nameof(IsChecked), _isChecked)
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
         MessageRateTextUnit = MessageRateText
@@ -75,12 +75,12 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
         Interlocked.Increment(ref _cnt);
     }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         yield return IsChecked;
     }
 
-    private ValueTask InternalCatchEvent(IRoutable src, AsyncRoutedEvent<IRoutable> e)
+    private ValueTask InternalCatchEvent(IViewModel src, AsyncRoutedEvent<IViewModel> e)
     {
         switch (e)
         {

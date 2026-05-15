@@ -1,4 +1,4 @@
-﻿using Asv.Avalonia;
+using Asv.Avalonia;
 using Asv.Common;
 using Asv.Modeling;
 using Material.Icons;
@@ -9,7 +9,7 @@ using R3;
 namespace Asv.Drones.Api;
 
 public abstract class FlightWidgetViewModel<TContext, TSelf>(
-    NavigationId id,
+    NavId id,
     ILoggerFactory loggerFactory,
     IExtensionService ext
 ) : FlightWidgetViewModel<TSelf>(id, loggerFactory, ext), IFlightWidget<TContext>
@@ -22,11 +22,7 @@ public abstract class FlightWidgetViewModel<TContext, TSelf>(
 public abstract class FlightWidgetViewModel<TSelf> : ExtendableViewModel<TSelf>, IFlightWidget
     where TSelf : class, IFlightWidget
 {
-    protected FlightWidgetViewModel(
-        NavigationId id,
-        ILoggerFactory loggerFactory,
-        IExtensionService ext
-    )
+    protected FlightWidgetViewModel(NavId id, ILoggerFactory loggerFactory, IExtensionService ext)
         : base(id, loggerFactory, ext)
     {
         Menu.SetRoutableParent(this).DisposeItWith(Disposable);
@@ -96,7 +92,7 @@ public abstract class FlightWidgetViewModel<TSelf> : ExtendableViewModel<TSelf>,
     public ObservableList<IFlightWidgetSection> Sections { get; }
     public INotifyCollectionChangedSynchronizedViewList<IFlightWidgetSection> SectionsView { get; }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         foreach (var item in SectionsView)
         {

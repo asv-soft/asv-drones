@@ -15,7 +15,7 @@ public sealed class NullMavlinkCommands : IMavlinkCommands
     public ICommandInfo WriteParamInfo => MavlinkParamsWriteCommand.StaticInfo;
 
     public ValueTask WriteParam(
-        IRoutable context,
+        IViewModel context,
         string name,
         MavParamValue value,
         CancellationToken cancel = default
@@ -26,7 +26,7 @@ public sealed class NullMavlinkCommands : IMavlinkCommands
 
     public ICommandInfo ReadParamInfo => MavlinkParamReadCommand.StaticInfo;
 
-    public ValueTask ReadParam(IRoutable context, string name, CancellationToken cancel = default)
+    public ValueTask ReadParam(IViewModel context, string name, CancellationToken cancel = default)
     {
         return ValueTask.CompletedTask;
     }

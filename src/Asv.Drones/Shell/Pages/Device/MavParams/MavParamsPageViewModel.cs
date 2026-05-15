@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -52,11 +52,12 @@ public class MavParamsPageViewModel
     private CancellationTokenSource? _cancellationTokenSource;
     private ISynchronizedView<KeyValuePair<string, ParamItem>, ParamItemViewModel> _view;
     private MavParamsPageViewModelConfig? _config;
+    private ILogger Logger => _loggerFactory.CreateLogger(GetType());
 
     public MavParamsPageViewModel()
         : this(
+            DesignTime.PageContext,
             NullDeviceManager.Instance,
-            NullCommandService.Instance,
             NullLoggerFactory.Instance,
             NullLayoutService.Instance,
             NullNavigationService.Instance,
@@ -78,23 +79,22 @@ public class MavParamsPageViewModel
     }
 
     public MavParamsPageViewModel(
+        IPageContext context,
         IDeviceManager devices,
-        ICommandService cmd,
         ILoggerFactory loggerFactory,
         ILayoutService layoutService,
         INavigationService nav,
         IDialogService dialogService,
         IExtensionService ext
     )
-        : base(PageId, devices, cmd, layoutService, loggerFactory, dialogService, ext)
+        : base(PageId, context, devices, layoutService, loggerFactory, dialogService, ext)
     {
         ArgumentNullException.ThrowIfNull(devices);
-        ArgumentNullException.ThrowIfNull(cmd);
         ArgumentNullException.ThrowIfNull(layoutService);
         ArgumentNullException.ThrowIfNull(loggerFactory);
         ArgumentNullException.ThrowIfNull(nav);
 
-        Title = RS.MavParamsPageViewModel_Title;
+        Header = RS.MavParamsPageViewModel_Title;
 
         _layoutService = layoutService;
         _loggerFactory = loggerFactory;
@@ -114,11 +114,7 @@ public class MavParamsPageViewModel
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
 
-        IsStarredOnly = new HistoricalBoolProperty(
-            nameof(IsStarredOnly),
-            _isStarredOnly,
-            loggerFactory
-        )
+        IsStarredOnly = new HistoricalBoolProperty(nameof(IsStarredOnly), _isStarredOnly)
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
         IsRefreshing = new BindableReactiveProperty<bool>().DisposeItWith(Disposable);
@@ -234,7 +230,7 @@ public class MavParamsPageViewModel
             ParamItemViewModelConfig? config = null;
             _config?.Params.TryGetValue(kvp.Key, out config);
 
-            return new ParamItemViewModel(kvp.Key, kvp.Value, _loggerFactory, config);
+            return new ParamItemViewModel(new NavId(kvp.Key), kvp.Value, _loggerFactory, config);
         });
         _view.RegisterTo(cancel);
         _view.DisposeMany().RegisterTo(cancel);
@@ -342,7 +338,7 @@ public class MavParamsPageViewModel
 
     protected override void AfterDeviceInitialized(IClientDevice device, CancellationToken cancel)
     {
-        Title = $"{RS.MavParamsPageViewModel_Title}[{device.Id}]";
+        Header = $"{RS.MavParamsPageViewModel_Title}[{device.Id}]";
         _paramsClient = device.GetMicroservice<IParamsClientEx>();
         DeviceName = device
             .Name.Select(x => x ?? RS.MavParamsPageViewModel_DeviceName_Unknown)
@@ -375,7 +371,7 @@ public class MavParamsPageViewModel
 
     public BindableReactiveProperty<ParamItemViewModel?> SelectedItem { get; }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         yield return Search;
         yield return IsStarredOnly;
@@ -391,7 +387,7 @@ public class MavParamsPageViewModel
 
     protected override void AfterLoadExtensions() { }
 
-    private async ValueTask InternalCatchEvent(IRoutable src, AsyncRoutedEvent<IRoutable> e)
+    private async ValueTask InternalCatchEvent(IViewModel src, AsyncRoutedEvent<IViewModel> e)
     {
         switch (e)
         {
@@ -504,7 +500,7 @@ public class MavParamsPageViewModel
         }
 
         using var vm = new TryCloseWithApprovalDialogViewModel(_loggerFactory);
-        var dialog = new ContentDialog(vm, _nav)
+        var dialog = new ContentDialog(vm)
         {
             Title = RS.ParamPageViewModel_DataLossDialog_Title,
             IsSecondaryButtonEnabled = true,

@@ -22,7 +22,7 @@ public class SetAltitudeDialogViewModel : DialogViewModelBase
     }
 
     public SetAltitudeDialogViewModel(IUnit unit, ILoggerFactory loggerFactory)
-        : base(DialogId, loggerFactory)
+        : base(DialogId)
     {
         var altitudeUnit =
             unit as AltitudeUnit
@@ -53,7 +53,7 @@ public class SetAltitudeDialogViewModel : DialogViewModelBase
         _sub2.Disposable = IsValid.Subscribe(enabled => dialog.IsPrimaryButtonEnabled = enabled);
     }
 
-    public override IEnumerable<IRoutable> GetChildren()
+    public override IEnumerable<IViewModel> GetChildren()
     {
         return [];
     }

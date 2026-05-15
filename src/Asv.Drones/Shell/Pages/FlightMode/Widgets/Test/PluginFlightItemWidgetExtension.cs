@@ -29,7 +29,7 @@ public class PluginFlightItemWidgetExtension(ILoggerFactory loggerFactory, IExte
         {
             while (!contextDispose.IsDisposed)
             {
-                if (context.IsDisposed)
+                if (context is ViewModel { IsDisposed: true })
                 {
                     return;
                 }

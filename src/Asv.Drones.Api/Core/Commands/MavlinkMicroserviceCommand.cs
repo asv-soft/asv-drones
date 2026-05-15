@@ -1,4 +1,4 @@
-﻿using Asv.Avalonia;
+using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.IO;
 
@@ -10,9 +10,9 @@ public abstract class MavlinkMicroserviceCommand<TMicroservice, TArg>
     where TMicroservice : class
 {
     public override bool CanExecute(
-        IRoutable context,
+        IViewModel context,
         CommandArg parameter,
-        out IRoutable targetContext
+        out IViewModel targetContext
     )
     {
         if (base.CanExecute(context, parameter, out targetContext) == false)
@@ -44,7 +44,7 @@ public abstract class MavlinkMicroserviceCommand<TMicroservice, TArg>
         return InternalExecute(microservice, arg, cancel);
     }
 
-    protected abstract ValueTask<TArg?> InternalExecute(
+    public abstract ValueTask<TArg?> InternalExecute(
         TMicroservice microservice,
         TArg arg,
         CancellationToken cancel
