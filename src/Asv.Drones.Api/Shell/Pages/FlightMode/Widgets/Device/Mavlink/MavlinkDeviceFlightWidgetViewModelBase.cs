@@ -13,7 +13,7 @@ public abstract class MavlinkDeviceFlightWidgetViewModelBase<TMavlinkClientDevic
     IExtensionService ext
 )
     : DeviceFlightWidgetViewModelBase<TMavlinkClientDevice, TSelf>(
-        id,
+        id.ToString(),
         deviceManager,
         loggerFactory,
         ext

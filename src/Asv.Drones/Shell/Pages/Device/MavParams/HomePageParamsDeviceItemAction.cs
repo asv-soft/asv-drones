@@ -1,13 +1,14 @@
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
+using Asv.Common;
 using Asv.IO;
 using Asv.Mavlink;
-using Material.Icons;
-using Microsoft.Extensions.Logging;
+using Asv.Modeling;
+using R3;
 
 namespace Asv.Drones;
 
-public class HomePageParamsDeviceItemAction(ILoggerFactory loggerFactory) : HomePageDeviceItemAction
+public class HomePageParamsDeviceItemAction : HomePageDeviceItemAction
 {
     protected override IActionViewModel? TryCreateAction(
         IClientDevice device,
@@ -21,11 +22,20 @@ public class HomePageParamsDeviceItemAction(ILoggerFactory loggerFactory) : Home
 
         return new ActionViewModel("params")
         {
-            Icon = MaterialIconKind.CogTransferOutline,
-            Header = RS.HomePageParamsDeviceItemAction_ActionViewModel_Header,
-            Description = RS.HomePageParamsDeviceItemAction_ActionViewModel_Description,
-            Command = new BindableAsyncCommand(OpenMavParamsCommand.Id, context),
-            CommandParameter = new StringArg($"dev_id={device.Id}"), // TODO: replace with DevicePageViewModelMixin.CreateOpenPageArgs
+            Icon = MavParamsPageViewModel.PageIcon,
+            Header = RS.OpenMavParamsCommand_CommandInfo_Name,
+            Description = RS.OpenMavParamsCommand_CommandInfo_Description,
+            Command = new ReactiveCommand(
+                async (_, _) =>
+                    await context.GoTo(
+                        new NavPath(
+                            new NavId(
+                                MavParamsPageViewModel.PageId,
+                                DevicePageViewModelMixin.CreateOpenPageArgs(device.Id)
+                            )
+                        )
+                    )
+            ),
         };
     }
 }

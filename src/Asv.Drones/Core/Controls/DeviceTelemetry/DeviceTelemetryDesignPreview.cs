@@ -37,7 +37,7 @@ internal static class DeviceTelemetryDesignPreview
         unitService.Extend(
             new ProgressUnit(
                 DesignTime.Configuration,
-                [new ProgressPercentUnitItem(), new ProgressInPartsUnitItem()]
+                [new ProgressPercentUnitItem(), new ProgressPercentUnitItem()]
             )
         );
         unitService.Extend(

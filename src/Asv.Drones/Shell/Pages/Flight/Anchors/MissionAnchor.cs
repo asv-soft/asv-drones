@@ -7,18 +7,17 @@ using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
 
-public class MissionAnchor : MapAnchor<MissionAnchor>
+public class MissionAnchor : MapAnchor
 {
     public MissionAnchor(int index, GeoPoint current, GeoPoint next, ILoggerFactory loggerFactory)
         : base($"wayPoint{index}") // TODO: Use a more descriptive ID with drone ID
     {
         Location = current;
-        Title = index.ToString();
+        Header = index.ToString();
         IsReadOnly = true;
         IsVisible = true;
         Icon = MaterialIconKind.MapMarker;
         CenterY = new VerticalOffset(VerticalOffsetEnum.Bottom, 0);
-        Foreground = Brushes.Red;
         Polygon.Add(current);
         Polygon.Add(next);
     }
@@ -27,11 +26,10 @@ public class MissionAnchor : MapAnchor<MissionAnchor>
         : base($"wayPoint{index}")
     {
         Location = current;
-        Title = index.ToString();
+        Header = index.ToString();
         IsReadOnly = true;
         IsVisible = true;
         Icon = MaterialIconKind.MapMarker;
         CenterY = new VerticalOffset(VerticalOffsetEnum.Bottom, 0);
-        Foreground = Brushes.Red;
     }
 }

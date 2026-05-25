@@ -7,7 +7,7 @@ using R3;
 
 namespace Asv.Drones;
 
-public interface IBrowserItemViewModel : ISupportRename, ISupportRemove
+public interface IBrowserItemViewModel : ISupportRemove
 {
     string Name { get; set; }
     string Path { get; set; }

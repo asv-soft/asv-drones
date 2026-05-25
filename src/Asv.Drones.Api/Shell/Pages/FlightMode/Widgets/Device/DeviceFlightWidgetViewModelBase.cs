@@ -16,12 +16,12 @@ public abstract class DeviceFlightWidgetViewModelBase<TDeviceContext, TSelf>
     private readonly IDeviceManager _deviceManager;
 
     protected DeviceFlightWidgetViewModelBase(
-        NavId id,
+        string typeId,
         IDeviceManager deviceManager,
         ILoggerFactory loggerFactory,
         IExtensionService ext
     )
-        : base(id, loggerFactory, ext)
+        : base(typeId, ext)
     {
         ArgumentNullException.ThrowIfNull(deviceManager);
         _deviceManager = deviceManager;
@@ -33,7 +33,8 @@ public abstract class DeviceFlightWidgetViewModelBase<TDeviceContext, TSelf>
     public override void InitWith(TDeviceContext device)
     {
         ArgumentNullException.ThrowIfNull(device);
-        InitArgs(device.Id.AsString());
+
+        // InitArgs($"{Id.TypeId}?deviceId={Uri.EscapeDataString(device.Id.AsString())}");
         Device = device;
         Header = device.Id.ToString();
         Icon = _deviceManager.GetIcon(device.Id);

@@ -2,28 +2,25 @@ using Asv.Avalonia;
 using Asv.Common;
 using Asv.Modeling;
 using Material.Icons;
-using Microsoft.Extensions.Logging;
 using ObservableCollections;
 using R3;
 
 namespace Asv.Drones.Api;
 
-public abstract class FlightWidgetViewModel<TContext, TSelf>(
-    NavId id,
-    ILoggerFactory loggerFactory,
-    IExtensionService ext
-) : FlightWidgetViewModel<TSelf>(id, loggerFactory, ext), IFlightWidget<TContext>
+public abstract class FlightWidgetViewModel<TContext, TSelf>(string typeId, IExtensionService ext)
+    : FlightWidgetViewModel<TSelf>(typeId, ext),
+        IFlightWidget<TContext>
     where TContext : class
     where TSelf : class, IFlightWidget<TContext>
 {
     public abstract void InitWith(TContext context);
 }
 
-public abstract class FlightWidgetViewModel<TSelf> : ExtendableViewModel<TSelf>, IFlightWidget
+public abstract class FlightWidgetViewModel<TSelf> : ViewModel<TSelf>, IFlightWidget
     where TSelf : class, IFlightWidget
 {
-    protected FlightWidgetViewModel(NavId id, ILoggerFactory loggerFactory, IExtensionService ext)
-        : base(id, loggerFactory, ext)
+    protected FlightWidgetViewModel(string id, IExtensionService ext)
+        : base(id, default, ext)
     {
         Menu.SetRoutableParent(this).DisposeItWith(Disposable);
         Menu.DisposeRemovedItems().DisposeItWith(Disposable);

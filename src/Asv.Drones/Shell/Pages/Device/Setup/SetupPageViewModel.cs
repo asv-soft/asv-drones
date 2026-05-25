@@ -18,21 +18,11 @@ public class SetupPageViewModel : TreeDevicePageViewModel<ISetupPage, ISetupSubp
         IPageContext context,
         IDeviceManager devices,
         IServiceProvider container,
-        ILayoutService layoutService,
         ILoggerFactory loggerFactory,
         IDialogService dialogService,
         IExtensionService ext
     )
-        : base(
-            PageId,
-            context,
-            devices,
-            container,
-            layoutService,
-            loggerFactory,
-            dialogService,
-            ext
-        )
+        : base(PageId, context, devices, container, loggerFactory, dialogService, ext)
     {
         Icon = PageIcon;
     }

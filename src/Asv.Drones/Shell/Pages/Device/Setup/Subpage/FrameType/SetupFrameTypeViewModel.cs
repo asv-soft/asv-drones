@@ -20,7 +20,7 @@ namespace Asv.Drones;
 
 public sealed class SetupFrameTypeViewModel : SetupSubpage
 {
-    public const string PageId = "frame-type";
+    public const string PageId = "frameType";
     private readonly SynchronizedReactiveProperty<bool> _isRefreshing;
     private readonly SynchronizedReactiveProperty<bool> _isChangingFrame;
     private readonly ILoggerFactory _loggerFactory;
@@ -45,8 +45,7 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
             Enumerable
                 .Range(1, 10)
                 .Select(n => new DroneFrameItemViewModel(
-                    new NullDroneFrame { Id = $"frame-id-{n}" },
-                    _loggerFactory
+                    new NullDroneFrame { Id = $"frame-id-{n}" }
                 ))
         );
 
@@ -105,7 +104,7 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
             DroneFrameItemViewModel
         >((_, model) => model.Filter(Search.Text.ViewValue.Value));
 
-        Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
+        Events.Catch(InternalCatchEvent).DisposeItWith(Disposable);
     }
 
     public IReadOnlyBindableReactiveProperty<bool> IsUpdating { get; }
@@ -145,10 +144,7 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
             .DisposeItWith(Disposable);
 
         _framesView = _frameClient
-            .Frames.CreateView(droneFrame => new DroneFrameItemViewModel(
-                droneFrame.Value,
-                _loggerFactory
-            ))
+            .Frames.CreateView(droneFrame => new DroneFrameItemViewModel(droneFrame.Value))
             .DisposeItWith(Disposable);
         _framesView.SetRoutableParent(this).DisposeItWith(Disposable);
         _framesView.DisposeMany().DisposeItWith(Disposable);
@@ -234,16 +230,20 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
         }
     }
 
-    private async ValueTask InternalCatchEvent(IViewModel src, AsyncRoutedEvent<IViewModel> e)
+    private async ValueTask InternalCatchEvent(
+        IViewModel src,
+        AsyncRoutedEvent<IViewModel> e,
+        CancellationToken cancel
+    )
     {
         switch (e)
         {
             case CurrentDroneFrameChangeEvent { Sender: DroneFrameItemViewModel param }:
             {
-                await this.ExecuteCommand(
-                    ChangeFrameTypeCommand.Id,
-                    CommandArg.CreateString(param.Model.Id)
-                );
+                if (CurrentFrame?.Value?.Id != null)
+                {
+                    await ChangeFrameType(CurrentFrame?.Value?.Id ?? string.Empty, cancel); // TODO: replace with Undo
+                }
 
                 e.IsHandled = true;
                 break;

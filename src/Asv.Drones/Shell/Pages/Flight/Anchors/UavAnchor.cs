@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
 using Asv.Avalonia.IO;
@@ -6,8 +7,8 @@ using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
+using Asv.Modeling;
 using Material.Icons;
-using Microsoft.Extensions.Logging;
 using R3;
 
 namespace Asv.Drones;
@@ -28,13 +29,16 @@ public class UavAnchor : MapAnchor<UavAnchor>
         DeviceId deviceId,
         IDeviceManager mng,
         IClientDevice dev,
-        IPositionClientEx pos,
-        ILoggerFactory loggerFactory
+        IExtensionService ext,
+        IPositionClientEx pos
     )
-        : base(UavAnchorIdBase)
+        : base(
+            UavAnchorIdBase,
+            new NavArgs(new KeyValuePair<string, string?>("deviceId", deviceId.AsString())),
+            ext
+        )
     {
         DeviceId = deviceId;
-        InitArgs(deviceId.AsString());
         IsReadOnly = true;
         IsVisible = true;
         Icon = mng.GetIcon(deviceId) ?? MaterialIconKind.Memory;
@@ -43,7 +47,7 @@ public class UavAnchor : MapAnchor<UavAnchor>
         CenterY = DeviceIconMixin.GetIconCenterY(deviceId);
         UseMapRotation = true;
         dev.Name.ObserveOnUIThreadDispatcher()
-            .Subscribe(x => Title = x ?? string.Empty)
+            .Subscribe(x => Header = x ?? string.Empty)
             .DisposeItWith(Disposable);
         pos.Current.ObserveOnUIThreadDispatcher()
             .Subscribe(x => Location = x)

@@ -34,14 +34,13 @@ public static class AsvDronesMixin
                 .UseOptionalPacketViewer()
                 .UseFlightMode()
                 .UseExtendableFlightMode()
-                .UseCommands()
+                .UseActions()
                 .UseFileBrowser()
                 .UseSetupPage();
         }
 
         public Builder UseControls()
         {
-            builder.ViewLocator.RegisterViewFor<UavWidgetViewModel, UavWidgetView>();
             builder.ViewLocator.RegisterViewFor<
                 VelocityUavIndicatorViewModel,
                 VelocityUavIndicator
@@ -53,24 +52,16 @@ public static class AsvDronesMixin
             return this;
         }
 
-        public Builder UseCommands()
+        public Builder UseActions()
         {
-            builder.Services.AddSingleton<IMavlinkCommands, MavlinkCommands>();
-            builder
-                .RegisterMavlinkCommands()
-                .Commands.Register<OpenSetupCommand>()
-                .Register<ChangeFrameTypeCommand>()
-                .Register<OpenPacketViewerCommand>()
+            /*builder.Register<ChangeFrameTypeCommand>()
                 .Register<ExportPacketsToCsvCommand>()
                 .Register<ClearAllPacketsCommand>()
-                .Register<OpenMavParamsCommand>()
                 .Register<UpdateParamsCommand>()
                 .Register<StopUpdateParamsCommand>()
                 .Register<RemoveAllPinsCommand>()
                 .Register<MavlinkParamsWriteCommand>()
                 .Register<MavlinkParamReadCommand>()
-                .Register<OpenFlightModeCommand>()
-                .Register<OpenFlightCommand>()
                 .Register<TakeOffCommand>()
                 .Register<StartMissionCommand>()
                 .Register<RTLCommand>()
@@ -78,7 +69,6 @@ public static class AsvDronesMixin
                 .Register<GuidedModeCommand>()
                 .Register<AutoModeCommand>()
                 .Register<UpdateMissionCommand>()
-                .Register<OpenFileBrowserCommand>()
                 .Register<UploadItemCommand>()
                 .Register<DownloadItemCommand>()
                 .Register<BurstDownloadItemCommand>()
@@ -86,7 +76,7 @@ public static class AsvDronesMixin
                 .Register<CalculateCrc32Command>()
                 .Register<FindFileCommand>()
                 .Register<CommitRenameCommand>()
-                .Register<RemoveItemCommand>();
+                .Register<RemoveItemCommand>();*/
             return this;
         }
 
@@ -149,18 +139,11 @@ public static class AsvDronesMixin
 
         public Builder UseFlightMode()
         {
-            builder.Shell.Pages.Register<FlightPageViewModel, FlightPageView>(
-                FlightPageViewModel.PageId
-            );
-            builder.Shell.Pages.Home.UseExtension<HomePageFlightExtension>();
-            builder.Extensions.Register<IFlightMode, FlightUavAnchorsExtension>();
-            builder.Extensions.Register<IFlightMode, FlightWidgetsExtension>();
-            builder.ViewLocator.RegisterViewFor<UavWidgetViewModel, UavWidgetView>();
-            builder.ViewLocator.RegisterViewFor<MissionProgressViewModel, MissionProgressView>();
-            builder.ViewLocator.RegisterViewFor<
-                SetAltitudeDialogViewModel,
-                SetAltitudeDialogView
-            >();
+            builder.Shell.Pages.WithFlightPage(configure =>
+            {
+                configure.UseDefault();
+            });
+
             return this;
         }
 
@@ -189,16 +172,6 @@ public static class AsvDronesMixin
             builder.Services.AddTransient<IDroneFlightWidget, DroneFlightWidgetViewModel>();
             builder.ViewLocator.RegisterViewFor<DroneFlightWidgetViewModel, FlightWidgetView>();
 
-            // Sections for the drone Widget
-            builder.Services.AddKeyedTransient<TelemetrySectionViewModel>(
-                TelemetrySectionViewModel.SectionId
-            );
-            builder.Extensions.Register<
-                IDroneFlightWidget,
-                DroneFlightWidgetTelemetrySectionExtension
-            >();
-            builder.ViewLocator.RegisterViewFor<TelemetrySectionViewModel, TelemetrySectionView>();
-
             builder.Services.AddKeyedTransient<AttitudeIndicatorSectionViewModel>(
                 AttitudeIndicatorSectionViewModel.SectionId
             );
@@ -209,18 +182,6 @@ public static class AsvDronesMixin
             builder.ViewLocator.RegisterViewFor<
                 AttitudeIndicatorSectionViewModel,
                 AttitudeIndicatorSectionView
-            >();
-
-            builder.Services.AddKeyedTransient<FlightControlSectionViewModel>(
-                FlightControlSectionViewModel.SectionId
-            );
-            builder.Extensions.Register<
-                IDroneFlightWidget,
-                DroneFlightWidgetFlightControlSectionExtension
-            >();
-            builder.ViewLocator.RegisterViewFor<
-                FlightControlSectionViewModel,
-                FlightControlSectionView
             >();
 
             // Test plugin widget

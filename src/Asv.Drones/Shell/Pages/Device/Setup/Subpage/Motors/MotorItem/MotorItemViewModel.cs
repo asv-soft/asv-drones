@@ -12,15 +12,15 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class MotorItemViewModel : RoutableViewModel
+public sealed class MotorItemViewModel : ViewModel
 {
-    public const string BaseId = "motor-item";
+    public const string BaseId = "motorItem";
 
     private readonly SynchronizedReactiveProperty<double> _throttle;
     private readonly SynchronizedReactiveProperty<bool> _isEnabled;
 
     public MotorItemViewModel()
-        : base(new NavId(BaseId, new NavArgs(("id", "1"))), NullLoggerFactory.Instance)
+        : base(BaseId, new NavArgs(("id", "1")))
     {
         DesignTime.ThrowIfNotDesignMode();
 
@@ -36,7 +36,7 @@ public sealed class MotorItemViewModel : RoutableViewModel
         IUnitService unit,
         ILoggerFactory loggerFactory
     )
-        : base(new NavId(BaseId, new NavArgs(("id", motor.Id.ToString()))), loggerFactory)
+        : base(BaseId, new NavArgs(("id", motor.Id.ToString())))
     {
         Motor = motor;
         Timeout = duration;

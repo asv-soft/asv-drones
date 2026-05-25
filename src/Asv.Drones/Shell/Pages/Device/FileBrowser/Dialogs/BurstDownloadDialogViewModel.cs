@@ -9,7 +9,7 @@ namespace Asv.Drones;
 
 public class BurstDownloadDialogViewModel : DialogViewModelBase
 {
-    private const string DialogId = $"{BaseId}.burst";
+    private const string DialogId = $"{BaseId}Burst";
 
     public BurstDownloadDialogViewModel()
         : this(DesignTime.LoggerFactory)

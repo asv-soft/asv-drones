@@ -10,8 +10,10 @@ namespace Asv.Drones;
 
 public class FileItemViewModel : BrowserItemViewModel
 {
+    private readonly ILogger<FileItemViewModel> _logger;
+
     public FileItemViewModel(
-        NavId id,
+        string id,
         string parentPath,
         string path,
         string name,
@@ -25,6 +27,7 @@ public class FileItemViewModel : BrowserItemViewModel
         Name = name;
         Size = new FileSize(size);
         FtpEntryType = FtpEntryType.File;
+        _logger = loggerFactory.CreateLogger<FileItemViewModel>();
     }
 
     public uint? Crc32
@@ -60,7 +63,7 @@ public class FileItemViewModel : BrowserItemViewModel
         var oldPath = FtpBrowserPath.Normalize(oldValue, false, sep);
         var newPath = FtpBrowserPath.Normalize(newValue, false, sep);
 
-        var result = await ItemsOperations.RenameFileAsync(oldPath, newPath, Logger, ct);
+        var result = await ItemsOperations.RenameFileAsync(oldPath, newPath, _logger, ct);
 
         EditMode = false;
         EditedName.Value = FtpBrowserPath.NameOf(result, sep);
@@ -70,12 +73,12 @@ public class FileItemViewModel : BrowserItemViewModel
 
     public override async ValueTask RemoveAsync(CancellationToken ct)
     {
-        await ItemsOperations.RemoveFileAsync(Path, Logger, ct);
+        await ItemsOperations.RemoveFileAsync(Path, _logger, ct);
     }
 
     public override async ValueTask<uint> CalculateCrc32Async(CancellationToken ct)
     {
-        var crc32 = await ItemsOperations.CalculateCrc32Async(Path, Logger, ct);
+        var crc32 = await ItemsOperations.CalculateCrc32Async(Path, _logger, ct);
         Crc32 = crc32;
         Crc32Status = Crc32Status.Default;
         return crc32;
@@ -84,6 +87,6 @@ public class FileItemViewModel : BrowserItemViewModel
     public override async ValueTask CreateDirectoryAsync(CancellationToken ct)
     {
         var path = FtpBrowserPath.ParentDirOf(Path, ItemsOperations.Separator);
-        await ItemsOperations.CreateDirectoryAsync(path, Logger, ct);
+        await ItemsOperations.CreateDirectoryAsync(path, _logger, ct);
     }
 }

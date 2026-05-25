@@ -15,10 +15,10 @@ public class PacketFilterViewModelBaseConfig
     public bool IsChecked { get; set; } = true;
 }
 
-public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
+public abstract class PacketFilterViewModelBase<TFilter> : ViewModel
     where TFilter : PacketFilterViewModelBase<TFilter>
 {
-    public static string BaseId => $"packet-filter.{typeof(TFilter).Name}";
+    public static string BaseId => $"packetFilter{typeof(TFilter).Name}";
     private const int BaseMovingAverageSize = 3;
 
     private readonly IUnit _unit;
@@ -39,7 +39,7 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
         IUnitService unitService,
         ILoggerFactory loggerFactory
     )
-        : base(new NavId(BaseId, new NavArgs(("id", idArg))), loggerFactory)
+        : base(BaseId, new NavArgs(("id", idArg)))
     {
         _unit = unitService.Units[FrequencyUnit.Id];
         _isChecked = new ReactiveProperty<bool>(true).DisposeItWith(Disposable);
@@ -66,8 +66,6 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
             .Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1))
             .Subscribe(_ => UpdateRateText())
             .DisposeItWith(Disposable);
-
-        Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
     }
 
     public void IncreaseRatesCounterSafe()
@@ -78,33 +76,6 @@ public abstract class PacketFilterViewModelBase<TFilter> : RoutableViewModel
     public override IEnumerable<IViewModel> GetChildren()
     {
         yield return IsChecked;
-    }
-
-    private ValueTask InternalCatchEvent(IViewModel src, AsyncRoutedEvent<IViewModel> e)
-    {
-        switch (e)
-        {
-            case SaveLayoutEvent saveLayoutEvent:
-                if (Config is null)
-                {
-                    break;
-                }
-
-                this.HandleSaveLayout(
-                    saveLayoutEvent,
-                    Config,
-                    cfg => cfg.IsChecked = IsChecked.ViewValue.Value
-                );
-                break;
-            case LoadLayoutEvent loadLayoutEvent:
-                Config = this.HandleLoadLayout<PacketFilterViewModelBaseConfig>(
-                    loadLayoutEvent,
-                    cfg => IsChecked.ModelValue.Value = cfg.IsChecked
-                );
-                break;
-        }
-
-        return ValueTask.CompletedTask;
     }
 
     private void UpdateRateText()

@@ -23,16 +23,9 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class PacketViewerViewModelConfig
-{
-    public string SearchText { get; set; } = string.Empty;
-    public bool IsCheckedAllSources { get; set; } = true;
-    public bool IsCheckedAllTypes { get; set; } = true;
-}
-
 public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
 {
-    public const string PageId = "packet-viewer";
+    public const string PageId = "packetViewer";
     public const MaterialIconKind PageIcon = MaterialIconKind.Package;
     private const int MaxPacketsAmount = 1000;
     private const int PacketsReceiveDelayInSeconds = 1;
@@ -44,13 +37,11 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
     private readonly ILoggerFactory _loggerFactory;
     private readonly IUnitService _unit;
     private readonly IDeviceManager _deviceManager;
-    private readonly INavigationService _navigationService;
     private readonly IEnumerable<IPacketConverter> _converters;
     private readonly ObservableFixedSizeRingBuffer<PacketMessageViewModel> _packetsBuffer;
     private readonly ObservableHashSet<SourcePacketFilterViewModel> _filtersBySourceSet;
     private readonly ObservableHashSet<TypePacketFilterViewModel> _filtersByTypeSet;
     private readonly ReactiveProperty<bool> _filterChangeTrigger;
-    private PacketViewerViewModelConfig? _config;
     private ILogger Logger => _loggerFactory.CreateLogger(GetType());
 
     public ICommand ClearAll { get; }
@@ -68,12 +59,10 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         : this(
             DesignTime.PageContext,
             AppHost.Instance.Services.GetRequiredService<IHostEnvironment>(),
-            NullLayoutService.Instance,
             NullLoggerFactory.Instance,
             NullUnitService.Instance,
             [],
             NullDeviceManager.Instance,
-            NullNavigationService.Instance,
             DesignTime.DialogService,
             DesignTime.ExtensionService
         )
@@ -92,12 +81,10 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
     public PacketViewerViewModel(
         IPageContext context,
         IHostEnvironment app,
-        ILayoutService layoutService,
         ILoggerFactory loggerFactory,
         IUnitService unit,
         IEnumerable<IPacketConverter> converters,
         IDeviceManager deviceManager,
-        INavigationService navigationService,
         IDialogService dialogService,
         IExtensionService ext
     )
@@ -108,7 +95,6 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         _unit = unit;
         _converters = converters;
         _deviceManager = deviceManager;
-        _navigationService = navigationService;
         _loggerFactory = loggerFactory;
         _filterChangeTrigger = new ReactiveProperty<bool>(false).DisposeItWith(Disposable);
 
@@ -171,8 +157,8 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
             Disposable
         );
 
-        ExportToCsv = new BindableAsyncCommand(ExportPacketsToCsvCommand.Id, this);
-        ClearAll = new BindableAsyncCommand(ClearAllPacketsCommand.Id, this);
+        ExportToCsv = new ReactiveCommand((_, c) => ExportToCsvImpl(c)).DisposeItWith(Disposable);
+        ClearAll = new ReactiveCommand(_ => ClearAllImpl()).DisposeItWith(Disposable);
 
         IsPaused.ViewValue.Subscribe(_ => SelectedPacket.Value = null).DisposeItWith(Disposable);
         IsCheckedAllSources
@@ -228,31 +214,25 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
 
         _filtersBySourceSet // TODO: Switch to a special routable event when ready
             .ObserveAdd()
-            .SubscribeAwait(
-                async (filter, ct) =>
-                {
-                    await filter.Value.RequestLoadLayout(layoutService, ct);
-                    filter
-                        .Value.IsChecked.ViewValue.Subscribe(_ =>
-                            _filterChangeTrigger.Value = !_filterChangeTrigger.Value
-                        )
-                        .DisposeItWith(Disposable);
-                }
-            )
+            .Subscribe(filter =>
+            {
+                filter
+                    .Value.IsChecked.ViewValue.Subscribe(_ =>
+                        _filterChangeTrigger.Value = !_filterChangeTrigger.Value
+                    )
+                    .DisposeItWith(Disposable);
+            })
             .DisposeItWith(Disposable);
         _filtersByTypeSet // TODO: Switch to a special routable event when ready
             .ObserveAdd()
-            .SubscribeAwait(
-                async (filter, ct) =>
-                {
-                    await filter.Value.RequestLoadLayout(layoutService, ct);
-                    filter
-                        .Value.IsChecked.ViewValue.Subscribe(_ =>
-                            _filterChangeTrigger.Value = !_filterChangeTrigger.Value
-                        )
-                        .DisposeItWith(Disposable);
-                }
-            )
+            .Subscribe(filter =>
+            {
+                filter
+                    .Value.IsChecked.ViewValue.Subscribe(_ =>
+                        _filterChangeTrigger.Value = !_filterChangeTrigger.Value
+                    )
+                    .DisposeItWith(Disposable);
+            })
             .DisposeItWith(Disposable);
 
         Observable
@@ -278,8 +258,6 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
                 packetsView.AttachFilter(viewFilter);
             })
             .DisposeItWith(Disposable);
-
-        Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
     }
 
     public override IEnumerable<IViewModel> GetChildren()
@@ -310,7 +288,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         _packetsBuffer.RemoveAll();
     }
 
-    internal async ValueTask ExportToCsvImpl(CancellationToken cancel = default)
+    internal async ValueTask ExportToCsvImpl(CancellationToken cancel)
     {
         cancel.ThrowIfCancellationRequested();
         using var vm = new SavePacketMessagesDialogViewModel(_loggerFactory);
@@ -416,44 +394,6 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
                 );
             }
         );
-    }
-
-    private ValueTask InternalCatchEvent(IViewModel src, AsyncRoutedEvent<IViewModel> e)
-    {
-        switch (e)
-        {
-            case SaveLayoutEvent saveLayoutEvent:
-                if (_config is null)
-                {
-                    break;
-                }
-
-                this.HandleSaveLayout(
-                    saveLayoutEvent,
-                    _config,
-                    cfg =>
-                    {
-                        cfg.SearchText = Search.Text.ViewValue.Value ?? string.Empty;
-                        cfg.IsCheckedAllSources = IsCheckedAllSources.ViewValue.Value;
-                        cfg.IsCheckedAllTypes = IsCheckedAllTypes.ViewValue.Value;
-                    },
-                    FlushingStrategy.FlushBothViewModelAndView
-                );
-                break;
-            case LoadLayoutEvent loadLayoutEvent:
-                _config = this.HandleLoadLayout<PacketViewerViewModelConfig>(
-                    loadLayoutEvent,
-                    cfg =>
-                    {
-                        Search.Text.ModelValue.Value = cfg.SearchText;
-                        IsCheckedAllSources.ModelValue.Value = cfg.IsCheckedAllSources;
-                        IsCheckedAllTypes.ModelValue.Value = cfg.IsCheckedAllTypes;
-                    }
-                );
-                break;
-        }
-
-        return ValueTask.CompletedTask;
     }
 
     private IEnumerable<PacketMessageViewModel> ConvertToPacketMessage(

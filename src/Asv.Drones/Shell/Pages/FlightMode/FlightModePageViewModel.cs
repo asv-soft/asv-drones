@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
 using Asv.Common;
@@ -13,18 +11,10 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class FlightModePageViewModelConfig
-{
-    public GeoPoint MapCenter { get; set; } = GeoPoint.Zero;
-    public int Zoom { get; set; } = 0;
-}
-
 public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightModePage
 {
-    public const string PageId = "flight-mode";
+    public const string PageId = "flightMode";
     public const MaterialIconKind PageIcon = MaterialIconKind.MapSearch;
-
-    private FlightModePageViewModelConfig? _config;
 
     public FlightModePageViewModel()
         : this(
@@ -61,8 +51,6 @@ public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightMo
         Map = new MapViewModel(nameof(Map), mapService)
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
-
-        Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
     }
 
     public ObservableList<IFlightWidget> Widgets { get; }
@@ -79,49 +67,16 @@ public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightMo
         }
     }
 
-    private ValueTask InternalCatchEvent(IViewModel src, AsyncRoutedEvent<IViewModel> e)
-    {
-        switch (e)
-        {
-            case SaveLayoutEvent saveLayoutEvent:
-                if (_config is null)
-                {
-                    break;
-                }
-
-                this.HandleSaveLayout(
-                    saveLayoutEvent,
-                    _config,
-                    cfg =>
-                    {
-                        cfg.MapCenter = Map.CenterMap.Value;
-                        cfg.Zoom = Map.Zoom.Value;
-                    },
-                    FlushingStrategy.FlushBothViewModelAndView
-                );
-                break;
-            case LoadLayoutEvent loadLayoutEvent:
-                _config = this.HandleLoadLayout<FlightModePageViewModelConfig>(
-                    loadLayoutEvent,
-                    cfg =>
-                    {
-                        Map.CenterMap.Value = cfg.MapCenter;
-                        Map.Zoom.Value = cfg.Zoom switch
-                        {
-                            < IZoomService.MinZoomLevel => IZoomService.MinZoomLevel,
-                            > IZoomService.MaxZoomLevel => IZoomService.MaxZoomLevel,
-                            _ => cfg.Zoom,
-                        };
-                    }
-                );
-                break;
-        }
-
-        return ValueTask.CompletedTask;
-    }
-
     protected override void AfterLoadExtensions()
     {
         // nothing to do
+        Layout.Register(
+            nameof(Map.CenterMap),
+            x => Map.CenterMap.Value = x,
+            () => Map.CenterMap.Value,
+            Map.CenterMap
+        );
+        Layout.Register(nameof(Map.Zoom), x => Map.Zoom.Value = x, () => Map.Zoom.Value, Map.Zoom);
+        Layout.LoadWhenRootAttached(RootTracking).AddTo(ref DisposableBag);
     }
 }

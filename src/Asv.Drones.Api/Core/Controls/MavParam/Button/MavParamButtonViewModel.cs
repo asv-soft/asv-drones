@@ -33,6 +33,7 @@ public class MavParamButtonViewModel : MavParamViewModel
             ),
             new Subject<MavParamValue>(),
             (_, _) => ValueTask.FromResult(new MavParamValue(100)),
+            null,
             DesignTime.LoggerFactory
         )
     {
@@ -43,9 +44,10 @@ public class MavParamButtonViewModel : MavParamViewModel
         MavParamInfo info,
         Observable<MavParamValue> update,
         InitialReadParamDelegate initReadCallback,
+        WriteParamDelegate? writeCallback,
         ILoggerFactory loggerFactory
     )
-        : base(info, update, initReadCallback, loggerFactory)
+        : base(info, update, initReadCallback, writeCallback, loggerFactory)
     {
         ShowHeader = false;
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
@@ -21,15 +22,17 @@ public class ParamItemViewModelConfig
     public bool IsPinned { get; set; }
 }
 
-public class ParamItemViewModel : RoutableViewModel
+public class ParamItemViewModel : ViewModel
 {
+    public const string ViewModelId = "mavParamItem";
+
     private readonly ParamItem _paramItem;
     private readonly ReactiveProperty<bool> _isPinned;
     private readonly ReactiveProperty<bool> _isStarred;
     private bool _internalUpdate;
 
     public ParamItemViewModel()
-        : base(DesignTime.Id, DesignTime.LoggerFactory) // use base class instead of ParamItem, because there is no way to create an empty Param item
+        : base(NavId.GenerateRandomAsString()) // use base class instead of ParamItem, because there is no way to create an empty Param item
     {
         DesignTime.ThrowIfNotDesignMode();
 
@@ -41,15 +44,16 @@ public class ParamItemViewModel : RoutableViewModel
     }
 
     public ParamItemViewModel(
-        NavId id,
+        NavArgs args,
         ParamItem paramItem,
         ILoggerFactory loggerFactory,
         ParamItemViewModelConfig? initialConfig = null
     )
-        : base(id)
+        : base(ViewModelId, args)
     {
         ArgumentNullException.ThrowIfNull(paramItem);
         ArgumentNullException.ThrowIfNull(loggerFactory);
+        var logger = loggerFactory.CreateLogger<ParamItemViewModel>();
 
         _paramItem = paramItem;
         Name = paramItem.Name;
@@ -227,17 +231,12 @@ public class ParamItemViewModel : RoutableViewModel
             {
                 try
                 {
-                    await Api.Commands.Mavlink.WriteParam(
-                        this,
-                        paramItem.Name,
-                        paramItem.Value.Value,
-                        ct
-                    );
+                    await paramItem.Write(ct);
                     IsSynced.Value = true;
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(ex, "Write {Name} error", Name);
+                    logger.LogError(ex, "Write {Name} error", Name);
                 }
             }
         ).DisposeItWith(Disposable);
@@ -247,12 +246,12 @@ public class ParamItemViewModel : RoutableViewModel
             {
                 try
                 {
-                    await Api.Commands.Mavlink.ReadParam(this, paramItem.Name, ct);
+                    await paramItem.Read(ct);
                     IsSynced.Value = true;
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(ex, "Read {Name} error", Name);
+                    logger.LogError(ex, "Read {Name} error", Name);
                 }
             }
         ).DisposeItWith(Disposable);
@@ -271,8 +270,6 @@ public class ParamItemViewModel : RoutableViewModel
                 async (_, ct) => await this.Rise(new ParamItemChangedEvent(this, IsStarred), ct)
             )
             .DisposeItWith(Disposable);
-
-        Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
     }
 
     public string Name { get; }
@@ -350,35 +347,4 @@ public class ParamItemViewModel : RoutableViewModel
     }
 
     #endregion
-
-    private ValueTask InternalCatchEvent(IViewModel src, AsyncRoutedEvent<IViewModel> e)
-    {
-        switch (e)
-        {
-            case LoadLayoutEvent loadLayoutEvent:
-            {
-                if (Parent is not MavParamsPageViewModel parent)
-                {
-                    break;
-                }
-
-                parent.HandleLoadLayout<MavParamsPageViewModelConfig>(
-                    loadLayoutEvent,
-                    cfg =>
-                    {
-                        if (!cfg.Params.TryGetValue(Name, out var paramItemConfig))
-                        {
-                            return;
-                        }
-
-                        IsPinned.ModelValue.Value = paramItemConfig.IsPinned;
-                        IsStarred.ModelValue.Value = paramItemConfig.IsStarred;
-                    }
-                );
-                break;
-            }
-        }
-
-        return ValueTask.CompletedTask;
-    }
 }

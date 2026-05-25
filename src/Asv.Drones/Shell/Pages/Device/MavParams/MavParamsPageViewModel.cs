@@ -33,12 +33,10 @@ public class MavParamsPageViewModel
     : DevicePageViewModel<IMavParamsPageViewModel>,
         IMavParamsPageViewModel
 {
-    public const string PageId = "mav-params";
+    public const string PageId = "mavParams";
     public const MaterialIconKind PageIcon = MaterialIconKind.CogTransferOutline;
 
-    private readonly ILayoutService _layoutService;
     private readonly ILoggerFactory _loggerFactory;
-    private readonly INavigationService _nav;
     private readonly ObservableList<ParamItemViewModel> _viewedParamsList; // TODO: Separate views for this collection and all params
     private readonly ReactiveProperty<bool> _isStarredOnly;
     private readonly SynchronizedViewFilter<
@@ -59,8 +57,6 @@ public class MavParamsPageViewModel
             DesignTime.PageContext,
             NullDeviceManager.Instance,
             NullLoggerFactory.Instance,
-            NullLayoutService.Instance,
-            NullNavigationService.Instance,
             DesignTime.DialogService,
             DesignTime.ExtensionService
         )
@@ -82,23 +78,17 @@ public class MavParamsPageViewModel
         IPageContext context,
         IDeviceManager devices,
         ILoggerFactory loggerFactory,
-        ILayoutService layoutService,
-        INavigationService nav,
         IDialogService dialogService,
         IExtensionService ext
     )
-        : base(PageId, context, devices, layoutService, loggerFactory, dialogService, ext)
+        : base(PageId, context, devices, loggerFactory, dialogService, ext)
     {
         ArgumentNullException.ThrowIfNull(devices);
-        ArgumentNullException.ThrowIfNull(layoutService);
         ArgumentNullException.ThrowIfNull(loggerFactory);
-        ArgumentNullException.ThrowIfNull(nav);
 
         Header = RS.MavParamsPageViewModel_Title;
 
-        _layoutService = layoutService;
         _loggerFactory = loggerFactory;
-        _nav = nav;
         _isStarredOnly = new ReactiveProperty<bool>().DisposeItWith(Disposable);
         _viewedParamsList = [];
         ViewedParams = _viewedParamsList
@@ -149,25 +139,23 @@ public class MavParamsPageViewModel
 
         Disposable.AddAction(StopUpdateParamsImpl);
 
-        UpdateParams = new BindableAsyncCommand(UpdateParamsCommand.Id, this);
+        UpdateParams = new ReactiveCommand((_, ct) => UpdateParamsImpl(ct)).DisposeItWith(
+            Disposable
+        );
 
-        StopUpdateParams = new BindableAsyncCommand(StopUpdateParamsCommand.Id, this);
+        StopUpdateParams = new ReactiveCommand(_ => StopUpdateParamsImpl()).DisposeItWith(
+            Disposable
+        );
 
-        RemoveAllPins = new ReactiveCommand(
-            async (_, ct) =>
+        RemoveAllPins = new ReactiveCommand(_ =>
+        {
+            if (AllParams?.Any(item => item.IsPinned.ViewValue.Value) != true)
             {
-                if (!AllParams?.Any(item => item.IsPinned.ViewValue.Value) ?? false)
-                {
-                    return;
-                }
-
-                await this.ExecuteCommand(
-                    RemoveAllPinsCommand.Id,
-                    CommandArg.CreateDictionary(),
-                    ct
-                );
+                return;
             }
-        ).DisposeItWith(Disposable);
+
+            RemoveAllPinsImpl();
+        }).DisposeItWith(Disposable);
 
         IsStarredOnly
             .ViewValue.ThrottleLast(TimeSpan.FromMilliseconds(500))
@@ -194,7 +182,7 @@ public class MavParamsPageViewModel
                 )
         );
 
-        Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
+        Events.Catch(InternalCatchEvent).DisposeItWith(Disposable);
     }
 
     private Task UpdateImpl(string? query, IProgress<double> progress, CancellationToken cancel)
@@ -230,7 +218,12 @@ public class MavParamsPageViewModel
             ParamItemViewModelConfig? config = null;
             _config?.Params.TryGetValue(kvp.Key, out config);
 
-            return new ParamItemViewModel(new NavId(kvp.Key), kvp.Value, _loggerFactory, config);
+            return new ParamItemViewModel(
+                new NavArgs(("id", kvp.Key)),
+                kvp.Value,
+                _loggerFactory,
+                config
+            );
         });
         _view.RegisterTo(cancel);
         _view.DisposeMany().RegisterTo(cancel);
@@ -251,8 +244,6 @@ public class MavParamsPageViewModel
             .SubscribeAwait(
                 async (e, ct) =>
                 {
-                    await e.Value.View.RequestLoadLayout(_layoutService, ct);
-
                     if (!e.Value.View.IsPinned.ViewValue.Value)
                     {
                         return;
@@ -293,7 +284,7 @@ public class MavParamsPageViewModel
         }
     }
 
-    internal async Task UpdateParamsImpl(CancellationToken cancel = default)
+    internal async ValueTask UpdateParamsImpl(CancellationToken cancel = default)
     {
         if (IsRefreshing.Value)
         {
@@ -333,6 +324,27 @@ public class MavParamsPageViewModel
         catch (Exception e)
         {
             Logger.LogError(e, "Error to read all param items");
+        }
+    }
+
+    private void RemoveAllPinsImpl()
+    {
+        if (AllParams is null)
+        {
+            return;
+        }
+
+        foreach (var item in AllParams.Where(item => item.IsPinned.ViewValue.Value).ToArray())
+        {
+            item.IsPinned.ModelValue.Value = false;
+        }
+
+        var notSelected = _viewedParamsList
+            .Where(item => item.Id != SelectedItem.Value?.Id)
+            .ToArray();
+        foreach (var item in notSelected)
+        {
+            _viewedParamsList.Remove(item);
         }
     }
 
@@ -387,7 +399,11 @@ public class MavParamsPageViewModel
 
     protected override void AfterLoadExtensions() { }
 
-    private async ValueTask InternalCatchEvent(IViewModel src, AsyncRoutedEvent<IViewModel> e)
+    private async ValueTask InternalCatchEvent(
+        IViewModel src,
+        AsyncRoutedEvent<IViewModel> e,
+        CancellationToken cancel
+    )
     {
         switch (e)
         {
@@ -413,59 +429,6 @@ public class MavParamsPageViewModel
                     closeEvent.AddRestriction(new Restriction(this));
                 }
 
-                break;
-            }
-
-            case SaveLayoutEvent saveLayoutEvent:
-            {
-                if (!IsDeviceInitialized.Value)
-                {
-                    if (saveLayoutEvent.IsFlushToFile)
-                    {
-                        saveLayoutEvent.LayoutService.FlushFromMemoryViewModelAndView(this);
-                    }
-                    break;
-                }
-
-                if (_config is null)
-                {
-                    break;
-                }
-
-                this.HandleSaveLayout(
-                    saveLayoutEvent,
-                    _config,
-                    cfg =>
-                    {
-                        cfg.SearchText = Search.Text.ViewValue.Value ?? string.Empty;
-                        cfg.IsStarredOnly = IsStarredOnly.ViewValue.Value;
-                        cfg.Params = _view
-                            .Where(p => p.IsLayoutChanged.CurrentValue)
-                            .ToDictionary(
-                                p => p.Name,
-                                p => new ParamItemViewModelConfig
-                                {
-                                    Name = p.Name,
-                                    IsPinned = p.IsPinned.ViewValue.Value,
-                                    IsStarred = p.IsStarred.ViewValue.Value,
-                                }
-                            );
-                    },
-                    FlushingStrategy.FlushBothViewModelAndView
-                );
-                break;
-            }
-
-            case LoadLayoutEvent loadLayoutEvent:
-            {
-                _config = this.HandleLoadLayout<MavParamsPageViewModelConfig>(
-                    loadLayoutEvent,
-                    cfg =>
-                    {
-                        Search.Text.ModelValue.Value = cfg.SearchText;
-                        IsStarredOnly.ModelValue.Value = cfg.IsStarredOnly;
-                    }
-                );
                 break;
             }
         }

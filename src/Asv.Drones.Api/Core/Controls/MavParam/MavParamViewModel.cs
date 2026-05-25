@@ -17,22 +17,36 @@ public delegate ValueTask<MavParamValue> InitialReadParamDelegate(
     CancellationToken cancel
 );
 
+public delegate ValueTask WriteParamDelegate(
+    string paramName,
+    MavParamValue value,
+    CancellationToken cancel
+);
+
 public class MavParamViewModel
-    : RoutableViewModel,
+    : ViewModel,
         ISupportRefresh,
         ISupportCancel,
         IComparable<MavParamViewModel>,
         IComparable
 {
+    private readonly InitialReadParamDelegate _readParam;
+    private readonly WriteParamDelegate _writeParam;
+    private readonly ILogger<MavParamViewModel> _logger;
+
     protected MavParamViewModel(
         MavParamInfo metadata,
         Observable<MavParamValue> update,
         InitialReadParamDelegate initReadCallback,
+        WriteParamDelegate? writeCallback,
         ILoggerFactory loggerFactory
     )
-        : base(metadata.Id, loggerFactory)
+        : base(metadata.Id)
     {
         Info = metadata;
+        _logger = loggerFactory.CreateLogger<MavParamViewModel>();
+        _readParam = initReadCallback;
+        _writeParam = writeCallback ?? ((_, _, _) => ValueTask.CompletedTask);
         update
             .ObserveOnCurrentSynchronizationContext()
             .Subscribe(InternalOnRemoteChanged)
@@ -65,7 +79,7 @@ public class MavParamViewModel
         }
         catch (Exception e)
         {
-            Logger.ZLogError(
+            _logger.ZLogError(
                 e,
                 $"Failed to read initial value for param {Info.Metadata.Name}:{e.Message}"
             );
@@ -101,7 +115,7 @@ public class MavParamViewModel
             IsNetworkError = false;
             NetworkErrorMessage = null;
             IsInEditMode = false;
-            await Api.Commands.Mavlink.ReadParam(this, Info.Metadata.Name);
+            InternalOnRemoteChanged(await _readParam(Info.Metadata.Name, DisposeCancel));
         }
         catch (Exception e)
         {
@@ -126,7 +140,8 @@ public class MavParamViewModel
             NetworkErrorMessage = null;
             IsNetworkError = false;
             IsBusy = true;
-            await Commands.Mavlink.WriteParam(this, Info.Metadata.Name, Info.Convert(Value.Value));
+            await _writeParam(Info.Metadata.Name, Info.Convert(Value.Value), DisposeCancel);
+            IsSync = true;
         }
         catch (Exception e)
         {
@@ -205,6 +220,11 @@ public class MavParamViewModel
     public override IEnumerable<IViewModel> GetChildren()
     {
         yield break;
+    }
+
+    public async ValueTask Refresh(CancellationToken cancel)
+    {
+        await _readParam(Info.Id, cancel);
     }
 
     public void Cancel() { }

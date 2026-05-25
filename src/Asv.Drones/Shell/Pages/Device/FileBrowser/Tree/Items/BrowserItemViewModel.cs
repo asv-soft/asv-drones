@@ -11,10 +11,12 @@ using R3;
 
 namespace Asv.Drones;
 
-public abstract class BrowserItemViewModel : RoutableViewModel, IBrowserItemViewModel
+public abstract class BrowserItemViewModel : ViewModel, IBrowserItemViewModel
 {
     private readonly char _separator;
     private IBrowserItemsOperations? _ops;
+    private readonly ILogger<BrowserItemViewModel> _logger;
+
     protected IBrowserItemsOperations ItemsOperations =>
         _ops
         ?? throw new InvalidOperationException(
@@ -22,7 +24,7 @@ public abstract class BrowserItemViewModel : RoutableViewModel, IBrowserItemView
         );
 
     protected BrowserItemViewModel(
-        NavId id,
+        string id,
         string? parentPath,
         string path,
         FtpBrowserSourceType type,
@@ -33,7 +35,7 @@ public abstract class BrowserItemViewModel : RoutableViewModel, IBrowserItemView
         ParentPath = parentPath;
         Path = path;
         Type = type;
-
+        _logger = loggerFactory.CreateLogger<BrowserItemViewModel>();
         _separator =
             Type is FtpBrowserSourceType.Local
                 ? System.IO.Path.DirectorySeparatorChar
@@ -175,7 +177,9 @@ public abstract class BrowserItemViewModel : RoutableViewModel, IBrowserItemView
             EditedName.Value = oldName;
             return;
         }
-        await this.ExecuteCommand(
+
+        // TODO: implement rename
+        /*await this.ExecuteCommand(
             CommitRenameCommand.Id,
             CommandArg.CreateDictionary(
                 new Dictionary<string, CommandArg>
@@ -185,7 +189,7 @@ public abstract class BrowserItemViewModel : RoutableViewModel, IBrowserItemView
                 }
             ),
             ct
-        );
+        );*/
     }
 
     /// <summary>
@@ -200,5 +204,10 @@ public abstract class BrowserItemViewModel : RoutableViewModel, IBrowserItemView
     public override IEnumerable<IViewModel> GetChildren()
     {
         return [];
+    }
+
+    public ValueTask Remove(CancellationToken ct)
+    {
+        return ValueTask.CompletedTask;
     }
 }

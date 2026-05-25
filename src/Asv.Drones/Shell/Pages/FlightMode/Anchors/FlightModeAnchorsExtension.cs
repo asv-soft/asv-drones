@@ -10,7 +10,7 @@ using R3;
 
 namespace Asv.Drones;
 
-public class FlightModeAnchorsExtension(IDeviceManager conn, ILoggerFactory loggerFactory)
+public class FlightModeAnchorsExtension(IDeviceManager conn, IExtensionService ext)
     : IExtensionFor<IFlightModePage>
 {
     public void Extend(IFlightModePage context, CompositeDisposable contextDispose)
@@ -26,7 +26,7 @@ public class FlightModeAnchorsExtension(IDeviceManager conn, ILoggerFactory logg
     private UavAnchor? TryCreateAnchor(IClientDevice device)
     {
         var pos = device.GetMicroservice<IPositionClientEx>();
-        return pos != null ? new UavAnchor(device.Id, conn, device, pos, loggerFactory) : null;
+        return pos != null ? new UavAnchor(device.Id, conn, device, ext, pos) : null;
     }
 
     private static bool RemoveAnchor(IClientDevice dev, UavAnchor anchor)

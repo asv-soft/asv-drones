@@ -17,7 +17,7 @@ namespace Asv.Drones;
 
 public sealed class SetupMotorsViewModel : SetupSubpage
 {
-    public const string PageId = "motor-test";
+    public const string PageId = "motorTest";
     public const MaterialIconKind Icon = MaterialIconKind.Motor;
     private const int DefaultTestDurationInSeconds = 3;
     private readonly ILoggerFactory _loggerFactory;

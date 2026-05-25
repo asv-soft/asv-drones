@@ -6,9 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones.Plane;
 
-public class PlaneSectionViewModel : RoutableViewModel, IFlightWidgetSection<ArduPlaneClientDevice>
+public class PlaneSectionViewModel : ViewModel, IFlightWidgetSection<ArduPlaneClientDevice>
 {
-    public const string SectionId = "plane-widget-section";
+    public const string SectionId = "planeWidgetSection";
 
     public PlaneSectionViewModel()
         : this(DesignTime.LoggerFactory) { }

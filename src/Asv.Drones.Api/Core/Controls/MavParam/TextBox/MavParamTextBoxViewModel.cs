@@ -39,6 +39,7 @@ public class MavParamTextBoxViewModel : MavParamViewModel
             ),
             new Subject<MavParamValue>(),
             (_, _) => ValueTask.FromResult(new MavParamValue(100)),
+            null,
             DesignTime.LoggerFactory
         )
     {
@@ -72,9 +73,10 @@ public class MavParamTextBoxViewModel : MavParamViewModel
         MavParamInfo param,
         Observable<MavParamValue> update,
         InitialReadParamDelegate initReadCallback,
+        WriteParamDelegate? writeCallback,
         ILoggerFactory loggerFactory
     )
-        : base(param, update, initReadCallback, loggerFactory)
+        : base(param, update, initReadCallback, writeCallback, loggerFactory)
     {
         _textValue = new BindableReactiveProperty<string>().DisposeItWith(Disposable);
         _internalChange = true;

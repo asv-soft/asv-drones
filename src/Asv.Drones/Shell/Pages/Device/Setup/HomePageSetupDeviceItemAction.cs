@@ -1,11 +1,13 @@
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
+using Asv.Common;
 using Asv.IO;
-using Microsoft.Extensions.Logging;
+using Asv.Modeling;
+using R3;
 
 namespace Asv.Drones;
 
-public class HomePageSetupDeviceItemAction(ILoggerFactory loggerFactory) : HomePageDeviceItemAction
+public class HomePageSetupDeviceItemAction : HomePageDeviceItemAction
 {
     protected override IActionViewModel? TryCreateAction(
         IClientDevice device,
@@ -14,11 +16,20 @@ public class HomePageSetupDeviceItemAction(ILoggerFactory loggerFactory) : HomeP
     {
         return new ActionViewModel(SetupPageViewModel.PageId)
         {
-            Header = OpenSetupCommand.StaticInfo.Name,
-            Description = OpenSetupCommand.StaticInfo.Description,
-            Icon = OpenSetupCommand.StaticInfo.Icon,
-            Command = new BindableAsyncCommand(OpenSetupCommand.Id, context),
-            CommandParameter = DevicePageViewModelMixin.CreateOpenPageArgs(device.Id),
+            Header = RS.OpenSetupCommand_CommandInfo_Name,
+            Description = RS.OpenSetupCommand_CommandInfo_Description,
+            Icon = SetupPageViewModel.PageIcon,
+            Command = new ReactiveCommand(
+                async (_, _) =>
+                    await context.GoTo(
+                        new NavPath(
+                            new NavId(
+                                SetupPageViewModel.PageId,
+                                DevicePageViewModelMixin.CreateOpenPageArgs(device.Id)
+                            )
+                        )
+                    )
+            ),
         };
     }
 }

@@ -5,18 +5,16 @@ using Asv.Avalonia;
 using Asv.Common;
 using Asv.Mavlink;
 using Asv.Modeling;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using R3;
 
 namespace Asv.Drones;
 
-public sealed class DroneFrameItemViewModel : RoutableViewModel
+public sealed class DroneFrameItemViewModel : ViewModel
 {
-    public const string BaseId = "frame-item";
+    public const string BaseId = "frameItem";
 
     public DroneFrameItemViewModel()
-        : this(NullDroneFrame.Instance, NullLoggerFactory.Instance)
+        : this(NullDroneFrame.Instance)
     {
         DesignTime.ThrowIfNotDesignMode();
         ApplyCommand = new ReactiveCommand(
@@ -30,8 +28,8 @@ public sealed class DroneFrameItemViewModel : RoutableViewModel
         ).DisposeItWith(Disposable);
     }
 
-    public DroneFrameItemViewModel(IDroneFrame model, ILoggerFactory loggerFactory)
-        : base(new NavId(BaseId, new NavArgs(("id", model.Id))), loggerFactory)
+    public DroneFrameItemViewModel(IDroneFrame model)
+        : base(BaseId, new NavArgs(("id", model.Id)))
     {
         Model = model;
         IsCurrent = new BindableReactiveProperty<bool>(false).DisposeItWith(Disposable);

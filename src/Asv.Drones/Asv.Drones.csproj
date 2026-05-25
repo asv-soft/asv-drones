@@ -83,6 +83,7 @@
       <Folder Include="Core\" />
       <Folder Include="Core\Controls\DeviceTelemetry\AngleUavIndicator\Items\" />
       <Folder Include="Core\Controls\DeviceTelemetry\Rtt\" />
+      <Folder Include="Shell\Pages\Flight\Widgets\" />
     </ItemGroup>
 
     <ItemGroup>

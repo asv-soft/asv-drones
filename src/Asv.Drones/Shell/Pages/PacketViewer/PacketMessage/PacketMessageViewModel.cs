@@ -8,9 +8,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
 
-public class PacketMessageViewModel : RoutableViewModel
+public class PacketMessageViewModel : ViewModel
 {
-    public const string PageId = "packet-message";
+    public const string PageId = "packetMessage";
 
     public DateTime DateTime { get; }
     public string Source { get; }
@@ -26,7 +26,7 @@ public class PacketMessageViewModel : RoutableViewModel
     }
 
     public PacketMessageViewModel()
-        : base(DesignTime.Id, DesignTime.LoggerFactory)
+        : base(DesignTime.Id.TypeId)
     {
         DesignTime.ThrowIfNotDesignMode();
         DateTime = DateTime.Now;
@@ -43,8 +43,12 @@ public class PacketMessageViewModel : RoutableViewModel
         ILoggerFactory loggerFactory
     )
         : base(
-            NavId.GenerateByHash(packet.SystemId, packet.ComponentId, packet.Sequence, packet.Id),
-            loggerFactory
+            NavId.GenerateByHashAsString(
+                packet.SystemId,
+                packet.ComponentId,
+                packet.Sequence,
+                packet.Id
+            )
         )
     {
         DateTime = DateTime.Now;

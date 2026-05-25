@@ -1,13 +1,14 @@
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
+using Asv.Common;
 using Asv.IO;
 using Asv.Mavlink;
-using Microsoft.Extensions.Logging;
+using Asv.Modeling;
+using R3;
 
 namespace Asv.Drones;
 
-public class HomePageFileBrowserDeviceItemAction(ILoggerFactory loggerFactory)
-    : HomePageDeviceItemAction
+public class HomePageFileBrowserDeviceItemAction : HomePageDeviceItemAction
 {
     protected override IActionViewModel? TryCreateAction(
         IClientDevice device,
@@ -21,11 +22,20 @@ public class HomePageFileBrowserDeviceItemAction(ILoggerFactory loggerFactory)
 
         return new ActionViewModel("browser")
         {
-            Header = OpenFileBrowserCommand.StaticInfo.Name,
-            Description = OpenFileBrowserCommand.StaticInfo.Description,
-            Icon = OpenFileBrowserCommand.StaticInfo.Icon,
-            Command = new BindableAsyncCommand(OpenFileBrowserCommand.Id, context),
-            CommandParameter = new StringArg($"dev_id={device.Id}"), // TODO: replate with DevicePageViewModelMixin.CreateOpenPageArgs
+            Header = RS.OpenFileBrowserCommand_CommandInfo_Name,
+            Description = RS.OpenFileBrowserCommand_CommandInfo_Description,
+            Icon = FileBrowserViewModel.PageIcon,
+            Command = new ReactiveCommand(
+                async (_, _) =>
+                    await context.GoTo(
+                        new NavPath(
+                            new NavId(
+                                FileBrowserViewModel.PageId,
+                                DevicePageViewModelMixin.CreateOpenPageArgs(device.Id)
+                            )
+                        )
+                    )
+            ),
         };
     }
 }

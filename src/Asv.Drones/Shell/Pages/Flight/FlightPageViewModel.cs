@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
@@ -12,19 +13,10 @@ using ObservableCollections;
 
 namespace Asv.Drones;
 
-public sealed class FlightPageViewModelConfig
-{
-    public GeoPoint MapCenter { get; set; } = GeoPoint.Zero;
-    public int Zoom { get; set; } = IZoomService.MinZoomLevel;
-    public double Rotation { get; set; } = 0.0;
-}
-
 public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
 {
     public const string PageId = "flight";
     public const MaterialIconKind PageIcon = MaterialIconKind.MapSearch;
-
-    private FlightPageViewModelConfig? _config;
 
     public FlightPageViewModel()
         : this(
@@ -36,7 +28,7 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
         )
     {
         DesignTime.ThrowIfNotDesignMode();
-        var drone = new MapAnchor<IMapAnchor>(DesignTime.Id.TypeId)
+        var drone = new MapAnchor(DesignTime.Id.TypeId)
         {
             Icon = MaterialIconKind.Navigation,
             Location = new GeoPoint(53, 53, 100),
@@ -52,7 +44,6 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
             TimeSpan.FromSeconds(1),
             TimeSpan.FromSeconds(1)
         );
-        Widgets.Add(new UavWidgetViewModel { Header = "Device11" });
     }
 
     public FlightPageViewModel(
@@ -74,8 +65,6 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
         Widgets.SetRoutableParent(this).DisposeItWith(Disposable);
         Widgets.DisposeRemovedItems().DisposeItWith(Disposable);
         WidgetsView = Widgets.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);
-
-        Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
     }
 
     public NotifyCollectionChangedSynchronizedViewList<IUavFlightWidget> WidgetsView { get; }
@@ -90,49 +79,6 @@ public class FlightPageViewModel : PageViewModel<IFlightMode>, IFlightMode
         {
             yield return widget;
         }
-    }
-
-    private ValueTask InternalCatchEvent(IViewModel src, AsyncRoutedEvent<IViewModel> e)
-    {
-        switch (e)
-        {
-            case SaveLayoutEvent saveLayoutEvent:
-                if (_config is null)
-                {
-                    break;
-                }
-
-                this.HandleSaveLayout(
-                    saveLayoutEvent,
-                    _config,
-                    cfg =>
-                    {
-                        cfg.MapCenter = MapViewModel.CenterMap.Value;
-                        cfg.Zoom = MapViewModel.Zoom.Value;
-                        cfg.Rotation = MapViewModel.Rotation.Value;
-                    },
-                    FlushingStrategy.FlushBothViewModelAndView
-                );
-                break;
-            case LoadLayoutEvent loadLayoutEvent:
-                _config = this.HandleLoadLayout<FlightPageViewModelConfig>(
-                    loadLayoutEvent,
-                    cfg =>
-                    {
-                        MapViewModel.CenterMap.Value = cfg.MapCenter;
-                        MapViewModel.Zoom.Value = cfg.Zoom switch
-                        {
-                            < IZoomService.MinZoomLevel => IZoomService.MinZoomLevel,
-                            > IZoomService.MaxZoomLevel => IZoomService.MaxZoomLevel,
-                            _ => cfg.Zoom,
-                        };
-                        MapViewModel.Rotation.Value = cfg.Rotation;
-                    }
-                );
-                break;
-        }
-
-        return ValueTask.CompletedTask;
     }
 
     protected override void AfterLoadExtensions()

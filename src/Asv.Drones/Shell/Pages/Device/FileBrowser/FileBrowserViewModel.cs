@@ -12,6 +12,7 @@ using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
 using Asv.Modeling;
+using Avalonia.Input;
 using Material.Icons;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,25 +24,12 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class FileBrowserViewModelConfig
-{
-    public string LocalSearchText { get; set; } = string.Empty;
-    public string RemoteSearchText { get; set; } = string.Empty;
-    public string? LocalSelectedItemKey { get; set; }
-    public string? RemoteSelectedItemKey { get; set; }
-    public IDictionary<string, DirectoryItemViewModelConfig> LocalDirectories { get; set; } =
-        new Dictionary<string, DirectoryItemViewModelConfig>();
-    public IDictionary<string, DirectoryItemViewModelConfig> RemoteDirectories { get; set; } =
-        new Dictionary<string, DirectoryItemViewModelConfig>();
-}
-
 public class FileBrowserViewModel
     : DevicePageViewModel<IFileBrowserViewModel>,
         IFileBrowserViewModel,
-        ISupportRefresh,
-        ITransferFtpEntries
+        ISupportRefresh
 {
-    public const string PageId = "files.browser";
+    public const string PageId = "filesBrowser";
     public const MaterialIconKind PageIcon = MaterialIconKind.FolderEye;
     private const int SearchThrottleMs = 500;
 
@@ -49,7 +37,6 @@ public class FileBrowserViewModel
 
     private readonly YesOrNoDialogPrefab _yesNoDialog;
     private readonly ILoggerFactory _loggerFactory;
-    private readonly INavigationService _navigation;
     private readonly ProgressWithLock _transfer;
     private readonly string _localRootPath;
     private readonly string _remoteRootPath;
@@ -61,7 +48,6 @@ public class FileBrowserViewModel
 
     private FtpClientService? _ftpService;
     private FileBrowserBackend? _backend;
-    private FileBrowserViewModelConfig? _config;
     private ILogger Logger => _loggerFactory.CreateLogger(GetType());
 
     public FileBrowserViewModel()
@@ -69,9 +55,7 @@ public class FileBrowserViewModel
             DesignTime.PageContext,
             NullDeviceManager.Instance,
             AppHost.Instance.Services.GetRequiredService<IHostEnvironment>(),
-            NullLayoutService.Instance,
             NullLoggerFactory.Instance,
-            NullNavigationService.Instance,
             NullDialogService.Instance,
             NullExtensionService.Instance
         )
@@ -80,7 +64,7 @@ public class FileBrowserViewModel
             new ObservableList<IBrowserItemViewModel>
             {
                 new DirectoryItemViewModel(
-                    NavId.Empty,
+                    NavId.GenerateRandomAsString(),
                     "/",
                     "/folder/",
                     "folder",
@@ -88,7 +72,7 @@ public class FileBrowserViewModel
                     _loggerFactory
                 ),
                 new FileItemViewModel(
-                    NavId.Empty,
+                    NavId.GenerateRandomAsString(),
                     "/",
                     "/file.txt",
                     "file.txt",
@@ -97,7 +81,7 @@ public class FileBrowserViewModel
                     _loggerFactory
                 ),
                 new FileItemViewModel(
-                    NavId.Empty,
+                    NavId.GenerateRandomAsString(),
                     "/",
                     "/file2.txt",
                     "file2.txt",
@@ -106,7 +90,7 @@ public class FileBrowserViewModel
                     _loggerFactory
                 ),
                 new FileItemViewModel(
-                    NavId.Empty,
+                    NavId.GenerateRandomAsString(),
                     "/",
                     "/file3.txt",
                     "file3.txt",
@@ -115,7 +99,7 @@ public class FileBrowserViewModel
                     _loggerFactory
                 ),
                 new FileItemViewModel(
-                    NavId.Empty,
+                    NavId.GenerateRandomAsString(),
                     "/",
                     "/file4.txt",
                     "file4.txt",
@@ -130,7 +114,7 @@ public class FileBrowserViewModel
             new ObservableList<IBrowserItemViewModel>
             {
                 new DirectoryItemViewModel(
-                    NavId.Empty,
+                    NavId.GenerateRandomAsString(),
                     "/",
                     "/folder/",
                     "folder",
@@ -138,7 +122,7 @@ public class FileBrowserViewModel
                     _loggerFactory
                 ),
                 new FileItemViewModel(
-                    NavId.Empty,
+                    NavId.GenerateRandomAsString(),
                     "/",
                     "/file.txt",
                     "file.txt",
@@ -147,7 +131,7 @@ public class FileBrowserViewModel
                     _loggerFactory
                 ),
                 new FileItemViewModel(
-                    NavId.Empty,
+                    NavId.GenerateRandomAsString(),
                     "/",
                     "/file2.txt",
                     "file2.txt",
@@ -156,7 +140,7 @@ public class FileBrowserViewModel
                     _loggerFactory
                 ),
                 new FileItemViewModel(
-                    NavId.Empty,
+                    NavId.GenerateRandomAsString(),
                     "/",
                     "/file3.txt",
                     "file3.txt",
@@ -165,7 +149,7 @@ public class FileBrowserViewModel
                     _loggerFactory
                 ),
                 new FileItemViewModel(
-                    NavId.Empty,
+                    NavId.GenerateRandomAsString(),
                     "/",
                     "/file4.txt",
                     "file4.txt",
@@ -182,18 +166,15 @@ public class FileBrowserViewModel
         IPageContext context,
         IDeviceManager devices,
         IHostEnvironment appPath,
-        ILayoutService layoutService,
         ILoggerFactory loggerFactory,
-        INavigationService navigation,
         IDialogService dialogService,
         IExtensionService ext
     )
-        : base(PageId, context, devices, layoutService, loggerFactory, dialogService, ext)
+        : base(PageId, context, devices, loggerFactory, dialogService, ext)
     {
         _localRootPath = appPath.ContentRootPath;
         _remoteRootPath = MavlinkFtpHelper.DirectorySeparator.ToString();
         _loggerFactory = loggerFactory;
-        _navigation = navigation;
         _yesNoDialog = dialogService.GetDialogPrefab<YesOrNoDialogPrefab>();
         _localFilesService = new LocalFilesService();
         _transfer = new ProgressWithLock(loggerFactory).DisposeItWith(Disposable);
@@ -296,8 +277,6 @@ public class FileBrowserViewModel
             .DisposeItWith(Disposable);
 
         InitCommands();
-
-        Events.Subscribe(InternalCatchEvent).DisposeItWith(Disposable);
     }
 
     #region Properties
@@ -387,8 +366,7 @@ public class FileBrowserViewModel
     {
         FindFileOnLocalCommand = CanFindFileOnLocal
             .ToReactiveCommand<Unit>(
-                async (_, ct) =>
-                    await this.ExecuteCommand(FindFileCommand.Id, CommandArg.Empty, ct),
+                async (_, ct) => FindFileOnLocal(),
                 awaitOperation: AwaitOperation.Drop
             )
             .DisposeItWith(Disposable);
@@ -542,24 +520,7 @@ public class FileBrowserViewModel
                 remoteDirectory = sep + localName;
             }
 
-            await this.ExecuteCommand(
-                UploadItemCommand.Id,
-                CommandArg.CreateDictionary(
-                    new Dictionary<string, CommandArg>
-                    {
-                        { TransferCommandBase.SourcePath, CommandArg.CreateString(item.Base.Path) },
-                        {
-                            TransferCommandBase.DestinationPath,
-                            CommandArg.CreateString(remoteDirectory)
-                        },
-                        {
-                            TransferCommandBase.EntryType,
-                            CommandArg.CreateString(item.Base.FtpEntryType.ToString())
-                        },
-                    }
-                ),
-                ct
-            );
+            // TODO: implement UploadItemCommand
         }
     }
 
@@ -601,7 +562,8 @@ public class FileBrowserViewModel
 
         if (res)
         {
-            await this.ExecuteCommand(
+            // TODO: Implement burst download command execution
+            /*await this.ExecuteCommand(
                 BurstDownloadItemCommand.Id,
                 CommandArg.CreateDictionary(
                     new Dictionary<string, CommandArg>
@@ -622,7 +584,7 @@ public class FileBrowserViewModel
                     }
                 ),
                 ct
-            );
+            );*/
         }
     }
 
@@ -657,7 +619,8 @@ public class FileBrowserViewModel
         var result = await dialog.ShowAsync();
         if (result == ContentDialogResult.Primary)
         {
-            await this.ExecuteCommand(
+            // TODO: Implement burst download command execution
+            /*await this.ExecuteCommand(
                 BurstDownloadItemCommand.Id,
                 CommandArg.CreateDictionary(
                     new Dictionary<string, CommandArg>
@@ -680,7 +643,7 @@ public class FileBrowserViewModel
                     }
                 ),
                 ct
-            );
+            );*/
         }
     }
 
@@ -698,7 +661,8 @@ public class FileBrowserViewModel
             return;
         }
 
-        await item.Base.ExecuteCommand(RemoveItemCommand.Id, CommandArg.Empty, ct);
+        // TODO: Implement item removal command execution
+        /*await item.Base.ExecuteCommand(RemoveItemCommand.Id, CommandArg.Empty, ct);*/
     }
 
     private static async ValueTask CreateFolderImpl(
@@ -706,7 +670,8 @@ public class FileBrowserViewModel
         CancellationToken ct
     )
     {
-        await item.ExecuteCommand(CreateDirectoryCommand.Id, CommandArg.Empty, ct);
+        // TODO: Implement folder creation command execution
+        /*await item.ExecuteCommand(CreateDirectoryCommand.Id, CommandArg.Empty, ct);*/
     }
 
     private async Task RefreshRemoteImpl(CancellationToken ct)
@@ -778,8 +743,7 @@ public class FileBrowserViewModel
             _localRootPath,
             _localRootPath,
             _backend,
-            _loggerFactory,
-            _config?.LocalDirectories
+            _loggerFactory
         );
 
         var selected = LocalSelectedItem.Value?.Key;
@@ -836,7 +800,8 @@ public class FileBrowserViewModel
             return;
         }
 
-        await fileItem.ExecuteCommand(CalculateCrc32Command.Id, CommandArg.Empty, ct);
+        // TODO: Implement CRC32 calculation command execution
+        /*await fileItem.ExecuteCommand(CalculateCrc32Command.Id, CommandArg.Empty, ct);*/
     }
 
     private async ValueTask CompareSelectedItemsImpl(CancellationToken ct)
@@ -856,7 +821,8 @@ public class FileBrowserViewModel
             return;
         }
 
-        if (localFileItem.Crc32 == null)
+        // TODO: Implement CRC32 calculation command execution
+        /*if (localFileItem.Crc32 == null)
         {
             await localFileItem.ExecuteCommand(CalculateCrc32Command.Id, CommandArg.Empty, ct);
         }
@@ -877,7 +843,7 @@ public class FileBrowserViewModel
         {
             localFileItem.Crc32Status = Crc32Status.Incorrect;
             remoteFileItem.Crc32Status = Crc32Status.Incorrect;
-        }
+        }*/
     }
 
     public void FindFileOnLocal()
@@ -1089,7 +1055,6 @@ public class FileBrowserViewModel
             {
                 DirectoryItemViewModelConfig? config = null;
                 var dirPath = FtpBrowserPath.Normalize(key, true, sep);
-                _config?.RemoteDirectories.TryGetValue(dirPath, out config);
                 vm = new DirectoryItemViewModel(
                     PathHelper.EncodePathToId(dirPath),
                     FtpBrowserPath.ParentDirOf(dirPath, sep),
@@ -1127,100 +1092,6 @@ public class FileBrowserViewModel
 
     #region Routable
 
-    private ValueTask InternalCatchEvent(IViewModel src, AsyncRoutedEvent<IViewModel> e)
-    {
-        switch (e)
-        {
-            case SaveLayoutEvent saveLayoutEvent:
-            {
-                if (!IsDeviceInitialized.Value)
-                {
-                    if (saveLayoutEvent.IsFlushToFile)
-                    {
-                        saveLayoutEvent.LayoutService.FlushFromMemoryViewModelAndView(this);
-                    }
-                    break;
-                }
-
-                if (_config is null)
-                {
-                    break;
-                }
-
-                this.HandleSaveLayout(
-                    saveLayoutEvent,
-                    _config,
-                    cfg =>
-                    {
-                        cfg.LocalSearchText = LocalSearch.Text.ViewValue.Value ?? string.Empty;
-                        cfg.RemoteSearchText = RemoteSearch.Text.ViewValue.Value ?? string.Empty;
-                        cfg.LocalSelectedItemKey = LocalSelectedItem.Value?.Key;
-                        cfg.RemoteSelectedItemKey = RemoteSelectedItem.Value?.Key;
-                        cfg.LocalDirectories = _localItems
-                            .Where(item =>
-                                item is { FtpEntryType: FtpEntryType.Directory, IsExpanded: true }
-                            )
-                            .ToDictionary(
-                                item => item.Path,
-                                item => new DirectoryItemViewModelConfig
-                                {
-                                    IsExpanded = item.IsExpanded,
-                                }
-                            );
-                        cfg.RemoteDirectories = _remoteItems
-                            .Where(item =>
-                                item is { FtpEntryType: FtpEntryType.Directory, IsExpanded: true }
-                            )
-                            .ToDictionary(
-                                item => item.Path,
-                                item => new DirectoryItemViewModelConfig
-                                {
-                                    IsExpanded = item.IsExpanded,
-                                }
-                            );
-                    },
-                    FlushingStrategy.FlushBothViewModelAndView
-                );
-                break;
-            }
-
-            case LoadLayoutEvent loadLayoutEvent:
-            {
-                _config = this.HandleLoadLayout<FileBrowserViewModelConfig>(
-                    loadLayoutEvent,
-                    cfg =>
-                    {
-                        LocalSearch.Text.ModelValue.Value = cfg.LocalSearchText;
-                        RemoteSearch.Text.ModelValue.Value = cfg.RemoteSearchText;
-                        LocalSelectedItem.Value =
-                            LocalItemsTree.FindNode(n => n.Key == cfg.LocalSelectedItemKey)
-                            as BrowserNode;
-                        RemoteSelectedItem.Value =
-                            RemoteItemsTree.FindNode(n => n.Key == cfg.LocalSelectedItemKey)
-                            as BrowserNode;
-                        _localItems
-                            .Where(item => item is { FtpEntryType: FtpEntryType.Directory })
-                            .ForEach(it =>
-                            {
-                                cfg.LocalDirectories.TryGetValue(it.Path, out var config);
-                                it.IsExpanded = config?.IsExpanded ?? it.IsExpanded;
-                            });
-                        _remoteItems
-                            .Where(item => item is { FtpEntryType: FtpEntryType.Directory })
-                            .ForEach(it =>
-                            {
-                                cfg.RemoteDirectories.TryGetValue(it.Path, out var config);
-                                it.IsExpanded = config?.IsExpanded ?? it.IsExpanded;
-                            });
-                    }
-                );
-                break;
-            }
-        }
-
-        return ValueTask.CompletedTask;
-    }
-
     public override IEnumerable<IViewModel> GetChildren()
     {
         yield return LocalSearch;
@@ -1235,6 +1106,12 @@ public class FileBrowserViewModel
         {
             yield return item;
         }
+    }
+
+    public ValueTask Refresh(CancellationToken cancel)
+    {
+        Refresh();
+        return ValueTask.CompletedTask;
     }
 
     protected override void AfterLoadExtensions() { }

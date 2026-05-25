@@ -12,9 +12,10 @@ public class MavParamAsciiCharViewModel : MavParamTextBoxViewModel
         MavParamInfo param,
         Observable<MavParamValue> update,
         InitialReadParamDelegate initReadCallback,
+        WriteParamDelegate? writeCallback,
         ILoggerFactory loggerFactory
     )
-        : base(param, update, initReadCallback, loggerFactory) { }
+        : base(param, update, initReadCallback, writeCallback, loggerFactory) { }
 
     protected override string ValueToText(ValueType remoteValue)
     {

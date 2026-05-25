@@ -11,10 +11,10 @@ using R3;
 namespace Asv.Drones;
 
 public class AttitudeIndicatorSectionViewModel
-    : RoutableViewModel,
+    : ViewModel,
         IFlightWidgetSection<MavlinkClientDevice>
 {
-    public const string SectionId = "alt-indicator-widget-section";
+    public const string SectionId = "altIndicatorWidgetSection";
 
     public AttitudeIndicatorSectionViewModel(ILoggerFactory loggerFactory)
         : base(SectionId) { }

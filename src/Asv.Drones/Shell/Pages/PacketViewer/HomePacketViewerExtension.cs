@@ -1,18 +1,27 @@
 using Asv.Avalonia;
 using Asv.Common;
-using Microsoft.Extensions.Logging;
+using Asv.Modeling;
 using R3;
 
 namespace Asv.Drones;
 
-public class HomePacketViewerExtension(ILoggerFactory loggerFactory) : IExtensionFor<IHomePage>
+public class HomePacketViewerExtension : IExtensionFor<IHomePage>
 {
     public void Extend(IHomePage context, CompositeDisposable contextDispose)
     {
         context.Tools.Add(
-            OpenPacketViewerCommand
-                .StaticInfo.CreateAction(loggerFactory)
-                .DisposeItWith(contextDispose)
+            new ActionViewModel(PacketViewerViewModel.PageId)
+            {
+                Header = RS.OpenPacketViewerCommand_CommandInfo_Name,
+                Description = RS.OpenPacketViewerCommand_CommandInfo_Description,
+                Icon = PacketViewerViewModel.PageIcon,
+                Command = new ReactiveCommand(
+                    async (_, _) =>
+                        await context.GoTo(
+                            new NavPath(new NavId(PacketViewerViewModel.PageId, NavArgs.Empty))
+                        )
+                ),
+            }.DisposeItWith(contextDispose)
         );
     }
 }

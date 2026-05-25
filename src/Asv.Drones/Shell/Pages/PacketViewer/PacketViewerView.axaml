@@ -118,8 +118,6 @@
                 Header="{x:Static drones:RS.PacketViewerView_ExpanderFilterBySources_Header}"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Stretch"
-                Expanded="Expander_StateChanged"
-                Collapsed="Expander_StateChanged"
             >
                 <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
                     <CheckBox
@@ -179,8 +177,6 @@
                 Header="{x:Static drones:RS.PacketViewerView_ExpanderFilterByTypes_Header}"
                 VerticalAlignment="Stretch"
                 HorizontalAlignment="Stretch"
-                Expanded="Expander_StateChanged"
-                Collapsed="Expander_StateChanged"
             >
                 <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
                     <CheckBox

@@ -13,11 +13,12 @@ public class MavParamLatLonTextBoxViewModel : MavParamTextBoxViewModel
         MavParamInfo param,
         Observable<MavParamValue> update,
         InitialReadParamDelegate initReadCallback,
+        WriteParamDelegate? writeCallback,
         ILoggerFactory loggerFactory,
         IUnitService measureService,
         bool isLatitude
     )
-        : base(param, update, initReadCallback, loggerFactory)
+        : base(param, update, initReadCallback, writeCallback, loggerFactory)
     {
         _unit =
             measureService[isLatitude ? LatitudeUnit.Id : LongitudeUnit.Id]

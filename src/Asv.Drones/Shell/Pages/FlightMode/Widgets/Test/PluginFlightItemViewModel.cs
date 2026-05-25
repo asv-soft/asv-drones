@@ -11,10 +11,10 @@ namespace Asv.Drones;
 
 public class PluginFlightItemViewModel : FlightWidgetViewModel<PluginFlightItemViewModel> // TODO: Remove on new FlightMode release
 {
-    private const string WidgetId = "test-widget";
+    private const string WidgetId = "testWidget";
 
     public PluginFlightItemViewModel(ILoggerFactory loggerFactory, IExtensionService ext)
-        : base(new NavId(WidgetId), loggerFactory, ext) { }
+        : base(WidgetId, ext) { }
 
     public override int Order => 1;
 }

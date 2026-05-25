@@ -11,6 +11,7 @@ public static class MavParamFactory
         IMavParamTypeMetadata metadata,
         Observable<MavParamValue> update,
         InitialReadParamDelegate initReadCallback,
+        WriteParamDelegate? writeCallback,
         ILoggerFactory loggerFactory,
         IUnitService measureService
     )
@@ -22,12 +23,14 @@ public static class MavParamFactory
                 info,
                 update,
                 initReadCallback,
+                writeCallback,
                 loggerFactory
             ),
             MavParamWidgetType.Altitude => new MavParamAltitudeTextBoxViewModel(
                 info,
                 update,
                 initReadCallback,
+                writeCallback,
                 loggerFactory,
                 measureService
             ),
@@ -35,6 +38,7 @@ public static class MavParamFactory
                 info,
                 update,
                 initReadCallback,
+                writeCallback,
                 loggerFactory,
                 measureService,
                 true
@@ -43,6 +47,7 @@ public static class MavParamFactory
                 info,
                 update,
                 initReadCallback,
+                writeCallback,
                 loggerFactory,
                 measureService,
                 false
@@ -51,15 +56,23 @@ public static class MavParamFactory
                 info,
                 update,
                 initReadCallback,
+                writeCallback,
                 loggerFactory
             ),
             MavParamWidgetType.ComboBox => new MavParamComboBoxViewModel(
                 info,
                 update,
                 initReadCallback,
+                writeCallback,
                 loggerFactory
             ),
-            _ => new MavParamTextBoxViewModel(info, update, initReadCallback, loggerFactory),
+            _ => new MavParamTextBoxViewModel(
+                info,
+                update,
+                initReadCallback,
+                writeCallback,
+                loggerFactory
+            ),
         };
     }
 
@@ -74,6 +87,10 @@ public static class MavParamFactory
             param,
             svc.Filter(param.Name),
             svc.GetFromCacheOrReadOnce,
+            async (name, value, cancel) =>
+            {
+                await svc.WriteOnce(name, value, cancel);
+            },
             loggerFactory,
             measureService
         );

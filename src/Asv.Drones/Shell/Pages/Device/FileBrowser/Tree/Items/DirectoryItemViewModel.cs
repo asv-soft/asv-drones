@@ -15,8 +15,10 @@ public class DirectoryItemViewModelConfig
 
 public class DirectoryItemViewModel : BrowserItemViewModel
 {
+    private ILogger<DirectoryItemViewModel> _logger;
+
     public DirectoryItemViewModel(
-        NavId id,
+        string id,
         string? parentPath,
         string path,
         string name,
@@ -30,6 +32,7 @@ public class DirectoryItemViewModel : BrowserItemViewModel
         Name = name;
         FtpEntryType = FtpEntryType.Directory;
         IsExpanded = layoutConfig?.IsExpanded ?? IsExpanded;
+        _logger = loggerFactory.CreateLogger<DirectoryItemViewModel>();
     }
 
     public override async ValueTask<string> RenameAsync(
@@ -46,7 +49,7 @@ public class DirectoryItemViewModel : BrowserItemViewModel
         var oldPath = FtpBrowserPath.Normalize(oldValue, true, sep);
         var newPath = FtpBrowserPath.Normalize(newValue, true, sep);
 
-        var result = await ItemsOperations.RenameDirectoryAsync(oldPath, newPath, Logger, ct);
+        var result = await ItemsOperations.RenameDirectoryAsync(oldPath, newPath, _logger, ct);
 
         EditMode = false;
         EditedName.Value = FtpBrowserPath.NameOf(result, sep);
@@ -56,17 +59,17 @@ public class DirectoryItemViewModel : BrowserItemViewModel
 
     public override async ValueTask RemoveAsync(CancellationToken ct)
     {
-        await ItemsOperations.RemoveDirectoryAsync(Path, Logger, ct);
+        await ItemsOperations.RemoveDirectoryAsync(Path, _logger, ct);
     }
 
     public override ValueTask<uint> CalculateCrc32Async(CancellationToken ct)
     {
-        Logger.LogError("Cannot calculate CRC32 for directory");
+        _logger.LogError("Cannot calculate CRC32 for directory");
         return new ValueTask<uint>(0);
     }
 
     public override async ValueTask CreateDirectoryAsync(CancellationToken ct)
     {
-        await ItemsOperations.CreateDirectoryAsync(Path, Logger, ct);
+        await ItemsOperations.CreateDirectoryAsync(Path, _logger, ct);
     }
 }
