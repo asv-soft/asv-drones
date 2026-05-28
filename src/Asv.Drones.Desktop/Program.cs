@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
 using Asv.Avalonia.IO;
+using Asv.Avalonia.Launcher.Ready;
 using Asv.Avalonia.Plugins;
 using Asv.Common;
 using Asv.Drones.Api;
@@ -72,6 +73,7 @@ sealed class Program
                     })
                     .UseModuleGeoMap()
                     .UseModuleIo()
+                    .UseLauncher(cfg => cfg.IsOptional())
                     .UseDronesApp();
             });
     }
