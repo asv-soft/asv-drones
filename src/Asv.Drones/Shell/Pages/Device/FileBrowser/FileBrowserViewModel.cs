@@ -277,6 +277,13 @@ public class FileBrowserViewModel
             .DisposeItWith(Disposable);
 
         InitCommands();
+
+        Target
+            .Where(w => w.HasValue)
+            .Select(w => w!.Value)
+            .ObserveOnUIThreadDispatcher()
+            .Subscribe(w => OnDeviceConnected(w.Device, w.WhenDisconnectedToken))
+            .DisposeItWith(Disposable);
     }
 
     #region Properties
@@ -1133,10 +1140,7 @@ public class FileBrowserViewModel
 
     #endregion
 
-    protected override void AfterDeviceInitialized(
-        IClientDevice device,
-        CancellationToken onDisconnectedToken
-    )
+    private void OnDeviceConnected(IClientDevice device, CancellationToken onDisconnectedToken)
     {
         Header = $"{RS.FileBrowserViewModel_Title}[{device.Id}]";
         Icon = DeviceIconMixin.GetIcon(device.Id) ?? PageIcon;
