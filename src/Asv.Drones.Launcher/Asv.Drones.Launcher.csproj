@@ -51,4 +51,8 @@
         <DependentUpon>App.axaml</DependentUpon>
       </Compile>
     </ItemGroup>
+
+    <ItemGroup>
+        <AvaloniaResource Include="Assets/**" />
+    </ItemGroup>
 </Project>
