@@ -41,6 +41,7 @@
 
     <ItemGroup>
         <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Asv.Avalonia.LauncherReady" Version="$(AsvAvaloniaVersion)"/>
         <!--Condition below is needed to remove AvaloniaUI.DiagnosticsSupport package from build output in Release configuration.-->
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.0"/>
         <PackageReference Include="Roslynator.Analyzers" Version="4.14.0">
