@@ -57,14 +57,15 @@ jobs:
       - name: Publish launcher for installer
         run: dotnet publish ./src/${{ env.LAUNCHER_PROJECT_NAME }}/${{ env.LAUNCHER_PROJECT_NAME }}.csproj -c Release -r win-x64 --self-contained false --no-restore -o ./publish/app
 
-      - name: Sign app files
-        uses: dlemstra/code-sign-action@v1
-        with:
-          certificate: '${{ secrets.WINDOWS_SIGNING_CERTIFICATE }}'
-          password: '${{ secrets.WINDOWS_SIGNING_PASSWORD }}'
-          folder: './publish/app'
-          recursive: true
-          description: 'Sign The App'
+      # uncomment when real certificate is available
+#      - name: Sign app files
+#        uses: dlemstra/code-sign-action@v1
+#        with:
+#          certificate: '${{ secrets.WINDOWS_SIGNING_CERTIFICATE }}'
+#          password: '${{ secrets.WINDOWS_SIGNING_PASSWORD }}'
+#          folder: './publish/app'
+#          recursive: true
+#          description: 'Sign The App'
 
       - name: Install NSIS
         run: |
@@ -76,14 +77,15 @@ jobs:
         with:
           script-file: win-64-install.nsi
 
-      - name: Sign the installer
-        uses: dlemstra/code-sign-action@v1
-        with:
-          certificate: '${{ secrets.WINDOWS_SIGNING_CERTIFICATE }}'
-          password: '${{ secrets.WINDOWS_SIGNING_PASSWORD }}'
-          files: |
-            AsvDronesInstaller.exe
-          description: 'Sign The Installer'
+      # uncomment when real certificate is available
+#      - name: Sign the installer
+#        uses: dlemstra/code-sign-action@v1
+#        with:
+#          certificate: '${{ secrets.WINDOWS_SIGNING_CERTIFICATE }}'
+#          password: '${{ secrets.WINDOWS_SIGNING_PASSWORD }}'
+#          files: |
+#            AsvDronesInstaller.exe
+#          description: 'Sign The Installer'
 
       - name: List output files
         run: Get-ChildItem -Path ./publish/app -Force
