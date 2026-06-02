@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Launcher/">
+    <Project Path="Asv.Drones.Launcher/Asv.Drones.Launcher.csproj" />
+  </Folder>
   <Folder Name="/Platforms/">
     <Project Path="Asv.Drones.Android/Asv.Drones.Android.csproj" />
     <Project Path="Asv.Drones.Desktop/Asv.Drones.Desktop.csproj" />

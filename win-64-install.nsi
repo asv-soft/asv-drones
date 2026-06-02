@@ -36,10 +36,12 @@ SectionEnd
 
 ; Section for shortcuts
 Section "Start Menu and Desktop Shortcuts" SEC02
+  CreateDirectory "$SMPROGRAMS\Asv Drones"
+
   ; Create a shortcut on the desktop
-  CreateShortcut "$DESKTOP\Asv Drones.lnk" "$INSTDIR\Asv.Drones.Desktop.exe" "" "$INSTDIR\Asv.Drones.Desktop.exe" 0
+  CreateShortcut "$DESKTOP\Asv Drones.lnk" "$INSTDIR\Asv.Drones.Launcher.exe" "--target $\"$INSTDIR\Asv.Drones.Desktop.exe$\"" "$INSTDIR\Asv.Drones.Launcher.exe" 0
   ; Create a shortcut in the Start menu
-  CreateShortcut "$SMPROGRAMS\Asv Drones\Asv Drones.lnk" "$INSTDIR\Asv.Drones.Desktop.exe" "" "$INSTDIR\Asv.Drones.Desktop.exe" 0
+  CreateShortcut "$SMPROGRAMS\Asv Drones\Asv Drones.lnk" "$INSTDIR\Asv.Drones.Launcher.exe" "--target $\"$INSTDIR\Asv.Drones.Desktop.exe$\"" "$INSTDIR\Asv.Drones.Launcher.exe" 0
 SectionEnd
 
 Section -Post

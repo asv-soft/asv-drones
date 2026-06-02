@@ -6,7 +6,7 @@
     <ApiVersion>3.0.0</ApiVersion>
     <AvaloniaVersion>12.0.3</AvaloniaVersion>
     <AvaloniaDataGridVersion>12.0.0</AvaloniaDataGridVersion>
-    <AsvAvaloniaVersion>3.0.0-dev.9</AsvAvaloniaVersion>
+    <AsvAvaloniaVersion>3.0.0-dev.11</AsvAvaloniaVersion>
     <AsvMavlinkVersion>4.3.0-dev.1</AsvMavlinkVersion>
     <AsvGnssVersion>2.2.0-dev.1</AsvGnssVersion>
     <ScottPlotVersion>5.1.58</ScottPlotVersion>
