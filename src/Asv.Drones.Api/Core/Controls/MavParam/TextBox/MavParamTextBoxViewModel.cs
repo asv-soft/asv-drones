@@ -78,15 +78,16 @@ public class MavParamTextBoxViewModel : MavParamViewModel
     )
         : base(param, update, initReadCallback, writeCallback, loggerFactory)
     {
-        _textValue = new BindableReactiveProperty<string>().DisposeItWith(Disposable);
+        // we don't subscribe to value changes here, because we set Value at Validator
+        _textValue = new BindableReactiveProperty<string>()
+            .EnableValidation(Validator)
+            .DisposeItWith(Disposable);
         _internalChange = true;
         Value
             .Where(_ => _internalChange == false)
             .Subscribe(x => _textValue.Value = ValueToText(x))
             .DisposeItWith(Disposable);
 
-        // we don't subscribe to value changes here, because we set Value at Validator
-        TextValue.EnableValidation(Validator).DisposeItWith(Disposable);
         Observable
             .FromEventHandler<DataErrorsChangedEventArgs>(
                 h => _textValue.ErrorsChanged += h,
@@ -124,5 +125,5 @@ public class MavParamTextBoxViewModel : MavParamViewModel
         return null;
     }
 
-    public IReadOnlyBindableReactiveProperty<string> TextValue => _textValue;
+    public BindableReactiveProperty<string> TextValue => _textValue;
 }

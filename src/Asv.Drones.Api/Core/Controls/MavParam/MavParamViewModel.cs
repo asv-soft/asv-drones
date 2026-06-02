@@ -1,11 +1,7 @@
-using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Globalization;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Mavlink;
-using Asv.Mavlink.Common;
-using Material.Icons;
+using Asv.Modeling;
 using Microsoft.Extensions.Logging;
 using R3;
 using ZLogger;
@@ -33,6 +29,8 @@ public class MavParamViewModel
     private readonly InitialReadParamDelegate _readParam;
     private readonly WriteParamDelegate _writeParam;
     private readonly ILogger<MavParamViewModel> _logger;
+    private readonly IUndoChangeSink<ValueUndoChange<string>> _undoSink;
+    private MavParamValue _lastParamTypeValue;
 
     protected MavParamViewModel(
         MavParamInfo metadata,
@@ -66,6 +64,23 @@ public class MavParamViewModel
             .Take(1)
             .Subscribe(initReadCallback, (_, callback) => Init(callback))
             .DisposeItWith(Disposable);
+
+        _undoSink = Undo.Register<ValueUndoChange<string>>("Value", OnUndo, OnRedo)
+            .DisposeItWith(Disposable);
+    }
+
+    private async ValueTask OnRedo(ValueUndoChange<string> change, CancellationToken cancel)
+    {
+        var value = MavParamValue.Parse(change.NewValue);
+        Value.Value = Info.Convert(value);
+        await Write();
+    }
+
+    private async ValueTask OnUndo(ValueUndoChange<string> change, CancellationToken cancel)
+    {
+        var value = MavParamValue.Parse(change.OldValue);
+        Value.Value = Info.Convert(value);
+        await Write();
     }
 
     public MavParamInfo Info { get; }
@@ -94,6 +109,7 @@ public class MavParamViewModel
         {
             return;
         }
+        _lastParamTypeValue = value;
         IsRemoteChange = true;
         Value.OnNext(Info.Convert(value));
         IsSync = true;
@@ -128,7 +144,7 @@ public class MavParamViewModel
         }
     }
 
-    public async void Write()
+    public async Task Write()
     {
         if (HasValidationErrors)
         {
@@ -140,7 +156,15 @@ public class MavParamViewModel
             NetworkErrorMessage = null;
             IsNetworkError = false;
             IsBusy = true;
-            await _writeParam(Info.Metadata.Name, Info.Convert(Value.Value), DisposeCancel);
+            var value = Info.Convert(Value.Value);
+            await _writeParam(Info.Metadata.Name, value, DisposeCancel);
+            _undoSink.Publish(
+                new ValueUndoChange<string>
+                {
+                    OldValue = _lastParamTypeValue.ToString(),
+                    NewValue = value.ToString(),
+                }
+            );
             IsSync = true;
         }
         catch (Exception e)
