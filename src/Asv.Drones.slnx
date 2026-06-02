@@ -11,6 +11,7 @@
     <File Path="../.github/workflows/api-release-dev.yml" />
     <File Path="../.github/workflows/api-release.yml" />
     <File Path="../.github/workflows/drones-release-windows.yml" />
+    <File Path="../AGENTS.md" />
     <File Path="../README.md" />
     <File Path="../win-64-install.nsi" />
     <File Path=".aiassistant/rules/comments.md" />

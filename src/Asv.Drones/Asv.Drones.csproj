@@ -1,35 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>$(TargetFramework)</TargetFramework>
-        <FileVersion>$(ProductVersion)</FileVersion>
-        <Version>$(ProductVersion)</Version>
-
-        <Authors>https://github.com/asv-soft</Authors>
-        <Company>https://github.com/asv-soft</Company>
-        <Copyright>https://github.com/asv-soft</Copyright>
-        
-        <Nullable>enable</Nullable>
-        <LangVersion>preview</LangVersion>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <AvaloniaUseCompilation>true</AvaloniaUseCompilation>
-        <CodeAnalysisRuleSet>../CodeStyle.ruleset</CodeAnalysisRuleSet>
-        <WarningsAsErrors>
-            CS0169,
-            CS0618,
-            CS1502,
-            CS1503,
-            CS8524,
-            CS8600,
-            CS8601,
-            CS8602,
-            CS8603,
-            CS8604,
-            CS8625,
-            CS8629,
-            CS8762,
-            CA1510,
-            CA1851
-        </WarningsAsErrors>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
@@ -45,12 +17,12 @@
         <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)"/>
         <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)"/>
         <!--Condition below is needed to remove AvaloniaUI.DiagnosticsSupport package from build output in Release configuration.-->
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.0"/>
-        <PackageReference Include="Roslynator.Analyzers" Version="4.14.0">
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.1"/>
+        <PackageReference Include="Roslynator.Analyzers" Version="4.15.0">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+        <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>

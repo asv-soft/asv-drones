@@ -1,44 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>$(TargetFramework)</TargetFramework>
-        <FileVersion>$(ApiVersion)</FileVersion>
-        <Version>$(ApiVersion)</Version>
-        <PackageVersion>$(ApiVersion)</PackageVersion>
-
-        <Authors>https://github.com/asv-soft</Authors>
-        <Company>https://github.com/asv-soft</Company>
-        <Copyright>https://github.com/asv-soft</Copyright>
-
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-
-        <LangVersion>preview</LangVersion>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
         <Title>Asv.Drones.Api</Title>
         <Copyright>Asv Soft</Copyright>
-        <PackageProjectUrl>https://github.com/asv-soft/asv-drones</PackageProjectUrl>
-        <PackageLicenseUrl>https://github.com/asv-soft/asv-drones/blob/main/LICENSE</PackageLicenseUrl>
-        <RepositoryUrl>https://github.com/asv-soft/asv-drones</RepositoryUrl>
-        <RepositoryType>git</RepositoryType>
-        <CodeAnalysisRuleSet>../CodeStyle.ruleset</CodeAnalysisRuleSet>
-        <WarningsAsErrors>
-            CS0169,
-            CS0618,
-            CS1502,
-            CS1503,
-            CS8524,
-            CS8600,
-            CS8601,
-            CS8602,
-            CS8603,
-            CS8604,
-            CS8625,
-            CS8629,
-            CS8762,
-            CA1510,
-            CA1851
-        </WarningsAsErrors>
     </PropertyGroup>
 
     <ItemGroup>
@@ -48,15 +13,15 @@
         <PackageReference Include="Asv.Avalonia.Plugins" Version="$(AsvAvaloniaVersion)" />
         <PackageReference Include="Asv.Mavlink" Version="$(AsvMavlinkVersion)" />
         <PackageReference Include="Asv.Gnss" Version="$(AsvGnssVersion)" />
-        <PackageReference Include="ScottPlot.Avalonia" Version="$(ScottPlotVersion)" />
+        <PackageReference Include="ScottPlot.Avalonia" Version="5.1.58" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Roslynator.Analyzers" Version="4.14.0">
+      <PackageReference Include="Roslynator.Analyzers" Version="4.15.0">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>

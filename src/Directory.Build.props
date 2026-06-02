@@ -1,14 +1,54 @@
 <Project>
-  <PropertyGroup>
-    <Nullable>enable</Nullable>
-    <ProductVersion>3.0.0-dev.0</ProductVersion>
-    <TargetFramework>net10.0</TargetFramework>
-    <ApiVersion>3.0.0</ApiVersion>
-    <AvaloniaVersion>12.0.3</AvaloniaVersion>
-    <AvaloniaDataGridVersion>12.0.0</AvaloniaDataGridVersion>
-    <AsvAvaloniaVersion>3.0.0-dev.11</AsvAvaloniaVersion>
-    <AsvMavlinkVersion>4.3.0-dev.1</AsvMavlinkVersion>
-    <AsvGnssVersion>2.2.0-dev.1</AsvGnssVersion>
-    <ScottPlotVersion>5.1.58</ScottPlotVersion>
-  </PropertyGroup>
+    <PropertyGroup>
+        <ApiVersion>3.0.0</ApiVersion>
+        <ProductVersion>3.0.0-dev.0</ProductVersion>
+        <TargetFramework>net10.0</TargetFramework>
+
+        <AvaloniaVersion>12.0.4</AvaloniaVersion>
+        <AvaloniaDataGridVersion>12.0.0</AvaloniaDataGridVersion>
+        <AsvAvaloniaVersion>3.0.0-dev.15</AsvAvaloniaVersion>
+        <AsvMavlinkVersion>4.3.0-dev.3</AsvMavlinkVersion>
+        <AsvGnssVersion>2.2.0-dev.2</AsvGnssVersion>
+        
+        <FileVersion>$(ProductVersion)</FileVersion>
+        <Version>$(ProductVersion)</Version>
+        <PackageVersion>$(ProductVersion)</PackageVersion>
+        <Authors>https://github.com/asv-soft</Authors>
+        <Company>https://github.com/asv-soft</Company>
+        <Copyright>https://github.com/asv-soft</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/asv-soft/asv-drones</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/asv-soft/asv-drones</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <LangVersion>preview</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)CodeStyle.ruleset</CodeAnalysisRuleSet>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <WarningsAsErrors
+            Condition="!$([System.String]::Copy('$(MSBuildProjectName)').EndsWith('.Test'))"
+        >
+            CS0169,
+            CS0618,
+            CS1502,
+            CS1503,
+            CS8524,
+            CS8600,
+            CS8601,
+            CS8602,
+            CS8603,
+            CS8604,
+            CS8625,
+            CS8629,
+            CS8762,
+            CA1510,
+            CA1851
+        </WarningsAsErrors>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(MSBuildProjectName)' == 'Asv.Drones.Api'">
+        <FileVersion>$(ApiVersion)</FileVersion>
+        <Version>$(ApiVersion)</Version>
+        <PackageVersion>$(ApiVersion)</PackageVersion>
+    </PropertyGroup>
 </Project>
