@@ -1,4 +1,3 @@
-using System.Linq;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Drones.Api;
@@ -18,12 +17,7 @@ public class MotorsSetupPageExtension(ILoggerFactory loggerFactory) : IExtension
             .Target.Where(w => w is not null)
             .Subscribe(wrapper =>
             {
-                if (wrapper is null)
-                {
-                    return;
-                }
-
-                var client = wrapper.Value.Device.GetMicroservice<IMotorTestClient>();
+                var client = wrapper?.Device.GetMicroservice<IMotorTestClient>();
 
                 if (
                     client is null

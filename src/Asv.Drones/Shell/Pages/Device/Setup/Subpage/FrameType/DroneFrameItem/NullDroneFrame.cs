@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Asv.Mavlink;
 
 namespace Asv.Drones;

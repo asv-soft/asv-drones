@@ -1,16 +1,11 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
 using Asv.Modeling;
-using Avalonia.Threading;
+using Material.Icons;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using ObservableCollections;
@@ -21,15 +16,14 @@ namespace Asv.Drones;
 public sealed class SetupFrameTypeViewModel : SetupSubpage
 {
     public const string PageId = "frameType";
+    public const MaterialIconKind Icon = MaterialIconKind.ThemeLightDark;
+
     private readonly SynchronizedReactiveProperty<bool> _isRefreshing;
     private readonly SynchronizedReactiveProperty<bool> _isChangingFrame;
-    private readonly ILoggerFactory _loggerFactory;
-
     private readonly YesOrNoDialogPrefab _yesOrNoDialog;
-
-    private IFrameClient? _frameClient;
-
-    private ISynchronizedView<
+    private readonly IFrameClient? _frameClient;
+    private readonly IUndoChangeSink<ValueUndoChange<string>> _undoSink;
+    private readonly ISynchronizedView<
         KeyValuePair<string, IDroneFrame>,
         DroneFrameItemViewModel
     >? _framesView;
@@ -39,8 +33,13 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
     > _framesViewFilter;
 
     public SetupFrameTypeViewModel()
-        : this(NullLoggerFactory.Instance, NullDialogService.Instance)
+        : this(
+            DesignTimeSetupSubPageContext.Instance,
+            NullLoggerFactory.Instance,
+            NullDialogService.Instance.GetDialogPrefab<YesOrNoDialogPrefab>()
+        )
     {
+        DesignTime.ThrowIfNotDesignMode();
         var frames = new ObservableList<DroneFrameItemViewModel>(
             Enumerable
                 .Range(1, 10)
@@ -57,81 +56,22 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
         ).DisposeItWith(Disposable);
 
         Frames = frames.ToNotifyCollectionChangedSlim();
-
-        RefreshCommand = new ReactiveCommand<Unit>(
-            async (_, cancel) =>
-            {
-                _isRefreshing.Value = true;
-                await Task.Delay(500, cancel);
-                _isRefreshing.Value = false;
-            }
-        ).DisposeItWith(Disposable);
     }
 
-    public SetupFrameTypeViewModel(ILoggerFactory loggerFactory, IDialogService dialogService)
-        : base(new NavId(PageId), loggerFactory)
-    {
-        _yesOrNoDialog = dialogService.GetDialogPrefab<YesOrNoDialogPrefab>();
-        _loggerFactory = loggerFactory;
-
-        _isRefreshing = new SynchronizedReactiveProperty<bool>(false).DisposeItWith(Disposable);
-        _isChangingFrame = new SynchronizedReactiveProperty<bool>(false).DisposeItWith(Disposable);
-        IsUpdating = _isRefreshing
-            .ObserveOnUIThreadDispatcher()
-            .CombineLatest(_isChangingFrame, (r, c) => r || c)
-            .ToReadOnlyBindableReactiveProperty()
-            .DisposeItWith(Disposable);
-
-        SelectedFrame = new BindableReactiveProperty<DroneFrameItemViewModel?>(null).DisposeItWith(
-            Disposable
-        );
-
-        RefreshCommand = new ReactiveCommand(Refresh, AwaitOperation.Drop).DisposeItWith(
-            Disposable
-        );
-
-        Search = new SearchBoxViewModel(
-            nameof(Search),
-            loggerFactory,
-            UpdateImpl,
-            TimeSpan.FromMilliseconds(500)
-        )
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
-
-        _framesViewFilter = new SynchronizedViewFilter<
-            KeyValuePair<string, IDroneFrame>,
-            DroneFrameItemViewModel
-        >((_, model) => model.Filter(Search.Text.ViewValue.Value));
-
-        Events.Catch(InternalCatchEvent).DisposeItWith(Disposable);
-    }
-
-    public IReadOnlyBindableReactiveProperty<bool> IsUpdating { get; }
-    public IReadOnlyBindableReactiveProperty<string>? CurrentFrameLabel { get; private set; }
-    public IReadOnlyBindableReactiveProperty<IDroneFrame?>? CurrentFrame { get; private set; }
-    public SearchBoxViewModel Search { get; }
-    public IReadOnlyDictionary<string, string> MetaFallBack =>
-        ImmutableDictionary<string, string>.Empty;
-
-    public INotifyCollectionChangedSynchronizedViewList<DroneFrameItemViewModel>? Frames
-    {
-        get;
-        private set;
-    }
-
-    public BindableReactiveProperty<DroneFrameItemViewModel?> SelectedFrame { get; }
-
-    public ReactiveCommand<Unit> RefreshCommand { get; }
-
-    public override ValueTask Init(ISetupPage context)
+    public SetupFrameTypeViewModel(
+        ITreeSubPageContext<ISetupPage> context,
+        ILoggerFactory loggerFactory,
+        IDialogService dialogService
+    )
+        : this(context, loggerFactory, dialogService.GetDialogPrefab<YesOrNoDialogPrefab>())
     {
         _frameClient =
-            context.Target.CurrentValue?.Device.GetMicroservice<IFrameClient>()
+            context.Context.Target.CurrentValue?.Device.GetMicroservice<IFrameClient>()
             ?? throw new Exception($"{nameof(IFrameClient)} should not be null");
 
         CurrentFrame = _frameClient
-            .CurrentFrame.ToReadOnlyBindableReactiveProperty()
+            .CurrentFrame.ObserveOnUIThreadDispatcher()
+            .ToReadOnlyBindableReactiveProperty()
             .DisposeItWith(Disposable);
         CurrentFrameLabel = _frameClient
             .CurrentFrame.ObserveOnUIThreadDispatcher()
@@ -168,9 +108,65 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
                 }
             })
             .DisposeItWith(Disposable);
-
-        return ValueTask.CompletedTask;
     }
+
+    private SetupFrameTypeViewModel(
+        ITreeSubPageContext<ISetupPage> context,
+        ILoggerFactory loggerFactory,
+        YesOrNoDialogPrefab yesOrNoDialog
+    )
+        : base(PageId, context, loggerFactory)
+    {
+        _yesOrNoDialog = yesOrNoDialog;
+
+        _isRefreshing = new SynchronizedReactiveProperty<bool>(false).DisposeItWith(Disposable);
+        _isChangingFrame = new SynchronizedReactiveProperty<bool>(false).DisposeItWith(Disposable);
+        IsUpdating = _isRefreshing
+            .CombineLatest(_isChangingFrame, (r, c) => r || c)
+            .ObserveOnUIThreadDispatcher()
+            .ToReadOnlyBindableReactiveProperty()
+            .DisposeItWith(Disposable);
+
+        SelectedFrame = new BindableReactiveProperty<DroneFrameItemViewModel?>(null).DisposeItWith(
+            Disposable
+        );
+
+        RefreshCommand = new ReactiveCommand(Refresh, AwaitOperation.Drop).DisposeItWith(
+            Disposable
+        );
+
+        Search = new SearchBoxViewModel(
+            nameof(Search),
+            loggerFactory,
+            UpdateImpl,
+            TimeSpan.FromMilliseconds(500)
+        )
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
+
+        _framesViewFilter = new SynchronizedViewFilter<
+            KeyValuePair<string, IDroneFrame>,
+            DroneFrameItemViewModel
+        >((_, model) => model.Filter(Search.Text.ViewValue.Value));
+
+        Events.Catch(InternalCatchEvent).DisposeItWith(Disposable);
+
+        _undoSink = Undo.CreateValueChange<string>("default", ApplyFrameById, ApplyFrameById)
+            .DisposeItWith(Disposable);
+    }
+
+    public IReadOnlyBindableReactiveProperty<bool> IsUpdating { get; }
+    public IReadOnlyBindableReactiveProperty<string>? CurrentFrameLabel { get; private set; }
+    public IReadOnlyBindableReactiveProperty<IDroneFrame?>? CurrentFrame { get; private set; }
+    public SearchBoxViewModel Search { get; }
+    public IReadOnlyDictionary<string, string> MetaFallBack =>
+        ImmutableDictionary<string, string>.Empty;
+
+    public INotifyCollectionChangedSynchronizedViewList<DroneFrameItemViewModel>? Frames { get; }
+
+    public BindableReactiveProperty<DroneFrameItemViewModel?> SelectedFrame { get; }
+
+    public ReactiveCommand<Unit> RefreshCommand { get; }
 
     public override IEnumerable<IViewModel> GetChildren()
     {
@@ -190,12 +186,18 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
         }
     }
 
-    internal async Task ChangeFrameType(string frameId, CancellationToken cancel = default)
+    private async Task ChangeFrameType(
+        string frameId,
+        bool record,
+        CancellationToken cancel = default
+    )
     {
         if (_frameClient is null)
         {
             return;
         }
+
+        var oldFrameId = CurrentFrame?.Value?.Id;
 
         if (_frameClient.Frames.TryGetValue(frameId, out var droneFrame))
         {
@@ -218,6 +220,11 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
                 await _frameClient.SetFrame(droneFrame, cancel);
 
                 Logger.LogInformation("Frame set to: {FrameId}", droneFrame.Id);
+
+                if (record && oldFrameId is not null && oldFrameId != frameId)
+                {
+                    _undoSink.Publish(oldFrameId, frameId);
+                }
             }
             catch (Exception ex)
             {
@@ -230,6 +237,11 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
         }
     }
 
+    private void ApplyFrameById(string frameId)
+    {
+        ChangeFrameType(frameId, record: false).SafeFireAndForget();
+    }
+
     private async ValueTask InternalCatchEvent(
         IViewModel src,
         AsyncRoutedEvent<IViewModel> e,
@@ -240,10 +252,7 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
         {
             case CurrentDroneFrameChangeEvent { Sender: DroneFrameItemViewModel param }:
             {
-                if (CurrentFrame?.Value?.Id != null)
-                {
-                    await ChangeFrameType(CurrentFrame?.Value?.Id ?? string.Empty, cancel); // TODO: replace with Undo
-                }
+                await ChangeFrameType(param.Model.Id, record: true, cancel);
 
                 e.IsHandled = true;
                 break;
