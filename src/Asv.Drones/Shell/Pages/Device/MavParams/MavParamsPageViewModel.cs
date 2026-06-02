@@ -183,6 +183,13 @@ public class MavParamsPageViewModel
         );
 
         Events.Catch(InternalCatchEvent).DisposeItWith(Disposable);
+
+        Target
+            .Where(w => w.HasValue)
+            .Select(w => w!.Value)
+            .ObserveOnUIThreadDispatcher()
+            .Subscribe(w => OnDeviceConnected(w.Device, w.WhenDisconnectedToken))
+            .DisposeItWith(Disposable);
     }
 
     private Task UpdateImpl(string? query, IProgress<double> progress, CancellationToken cancel)
@@ -348,7 +355,7 @@ public class MavParamsPageViewModel
         }
     }
 
-    protected override void AfterDeviceInitialized(IClientDevice device, CancellationToken cancel)
+    private void OnDeviceConnected(IClientDevice device, CancellationToken cancel)
     {
         Header = $"{RS.MavParamsPageViewModel_Title}[{device.Id}]";
         _paramsClient = device.GetMicroservice<IParamsClientEx>();
@@ -372,10 +379,14 @@ public class MavParamsPageViewModel
     public INotifyCollectionChangedSynchronizedViewList<ParamItemViewModel>? AllParams
     {
         get;
-        private set;
+        private set => SetField(ref field, value);
     }
 
-    public IReadOnlyBindableReactiveProperty<int> Total { get; private set; }
+    public IReadOnlyBindableReactiveProperty<int> Total
+    {
+        get;
+        private set => SetField(ref field, value);
+    }
 
     public INotifyCollectionChangedSynchronizedViewList<ParamItemViewModel> ViewedParams { get; }
 

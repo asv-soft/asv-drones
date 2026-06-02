@@ -67,6 +67,7 @@
                         Height="{CompiledBinding #SearchBox.Bounds.Height}"
                     >
                         <avalonia:MaterialIcon
+                            Classes="medium"
                             Kind="PinOff"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
@@ -80,6 +81,7 @@
                         Height="{CompiledBinding #SearchBox.Bounds.Height}"
                     >
                         <avalonia:MaterialIcon
+                            Classes="medium"
                             Kind="Sync"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
@@ -93,6 +95,7 @@
                         Height="{CompiledBinding #SearchBox.Bounds.Height}"
                     >
                         <avalonia:MaterialIcon
+                            Classes="medium"
                             Kind="Star"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
