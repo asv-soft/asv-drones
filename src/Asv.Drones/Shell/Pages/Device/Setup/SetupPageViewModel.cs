@@ -1,12 +1,11 @@
 using System;
+using System.Threading;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
-using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
-using R3;
 
 namespace Asv.Drones;
 
@@ -26,18 +25,5 @@ public class SetupPageViewModel : TreeDevicePageViewModel<ISetupPage, ISetupSubp
         : base(PageId, context, devices, container, loggerFactory, dialogService, ext)
     {
         Icon = PageIcon;
-
-        Target
-            .Where(w => w.HasValue)
-            .Select(w => w!.Value)
-            .ObserveOnUIThreadDispatcher()
-            .Subscribe(w => OnDeviceConnected(w.Device))
-            .DisposeItWith(Disposable);
-    }
-
-    private void OnDeviceConnected(IClientDevice device)
-    {
-        Header = $"{RS.SetupPageViewModel_Title}[{device.Id}]";
-        TreeHeader = RS.SetupPageViewModel_Title;
     }
 }

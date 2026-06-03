@@ -8,18 +8,21 @@
     x:Class="Asv.Drones.AttitudeIndicatorSectionView"
     x:DataType="drones:AttitudeIndicatorSectionViewModel"
 >
+    <Design.DataContext>
+        <drones:AttitudeIndicatorSectionViewModel />
+    </Design.DataContext>
     <WrapPanel Orientation="Horizontal" ItemWidth="220">
         <Viewbox>
             <drones:UavAngleIndicator
-                RollAngle="{Binding Roll.Value}"
-                PitchAngle="{Binding Pitch.Value}"
+                RollAngle="{Binding Roll}"
+                PitchAngle="{Binding Pitch}"
                 CornerRadius="500"
             />
         </Viewbox>
         <Viewbox>
             <drones:CompassUavIndicator
-                Heading="{CompiledBinding Heading.Value}"
-                HomeAzimuth="{CompiledBinding HomeAzimuth.Value}"
+                Heading="{Binding Heading}"
+                HomeAzimuth="{Binding HomeAzimuth}"
             />
         </Viewbox>
     </WrapPanel>

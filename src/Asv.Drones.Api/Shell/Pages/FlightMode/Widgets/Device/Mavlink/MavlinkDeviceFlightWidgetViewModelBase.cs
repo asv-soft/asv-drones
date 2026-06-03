@@ -2,38 +2,20 @@ using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Mavlink;
 using Asv.Modeling;
-using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones.Api;
 
 public abstract class MavlinkDeviceFlightWidgetViewModelBase<TMavlinkClientDevice, TSelf>(
     NavId id,
+    TMavlinkClientDevice device,
     IDeviceManager deviceManager,
-    ILoggerFactory loggerFactory,
     IExtensionService ext
-)
-    : DeviceFlightWidgetViewModelBase<TMavlinkClientDevice, TSelf>(
-        id.ToString(),
-        deviceManager,
-        loggerFactory,
-        ext
-    )
-    where TSelf : class, IFlightWidget<TMavlinkClientDevice>
+) : DeviceFlightWidgetViewModelBase<TMavlinkClientDevice, TSelf>(id, device, deviceManager, ext)
+    where TSelf : class, IFlightWidget
     where TMavlinkClientDevice : MavlinkClientDevice
 {
-    private int _order;
-    public override int Order => _order;
-
-    public override void InitWith(TMavlinkClientDevice device)
-    {
-        base.InitWith(device);
-
-        var mavlinkId =
-            device.Id as MavlinkClientDeviceId
-            ?? throw new Exception($"Should be {typeof(MavlinkClientDeviceId)}");
-
-        _order = CreateOrderFromId(mavlinkId);
-    }
+    public override int Order { get; } =
+        device.Id is MavlinkClientDeviceId mavlinkId ? CreateOrderFromId(mavlinkId) : 0;
 
     private static int CreateOrderFromId(MavlinkClientDeviceId id)
     {

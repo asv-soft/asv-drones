@@ -35,10 +35,19 @@ internal static class DeviceTelemetryDesignPreview
             )
         );
         unitService.Extend(
-            new ProgressUnit(
+            new AltitudeUnit(
                 DesignTime.Configuration,
-                [new ProgressPercentUnitItem(), new ProgressPercentUnitItem()]
+                [new AltitudeMeterUnitItem(), new AltitudeFeetUnitItem()]
             )
+        );
+        unitService.Extend(
+            new AngleUnit(
+                DesignTime.Configuration,
+                [new AngleDegreeUnitItem(), new AngleDmsUnitItem()]
+            )
+        );
+        unitService.Extend(
+            new ProgressUnit(DesignTime.Configuration, [new ProgressPercentUnitItem()])
         );
         unitService.Extend(
             new CapacityUnit(DesignTime.Configuration, [new CapacityMilliAmperePerHourUnitItem()])

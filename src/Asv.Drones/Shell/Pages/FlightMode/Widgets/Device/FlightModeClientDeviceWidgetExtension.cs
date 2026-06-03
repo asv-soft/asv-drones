@@ -1,9 +1,11 @@
-﻿using Asv.Avalonia;
+using System.Linq;
+using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Modeling;
+using Avalonia.Threading;
 using R3;
 
 namespace Asv.Drones;
@@ -18,7 +20,11 @@ public class FlightModeClientDeviceWidgetExtension(
         conn.Explorer.InitializedDevices.PopulateTo(
                 context.Widgets,
                 TryCreateWidget,
-                IsRemoveWidget
+                IsRemoveWidget,
+                synchronizationContext: new AvaloniaSynchronizationContext(
+                    Dispatcher.UIThread,
+                    DispatcherPriority.Default
+                )
             )
             .DisposeItWith(contextDispose);
     }
@@ -30,6 +36,9 @@ public class FlightModeClientDeviceWidgetExtension(
 
     private static bool IsRemoveWidget(IClientDevice model, IFlightWidget vm)
     {
-        return model.Id.ToString() == vm.Id.TypeId;
+        var widgetDeviceId = vm
+            .Id.Args.FirstOrDefault(x => x.Key == DevicePageViewModelMixin.ArgsDeviceIdKey)
+            .Value;
+        return widgetDeviceId == model.Id.AsString();
     }
 }

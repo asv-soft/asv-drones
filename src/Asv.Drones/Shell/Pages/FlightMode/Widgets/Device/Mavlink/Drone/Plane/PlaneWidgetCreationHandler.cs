@@ -20,9 +20,7 @@ public class PlaneWidgetCreationHandler(IServiceProvider services)
                 return null;
             }
 
-            var widget = services.GetService<IPlaneWidget>();
-
-            widget?.InitWith(plane);
+            var widget = ActivatorUtilities.CreateInstance<PlaneWidgetViewModel>(services, plane);
 
             return widget;
         }

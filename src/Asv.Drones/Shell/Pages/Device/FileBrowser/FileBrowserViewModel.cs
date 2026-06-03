@@ -277,13 +277,6 @@ public class FileBrowserViewModel
             .DisposeItWith(Disposable);
 
         InitCommands();
-
-        Target
-            .Where(w => w.HasValue)
-            .Select(w => w!.Value)
-            .ObserveOnUIThreadDispatcher()
-            .Subscribe(w => OnDeviceConnected(w.Device, w.WhenDisconnectedToken))
-            .DisposeItWith(Disposable);
     }
 
     #region Properties
@@ -1139,51 +1132,4 @@ public class FileBrowserViewModel
     }
 
     #endregion
-
-    private void OnDeviceConnected(IClientDevice device, CancellationToken onDisconnectedToken)
-    {
-        Header = $"{RS.FileBrowserViewModel_Title}[{device.Id}]";
-        Icon = DeviceIconMixin.GetIcon(device.Id) ?? PageIcon;
-
-        var client = device.GetMicroservice<IFtpClient>();
-        ArgumentNullException.ThrowIfNull(client);
-        var clientEx = device.GetMicroservice<IFtpClientEx>() ?? new FtpClientEx(client);
-
-        _ftpService = new FtpClientService(clientEx, _loggerFactory).DisposeItWith(Disposable);
-        _ftpService.RegisterTo(onDisconnectedToken);
-
-        _ftpService
-            .RemoteChanged.ThrottleLast(TimeSpan.FromMilliseconds(200))
-            .SubscribeAwait(async (_, _) => await RefreshRemoteImpl(onDisconnectedToken))
-            .RegisterTo(onDisconnectedToken);
-        _ftpService
-            .RemoteChanging.Subscribe(isBusy => IsUiBlocked.OnNext(isBusy))
-            .RegisterTo(onDisconnectedToken);
-
-        _backend = new FileBrowserBackend(_localFilesService, _ftpService);
-
-        onDisconnectedToken.Register(() =>
-        {
-            try
-            {
-                _transfer.TryCancel();
-            }
-            catch
-            {
-                // ignored
-            }
-
-            IsUiBlocked.OnNext(false);
-            IsProgressVisible.OnNext(false);
-            IsTransferInProgress.OnNext(false);
-            Progress.OnNext(0);
-
-            _rawRemoteEntries.Clear();
-            _remoteItems.Clear();
-            RemoteSelectedItem.OnNext(null);
-            _ftpService = null;
-        });
-
-        Refresh();
-    }
 }
