@@ -107,9 +107,6 @@
     <data name="FileBrowserViewModel_BurstDownloadDialog_SecondaryButtonText" xml:space="preserve">
         <value>Отмена</value>
     </data>
-    <data name="MavParamsPageViewModel_DeviceName_Unknown" xml:space="preserve">
-        <value>Неизвестно</value>
-    </data>
     <data name="FileBrowserView_Watermark_Local" xml:space="preserve">
         <value>Локальный поиск</value>
     </data>

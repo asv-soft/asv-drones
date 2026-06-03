@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
-using Asv.Cfg;
 using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
 using Asv.Modeling;
-using Avalonia.Controls;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -44,16 +42,22 @@ public class MavParamsPageViewModel
         ParamItemViewModel
     > _fullFilter;
     private readonly Lock _cancelLock = new();
+    private readonly IUndoChangeSink<ValueUndoChange<IReadOnlyList<string>>> _removeAllPinsUndo;
+    private readonly Subject<Unit> _layoutChanged = new();
+    private readonly ILogger _logger;
 
     private IParamsClientEx? _paramsClient;
     private CancellationTokenSource? _cancellationTokenSource;
-    private ISynchronizedView<KeyValuePair<string, ParamItem>, ParamItemViewModel> _view;
+    private ISynchronizedView<KeyValuePair<string, ParamItem>, ParamItemViewModel>? _view;
     private MavParamsPageViewModelConfig? _config;
-    private ILogger Logger => _loggerFactory.CreateLogger(GetType());
 
     public MavParamsPageViewModel()
         : this(
-            DesignTime.PageContext,
+            new PageContext(
+                new NavArgs((DevicePageViewModelMixin.ArgsDeviceIdKey, "design")),
+                NullUndoHistoryStore.Instance,
+                NullLayoutStore.Instance
+            ),
             NullDeviceManager.Instance,
             NullLoggerFactory.Instance,
             DesignTime.DialogService,
@@ -61,6 +65,7 @@ public class MavParamsPageViewModel
         )
     {
         DesignTime.ThrowIfNotDesignMode();
+
         var list = new ObservableList<ParamItemViewModel>
         {
             new() { DisplayName = "Param 1" },
@@ -82,12 +87,11 @@ public class MavParamsPageViewModel
     )
         : base(PageId, context, devices, loggerFactory, dialogService, ext)
     {
-        ArgumentNullException.ThrowIfNull(devices);
-        ArgumentNullException.ThrowIfNull(loggerFactory);
-
         Header = RS.MavParamsPageViewModel_Title;
 
         _loggerFactory = loggerFactory;
+        _logger = _loggerFactory.CreateLogger(GetType());
+
         _isStarredOnly = new ReactiveProperty<bool>().DisposeItWith(Disposable);
         _viewedParamsList = [];
         ViewedParams = _viewedParamsList
@@ -116,7 +120,7 @@ public class MavParamsPageViewModel
             .Subscribe(value =>
             {
                 var itemsToDelete = _viewedParamsList
-                    .Where(_ => !_.IsPinned.ViewValue.Value)
+                    .Where(p => !p.IsPinned.ViewValue.Value)
                     .ToArray();
 
                 foreach (var item in itemsToDelete)
@@ -146,14 +150,31 @@ public class MavParamsPageViewModel
             Disposable
         );
 
+        _removeAllPinsUndo = Undo.CreateValueChange<IReadOnlyList<string>>(
+                "removeAllPins",
+                ApplyPinnedSet,
+                ApplyPinnedSet
+            )
+            .DisposeItWith(Disposable);
+
         RemoveAllPins = new ReactiveCommand(_ =>
         {
-            if (AllParams?.Any(item => item.IsPinned.ViewValue.Value) != true)
+            if (AllParams is null)
             {
                 return;
             }
 
-            RemoveAllPinsImpl();
+            var pinnedNames = AllParams
+                .Where(item => item.IsPinned.ViewValue.Value)
+                .Select(item => item.Name)
+                .ToArray();
+            if (pinnedNames.Length == 0)
+            {
+                return;
+            }
+
+            _removeAllPinsUndo.Publish(pinnedNames, []);
+            ApplyPinnedSet([]);
         }).DisposeItWith(Disposable);
 
         IsStarredOnly
@@ -181,7 +202,56 @@ public class MavParamsPageViewModel
                 )
         );
 
+        _layoutChanged.DisposeItWith(Disposable);
+        Search
+            .Text.ViewValue.Skip(1)
+            .Subscribe(_ => _layoutChanged.OnNext(Unit.Default))
+            .DisposeItWith(Disposable);
+        IsStarredOnly
+            .ViewValue.Skip(1)
+            .Subscribe(_ => _layoutChanged.OnNext(Unit.Default))
+            .DisposeItWith(Disposable);
+
         Events.Catch(InternalCatchEvent).DisposeItWith(Disposable);
+
+        Target
+            .Where(w => w.HasValue)
+            .Select(w => w!.Value)
+            .ObserveOnUIThreadDispatcher()
+            .Subscribe(w => OnDeviceConnected(w.Device, w.WhenDisconnectedToken))
+            .DisposeItWith(Disposable);
+    }
+
+    public HistoricalBoolProperty IsStarredOnly { get; }
+    public BindableReactiveProperty<bool> IsRefreshing { get; }
+    public BindableReactiveProperty<double> Progress { get; }
+    public ICommand UpdateParams { get; }
+    public ICommand StopUpdateParams { get; }
+    public ReactiveCommand RemoveAllPins { get; }
+    public SearchBoxViewModel Search { get; }
+
+    public INotifyCollectionChangedSynchronizedViewList<ParamItemViewModel>? AllParams
+    {
+        get;
+        private set => SetField(ref field, value);
+    }
+
+    public IReadOnlyBindableReactiveProperty<int>? Total
+    {
+        get;
+        private set => SetField(ref field, value);
+    }
+
+    public INotifyCollectionChangedSynchronizedViewList<ParamItemViewModel> ViewedParams { get; }
+
+    public BindableReactiveProperty<ParamItemViewModel?> SelectedItem { get; }
+
+    private void OnDeviceConnected(IClientDevice device, CancellationToken cancel)
+    {
+        Header = $"{RS.MavParamsPageViewModel_Title}[{device.Id}]";
+        _paramsClient = device.GetMicroservice<IParamsClientEx>();
+        Icon = DeviceIconMixin.GetIcon(device.Id) ?? PageIcon;
+        InternalInit(cancel);
     }
 
     private Task UpdateImpl(string? query, IProgress<double> progress, CancellationToken cancel)
@@ -210,7 +280,12 @@ public class MavParamsPageViewModel
             throw new Exception($"Service of type {nameof(IParamsClientEx)} was not found");
         }
 
-        Total = _paramsClient.RemoteCount.ToReadOnlyBindableReactiveProperty();
+        SelectedItem.Value = null;
+        _viewedParamsList.Clear();
+
+        Total = _paramsClient
+            .RemoteCount.ObserveOnUIThreadDispatcher()
+            .ToReadOnlyBindableReactiveProperty();
         Total.RegisterTo(cancel);
         _view = _paramsClient.Items.CreateView(kvp =>
         {
@@ -240,32 +315,30 @@ public class MavParamsPageViewModel
 
         _view
             .ObserveAdd(cancellationToken: cancel)
-            .SubscribeAwait(
-                async (e, ct) =>
+            .Subscribe(e =>
+            {
+                if (!e.Value.View.IsPinned.ViewValue.Value)
                 {
-                    if (!e.Value.View.IsPinned.ViewValue.Value)
-                    {
-                        return;
-                    }
-
-                    if (_viewedParamsList.Contains(e.Value.View))
-                    {
-                        return;
-                    }
-
-                    _viewedParamsList.Add(e.Value.View);
+                    return;
                 }
-            )
+
+                if (_viewedParamsList.Contains(e.Value.View))
+                {
+                    return;
+                }
+
+                _viewedParamsList.Add(e.Value.View);
+            })
             .RegisterTo(cancel);
 
         AllParams = _view.ToNotifyCollectionChanged(
             SynchronizationContextCollectionEventDispatcher.Current
         );
         AllParams.RegisterTo(cancel);
-        Search.Refresh();
+        Search.Refresh(cancel);
     }
 
-    internal void StopUpdateParamsImpl()
+    private void StopUpdateParamsImpl()
     {
         using (_cancelLock.EnterScope())
         {
@@ -283,7 +356,7 @@ public class MavParamsPageViewModel
         }
     }
 
-    internal async ValueTask UpdateParamsImpl(CancellationToken cancel = default)
+    private async ValueTask UpdateParamsImpl(CancellationToken cancel = default)
     {
         if (IsRefreshing.Value)
         {
@@ -318,56 +391,58 @@ public class MavParamsPageViewModel
         }
         catch (OperationCanceledException)
         {
-            Logger.LogInformation("User canceled updating params");
+            _logger.LogInformation("User canceled updating params");
         }
         catch (Exception e)
         {
-            Logger.LogError(e, "Error to read all param items");
+            _logger.LogError(e, "Error to read all param items");
+        }
+        finally
+        {
+            if (!IsRefreshing.IsDisposed)
+            {
+                IsRefreshing.Value = false;
+            }
         }
     }
 
-    private void RemoveAllPinsImpl()
+    private void ApplyPinnedSet(IReadOnlyList<string> pinnedNames)
     {
         if (AllParams is null)
         {
             return;
         }
 
-        foreach (var item in AllParams.Where(item => item.IsPinned.ViewValue.Value).ToArray())
+        var target = pinnedNames.ToHashSet();
+
+        foreach (var item in AllParams)
         {
-            item.IsPinned.ModelValue.Value = false;
+            var shouldPin = target.Contains(item.Name);
+            if (item.IsPinned.ViewValue.Value != shouldPin)
+            {
+                item.IsPinned.ModelValue.Value = shouldPin;
+            }
         }
 
-        var notSelected = _viewedParamsList
-            .Where(item => item.Id != SelectedItem.Value?.Id)
-            .ToArray();
-        foreach (var item in notSelected)
+        var keep = AllParams.Where(item => target.Contains(item.Name)).ToHashSet();
+        if (SelectedItem.Value is not null)
+        {
+            keep.Add(SelectedItem.Value);
+        }
+
+        foreach (var item in _viewedParamsList.Where(item => !keep.Contains(item)).ToArray())
         {
             _viewedParamsList.Remove(item);
         }
+
+        foreach (var item in keep)
+        {
+            if (!_viewedParamsList.Contains(item))
+            {
+                _viewedParamsList.Add(item);
+            }
+        }
     }
-
-    public HistoricalBoolProperty IsStarredOnly { get; }
-    public BindableReactiveProperty<bool> IsRefreshing { get; }
-    public BindableReactiveProperty<double> Progress { get; }
-    public ICommand UpdateParams { get; }
-    public ICommand StopUpdateParams { get; }
-    public ReactiveCommand RemoveAllPins { get; }
-    public SearchBoxViewModel Search { get; }
-
-    public INotifyCollectionChangedSynchronizedViewList<ParamItemViewModel>? AllParams
-    {
-        get;
-        private set;
-    }
-
-    public IReadOnlyBindableReactiveProperty<int> Total { get; private set; }
-
-    public INotifyCollectionChangedSynchronizedViewList<ParamItemViewModel> ViewedParams { get; }
-
-    public IReadOnlyBindableReactiveProperty<string> DeviceName { get; private set; }
-
-    public BindableReactiveProperty<ParamItemViewModel?> SelectedItem { get; }
 
     public override IEnumerable<IViewModel> GetChildren()
     {
@@ -383,7 +458,66 @@ public class MavParamsPageViewModel
         }
     }
 
-    protected override void AfterLoadExtensions() { }
+    protected override void AfterLoadExtensions()
+    {
+        ViewLayoutMixin
+            .Register(
+                Layout,
+                nameof(MavParamsPageViewModel),
+                LoadLayout,
+                SaveLayout,
+                _layoutChanged
+                    .ThrottleLast(TimeSpan.FromMilliseconds(200))
+                    .ObserveOnUIThreadDispatcher()
+            )
+            .DisposeItWith(Disposable);
+        Layout.LoadWhenRootAttached(RootTracking).DisposeItWith(Disposable);
+    }
+
+    private MavParamsPageViewModelConfig SaveLayout()
+    {
+        var paramsConfig =
+            AllParams
+                ?.Where(item => item.IsPinned.ViewValue.Value || item.IsStarred.ViewValue.Value)
+                .ToDictionary(
+                    item => item.Name,
+                    item => new ParamItemViewModelConfig
+                    {
+                        Name = item.Name,
+                        IsStarred = item.IsStarred.ViewValue.Value,
+                        IsPinned = item.IsPinned.ViewValue.Value,
+                    }
+                ) ?? (_config?.Params ?? new Dictionary<string, ParamItemViewModelConfig>());
+
+        return new MavParamsPageViewModelConfig
+        {
+            Params = paramsConfig,
+            SearchText = Search.Text.ViewValue.Value ?? string.Empty,
+            IsStarredOnly = IsStarredOnly.ViewValue.Value,
+        };
+    }
+
+    private void LoadLayout(MavParamsPageViewModelConfig config)
+    {
+        _config = config;
+
+        Search.Text.ModelValue.Value = config.SearchText;
+        IsStarredOnly.ModelValue.Value = config.IsStarredOnly;
+
+        if (AllParams is not null)
+        {
+            foreach (var item in AllParams)
+            {
+                if (!_config.Params.TryGetValue(item.Name, out var cfg))
+                {
+                    continue;
+                }
+
+                item.IsStarred.ModelValue.Value = cfg.IsStarred;
+                item.IsPinned.ModelValue.Value = cfg.IsPinned;
+            }
+        }
+    }
 
     private async ValueTask InternalCatchEvent(
         IViewModel src,
@@ -403,13 +537,14 @@ public class MavParamsPageViewModel
                     }
                 }
 
+                _layoutChanged.OnNext(Unit.Default);
                 e.IsHandled = true;
                 break;
             }
 
             case PageCloseAttemptEvent { Sender: MavParamsPageViewModel } closeEvent:
             {
-                var isCloseReady = await TryCloseWithApproval();
+                var isCloseReady = await TryCloseWithApproval(cancel);
                 if (!isCloseReady)
                 {
                     closeEvent.AddRestriction(new Restriction(this));
@@ -423,7 +558,7 @@ public class MavParamsPageViewModel
     private void UpdateViewedItems(ParamItemViewModel param)
     {
         var itemsToDelete = _viewedParamsList
-            .Where(_ => !_.IsPinned.ViewValue.Value && _.Id != SelectedItem.Value?.Id)
+            .Where(p => !p.IsPinned.ViewValue.Value && p.Id != SelectedItem.Value?.Id)
             .ToArray();
 
         foreach (var item in itemsToDelete)
@@ -474,15 +609,5 @@ public class MavParamsPageViewModel
         }
 
         return true;
-    }
-}
-
-file class ParamsKvpComparer : IComparer<KeyValuePair<string, ParamItem>>
-{
-    public static ParamsKvpComparer Instance { get; } = new();
-
-    public int Compare(KeyValuePair<string, ParamItem> x, KeyValuePair<string, ParamItem> y)
-    {
-        return string.CompareOrdinal(x.Value.Name, y.Value.Name);
     }
 }

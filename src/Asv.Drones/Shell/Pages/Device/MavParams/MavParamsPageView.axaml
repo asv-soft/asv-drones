@@ -7,6 +7,8 @@
     xmlns:drones="clr-namespace:Asv.Drones"
     xmlns:avalonia1="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
     mc:Ignorable="d"
+    d:DesignWidth="800"
+    d:DesignHeight="400"
     x:Class="Asv.Drones.MavParamsPageView"
     x:DataType="drones:MavParamsPageViewModel"
 >
@@ -160,12 +162,7 @@
                     </ListBox>
                 </ScrollViewer>
             </DockPanel>
-            <GridSplitter
-                x:Name="GridSplitterColumn"
-                Background="Transparent"
-                Grid.Column="1"
-                DragCompleted="GridSplitter_Dragged"
-            />
+            <GridSplitter x:Name="GridSplitterColumn" Background="Transparent" Grid.Column="1" />
             <Panel Grid.Column="2" x:Name="ViewedParamsColumn">
                 <StackPanel
                     IsVisible="{Binding IsRefreshing.Value}"

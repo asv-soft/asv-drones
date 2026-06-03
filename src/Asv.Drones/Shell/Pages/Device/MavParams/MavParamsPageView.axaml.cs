@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using Asv.Avalonia;
+using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using R3;
 
@@ -10,22 +9,30 @@ namespace Asv.Drones;
 
 public partial class MavParamsPageView : UserControl
 {
+    private const int AllParamsColumnIndex = 0;
+
+    private readonly IDisposable? _columnWidthLayout;
+
     public MavParamsPageView()
     {
         InitializeComponent();
-    }
 
-    private void GridSplitter_Dragged(object? sender, VectorEventArgs e)
-    {
         if (Design.IsDesignMode)
         {
             return;
         }
 
-        if (sender is not GridSplitter)
-        {
-            return;
-        }
+        _columnWidthLayout = this.RegisterGridColumnPixelWidth(
+            $"{MavParamsPageViewModel.PageId}.columnWidth",
+            MainGrid,
+            AllParamsColumnIndex
+        );
+    }
+
+    protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        _columnWidthLayout?.Dispose();
+        base.OnDetachedFromVisualTree(e);
     }
 
     private void ItemDockPanel_DoubleTapped(object? sender, RoutedEventArgs e)
