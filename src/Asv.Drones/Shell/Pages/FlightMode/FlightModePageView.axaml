@@ -21,7 +21,11 @@
         <ItemsControl ItemsSource="{Binding WidgetsView}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <avalonia1:WorkspacePanel />
+                    <avalonia1:WorkspacePanel
+                        AttachedToVisualTree="WorkspacePanel_OnAttachedToVisualTree"
+                        DetachedFromVisualTree="WorkspacePanel_OnDetachedFromVisualTree"
+                        WorkspaceChanged="OnWorkspaceChanged"
+                    />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
