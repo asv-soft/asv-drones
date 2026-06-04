@@ -8,11 +8,9 @@ public class PlaneSectionExtension(IServiceProvider services) : IExtensionFor<IP
 {
     public void Extend(IPlaneWidget context, R3.CompositeDisposable contextDispose)
     {
-        var section = services.GetRequiredKeyedService<PlaneSectionViewModel>(
-            PlaneSectionViewModel.SectionId
-        );
-        context.Sections.Add(section);
+        var device = context.Device ?? throw new NullReferenceException();
+        var section = ActivatorUtilities.CreateInstance<PlaneSectionViewModel>(services, device);
 
-        section.InitWith(context.Device ?? throw new NullReferenceException());
+        context.Sections.Add(section);
     }
 }

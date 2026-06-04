@@ -3,7 +3,6 @@ using Asv.Avalonia.IO;
 using Asv.Drones.Api;
 using Asv.Mavlink;
 using Asv.Modeling;
-using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones.Plane;
 
@@ -19,23 +18,28 @@ public class PlaneWidgetViewModel
     public const string WidgetId = "plane";
 
     public PlaneWidgetViewModel(
+        ArduPlaneClientDevice device,
         IDeviceManager deviceManager,
-        ILoggerFactory loggerFactory,
         IExtensionService ext
     )
-        : base(new NavId(WidgetId), deviceManager, loggerFactory, ext) { }
+        : base(
+            new NavId(WidgetId, DevicePageViewModelMixin.CreateOpenPageArgs(device.Id)),
+            device,
+            deviceManager,
+            ext
+        ) { }
 }
 
 public abstract class PlaneWidgetViewModelBase<TPlane, TSelf>
     : DroneFlightWidgetViewModelBase<TPlane, TSelf>
-    where TSelf : class, IFlightWidget<ArduPlaneClientDevice>
+    where TSelf : class, IFlightWidget
     where TPlane : ArduPlaneClientDevice
 {
     protected PlaneWidgetViewModelBase(
         NavId id,
+        TPlane device,
         IDeviceManager deviceManager,
-        ILoggerFactory loggerFactory,
         IExtensionService ext
     )
-        : base(id, deviceManager, loggerFactory, ext) { }
+        : base(id, device, deviceManager, ext) { }
 }

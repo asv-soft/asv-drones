@@ -7,20 +7,11 @@ using R3;
 
 namespace Asv.Drones.Api;
 
-public abstract class FlightWidgetViewModel<TContext, TSelf>(string typeId, IExtensionService ext)
-    : FlightWidgetViewModel<TSelf>(typeId, ext),
-        IFlightWidget<TContext>
-    where TContext : class
-    where TSelf : class, IFlightWidget<TContext>
-{
-    public abstract void InitWith(TContext context);
-}
-
 public abstract class FlightWidgetViewModel<TSelf> : ViewModel<TSelf>, IFlightWidget
     where TSelf : class, IFlightWidget
 {
-    protected FlightWidgetViewModel(string id, IExtensionService ext)
-        : base(id, default, ext)
+    protected FlightWidgetViewModel(NavId id, IExtensionService ext)
+        : base(id.TypeId, id.Args, ext)
     {
         Menu.SetRoutableParent(this).DisposeItWith(Disposable);
         Menu.DisposeRemovedItems().DisposeItWith(Disposable);
@@ -34,6 +25,8 @@ public abstract class FlightWidgetViewModel<TSelf> : ViewModel<TSelf>, IFlightWi
             .ObserveOnUIThreadDispatcher()
             .Subscribe(_ => Sections.Sort(FlightWidgetSectionsComparer.Instance))
             .DisposeItWith(Disposable);
+
+        Disposable.AddAction(() => Sections.ClearWithItemsDispose());
 
         SectionsView = Sections.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);
     }

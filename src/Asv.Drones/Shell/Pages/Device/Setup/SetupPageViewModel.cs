@@ -26,13 +26,4 @@ public class SetupPageViewModel : TreeDevicePageViewModel<ISetupPage, ISetupSubp
     {
         Icon = PageIcon;
     }
-
-    protected override void AfterDeviceInitialized(
-        IClientDevice device,
-        CancellationToken onDisconnectedToken
-    )
-    {
-        Header = $"{RS.SetupPageViewModel_Title}[{device.Id}]";
-        TreeHeader = RS.SetupPageViewModel_Title;
-    }
 }

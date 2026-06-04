@@ -14,7 +14,7 @@ public class PluginFlightItemViewModel : FlightWidgetViewModel<PluginFlightItemV
     private const string WidgetId = "testWidget";
 
     public PluginFlightItemViewModel(ILoggerFactory loggerFactory, IExtensionService ext)
-        : base(WidgetId, ext) { }
+        : base(new NavId(WidgetId), ext) { }
 
     public override int Order => 1;
 }

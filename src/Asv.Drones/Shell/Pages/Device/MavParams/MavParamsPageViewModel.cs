@@ -45,7 +45,6 @@ public class MavParamsPageViewModel
     > _fullFilter;
     private readonly Lock _cancelLock = new();
 
-    private DeviceId _deviceId;
     private IParamsClientEx? _paramsClient;
     private CancellationTokenSource? _cancellationTokenSource;
     private ISynchronizedView<KeyValuePair<string, ParamItem>, ParamItemViewModel> _view;
@@ -346,19 +345,6 @@ public class MavParamsPageViewModel
         {
             _viewedParamsList.Remove(item);
         }
-    }
-
-    protected override void AfterDeviceInitialized(IClientDevice device, CancellationToken cancel)
-    {
-        Header = $"{RS.MavParamsPageViewModel_Title}[{device.Id}]";
-        _paramsClient = device.GetMicroservice<IParamsClientEx>();
-        DeviceName = device
-            .Name.Select(x => x ?? RS.MavParamsPageViewModel_DeviceName_Unknown)
-            .ToReadOnlyBindableReactiveProperty<string>();
-        DeviceName.RegisterTo(cancel);
-        _deviceId = device.Id;
-        Icon = DeviceIconMixin.GetIcon(_deviceId) ?? PageIcon;
-        InternalInit(cancel);
     }
 
     public HistoricalBoolProperty IsStarredOnly { get; }

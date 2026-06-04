@@ -20,9 +20,10 @@ public class DroneWidgetCreationHandler(IServiceProvider services)
                 return null;
             }
 
-            var widget = services.GetService<IDroneFlightWidget>();
-
-            widget?.InitWith(mavlinkDevice);
+            var widget = ActivatorUtilities.CreateInstance<DroneFlightWidgetViewModel>(
+                services,
+                mavlinkDevice
+            );
 
             return widget;
         }

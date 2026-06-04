@@ -30,7 +30,6 @@
     <ItemGroup>
       <Folder Include="Core\Services\Devices\" />
       <Folder Include="Shell\" />
-      <Folder Include="Tools\Design\" />
     </ItemGroup>
 
     <ItemGroup>

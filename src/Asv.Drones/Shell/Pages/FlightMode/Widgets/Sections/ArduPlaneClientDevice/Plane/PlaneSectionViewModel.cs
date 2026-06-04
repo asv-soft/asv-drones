@@ -2,21 +2,26 @@ using System.Collections.Generic;
 using Asv.Avalonia;
 using Asv.Drones.Api;
 using Asv.Mavlink;
-using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones.Plane;
 
-public class PlaneSectionViewModel : ViewModel, IFlightWidgetSection<ArduPlaneClientDevice>
+public class PlaneSectionViewModel : ViewModel, IFlightWidgetSection
 {
-    public const string SectionId = "planeWidgetSection";
+    public const string SectionId = "plane-widget-section";
 
     public PlaneSectionViewModel()
-        : this(DesignTime.LoggerFactory) { }
+        : base(SectionId)
+    {
+        DesignTime.ThrowIfNotDesignMode();
+        Order = -1;
+    }
 
-    public PlaneSectionViewModel(ILoggerFactory loggerFactory)
+    public PlaneSectionViewModel(ArduPlaneClientDevice device)
         : base(SectionId)
     {
         Order = -1;
+        Type = device.GetType().Name;
+        Text = device.Name.CurrentValue;
     }
 
     public string? Type
@@ -29,12 +34,6 @@ public class PlaneSectionViewModel : ViewModel, IFlightWidgetSection<ArduPlaneCl
     {
         get;
         set => SetField(ref field, value);
-    }
-
-    public void InitWith(ArduPlaneClientDevice context)
-    {
-        Type = context.GetType().Name;
-        Text = context.Name.CurrentValue;
     }
 
     public int Order { get; }

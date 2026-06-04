@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Asv.Avalonia;
-using Asv.Modeling;
+using Asv.Drones.Api;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
@@ -21,23 +21,35 @@ public record BatteryRttBoxData(
 );
 #pragma warning restore SA1313
 
-public class BatteryUavIndicatorViewModel : KeyValueRttBoxViewModel<BatteryRttBoxData>
+public class BatteryUavIndicatorViewModel
+    : KeyValueRttBoxViewModel<BatteryRttBoxData>,
+        ITelemetryItem
 {
     private readonly AsvColorKind defaultStatusColor;
 
     [SetsRequiredMembers]
     public BatteryUavIndicatorViewModel()
         : this(
-            new NavId(nameof(BatteryUavIndicator)),
+            nameof(BatteryUavIndicator),
             DesignTime.LoggerFactory,
-            new ReactiveProperty<double>(0.76),
-            new ReactiveProperty<double>(12.4),
-            new ReactiveProperty<double>(23.8),
-            new ReactiveProperty<double>(3900),
-            DeviceTelemetryDesignPreview.Unit(ProgressUnit.Id).CurrentUnitItem,
-            DeviceTelemetryDesignPreview.Unit(AmperageUnit.Id).CurrentUnitItem,
-            DeviceTelemetryDesignPreview.Unit(CapacityUnit.Id).CurrentUnitItem,
-            DeviceTelemetryDesignPreview.Unit(VoltageUnit.Id).CurrentUnitItem,
+            DeviceTelemetryDesignPreview
+                .UnitService.Units[ProgressUnit.Id]
+                .CurrentUnitItem.CombineLatest(
+                    DeviceTelemetryDesignPreview.UnitService.Units[AmperageUnit.Id].CurrentUnitItem,
+                    DeviceTelemetryDesignPreview.UnitService.Units[CapacityUnit.Id].CurrentUnitItem,
+                    DeviceTelemetryDesignPreview.UnitService.Units[VoltageUnit.Id].CurrentUnitItem,
+                    (progressUnit, amperageUnit, capacityUnit, voltageUnit) =>
+                        new BatteryRttBoxData(
+                            0.76d,
+                            12.4d,
+                            23.8d,
+                            3900d,
+                            progressUnit,
+                            amperageUnit,
+                            capacityUnit,
+                            voltageUnit
+                        )
+                ),
             DeviceTelemetryDesignPreview.DefaultStatusColor
         )
     {
@@ -46,39 +58,20 @@ public class BatteryUavIndicatorViewModel : KeyValueRttBoxViewModel<BatteryRttBo
 
     [SetsRequiredMembers]
     public BatteryUavIndicatorViewModel(
-        NavId id,
+        string id,
         ILoggerFactory loggerFactory,
-        ReactiveProperty<double> batteryCharge,
-        ReactiveProperty<double> batteryAmperage,
-        ReactiveProperty<double> batteryVoltage,
-        ReactiveProperty<double> batteryConsumed,
-        SynchronizedReactiveProperty<IUnitItem> progressUnit,
-        SynchronizedReactiveProperty<IUnitItem> amperageUnit,
-        SynchronizedReactiveProperty<IUnitItem> capacityUnit,
-        SynchronizedReactiveProperty<IUnitItem> voltageUnit,
+        Observable<BatteryRttBoxData> batteryData,
         AsvColorKind defaultStatusColor,
         TimeSpan? networkErrorTimeout = null
     )
         : base(
-            id.TypeId,
+            id,
             loggerFactory,
-            batteryCharge
-                .CombineLatest(
-                    batteryAmperage,
-                    batteryVoltage,
-                    batteryConsumed,
-                    progressUnit,
-                    amperageUnit,
-                    capacityUnit,
-                    voltageUnit,
-                    (bC, bA, bV, bCo, prog, amp, cap, vol) =>
-                        new BatteryRttBoxData(bC, bA, bV, bCo, prog, amp, cap, vol)
-                )
-                .ObserveOnUIThreadDispatcher()
-                .ThrottleLast(TimeSpan.FromMilliseconds(200)),
+            batteryData.ObserveOnUIThreadDispatcher().ThrottleLast(TimeSpan.FromMilliseconds(200)),
             networkErrorTimeout
         )
     {
+        ItemId = id;
         this.defaultStatusColor = defaultStatusColor;
 
         Header = RS.UavRttItem_Battery;
@@ -110,6 +103,8 @@ public class BatteryUavIndicatorViewModel : KeyValueRttBoxViewModel<BatteryRttBo
         };
         Status = defaultStatusColor;
     }
+
+    public string ItemId { get; }
 
     private void ChangeBatteryStatus(double percent)
     {

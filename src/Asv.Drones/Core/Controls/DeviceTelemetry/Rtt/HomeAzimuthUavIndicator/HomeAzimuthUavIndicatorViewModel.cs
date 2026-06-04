@@ -1,20 +1,20 @@
 using System;
 using Asv.Avalonia;
-using Asv.Modeling;
+using Asv.Drones.Api;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
 
 namespace Asv.Drones;
 
-public class HomeAzimuthUavIndicatorViewModel : SplitDigitRttBoxViewModel
+public class HomeAzimuthUavIndicatorViewModel : SplitDigitRttBoxViewModel, ITelemetryItem
 {
     public HomeAzimuthUavIndicatorViewModel()
         : this(
-            new NavId(nameof(HomeAzimuthUavIndicator)),
+            nameof(HomeAzimuthUavIndicator),
             DesignTime.LoggerFactory,
             DeviceTelemetryDesignPreview.UnitService,
-            new ReactiveProperty<double>(30),
+            Observable.Return(30d),
             DeviceTelemetryDesignPreview.DefaultStatusColor
         )
     {
@@ -22,26 +22,22 @@ public class HomeAzimuthUavIndicatorViewModel : SplitDigitRttBoxViewModel
     }
 
     public HomeAzimuthUavIndicatorViewModel(
-        NavId id,
+        string id,
         ILoggerFactory loggerFactory,
         IUnitService unitService,
-        ReactiveProperty<double> homeAzimuth,
+        Observable<double> homeAzimuth,
         AsvColorKind defaultStatusColor,
         TimeSpan? networkErrorTimeout = null
     )
-        : base(
-            id.TypeId,
-            loggerFactory,
-            unitService,
-            AngleUnit.Id,
-            homeAzimuth,
-            networkErrorTimeout
-        )
+        : base(id, loggerFactory, unitService, AngleUnit.Id, homeAzimuth, networkErrorTimeout)
     {
+        ItemId = id;
         Header = RS.HomeAzimuthUavIndicatorViewModel_HomeAzimuth;
         ShortHeader = RS.HomeAzimuthUavIndicatorViewModel_HomeAzimuth_Short;
         Icon = MaterialIconKind.Home;
         Status = defaultStatusColor;
         FormatString = "F0";
     }
+
+    public string ItemId { get; }
 }

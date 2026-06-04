@@ -1,20 +1,20 @@
 using System;
 using Asv.Avalonia;
-using Asv.Modeling;
+using Asv.Drones.Api;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
 
 namespace Asv.Drones;
 
-public class VelocityUavIndicatorViewModel : SplitDigitRttBoxViewModel
+public class VelocityUavIndicatorViewModel : SplitDigitRttBoxViewModel, ITelemetryItem
 {
     public VelocityUavIndicatorViewModel()
         : this(
-            new NavId(nameof(VelocityUavIndicator)),
+            nameof(VelocityUavIndicator),
             DesignTime.LoggerFactory,
             DeviceTelemetryDesignPreview.UnitService,
-            new ReactiveProperty<double>(19.9),
+            Observable.Return(19.9d),
             DeviceTelemetryDesignPreview.DefaultStatusColor
         )
     {
@@ -22,26 +22,22 @@ public class VelocityUavIndicatorViewModel : SplitDigitRttBoxViewModel
     }
 
     public VelocityUavIndicatorViewModel(
-        NavId id,
+        string id,
         ILoggerFactory loggerFactory,
         IUnitService unitService,
-        ReactiveProperty<double> velocity,
+        Observable<double> velocity,
         AsvColorKind defaultStatusColor,
         TimeSpan? networkErrorTimeout = null
     )
-        : base(
-            id.TypeId,
-            loggerFactory,
-            unitService,
-            VelocityUnit.Id,
-            velocity,
-            networkErrorTimeout
-        )
+        : base(id, loggerFactory, unitService, VelocityUnit.Id, velocity, networkErrorTimeout)
     {
+        ItemId = id;
         Header = RS.UavRttItem_Velocity;
         ShortHeader = RS.VelocityUavIndicatorViewModel_Velocity_Short;
         Icon = MaterialIconKind.Speedometer;
         Status = defaultStatusColor;
         FormatString = "F2";
     }
+
+    public string ItemId { get; }
 }
