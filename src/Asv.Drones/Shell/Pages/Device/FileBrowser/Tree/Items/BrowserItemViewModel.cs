@@ -155,6 +155,20 @@ public abstract class BrowserItemViewModel : ViewModel, IBrowserItemViewModel
     public abstract ValueTask<uint> CalculateCrc32Async(CancellationToken ct);
     public abstract ValueTask CreateDirectoryAsync(CancellationToken ct);
 
+    /// <summary>
+    /// Attach backend context once right after VM creation.
+    /// </summary>
+    /// <param name="backend">Backend context from VM.</param>
+    public void AttachBackend(FileBrowserBackend backend)
+    {
+        _ops = backend.ResolveOps(Type);
+    }
+
+    public ValueTask Remove(CancellationToken ct)
+    {
+        return ValueTask.CompletedTask;
+    }
+
     private async ValueTask CommitRenameImpl(CancellationToken ct)
     {
         var oldName = Name;
@@ -178,36 +192,23 @@ public abstract class BrowserItemViewModel : ViewModel, IBrowserItemViewModel
             return;
         }
 
-        // TODO: implement rename
-        /*await this.ExecuteCommand(
-            CommitRenameCommand.Id,
-            CommandArg.CreateDictionary(
-                new Dictionary<string, CommandArg>
-                {
-                    { CommitRenameCommand.NewValue, CommandArg.CreateString(newPath) },
-                    { CommitRenameCommand.OldValue, CommandArg.CreateString(oldPath) },
-                }
-            ),
-            ct
-        );*/
-    }
+        string resultPath;
+        try
+        {
+            resultPath = await RenameAsync(oldPath, newPath, ct);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(
+                e,
+                "Failed to rename \"{OldPath}\" to \"{NewPath}\"",
+                oldPath,
+                newPath
+            );
+            EditedName.Value = oldName;
+            return;
+        }
 
-    /// <summary>
-    /// Attach backend context once right after VM creation.
-    /// </summary>
-    /// <param name="backend">Backend context from VM.</param>
-    public void AttachBackend(FileBrowserBackend backend)
-    {
-        _ops = backend.ResolveOps(Type);
-    }
-
-    public override IEnumerable<IViewModel> GetChildren()
-    {
-        return [];
-    }
-
-    public ValueTask Remove(CancellationToken ct)
-    {
-        return ValueTask.CompletedTask;
+        await this.Rise(new BrowserItemRenamedEvent(this, oldPath, resultPath, Type), ct);
     }
 }
