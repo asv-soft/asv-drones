@@ -14,7 +14,7 @@ public class HeadingUavIndicatorViewModel : SplitDigitRttBoxViewModel, ITelemetr
             nameof(HeadingUavIndicator),
             DesignTime.LoggerFactory,
             DeviceTelemetryDesignPreview.UnitService,
-            Observable.Return(29d),
+            Observable.Return(29d).Concat(Observable.Never<double>()),
             DeviceTelemetryDesignPreview.DefaultStatusColor
         )
     {
