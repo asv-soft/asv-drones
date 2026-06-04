@@ -1,13 +1,11 @@
 using Asv.Avalonia;
-using Asv.Common;
 using Asv.Modeling;
 
 namespace Asv.Drones;
 
 /// <summary>
-/// Represents an event triggered when param item changes.
+/// Represents an event triggered when a param item changes.
 /// </summary>
-/// <param name="source">.</param>
 public sealed class ParamItemChangedEvent(IViewModel source, object trackedObject)
     : AsyncRoutedEvent<IViewModel>(source, RoutingStrategy.Bubble)
 {

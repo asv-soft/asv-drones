@@ -68,7 +68,10 @@
                 TextWrapping="Wrap"
                 Margin="10 5"
             />
-            <TextBox Margin="10 5" Text="{CompiledBinding Value.Value}">
+            <TextBox
+                Margin="10 5"
+                Text="{CompiledBinding Value.ViewValue.Value, UpdateSourceTrigger=LostFocus}"
+            >
                 <TextBox.InnerRightContent>
                     <TextBlock
                         Text="{CompiledBinding Units, Mode=OneTime}"

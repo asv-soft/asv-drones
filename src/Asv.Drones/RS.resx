@@ -119,9 +119,6 @@
     <data name="FileBrowserViewModel_BurstDownloadDialog_SecondaryButtonText" xml:space="preserve">
         <value>Cancel</value>
     </data>
-    <data name="MavParamsPageViewModel_DeviceName_Unknown" xml:space="preserve">
-        <value>Unknown</value>
-    </data>
     <data name="NotANumber" xml:space="preserve">
         <value>N/A</value>
     </data>

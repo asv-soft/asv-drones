@@ -663,15 +663,6 @@ namespace Asv.Drones {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unknown.
-        /// </summary>
-        public static string MavParamsPageViewModel_DeviceName_Unknown {
-            get {
-                return ResourceManager.GetString("MavParamsPageViewModel_DeviceName_Unknown", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Params.
         /// </summary>
         public static string MavParamsPageViewModel_Title {
