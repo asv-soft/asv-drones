@@ -1120,6 +1120,7 @@ public class FileBrowserViewModel
 
     #region Dispose
 
+
     protected override void Dispose(bool disposing)
     {
         if (disposing)

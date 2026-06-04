@@ -171,9 +171,8 @@ public partial class MavParamInfo
     public ValueType Increment => Convert(Metadata.Increment);
     public string? FormatString =>
         CollectionExtensions.GetValueOrDefault(_additionalInfo, FormatStringKey);
-    public MavParamWidgetType WidgetType =>
-        GetAdditionalAsEnum<MavParamWidgetType>(_additionalInfo, WidgetTypeKey)
-        ?? MavParamWidgetType.TextBox;
+    public string? WidgetType =>
+        CollectionExtensions.GetValueOrDefault(_additionalInfo, WidgetTypeKey);
     public MaterialIconKind? Icon =>
         GetAdditionalAsEnum<MaterialIconKind>(_additionalInfo, IconKey);
 

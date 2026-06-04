@@ -6,9 +6,9 @@
 
         <AvaloniaVersion>12.0.4</AvaloniaVersion>
         <AvaloniaDataGridVersion>12.0.0</AvaloniaDataGridVersion>
-        <AsvAvaloniaVersion>3.0.0-dev.16</AsvAvaloniaVersion>
-        <AsvMavlinkVersion>4.3.0-dev.3</AsvMavlinkVersion>
-        <AsvGnssVersion>2.2.0-dev.2</AsvGnssVersion>
+        <AsvAvaloniaVersion>3.0.0-dev.23</AsvAvaloniaVersion>
+        <AsvMavlinkVersion>4.3.0-dev.4</AsvMavlinkVersion>
+        <AsvGnssVersion>2.2.0-dev.3</AsvGnssVersion>
         
         <FileVersion>$(ProductVersion)</FileVersion>
         <Version>$(ProductVersion)</Version>

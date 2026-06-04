@@ -19,14 +19,14 @@ public static class MavParamFactory
         var info = new MavParamInfo(metadata);
         return info.WidgetType switch
         {
-            MavParamWidgetType.AsciiChars => new MavParamAsciiCharViewModel(
+            "AsciiChars" => new MavParamAsciiCharViewModel(
                 info,
                 update,
                 initReadCallback,
                 writeCallback,
                 loggerFactory
             ),
-            MavParamWidgetType.Altitude => new MavParamAltitudeTextBoxViewModel(
+            "Altitude" => new MavParamAltitudeTextBoxViewModel(
                 info,
                 update,
                 initReadCallback,
@@ -34,7 +34,7 @@ public static class MavParamFactory
                 loggerFactory,
                 measureService
             ),
-            MavParamWidgetType.Latitude => new MavParamLatLonTextBoxViewModel(
+            "Latitude" => new MavParamLatLonTextBoxViewModel(
                 info,
                 update,
                 initReadCallback,
@@ -43,7 +43,7 @@ public static class MavParamFactory
                 measureService,
                 true
             ),
-            MavParamWidgetType.Longitude => new MavParamLatLonTextBoxViewModel(
+            "Longitude" => new MavParamLatLonTextBoxViewModel(
                 info,
                 update,
                 initReadCallback,
@@ -52,14 +52,14 @@ public static class MavParamFactory
                 measureService,
                 false
             ),
-            MavParamWidgetType.Button => new MavParamButtonViewModel(
+            "Button" => new MavParamButtonViewModel(
                 info,
                 update,
                 initReadCallback,
                 writeCallback,
                 loggerFactory
             ),
-            MavParamWidgetType.ComboBox => new MavParamComboBoxViewModel(
+            "ComboBox" => new MavParamComboBoxViewModel(
                 info,
                 update,
                 initReadCallback,
