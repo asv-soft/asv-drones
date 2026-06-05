@@ -24,9 +24,27 @@ public static class MavParamMixin
     {
         public Builder Default()
         {
-            return UseEditor<MavParamTextBoxPropertyViewModel, MavParamTextBoxPropertyView>(
-                MavParamTextBoxPropertyViewModel.TypeId
-            );
+            return UseEditor<MavParamTextBoxPropertyViewModel, PropertyTextBoxView>(
+                    MavParamTextBoxPropertyViewModel.TypeId
+                )
+                .UseEditor<MavParamAsciiCharPropertyViewModel, PropertyTextBoxView>(
+                    MavParamAsciiCharPropertyViewModel.TypeId
+                )
+                .UseEditor<MavParamComboBoxPropertyViewModel, PropertyComboBoxView>(
+                    MavParamComboBoxPropertyViewModel.TypeId
+                )
+                .UseEditor<MavParamButtonPropertyViewModel, PropertyButtonView>(
+                    MavParamButtonPropertyViewModel.TypeId
+                )
+                .UseEditor<MavParamAltitudePropertyViewModel, PropertyUnitView>(
+                    MavParamAltitudePropertyViewModel.TypeId
+                )
+                .UseEditor<MavParamLatitudePropertyViewModel, PropertyUnitView>(
+                    MavParamLatitudePropertyViewModel.TypeId
+                )
+                .UseEditor<MavParamLongitudePropertyViewModel, PropertyUnitView>(
+                    MavParamLongitudePropertyViewModel.TypeId
+                );
         }
 
         public Builder UseEditor<TViewModel, TView>(string widgetType)

@@ -86,9 +86,12 @@ public partial class MavParamInfo
 
     public const string WidgetTypeKey = "widget";
     public const string FormatStringKey = "format";
+    public const string ShortcutKey = "shortcut";
+    public const string UnitKey = "unitkey";
     public const string IconKey = "icon";
     public const string IconColorKey = "icon-color";
     public const string OrderKey = "order";
+    public const string ItemDescriptionKey = "desc";
 
     #endregion
 
@@ -105,6 +108,21 @@ public partial class MavParamInfo
     #region AdditionalInfo
 
     public ImmutableDictionary<string, string> AdditionalInfo => _additionalInfo;
+
+    public string? GetAdditionalAsString(string key, string? defaultValue = null)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(key);
+        return GetAdditionalAsString(_additionalInfo, key, defaultValue);
+    }
+
+    private static string? GetAdditionalAsString(
+        ImmutableDictionary<string, string> dict,
+        string key,
+        string? defaultValue = null
+    )
+    {
+        return dict.TryGetValue(key, out var value) ? value.Trim() : defaultValue;
+    }
 
     private static T? GetAdditionalAsEnum<T>(ImmutableDictionary<string, string> dict, string key)
         where T : struct
@@ -169,10 +187,8 @@ public partial class MavParamInfo
     public ValueType Max => Convert(Metadata.MaxValue);
     public ValueType Min => Convert(Metadata.MinValue);
     public ValueType Increment => Convert(Metadata.Increment);
-    public string? FormatString =>
-        CollectionExtensions.GetValueOrDefault(_additionalInfo, FormatStringKey);
-    public string? WidgetType =>
-        CollectionExtensions.GetValueOrDefault(_additionalInfo, WidgetTypeKey);
+    public string? FormatString => GetAdditionalAsString(FormatStringKey);
+    public string? WidgetType => GetAdditionalAsString(WidgetTypeKey);
     public MaterialIconKind? Icon =>
         GetAdditionalAsEnum<MaterialIconKind>(_additionalInfo, IconKey);
 
@@ -181,6 +197,42 @@ public partial class MavParamInfo
 
     public int Order => GetAdditionalAsInt(_additionalInfo, OrderKey);
     public string Title => Metadata.ShortDesc ?? Metadata.Name;
+    public string? Shortcut =>
+        GetAdditionalAsString(ShortcutKey) ?? TryGetShortcutFromName(Metadata);
+
+    private static string TryGetShortcutFromName(IMavParamTypeMetadata metadata)
+    {
+        if (string.IsNullOrWhiteSpace(metadata.Name))
+        {
+            return string.Empty;
+        }
+
+        if (string.IsNullOrWhiteSpace(metadata.Group))
+        {
+            return metadata.Name;
+        }
+
+        var groupWords = new HashSet<string>(
+            metadata.Group.Split(
+                ['.', '_'],
+                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
+            ),
+            StringComparer.OrdinalIgnoreCase
+        );
+
+        if (groupWords.Count == 0)
+        {
+            return metadata.Name;
+        }
+
+        var shortcutWords = metadata
+            .Name.Split('_', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Where(word => groupWords.Contains(word) == false);
+
+        return string.Join("_", shortcutWords);
+    }
+
+    public string? Unit => GetAdditionalAsString(UnitKey);
 
     public IEnumerable<MavParamValueItem> GetPredefinedValues()
     {
@@ -191,14 +243,16 @@ public partial class MavParamInfo
 
         foreach (var value in Metadata.Values)
         {
-            ParseAdditionalInfo(value.Item2, out var dict, out var desc);
+            ParseAdditionalInfo(value.Item2, out var dict, out var header);
             var icon = GetAdditionalAsEnum<MaterialIconKind>(dict, IconKey);
-            var iconColor = GetAdditionalAsEnum<AsvColorKind>(_additionalInfo, IconKey);
+            var iconColor = GetAdditionalAsEnum<AsvColorKind>(dict, IconColorKey);
+            var description = GetAdditionalAsString(dict, ItemDescriptionKey);
 
             yield return new MavParamValueItem(
                 icon,
                 iconColor,
-                desc,
+                header,
+                description,
                 value.Item1,
                 Convert(value.Item1)
             );
@@ -590,6 +644,7 @@ public class MavParamValueItem(
     MaterialIconKind? icon,
     AsvColorKind? iconColor,
     string title,
+    string? description,
     MavParamValue mavlinkValue,
     ValueType value
 )
@@ -597,6 +652,7 @@ public class MavParamValueItem(
     public MaterialIconKind? Icon => icon;
     public AsvColorKind IconColor => iconColor ?? AsvColorKind.None;
     public string Title => title;
+    public string? Description => description;
     public MavParamValue MavValue => mavlinkValue;
     public ValueType Value => value;
 }
