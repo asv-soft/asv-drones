@@ -13,7 +13,7 @@ public sealed class VelocityTelemetryItemFactory(
     ILoggerFactory loggerFactory
 ) : ITelemetryItemFactory
 {
-    public const string Id = "velocity-uav";
+    public const string Id = "velocity";
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public string ItemId => Id;
@@ -31,7 +31,7 @@ public sealed class VelocityTelemetryItemFactory(
             .Main.GroundVelocity.Select(Math.Truncate)
             .Prepend(double.NaN);
 
-        return new VelocityUavIndicatorViewModel(
+        return new VelocityTelemetryItemViewModel(
             Id,
             loggerFactory,
             unitService,
@@ -44,7 +44,7 @@ public sealed class VelocityTelemetryItemFactory(
     {
         var velocityObservable = Observable.Return(19.9d).Concat(Observable.Never<double>());
 
-        return new VelocityUavIndicatorViewModel(
+        return new VelocityTelemetryItemViewModel(
             Id,
             loggerFactory,
             unitService,

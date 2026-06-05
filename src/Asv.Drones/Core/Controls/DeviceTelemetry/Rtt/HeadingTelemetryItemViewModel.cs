@@ -7,11 +7,11 @@ using R3;
 
 namespace Asv.Drones;
 
-public class HeadingUavIndicatorViewModel : SplitDigitRttBoxViewModel, ITelemetryItem
+public class HeadingTelemetryItemViewModel : SplitDigitRttBoxViewModel, ITelemetryItem
 {
-    public HeadingUavIndicatorViewModel()
+    public HeadingTelemetryItemViewModel()
         : this(
-            nameof(HeadingUavIndicator),
+            nameof(HeadingTelemetryItemViewModel),
             DesignTime.LoggerFactory,
             DeviceTelemetryDesignPreview.UnitService,
             Observable.Return(29d).Concat(Observable.Never<double>()),
@@ -21,7 +21,7 @@ public class HeadingUavIndicatorViewModel : SplitDigitRttBoxViewModel, ITelemetr
         DesignTime.ThrowIfNotDesignMode();
     }
 
-    public HeadingUavIndicatorViewModel(
+    public HeadingTelemetryItemViewModel(
         string id,
         ILoggerFactory loggerFactory,
         IUnitService unitService,

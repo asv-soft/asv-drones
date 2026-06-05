@@ -14,7 +14,7 @@ public sealed class HomeAzimuthTelemetryItemFactory(
     ILoggerFactory loggerFactory
 ) : ITelemetryItemFactory
 {
-    public const string Id = "home-azimuth-uav";
+    public const string Id = "home-azimuth";
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public string ItemId => Id;
@@ -34,7 +34,7 @@ public sealed class HomeAzimuthTelemetryItemFactory(
             .Select(p => p.Azimuth(positionClientEx.Home.CurrentValue ?? GeoPoint.NaN))
             .Prepend(double.NaN);
 
-        return new HomeAzimuthUavIndicatorViewModel(
+        return new HomeAzimuthTelemetryItemViewModel(
             Id,
             loggerFactory,
             unitService,
@@ -47,7 +47,7 @@ public sealed class HomeAzimuthTelemetryItemFactory(
     {
         var homeAzimuthObservable = Observable.Return(30d).Concat(Observable.Never<double>());
 
-        return new HomeAzimuthUavIndicatorViewModel(
+        return new HomeAzimuthTelemetryItemViewModel(
             Id,
             loggerFactory,
             unitService,

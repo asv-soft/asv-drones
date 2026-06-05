@@ -29,7 +29,7 @@ public sealed class RtlAction<TWidget>() : FlightWidgetAction<TWidget>("rtl")
         {
             Icon = ActionIcon,
             Description = ActionDescription,
-            Order = DroneActionOrder.Rtl,
+            Order = 60,
         };
         item.Command = CreateCommand(item, ct => new ValueTask(control.DoRtl(ct)))
             .DisposeItWith(contextDispose);

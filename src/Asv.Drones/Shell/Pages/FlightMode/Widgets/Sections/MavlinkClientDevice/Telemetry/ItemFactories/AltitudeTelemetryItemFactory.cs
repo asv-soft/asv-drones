@@ -9,7 +9,7 @@ namespace Asv.Drones;
 
 public sealed class AltitudeTelemetryItemFactory(IUnitService unitService) : ITelemetryItemFactory
 {
-    public const string Id = "altitude-uav";
+    public const string Id = "altitude";
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public string ItemId => Id;
@@ -37,7 +37,7 @@ public sealed class AltitudeTelemetryItemFactory(IUnitService unitService) : ITe
                 (value, unit) => new AltitudeRttBoxData(value.AltitudeAgl, value.AltitudeMsl, unit)
             );
 
-        return new AltitudeUavIndicatorViewModel(Id, altitudeObservable, DefaultStatusColor);
+        return new AltitudeTelemetryItemViewModel(Id, altitudeObservable, DefaultStatusColor);
     }
 
     public ITelemetryItem CreatePreview()
@@ -46,6 +46,6 @@ public sealed class AltitudeTelemetryItemFactory(IUnitService unitService) : ITe
             .Units[AltitudeUnit.Id]
             .CurrentUnitItem.Select(unit => new AltitudeRttBoxData(10d, 14d, unit));
 
-        return new AltitudeUavIndicatorViewModel(Id, altitudeObservable, DefaultStatusColor);
+        return new AltitudeTelemetryItemViewModel(Id, altitudeObservable, DefaultStatusColor);
     }
 }

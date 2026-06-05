@@ -18,17 +18,17 @@ public record GnssRttBoxData(
 );
 #pragma warning restore SA1313
 
-public class GnssUavIndicatorViewModel : KeyValueRttBoxViewModel<GnssRttBoxData>, ITelemetryItem
+public class GnssTelemetryItemViewModel : KeyValueRttBoxViewModel<GnssRttBoxData>, ITelemetryItem
 {
     private const int DangerSatelliteCount = 10;
     private static readonly Range WarningSatelliteAmount = 15..20;
 
-    private readonly AsvColorKind defaultStatusColor;
+    private readonly AsvColorKind _defaultStatusColor;
 
     [SetsRequiredMembers]
-    public GnssUavIndicatorViewModel()
+    public GnssTelemetryItemViewModel()
         : this(
-            nameof(GnssUavIndicator),
+            nameof(GnssTelemetryItemViewModel),
             DesignTime.LoggerFactory,
             Observable
                 .Return(
@@ -42,7 +42,7 @@ public class GnssUavIndicatorViewModel : KeyValueRttBoxViewModel<GnssRttBoxData>
     }
 
     [SetsRequiredMembers]
-    public GnssUavIndicatorViewModel(
+    public GnssTelemetryItemViewModel(
         string id,
         ILoggerFactory loggerFactory,
         Observable<GnssRttBoxData> gnssData,
@@ -57,7 +57,7 @@ public class GnssUavIndicatorViewModel : KeyValueRttBoxViewModel<GnssRttBoxData>
         )
     {
         ItemId = id;
-        this.defaultStatusColor = defaultStatusColor;
+        _defaultStatusColor = defaultStatusColor;
 
         Header = RS.UavRttItem_GNSS;
         Icon = MaterialIconKind.GpsFixed;
@@ -100,7 +100,7 @@ public class GnssUavIndicatorViewModel : KeyValueRttBoxViewModel<GnssRttBoxData>
             return;
         }
 
-        Status = defaultStatusColor;
+        Status = _defaultStatusColor;
     }
 
     private static string GpsFixTypeToString(Mavlink.Common.GpsFixType type)

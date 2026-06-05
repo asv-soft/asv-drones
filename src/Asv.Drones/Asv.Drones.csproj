@@ -58,13 +58,10 @@
     <ItemGroup>
       <Folder Include="Core\" />
       <Folder Include="Core\Controls\DeviceTelemetry\AngleUavIndicator\Items\" />
-      <Folder Include="Core\Controls\DeviceTelemetry\Rtt\" />
     </ItemGroup>
 
     <ItemGroup>
       <AdditionalFiles Include="Core\Controls\DeviceTelemetry\AngleUavIndicator\UavAngleIndicatorStyles.axaml" />
-      <AdditionalFiles Include="Core\Controls\DeviceTelemetry\Rtt\HeadingUavIndicator\HeadingUavIndicator.axaml" />
-      <AdditionalFiles Include="Core\Controls\DeviceTelemetry\Rtt\HomeAzimuthUavIndicator\HomeAzimuthUavIndicator.axaml" />
       <AdditionalFiles Include="Shell\Pages\FlightMode\Dialogs\SetAltitudeDialogView.axaml" />
       <AdditionalFiles Include="Shell\Pages\FlightMode\Widgets\Test\PluginFlightItemView.axaml" />
     </ItemGroup>
