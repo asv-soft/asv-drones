@@ -95,22 +95,6 @@ public static class AsvDronesMixin
         public Builder UseMavParams()
         {
             builder.ViewLocator.RegisterPropertyEditor();
-            builder.ViewLocator.RegisterViewFor<MavParamTextBoxViewModel, MavParamTextBoxView>();
-            builder.ViewLocator.RegisterViewFor<MavParamButtonViewModel, MavParamButtonView>();
-            builder.ViewLocator.RegisterViewFor<MavParamComboBoxViewModel, MavParamComboBoxView>();
-            builder.ViewLocator.RegisterViewFor<
-                MavParamAltitudeTextBoxViewModel,
-                MavParamAltitudeTextBoxView
-            >();
-            builder.ViewLocator.RegisterViewFor<
-                MavParamLatLonTextBoxViewModel,
-                MavParamLatLonTextBoxView
-            >();
-            builder.ViewLocator.RegisterViewFor<
-                MavParamAsciiCharViewModel,
-                MavParamAsciiCharView
-            >();
-            builder.ViewLocator.RegisterViewFor<MavParamButtonViewModel, MavParamButtonView>();
 
             builder.UseMavParam();
 

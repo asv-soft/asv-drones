@@ -55,12 +55,6 @@
       </Compile>
     </ItemGroup>
 
-    <ItemGroup>
-      <AdditionalFiles Include="Core\Controls\MavParam\Button\MavParamButtonView.axaml" />
-      <AdditionalFiles Include="Core\Controls\MavParam\ComboBox\MavParamComboBoxView.axaml" />
-      <AdditionalFiles Include="Core\Controls\MavParam\TextBox\MavParamTextBoxView.axaml" />
-    </ItemGroup>
-
 
 
 </Project>
