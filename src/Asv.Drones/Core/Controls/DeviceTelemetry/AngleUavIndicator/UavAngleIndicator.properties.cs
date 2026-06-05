@@ -83,13 +83,14 @@ public partial class UavAngleIndicator
 
     public static readonly DirectProperty<
         UavAngleIndicator,
-        IEnumerable<OldAttitudeIndicator.RollItem>
-    > RollItemsProperty = AvaloniaProperty.RegisterDirect<
-        UavAngleIndicator,
-        IEnumerable<OldAttitudeIndicator.RollItem>
-    >(nameof(RollItems), _ => _.RollItems, (_, value) => _.RollItems = value);
+        IEnumerable<RollItem>
+    > RollItemsProperty = AvaloniaProperty.RegisterDirect<UavAngleIndicator, IEnumerable<RollItem>>(
+        nameof(RollItems),
+        _ => _.RollItems,
+        (_, value) => _.RollItems = value
+    );
 
-    public IEnumerable<OldAttitudeIndicator.RollItem> RollItems
+    public IEnumerable<RollItem> RollItems
     {
         get;
         set => SetAndRaise(RollItemsProperty, ref field, value);
@@ -97,13 +98,13 @@ public partial class UavAngleIndicator
 
     public static readonly DirectProperty<
         UavAngleIndicator,
-        IEnumerable<OldAttitudeIndicator.PitchItem>
+        IEnumerable<PitchItem>
     > PitchItemsProperty = AvaloniaProperty.RegisterDirect<
         UavAngleIndicator,
-        IEnumerable<OldAttitudeIndicator.PitchItem>
+        IEnumerable<PitchItem>
     >(nameof(PitchItems), _ => _.PitchItems, (_, value) => _.PitchItems = value);
 
-    public IEnumerable<OldAttitudeIndicator.PitchItem> PitchItems
+    public IEnumerable<PitchItem> PitchItems
     {
         get;
         set => SetAndRaise(PitchItemsProperty, ref field, value);

@@ -14,7 +14,6 @@
         </ResourceDictionary>
     </Application.Resources>
     <Application.Styles>
-        <StyleInclude Source="avares://Asv.Drones/Core/Controls/DeviceTelemetry/OldAttitudeIndicator/AttitudeIndicatorStyles.axaml" />
         <StyleInclude Source="avares://Asv.Drones/Core/Controls/DeviceTelemetry/AngleUavIndicator/UavAngleIndicatorStyles.axaml" />
         <StyleInclude Source="avares://Asv.Drones/Core/Controls/DeviceTelemetry/CompassUavIndicator/CompassUavIndicatorStyles.axaml" />
         <StyleInclude Source="avares://Asv.Avalonia/Theme.axaml" />
