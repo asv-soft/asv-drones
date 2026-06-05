@@ -20,6 +20,7 @@ public sealed class DroneFlightWidgetTelemetrySectionExtension(IServiceProvider 
             GnssTelemetryItemFactory.Id,
             LinkQualityTelemetryItemFactory.Id,
             HomeAzimuthTelemetryItemFactory.Id,
+            MissionTargetTelemetryItemFactory.Id,
         ];
 
         var vm = services.CreateViewModel<ITelemetrySection, TelemetrySectionArgs>(

@@ -12,14 +12,12 @@ namespace Asv.Drones;
 public record AngleRttBoxData(double Pitch, double Roll, IUnitItem AngleUnit);
 #pragma warning restore SA1313
 
-public class AngleUavRttIndicatorViewModel
-    : TwoColumnRttBoxViewModel<AngleRttBoxData>,
-        ITelemetryItem
+public class AngleTelemetryItemViewModel : TwoColumnRttBoxViewModel<AngleRttBoxData>, ITelemetryItem
 {
     [SetsRequiredMembers]
-    public AngleUavRttIndicatorViewModel()
+    public AngleTelemetryItemViewModel()
         : this(
-            nameof(AngleUavRttIndicator),
+            nameof(AngleTelemetryItemViewModel),
             DeviceTelemetryDesignPreview
                 .UnitService.Units[AngleUnit.Id]
                 .CurrentUnitItem.Select(unit => new AngleRttBoxData(30d, 10d, unit)),
@@ -30,7 +28,7 @@ public class AngleUavRttIndicatorViewModel
     }
 
     [SetsRequiredMembers]
-    public AngleUavRttIndicatorViewModel(
+    public AngleTelemetryItemViewModel(
         string id,
         Observable<AngleRttBoxData> angleData,
         AsvColorKind defaultStatusColor,

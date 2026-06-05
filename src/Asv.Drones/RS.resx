@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <root>
     <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -128,17 +128,35 @@
     <data name="MissionProgressView_SubStatusText" xml:space="preserve">
         <value>before complete</value>
     </data>
-    <data name="MissionProgressView_MissionDistanceRTT" xml:space="preserve">
+    <data name="MissionDistanceTelemetry_MissionDistance" xml:space="preserve">
+        <value>Mission distance</value>
+    </data>
+    <data name="MissionDistanceTelemetry_DisplayName" xml:space="preserve">
+        <value>Total distance</value>
+    </data>
+    <data name="MissionProgressTelemetry_RemainingDistance" xml:space="preserve">
+        <value>Remaining distance</value>
+    </data>
+    <data name="MissionTelemetry_RemainingTime" xml:space="preserve">
+        <value>Remaining time</value>
+    </data>
+    <data name="MissionProgressTelemetry_DisplayName" xml:space="preserve">
+        <value>Mission Progress</value>
+    </data>
+    <data name="MissionDistanceTelemetryItemViewModel_Header" xml:space="preserve">
         <value>Mission</value>
     </data>
-    <data name="MissionProgressView_TotalDistanceRTT" xml:space="preserve">
-        <value>Total</value>
-    </data>
-    <data name="MissionProgressView_HomeDistance" xml:space="preserve">
+    <data name="HomeDistanceTelemetry_DisplayName" xml:space="preserve">
         <value>Home</value>
     </data>
-    <data name="MissionProgressView_TargetDistance" xml:space="preserve">
-        <value>Target</value>
+    <data name="MissionTargetTelemetry_DispayName" xml:space="preserve">
+        <value>Next mission item</value>
+    </data>
+    <data name="MissionTargetTelemetry_TargetDistance" xml:space="preserve">
+        <value>Distance</value>
+    </data>
+    <data name="MissionProgressView_TargetIndexRTT" xml:space="preserve">
+        <value>Number</value>
     </data>
     <data name="MissionProgressView_DownLoadingMission" xml:space="preserve">
         <value>Downloading mission</value>

@@ -44,6 +44,22 @@ public sealed class ConfigureTelemetryDialogViewModel : DialogViewModelBase
                 DesignTime.LoggerFactory
             ),
             new GnssTelemetryItemFactory(DesignTime.LoggerFactory),
+            new MissionDistanceTelemetryItemFactory(
+                DeviceTelemetryDesignPreview.UnitService,
+                DesignTime.LoggerFactory
+            ),
+            new MissionProgressTelemetryItemFactory(
+                DeviceTelemetryDesignPreview.UnitService,
+                DesignTime.LoggerFactory
+            ),
+            new HomeDistanceTelemetryItemFactory(
+                DeviceTelemetryDesignPreview.UnitService,
+                DesignTime.LoggerFactory
+            ),
+            new MissionTargetTelemetryItemFactory(
+                DeviceTelemetryDesignPreview.UnitService,
+                DesignTime.LoggerFactory
+            ),
         ])
     {
         DesignTime.ThrowIfNotDesignMode();

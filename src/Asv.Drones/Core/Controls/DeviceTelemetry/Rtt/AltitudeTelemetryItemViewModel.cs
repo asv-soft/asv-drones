@@ -1,9 +1,7 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Asv.Avalonia;
 using Asv.Drones.Api;
 using Material.Icons;
-using Microsoft.Extensions.Logging;
 using R3;
 
 namespace Asv.Drones;
@@ -12,14 +10,14 @@ namespace Asv.Drones;
 public record AltitudeRttBoxData(double AltitudeAgl, double AltitudeMsl, IUnitItem AltitudeUnit);
 #pragma warning restore SA1313
 
-public class AltitudeUavIndicatorViewModel
+public class AltitudeTelemetryItemViewModel
     : TwoColumnRttBoxViewModel<AltitudeRttBoxData>,
         ITelemetryItem
 {
     [SetsRequiredMembers]
-    public AltitudeUavIndicatorViewModel()
+    public AltitudeTelemetryItemViewModel()
         : this(
-            nameof(AltitudeUavIndicator),
+            nameof(AltitudeTelemetryItemViewModel),
             DeviceTelemetryDesignPreview
                 .UnitService.Units[AltitudeUnit.Id]
                 .CurrentUnitItem.Select(unit => new AltitudeRttBoxData(10d, 14d, unit)),
@@ -30,7 +28,7 @@ public class AltitudeUavIndicatorViewModel
     }
 
     [SetsRequiredMembers]
-    public AltitudeUavIndicatorViewModel(
+    public AltitudeTelemetryItemViewModel(
         string id,
         Observable<AltitudeRttBoxData> altitudeData,
         AsvColorKind defaultStatusColor,

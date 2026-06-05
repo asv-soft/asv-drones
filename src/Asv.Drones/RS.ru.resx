@@ -1,4 +1,4 @@
-<root>
+﻿<root>
     <resheader name="resmimetype">
         <value>text/microsoft-resx</value>
     </resheader>
@@ -122,23 +122,41 @@
     <data name="NotANumber" xml:space="preserve">
         <value>Н/Д</value>
     </data>
-    <data name="MissionProgressView_HomeDistance" xml:space="preserve">
+    <data name="HomeDistanceTelemetry_DisplayName" xml:space="preserve">
         <value>Стартовая точка</value>
     </data>
-    <data name="MissionProgressView_MissionDistanceRTT" xml:space="preserve">
-        <value>Миссия</value>
+    <data name="MissionDistanceTelemetry_MissionDistance" xml:space="preserve">
+        <value>Дистанция миссии</value>
     </data>
     <data name="MissionProgressView_SubStatusText" xml:space="preserve">
         <value>до завершения</value>
     </data>
-    <data name="MissionProgressView_TargetDistance" xml:space="preserve">
-        <value>Цель</value>
+    <data name="MissionTargetTelemetry_DispayName" xml:space="preserve">
+        <value>Следующая точка миссии</value>
+    </data>
+    <data name="MissionTargetTelemetry_TargetDistance" xml:space="preserve">
+        <value>Дистанция</value>
+    </data>
+    <data name="MissionProgressView_TargetIndexRTT" xml:space="preserve">
+        <value>Номер</value>
     </data>
     <data name="MissionProgressView_Title" xml:space="preserve">
         <value>Прогресс миссии</value>
     </data>
-    <data name="MissionProgressView_TotalDistanceRTT" xml:space="preserve">
+    <data name="MissionDistanceTelemetry_DisplayName" xml:space="preserve">
         <value>Общая дистанция</value>
+    </data>
+    <data name="MissionProgressTelemetry_RemainingDistance" xml:space="preserve">
+        <value>Оставшаяся дистанция</value>
+    </data>
+    <data name="MissionTelemetry_RemainingTime" xml:space="preserve">
+        <value>Оставшееся время</value>
+    </data>
+    <data name="MissionProgressTelemetry_DisplayName" xml:space="preserve">
+        <value>Прогресс миссии</value>
+    </data>
+    <data name="MissionDistanceTelemetryItemViewModel_Header" xml:space="preserve">
+        <value>Миссия</value>
     </data>
     <data name="MissionProgressView_DownLoadingMission" xml:space="preserve">
         <value>Загрузка миссии</value>

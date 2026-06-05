@@ -11,7 +11,7 @@ namespace Asv.Drones;
 public sealed class CurrentFlightModeTelemetryItemFactory(ILoggerFactory loggerFactory)
     : ITelemetryItemFactory
 {
-    public const string Id = "current-flight-mode-uav";
+    public const string Id = "current-flight-mode";
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public string ItemId => Id;
@@ -29,7 +29,7 @@ public sealed class CurrentFlightModeTelemetryItemFactory(ILoggerFactory loggerF
             .CurrentMode.Select(mode => mode.Name)
             .Prepend(string.Empty);
 
-        return new CurrentFlightModeUavIndicatorViewModel(
+        return new CurrentFlightModeTelemetryItemViewModel(
             Id,
             loggerFactory,
             currentMode,
@@ -41,7 +41,7 @@ public sealed class CurrentFlightModeTelemetryItemFactory(ILoggerFactory loggerF
     {
         var currentMode = Observable.Return("Unknown").Concat(Observable.Never<string>());
 
-        return new CurrentFlightModeUavIndicatorViewModel(
+        return new CurrentFlightModeTelemetryItemViewModel(
             Id,
             loggerFactory,
             currentMode,

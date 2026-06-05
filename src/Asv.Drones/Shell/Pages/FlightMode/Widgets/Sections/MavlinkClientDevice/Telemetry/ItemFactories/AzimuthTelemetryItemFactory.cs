@@ -13,7 +13,7 @@ public sealed class AzimuthTelemetryItemFactory(
     ILoggerFactory loggerFactory
 ) : ITelemetryItemFactory
 {
-    public const string Id = "azimuth-uav";
+    public const string Id = "azimuth";
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public string ItemId => Id;
@@ -31,7 +31,7 @@ public sealed class AzimuthTelemetryItemFactory(
             .Yaw.Select(value => Math.Round(value, 2))
             .Prepend(double.NaN);
 
-        return new AzimuthUavIndicatorViewModel(
+        return new AzimuthTelemetryItemViewModel(
             Id,
             loggerFactory,
             unitService,
@@ -44,7 +44,7 @@ public sealed class AzimuthTelemetryItemFactory(
     {
         var azimuthObservable = Observable.Return(39d).Concat(Observable.Never<double>());
 
-        return new AzimuthUavIndicatorViewModel(
+        return new AzimuthTelemetryItemViewModel(
             Id,
             loggerFactory,
             unitService,

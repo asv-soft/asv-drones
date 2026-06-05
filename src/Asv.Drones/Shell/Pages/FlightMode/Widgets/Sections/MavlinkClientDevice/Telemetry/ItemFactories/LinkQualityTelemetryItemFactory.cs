@@ -14,7 +14,7 @@ public sealed class LinkQualityTelemetryItemFactory(
     ILoggerFactory loggerFactory
 ) : ITelemetryItemFactory
 {
-    public const string Id = "link-quality-uav";
+    public const string Id = "link-quality";
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public string ItemId => Id;
@@ -30,7 +30,7 @@ public sealed class LinkQualityTelemetryItemFactory(
         var heartbeatClient = device.GetRequiredMicroservice<IHeartbeatClient>();
         var linkQuality = heartbeatClient.LinkQuality.Prepend(double.NaN);
 
-        return new LinkQualityUavIndicatorViewModel(
+        return new LinkQualityTelemetryItemViewModel(
             Id,
             loggerFactory,
             unitService,
@@ -47,7 +47,7 @@ public sealed class LinkQualityTelemetryItemFactory(
             .Return(LinkState.Connected)
             .Concat(Observable.Never<LinkState>());
 
-        return new LinkQualityUavIndicatorViewModel(
+        return new LinkQualityTelemetryItemViewModel(
             Id,
             loggerFactory,
             unitService,

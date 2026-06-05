@@ -21,16 +21,16 @@ public record BatteryRttBoxData(
 );
 #pragma warning restore SA1313
 
-public class BatteryUavIndicatorViewModel
+public class BatteryTelemetryItemViewModel
     : KeyValueRttBoxViewModel<BatteryRttBoxData>,
         ITelemetryItem
 {
-    private readonly AsvColorKind defaultStatusColor;
+    private readonly AsvColorKind _defaultStatusColor;
 
     [SetsRequiredMembers]
-    public BatteryUavIndicatorViewModel()
+    public BatteryTelemetryItemViewModel()
         : this(
-            nameof(BatteryUavIndicator),
+            nameof(BatteryTelemetryItemViewModel),
             DesignTime.LoggerFactory,
             DeviceTelemetryDesignPreview
                 .UnitService.Units[ProgressUnit.Id]
@@ -57,7 +57,7 @@ public class BatteryUavIndicatorViewModel
     }
 
     [SetsRequiredMembers]
-    public BatteryUavIndicatorViewModel(
+    public BatteryTelemetryItemViewModel(
         string id,
         ILoggerFactory loggerFactory,
         Observable<BatteryRttBoxData> batteryData,
@@ -72,7 +72,7 @@ public class BatteryUavIndicatorViewModel
         )
     {
         ItemId = id;
-        this.defaultStatusColor = defaultStatusColor;
+        _defaultStatusColor = defaultStatusColor;
 
         Header = RS.UavRttItem_Battery;
         Icon = MaterialIconKind.Battery10;
@@ -110,11 +110,11 @@ public class BatteryUavIndicatorViewModel
     {
         Status = percent switch
         {
-            > 0.7d => defaultStatusColor,
+            > 0.7d => _defaultStatusColor,
             > 0.5d => AsvColorKind.Warning,
             > 0.4d => AsvColorKind.Warning | AsvColorKind.Blink,
             < 0.3d => AsvColorKind.Error | AsvColorKind.Blink,
-            _ => defaultStatusColor,
+            _ => _defaultStatusColor,
         };
     }
 }

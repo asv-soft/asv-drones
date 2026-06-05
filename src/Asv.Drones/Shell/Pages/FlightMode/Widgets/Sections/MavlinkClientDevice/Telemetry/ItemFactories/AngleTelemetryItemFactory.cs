@@ -10,7 +10,7 @@ namespace Asv.Drones;
 
 public sealed class AngleTelemetryItemFactory(IUnitService unitService) : ITelemetryItemFactory
 {
-    public const string Id = "angle-uav";
+    public const string Id = "angle";
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public string ItemId => Id;
@@ -33,7 +33,7 @@ public sealed class AngleTelemetryItemFactory(IUnitService unitService) : ITelem
                 (pitch, roll, unit) => new AngleRttBoxData(pitch, roll, unit)
             );
 
-        return new AngleUavRttIndicatorViewModel(Id, angleObservable, DefaultStatusColor);
+        return new AngleTelemetryItemViewModel(Id, angleObservable, DefaultStatusColor);
     }
 
     public ITelemetryItem CreatePreview()
@@ -42,6 +42,6 @@ public sealed class AngleTelemetryItemFactory(IUnitService unitService) : ITelem
             .Units[AngleUnit.Id]
             .CurrentUnitItem.Select(unit => new AngleRttBoxData(30d, 10d, unit));
 
-        return new AngleUavRttIndicatorViewModel(Id, angleObservable, DefaultStatusColor);
+        return new AngleTelemetryItemViewModel(Id, angleObservable, DefaultStatusColor);
     }
 }

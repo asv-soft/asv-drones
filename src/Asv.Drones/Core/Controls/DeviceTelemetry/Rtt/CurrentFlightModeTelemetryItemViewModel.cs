@@ -8,12 +8,12 @@ using R3;
 
 namespace Asv.Drones;
 
-public class CurrentFlightModeUavIndicatorViewModel : SingleRttBoxViewModel<string>, ITelemetryItem
+public class CurrentFlightModeTelemetryItemViewModel : SingleRttBoxViewModel<string>, ITelemetryItem
 {
     [SetsRequiredMembers]
-    public CurrentFlightModeUavIndicatorViewModel()
+    public CurrentFlightModeTelemetryItemViewModel()
         : this(
-            nameof(CurrentFlightModeUavIndicator),
+            nameof(CurrentFlightModeTelemetryItemViewModel),
             DesignTime.LoggerFactory,
             Observable.Return("Guided").Concat(Observable.Never<string>()),
             DeviceTelemetryDesignPreview.DefaultStatusColor
@@ -23,7 +23,7 @@ public class CurrentFlightModeUavIndicatorViewModel : SingleRttBoxViewModel<stri
     }
 
     [SetsRequiredMembers]
-    public CurrentFlightModeUavIndicatorViewModel(
+    public CurrentFlightModeTelemetryItemViewModel(
         string id,
         ILoggerFactory loggerFactory,
         Observable<string> currentMode,
