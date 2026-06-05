@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Mavlink;

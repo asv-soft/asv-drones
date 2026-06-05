@@ -53,7 +53,12 @@
                     Height="{Binding #FrameSearchBox.Bounds.Height}"
                     Margin="0"
                 >
-                    <icons:MaterialIcon Kind="Sync" />
+                    <icons:MaterialIcon
+                        Classes="medium"
+                        Kind="Sync"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                    />
                 </Button>
             </Grid>
 
