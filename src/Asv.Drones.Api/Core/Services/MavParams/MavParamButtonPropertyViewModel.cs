@@ -6,7 +6,8 @@ namespace Asv.Drones.Api;
 
 public sealed class MavParamButtonPropertyViewModel
     : PropertyButtonViewModel,
-        IMavParamPropertyViewModel
+        IMavParamPropertyViewModel,
+        ISupportRefresh
 {
     private readonly IMavParamContext _context;
 
@@ -18,7 +19,7 @@ public sealed class MavParamButtonPropertyViewModel
         ArgumentNullException.ThrowIfNull(context);
 
         _context = context;
-        this.ApplyMavParamMetadata(Info);
+        this.ApplyMavParamMetadata(Info, Client, Refresh);
         if (Icon is null)
         {
             Icon = MaterialIconKind.PlayCircle;
@@ -26,6 +27,30 @@ public sealed class MavParamButtonPropertyViewModel
     }
 
     public MavParamInfo Info => _context.Info;
+
+    private IParamsClientEx Client => _context.Client;
+
+    public async ValueTask Refresh(CancellationToken cancel = default)
+    {
+        if (IsBusy)
+        {
+            return;
+        }
+
+        IsBusy = true;
+        try
+        {
+            await Client.GetFromCacheOrReadOnce(Info.Metadata.Name, cancel).ConfigureAwait(false);
+        }
+        catch (Exception e)
+        {
+            ApplyErrorFromModel(e);
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
 
     private static async ValueTask Execute(IMavParamContext context, CancellationToken cancel)
     {

@@ -22,7 +22,7 @@ public sealed class MavParamComboBoxPropertyViewModel
 
         _context = context;
         MavValue = Info.Metadata.DefaultValue;
-        this.ApplyMavParamMetadata(Info);
+        this.ApplyMavParamMetadata(Info, Client, Refresh);
 
         foreach (var item in Info.GetPredefinedValues())
         {

@@ -32,7 +32,7 @@ public abstract class MavParamUnitPropertyViewModel
         _valueToSi = valueToSi;
         _siToValue = siToValue;
         MavValue = Info.Metadata.DefaultValue;
-        this.ApplyMavParamMetadata(Info);
+        this.ApplyMavParamMetadata(Info, Client, Refresh);
         ApplyValueFromModel(_valueToSi(Info.DefaultValue));
 
         Client

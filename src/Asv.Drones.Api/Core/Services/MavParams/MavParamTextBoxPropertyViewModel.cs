@@ -23,7 +23,7 @@ public class MavParamTextBoxPropertyViewModel
 
         _context = context;
         MavValue = Info.Metadata.DefaultValue;
-        this.ApplyMavParamMetadata(Info);
+        this.ApplyMavParamMetadata(Info, Client, Refresh);
         Units = Info.Metadata.Units;
 
         Text.EnableValidation(ValidateText).DisposeItWith(Disposable);
