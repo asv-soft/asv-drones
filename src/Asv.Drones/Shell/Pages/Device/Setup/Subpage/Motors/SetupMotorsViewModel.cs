@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Drones.Api;
@@ -19,24 +16,53 @@ public sealed class SetupMotorsViewModel : SetupSubpage
 {
     public const string PageId = "motorTest";
     public const MaterialIconKind Icon = MaterialIconKind.Motor;
+
     private const int DefaultTestDurationInSeconds = 3;
-    private readonly ILoggerFactory _loggerFactory;
-    private readonly IUnitService _unit;
+
     private readonly ReactiveProperty<double> _duration;
     private readonly SynchronizedReactiveProperty<bool> _isEnabled;
-
-    private ISynchronizedView<ITestMotor, MotorItemViewModel>? _motorsView;
-    private IMotorTestClient? _motorTestClient;
+    private readonly ISynchronizedView<ITestMotor, MotorItemViewModel> _motorsView;
 
     public SetupMotorsViewModel()
-        : this(NullLoggerFactory.Instance, NullUnitService.Instance) { }
-
-    public SetupMotorsViewModel(ILoggerFactory loggerFactory, IUnitService unit)
-        : base(new NavId(PageId), loggerFactory)
+        : this(
+            DesignTimeSetupSubPageContext.Instance,
+            NullLoggerFactory.Instance,
+            CreateDesignTimeUnitService(),
+            new ObservableList<ITestMotor>
+            {
+                new NullTestMotor(1, 1, true, 1100),
+                new NullTestMotor(2, 2, false, 1500),
+                new NullTestMotor(3, 3, true, 1900),
+                new NullTestMotor(4, 4, false, 1000),
+            }
+        )
     {
-        _loggerFactory = loggerFactory;
-        _unit = unit;
+        DesignTime.ThrowIfNotDesignMode();
+    }
 
+    public SetupMotorsViewModel(
+        ITreeSubPageContext<ISetupPage> context,
+        ILoggerFactory loggerFactory,
+        IUnitService unitService
+    )
+        : this(
+            context,
+            loggerFactory,
+            unitService,
+            context
+                .Context.Target.CurrentValue?.Device.GetMicroservice<IMotorTestClient>()
+                ?.TestMotors
+            ?? throw new Exception($"{nameof(IMotorTestClient)} should not be null")
+        ) { }
+
+    private SetupMotorsViewModel(
+        ITreeSubPageContext<ISetupPage> context,
+        ILoggerFactory loggerFactory,
+        IUnitService unitService,
+        IReadOnlyObservableList<ITestMotor> motors
+    )
+        : base(PageId, context, loggerFactory)
+    {
         _isEnabled = new SynchronizedReactiveProperty<bool>().DisposeItWith(Disposable);
         IsEnabled = _isEnabled.ToBindableReactiveProperty().DisposeItWith(Disposable);
 
@@ -46,7 +72,7 @@ public sealed class SetupMotorsViewModel : SetupSubpage
         Duration = new HistoricalUnitProperty(
             nameof(Duration),
             _duration,
-            unit.Units[TimeSpanUnit.Id],
+            unitService.Units[TimeSpanUnit.Id],
             loggerFactory
         )
             .SetRoutableParent(this)
@@ -60,31 +86,13 @@ public sealed class SetupMotorsViewModel : SetupSubpage
             .Unit.CurrentUnitItem.Select(item => item.Symbol)
             .ToReadOnlyBindableReactiveProperty<string>()
             .DisposeItWith(Disposable);
-    }
 
-    public HistoricalUnitProperty Duration { get; }
-    public IReadOnlyBindableReactiveProperty<string> DurationSymbol { get; }
-
-    public BindableReactiveProperty<bool> IsEnabled { get; }
-
-    public INotifyCollectionChangedSynchronizedViewList<MotorItemViewModel>? Motors
-    {
-        get;
-        private set;
-    }
-
-    public override ValueTask Init(ISetupPage context)
-    {
-        _motorTestClient =
-            context.Target.CurrentValue?.Device.GetMicroservice<IMotorTestClient>()
-            ?? throw new Exception($"{nameof(IMotorTestClient)} should not be null");
-
-        _motorsView = _motorTestClient
-            .TestMotors.CreateView(motor => new MotorItemViewModel(
+        _motorsView = motors
+            .CreateView(motor => new MotorItemViewModel(
                 motor,
                 _duration,
-                _unit,
-                _loggerFactory
+                unitService,
+                loggerFactory
             ))
             .DisposeItWith(Disposable);
 
@@ -94,9 +102,14 @@ public sealed class SetupMotorsViewModel : SetupSubpage
         Motors = _motorsView
             .ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current)
             .DisposeItWith(Disposable);
-
-        return ValueTask.CompletedTask;
     }
+
+    public HistoricalUnitProperty Duration { get; }
+    public IReadOnlyBindableReactiveProperty<string> DurationSymbol { get; }
+
+    public BindableReactiveProperty<bool> IsEnabled { get; }
+
+    public INotifyCollectionChangedSynchronizedViewList<MotorItemViewModel> Motors { get; }
 
     public override IEnumerable<IViewModel> GetChildren()
     {
@@ -105,16 +118,22 @@ public sealed class SetupMotorsViewModel : SetupSubpage
             yield return childRoutable;
         }
 
-        if (Motors is null)
-        {
-            yield break;
-        }
-
         foreach (var vm in Motors)
         {
             yield return vm;
         }
 
         yield return Duration;
+    }
+
+    private static IUnitService CreateDesignTimeUnitService()
+    {
+        NullUnitService.Instance.Extend(
+            new TimeSpanUnit(DesignTime.Configuration, [new TimeSpanSecondUnitItem()])
+        );
+        NullUnitService.Instance.Extend(
+            new ThrottleUnit(DesignTime.Configuration, [new ThrottlePercentUnitItem()])
+        );
+        return NullUnitService.Instance;
     }
 }

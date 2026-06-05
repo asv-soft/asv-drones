@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Mavlink;
@@ -20,14 +16,14 @@ public sealed class MotorItemViewModel : ViewModel
     private readonly SynchronizedReactiveProperty<bool> _isEnabled;
 
     public MotorItemViewModel()
-        : base(BaseId, new NavArgs(("id", "1")))
+        : this(
+            NullTestMotor.Instance,
+            new ReactiveProperty<double>(100),
+            CreateDesignTimeUnitService(),
+            NullLoggerFactory.Instance
+        )
     {
         DesignTime.ThrowIfNotDesignMode();
-
-        IsEnabled = new BindableReactiveProperty<bool>(true);
-        Pwm = new BindableReactiveProperty<ushort>(1000);
-        ServoChannel = 1;
-        IsTestIdle = new BindableReactiveProperty<bool>(true);
     }
 
     public MotorItemViewModel(
@@ -58,7 +54,10 @@ public sealed class MotorItemViewModel : ViewModel
             .ViewValue.Subscribe(_ => _isEnabled.Value = !Throttle.ViewValue.HasErrors)
             .DisposeItWith(Disposable);
 
-        Pwm = motor.Pwm.ToBindableReactiveProperty().DisposeItWith(Disposable);
+        Pwm = motor
+            .Pwm.ObserveOnUIThreadDispatcher()
+            .ToBindableReactiveProperty()
+            .DisposeItWith(Disposable);
         ServoChannel = motor.ServoChannel;
         IsTestIdle = motor
             .IsTestRun.ObserveOnUIThreadDispatcher()
@@ -83,13 +82,20 @@ public sealed class MotorItemViewModel : ViewModel
     public ReactiveCommand RunTestCommand { get; }
     public HistoricalUnitProperty Throttle { get; }
     public IReadOnlyBindableReactiveProperty<string> ThrottleSymbol { get; }
-
     public ReactiveProperty<double> Timeout { get; }
     public BindableReactiveProperty<bool> IsEnabled { get; }
 
     public override IEnumerable<IViewModel> GetChildren()
     {
         yield return Throttle;
+    }
+
+    private static IUnitService CreateDesignTimeUnitService()
+    {
+        NullUnitService.Instance.Extend(
+            new ThrottleUnit(DesignTime.Configuration, [new ThrottlePercentUnitItem()])
+        );
+        return NullUnitService.Instance;
     }
 
     private async Task RunMotorTest(ITestMotor motor, CancellationToken cts)

@@ -1,12 +1,9 @@
-using System.Linq;
-using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
 using Asv.Modeling;
-using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
 
@@ -20,12 +17,7 @@ public class FrameTypeSetupPageExtension(ILoggerFactory loggerFactory) : IExtens
             .Target.Where(w => w is not null)
             .Subscribe(wrapper =>
             {
-                if (wrapper is null)
-                {
-                    return;
-                }
-
-                var frameClient = wrapper.Value.Device.GetMicroservice<IFrameClient>();
+                var frameClient = wrapper?.Device.GetMicroservice<IFrameClient>();
 
                 if (
                     frameClient is null
@@ -39,7 +31,7 @@ public class FrameTypeSetupPageExtension(ILoggerFactory loggerFactory) : IExtens
                     new TreePage(
                         SetupFrameTypeViewModel.PageId,
                         RS.SetupFrameTypeViewModel_Name,
-                        MaterialIconKind.ThemeLightDark,
+                        SetupFrameTypeViewModel.Icon,
                         new NavId(SetupFrameTypeViewModel.PageId),
                         NavId.Empty,
                         loggerFactory

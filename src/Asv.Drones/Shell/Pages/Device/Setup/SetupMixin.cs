@@ -1,5 +1,4 @@
-﻿using System;
-using Asv.Avalonia;
+﻿using Asv.Avalonia;
 using Asv.Drones.Api;
 using Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
@@ -54,8 +53,9 @@ public static class SetupMixin
             where TViewModel : class, ISetupSubpage
             where TView : Control
         {
-            builder.ViewLocator.RegisterViewFor<TViewModel, TView>();
-            builder.Services.AddKeyedTransient<ISetupSubpage, TViewModel>(pageId);
+            builder.Shell.TreeSubPages.Register<ISetupPage, ISetupSubpage, TViewModel, TView>(
+                pageId
+            );
             return this;
         }
 
