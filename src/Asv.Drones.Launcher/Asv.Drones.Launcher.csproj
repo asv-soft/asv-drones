@@ -29,7 +29,7 @@
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)"/>
         <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)"/>
-        <PackageReference Include="Asv.Avalonia.Launcher" Version="0.0.1-dev.0"/>
+        <PackageReference Include="Asv.Avalonia.Launcher" Version="$(AsvLauncherApiVersion)"/>
         <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)"/>
         <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)"/>
         <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.1">
