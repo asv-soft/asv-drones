@@ -13,7 +13,7 @@ public sealed class MavParamComboBoxPropertyViewModel
 {
     private readonly IMavParamContext _context;
 
-    public const string TypeId = nameof(MavParamWidgetType.ComboBox);
+    public const string TypeId = MavParamWidgetIds.ComboBox;
 
     public MavParamComboBoxPropertyViewModel(IMavParamContext context)
         : base(context.Info.Id)

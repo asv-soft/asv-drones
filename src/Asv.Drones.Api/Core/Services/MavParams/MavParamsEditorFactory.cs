@@ -1,6 +1,5 @@
 using Asv.Avalonia;
 using Asv.Mavlink;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Asv.Drones.Api;
 
@@ -14,50 +13,62 @@ public class MavParamsEditorFactory : IMavParamsEditorFactory
         _container = container;
     }
 
-    public IMavParamPropertyViewModel Create(IMavParamTypeMetadata param, IParamsClientEx client)
+    public IEnumerable<IMavParamPropertyViewModel> CreateList(
+        IParamsClientEx client,
+        params IEnumerable<IMavParamTypeMetadata> paramList
+    )
+    {
+        ArgumentNullException.ThrowIfNull(client);
+        ArgumentNullException.ThrowIfNull(paramList);
+
+        foreach (var param in paramList)
+        {
+            var editor = Create(param, client);
+            if (editor is not null)
+            {
+                yield return editor;
+            }
+        }
+    }
+
+    public IMavParamPropertyViewModel? Create(IMavParamTypeMetadata param, IParamsClientEx client)
     {
         ArgumentNullException.ThrowIfNull(param);
         ArgumentNullException.ThrowIfNull(client);
 
         var info = new MavParamInfo(param);
+        if (MavParamWidgetIds.GetIdByName(info.WidgetType) == MavParamWidgetIds.Hidden)
+        {
+            return null;
+        }
+
         var context = new MavParamContext(info, client);
         foreach (var key in GetWidgetTypeKeys(info.WidgetType))
         {
-            var factory = _container.GetKeyedService<ViewModelMixin.FactoryDelegate<
+            var editor = _container.TryCreateViewModel<
                 IMavParamPropertyViewModel,
                 IMavParamContext
-            >>(key);
-            if (factory is not null)
+            >(key, context);
+            if (editor is not null)
             {
-                return factory(context);
+                return editor;
             }
         }
 
-        return _container.CreateViewModel<IMavParamPropertyViewModel, IMavParamContext>(
-            MavParamTextBoxPropertyViewModel.TypeId,
-            context
-        );
+        return null;
     }
 
     private static IEnumerable<string> GetWidgetTypeKeys(string? widgetType)
     {
         if (!string.IsNullOrWhiteSpace(widgetType))
         {
-            yield return widgetType.Trim();
+            var widgetId = MavParamWidgetIds.GetIdByName(widgetType);
+            yield return widgetId;
 
-            var normalizedWidgetType = widgetType
-                .Replace("-", string.Empty)
-                .Replace("_", string.Empty)
-                .Replace(" ", string.Empty);
-            if (
-                Enum.TryParse<MavParamWidgetType>(
-                    normalizedWidgetType,
-                    true,
-                    out var knownWidgetType
-                )
-            )
+            var rawWidgetType = widgetType.Trim();
+            if (rawWidgetType != widgetId)
             {
-                yield return knownWidgetType.ToString();
+                yield return rawWidgetType;
             }
         }
 

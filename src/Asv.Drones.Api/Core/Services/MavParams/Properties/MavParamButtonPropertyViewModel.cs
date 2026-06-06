@@ -11,7 +11,7 @@ public sealed class MavParamButtonPropertyViewModel
 {
     private readonly IMavParamContext _context;
 
-    public const string TypeId = nameof(MavParamWidgetType.Button);
+    public const string TypeId = MavParamWidgetIds.Button;
 
     public MavParamButtonPropertyViewModel(IMavParamContext context)
         : base(context.Info.Id, cancel => Execute(context, cancel))

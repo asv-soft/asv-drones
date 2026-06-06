@@ -11,17 +11,6 @@ using Material.Icons;
 
 namespace Asv.Drones.Api;
 
-public enum MavParamWidgetType
-{
-    TextBox,
-    ComboBox,
-    Button,
-    Latitude,
-    Longitude,
-    Altitude,
-    AsciiChars,
-}
-
 public partial class MavParamInfo
 {
     #region Parsing metadata long description
@@ -85,6 +74,7 @@ public partial class MavParamInfo
     #region Well known keys
 
     public const string WidgetTypeKey = "widget";
+    public const string GroupByKey = "group-by";
     public const string FormatStringKey = "format";
     public const string ShortcutKey = "shortcut";
     public const string UnitKey = "unitkey";
@@ -189,6 +179,7 @@ public partial class MavParamInfo
     public ValueType Increment => Convert(Metadata.Increment);
     public string? FormatString => GetAdditionalAsString(FormatStringKey);
     public string? WidgetType => GetAdditionalAsString(WidgetTypeKey);
+    public string? GroupBy => GetAdditionalAsString(GroupByKey);
     public MaterialIconKind? Icon =>
         GetAdditionalAsEnum<MaterialIconKind>(_additionalInfo, IconKey);
 

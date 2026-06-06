@@ -14,7 +14,7 @@ public class MavParamTextBoxPropertyViewModel
 {
     private readonly IMavParamContext _context;
 
-    public const string TypeId = nameof(MavParamWidgetType.TextBox);
+    public const string TypeId = MavParamWidgetIds.TextBox;
 
     public MavParamTextBoxPropertyViewModel(IMavParamContext context)
         : base(context.Info.Id)
@@ -136,7 +136,7 @@ public class MavParamTextBoxPropertyViewModel
 
 public sealed class MavParamAsciiCharPropertyViewModel : MavParamTextBoxPropertyViewModel
 {
-    public new const string TypeId = nameof(MavParamWidgetType.AsciiChars);
+    public new const string TypeId = MavParamWidgetIds.AsciiChars;
 
     public MavParamAsciiCharPropertyViewModel(IMavParamContext context)
         : base(context) { }

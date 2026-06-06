@@ -5,7 +5,11 @@ namespace Asv.Drones.Api;
 
 public interface IMavParamsEditorFactory
 {
-    IMavParamPropertyViewModel Create(IMavParamTypeMetadata param, IParamsClientEx client);
+    IEnumerable<IMavParamPropertyViewModel> CreateList(
+        IParamsClientEx client,
+        params IEnumerable<IMavParamTypeMetadata> paramList
+    );
+    IMavParamPropertyViewModel? Create(IMavParamTypeMetadata param, IParamsClientEx client);
 }
 
 public interface IMavParamPropertyViewModel : IPropertyViewModel

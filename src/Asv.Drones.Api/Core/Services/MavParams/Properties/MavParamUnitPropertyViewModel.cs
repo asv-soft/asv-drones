@@ -135,7 +135,7 @@ public abstract class MavParamUnitPropertyViewModel
 
 public sealed class MavParamAltitudePropertyViewModel : MavParamUnitPropertyViewModel
 {
-    public const string TypeId = nameof(MavParamWidgetType.Altitude);
+    public const string TypeId = MavParamWidgetIds.Altitude;
 
     public MavParamAltitudePropertyViewModel(IMavParamContext context, IUnitService unitService)
         : base(
@@ -148,7 +148,7 @@ public sealed class MavParamAltitudePropertyViewModel : MavParamUnitPropertyView
 
 public sealed class MavParamLatitudePropertyViewModel : MavParamUnitPropertyViewModel
 {
-    public const string TypeId = nameof(MavParamWidgetType.Latitude);
+    public const string TypeId = MavParamWidgetIds.Latitude;
 
     public MavParamLatitudePropertyViewModel(IMavParamContext context, IUnitService unitService)
         : base(
@@ -161,7 +161,7 @@ public sealed class MavParamLatitudePropertyViewModel : MavParamUnitPropertyView
 
 public sealed class MavParamLongitudePropertyViewModel : MavParamUnitPropertyViewModel
 {
-    public const string TypeId = nameof(MavParamWidgetType.Longitude);
+    public const string TypeId = MavParamWidgetIds.Longitude;
 
     public MavParamLongitudePropertyViewModel(IMavParamContext context, IUnitService unitService)
         : base(
