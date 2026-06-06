@@ -13,10 +13,13 @@ public sealed class DroneFlightWidgetTelemetrySectionExtension(IServiceProvider 
         var device = context.Device ?? throw new NullReferenceException();
         string[] defaultItemIds =
         [
+            CurrentFlightModeTelemetryItemFactory.Id,
             BatteryTelemetryItemFactory.Id,
             AltitudeTelemetryItemFactory.Id,
             VelocityTelemetryItemFactory.Id,
-            AngleTelemetryItemFactory.Id,
+            GnssTelemetryItemFactory.Id,
+            LinkQualityTelemetryItemFactory.Id,
+            HomeAzimuthTelemetryItemFactory.Id,
         ];
 
         var vm = services.CreateViewModel<ITelemetrySection, TelemetrySectionArgs>(

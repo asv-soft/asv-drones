@@ -14,7 +14,7 @@ public class HomeAzimuthUavIndicatorViewModel : SplitDigitRttBoxViewModel, ITele
             nameof(HomeAzimuthUavIndicator),
             DesignTime.LoggerFactory,
             DeviceTelemetryDesignPreview.UnitService,
-            Observable.Return(30d),
+            Observable.Return(30d).Concat(Observable.Never<double>()),
             DeviceTelemetryDesignPreview.DefaultStatusColor
         )
     {

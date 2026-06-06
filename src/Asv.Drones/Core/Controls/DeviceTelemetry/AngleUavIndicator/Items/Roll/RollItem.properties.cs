@@ -4,8 +4,8 @@ namespace Asv.Drones;
 
 public partial class RollItem
 {
-    public static readonly DirectProperty<OldAttitudeIndicator.RollItem, string> TitleProperty =
-        AvaloniaProperty.RegisterDirect<OldAttitudeIndicator.RollItem, string>(
+    public static readonly DirectProperty<RollItem, string> TitleProperty =
+        AvaloniaProperty.RegisterDirect<RollItem, string>(
             nameof(Title),
             _ => _.Title,
             (_, value) => _.Title = value
@@ -17,8 +17,8 @@ public partial class RollItem
         set => SetAndRaise(TitleProperty, ref field, value);
     }
 
-    public static readonly DirectProperty<OldAttitudeIndicator.RollItem, double> ValueProperty =
-        AvaloniaProperty.RegisterDirect<OldAttitudeIndicator.RollItem, double>(
+    public static readonly DirectProperty<RollItem, double> ValueProperty =
+        AvaloniaProperty.RegisterDirect<RollItem, double>(
             nameof(Value),
             _ => _.Value,
             (_, value) => _.Value = value

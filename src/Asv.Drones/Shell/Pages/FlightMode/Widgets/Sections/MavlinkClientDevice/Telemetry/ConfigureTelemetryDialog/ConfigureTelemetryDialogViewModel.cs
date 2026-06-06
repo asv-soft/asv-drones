@@ -34,6 +34,16 @@ public sealed class ConfigureTelemetryDialogViewModel : DialogViewModelBase
                 DeviceTelemetryDesignPreview.UnitService,
                 DesignTime.LoggerFactory
             ),
+            new CurrentFlightModeTelemetryItemFactory(DesignTime.LoggerFactory),
+            new AzimuthTelemetryItemFactory(
+                DeviceTelemetryDesignPreview.UnitService,
+                DesignTime.LoggerFactory
+            ),
+            new LinkQualityTelemetryItemFactory(
+                DeviceTelemetryDesignPreview.UnitService,
+                DesignTime.LoggerFactory
+            ),
+            new GnssTelemetryItemFactory(DesignTime.LoggerFactory),
         ])
     {
         DesignTime.ThrowIfNotDesignMode();
