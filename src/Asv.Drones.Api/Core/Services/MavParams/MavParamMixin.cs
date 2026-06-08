@@ -1,4 +1,5 @@
 ﻿using Asv.Avalonia;
+using Asv.Avalonia.GeoMap;
 using Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +25,11 @@ public static class MavParamMixin
     {
         public Builder Default()
         {
+            builder.ViewLocator.RegisterViewFor<
+                MavParamGeoPointPropertyViewModel,
+                PropertyGeoPointView
+            >();
+
             return UseEditor<MavParamTextBoxPropertyViewModel, PropertyTextBoxView>(
                     MavParamTextBoxPropertyViewModel.TypeId
                 )

@@ -75,6 +75,7 @@ public partial class MavParamInfo
 
     public const string WidgetTypeKey = "widget";
     public const string GroupByKey = "group-by";
+    public const string GroupIconKey = "group-icon";
     public const string FormatStringKey = "format";
     public const string ShortcutKey = "shortcut";
     public const string UnitKey = "unitkey";
@@ -180,6 +181,8 @@ public partial class MavParamInfo
     public string? FormatString => GetAdditionalAsString(FormatStringKey);
     public string? WidgetType => GetAdditionalAsString(WidgetTypeKey);
     public string? GroupBy => GetAdditionalAsString(GroupByKey);
+    public MaterialIconKind? GroupIcon =>
+        GetAdditionalAsEnum<MaterialIconKind>(_additionalInfo, GroupIconKey);
     public MaterialIconKind? Icon =>
         GetAdditionalAsEnum<MaterialIconKind>(_additionalInfo, IconKey);
 
