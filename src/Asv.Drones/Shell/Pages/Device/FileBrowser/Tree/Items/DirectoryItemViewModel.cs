@@ -1,9 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Asv.Avalonia;
 using Asv.Mavlink;
-using Asv.Modeling;
 using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;
@@ -15,7 +13,7 @@ public class DirectoryItemViewModelConfig
 
 public class DirectoryItemViewModel : BrowserItemViewModel
 {
-    private ILogger<DirectoryItemViewModel> _logger;
+    private readonly ILogger<DirectoryItemViewModel> _logger;
 
     public DirectoryItemViewModel(
         string id,

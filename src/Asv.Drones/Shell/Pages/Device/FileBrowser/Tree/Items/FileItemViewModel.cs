@@ -68,7 +68,7 @@ public class FileItemViewModel : BrowserItemViewModel
         EditMode = false;
         EditedName.Value = FtpBrowserPath.NameOf(result, sep);
         IsSelected = true;
-        return newPath;
+        return result;
     }
 
     public override async ValueTask RemoveAsync(CancellationToken ct)

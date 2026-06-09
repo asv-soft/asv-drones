@@ -26,7 +26,6 @@
         <Style Selector="TreeViewItem" x:DataType="drones:BrowserNode">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="IsExpanded" Value="{Binding Base.IsExpanded, Mode=TwoWay}" />
-            <Setter Property="IsSelected" Value="{Binding Base.IsSelected, Mode=TwoWay}" />
         </Style>
         <Style Selector="avalonia|MaterialIcon.folder">
             <Setter Property="Kind" Value="FolderOutline" />
@@ -208,7 +207,6 @@
                     x:Name="GridSplitterColumn"
                     Width="30"
                     KeyboardNavigation.TabNavigation="None"
-                    DragCompleted="GridSplitter_Dragged"
                     IsTabStop="False"
                 />
 
@@ -226,17 +224,19 @@
                 >
                     <Button
                         Height="50"
-                        Content="{avalonia:MaterialIconExt Kind=TransferRight}"
                         Command="{Binding UploadCommand}"
                         IsEnabled="{Binding !IsUiBlocked.Value}"
                         CommandParameter="{Binding LocalSelectedItem.Value}"
-                    />
+                    >
+                        <avalonia:MaterialIcon Kind="TransferRight" Classes="big" />
+                    </Button>
                     <Button
                         Height="50"
-                        Content="{avalonia:MaterialIconExt Kind=TransferLeft}"
                         IsEnabled="{Binding !IsUiBlocked.Value}"
                         Command="{Binding ShowDownloadPopupCommand}"
-                    />
+                    >
+                        <avalonia:MaterialIcon Kind="TransferLeft" Classes="big" />
+                    </Button>
 
                     <Popup
                         IsOpen="{Binding IsDownloadPopupOpen.Value}"
@@ -246,7 +246,7 @@
                         HorizontalOffset="12"
                         Topmost="True"
                     >
-                        <Border Padding="10" CornerRadius="6" avalonia1:AsvPallete.Color="None">
+                        <Border Padding="10" CornerRadius="6" avalonia1:AsvPallete.Color="Unknown">
                             <StackPanel>
                                 <Button
                                     Content="{x:Static drones:RS.FileBrowserView_Button_Download_Content}"

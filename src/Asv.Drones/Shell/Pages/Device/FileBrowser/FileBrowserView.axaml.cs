@@ -1,16 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Asv.Avalonia;
+﻿using Asv.Avalonia;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.VisualTree;
+using R3;
 
 namespace Asv.Drones;
 
 public partial class FileBrowserView : UserControl
 {
+    private readonly SerialDisposable _layout = new();
+
+    private const string GridColumnWidthLayoutId = "MainGrid.LocalColumnWidth";
+
     public FileBrowserView()
     {
         InitializeComponent();
@@ -19,19 +22,19 @@ public partial class FileBrowserView : UserControl
     protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
     {
         base.OnAttachedToVisualTree(e);
+
+        _layout.Disposable = this.RegisterGridColumnPixelWidth(
+            GridColumnWidthLayoutId,
+            MainGrid,
+            0
+        );
     }
 
-    private void GridSplitter_Dragged(object? sender, VectorEventArgs e)
+    protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
     {
-        if (Design.IsDesignMode)
-        {
-            return;
-        }
+        _layout.Disposable = null;
 
-        if (sender is not GridSplitter)
-        {
-            return;
-        }
+        base.OnDetachedFromVisualTree(e);
     }
 
     private void TreeView_OnPointerPressed(object? sender, PointerPressedEventArgs e)

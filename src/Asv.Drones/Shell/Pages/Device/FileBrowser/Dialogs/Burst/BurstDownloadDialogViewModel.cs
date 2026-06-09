@@ -2,22 +2,17 @@ using System.Collections.Generic;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Mavlink;
-using Microsoft.Extensions.Logging;
 using R3;
 
 namespace Asv.Drones;
 
-public class BurstDownloadDialogViewModel : DialogViewModelBase
+public class BurstDownloadDialogViewModel : FtpDialogViewModelBase
 {
-    private const string DialogId = $"{BaseId}Burst";
+    private const string DialogId = "burst";
+
+    private readonly SerialDisposable _sub = new();
 
     public BurstDownloadDialogViewModel()
-        : this(DesignTime.LoggerFactory)
-    {
-        DesignTime.ThrowIfNotDesignMode();
-    }
-
-    public BurstDownloadDialogViewModel(ILoggerFactory loggerFactory)
         : base(DialogId)
     {
         PacketSize = new BindableReactiveProperty<byte?>(
@@ -55,8 +50,6 @@ public class BurstDownloadDialogViewModel : DialogViewModelBase
     {
         return [];
     }
-
-    private readonly SerialDisposable _sub = new();
 
     protected override void Dispose(bool disposing)
     {

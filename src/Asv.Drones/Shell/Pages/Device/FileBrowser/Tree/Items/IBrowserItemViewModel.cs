@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Asv.Avalonia;
-using Asv.Drones.Api;
 using Asv.Mavlink;
 using R3;
 
@@ -26,6 +25,7 @@ public interface IBrowserItemViewModel : ISupportRemove
 
     void AttachBackend(FileBrowserBackend backend);
 
+    ValueTask RemoveAsync(CancellationToken ct);
     ValueTask CreateDirectoryAsync(CancellationToken ct);
     ValueTask<uint> CalculateCrc32Async(CancellationToken ct);
 }
