@@ -271,6 +271,7 @@
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=shell_005Cpages_005Cflightmode_005Cwidgets_005Cdevice_005Cmavlink_005Cdrones/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=shell_005Cpages_005Cflightmode_005Cwidgets_005Cdevice_005Cmavlink/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=shell_005Cpages_005Cflightmode_005Cwidgets_005Cdevice/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=shell_005Cpages_005Cflightmode_005Cwidgets_005Cdevice_005Cmavlink_005Cdrone_005Cactions/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=shell_005Cpages_005Cflightmode_005Cwidgets_005Cdevice_005Cmavlink_005Cdrone_005Cplane/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=shell_005Cpages_005Cflightmode_005Cwidgets_005Cdevice_005Cmavlink_005Cdrone_005Cplane_005Csections/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=shell_005Cpages_005Cflightmode_005Cwidgets_005Cdevice_005Cmavlink_005Cdrone_005Csections_005Casyncsectionfortest/@EntryIndexedValue">True</s:Boolean>

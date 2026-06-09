@@ -30,52 +30,11 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border
-                        Background="{DynamicResource SystemAltMediumHighColor}"
-                        Opacity="0.9"
-                        BorderThickness="{DynamicResource ThemeBorderThickness}"
-                        CornerRadius="{DynamicResource ControlCornerRadius}"
-                        Padding="8"
-                        BorderBrush="{DynamicResource SystemControlTransientBorderBrush}"
-                        HorizontalAlignment="Stretch"
-                    >
-                        <DockPanel>
-                            <Grid ColumnDefinitions="Auto,5,*, Auto" DockPanel.Dock="Top">
-                                <avalonia:MaterialIcon
-                                    Kind="{Binding Icon}"
-                                    avalonia1:AsvPallete.Color="{CompiledBinding IconColor}"
-                                />
-                                <TextBlock
-                                    VerticalAlignment="Center"
-                                    Grid.Column="2"
-                                    Text="{Binding Header}"
-                                />
-                                <ToggleButton
-                                    IsChecked="True"
-                                    x:Name="PART_Expand"
-                                    Grid.Column="3"
-                                    Padding="0"
-                                    Theme="{StaticResource TransparentButton}"
-                                >
-                                    <Panel Width="20" Height="20">
-                                        <avalonia:MaterialIcon
-                                            IsVisible="{Binding ElementName=PART_Expand, Path=IsChecked}"
-                                            Kind="MenuUp"
-                                        />
-                                        <avalonia:MaterialIcon
-                                            IsVisible="{Binding ElementName=PART_Expand, Path=!IsChecked}"
-                                            Kind="MenuDown"
-                                        />
-                                    </Panel>
-                                </ToggleButton>
-                            </Grid>
-                            <ContentControl
-                                Margin="0,4,0,0"
-                                IsVisible="{Binding ElementName=PART_Expand, Path=IsChecked}"
-                                Content="{Binding}"
-                            />
-                        </DockPanel>
-                    </Border>
+                    <avalonia1:WorkspaceItem
+                        Content="{Binding}"
+                        ActionsHeader="{x:Static drones:RS.FlightModePageView_WorkspaceItem_ActionsHeader}"
+                        Margin="0"
+                    />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

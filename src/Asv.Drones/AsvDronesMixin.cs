@@ -207,13 +207,27 @@ public static class AsvDronesMixin
                 AttitudeIndicatorSectionView
             >();
 
-            builder.Extensions.Register<
-                IDroneFlightWidget,
-                DroneFlightWidgetFlightControlSectionExtension
-            >();
+            // Actions for flight widgets
+            builder.Extensions.Register<IDroneFlightWidget, AutoModeAction<IDroneFlightWidget>>();
+            builder.Extensions.Register<IDroneFlightWidget, GuidedAction<IDroneFlightWidget>>();
+            builder.Extensions.Register<IDroneFlightWidget, TakeOffAction<IDroneFlightWidget>>();
+            builder.Extensions.Register<IDroneFlightWidget, LandAction<IDroneFlightWidget>>();
+            builder.Extensions.Register<IDroneFlightWidget, RtlAction<IDroneFlightWidget>>();
+            builder.Extensions.Register<IDroneFlightWidget, GotoAction<IDroneFlightWidget>>();
+            builder.Extensions.Register<IDroneFlightWidget, RoiAction<IDroneFlightWidget>>();
+            builder.Extensions.Register<IDroneFlightWidget, FindDroneAction<IDroneFlightWidget>>();
+
+            builder.Extensions.Register<IPlaneWidget, AutoModeAction<IPlaneWidget>>();
+            builder.Extensions.Register<IPlaneWidget, GuidedAction<IPlaneWidget>>();
+            builder.Extensions.Register<IPlaneWidget, TakeOffAction<IPlaneWidget>>();
+            builder.Extensions.Register<IPlaneWidget, RtlAction<IPlaneWidget>>();
+            builder.Extensions.Register<IPlaneWidget, GotoAction<IPlaneWidget>>();
+            builder.Extensions.Register<IPlaneWidget, RoiAction<IPlaneWidget>>();
+            builder.Extensions.Register<IPlaneWidget, FindDroneAction<IPlaneWidget>>();
+
             builder.ViewLocator.RegisterViewFor<
-                FlightControlSectionViewModel,
-                FlightControlSectionView
+                SetAltitudeDialogViewModel,
+                SetAltitudeDialogView
             >();
 
             // Test plugin widget
