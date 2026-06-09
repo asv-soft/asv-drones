@@ -64,6 +64,9 @@ internal static class DeviceTelemetryDesignPreview
                 [new VoltageVoltUnitItem(), new VoltageMilliVoltUnitItem()]
             )
         );
+        unitService.Extend(
+            new TimeSpanUnit(DesignTime.Configuration, [new TimeSpanHourMinuteSecondUnitItem()])
+        );
 
         _isConfigured = true;
     }

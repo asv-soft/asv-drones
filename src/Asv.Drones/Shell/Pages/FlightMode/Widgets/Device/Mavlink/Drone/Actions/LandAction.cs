@@ -30,7 +30,7 @@ public sealed class LandAction<TWidget>() : FlightWidgetAction<TWidget>("land")
         {
             Icon = ActionIcon,
             Description = ActionDescription,
-            Order = DroneActionOrder.Land,
+            Order = 50,
         };
         item.Command = CreateCommand(item, ct => new ValueTask(control.DoLand(ct)))
             .DisposeItWith(contextDispose);

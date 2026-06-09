@@ -14,7 +14,7 @@ public sealed class BatteryTelemetryItemFactory(
     ILoggerFactory loggerFactory
 ) : ITelemetryItemFactory
 {
-    public const string Id = "battery-uav";
+    public const string Id = "battery";
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public string ItemId => Id;
@@ -70,7 +70,7 @@ public sealed class BatteryTelemetryItemFactory(
                 }
             );
 
-        return new BatteryUavIndicatorViewModel(
+        return new BatteryTelemetryItemViewModel(
             Id,
             loggerFactory,
             batteryObservable,
@@ -99,7 +99,7 @@ public sealed class BatteryTelemetryItemFactory(
                     )
             );
 
-        return new BatteryUavIndicatorViewModel(
+        return new BatteryTelemetryItemViewModel(
             Id,
             loggerFactory,
             batteryObservable,

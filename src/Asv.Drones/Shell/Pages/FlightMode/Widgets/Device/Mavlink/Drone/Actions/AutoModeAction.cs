@@ -29,7 +29,7 @@ public sealed class AutoModeAction<TWidget>() : FlightWidgetAction<TWidget>("aut
         {
             Icon = ActionIcon,
             Description = ActionDescription,
-            Order = DroneActionOrder.AutoMode,
+            Order = 10,
         };
         item.Command = CreateCommand(item, ct => new ValueTask(control.SetAutoMode(ct)))
             .DisposeItWith(contextDispose);

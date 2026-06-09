@@ -10,7 +10,7 @@ namespace Asv.Drones;
 
 public sealed class GnssTelemetryItemFactory(ILoggerFactory loggerFactory) : ITelemetryItemFactory
 {
-    public const string Id = "gnss-uav";
+    public const string Id = "gnss";
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public string ItemId => Id;
@@ -40,7 +40,12 @@ public sealed class GnssTelemetryItemFactory(ILoggerFactory loggerFactory) : ITe
                 )
             );
 
-        return new GnssUavIndicatorViewModel(Id, loggerFactory, gnssObservable, DefaultStatusColor);
+        return new GnssTelemetryItemViewModel(
+            Id,
+            loggerFactory,
+            gnssObservable,
+            DefaultStatusColor
+        );
     }
 
     public ITelemetryItem CreatePreview()
@@ -49,6 +54,11 @@ public sealed class GnssTelemetryItemFactory(ILoggerFactory loggerFactory) : ITe
             .Return(new GnssRttBoxData(10, 2d, 4d, Mavlink.Common.GpsFixType.GpsFixTypeDgps))
             .Concat(Observable.Never<GnssRttBoxData>());
 
-        return new GnssUavIndicatorViewModel(Id, loggerFactory, gnssObservable, DefaultStatusColor);
+        return new GnssTelemetryItemViewModel(
+            Id,
+            loggerFactory,
+            gnssObservable,
+            DefaultStatusColor
+        );
     }
 }

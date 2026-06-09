@@ -13,7 +13,7 @@ public sealed class HeadingTelemetryItemFactory(
     ILoggerFactory loggerFactory
 ) : ITelemetryItemFactory
 {
-    public const string Id = "heading-uav";
+    public const string Id = "heading";
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public string ItemId => Id;
@@ -31,7 +31,7 @@ public sealed class HeadingTelemetryItemFactory(
             .Yaw.Select(Math.Truncate)
             .Prepend(double.NaN);
 
-        return new HeadingUavIndicatorViewModel(
+        return new HeadingTelemetryItemViewModel(
             Id,
             loggerFactory,
             unitService,
@@ -44,7 +44,7 @@ public sealed class HeadingTelemetryItemFactory(
     {
         var headingObservable = Observable.Return(29d).Concat(Observable.Never<double>());
 
-        return new HeadingUavIndicatorViewModel(
+        return new HeadingTelemetryItemViewModel(
             Id,
             loggerFactory,
             unitService,

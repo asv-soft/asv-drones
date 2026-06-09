@@ -7,36 +7,36 @@ using R3;
 
 namespace Asv.Drones;
 
-public class HomeAzimuthUavIndicatorViewModel : SplitDigitRttBoxViewModel, ITelemetryItem
+public class VelocityTelemetryItemViewModel : SplitDigitRttBoxViewModel, ITelemetryItem
 {
-    public HomeAzimuthUavIndicatorViewModel()
+    public VelocityTelemetryItemViewModel()
         : this(
-            nameof(HomeAzimuthUavIndicator),
+            nameof(VelocityTelemetryItemViewModel),
             DesignTime.LoggerFactory,
             DeviceTelemetryDesignPreview.UnitService,
-            Observable.Return(30d).Concat(Observable.Never<double>()),
+            Observable.Return(19.9d).Concat(Observable.Never<double>()),
             DeviceTelemetryDesignPreview.DefaultStatusColor
         )
     {
         DesignTime.ThrowIfNotDesignMode();
     }
 
-    public HomeAzimuthUavIndicatorViewModel(
+    public VelocityTelemetryItemViewModel(
         string id,
         ILoggerFactory loggerFactory,
         IUnitService unitService,
-        Observable<double> homeAzimuth,
+        Observable<double> velocity,
         AsvColorKind defaultStatusColor,
         TimeSpan? networkErrorTimeout = null
     )
-        : base(id, loggerFactory, unitService, AngleUnit.Id, homeAzimuth, networkErrorTimeout)
+        : base(id, loggerFactory, unitService, VelocityUnit.Id, velocity, networkErrorTimeout)
     {
         ItemId = id;
-        Header = RS.HomeAzimuthUavIndicatorViewModel_HomeAzimuth;
-        ShortHeader = RS.HomeAzimuthUavIndicatorViewModel_HomeAzimuth_Short;
-        Icon = MaterialIconKind.Home;
+        Header = RS.UavRttItem_Velocity;
+        ShortHeader = RS.VelocityUavIndicatorViewModel_Velocity_Short;
+        Icon = MaterialIconKind.Speedometer;
         Status = defaultStatusColor;
-        FormatString = "F0";
+        FormatString = "F2";
     }
 
     public string ItemId { get; }

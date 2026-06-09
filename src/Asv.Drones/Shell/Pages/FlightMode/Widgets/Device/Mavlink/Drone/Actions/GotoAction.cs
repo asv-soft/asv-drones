@@ -33,7 +33,7 @@ public sealed class GotoAction<TWidget>(IDialogService dialogService)
         {
             Icon = ActionIcon,
             Description = ActionDescription,
-            Order = DroneActionOrder.Goto,
+            Order = 70,
         };
         item.Command = CreateCommand(
                 item,

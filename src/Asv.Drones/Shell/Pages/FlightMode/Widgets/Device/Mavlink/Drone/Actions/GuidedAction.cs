@@ -29,7 +29,7 @@ public sealed class GuidedAction<TWidget>() : FlightWidgetAction<TWidget>("guide
         {
             Icon = ActionIcon,
             Description = ActionDescription,
-            Order = DroneActionOrder.Guided,
+            Order = 30,
         };
         item.Command = CreateCommand(item, ct => new ValueTask(control.SetGuidedMode(ct)))
             .DisposeItWith(contextDispose);
