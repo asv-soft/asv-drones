@@ -16,18 +16,6 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class TelemetrySectionConfig
-{
-    public string[]? ItemIds { get; set; }
-}
-
-#pragma warning disable SA1313
-public sealed record TelemetrySectionArgs(
-    MavlinkClientDevice? Device,
-    IReadOnlyList<string> DefaultItemIds
-);
-#pragma warning restore SA1313
-
 public class TelemetrySectionViewModel : ViewModel, ITelemetrySection
 {
     public const string SectionId = "telemetry-widget-section";
