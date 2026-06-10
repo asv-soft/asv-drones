@@ -63,6 +63,10 @@
     <ItemGroup>
       <AdditionalFiles Include="Core\Controls\DeviceTelemetry\AngleUavIndicator\UavAngleIndicatorStyles.axaml" />
       <AdditionalFiles Include="Shell\Pages\FlightMode\Dialogs\SetAltitudeDialogView.axaml" />
+      <AdditionalFiles Include="Shell\Pages\FlightMode\Widgets\Sections\Telemetry\ConfigureTelemetryDialog\ConfigureTelemetryDialogView.axaml" />
+      <AdditionalFiles Include="Shell\Pages\FlightMode\Widgets\Sections\Telemetry\DisplayItem\Add\AddTelemetryDisplayItemView.axaml" />
+      <AdditionalFiles Include="Shell\Pages\FlightMode\Widgets\Sections\Telemetry\DisplayItem\Default\TelemetryDisplayItemView.axaml" />
+      <AdditionalFiles Include="Shell\Pages\FlightMode\Widgets\Sections\Telemetry\TelemetrySectionView.axaml" />
       <AdditionalFiles Include="Shell\Pages\FlightMode\Widgets\Test\PluginFlightItemView.axaml" />
     </ItemGroup>
 </Project>
