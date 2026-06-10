@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
 using Asv.Common;
@@ -73,9 +72,20 @@ public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightMo
             nameof(Map.CenterMap),
             x => Map.CenterMap.Value = x,
             () => Map.CenterMap.Value,
-            Map.CenterMap
+            Map.CenterMap.Skip(1)
         );
-        Layout.Register(nameof(Map.Zoom), x => Map.Zoom.Value = x, () => Map.Zoom.Value, Map.Zoom);
+        Layout.Register(
+            nameof(Map.Zoom),
+            x => Map.Zoom.Value = x,
+            () => Map.Zoom.Value,
+            Map.Zoom.Skip(1)
+        );
+        Layout.Register(
+            nameof(Map.Rotation),
+            x => Map.Rotation.Value = x,
+            () => Map.Rotation.Value,
+            Map.Rotation.Skip(1)
+        );
         Layout.LoadWhenRootAttached(RootTracking).AddTo(ref DisposableBag);
     }
 }
