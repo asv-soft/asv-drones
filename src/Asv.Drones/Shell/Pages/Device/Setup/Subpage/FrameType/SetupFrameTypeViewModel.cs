@@ -151,7 +151,7 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
 
         Events.Catch(InternalCatchEvent).DisposeItWith(Disposable);
 
-        _undoSink = Undo.CreateValueChange<string>("default", ApplyFrameById, ApplyFrameById)
+        _undoSink = Undo.RegisterValue<string>("default", ApplyFrameById, ApplyFrameById)
             .DisposeItWith(Disposable);
     }
 
@@ -223,7 +223,7 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
 
                 if (record && oldFrameId is not null && oldFrameId != frameId)
                 {
-                    _undoSink.Publish(oldFrameId, frameId);
+                    _undoSink.PublishUpdate(oldFrameId, frameId);
                 }
             }
             catch (Exception ex)

@@ -150,7 +150,7 @@ public class MavParamsPageViewModel
             Disposable
         );
 
-        _removeAllPinsUndo = Undo.CreateValueChange<IReadOnlyList<string>>(
+        _removeAllPinsUndo = Undo.RegisterValue<IReadOnlyList<string>>(
                 "removeAllPins",
                 ApplyPinnedSet,
                 ApplyPinnedSet
@@ -173,7 +173,7 @@ public class MavParamsPageViewModel
                 return;
             }
 
-            _removeAllPinsUndo.Publish(pinnedNames, []);
+            _removeAllPinsUndo.PublishUpdate(pinnedNames, []);
             ApplyPinnedSet([]);
         }).DisposeItWith(Disposable);
 

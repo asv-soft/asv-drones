@@ -48,7 +48,7 @@ static class Program
             .Configure<App>()
             .UsePlatformDetect()
 #if DEBUG
-            .WithDeveloperTools()
+            
 #endif
             .WithInterFont()
             .LogToTrace();

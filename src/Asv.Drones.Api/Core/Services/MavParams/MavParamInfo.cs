@@ -227,6 +227,7 @@ public partial class MavParamInfo
     }
 
     public string? Unit => GetAdditionalAsString(UnitKey);
+    public string? Category => _metadata.Category;
 
     public IEnumerable<MavParamValueItem> GetPredefinedValues()
     {

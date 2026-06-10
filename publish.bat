@@ -1,10 +1,11 @@
-cd publish
+if not exist publish mkdir publish
+cd publish || exit /b 1
 
 for /d %%i in (".\*") do (
     rmdir /s /q "%%i"
 )
 
-cd ../src/Asv.Drones.Gui.Desktop
+cd ../src/Asv.Drones.Desktop || exit /b 1
 
 dotnet publish -c Release -r win-arm --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true  -o ~/../../../publish/win-arm/app
 dotnet publish -c Release -r win-arm64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true  -o ~/../../../publish/win-arm64/app
@@ -23,27 +24,27 @@ cd ../../publish
 del /S *.pdb
 
 cd win-arm/app
-move Asv.Drones.Gui.Desktop.exe asv-drones-win-arm.exe
+move Asv.Drones.Desktop.exe asv-drones-win-arm.exe
 cd ../../win-arm64/app
-move Asv.Drones.Gui.Desktop.exe asv-drones-win-arm64.exe
+move Asv.Drones.Desktop.exe asv-drones-win-arm64.exe
 cd ../../win-x64/app
-move Asv.Drones.Gui.Desktop.exe asv-drones-win-x64.exe
+move Asv.Drones.Desktop.exe asv-drones-win-x64.exe
 cd ../../win-x86/app
-move Asv.Drones.Gui.Desktop.exe asv-drones-win-x86.exe
+move Asv.Drones.Desktop.exe asv-drones-win-x86.exe
 
 cd ../../linux-arm/app
-move Asv.Drones.Gui.Desktop asv-drones-linux-arm
+move Asv.Drones.Desktop asv-drones-linux-arm
 cd ../../linux-arm64/app
-move Asv.Drones.Gui.Desktop asv-drones-linux-arm64 
+move Asv.Drones.Desktop asv-drones-linux-arm64 
 cd ../../linux-musl-x64/app
-move Asv.Drones.Gui.Desktop asv-drones-linux-musl-x64
+move Asv.Drones.Desktop asv-drones-linux-musl-x64
 cd ../../linux-x64/app
-move Asv.Drones.Gui.Desktop asv-drones-linux-x64
+move Asv.Drones.Desktop asv-drones-linux-x64
 
 cd ../../osx-arm64/app
-move Asv.Drones.Gui.Desktop asv-drones-osx-arm64
+move Asv.Drones.Desktop asv-drones-osx-arm64
 cd ../../osx-x64/app
-move Asv.Drones.Gui.Desktop asv-drones-osx-x64
+move Asv.Drones.Desktop asv-drones-osx-x64
 cd ../../..
 
 setlocal enabledelayedexpansion
