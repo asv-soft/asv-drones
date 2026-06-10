@@ -28,7 +28,12 @@ public sealed class LinkQualityTelemetryItemFactory(
         ArgumentNullException.ThrowIfNull(device);
 
         var heartbeatClient = device.GetRequiredMicroservice<IHeartbeatClient>();
-        var linkQuality = heartbeatClient.LinkQuality.Prepend(double.NaN);
+        var linkQuality = heartbeatClient
+            .LinkQuality.Prepend(double.NaN)
+            .CombineLatest(
+                unitService.Units[ProgressUnit.Id].CurrentUnitItem,
+                (value, _) => value * 100d
+            );
 
         return new LinkQualityTelemetryItemViewModel(
             Id,
@@ -42,7 +47,10 @@ public sealed class LinkQualityTelemetryItemFactory(
 
     public ITelemetryItem CreatePreview()
     {
-        var linkQuality = Observable.Return(100d).Concat(Observable.Never<double>());
+        var linkQuality = Observable
+            .Return(1d)
+            .Concat(Observable.Never<double>())
+            .CombineLatest(unitService.Units[ProgressUnit.Id].CurrentUnitItem, (value, _) => value);
         var linkState = Observable
             .Return(LinkState.Connected)
             .Concat(Observable.Never<LinkState>());

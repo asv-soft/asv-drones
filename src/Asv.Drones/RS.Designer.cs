@@ -1167,6 +1167,18 @@ namespace Asv.Drones {
             }
         }
         
+        public static string VelocityUavIndicatorViewModel_Vertical_Short {
+            get {
+                return ResourceManager.GetString("VelocityUavIndicatorViewModel_Vertical_Short", resourceCulture);
+            }
+        }
+        
+        public static string UavRttItem_TimeInAir {
+            get {
+                return ResourceManager.GetString("UavRttItem_TimeInAir", resourceCulture);
+            }
+        }
+        
         public static string AngleUavRttIndicatorViewModel_Angle {
             get {
                 return ResourceManager.GetString("AngleUavRttIndicatorViewModel_Angle", resourceCulture);
@@ -1280,7 +1292,7 @@ namespace Asv.Drones {
                 return ResourceManager.GetString("TelemetrySectionViewModel_ConfigureTelemetryDialog_Title", resourceCulture);
             }
         }
-
+        
         public static string TelemetrySectionViewModel_ConfigureTelemetryDialog_PrimaryButtonText {
             get {
                 return ResourceManager.GetString("TelemetrySectionViewModel_ConfigureTelemetryDialog_PrimaryButtonText", resourceCulture);

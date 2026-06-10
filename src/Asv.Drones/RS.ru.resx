@@ -572,6 +572,12 @@
     <data name="VelocityUavIndicatorViewModel_Velocity_Short" xml:space="preserve">
         <value>СК</value>
     </data>
+    <data name="VelocityUavIndicatorViewModel_Vertical_Short" xml:space="preserve">
+        <value>ВС</value>
+    </data>
+    <data name="UavRttItem_TimeInAir" xml:space="preserve">
+        <value>Время в воздухе</value>
+    </data>
     <data name="AngleUavRttIndicatorViewModel_Angle" xml:space="preserve">
         <value>Углы</value>
     </data>

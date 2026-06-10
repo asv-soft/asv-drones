@@ -21,11 +21,11 @@ public sealed class ConfigureTelemetryDialogViewModel : DialogViewModelBase
                 DesignTime.LoggerFactory
             ),
             new AltitudeTelemetryItemFactory(DeviceTelemetryDesignPreview.UnitService),
-            new VelocityTelemetryItemFactory(
+            new VelocityTelemetryItemFactory(DeviceTelemetryDesignPreview.UnitService),
+            new CurrentFlightModeTelemetryItemFactory(
                 DeviceTelemetryDesignPreview.UnitService,
                 DesignTime.LoggerFactory
             ),
-            new CurrentFlightModeTelemetryItemFactory(DesignTime.LoggerFactory),
             new AzimuthTelemetryItemFactory(
                 DeviceTelemetryDesignPreview.UnitService,
                 DesignTime.LoggerFactory

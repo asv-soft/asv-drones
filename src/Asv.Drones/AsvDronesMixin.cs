@@ -42,7 +42,7 @@ public static class AsvDronesMixin
         {
             builder.ViewLocator.RegisterViewFor<
                 VelocityTelemetryItemViewModel,
-                SplitDigitRttBoxView
+                TwoColumnRttBoxView
             >();
             builder.ViewLocator.RegisterViewFor<
                 BatteryTelemetryItemViewModel,
@@ -175,9 +175,11 @@ public static class AsvDronesMixin
                 ConfigureTelemetryDialogViewModel,
                 ConfigureTelemetryDialogView
             >();
+
+            // TODO: remove it
             builder.ViewLocator.RegisterViewFor<
                 CurrentFlightModeTelemetryItemViewModel,
-                SingleRttBoxView
+                KeyValueRttBoxView
             >();
             builder.ViewLocator.RegisterViewFor<
                 AzimuthTelemetryItemViewModel,
@@ -202,7 +204,7 @@ public static class AsvDronesMixin
             >();
             builder.ViewLocator.RegisterViewFor<
                 VelocityTelemetryItemViewModel,
-                SplitDigitRttBoxView
+                TwoColumnRttBoxView
             >();
             builder.ViewLocator.RegisterViewFor<
                 LinkQualityTelemetryItemViewModel,
