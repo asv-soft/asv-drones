@@ -1270,7 +1270,7 @@ public class FileBrowserViewModel
                 renamed.SourceType == FtpBrowserSourceType.Local
                     ? _localRenameUndoSink
                     : _remoteRenameUndoSink;
-            sink.Publish(renamed.OldPath, renamed.NewPath);
+            sink.PublishUpdate(renamed.OldPath, renamed.NewPath);
             e.IsHandled = true;
         }
 

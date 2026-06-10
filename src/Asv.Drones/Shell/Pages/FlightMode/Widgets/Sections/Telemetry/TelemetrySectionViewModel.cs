@@ -98,7 +98,7 @@ public class TelemetrySectionViewModel : ViewModel, ITelemetrySection
         IsEditMode.Subscribe(_ => UpdateAddItemPresence()).DisposeItWith(Disposable);
 
         Events.Catch(InternalCatchEvent).DisposeItWith(Disposable);
-        _setItemsChangeSink = Undo.CreateValueChange<string[]>(
+        _setItemsChangeSink = Undo.RegisterValue<string[]>(
                 SetItemsChangeId,
                 oldValue => TryApplyItems(oldValue),
                 newValue => TryApplyItems(newValue)
@@ -160,7 +160,7 @@ public class TelemetrySectionViewModel : ViewModel, ITelemetrySection
             return false;
         }
 
-        _setItemsChangeSink.Publish(oldItemIds, ItemIds);
+        _setItemsChangeSink.PublishUpdate(oldItemIds, ItemIds);
         return true;
     }
 
