@@ -18,9 +18,9 @@ internal static class MavParamPropertyEditorMetadata
         editor.Icon = info.Icon;
         if (info.Category != null)
         {
-            editor.DisplayScopes.Add(info.Category);    
+            editor.DisplayScopes.Add(info.Category);
         }
-        
+
         if (info.IconColor.HasValue)
         {
             editor.IconColor = info.IconColor.Value;

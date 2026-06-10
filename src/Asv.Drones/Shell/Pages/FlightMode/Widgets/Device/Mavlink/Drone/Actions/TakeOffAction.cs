@@ -31,7 +31,7 @@ public sealed class TakeOffAction<TWidget>(IUnitService unitService, ILoggerFact
         {
             Icon = ActionIcon,
             Description = ActionDescription,
-            Order = DroneActionOrder.TakeOff,
+            Order = 40,
         };
         item.Command = CreateCommand(
                 item,

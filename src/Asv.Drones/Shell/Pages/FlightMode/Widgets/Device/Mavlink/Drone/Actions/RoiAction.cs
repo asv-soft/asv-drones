@@ -31,7 +31,7 @@ public sealed class RoiAction<TWidget>(IDialogService dialogService)
         {
             Icon = ActionIcon,
             Description = ActionDescription,
-            Order = DroneActionOrder.Roi,
+            Order = 80,
         };
         item.Command = CreateCommand(
                 item,

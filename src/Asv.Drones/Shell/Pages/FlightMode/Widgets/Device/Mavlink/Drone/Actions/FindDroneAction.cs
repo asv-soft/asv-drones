@@ -30,7 +30,7 @@ public sealed class FindDroneAction<TWidget>() : FlightWidgetAction<TWidget>("fi
         {
             Icon = ActionIcon,
             Description = ActionDescription,
-            Order = DroneActionOrder.FindDrone,
+            Order = 90,
         };
         item.Command = CreateCommand(
                 item,
