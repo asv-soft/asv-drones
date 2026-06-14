@@ -47,20 +47,8 @@
     <data name="ParametersEditorPageView_StarButton_ToolTip" xml:space="preserve">
         <value>Добавить параметр в избранные</value>
     </data>
-    <data name="ParamPageViewModel_DataLossDialog_Content" xml:space="preserve">
-        <value>У вас есть несохраненные данные. Хотите сохранить их?</value>
-    </data>
-    <data name="ParamPageViewModel_DataLossDialog_Title" xml:space="preserve">
-        <value>Предупреждение о возможной потере данных</value>
-    </data>
-    <data name="ParamPageViewModel_DataLossDialog_PrimaryButtonText" xml:space="preserve">
-        <value>Сохранить</value>
-    </data>
-    <data name="ParamPageViewModel_DataLossDialog_SecondaryButtonText" xml:space="preserve">
-        <value>Не сохранять</value>
-    </data>
-    <data name="ParamPageViewModel_DataLossDialog_CloseButtonText" xml:space="preserve">
-        <value>Отмена</value>
+    <data name="MavParamsPageViewModel_DataLossDialog_NotSyncedParamMessage" xml:space="preserve">
+        <value>Параметр «{0}» не синхронизирован</value>
     </data>
     <data name="Unit_Byte_Abbreviation" xml:space="preserve">
         <value>байт</value>
