@@ -1,5 +1,4 @@
-﻿using System;
-using Asv.Avalonia;
+﻿using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Drones.Api;
 using Asv.Drones.Plane;
@@ -103,10 +102,6 @@ public static class AsvDronesMixin
             );
             builder.Shell.Pages.Home.UseItemExtension<HomePageParamsDeviceItemAction>();
             builder.ViewLocator.RegisterViewFor<ParamItemViewModel, ParamItemView>();
-            builder.ViewLocator.RegisterViewFor<
-                TryCloseWithApprovalDialogViewModel,
-                TryCloseWithApprovalDialogView
-            >();
             return this;
         }
 
