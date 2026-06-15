@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Windows.Input;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Drones.Api;
@@ -8,20 +6,13 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class ConfigureTelemetryItemEntry
-{
-    public required string ItemId { get; init; }
-    public required string DisplayName { get; init; }
-    public required ITelemetryItem Item { get; init; }
-    public required ICommand Select { get; init; }
-}
-
 public sealed class ConfigureTelemetryDialogViewModel : DialogViewModelBase
 {
     public const string DialogId = $"{BaseId}.configure-telemetry";
 
     private readonly ObservableList<ConfigureTelemetryItemEntry> _entries;
-    private ContentDialog? _dialog;
+    private readonly ReactiveProperty<int> _selectedCount;
+    private readonly SerialDisposable _dialogSub;
 
     public ConfigureTelemetryDialogViewModel()
         : this([
@@ -69,24 +60,27 @@ public sealed class ConfigureTelemetryDialogViewModel : DialogViewModelBase
         : base(DialogId)
     {
         _entries = [];
+        _selectedCount = new ReactiveProperty<int>(0).DisposeItWith(Disposable);
+        _dialogSub = new SerialDisposable().DisposeItWith(Disposable);
 
         foreach (var factory in factories)
         {
             var item = factory.CreatePreview().SetRoutableParent(this).DisposeItWith(Disposable);
 
-            var selectCommand = new ReactiveCommand(_ =>
-            {
-                SelectedItemId = factory.ItemId;
-                _dialog?.Hide(ContentDialogResult.Primary);
-            }).DisposeItWith(Disposable);
+            var isSelected = new BindableReactiveProperty<bool>(false).DisposeItWith(Disposable);
+            isSelected
+                .Subscribe(_ =>
+                {
+                    _selectedCount.Value = _entries.Count(e => e.IsSelected.Value);
+                })
+                .DisposeItWith(Disposable);
 
             _entries.Add(
                 new ConfigureTelemetryItemEntry
                 {
                     ItemId = factory.ItemId,
-                    DisplayName = factory.DisplayName,
                     Item = item,
-                    Select = selectCommand,
+                    IsSelected = isSelected,
                 }
             );
         }
@@ -96,11 +90,21 @@ public sealed class ConfigureTelemetryDialogViewModel : DialogViewModelBase
 
     public INotifyCollectionChangedSynchronizedViewList<ConfigureTelemetryItemEntry> Entries { get; }
 
-    public string? SelectedItemId { get; private set; }
+    public IReadOnlyList<string> SelectedItemIds =>
+        _entries.Where(e => e.IsSelected.Value).Select(e => e.ItemId).ToArray();
 
     public override void ApplyDialog(ContentDialog dialog)
     {
-        _dialog = dialog;
+        dialog.DefaultButton = ContentDialogButton.Primary;
+
+        _dialogSub.Disposable = _selectedCount.Subscribe(count =>
+        {
+            dialog.IsPrimaryButtonEnabled = count > 0;
+            dialog.PrimaryButtonText = string.Format(
+                RS.TelemetrySectionViewModel_ConfigureTelemetryDialog_PrimaryButtonText,
+                count
+            );
+        });
     }
 
     public override IEnumerable<IViewModel> GetChildren()
@@ -110,4 +114,11 @@ public sealed class ConfigureTelemetryDialogViewModel : DialogViewModelBase
             yield return entry.Item;
         }
     }
+}
+
+public sealed class ConfigureTelemetryItemEntry
+{
+    public required string ItemId { get; init; }
+    public required ITelemetryItem Item { get; init; }
+    public required BindableReactiveProperty<bool> IsSelected { get; init; }
 }

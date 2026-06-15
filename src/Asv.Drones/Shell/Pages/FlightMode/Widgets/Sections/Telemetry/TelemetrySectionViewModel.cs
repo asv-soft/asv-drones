@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
 using Asv.Common;
@@ -369,17 +364,28 @@ public class TelemetrySectionViewModel : ViewModel, ITelemetrySection
         var dialog = new ContentDialog(vm)
         {
             Title = RS.TelemetrySectionViewModel_ConfigureTelemetryDialog_Title,
+            PrimaryButtonText = string.Format(
+                RS.TelemetrySectionViewModel_ConfigureTelemetryDialog_PrimaryButtonText,
+                0
+            ),
             CloseButtonText = RS.TelemetrySectionViewModel_ConfigureTelemetryDialog_CloseButtonText,
         };
         vm.ApplyDialog(dialog);
 
-        await dialog.ShowAsync();
-
-        if (!string.IsNullOrWhiteSpace(vm.SelectedItemId))
+        var result = await dialog.ShowAsync();
+        if (result != ContentDialogResult.Primary)
         {
-            ct.ThrowIfCancellationRequested();
-            TryAddItem(vm.SelectedItemId);
+            return;
         }
+
+        ct.ThrowIfCancellationRequested();
+
+        if (vm.SelectedItemIds.Count == 0)
+        {
+            return;
+        }
+
+        TrySetItems(ItemIds.Concat(vm.SelectedItemIds).ToArray());
     }
 
     private void DisposeAllWrappers()

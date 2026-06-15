@@ -16,7 +16,8 @@
 
     <ListBox
         ItemsSource="{Binding Entries}"
-        Width="720"
+        SelectionMode="Multiple, Toggle"
+        Width="460"
         MaxHeight="456"
         Background="Transparent"
         BorderThickness="0"
@@ -24,30 +25,42 @@
         ScrollViewer.VerticalScrollBarVisibility="Auto"
     >
         <ListBox.Styles>
-            <Style Selector="ListBoxItem">
+            <Style Selector="ListBoxItem" x:DataType="drones:ConfigureTelemetryItemEntry">
+                <Setter Property="IsSelected" Value="{Binding IsSelected.Value, Mode=TwoWay}" />
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="Margin" Value="0 0 0 8" />
                 <Setter Property="Background" Value="Transparent" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            </Style>
+            <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                <Setter Property="Background" Value="Transparent" />
+            </Style>
+
+            <Style Selector="ListBoxItem Border.tile-frame">
+                <Setter Property="Padding" Value="12" />
+                <Setter Property="MinHeight" Value="100" />
+                <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter
+                    Property="BorderBrush"
+                    Value="{DynamicResource AsvForegroundUnknownBrush}"
+                />
+                <Setter Property="BorderThickness" Value="1" />
+            </Style>
+            <Style Selector="ListBoxItem:selected Border.tile-frame">
+                <Setter Property="Background" Value="{DynamicResource AsvBackgroundInfo1Brush}" />
             </Style>
         </ListBox.Styles>
         <ListBox.ItemTemplate>
             <DataTemplate DataType="drones:ConfigureTelemetryItemEntry">
-                <Button
-                    Padding="12"
-                    MinHeight="100"
-                    HorizontalAlignment="Stretch"
-                    CornerRadius="{DynamicResource ControlCornerRadius}"
-                    BorderBrush="{DynamicResource AsvForegroundUnknownBrush}"
-                    BorderThickness="1"
-                    Background="Transparent"
-                    Command="{Binding Select}"
-                >
+                <Border Classes="tile-frame">
                     <ContentControl
-                        VerticalAlignment="Center"
                         HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
                         Content="{Binding Item}"
                     />
-                </Button>
+                </Border>
             </DataTemplate>
         </ListBox.ItemTemplate>
     </ListBox>

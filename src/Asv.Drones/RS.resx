@@ -641,6 +641,9 @@
     <data name="TelemetrySectionViewModel_ConfigureTelemetryDialog_Title" xml:space="preserve">
         <value>Add indicator</value>
     </data>
+    <data name="TelemetrySectionViewModel_ConfigureTelemetryDialog_PrimaryButtonText" xml:space="preserve">
+        <value>Add ({0})</value>
+    </data>
     <data name="AutoModeAction_TryCreateAction_Header" xml:space="preserve">
         <value>Auto</value>
     </data>
