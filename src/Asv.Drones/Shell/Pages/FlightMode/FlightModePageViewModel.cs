@@ -1,5 +1,6 @@
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
+using Asv.Avalonia.IO;
 using Asv.Common;
 using Asv.Drones.Api;
 using Asv.Modeling;
@@ -21,6 +22,7 @@ public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightMo
             NullMapService.Instance,
             DesignTime.LoggerFactory,
             DesignTime.DialogService,
+            NullDeviceManager.Instance,
             DesignTime.ExtensionService
         ) { }
 
@@ -29,6 +31,7 @@ public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightMo
         IMapService mapService,
         ILoggerFactory loggerFactory,
         IDialogService dialogService,
+        IDeviceManager manager,
         IExtensionService ext
     )
         : base(PageId, context, loggerFactory, dialogService, ext)
@@ -50,11 +53,13 @@ public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightMo
         Map = new MapViewModel(nameof(Map), mapService)
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
+        MissionLayer = new MissionLayer(Map.Anchors, manager, ext).DisposeItWith(Disposable);
     }
 
     public ObservableList<IFlightWidget> Widgets { get; }
     public NotifyCollectionChangedSynchronizedViewList<IFlightWidget> WidgetsView { get; }
     public IMap Map { get; }
+    public IMissionLayer MissionLayer { get; }
 
     public override IEnumerable<IViewModel> GetChildren()
     {
