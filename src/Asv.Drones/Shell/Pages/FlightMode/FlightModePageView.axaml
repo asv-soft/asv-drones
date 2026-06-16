@@ -17,7 +17,7 @@
         <drones:FlightModePageViewModel />
     </Design.DataContext>
     <Panel>
-        <geoMap:MapView DataContext="{CompiledBinding Map}" />
+        <geoMap:MapView x:Name="PART_Map" DataContext="{CompiledBinding Map}" />
         <ItemsControl ItemsSource="{Binding WidgetsView}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -43,6 +43,7 @@
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Margin="8"
+            GestureSurface="{Binding #PART_Map}"
             TouchpadRotationSensitivity="1"
         />
     </Panel>
