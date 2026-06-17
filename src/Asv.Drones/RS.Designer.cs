@@ -1280,6 +1280,12 @@ namespace Asv.Drones {
                 return ResourceManager.GetString("TelemetrySectionViewModel_ConfigureTelemetryDialog_Title", resourceCulture);
             }
         }
+
+        public static string TelemetrySectionViewModel_ConfigureTelemetryDialog_PrimaryButtonText {
+            get {
+                return ResourceManager.GetString("TelemetrySectionViewModel_ConfigureTelemetryDialog_PrimaryButtonText", resourceCulture);
+            }
+        }
         
         public static string AutoModeAction_TryCreateAction_Header {
             get {
