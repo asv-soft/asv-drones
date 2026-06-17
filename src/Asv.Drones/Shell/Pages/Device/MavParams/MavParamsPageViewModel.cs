@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
@@ -519,7 +514,7 @@ public class MavParamsPageViewModel
         }
     }
 
-    private async ValueTask InternalCatchEvent(
+    private ValueTask InternalCatchEvent(
         IViewModel src,
         AsyncRoutedEvent<IViewModel> e,
         CancellationToken cancel
@@ -544,15 +539,30 @@ public class MavParamsPageViewModel
 
             case PageCloseAttemptEvent { Sender: MavParamsPageViewModel } closeEvent:
             {
-                var isCloseReady = await TryCloseWithApproval(cancel);
-                if (!isCloseReady)
+                var notSyncedParams =
+                    _paramsClient
+                        ?.Items.Where(param => !param.Value.IsSynced.Value)
+                        .Select(param => param.Value)
+                        .ToArray() ?? [];
+
+                foreach (var param in notSyncedParams)
                 {
-                    closeEvent.AddRestriction(new Restriction(this));
+                    closeEvent.AddRestriction(
+                        new Restriction(
+                            this,
+                            string.Format(
+                                RS.MavParamsPageViewModel_DataLossDialog_NotSyncedParamMessage,
+                                param.Info.DisplayName
+                            )
+                        )
+                    );
                 }
 
                 break;
             }
         }
+
+        return ValueTask.CompletedTask;
     }
 
     private void UpdateViewedItems(ParamItemViewModel param)
@@ -571,43 +581,5 @@ public class MavParamsPageViewModel
         {
             _viewedParamsList.Add(param);
         }
-    }
-
-    private async Task<bool> TryCloseWithApproval(CancellationToken cancel = default)
-    {
-        cancel.ThrowIfCancellationRequested();
-        var notSyncedParams = _viewedParamsList.Where(param => !param.IsSynced.Value).ToArray();
-
-        if (notSyncedParams.Length == 0)
-        {
-            return true;
-        }
-
-        using var vm = new TryCloseWithApprovalDialogViewModel(_loggerFactory);
-        var dialog = new ContentDialog(vm)
-        {
-            Title = RS.ParamPageViewModel_DataLossDialog_Title,
-            IsSecondaryButtonEnabled = true,
-            PrimaryButtonText = RS.ParamPageViewModel_DataLossDialog_PrimaryButtonText,
-            SecondaryButtonText = RS.ParamPageViewModel_DataLossDialog_SecondaryButtonText,
-            CloseButtonText = RS.ParamPageViewModel_DataLossDialog_CloseButtonText,
-        };
-
-        var result = await dialog.ShowAsync();
-
-        if (result == ContentDialogResult.None)
-        {
-            return false;
-        }
-
-        if (result == ContentDialogResult.Primary)
-        {
-            foreach (var param in notSyncedParams)
-            {
-                param.Write.Execute(Unit.Default);
-            }
-        }
-
-        return true;
     }
 }

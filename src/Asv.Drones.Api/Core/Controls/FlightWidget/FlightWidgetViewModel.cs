@@ -31,6 +31,17 @@ public abstract class FlightWidgetViewModel<TSelf> : ViewModel<TSelf>, IFlightWi
         Disposable.AddAction(() => Sections.ClearWithItemsDispose());
 
         SectionsView = Sections.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);
+
+        Layout
+            .Register(
+                nameof(IsExpanded),
+                value => IsExpanded = value,
+                () => IsExpanded,
+                this.ObservePropertyChanged(x => x.IsExpanded).Skip(1)
+            )
+            .DisposeItWith(Disposable);
+
+        Layout.LoadWhenRootAttached(RootTracking).AddTo(ref DisposableBag);
     }
 
     public MaterialIconKind? Icon
