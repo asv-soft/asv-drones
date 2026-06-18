@@ -295,21 +295,6 @@ public static class AsvDronesMixin
                 ChangePathVisibilityAction<IDroneFlightWidget>
             >();
 
-            builder.Extensions.Register<IPlaneWidget, AutoModeAction<IPlaneWidget>>();
-            builder.Extensions.Register<IPlaneWidget, RefreshMissionAction<IPlaneWidget>>();
-            builder.Extensions.Register<IPlaneWidget, StartMissionAction<IPlaneWidget>>();
-            builder.Extensions.Register<IPlaneWidget, GuidedAction<IPlaneWidget>>();
-            builder.Extensions.Register<IPlaneWidget, TakeOffAction<IPlaneWidget>>();
-            builder.Extensions.Register<IPlaneWidget, RtlAction<IPlaneWidget>>();
-            builder.Extensions.Register<IPlaneWidget, GotoAction<IPlaneWidget>>();
-            builder.Extensions.Register<IPlaneWidget, RoiAction<IPlaneWidget>>();
-            builder.Extensions.Register<IPlaneWidget, FindDroneAction<IPlaneWidget>>();
-            builder.Extensions.Register<
-                IPlaneWidget,
-                ChangeMissionVisibilityAction<IPlaneWidget>
-            >();
-            builder.Extensions.Register<IPlaneWidget, ChangePathVisibilityAction<IPlaneWidget>>();
-
             builder.ViewLocator.RegisterViewFor<
                 SetAltitudeDialogViewModel,
                 SetAltitudeDialogView
@@ -318,23 +303,6 @@ public static class AsvDronesMixin
                 SetAltitudeDialogViewModel,
                 SetAltitudeDialogView
             >();
-
-            // Test plugin widget
-            builder.ViewLocator.RegisterViewFor<PluginFlightItemViewModel, PluginFlightItemView>();
-            builder.Extensions.Register<IFlightModePage, PluginFlightItemWidgetExtension>();
-
-            // Test plane widget
-            builder.Services.AddSingleton<
-                IClientDeviceWidgetCreationHandler,
-                PlaneWidgetCreationHandler
-            >();
-            builder.ViewLocator.RegisterViewFor<PlaneWidgetViewModel, FlightWidgetView>();
-
-            // Test plane section
-            builder.Extensions.Register<IPlaneWidget, PlaneSectionExtension>();
-            builder.ViewLocator.RegisterViewFor<PlaneSectionViewModel, PlaneSectionView>();
-
-            builder.Extensions.Register<IPlaneWidget, PlaneFlightWidgetTelemetrySectionExtension>();
 
             return this;
         }

@@ -67,6 +67,5 @@
       <AdditionalFiles Include="Shell\Pages\FlightMode\Widgets\Sections\Telemetry\DisplayItem\Add\AddTelemetryDisplayItemView.axaml" />
       <AdditionalFiles Include="Shell\Pages\FlightMode\Widgets\Sections\Telemetry\DisplayItem\Default\TelemetryDisplayItemView.axaml" />
       <AdditionalFiles Include="Shell\Pages\FlightMode\Widgets\Sections\Telemetry\TelemetrySectionView.axaml" />
-      <AdditionalFiles Include="Shell\Pages\FlightMode\Widgets\Test\PluginFlightItemView.axaml" />
     </ItemGroup>
 </Project>
