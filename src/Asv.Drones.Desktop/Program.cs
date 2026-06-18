@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using Asv.Avalonia;
+using Asv.Avalonia.Charts;
 using Asv.Avalonia.GeoMap;
 using Asv.Avalonia.IO;
 using Asv.Avalonia.Launcher.Ready;
@@ -72,6 +73,7 @@ sealed class Program
                             .UseOptionalMarket(); // register market plugins page
                     })
                     .UseModuleGeoMap()
+                    .UseModuleCharts()
                     .UseModuleIo()
                     .UseLauncher(cfg => cfg.IsOptional())
                     .UseDronesApp();
