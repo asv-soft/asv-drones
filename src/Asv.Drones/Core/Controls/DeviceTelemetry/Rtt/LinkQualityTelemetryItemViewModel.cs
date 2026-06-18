@@ -15,7 +15,7 @@ public class LinkQualityTelemetryItemViewModel : SplitDigitRttBoxViewModel, ITel
             nameof(LinkQualityTelemetryItemViewModel),
             DesignTime.LoggerFactory,
             DeviceTelemetryDesignPreview.UnitService,
-            Observable.Return(87d).Concat(Observable.Never<double>()),
+            Observable.Return(0.87d).Concat(Observable.Never<double>()),
             Observable.Return(LinkState.Connected).Concat(Observable.Never<LinkState>()),
             DeviceTelemetryDesignPreview.DefaultStatusColor
         )

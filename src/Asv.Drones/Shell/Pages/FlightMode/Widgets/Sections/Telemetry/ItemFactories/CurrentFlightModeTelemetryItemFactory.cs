@@ -8,8 +8,10 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class CurrentFlightModeTelemetryItemFactory(ILoggerFactory loggerFactory)
-    : ITelemetryItemFactory
+public sealed class CurrentFlightModeTelemetryItemFactory(
+    IUnitService unitService,
+    ILoggerFactory loggerFactory
+) : ITelemetryItemFactory
 {
     public const string Id = "current-flight-mode";
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
@@ -29,22 +31,41 @@ public sealed class CurrentFlightModeTelemetryItemFactory(ILoggerFactory loggerF
             .CurrentMode.Select(mode => mode.Name)
             .Prepend(string.Empty);
 
-        return new CurrentFlightModeTelemetryItemViewModel(
-            Id,
-            loggerFactory,
-            currentMode,
-            DefaultStatusColor
-        );
+        var timeInAir =
+            device
+                .GetMicroservice<IPositionClientEx>()
+                ?.ArmedTime.Select(time => time.TotalSeconds)
+                .Prepend(double.NaN) ?? Observable.Return(double.NaN);
+
+        return CreateItem(currentMode, timeInAir);
     }
 
     public ITelemetryItem CreatePreview()
     {
-        var currentMode = Observable.Return("Unknown").Concat(Observable.Never<string>());
+        return CreateItem(
+            Observable.Return("Unknown").Concat(Observable.Never<string>()),
+            Observable.Return(125d).Concat(Observable.Never<double>())
+        );
+    }
+
+    private CurrentFlightModeTelemetryItemViewModel CreateItem(
+        Observable<string> currentMode,
+        Observable<double> timeInAir
+    )
+    {
+        var timeSpanUnit = unitService.Units[TimeSpanUnit.Id].AvailableUnits[
+            TimeSpanHourMinuteSecondUnitItem.Id
+        ];
+
+        var modeData = currentMode.CombineLatest(
+            timeInAir,
+            (mode, time) => new FlightModeRttBoxData(mode, time, timeSpanUnit)
+        );
 
         return new CurrentFlightModeTelemetryItemViewModel(
             Id,
             loggerFactory,
-            currentMode,
+            modeData,
             DefaultStatusColor
         );
     }
