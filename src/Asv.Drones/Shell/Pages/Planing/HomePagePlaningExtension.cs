@@ -5,20 +5,20 @@ using R3;
 
 namespace Asv.Drones;
 
-public class HomePageFlightModeExtension : IExtensionFor<IHomePage>
+public class HomePagePlaningExtension : IExtensionFor<IHomePage>
 {
     public void Extend(IHomePage context, CompositeDisposable contextDispose)
     {
         context.Tools.Add(
             new ActionViewModel(FlightModePageViewModel.PageId)
             {
-                Header = "Flight Mode (BETA)",
-                Description = "Opens Flight Mode (BETA)",
+                Header = "Planing",
+                Description = "Tool for create missions and planing flights",
                 Icon = FlightModePageViewModel.PageIcon,
                 Command = new ReactiveCommand(
                     async (_, _) =>
                         await context.GoTo(
-                            new NavPath(new NavId(FlightModePageViewModel.PageId, NavArgs.Empty))
+                            new NavPath(new NavId(PlaningPageViewModel.PageId, NavArgs.Empty))
                         )
                 ),
             }.DisposeItWith(contextDispose)

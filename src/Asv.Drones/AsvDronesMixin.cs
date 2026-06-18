@@ -32,6 +32,7 @@ public static class AsvDronesMixin
                 .UseMavParams()
                 .UseOptionalPacketViewer()
                 .UseExtendableFlightMode()
+                .UsePlaningPage()
                 .UseActions()
                 .UseFileBrowser()
                 .UseSetupPage();
@@ -118,6 +119,13 @@ public static class AsvDronesMixin
             return this;
         }
 
+        public Builder UsePlaningPage()
+        {
+            builder.Shell.Pages.Register<PlaningPageViewModel, PlaningPageView>(PlaningPageViewModel.PageId);
+            builder.Shell.Pages.Home.UseExtension<HomePagePlaningExtension>();
+            return this;
+        }
+        
         public Builder UseExtendableFlightMode()
         {
             // FlightMode
@@ -125,7 +133,7 @@ public static class AsvDronesMixin
                 FlightModePageViewModel.PageId
             );
             builder.Shell.Pages.Home.UseExtension<HomePageFlightModeExtension>();
-
+            
             // Anchors
             builder.Extensions.Register<IFlightModePage, FlightModeAnchorsExtension>();
 
