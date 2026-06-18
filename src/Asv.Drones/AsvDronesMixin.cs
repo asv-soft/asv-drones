@@ -121,11 +121,13 @@ public static class AsvDronesMixin
 
         public Builder UsePlaningPage()
         {
-            builder.Shell.Pages.Register<PlaningPageViewModel, PlaningPageView>(PlaningPageViewModel.PageId);
+            builder.Shell.Pages.Register<PlaningPageViewModel, PlaningPageView>(
+                PlaningPageViewModel.PageId
+            );
             builder.Shell.Pages.Home.UseExtension<HomePagePlaningExtension>();
             return this;
         }
-        
+
         public Builder UseExtendableFlightMode()
         {
             // FlightMode
@@ -133,7 +135,7 @@ public static class AsvDronesMixin
                 FlightModePageViewModel.PageId
             );
             builder.Shell.Pages.Home.UseExtension<HomePageFlightModeExtension>();
-            
+
             // Anchors
             builder.Extensions.Register<IFlightModePage, FlightModeAnchorsExtension>();
 
@@ -280,6 +282,18 @@ public static class AsvDronesMixin
             builder.Extensions.Register<IDroneFlightWidget, GotoAction<IDroneFlightWidget>>();
             builder.Extensions.Register<IDroneFlightWidget, RoiAction<IDroneFlightWidget>>();
             builder.Extensions.Register<IDroneFlightWidget, FindDroneAction<IDroneFlightWidget>>();
+            builder.Extensions.Register<
+                IDroneFlightWidget,
+                ChangeMissionVisibilityAction<IDroneFlightWidget>
+            >();
+            builder.Extensions.Register<
+                IDroneFlightWidget,
+                ChangeAnchorsVisibilityAction<IDroneFlightWidget>
+            >();
+            builder.Extensions.Register<
+                IDroneFlightWidget,
+                ChangePathVisibilityAction<IDroneFlightWidget>
+            >();
 
             builder.Extensions.Register<IPlaneWidget, AutoModeAction<IPlaneWidget>>();
             builder.Extensions.Register<IPlaneWidget, RefreshMissionAction<IPlaneWidget>>();
@@ -290,6 +304,11 @@ public static class AsvDronesMixin
             builder.Extensions.Register<IPlaneWidget, GotoAction<IPlaneWidget>>();
             builder.Extensions.Register<IPlaneWidget, RoiAction<IPlaneWidget>>();
             builder.Extensions.Register<IPlaneWidget, FindDroneAction<IPlaneWidget>>();
+            builder.Extensions.Register<
+                IPlaneWidget,
+                ChangeMissionVisibilityAction<IPlaneWidget>
+            >();
+            builder.Extensions.Register<IPlaneWidget, ChangePathVisibilityAction<IPlaneWidget>>();
 
             builder.ViewLocator.RegisterViewFor<
                 SetAltitudeDialogViewModel,

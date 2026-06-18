@@ -5,19 +5,25 @@ using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
 using Asv.Modeling;
+using Avalonia.Threading;
 using R3;
 
 namespace Asv.Drones;
 
-public class FlightModeAnchorsExtension(IDeviceManager conn, IExtensionService ext)
+public class FlightModeAnchorsExtension(IDeviceManager manager, IExtensionService ext)
     : IExtensionFor<IFlightModePage>
 {
     public void Extend(IFlightModePage context, CompositeDisposable contextDispose)
     {
-        conn.Explorer.InitializedDevices.PopulateTo(
+        manager
+            .Explorer.InitializedDevices.PopulateTo(
                 context.Map.Anchors,
                 TryCreateAnchor,
-                RemoveAnchor
+                RemoveAnchor,
+                synchronizationContext: new AvaloniaSynchronizationContext(
+                    Dispatcher.UIThread,
+                    DispatcherPriority.Default
+                )
             )
             .DisposeItWith(contextDispose);
     }
@@ -25,11 +31,11 @@ public class FlightModeAnchorsExtension(IDeviceManager conn, IExtensionService e
     private UavAnchor? TryCreateAnchor(IClientDevice device)
     {
         var pos = device.GetMicroservice<IPositionClientEx>();
-        return pos != null ? new UavAnchor(device.Id, conn, device, ext, pos) : null;
+        return pos != null ? new UavAnchor(manager, device, ext) : null;
     }
 
     private static bool RemoveAnchor(IClientDevice dev, UavAnchor anchor)
     {
-        return anchor.DeviceId == dev.Id;
+        return anchor.Device.Id == dev.Id;
     }
 }
