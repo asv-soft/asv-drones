@@ -584,6 +584,12 @@
     <data name="VelocityUavIndicatorViewModel_Velocity_Short" xml:space="preserve">
         <value>GS</value>
     </data>
+    <data name="VelocityUavIndicatorViewModel_Vertical_Short" xml:space="preserve">
+        <value>VS</value>
+    </data>
+    <data name="UavRttItem_TimeInAir" xml:space="preserve">
+        <value>Time in air</value>
+    </data>
     <data name="AngleUavRttIndicatorViewModel_Angle" xml:space="preserve">
         <value>Angle</value>
     </data>

@@ -42,7 +42,7 @@ public static class AsvDronesMixin
         {
             builder.ViewLocator.RegisterViewFor<
                 VelocityTelemetryItemViewModel,
-                SplitDigitRttBoxView
+                TwoColumnRttBoxView
             >();
             builder.ViewLocator.RegisterViewFor<
                 BatteryTelemetryItemViewModel,
@@ -121,11 +121,13 @@ public static class AsvDronesMixin
 
         public Builder UsePlaningPage()
         {
-            builder.Shell.Pages.Register<PlaningPageViewModel, PlaningPageView>(PlaningPageViewModel.PageId);
+            builder.Shell.Pages.Register<PlaningPageViewModel, PlaningPageView>(
+                PlaningPageViewModel.PageId
+            );
             builder.Shell.Pages.Home.UseExtension<HomePagePlaningExtension>();
             return this;
         }
-        
+
         public Builder UseExtendableFlightMode()
         {
             // FlightMode
@@ -133,7 +135,7 @@ public static class AsvDronesMixin
                 FlightModePageViewModel.PageId
             );
             builder.Shell.Pages.Home.UseExtension<HomePageFlightModeExtension>();
-            
+
             // Anchors
             builder.Extensions.Register<IFlightModePage, FlightModeAnchorsExtension>();
 
@@ -173,9 +175,11 @@ public static class AsvDronesMixin
                 ConfigureTelemetryDialogViewModel,
                 ConfigureTelemetryDialogView
             >();
+
+            // TODO: remove it
             builder.ViewLocator.RegisterViewFor<
                 CurrentFlightModeTelemetryItemViewModel,
-                SingleRttBoxView
+                KeyValueRttBoxView
             >();
             builder.ViewLocator.RegisterViewFor<
                 AzimuthTelemetryItemViewModel,
@@ -200,7 +204,7 @@ public static class AsvDronesMixin
             >();
             builder.ViewLocator.RegisterViewFor<
                 VelocityTelemetryItemViewModel,
-                SplitDigitRttBoxView
+                TwoColumnRttBoxView
             >();
             builder.ViewLocator.RegisterViewFor<
                 LinkQualityTelemetryItemViewModel,
@@ -280,16 +284,18 @@ public static class AsvDronesMixin
             builder.Extensions.Register<IDroneFlightWidget, GotoAction<IDroneFlightWidget>>();
             builder.Extensions.Register<IDroneFlightWidget, RoiAction<IDroneFlightWidget>>();
             builder.Extensions.Register<IDroneFlightWidget, FindDroneAction<IDroneFlightWidget>>();
-
-            builder.Extensions.Register<IPlaneWidget, AutoModeAction<IPlaneWidget>>();
-            builder.Extensions.Register<IPlaneWidget, RefreshMissionAction<IPlaneWidget>>();
-            builder.Extensions.Register<IPlaneWidget, StartMissionAction<IPlaneWidget>>();
-            builder.Extensions.Register<IPlaneWidget, GuidedAction<IPlaneWidget>>();
-            builder.Extensions.Register<IPlaneWidget, TakeOffAction<IPlaneWidget>>();
-            builder.Extensions.Register<IPlaneWidget, RtlAction<IPlaneWidget>>();
-            builder.Extensions.Register<IPlaneWidget, GotoAction<IPlaneWidget>>();
-            builder.Extensions.Register<IPlaneWidget, RoiAction<IPlaneWidget>>();
-            builder.Extensions.Register<IPlaneWidget, FindDroneAction<IPlaneWidget>>();
+            builder.Extensions.Register<
+                IDroneFlightWidget,
+                ChangeMissionVisibilityAction<IDroneFlightWidget>
+            >();
+            builder.Extensions.Register<
+                IDroneFlightWidget,
+                ChangeAnchorsVisibilityAction<IDroneFlightWidget>
+            >();
+            builder.Extensions.Register<
+                IDroneFlightWidget,
+                ChangePathVisibilityAction<IDroneFlightWidget>
+            >();
 
             builder.ViewLocator.RegisterViewFor<
                 SetAltitudeDialogViewModel,
@@ -299,23 +305,6 @@ public static class AsvDronesMixin
                 SetAltitudeDialogViewModel,
                 SetAltitudeDialogView
             >();
-
-            // Test plugin widget
-            builder.ViewLocator.RegisterViewFor<PluginFlightItemViewModel, PluginFlightItemView>();
-            builder.Extensions.Register<IFlightModePage, PluginFlightItemWidgetExtension>();
-
-            // Test plane widget
-            builder.Services.AddSingleton<
-                IClientDeviceWidgetCreationHandler,
-                PlaneWidgetCreationHandler
-            >();
-            builder.ViewLocator.RegisterViewFor<PlaneWidgetViewModel, FlightWidgetView>();
-
-            // Test plane section
-            builder.Extensions.Register<IPlaneWidget, PlaneSectionExtension>();
-            builder.ViewLocator.RegisterViewFor<PlaneSectionViewModel, PlaneSectionView>();
-
-            builder.Extensions.Register<IPlaneWidget, PlaneFlightWidgetTelemetrySectionExtension>();
 
             return this;
         }

@@ -1,13 +1,16 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:geoMap="clr-namespace:Asv.Avalonia.GeoMap;assembly=Asv.Avalonia.GeoMap"
-             xmlns:avalonia="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
-             xmlns:drones="clr-namespace:Asv.Drones"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Asv.Drones.PlaningPageView"
-             x:DataType="drones:PlaningPageViewModel"
+﻿<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:geoMap="clr-namespace:Asv.Avalonia.GeoMap;assembly=Asv.Avalonia.GeoMap"
+    xmlns:avalonia="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
+    xmlns:drones="clr-namespace:Asv.Drones"
+    mc:Ignorable="d"
+    d:DesignWidth="800"
+    d:DesignHeight="450"
+    x:Class="Asv.Drones.PlaningPageView"
+    x:DataType="drones:PlaningPageViewModel"
 >
     <Design.DataContext>
         <drones:PlaningPageViewModel />
@@ -17,15 +20,12 @@
         <ItemsControl ItemsSource="{Binding WidgetsView}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <avalonia:WorkspacePanel/>
+                    <avalonia:WorkspacePanel />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <avalonia:WorkspaceItem
-                        Content="{Binding}" 
-                        Margin="0"
-                    />
+                    <avalonia:WorkspaceItem Content="{Binding}" Margin="0" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

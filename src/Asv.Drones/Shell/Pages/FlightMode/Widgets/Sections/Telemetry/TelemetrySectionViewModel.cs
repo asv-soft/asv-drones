@@ -44,10 +44,7 @@ public class TelemetrySectionViewModel : ViewModel, ITelemetrySection
                     DesignTime.LoggerFactory
                 ),
                 new AltitudeTelemetryItemFactory(DeviceTelemetryDesignPreview.UnitService),
-                new VelocityTelemetryItemFactory(
-                    DeviceTelemetryDesignPreview.UnitService,
-                    DesignTime.LoggerFactory
-                ),
+                new VelocityTelemetryItemFactory(DeviceTelemetryDesignPreview.UnitService),
                 new AngleTelemetryItemFactory(DeviceTelemetryDesignPreview.UnitService),
             ]
         )

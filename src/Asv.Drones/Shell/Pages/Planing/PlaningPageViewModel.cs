@@ -12,17 +12,24 @@ public class PlaningPageViewModel : PageViewModel<IPlaningPage>, IPlaningPage
     public const string PageId = "planing";
 
     public PlaningPageViewModel()
-        : this(NullPageContext.Instance, DesignTime.LoggerFactory, DesignTime.DialogService, DesignTime.ExtensionService, NullMapService.Instance)
+        : this(
+            NullPageContext.Instance,
+            DesignTime.LoggerFactory,
+            DesignTime.DialogService,
+            DesignTime.ExtensionService,
+            NullMapService.Instance
+        )
     {
         DesignTime.ThrowIfNotDesignMode();
     }
-    
+
     public PlaningPageViewModel(
-        IPageContext context, 
-        ILoggerFactory loggerFactory, 
-        IDialogService dialogService, 
+        IPageContext context,
+        ILoggerFactory loggerFactory,
+        IDialogService dialogService,
         IExtensionService ext,
-        IMapService mapService)
+        IMapService mapService
+    )
         : base(PageId, context, loggerFactory, dialogService, ext)
     {
         Widgets = [];
