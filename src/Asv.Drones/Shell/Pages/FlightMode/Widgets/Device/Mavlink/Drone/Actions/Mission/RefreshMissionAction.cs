@@ -11,9 +11,6 @@ namespace Asv.Drones;
 public sealed class RefreshMissionAction<TWidget>() : FlightWidgetAction<TWidget>("refresh-mission")
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
-    public const MaterialIconKind ActionIcon = MaterialIconKind.Refresh;
-    public static string ActionDescription => RS.RefreshMissionAction_TryCreateAction_Description;
-
     protected override IMenuItem? TryCreateAction(
         TWidget widget,
         CompositeDisposable contextDispose
@@ -25,12 +22,10 @@ public sealed class RefreshMissionAction<TWidget>() : FlightWidgetAction<TWidget
             return null;
         }
 
-        var item = new MenuItem(ActionId, RS.RefreshMissionAction_TryCreateAction_Header)
-        {
-            Icon = ActionIcon,
-            Description = ActionDescription,
-            Order = 100,
-        };
+        var item = CreateMenuItem(RS.RefreshMissionAction_TryCreateAction_Header);
+        item.Icon = MaterialIconKind.Refresh;
+        item.Description = RS.RefreshMissionAction_TryCreateAction_Description;
+        item.Order = 100;
         item.Command = CreateCommand(item, ct => new ValueTask(mission.Download(ct, _ => { })))
             .DisposeItWith(contextDispose);
         return item;

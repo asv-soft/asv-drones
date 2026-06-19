@@ -13,9 +13,6 @@ public sealed class GotoAction<TWidget>(IDialogService dialogService)
     : FlightWidgetAction<TWidget>("goto")
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
-    public const MaterialIconKind ActionIcon = MaterialIconKind.Target;
-    public static string ActionDescription => RS.GotoAction_TryCreateAction_Description;
-
     protected override IMenuItem? TryCreateAction(
         TWidget widget,
         CompositeDisposable contextDispose
@@ -29,12 +26,10 @@ public sealed class GotoAction<TWidget>(IDialogService dialogService)
 
         var position = widget.Device.GetMicroservice<IPositionClientEx>();
 
-        var item = new MenuItem(ActionId, RS.GotoAction_TryCreateAction_Header)
-        {
-            Icon = ActionIcon,
-            Description = ActionDescription,
-            Order = 70,
-        };
+        var item = CreateMenuItem(RS.GotoAction_TryCreateAction_Header);
+        item.Icon = MaterialIconKind.Target;
+        item.Description = RS.GotoAction_TryCreateAction_Description;
+        item.Order = 70;
         item.Command = CreateCommand(
                 item,
                 async ct =>

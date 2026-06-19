@@ -3,6 +3,7 @@ using Asv.Avalonia;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
+using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
 
@@ -17,12 +18,11 @@ public sealed class HeadingTelemetryItemFactory(
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public string ItemId => Id;
-    public string DisplayName => RS.HeadingUavIndicatorViewModel_Heading;
 
     public bool CanCreate(in IClientDevice device) =>
         device.GetMicroservice<IPositionClientEx>() is not null;
 
-    public ITelemetryItem Create(in IClientDevice device)
+    public IRttBoxViewModel Create(in IClientDevice device)
     {
         ArgumentNullException.ThrowIfNull(device);
 
@@ -31,25 +31,32 @@ public sealed class HeadingTelemetryItemFactory(
             .Yaw.Select(Math.Truncate)
             .Prepend(double.NaN);
 
-        return new HeadingTelemetryItemViewModel(
-            Id,
-            loggerFactory,
-            unitService,
-            headingObservable,
-            DefaultStatusColor
-        );
+        return InternalCreate(headingObservable);
     }
 
-    public ITelemetryItem CreatePreview()
+    public IRttBoxViewModel CreatePreview()
     {
         var headingObservable = Observable.Return(29d).Concat(Observable.Never<double>());
 
-        return new HeadingTelemetryItemViewModel(
+        return InternalCreate(headingObservable);
+    }
+
+    private IRttBoxViewModel InternalCreate(Observable<double> observable)
+    {
+        return new SplitDigitRttBoxViewModel(
             Id,
             loggerFactory,
             unitService,
-            headingObservable,
-            DefaultStatusColor
-        );
+            AngleUnit.Id,
+            observable,
+            null
+        )
+        {
+            Header = RS.HeadingUavIndicatorViewModel_Heading,
+            ShortHeader = RS.HeadingUavIndicatorViewModel_Heading_Short,
+            Icon = MaterialIconKind.SunAzimuth,
+            Status = DefaultStatusColor,
+            FormatString = "F0",
+        };
     }
 }

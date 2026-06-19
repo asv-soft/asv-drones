@@ -13,9 +13,6 @@ public sealed class TakeOffAction<TWidget>(IUnitService unitService, ILoggerFact
     : FlightWidgetAction<TWidget>("take-off")
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
-    public const MaterialIconKind ActionIcon = MaterialIconKind.AeroplaneTakeoff;
-    public static string ActionDescription => RS.TakeOffAction_TryCreateAction_Description;
-
     protected override IMenuItem? TryCreateAction(
         TWidget widget,
         CompositeDisposable contextDispose
@@ -27,12 +24,10 @@ public sealed class TakeOffAction<TWidget>(IUnitService unitService, ILoggerFact
             return null;
         }
 
-        var item = new MenuItem(ActionId, RS.TakeOffAction_TryCreateAction_Header)
-        {
-            Icon = ActionIcon,
-            Description = ActionDescription,
-            Order = 40,
-        };
+        var item = CreateMenuItem(RS.TakeOffAction_TryCreateAction_Header);
+        item.Icon = MaterialIconKind.AeroplaneTakeoff;
+        item.Description = RS.TakeOffAction_TryCreateAction_Description;
+        item.Order = 40;
         item.Command = CreateCommand(
                 item,
                 async ct =>

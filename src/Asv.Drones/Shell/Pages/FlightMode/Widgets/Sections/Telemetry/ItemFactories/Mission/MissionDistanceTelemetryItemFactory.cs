@@ -5,6 +5,7 @@ using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
 using Asv.Mavlink.Common;
+using Material.Icons;
 using Microsoft.Extensions.Logging;
 using ObservableCollections;
 using R3;
@@ -19,14 +20,13 @@ public sealed class MissionDistanceTelemetryItemFactory(
     public const string Id = "mission-distance";
 
     public string ItemId => Id;
-    public string DisplayName => RS.MissionDistanceTelemetry_DisplayName;
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public bool CanCreate(in IClientDevice device) =>
         device.GetMicroservice<IMissionClientEx>() is not null
         && device.GetMicroservice<IPositionClientEx>() is not null;
 
-    public ITelemetryItem Create(in IClientDevice device)
+    public IRttBoxViewModel Create(in IClientDevice device)
     {
         ArgumentNullException.ThrowIfNull(device);
 
@@ -48,7 +48,7 @@ public sealed class MissionDistanceTelemetryItemFactory(
         return CreateItem(totalDistance, missionDistance);
     }
 
-    public ITelemetryItem CreatePreview()
+    public IRttBoxViewModel CreatePreview()
     {
         return CreateItem(
             Observable.Return(1100d).Concat(Observable.Never<double>()),
@@ -56,7 +56,7 @@ public sealed class MissionDistanceTelemetryItemFactory(
         );
     }
 
-    private MissionDistanceTelemetryItemViewModel CreateItem(
+    private IRttBoxViewModel CreateItem(
         Observable<double> totalDistance,
         Observable<double> missionDistance
     )
@@ -67,12 +67,30 @@ public sealed class MissionDistanceTelemetryItemFactory(
             (total, mission, unit) => new MissionDistanceRttBoxData(total, mission, unit)
         );
 
-        return new MissionDistanceTelemetryItemViewModel(
+        return new KeyValueRttBoxViewModel<MissionDistanceRttBoxData>(
             Id,
             loggerFactory,
             distanceData,
-            DefaultStatusColor
-        );
+            null
+        )
+        {
+            Header = RS.MissionDistanceTelemetry_Header,
+            Icon = MaterialIconKind.LocationDistance,
+            UpdateAction = (model, changes) =>
+            {
+                model[
+                    0,
+                    RS.MissionDistanceTelemetry_DisplayName,
+                    changes.DistanceUnit.Symbol
+                ].ValueString = changes.DistanceUnit.PrintFromSi(changes.TotalDistance, "F2");
+                model[
+                    1,
+                    RS.MissionDistanceTelemetry_MissionDistance,
+                    changes.DistanceUnit.Symbol
+                ].ValueString = changes.DistanceUnit.PrintFromSi(changes.MissionDistance, "F2");
+            },
+            Status = DefaultStatusColor,
+        };
     }
 
     private static double CalculateTotalDistance(
@@ -99,3 +117,11 @@ public sealed class MissionDistanceTelemetryItemFactory(
             + GeoMath.Distance(stop.Location.Value, home);
     }
 }
+
+#pragma warning disable SA1313
+public record MissionDistanceRttBoxData(
+    double TotalDistance,
+    double MissionDistance,
+    IUnitItem DistanceUnit
+);
+#pragma warning restore SA1313

@@ -11,9 +11,6 @@ namespace Asv.Drones;
 public sealed class GuidedAction<TWidget>() : FlightWidgetAction<TWidget>("guided")
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
-    public const MaterialIconKind ActionIcon = MaterialIconKind.Controller;
-    public static string ActionDescription => RS.GuidedAction_TryCreateAction_Description;
-
     protected override IMenuItem? TryCreateAction(
         TWidget widget,
         CompositeDisposable contextDispose
@@ -25,12 +22,10 @@ public sealed class GuidedAction<TWidget>() : FlightWidgetAction<TWidget>("guide
             return null;
         }
 
-        var item = new MenuItem(ActionId, RS.GuidedAction_TryCreateAction_Header)
-        {
-            Icon = ActionIcon,
-            Description = ActionDescription,
-            Order = 30,
-        };
+        var item = CreateMenuItem(RS.GuidedAction_TryCreateAction_Header);
+        item.Icon = MaterialIconKind.Controller;
+        item.Description = RS.GuidedAction_TryCreateAction_Description;
+        item.Order = 30;
         item.Command = CreateCommand(item, ct => new ValueTask(control.SetGuidedMode(ct)))
             .DisposeItWith(contextDispose);
         return item;

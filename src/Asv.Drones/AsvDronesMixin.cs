@@ -40,14 +40,6 @@ public static class AsvDronesMixin
 
         public Builder UseControls()
         {
-            builder.ViewLocator.RegisterViewFor<
-                VelocityTelemetryItemViewModel,
-                TwoColumnRttBoxView
-            >();
-            builder.ViewLocator.RegisterViewFor<
-                BatteryTelemetryItemViewModel,
-                KeyValueRttBoxView
-            >();
             return this;
         }
 
@@ -174,58 +166,6 @@ public static class AsvDronesMixin
             builder.ViewLocator.RegisterViewFor<
                 ConfigureTelemetryDialogViewModel,
                 ConfigureTelemetryDialogView
-            >();
-
-            // TODO: remove it
-            builder.ViewLocator.RegisterViewFor<
-                CurrentFlightModeTelemetryItemViewModel,
-                KeyValueRttBoxView
-            >();
-            builder.ViewLocator.RegisterViewFor<
-                AzimuthTelemetryItemViewModel,
-                SplitDigitRttBoxView
-            >();
-            builder.ViewLocator.RegisterViewFor<
-                AltitudeTelemetryItemViewModel,
-                TwoColumnRttBoxView
-            >();
-            builder.ViewLocator.RegisterViewFor<AngleTelemetryItemViewModel, TwoColumnRttBoxView>();
-            builder.ViewLocator.RegisterViewFor<
-                BatteryTelemetryItemViewModel,
-                KeyValueRttBoxView
-            >();
-            builder.ViewLocator.RegisterViewFor<
-                HeadingTelemetryItemViewModel,
-                SplitDigitRttBoxView
-            >();
-            builder.ViewLocator.RegisterViewFor<
-                HomeAzimuthTelemetryItemViewModel,
-                SplitDigitRttBoxView
-            >();
-            builder.ViewLocator.RegisterViewFor<
-                VelocityTelemetryItemViewModel,
-                TwoColumnRttBoxView
-            >();
-            builder.ViewLocator.RegisterViewFor<
-                LinkQualityTelemetryItemViewModel,
-                SplitDigitRttBoxView
-            >();
-            builder.ViewLocator.RegisterViewFor<GnssTelemetryItemViewModel, KeyValueRttBoxView>();
-            builder.ViewLocator.RegisterViewFor<
-                DistanceTelemetryItemViewModel,
-                SplitDigitRttBoxView
-            >();
-            builder.ViewLocator.RegisterViewFor<
-                MissionDistanceTelemetryItemViewModel,
-                KeyValueRttBoxView
-            >();
-            builder.ViewLocator.RegisterViewFor<
-                MissionProgressTelemetryItemViewModel,
-                KeyValueRttBoxView
-            >();
-            builder.ViewLocator.RegisterViewFor<
-                MissionTargetTelemetryItemViewModel,
-                KeyValueRttBoxView
             >();
 
             builder.Services.AddSingleton<ITelemetryItemFactory, AltitudeTelemetryItemFactory>();

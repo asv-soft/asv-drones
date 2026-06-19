@@ -11,9 +11,6 @@ namespace Asv.Drones;
 public sealed class AutoModeAction<TWidget>() : FlightWidgetAction<TWidget>("auto-mode")
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
-    public const MaterialIconKind ActionIcon = MaterialIconKind.Automatic;
-    public static string ActionDescription => RS.AutoModeAction_TryCreateAction_Description;
-
     protected override IMenuItem? TryCreateAction(
         TWidget widget,
         CompositeDisposable contextDispose
@@ -25,12 +22,10 @@ public sealed class AutoModeAction<TWidget>() : FlightWidgetAction<TWidget>("aut
             return null;
         }
 
-        var item = new MenuItem(ActionId, RS.AutoModeAction_TryCreateAction_Header)
-        {
-            Icon = ActionIcon,
-            Description = ActionDescription,
-            Order = 10,
-        };
+        var item = CreateMenuItem(RS.AutoModeAction_TryCreateAction_Header);
+        item.Icon = MaterialIconKind.Automatic;
+        item.Description = RS.AutoModeAction_TryCreateAction_Description;
+        item.Order = 10;
         item.Command = CreateCommand(item, ct => new ValueTask(control.SetAutoMode(ct)))
             .DisposeItWith(contextDispose);
         return item;

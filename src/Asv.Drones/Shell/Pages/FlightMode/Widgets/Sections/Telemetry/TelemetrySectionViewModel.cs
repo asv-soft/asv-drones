@@ -2,7 +2,7 @@ using System.Windows.Input;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Drones.Api;
-using Asv.Mavlink;
+using Asv.IO;
 using Asv.Modeling;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -24,7 +24,7 @@ public class TelemetrySectionViewModel : ViewModel, ITelemetrySection
     private readonly IUndoChangeSink<ValueUndoChange<string[]>> _setItemsChangeSink;
 
     private readonly IReadOnlyList<string> _defaultTelemetryItemIds;
-    private readonly MavlinkClientDevice? _device;
+    private readonly IClientDevice? _device;
 
     public TelemetrySectionViewModel()
         : this(
@@ -114,7 +114,7 @@ public class TelemetrySectionViewModel : ViewModel, ITelemetrySection
         Layout.LoadWhenRootAttached(RootTracking).AddTo(ref DisposableBag);
     }
 
-    public ObservableList<ITelemetryItem> Items { get; }
+    public ObservableList<IRttBoxViewModel> Items { get; }
     public INotifyCollectionChangedSynchronizedViewList<IViewModel> DisplayItemsView { get; }
     public BindableReactiveProperty<bool> IsEditMode { get; }
     public ICommand ToggleEdit { get; }
@@ -124,7 +124,7 @@ public class TelemetrySectionViewModel : ViewModel, ITelemetrySection
 
     public bool TryAddItem(string itemId)
     {
-        if (string.IsNullOrWhiteSpace(itemId) || Items.Any(i => i.ItemId == itemId))
+        if (string.IsNullOrWhiteSpace(itemId) || Items.Any(i => i.Id.ToString() == itemId))
         {
             return false;
         }
@@ -161,7 +161,7 @@ public class TelemetrySectionViewModel : ViewModel, ITelemetrySection
         return TrySetItems(_defaultTelemetryItemIds);
     }
 
-    private ITelemetryItem? TryCreateItem(string itemId)
+    private IRttBoxViewModel? TryCreateItem(string itemId)
     {
         if (string.IsNullOrWhiteSpace(itemId))
         {
@@ -205,7 +205,7 @@ public class TelemetrySectionViewModel : ViewModel, ITelemetrySection
     private bool IsAddItemAtTail =>
         _displayItems.Count > 0 && ReferenceEquals(_displayItems[^1], _addItem);
 
-    private string[] ItemIds => Items.Select(i => i.ItemId).ToArray();
+    private string[] ItemIds => Items.Select(i => i.Id.ToString()).ToArray();
 
     private bool TryApplyItems(IReadOnlyList<string> itemIds)
     {
@@ -225,7 +225,7 @@ public class TelemetrySectionViewModel : ViewModel, ITelemetrySection
             var existingIndex = -1;
             for (var j = targetIndex; j < Items.Count; j++)
             {
-                if (Items[j].ItemId == targetId)
+                if (Items[j].Id.ToString() == targetId)
                 {
                     existingIndex = j;
                     break;
@@ -287,7 +287,7 @@ public class TelemetrySectionViewModel : ViewModel, ITelemetrySection
             .ObserveOnUIThreadDispatcher()
             .Subscribe(e =>
             {
-                if (_displayItemsById.Remove(e.Value.ItemId, out var wrapper))
+                if (_displayItemsById.Remove(e.Value.Id.ToString(), out var wrapper))
                 {
                     _displayItems.Remove(wrapper);
                     wrapper.Dispose();
@@ -301,7 +301,7 @@ public class TelemetrySectionViewModel : ViewModel, ITelemetrySection
             .ObserveOnUIThreadDispatcher()
             .Subscribe(e =>
             {
-                if (!_displayItemsById.TryGetValue(e.Value.ItemId, out var wrapper))
+                if (!_displayItemsById.TryGetValue(e.Value.Id.ToString(), out var wrapper))
                 {
                     return;
                 }
@@ -329,7 +329,7 @@ public class TelemetrySectionViewModel : ViewModel, ITelemetrySection
     private void UpdateAddItemPresence()
     {
         var canAddMore = _factories.Values.Any(f =>
-            (_device is null || f.CanCreate(_device)) && Items.All(i => i.ItemId != f.ItemId)
+            (_device is null || f.CanCreate(_device)) && Items.All(i => i.Id.ToString() != f.ItemId)
         );
         var shouldBePresent = canAddMore && (IsEditMode.Value || Items.Count == 0);
 
@@ -345,7 +345,7 @@ public class TelemetrySectionViewModel : ViewModel, ITelemetrySection
 
     private async ValueTask ShowConfigureDialogAsync(CancellationToken ct)
     {
-        var alreadyAdded = Items.Select(i => i.ItemId).ToHashSet();
+        var alreadyAdded = Items.Select(i => i.Id.ToString()).ToHashSet();
         var availableFactories = _factories
             .Values.Where(f =>
                 (_device is null || f.CanCreate(_device)) && !alreadyAdded.Contains(f.ItemId)
@@ -418,4 +418,9 @@ public class TelemetrySectionViewModel : ViewModel, ITelemetrySection
     }
 
     public override IEnumerable<IViewModel> GetChildren() => _displayItems;
+}
+
+public sealed class TelemetrySectionConfig
+{
+    public string[]? ItemIds { get; set; }
 }

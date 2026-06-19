@@ -1,3 +1,4 @@
+using Asv.Avalonia;
 using Asv.IO;
 
 namespace Asv.Drones.Api;
@@ -5,14 +6,13 @@ namespace Asv.Drones.Api;
 public interface ITelemetryItemFactory
 {
     string ItemId { get; }
-    string DisplayName { get; }
 
     bool CanCreate(in IClientDevice device);
 
-    ITelemetryItem Create(in IClientDevice device);
-    ITelemetryItem CreatePreview();
+    IRttBoxViewModel Create(in IClientDevice device);
+    IRttBoxViewModel CreatePreview();
 
-    ITelemetryItem? TryCreate(in IClientDevice device)
+    IRttBoxViewModel? TryCreate(in IClientDevice device)
     {
         if (!CanCreate(device))
         {

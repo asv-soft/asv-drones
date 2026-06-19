@@ -11,9 +11,6 @@ namespace Asv.Drones;
 public sealed class FindDroneAction<TWidget>() : FlightWidgetAction<TWidget>("find-drone")
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
-    public const MaterialIconKind ActionIcon = MaterialIconKind.Crosshairs;
-    public static string ActionDescription => RS.FindDroneAction_TryCreateAction_Description;
-
     protected override IMenuItem? TryCreateAction(
         TWidget widget,
         CompositeDisposable contextDispose
@@ -26,12 +23,10 @@ public sealed class FindDroneAction<TWidget>() : FlightWidgetAction<TWidget>("fi
             return null;
         }
 
-        var item = new MenuItem(ActionId, RS.FindDroneAction_TryCreateAction_Header)
-        {
-            Icon = ActionIcon,
-            Description = ActionDescription,
-            Order = 90,
-        };
+        var item = CreateMenuItem(RS.FindDroneAction_TryCreateAction_Header);
+        item.Icon = MaterialIconKind.Crosshairs;
+        item.Description = RS.FindDroneAction_TryCreateAction_Description;
+        item.Order = 90;
         item.Command = CreateCommand(
                 item,
                 _ =>

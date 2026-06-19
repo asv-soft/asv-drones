@@ -11,9 +11,6 @@ namespace Asv.Drones;
 public sealed class RtlAction<TWidget>() : FlightWidgetAction<TWidget>("rtl")
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
-    public const MaterialIconKind ActionIcon = MaterialIconKind.Home;
-    public static string ActionDescription => RS.RtlAction_TryCreateAction_Description;
-
     protected override IMenuItem? TryCreateAction(
         TWidget widget,
         CompositeDisposable contextDispose
@@ -25,12 +22,10 @@ public sealed class RtlAction<TWidget>() : FlightWidgetAction<TWidget>("rtl")
             return null;
         }
 
-        var item = new MenuItem(ActionId, RS.RtlAction_TryCreateAction_Header)
-        {
-            Icon = ActionIcon,
-            Description = ActionDescription,
-            Order = 60,
-        };
+        var item = CreateMenuItem(RS.RtlAction_TryCreateAction_Header);
+        item.Icon = MaterialIconKind.Home;
+        item.Description = RS.RtlAction_TryCreateAction_Description;
+        item.Order = 60;
         item.Command = CreateCommand(item, ct => new ValueTask(control.DoRtl(ct)))
             .DisposeItWith(contextDispose);
         return item;

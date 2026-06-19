@@ -11,9 +11,6 @@ namespace Asv.Drones;
 public sealed class LandAction<TWidget>() : FlightWidgetAction<TWidget>("land")
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
-    public const MaterialIconKind ActionIcon = MaterialIconKind.FlightLand;
-    public static string ActionDescription => RS.LandAction_TryCreateAction_Description;
-
     protected override IMenuItem? TryCreateAction(
         TWidget widget,
         CompositeDisposable contextDispose
@@ -26,12 +23,10 @@ public sealed class LandAction<TWidget>() : FlightWidgetAction<TWidget>("land")
             return null;
         }
 
-        var item = new MenuItem(ActionId, RS.LandAction_TryCreateAction_Header)
-        {
-            Icon = ActionIcon,
-            Description = ActionDescription,
-            Order = 50,
-        };
+        var item = CreateMenuItem(RS.LandAction_TryCreateAction_Header);
+        item.Icon = MaterialIconKind.FlightLand;
+        item.Description = RS.LandAction_TryCreateAction_Description;
+        item.Order = 50;
         item.Command = CreateCommand(item, ct => new ValueTask(control.DoLand(ct)))
             .DisposeItWith(contextDispose);
         return item;
