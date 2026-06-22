@@ -32,6 +32,7 @@
       <Folder Include="Core\Services\Devices\" />
       <Folder Include="Core\Services\MavParams\Factory\" />
       <Folder Include="Shell\" />
+      <Folder Include="Shell\Pages\FlightMode\Anchors\" />
     </ItemGroup>
 
     <ItemGroup>

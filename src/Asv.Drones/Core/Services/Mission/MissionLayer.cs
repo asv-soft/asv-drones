@@ -50,7 +50,6 @@ public sealed class MissionLayer : DisposableOnce, IMissionLayer
             return new DeviceMissionLayer(
                 mapAnchors,
                 device,
-                mission,
                 deviceManager.GetDeviceColor(device.Id),
                 ext
             );
