@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Common;
@@ -6,7 +5,7 @@ using Asv.IO;
 using Asv.Mavlink;
 using R3;
 
-namespace Asv.Drones;
+namespace Asv.Drones.Api;
 
 public class UavAnchor : DeviceAnchor<UavAnchor>
 {
