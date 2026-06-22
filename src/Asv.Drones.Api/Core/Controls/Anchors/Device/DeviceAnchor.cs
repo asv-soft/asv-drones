@@ -2,13 +2,12 @@
 using Asv.Avalonia.GeoMap;
 using Asv.Avalonia.IO;
 using Asv.Common;
-using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Modeling;
 using Material.Icons;
 using R3;
 
-namespace Asv.Drones;
+namespace Asv.Drones.Api;
 
 public class DeviceAnchor<TContext> : MapAnchor<TContext>, IDeviceAnchor
     where TContext : class, IDeviceAnchor

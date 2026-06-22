@@ -129,7 +129,7 @@ public static class AsvDronesMixin
             builder.Shell.Pages.Home.UseExtension<HomePageFlightModeExtension>();
 
             // Anchors
-            builder.Extensions.Register<IFlightModePage, FlightModeAnchorsExtension>();
+            builder.Extensions.Register<IFlightModePage, FlightModeUavAnchorsExtension>();
 
             // Factory for client device widgets
             builder.Services.AddSingleton<IClientDeviceWidgetFactory, ClientDeviceWidgetFactory>();

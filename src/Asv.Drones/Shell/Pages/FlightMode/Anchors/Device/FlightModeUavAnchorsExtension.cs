@@ -10,7 +10,7 @@ using R3;
 
 namespace Asv.Drones;
 
-public class FlightModeAnchorsExtension(IDeviceManager manager, IExtensionService ext)
+public class FlightModeUavAnchorsExtension(IDeviceManager manager, IExtensionService ext)
     : IExtensionFor<IFlightModePage>
 {
     public void Extend(IFlightModePage context, CompositeDisposable contextDispose)

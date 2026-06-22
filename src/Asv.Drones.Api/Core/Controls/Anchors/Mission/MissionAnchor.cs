@@ -3,14 +3,13 @@ using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
 using Asv.Avalonia.IO;
 using Asv.Common;
-using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
 using Asv.Modeling;
 using Material.Icons;
 using R3;
 
-namespace Asv.Drones;
+namespace Asv.Drones.Api;
 
 public sealed class MissionAnchor : MapAnchor<MissionAnchor>, IMissionAnchor
 {

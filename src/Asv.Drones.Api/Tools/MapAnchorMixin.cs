@@ -2,7 +2,7 @@ using Asv.Avalonia.GeoMap;
 using Asv.Common;
 using R3;
 
-namespace Asv.Drones;
+namespace Asv.Drones.Api;
 
 public static class MapAnchorMixin
 {
