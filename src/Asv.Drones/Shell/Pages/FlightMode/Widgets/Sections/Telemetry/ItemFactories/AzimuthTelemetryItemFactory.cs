@@ -3,6 +3,7 @@ using Asv.Avalonia;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
+using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
 
@@ -17,12 +18,11 @@ public sealed class AzimuthTelemetryItemFactory(
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public string ItemId => Id;
-    public string DisplayName => RS.UavRttItem_Azimuth;
 
     public bool CanCreate(in IClientDevice device) =>
         device.GetMicroservice<IPositionClientEx>() is not null;
 
-    public ITelemetryItem Create(in IClientDevice device)
+    public IRttBoxViewModel Create(in IClientDevice device)
     {
         ArgumentNullException.ThrowIfNull(device);
 
@@ -31,25 +31,31 @@ public sealed class AzimuthTelemetryItemFactory(
             .Yaw.Select(value => Math.Round(value, 2))
             .Prepend(double.NaN);
 
-        return new AzimuthTelemetryItemViewModel(
-            Id,
-            loggerFactory,
-            unitService,
-            azimuthObservable,
-            DefaultStatusColor
-        );
+        return InternalCreate(azimuthObservable);
     }
 
-    public ITelemetryItem CreatePreview()
+    public IRttBoxViewModel CreatePreview()
     {
         var azimuthObservable = Observable.Return(39d).Concat(Observable.Never<double>());
 
-        return new AzimuthTelemetryItemViewModel(
+        return InternalCreate(azimuthObservable);
+    }
+
+    private IRttBoxViewModel InternalCreate(Observable<double> observable)
+    {
+        return new SplitDigitRttBoxViewModel(
             Id,
             loggerFactory,
             unitService,
-            azimuthObservable,
-            DefaultStatusColor
-        );
+            AngleUnit.Id,
+            observable,
+            null
+        )
+        {
+            Header = RS.UavRttItem_Azimuth,
+            Icon = MaterialIconKind.SunAzimuth,
+            Status = DefaultStatusColor,
+            FormatString = "F2",
+        };
     }
 }

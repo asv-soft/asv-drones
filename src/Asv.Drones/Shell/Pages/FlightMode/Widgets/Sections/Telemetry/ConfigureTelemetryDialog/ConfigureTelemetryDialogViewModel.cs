@@ -119,6 +119,6 @@ public sealed class ConfigureTelemetryDialogViewModel : DialogViewModelBase
 public sealed class ConfigureTelemetryItemEntry
 {
     public required string ItemId { get; init; }
-    public required ITelemetryItem Item { get; init; }
+    public required IRttBoxViewModel Item { get; init; }
     public required BindableReactiveProperty<bool> IsSelected { get; init; }
 }

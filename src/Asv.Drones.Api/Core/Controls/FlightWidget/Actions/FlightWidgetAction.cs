@@ -16,14 +16,13 @@ namespace Asv.Drones.Api;
 public abstract class FlightWidgetAction<TWidget> : IExtensionFor<TWidget>
     where TWidget : class, IFlightWidget
 {
-    private const string BaseId = "drone-action.";
+    private const string BaseId = "widget-action.";
+    private readonly string _actionId;
 
     protected FlightWidgetAction(string id)
     {
-        ActionId = BaseId + id;
+        _actionId = BaseId + id;
     }
-
-    protected string ActionId { get; }
 
     public void Extend(TWidget context, CompositeDisposable contextDispose)
     {
@@ -38,6 +37,11 @@ public abstract class FlightWidgetAction<TWidget> : IExtensionFor<TWidget>
         TWidget widget,
         CompositeDisposable contextDispose
     );
+
+    protected MenuItem CreateMenuItem(string header)
+    {
+        return new MenuItem(_actionId, header);
+    }
 
     protected static ReactiveCommand CreateCommand(
         IViewModel owner,

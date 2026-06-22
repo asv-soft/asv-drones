@@ -13,10 +13,10 @@ public sealed class TelemetryDisplayItemViewModel : ViewModel
     public const string BaseId = "telemetry-display-item";
 
     public TelemetryDisplayItemViewModel(
-        ITelemetryItem item,
+        IRttBoxViewModel item,
         IReadOnlyBindableReactiveProperty<bool> isEditMode
     )
-        : base(BaseId, new NavArgs(("id", item.ItemId)))
+        : base(BaseId, new NavArgs(("id", item.Id.ToString())))
     {
         Item = item.SetRoutableParent(this);
         IsEditMode = isEditMode;
@@ -26,8 +26,8 @@ public sealed class TelemetryDisplayItemViewModel : ViewModel
         ).DisposeItWith(Disposable);
     }
 
-    public ITelemetryItem Item { get; }
-    public string ItemId => Item.ItemId;
+    public IRttBoxViewModel Item { get; }
+    public string ItemId => Item.Id.ToString();
     public ICommand RemoveCommand { get; }
     public IReadOnlyBindableReactiveProperty<bool> IsEditMode { get; }
 

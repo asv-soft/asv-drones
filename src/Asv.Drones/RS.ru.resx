@@ -143,7 +143,7 @@
     <data name="MissionProgressTelemetry_DisplayName" xml:space="preserve">
         <value>Прогресс миссии</value>
     </data>
-    <data name="MissionDistanceTelemetryItemViewModel_Header" xml:space="preserve">
+    <data name="MissionDistanceTelemetry_Header" xml:space="preserve">
         <value>Миссия</value>
     </data>
     <data name="MissionProgressView_DownLoadingMission" xml:space="preserve">

@@ -9,6 +9,6 @@ public sealed class TelemetryDisplayItemRemoveRequestedEvent(
     CancellationToken cancel = default
 ) : AsyncRoutedEvent<IViewModel>(source, RoutingStrategy.Bubble)
 {
-    public string ItemId => source.Item.ItemId;
+    public string ItemId => source.Item.Id.ToString();
     public CancellationToken Cancel { get; } = cancel;
 }

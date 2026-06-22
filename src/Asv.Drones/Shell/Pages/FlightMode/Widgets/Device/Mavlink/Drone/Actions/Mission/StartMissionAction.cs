@@ -11,9 +11,6 @@ namespace Asv.Drones;
 public sealed class StartMissionAction<TWidget>() : FlightWidgetAction<TWidget>("start-mission")
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
-    public const MaterialIconKind ActionIcon = MaterialIconKind.MapMarkerPath;
-    public static string ActionDescription => RS.StartMissionAction_TryCreateAction_Description;
-
     protected override IMenuItem? TryCreateAction(
         TWidget widget,
         CompositeDisposable contextDispose
@@ -26,12 +23,10 @@ public sealed class StartMissionAction<TWidget>() : FlightWidgetAction<TWidget>(
             return null;
         }
 
-        var item = new MenuItem(ActionId, RS.StartMissionAction_TryCreateAction_Header)
-        {
-            Icon = ActionIcon,
-            Description = ActionDescription,
-            Order = 110,
-        };
+        var item = CreateMenuItem(RS.StartMissionAction_TryCreateAction_Header);
+        item.Icon = MaterialIconKind.MapMarkerPath;
+        item.Description = RS.StartMissionAction_TryCreateAction_Description;
+        item.Order = 110;
         item.Command = CreateCommand(
                 item,
                 async ct =>

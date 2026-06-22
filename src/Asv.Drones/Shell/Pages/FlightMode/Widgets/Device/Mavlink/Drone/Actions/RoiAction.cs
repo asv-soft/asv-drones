@@ -13,9 +13,6 @@ public sealed class RoiAction<TWidget>(IDialogService dialogService)
     : FlightWidgetAction<TWidget>("roi")
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
-    public const MaterialIconKind ActionIcon = MaterialIconKind.ImageFilterCenterFocus;
-    public static string ActionDescription => RS.RoiAction_TryCreateAction_Description;
-
     protected override IMenuItem? TryCreateAction(
         TWidget widget,
         CompositeDisposable contextDispose
@@ -27,12 +24,10 @@ public sealed class RoiAction<TWidget>(IDialogService dialogService)
             return null;
         }
 
-        var item = new MenuItem(ActionId, RS.RoiAction_TryCreateAction_Header)
-        {
-            Icon = ActionIcon,
-            Description = ActionDescription,
-            Order = 80,
-        };
+        var item = CreateMenuItem(RS.RoiAction_TryCreateAction_Header);
+        item.Icon = MaterialIconKind.ImageFilterCenterFocus;
+        item.Description = RS.RoiAction_TryCreateAction_Description;
+        item.Order = 80;
         item.Command = CreateCommand(
                 item,
                 async ct =>

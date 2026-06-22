@@ -36,12 +36,10 @@ public abstract class MissionVisibilityAction<TWidget>(
         }
 
         var visibility = GetVisibility(mission);
-        var item = new MenuItem(ActionId, header)
-        {
-            Icon = GetVisibilityIcon(visibility.CurrentValue),
-            Description = description,
-            Order = order,
-        };
+        var item = CreateMenuItem(header);
+        item.Icon = GetVisibilityIcon(visibility.CurrentValue);
+        item.Description = description;
+        item.Order = order;
 
         visibility
             .ObserveOnUIThreadDispatcher()

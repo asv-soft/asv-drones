@@ -261,9 +261,9 @@ namespace Asv.Drones {
             }
         }
         
-        public static string MissionDistanceTelemetryItemViewModel_Header {
+        public static string MissionDistanceTelemetry_Header {
             get {
-                return ResourceManager.GetString("MissionDistanceTelemetryItemViewModel_Header", resourceCulture);
+                return ResourceManager.GetString("MissionDistanceTelemetry_Header", resourceCulture);
             }
         }
         

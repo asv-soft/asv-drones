@@ -3,6 +3,7 @@ using Asv.Avalonia;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
+using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
 
@@ -17,12 +18,11 @@ public sealed class CurrentFlightModeTelemetryItemFactory(
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public string ItemId => Id;
-    public string DisplayName => RS.UavRttItem_Mode;
 
     public bool CanCreate(in IClientDevice device) =>
         device.GetMicroservice<IModeClient>() is not null;
 
-    public ITelemetryItem Create(in IClientDevice device)
+    public IRttBoxViewModel Create(in IClientDevice device)
     {
         ArgumentNullException.ThrowIfNull(device);
 
@@ -40,7 +40,7 @@ public sealed class CurrentFlightModeTelemetryItemFactory(
         return CreateItem(currentMode, timeInAir);
     }
 
-    public ITelemetryItem CreatePreview()
+    public IRttBoxViewModel CreatePreview()
     {
         return CreateItem(
             Observable.Return("Unknown").Concat(Observable.Never<string>()),
@@ -48,7 +48,7 @@ public sealed class CurrentFlightModeTelemetryItemFactory(
         );
     }
 
-    private CurrentFlightModeTelemetryItemViewModel CreateItem(
+    private IRttBoxViewModel CreateItem(
         Observable<string> currentMode,
         Observable<double> timeInAir
     )
@@ -62,11 +62,23 @@ public sealed class CurrentFlightModeTelemetryItemFactory(
             (mode, time) => new FlightModeRttBoxData(mode, time, timeSpanUnit)
         );
 
-        return new CurrentFlightModeTelemetryItemViewModel(
-            Id,
-            loggerFactory,
-            modeData,
-            DefaultStatusColor
-        );
+        return new KeyValueRttBoxViewModel<FlightModeRttBoxData>(Id, loggerFactory, modeData, null)
+        {
+            Header = RS.UavRttItem_Mode,
+            Icon = MaterialIconKind.FlightMode,
+            UpdateAction = (model, changes) =>
+            {
+                model[0, RS.UavRttItem_Mode, null].ValueString = changes.Mode;
+                model[1, RS.UavRttItem_TimeInAir, changes.TimeSpanUnit.Symbol].ValueString =
+                    double.IsNaN(changes.TimeInAir)
+                        ? "-"
+                        : changes.TimeSpanUnit.PrintFromSi(changes.TimeInAir, "F0");
+            },
+            Status = DefaultStatusColor,
+        };
     }
 }
+
+#pragma warning disable SA1313
+public record FlightModeRttBoxData(string Mode, double TimeInAir, IUnitItem TimeSpanUnit);
+#pragma warning restore SA1313
