@@ -26,6 +26,18 @@ public class FlightModeUavAnchorsExtension(IDeviceManager manager, IExtensionSer
                 )
             )
             .DisposeItWith(contextDispose);
+
+        manager
+            .Explorer.InitializedDevices.PopulateTo(
+                context.Map.Anchors,
+                TryCreateTargetPathAnchor,
+                RemoveTargetPathAnchor,
+                synchronizationContext: new AvaloniaSynchronizationContext(
+                    Dispatcher.UIThread,
+                    DispatcherPriority.Default
+                )
+            )
+            .DisposeItWith(contextDispose);
     }
 
     private UavAnchor? TryCreateAnchor(IClientDevice device)
@@ -35,6 +47,17 @@ public class FlightModeUavAnchorsExtension(IDeviceManager manager, IExtensionSer
     }
 
     private static bool RemoveAnchor(IClientDevice dev, UavAnchor anchor)
+    {
+        return anchor.Device.Id == dev.Id;
+    }
+
+    private TargetAnchor? TryCreateTargetPathAnchor(IClientDevice device)
+    {
+        var pos = device.GetMicroservice<IPositionClientEx>();
+        return pos != null ? new TargetAnchor(device, manager, ext) : null;
+    }
+
+    private static bool RemoveTargetPathAnchor(IClientDevice dev, TargetAnchor anchor)
     {
         return anchor.Device.Id == dev.Id;
     }

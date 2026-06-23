@@ -6,7 +6,6 @@ using Asv.IO;
 using Asv.Mavlink;
 using Asv.Modeling;
 using Avalonia.Threading;
-using Material.Icons;
 using ObservableCollections;
 using R3;
 
@@ -17,19 +16,16 @@ public sealed class DeviceMissionLayer : DisposableOnce, IDeviceMissionLayer
     private readonly ICollection<IMapAnchor> _mapAnchors;
     private readonly AsvColorKind _iconColor;
     private readonly IExtensionService _ext;
-    private readonly IMissionClientEx _mission;
+    private readonly MissionPathAnchor _missionPathAnchor;
     private readonly ObservableList<IMissionAnchor> _anchors = [];
     private readonly ReactiveProperty<bool> _isVisible = new(true);
     private readonly ReactiveProperty<bool> _isAnchorsVisible = new(true);
     private readonly ReactiveProperty<bool> _isPathVisible = new(true);
     private readonly CompositeDisposable _disposable = [];
-    private readonly SerialDisposable _missionPathSubscriptions = new();
-    private IMissionAnchor? _highlightedAnchor;
 
     public DeviceMissionLayer(
         ICollection<IMapAnchor> mapAnchors,
         IClientDevice device,
-        IMissionClientEx mission,
         AsvColorKind iconColor,
         IExtensionService ext
     )
@@ -37,8 +33,12 @@ public sealed class DeviceMissionLayer : DisposableOnce, IDeviceMissionLayer
         _mapAnchors = mapAnchors;
         _iconColor = iconColor;
         _ext = ext;
-        _mission = mission;
         DeviceId = device.Id;
+        var mission = device.GetRequiredMicroservice<IMissionClientEx>();
+
+        _missionPathAnchor = new MissionPathAnchor(DeviceId, iconColor, _ext, _anchors);
+        _mapAnchors.Add(_missionPathAnchor);
+
         IsVisible = _isVisible.ToReadOnlyReactiveProperty().DisposeItWith(_disposable);
         IsAnchorsVisible = _isAnchorsVisible
             .ToReadOnlyReactiveProperty()
@@ -60,36 +60,23 @@ public sealed class DeviceMissionLayer : DisposableOnce, IDeviceMissionLayer
 
         _anchors.DisposeRemovedItems().DisposeItWith(_disposable);
         _isVisible
+            .ObserveOnUIThreadDispatcher()
             .Subscribe(_ =>
             {
                 ApplyAnchorsVisibility();
                 ApplyPathVisibility();
             })
             .DisposeItWith(_disposable);
-        _isAnchorsVisible.Subscribe(_ => ApplyAnchorsVisibility()).DisposeItWith(_disposable);
-        _isPathVisible.Subscribe(_ => ApplyPathVisibility()).DisposeItWith(_disposable);
-        _missionPathSubscriptions.DisposeItWith(_disposable);
-        Observable
-            .Merge(
-                _anchors.ObserveAdd().Select(_ => Unit.Default),
-                _anchors.ObserveRemove().Select(_ => Unit.Default),
-                _mission.Current.Select(_ => Unit.Default),
-                _mission.MissionItems.ObserveChanged().Select(_ => Unit.Default)
-            )
+        _isAnchorsVisible
             .ObserveOnUIThreadDispatcher()
-            .ThrottleLast(TimeSpan.FromMilliseconds(16))
-            .Subscribe(_ =>
-            {
-                if (IsPathActuallyVisible)
-                {
-                    RebuildMissionPath();
-                }
-
-                UpdateHighlightedAnchor();
-            })
+            .Subscribe(_ => ApplyAnchorsVisibility())
+            .DisposeItWith(_disposable);
+        _isPathVisible
+            .ObserveOnUIThreadDispatcher()
+            .Subscribe(_ => ApplyPathVisibility())
             .DisposeItWith(_disposable);
 
-        _mission
+        mission
             .MissionItems.PopulateTo(
                 _anchors,
                 CreateAnchor,
@@ -97,8 +84,6 @@ public sealed class DeviceMissionLayer : DisposableOnce, IDeviceMissionLayer
                 synchronizationContext: synchronizationContext
             )
             .DisposeItWith(_disposable);
-
-        UpdateHighlightedAnchor();
     }
 
     public DeviceId DeviceId { get; }
@@ -113,23 +98,26 @@ public sealed class DeviceMissionLayer : DisposableOnce, IDeviceMissionLayer
 
     public void SwitchAllVisibility()
     {
-        _isVisible.Value = !_isVisible.Value;
+        var isVisible = !_isVisible.Value;
+        _isVisible.Value = isVisible;
+        _isAnchorsVisible.Value = isVisible;
+        _isPathVisible.Value = isVisible;
     }
 
     public void SwitchAnchorsVisibility()
     {
         _isAnchorsVisible.Value = !_isAnchorsVisible.Value;
+        UpdateAllVisibility();
     }
 
     public void SwitchPathVisibility()
     {
         _isPathVisible.Value = !_isPathVisible.Value;
+        UpdateAllVisibility();
     }
 
     protected override void InternalDisposeOnce()
     {
-        _missionPathSubscriptions.Disposable = null;
-        ResetHighlightedAnchor();
         RemoveAnchorsFromMap();
         _anchors.ClearWithItemsDispose();
         _disposable.Dispose();
@@ -151,32 +139,6 @@ public sealed class DeviceMissionLayer : DisposableOnce, IDeviceMissionLayer
         return anchor.MissionIndex == missionItem.Index;
     }
 
-    private void RebuildMissionPath()
-    {
-        _missionPathSubscriptions.Disposable = null;
-        ClearMissionPath();
-
-        var anchors = _anchors.OrderBy(anchor => anchor.MissionIndex).ToArray();
-        DisposableBag subscriptions = default;
-
-        for (var i = 0; i < anchors.Length - 1; i++)
-        {
-            anchors[i]
-                .DrawLine(anchors[i].MissionItem.Location, anchors[i + 1].MissionItem.Location)
-                .AddTo(ref subscriptions);
-        }
-
-        _missionPathSubscriptions.Disposable = subscriptions;
-    }
-
-    private void ClearMissionPath()
-    {
-        foreach (var anchor in _anchors)
-        {
-            anchor.Polygon.Clear();
-        }
-    }
-
     private void ApplyAnchorsVisibility()
     {
         var isVisible = AreAnchorsActuallyVisible;
@@ -189,61 +151,24 @@ public sealed class DeviceMissionLayer : DisposableOnce, IDeviceMissionLayer
 
     private void ApplyPathVisibility()
     {
-        if (!IsPathActuallyVisible)
-        {
-            _missionPathSubscriptions.Disposable = null;
-            ClearMissionPath();
-            return;
-        }
-
-        RebuildMissionPath();
+        var isVisible = IsPathActuallyVisible;
+        _missionPathAnchor.IsVisible = isVisible;
     }
 
     private bool AreAnchorsActuallyVisible => _isVisible.Value && _isAnchorsVisible.Value;
 
     private bool IsPathActuallyVisible => _isVisible.Value && _isPathVisible.Value;
 
-    private void UpdateHighlightedAnchor()
+    private void UpdateAllVisibility()
     {
-        var anchor = _anchors.FirstOrDefault(anchor =>
-            anchor.MissionIndex == _mission.Current.CurrentValue
-        );
-        if (ReferenceEquals(_highlightedAnchor, anchor))
-        {
-            return;
-        }
-
-        ResetHighlightedAnchor();
-        _highlightedAnchor = anchor;
-        ApplyHighlightedAnchor();
-    }
-
-    private void ApplyHighlightedAnchor()
-    {
-        if (_highlightedAnchor is null)
-        {
-            return;
-        }
-
-        _highlightedAnchor.Icon = MaterialIconKind.Target;
-        _highlightedAnchor.IconColor = AsvColorKind.Info5;
-    }
-
-    private void ResetHighlightedAnchor()
-    {
-        var anchor = _highlightedAnchor;
-        _highlightedAnchor = null;
-        if (anchor is null || _anchors.Contains(anchor) == false)
-        {
-            return;
-        }
-
-        anchor.Icon = MaterialIconKind.StarFourPointsSmall;
-        anchor.IconColor = _iconColor;
+        _isVisible.Value = _isAnchorsVisible.Value || _isPathVisible.Value;
     }
 
     private void RemoveAnchorsFromMap()
     {
+        _mapAnchors.Remove(_missionPathAnchor);
+        _missionPathAnchor.Dispose();
+
         foreach (var anchor in _anchors.ToArray())
         {
             _mapAnchors.Remove(anchor);
