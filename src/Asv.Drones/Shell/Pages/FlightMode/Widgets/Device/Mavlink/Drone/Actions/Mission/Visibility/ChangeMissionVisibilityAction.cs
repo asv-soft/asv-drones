@@ -13,13 +13,15 @@ public sealed class ChangeMissionVisibilityAction<TWidget>()
     )
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
-    protected override ReadOnlyReactiveProperty<bool> GetVisibility(IDeviceMissionLayer mission)
+    protected override ReadOnlyReactiveProperty<bool> GetVisibility(
+        IMissionContainerAnchor missionContainer
+    )
     {
-        return mission.IsVisible;
+        return missionContainer.IsMissionVisible;
     }
 
-    protected override void SwitchVisibility(IDeviceMissionLayer mission)
+    protected override void SwitchVisibility(IMissionContainerAnchor missionContainer)
     {
-        mission.SwitchAllVisibility();
+        missionContainer.SwitchAllVisibility();
     }
 }
