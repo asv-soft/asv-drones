@@ -28,7 +28,9 @@ public abstract class MissionVisibilityAction<TWidget>(
         }
 
         var flightMode = widget.FindParentOfType<IFlightModePage>();
-        var mission = flightMode?.MissionLayer.FindOrDefault(widget.Device.Id);
+        var mission = flightMode
+            ?.Map.Anchors.OfType<IMissionContainerAnchor>()
+            .FirstOrDefault(anchor => anchor.DeviceId == widget.Device.Id);
 
         if (mission is null)
         {
@@ -58,9 +60,11 @@ public abstract class MissionVisibilityAction<TWidget>(
         return item;
     }
 
-    protected abstract ReadOnlyReactiveProperty<bool> GetVisibility(IDeviceMissionLayer mission);
+    protected abstract ReadOnlyReactiveProperty<bool> GetVisibility(
+        IMissionContainerAnchor missionContainer
+    );
 
-    protected abstract void SwitchVisibility(IDeviceMissionLayer mission);
+    protected abstract void SwitchVisibility(IMissionContainerAnchor missionContainer);
 
     private static MaterialIconKind GetVisibilityIcon(bool isVisible)
     {

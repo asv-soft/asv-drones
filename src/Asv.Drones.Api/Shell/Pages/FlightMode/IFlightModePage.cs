@@ -8,5 +8,4 @@ public interface IFlightModePage : IPage
 {
     ObservableList<IFlightWidget> Widgets { get; }
     IMap Map { get; }
-    IMissionLayer MissionLayer { get; }
 }

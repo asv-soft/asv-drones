@@ -3,7 +3,6 @@ using Asv.Avalonia.IO;
 using Asv.Common;
 using Asv.IO;
 using Asv.Mavlink;
-using Avalonia;
 using Avalonia.Media;
 using Material.Icons;
 using R3;

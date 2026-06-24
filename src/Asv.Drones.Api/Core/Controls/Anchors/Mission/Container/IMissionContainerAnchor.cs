@@ -1,16 +1,17 @@
+using Asv.Avalonia.GeoMap;
 using Asv.IO;
 using ObservableCollections;
 using R3;
 
 namespace Asv.Drones.Api;
 
-public interface IDeviceMissionLayer : IDisposable
+public interface IMissionContainerAnchor : IMapAnchor, IDisposable
 {
     DeviceId DeviceId { get; }
 
     IReadOnlyObservableList<IMissionAnchor> Anchors { get; }
 
-    ReadOnlyReactiveProperty<bool> IsVisible { get; }
+    ReadOnlyReactiveProperty<bool> IsMissionVisible { get; }
 
     ReadOnlyReactiveProperty<bool> IsAnchorsVisible { get; }
 
