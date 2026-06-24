@@ -110,8 +110,8 @@
     <data name="NotANumber" xml:space="preserve">
         <value>Н/Д</value>
     </data>
-    <data name="HomeDistanceTelemetry_DisplayName" xml:space="preserve">
-        <value>Стартовая точка</value>
+    <data name="HomeDistanceTelemetry_Header" xml:space="preserve">
+        <value>Дом</value>
     </data>
     <data name="MissionDistanceTelemetry_MissionDistance" xml:space="preserve">
         <value>Дистанция миссии</value>
@@ -119,7 +119,7 @@
     <data name="MissionProgressView_SubStatusText" xml:space="preserve">
         <value>до завершения</value>
     </data>
-    <data name="MissionTargetTelemetry_DispayName" xml:space="preserve">
+    <data name="MissionTargetTelemetry_Header" xml:space="preserve">
         <value>Следующая точка миссии</value>
     </data>
     <data name="MissionTargetTelemetry_TargetDistance" xml:space="preserve">
@@ -131,46 +131,46 @@
     <data name="MissionProgressView_Title" xml:space="preserve">
         <value>Прогресс миссии</value>
     </data>
-    <data name="MissionDistanceTelemetry_DisplayName" xml:space="preserve">
-        <value>Общая дистанция</value>
+    <data name="MissionTotalDistanceTelemetry_Header" xml:space="preserve">
+        <value>Общая дистанция миссии</value>
     </data>
     <data name="MissionProgressTelemetry_RemainingDistance" xml:space="preserve">
         <value>Оставшаяся дистанция</value>
     </data>
     <data name="MissionTelemetry_RemainingTime" xml:space="preserve">
-        <value>Оставшееся время</value>
+        <value>Осталось</value>
     </data>
-    <data name="MissionProgressTelemetry_DisplayName" xml:space="preserve">
+    <data name="MissionProgressTelemetry_Header" xml:space="preserve">
         <value>Прогресс миссии</value>
     </data>
     <data name="MissionDistanceTelemetry_Header" xml:space="preserve">
-        <value>Миссия</value>
+        <value>Протяженность миссии</value>
     </data>
     <data name="MissionProgressView_DownLoadingMission" xml:space="preserve">
         <value>Загрузка миссии</value>
     </data>
-    <data name="UavRttItem_Altitude" xml:space="preserve">
+    <data name="AltitudeTelemetry_Header" xml:space="preserve">
         <value>Высота</value>
     </data>
-    <data name="UavRttItem_Azimuth" xml:space="preserve">
+    <data name="AzimuthTelemetry_Header" xml:space="preserve">
         <value>Азимут</value>
     </data>
-    <data name="UavRttItem_Battery" xml:space="preserve">
+    <data name="BatteryTelemetry_Header" xml:space="preserve">
         <value>Батарея</value>
     </data>
-    <data name="UavRttItem_GNSS" xml:space="preserve">
-        <value>ГНСС</value>
+    <data name="GnssTelemetry_Satellites_Header" xml:space="preserve">
+        <value>ГНСС спутники</value>
     </data>
-    <data name="UavRttItem_Link" xml:space="preserve">
-        <value>Связь с НСУ</value>
+    <data name="LinkTelemetry_Header" xml:space="preserve">
+        <value>Связь</value>
     </data>
-    <data name="UavRttItem_Mode" xml:space="preserve">
+    <data name="ModeTelemetry_Header" xml:space="preserve">
         <value>Режим</value>
     </data>
-    <data name="UavRttItem_Velocity" xml:space="preserve">
-        <value>Скорость</value>
+    <data name="HorizontalVelocityTelemetry_Header" xml:space="preserve">
+        <value>Вертикальная скорость</value>
     </data>
-    <data name="UavWidgetViewModel_StatusText_PullUp" xml:space="preserve">
+    <data name="AltitudeTelemetry_StatusText_PullUp" xml:space="preserve">
         <value>Наберите высоту</value>
     </data>
     <data name="UavWidgetViewModel_StatusText_Armed" xml:space="preserve">
@@ -328,9 +328,6 @@
     </data>
     <data name="OpenPacketViewerCommand_CommandInfo_Description" xml:space="preserve">
         <value>Команда открывает просмотр пакетов</value>
-    </data>
-    <data name="AltitudeIndicatorStyles_ToolTip_Velocity" xml:space="preserve">
-        <value>Скорость</value>
     </data>
     <data name="AltitudeIndicatorStyles_ToolTip_Altitude" xml:space="preserve">
         <value>Высота</value>
@@ -548,49 +545,43 @@
     <data name="UavWidgetViewModel_GnssRttBox_SatellitesCount_Header" xml:space="preserve">
         <value>Спутники</value>
     </data>
-    <data name="UavWidgetViewModel_GnssRttBox_Hdop_Header" xml:space="preserve">
-        <value>Hdop</value>
+    <data name="GnssTelemetry_Hdop_Header" xml:space="preserve">
+        <value>ГНСС Hdop</value>
     </data>
-    <data name="UavWidgetViewModel_GnssRttBox_Vdop_Header" xml:space="preserve">
-        <value>Vdop</value>
+    <data name="GnssTelemetry_Vdop_Header" xml:space="preserve">
+        <value>ГНСС Vdop</value>
     </data>
-    <data name="UavWidgetViewModel_GnssRttBox_Mode_Header" xml:space="preserve">
-        <value>Режим</value>
+    <data name="GnssTelemetry_Mode_Header" xml:space="preserve">
+        <value>ГНСС Режим</value>
     </data>
-    <data name="HeadingUavIndicatorViewModel_Heading" xml:space="preserve">
+    <data name="HeadingTelemetry_Header" xml:space="preserve">
         <value>Курс</value>
     </data>
-    <data name="HeadingUavIndicatorViewModel_Heading_Short" xml:space="preserve">
-        <value>КУРС</value>
-    </data>
-    <data name="HomeAzimuthUavIndicatorViewModel_HomeAzimuth" xml:space="preserve">
+    <data name="HomeAzimuthTelemetry_Header" xml:space="preserve">
         <value>Азимут дома</value>
     </data>
-    <data name="HomeAzimuthUavIndicatorViewModel_HomeAzimuth_Short" xml:space="preserve">
-        <value>ДОМ</value>
+    <data name="HomeAzimuthTelemetry_Header_Short" xml:space="preserve">
+        <value>Дом</value>
     </data>
-    <data name="VelocityUavIndicatorViewModel_Velocity_Short" xml:space="preserve">
-        <value>СК</value>
+    <data name="VerticalVelocityTelemetry_Header" xml:space="preserve">
+        <value>Вертикальная скорость</value>
     </data>
-    <data name="VelocityUavIndicatorViewModel_Vertical_Short" xml:space="preserve">
-        <value>ВС</value>
-    </data>
-    <data name="UavRttItem_TimeInAir" xml:space="preserve">
+    <data name="TimeInAirTelemetry_Header" xml:space="preserve">
         <value>Время в воздухе</value>
     </data>
-    <data name="AngleUavRttIndicatorViewModel_Angle" xml:space="preserve">
-        <value>Углы</value>
+    <data name="AngleTelemetry_Header" xml:space="preserve">
+        <value>Угол</value>
     </data>
     <data name="AltitudeUavIndicatorViewModel_Agl" xml:space="preserve">
         <value>AGL</value>
     </data>
-    <data name="AltitudeUavIndicatorViewModel_Msl" xml:space="preserve">
-        <value>MSL</value>
+    <data name="MslAltitudeTelemetry_Header" xml:space="preserve">
+        <value>MSL Высота</value>
     </data>
     <data name="AngleUavRttIndicatorViewModel_Pitch" xml:space="preserve">
         <value>Тангаж</value>
     </data>
-    <data name="AngleUavRttIndicatorViewModel_Roll" xml:space="preserve">
+    <data name="AngleTelemetry_Roll" xml:space="preserve">
         <value>Крен</value>
     </data>
     <data name="AddTelemetryItemCommand_CommandInfo_Name" xml:space="preserve">
@@ -598,6 +589,18 @@
     </data>
     <data name="AddTelemetryItemCommand_CommandInfo_Description" xml:space="preserve">
         <value>Добавляет индикатор телеметрии в виджет режима полета.</value>
+    </data>
+    <data name="ConfigureTelemetryAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Настроить телеметрию</value>
+    </data>
+    <data name="ConfigureTelemetryAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Настроить отображение индикаторов телеметрии.</value>
+    </data>
+    <data name="ConfigureTelemetryDialogViewModel_SelectAll_Header" xml:space="preserve">
+        <value>Выбрать все</value>
+    </data>
+    <data name="ConfigureTelemetryDialogViewModel_ClearSelection_Header" xml:space="preserve">
+        <value>Отменить выбор</value>
     </data>
     <data name="RemoveTelemetryItemCommand_CommandInfo_Name" xml:space="preserve">
         <value>Удалить индикатор телеметрии</value>
@@ -633,10 +636,10 @@
         <value>Отмена</value>
     </data>
     <data name="TelemetrySectionViewModel_ConfigureTelemetryDialog_Title" xml:space="preserve">
-        <value>Добавить индикатор</value>
+        <value>Настройка телеметрии</value>
     </data>
     <data name="TelemetrySectionViewModel_ConfigureTelemetryDialog_PrimaryButtonText" xml:space="preserve">
-        <value>Добавить ({0})</value>
+        <value>Принять</value>
     </data>
     <data name="AutoModeAction_TryCreateAction_Header" xml:space="preserve">
         <value>Авто</value>
@@ -700,5 +703,50 @@
     </data>
     <data name="FlightModePageView_WorkspaceItem_ActionsHeader" xml:space="preserve">
         <value>Действия</value>
+    </data>
+    <data name="MslAltitudeTelemetry_Header_Short" xml:space="preserve">
+        <value>MSL</value>
+    </data>
+    <data name="AltitudeTelemetry_Header_Short" xml:space="preserve">
+        <value>Выс</value>
+    </data>
+    <data name="GnssTelemetry_Hdop_Header_Short" xml:space="preserve">
+        <value>Hdop</value>
+    </data>
+    <data name="GnssTelemetry_Mode_Header_Short" xml:space="preserve">
+        <value>ГНСС</value>
+    </data>
+    <data name="GnssTelemetry_Satellites_Header_Short" xml:space="preserve">
+        <value>Спут</value>
+    </data>
+    <data name="GnssTelemetry_Satellites_Unit" xml:space="preserve">
+        <value>спут</value>
+    </data>
+    <data name="GnssTelemetry_Vdop_Header_Short" xml:space="preserve">
+        <value>Vdop</value>
+    </data>
+    <data name="MissionDistanceTelemetry_Header_Short" xml:space="preserve">
+        <value>Миссия</value>
+    </data>
+    <data name="MissionProgressTelemetry_Header_Short" xml:space="preserve">
+        <value>Миссия</value>
+    </data>
+    <data name="MissionTargetTelemetry_Header_Short" xml:space="preserve">
+        <value>точка мис</value>
+    </data>
+    <data name="VerticalVelocityTelemetry_Header_Short" xml:space="preserve">
+        <value>ВС</value>
+    </data>
+    <data name="HorizontalVelocityTelemetry_Header_Short" xml:space="preserve">
+        <value>ГС</value>
+    </data>
+    <data name="MissionTotalDistanceTelemetry_Header_Short" xml:space="preserve">
+        <value>Мис Общ</value>
+    </data>
+    <data name="BatteryTelemetry_Header_Short" xml:space="preserve">
+        <value>Бат</value>
+    </data>
+    <data name="TimeInAirTelemetry_Header_Short" xml:space="preserve">
+        <value>В воздухе</value>
     </data>
 </root>

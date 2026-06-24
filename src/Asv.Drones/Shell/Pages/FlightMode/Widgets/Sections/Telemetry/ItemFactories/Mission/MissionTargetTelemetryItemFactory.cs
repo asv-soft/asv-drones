@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Asv.Avalonia;
 using Asv.Drones.Api;
 using Asv.IO;
@@ -6,101 +6,72 @@ using Asv.Mavlink;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
+using TelemetryHelper = Asv.Drones.Api.TelemetryHelper;
 
 namespace Asv.Drones;
 
-public sealed class MissionTargetTelemetryItemFactory(
-    IUnitService unitService,
-    ILoggerFactory loggerFactory
-) : ITelemetryItemFactory
+public sealed class MissionTargetTelemetryItemFactory(IUnitService unitService)
+    : ITelemetryItemFactory
 {
     public const string Id = "mission-target-distance";
 
     public string ItemId => Id;
-    private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public bool CanCreate(in IClientDevice device) =>
         device.GetMicroservice<IPositionClientEx>() is not null
         && device.GetMicroservice<IMissionClientEx>() is not null
         && device.GetMicroservice<IGnssClientEx>() is not null;
 
-    public IRttBoxViewModel Create(in IClientDevice device)
+    public ITileViewModel Create(in IClientDevice device)
     {
         ArgumentNullException.ThrowIfNull(device);
 
         var positionClient = device.GetRequiredMicroservice<IPositionClientEx>();
         var missionClient = device.GetRequiredMicroservice<IMissionClientEx>();
         var gnssClient = device.GetRequiredMicroservice<IGnssClientEx>();
-
-        return CreateItem(
-            positionClient.TargetDistance.Prepend(double.NaN),
-            missionClient.Current.Prepend((ushort)0),
-            gnssClient.Main.GroundVelocity.Prepend(double.NaN)
-        );
-    }
-
-    public IRttBoxViewModel CreatePreview()
-    {
-        return CreateItem(
-            Observable.Return(100d).Concat(Observable.Never<double>()),
-            Observable.Return((ushort)3).Concat(Observable.Never<ushort>()),
-            Observable.Return(10d).Concat(Observable.Never<double>())
-        );
-    }
-
-    private IRttBoxViewModel CreateItem(
-        Observable<double> distance,
-        Observable<ushort> targetIndex,
-        Observable<double> groundVelocity
-    )
-    {
         var timeSpanUnit = unitService.Units[TimeSpanUnit.Id].AvailableUnits[
             TimeSpanHourMinuteSecondUnitItem.Id
         ];
 
-        var targetData = distance.CombineLatest(
-            targetIndex,
-            groundVelocity,
-            unitService.Units[DistanceUnit.Id].CurrentUnitItem,
-            (targetDistance, index, velocity, unit) =>
-                new TargetDistanceRttBoxData(
-                    targetDistance,
-                    index,
-                    targetDistance / velocity,
-                    unit,
-                    timeSpanUnit
-                )
-        );
+        var targetData = positionClient
+            .TargetDistance.Prepend(double.NaN)
+            .CombineLatest(
+                missionClient.Current.Prepend((ushort)0),
+                gnssClient.Main.GroundVelocity.Prepend(double.NaN),
+                unitService.Units[DistanceUnit.Id].CurrentUnitItem,
+                (targetDistance, index, velocity, unit) =>
+                    new TargetDistanceRttBoxData(
+                        targetDistance,
+                        index,
+                        targetDistance / velocity,
+                        unit,
+                        timeSpanUnit
+                    )
+            )
+            .ObserveOnUIThreadDispatcher()
+            .ThrottleLast(TimeSpan.FromMilliseconds(200));
 
-        return new KeyValueRttBoxViewModel<TargetDistanceRttBoxData>(
-            Id,
-            loggerFactory,
-            targetData,
-            null
+        return new TelemetryViewModel<TargetDistanceRttBoxData>(Id, targetData, Update)
+        {
+            Density = TileDensity.Regular,
+            Header = RS.MissionTargetTelemetry_Header,
+            ShortHeader = RS.MissionTargetTelemetry_Header_Short,
+            Icon = MaterialIconKind.Target,
+        };
+
+        static void Update(
+            TelemetryViewModel<TargetDistanceRttBoxData> t,
+            TargetDistanceRttBoxData changes
         )
         {
-            Header = RS.MissionTargetTelemetry_DispayName,
-            Icon = MaterialIconKind.Target,
-            UpdateAction = (model, changes) =>
-            {
-                model[
-                    0,
-                    RS.MissionTargetTelemetry_TargetDistance,
-                    changes.DistanceUnit.Symbol
-                ].ValueString = changes.DistanceUnit.PrintFromSi(changes.TargetDistance, "F2");
-                model[1, RS.MissionProgressView_TargetIndexRTT, null].ValueString =
-                    changes.TargetIndex.ToString();
-                model[
-                    2,
-                    RS.MissionTelemetry_RemainingTime,
-                    changes.TimeSpanUnit.Symbol
-                ].ValueString =
-                    double.IsNaN(changes.RemainingTime) || double.IsInfinity(changes.RemainingTime)
-                        ? "-"
-                        : changes.TimeSpanUnit.PrintFromSi(changes.RemainingTime, "F0");
-            },
-            Status = DefaultStatusColor,
-        };
+            t.Header = $"{RS.MissionTargetTelemetry_Header} {changes.TargetIndex}";
+            t.Text = changes.DistanceUnit.PrintFromSi(changes.TargetDistance, "F2");
+            t.Units = changes.DistanceUnit.Symbol;
+            t.StatusText =
+                double.IsNaN(changes.RemainingTime) || double.IsInfinity(changes.RemainingTime)
+                    ? $"{RS.MissionTelemetry_RemainingTime}: -"
+                    : $"{RS.MissionTelemetry_RemainingTime}: {changes.TimeSpanUnit.PrintFromSiWithUnits(changes.RemainingTime, "F0")}";
+        }
     }
 }
 

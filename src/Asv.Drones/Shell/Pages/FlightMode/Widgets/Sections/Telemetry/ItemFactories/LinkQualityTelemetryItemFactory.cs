@@ -7,23 +7,21 @@ using Asv.Mavlink;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
+using TelemetryHelper = Asv.Drones.Api.TelemetryHelper;
 
 namespace Asv.Drones;
 
-public sealed class LinkQualityTelemetryItemFactory(
-    IUnitService unitService,
-    ILoggerFactory loggerFactory
-) : ITelemetryItemFactory
+public sealed class LinkQualityTelemetryItemFactory(IUnitService unitService)
+    : ITelemetryItemFactory
 {
     public const string Id = "link-quality";
-    private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public string ItemId => Id;
 
     public bool CanCreate(in IClientDevice device) =>
         device.GetMicroservice<IHeartbeatClient>() is not null;
 
-    public IRttBoxViewModel Create(in IClientDevice device)
+    public ITileViewModel Create(in IClientDevice device)
     {
         ArgumentNullException.ThrowIfNull(device);
 
@@ -33,74 +31,61 @@ public sealed class LinkQualityTelemetryItemFactory(
             .CombineLatest(
                 unitService.Units[ProgressUnit.Id].CurrentUnitItem,
                 heartbeatClient.Link.State,
-                (value, _, state) => new LinkQualityRttBoxData(value * 100d, state)
-            );
-
-        return CreateItem(linkQuality);
-    }
-
-    public IRttBoxViewModel CreatePreview()
-    {
-        var linkQuality = Observable
-            .Return(1d)
-            .Concat(Observable.Never<double>())
-            .CombineLatest(
-                unitService.Units[ProgressUnit.Id].CurrentUnitItem,
-                Observable.Return(LinkState.Connected).Concat(Observable.Never<LinkState>()),
-                (value, _, state) => new LinkQualityRttBoxData(value, state)
-            );
-
-        return CreateItem(linkQuality);
-    }
-
-    private IRttBoxViewModel CreateItem(Observable<LinkQualityRttBoxData> linkQualityData)
-    {
-        return new LinkQualityRttBoxViewModel(loggerFactory, unitService, linkQualityData)
-        {
-            Header = RS.UavRttItem_Link,
-            Icon = MaterialIconKind.Wifi,
-            FormatString = "F2",
-        };
-    }
-
-    private sealed class LinkQualityRttBoxViewModel : SplitDigitRttBoxViewModel
-    {
-        public LinkQualityRttBoxViewModel(
-            ILoggerFactory loggerFactory,
-            IUnitService unitService,
-            Observable<LinkQualityRttBoxData> linkQualityData
-        )
-            : base(
-                LinkQualityTelemetryItemFactory.Id,
-                loggerFactory,
-                unitService,
-                ProgressUnit.Id,
-                linkQualityData.Select(data => data.LinkQuality),
-                null
+                (value, unit, state) => new LinkQualityTelemetryData(value * 100d, unit, state)
             )
+            .ObserveOnUIThreadDispatcher()
+            .ThrottleLast(TimeSpan.FromMilliseconds(200));
+
+        return new TelemetryViewModel<LinkQualityTelemetryData>(Id, linkQuality, Update)
         {
-            Status = DefaultStatusColor;
-            linkQualityData
-                .ObserveOnUIThreadDispatcher()
-                .Select(data => GetLinkStatus(data.LinkState))
-                .DistinctUntilChanged()
-                .Subscribe(status => Status = status)
-                .DisposeItWith(Disposable);
+            Density = TileDensity.Inline,
+            Header = RS.LinkTelemetry_Header,
+            ShortHeader = RS.LinkTelemetry_Header,
+            Icon = MaterialIconKind.Wifi,
+        };
+
+        static void Update(
+            TelemetryViewModel<LinkQualityTelemetryData> t,
+            LinkQualityTelemetryData changes
+        )
+        {
+            t.StatusIcon = GetStatusIcon(changes.LinkState);
+            t.Text = changes.ProgressUnit.PrintFromSi(changes.LinkQuality, "F2");
+            t.Units = changes.ProgressUnit.Symbol;
+            t.Progress = changes.LinkQuality;
+
+            var status = GetStatusColor(changes.LinkState);
+            t.ProgressColor = status;
+            t.StatusColor = status;
+            t.StatusIconColor = status;
         }
     }
 
-    private static AsvColorKind GetLinkStatus(LinkState state)
+    private static AsvColorKind GetStatusColor(LinkState state)
     {
         return state switch
         {
-            LinkState.Connected => AsvColorKind.Success,
-            LinkState.Downgrade => AsvColorKind.Warning,
+            LinkState.Downgrade => AsvColorKind.Warning | AsvColorKind.Blink,
             LinkState.Disconnected => AsvColorKind.Error,
-            _ => AsvColorKind.None,
+            _ => AsvColorKind.Success,
+        };
+    }
+
+    private static MaterialIconKind GetStatusIcon(LinkState percent)
+    {
+        return percent switch
+        {
+            LinkState.Downgrade => MaterialIconKind.AlertCircle,
+            LinkState.Disconnected => MaterialIconKind.CloseCircle,
+            _ => MaterialIconKind.CheckCircle,
         };
     }
 }
 
 #pragma warning disable SA1313
-public record LinkQualityRttBoxData(double LinkQuality, LinkState LinkState);
+public record LinkQualityTelemetryData(
+    double LinkQuality,
+    IUnitItem ProgressUnit,
+    LinkState LinkState
+);
 #pragma warning restore SA1313

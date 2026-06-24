@@ -1,0 +1,43 @@
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:api="clr-namespace:Asv.Drones.Api;assembly=Asv.Drones.Api"
+    xmlns:asvAvalonia="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
+    mc:Ignorable="d"
+    x:Class="Asv.Drones.ConfigureTelemetryDialogView"
+    x:DataType="api:ConfigureTelemetryDialogViewModel"
+    MinWidth="360"
+    MaxWidth="520"
+>
+    <Design.DataContext>
+        <api:ConfigureTelemetryDialogViewModel />
+    </Design.DataContext>
+
+    <DockPanel LastChildFill="True">
+        <Border
+            DockPanel.Dock="Top"
+            Padding="8"
+            BorderThickness="0 0 0 1"
+            BorderBrush="{DynamicResource AsvSeparatorBrush}"
+        >
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <Button
+                    Content="{CompiledBinding SelectAllHeader}"
+                    Command="{CompiledBinding SelectAllCommand}"
+                />
+                <Button
+                    Content="{CompiledBinding ClearSelectionHeader}"
+                    Command="{CompiledBinding ClearSelectionCommand}"
+                />
+            </StackPanel>
+        </Border>
+
+        <asvAvalonia:PropertyEditorView
+            MaxHeight="520"
+            Margin="0 8 0 0"
+            DataContext="{CompiledBinding Editor}"
+        />
+    </DockPanel>
+</UserControl>

@@ -11,14 +11,13 @@ namespace Asv.Drones;
 public sealed class AngleTelemetryItemFactory(IUnitService unitService) : ITelemetryItemFactory
 {
     public const string Id = "angle";
-    private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public string ItemId => Id;
 
     public bool CanCreate(in IClientDevice device) =>
         device.GetMicroservice<IPositionClientEx>() is not null;
 
-    public IRttBoxViewModel Create(in IClientDevice device)
+    public ITileViewModel Create(in IClientDevice device)
     {
         ArgumentNullException.ThrowIfNull(device);
 
@@ -30,41 +29,25 @@ public sealed class AngleTelemetryItemFactory(IUnitService unitService) : ITelem
                 positionClientEx.Roll.Prepend(double.NaN),
                 unitService.Units[AngleUnit.Id].CurrentUnitItem,
                 (pitch, roll, unit) => new AngleRttBoxData(pitch, roll, unit)
-            );
+            )
+            .ObserveOnUIThreadDispatcher()
+            .ThrottleLast(TimeSpan.FromMilliseconds(200));
 
-        return InternalCreate(angleObservable);
-    }
-
-    public IRttBoxViewModel CreatePreview()
-    {
-        var angleObservable = unitService
-            .Units[AngleUnit.Id]
-            .CurrentUnitItem.Select(unit => new AngleRttBoxData(30d, 10d, unit));
-
-        return InternalCreate(angleObservable);
-    }
-
-    private static IRttBoxViewModel InternalCreate(Observable<AngleRttBoxData> observable)
-    {
-        var rtt = new TwoColumnRttBoxViewModel<AngleRttBoxData>(Id, observable, null)
+        return new TelemetryViewModel<AngleRttBoxData>(Id, angleObservable, Update)
         {
-            Header = RS.AngleUavRttIndicatorViewModel_Angle,
+            Density = TileDensity.Regular,
+            Header = RS.AngleTelemetry_Header,
+            ShortHeader = RS.AngleTelemetry_Header,
             Icon = MaterialIconKind.Altimeter,
-            UpdateAction = (model, changes) =>
-            {
-                model.Left.ValueString = changes.AngleUnit.PrintFromSi(changes.Pitch, "F2");
-                model.Right.ValueString = changes.AngleUnit.PrintFromSi(changes.Roll, "F2");
-
-                model.Left.UnitSymbol = changes.AngleUnit.Symbol;
-                model.Right.UnitSymbol = changes.AngleUnit.Symbol;
-            },
-            Status = DefaultStatusColor,
         };
 
-        rtt.Left.Header = RS.AngleUavRttIndicatorViewModel_Pitch;
-        rtt.Right.Header = RS.AngleUavRttIndicatorViewModel_Roll;
-
-        return rtt;
+        static void Update(TelemetryViewModel<AngleRttBoxData> t, AngleRttBoxData changes)
+        {
+            t.Text = changes.AngleUnit.PrintFromSi(changes.Pitch, "F2");
+            t.Units = changes.AngleUnit.Symbol;
+            t.StatusText =
+                $"{RS.AngleTelemetry_Roll}: {changes.AngleUnit.PrintFromSiWithUnits(changes.Roll, "F2")}";
+        }
     }
 }
 

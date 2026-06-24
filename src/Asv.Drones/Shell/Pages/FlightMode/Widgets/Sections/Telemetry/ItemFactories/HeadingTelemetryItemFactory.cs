@@ -6,13 +6,11 @@ using Asv.Mavlink;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
+using TelemetryHelper = Asv.Drones.Api.TelemetryHelper;
 
 namespace Asv.Drones;
 
-public sealed class HeadingTelemetryItemFactory(
-    IUnitService unitService,
-    ILoggerFactory loggerFactory
-) : ITelemetryItemFactory
+public sealed class HeadingTelemetryItemFactory(IUnitService unitService) : ITelemetryItemFactory
 {
     public const string Id = "heading";
     private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
@@ -22,41 +20,37 @@ public sealed class HeadingTelemetryItemFactory(
     public bool CanCreate(in IClientDevice device) =>
         device.GetMicroservice<IPositionClientEx>() is not null;
 
-    public IRttBoxViewModel Create(in IClientDevice device)
+    public ITileViewModel Create(in IClientDevice device)
     {
         ArgumentNullException.ThrowIfNull(device);
 
         var headingObservable = device
             .GetRequiredMicroservice<IPositionClientEx>()
             .Yaw.Select(Math.Truncate)
-            .Prepend(double.NaN);
+            .Prepend(double.NaN)
+            .CombineLatest(
+                unitService.Units[AngleUnit.Id].CurrentUnitItem,
+                (heading, unit) => new HeadingRttBoxData(heading, unit)
+            )
+            .ObserveOnUIThreadDispatcher()
+            .ThrottleLast(TimeSpan.FromMilliseconds(200));
 
-        return InternalCreate(headingObservable);
-    }
-
-    public IRttBoxViewModel CreatePreview()
-    {
-        var headingObservable = Observable.Return(29d).Concat(Observable.Never<double>());
-
-        return InternalCreate(headingObservable);
-    }
-
-    private IRttBoxViewModel InternalCreate(Observable<double> observable)
-    {
-        return new SplitDigitRttBoxViewModel(
-            Id,
-            loggerFactory,
-            unitService,
-            AngleUnit.Id,
-            observable,
-            null
-        )
+        return new TelemetryViewModel<HeadingRttBoxData>(Id, headingObservable, Update)
         {
-            Header = RS.HeadingUavIndicatorViewModel_Heading,
-            ShortHeader = RS.HeadingUavIndicatorViewModel_Heading_Short,
+            Density = TileDensity.Inline,
+            Header = RS.HeadingTelemetry_Header,
+            ShortHeader = RS.HeadingTelemetry_Header,
             Icon = MaterialIconKind.SunAzimuth,
-            Status = DefaultStatusColor,
-            FormatString = "F0",
         };
+
+        static void Update(TelemetryViewModel<HeadingRttBoxData> t, HeadingRttBoxData changes)
+        {
+            t.Text = changes.AngleUnit.PrintFromSi(changes.Heading, "F0");
+            t.Units = changes.AngleUnit.Symbol;
+        }
     }
 }
+
+#pragma warning disable SA1313
+public record HeadingRttBoxData(double Heading, IUnitItem AngleUnit);
+#pragma warning restore SA1313

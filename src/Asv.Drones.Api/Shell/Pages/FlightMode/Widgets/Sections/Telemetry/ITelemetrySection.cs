@@ -1,22 +1,10 @@
 using Asv.Avalonia;
 using Asv.IO;
-using Asv.Mavlink;
-using ObservableCollections;
 
 namespace Asv.Drones.Api;
 
-public interface ITelemetrySection : IFlightWidgetSection
-{
-    ObservableList<IRttBoxViewModel> Items { get; }
-    bool TryAddItem(string itemId);
-    bool TryRemoveItem(string itemId);
-    bool TrySetItems(IReadOnlyList<string> itemIds);
-    bool TryResetItems();
-}
+public interface ITelemetrySection : IFlightWidgetSection, IDashboard { }
 
 #pragma warning disable SA1313
-public sealed record TelemetrySectionArgs(
-    IClientDevice? Device,
-    IReadOnlyList<string> DefaultItemIds
-);
+public sealed record TelemetrySectionArgs(IClientDevice Device);
 #pragma warning restore SA1313

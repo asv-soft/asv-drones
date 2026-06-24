@@ -24,4 +24,25 @@
     <data name="FlightWidgetAction_CreateCommand_Title" xml:space="preserve">
         <value>Command failed</value>
     </data>
+    <data name="ConfigureTelemetryAction_Header" xml:space="preserve">
+        <value>Configure telemetry</value>
+    </data>
+    <data name="ConfigureTelemetryAction_Description" xml:space="preserve">
+        <value>Configure how telemetry indicators are displayed.</value>
+    </data>
+    <data name="ConfigureTelemetryAction_DialogTitle" xml:space="preserve">
+        <value>Configure telemetry</value>
+    </data>
+    <data name="ConfigureTelemetryAction_DialogPrimaryButtonText" xml:space="preserve">
+        <value>Accept</value>
+    </data>
+    <data name="ConfigureTelemetryAction_DialogCloseButtonText" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="ConfigureTelemetryDialogViewModel_SelectAll_Header" xml:space="preserve">
+        <value>Select all</value>
+    </data>
+    <data name="ConfigureTelemetryDialogViewModel_ClearSelection_Header" xml:space="preserve">
+        <value>Clear selection</value>
+    </data>
 </root>
