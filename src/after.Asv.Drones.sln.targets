@@ -1,0 +1,34 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    .slnx solution metaprojects do not generate per-project Restore targets.
+    Some IDEs still invoke targets such as Asv_Drones_Api:Restore, so keep
+    those aliases here and forward them to the matching project restore.
+  -->
+  <PropertyGroup>
+    <_AsvDronesSolutionRestoreProperties>Configuration=$(Configuration);Platform=$(Platform);BuildingSolutionFile=true;SolutionDir=$(MSBuildThisFileDirectory);SolutionExt=.slnx;SolutionFileName=Asv.Drones.slnx;SolutionName=Asv.Drones;SolutionPath=$(MSBuildThisFileDirectory)Asv.Drones.slnx</_AsvDronesSolutionRestoreProperties>
+  </PropertyGroup>
+
+  <Target Name="Asv_Drones_Api:Restore">
+    <MSBuild Projects="$(MSBuildThisFileDirectory)Asv.Drones.Api\Asv.Drones.Api.csproj" Targets="Restore" BuildInParallel="True" Properties="$(_AsvDronesSolutionRestoreProperties)" />
+  </Target>
+
+  <Target Name="Asv_Drones:Restore">
+    <MSBuild Projects="$(MSBuildThisFileDirectory)Asv.Drones\Asv.Drones.csproj" Targets="Restore" BuildInParallel="True" Properties="$(_AsvDronesSolutionRestoreProperties)" />
+  </Target>
+
+  <Target Name="Launcher\Asv_Drones_Launcher:Restore">
+    <MSBuild Projects="$(MSBuildThisFileDirectory)Asv.Drones.Launcher\Asv.Drones.Launcher.csproj" Targets="Restore" BuildInParallel="True" Properties="$(_AsvDronesSolutionRestoreProperties)" />
+  </Target>
+
+  <Target Name="Platforms\Asv_Drones_Android:Restore">
+    <MSBuild Projects="$(MSBuildThisFileDirectory)Asv.Drones.Android\Asv.Drones.Android.csproj" Targets="Restore" BuildInParallel="True" Properties="$(_AsvDronesSolutionRestoreProperties)" />
+  </Target>
+
+  <Target Name="Platforms\Asv_Drones_Desktop:Restore">
+    <MSBuild Projects="$(MSBuildThisFileDirectory)Asv.Drones.Desktop\Asv.Drones.Desktop.csproj" Targets="Restore" BuildInParallel="True" Properties="$(_AsvDronesSolutionRestoreProperties)" />
+  </Target>
+
+  <Target Name="Platforms\Asv_Drones_iOS:Restore">
+    <MSBuild Projects="$(MSBuildThisFileDirectory)Asv.Drones.iOS\Asv.Drones.iOS.csproj" Targets="Restore" BuildInParallel="True" Properties="$(_AsvDronesSolutionRestoreProperties)" />
+  </Target>
+</Project>

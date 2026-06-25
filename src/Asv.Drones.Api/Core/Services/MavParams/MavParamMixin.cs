@@ -63,7 +63,16 @@ public static class MavParamMixin
                 );
         }
 
-        public Builder UseEditor<TViewModel, TView>(string widgetType)
+        public Builder UseEditor<
+            [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(
+                System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors
+            )]
+                TViewModel,
+            [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(
+                System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors
+            )]
+                TView
+        >(string widgetType)
             where TViewModel : class, IMavParamPropertyViewModel
             where TView : Control
         {

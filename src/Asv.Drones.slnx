@@ -15,6 +15,7 @@
     <File Path="../README.md" />
     <File Path="../win-64-install.nsi" />
     <File Path=".aiassistant/rules/comments.md" />
+    <File Path="after.Asv.Drones.sln.targets" />
     <File Path="Directory.Build.props" />
   </Folder>
   <Project Path="Asv.Drones.Api/Asv.Drones.Api.csproj" />

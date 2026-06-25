@@ -49,7 +49,16 @@ public static class SetupMixin
             return this;
         }
 
-        public Builder AddSubPage<TViewModel, TView>(string pageId)
+        public Builder AddSubPage<
+            [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(
+                System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors
+            )]
+                TViewModel,
+            [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(
+                System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors
+            )]
+                TView
+        >(string pageId)
             where TViewModel : class, ISetupSubpage
             where TView : Control
         {
@@ -59,7 +68,20 @@ public static class SetupMixin
             return this;
         }
 
-        public Builder AddSubPage<TViewModel, TView, TTreeMenu>(string pageId)
+        public Builder AddSubPage<
+            [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(
+                System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors
+            )]
+                TViewModel,
+            [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(
+                System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors
+            )]
+                TView,
+            [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(
+                System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors
+            )]
+                TTreeMenu
+        >(string pageId)
             where TViewModel : class, ISetupSubpage
             where TView : Control
             where TTreeMenu : class, ITreePage

@@ -65,7 +65,7 @@ sealed class Program
                         options.WithPluginPrefix("Asv.Drones.Plugin.");
                     })
                     .UseDesktopShell()
-                    .UseSafeModulePlugins(configure =>
+                    .UseModulePlugins(configure =>
                     {
                         configure
                             .WithApiPackage(typeof(MavlinkHost).Assembly)
