@@ -11,6 +11,10 @@ namespace Asv.Drones;
 
 public class MotorsSetupPageExtension(ILoggerFactory loggerFactory) : IExtensionFor<ISetupPage>
 {
+    public const string StaticId = "ext.setup.motors";
+
+    string ISupportId<string>.Id => StaticId;
+
     public void Extend(ISetupPage context, CompositeDisposable contextDispose)
     {
         context

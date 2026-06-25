@@ -5,6 +5,9 @@ public static class MavParamWidgetIds
     public const string TextBox = "textbox";
     public const string AsciiChars = "ascii-chars";
     public const string ComboBox = "combo-box";
+    public const string ToggleButtonGroup = "toggle-button-group";
+    public const string ToggleSwitch = "toggle-switch";
+    public const string Slider = "slider";
     public const string Button = "button";
     public const string Altitude = "altitude";
     public const string Latitude = "latitude";
@@ -29,6 +32,11 @@ public static class MavParamWidgetIds
             "textbox" => TextBox,
             "asciichars" => AsciiChars,
             "combobox" => ComboBox,
+            "togglebuttongroup" => ToggleButtonGroup,
+            "buttongroup" => ToggleButtonGroup,
+            "toggleswitch" => ToggleSwitch,
+            "switch" => ToggleSwitch,
+            "slider" => Slider,
             "button" => Button,
             "altitude" => Altitude,
             "latitude" => Latitude,

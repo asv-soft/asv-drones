@@ -11,6 +11,10 @@ namespace Asv.Drones;
 public sealed class LandAction<TWidget>() : FlightWidgetAction<TWidget>("land")
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
+    public const string StaticId = "ext.flight-widget.action.land";
+
+    public override string Id => StaticId;
+
     protected override IMenuItem? TryCreateAction(
         TWidget widget,
         CompositeDisposable contextDispose

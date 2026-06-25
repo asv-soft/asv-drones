@@ -24,6 +24,8 @@ public abstract class FlightWidgetAction<TWidget> : IExtensionFor<TWidget>
         _actionId = BaseId + id;
     }
 
+    public abstract string Id { get; }
+
     public void Extend(TWidget context, CompositeDisposable contextDispose)
     {
         var action = TryCreateAction(context, contextDispose);

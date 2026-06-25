@@ -7,6 +7,10 @@ namespace Asv.Drones;
 
 public class HomePageFlightModeExtension : IExtensionFor<IHomePage>
 {
+    public const string StaticId = "ext.home.flight-mode";
+
+    string ISupportId<string>.Id => StaticId;
+
     public void Extend(IHomePage context, CompositeDisposable contextDispose)
     {
         context.Tools.Add(

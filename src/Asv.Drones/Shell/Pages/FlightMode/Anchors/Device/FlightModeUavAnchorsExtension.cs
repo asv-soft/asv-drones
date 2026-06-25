@@ -13,6 +13,10 @@ namespace Asv.Drones;
 public class FlightModeUavAnchorsExtension(IDeviceManager manager, IExtensionService ext)
     : IExtensionFor<IFlightModePage>
 {
+    public const string StaticId = "ext.flight-mode.uav-anchors";
+
+    string ISupportId<string>.Id => StaticId;
+
     public void Extend(IFlightModePage context, CompositeDisposable contextDispose)
     {
         manager

@@ -39,6 +39,16 @@ public static class MavParamMixin
                 .UseEditor<MavParamComboBoxPropertyViewModel, PropertyComboBoxView>(
                     MavParamComboBoxPropertyViewModel.TypeId
                 )
+                .UseEditor<
+                    MavParamToggleButtonGroupPropertyViewModel,
+                    PropertyToggleButtonGroupView
+                >(MavParamToggleButtonGroupPropertyViewModel.TypeId)
+                .UseEditor<MavParamToggleSwitchPropertyViewModel, PropertyToggleSwitchView>(
+                    MavParamToggleSwitchPropertyViewModel.TypeId
+                )
+                .UseEditor<MavParamSliderPropertyViewModel, PropertySliderView>(
+                    MavParamSliderPropertyViewModel.TypeId
+                )
                 .UseEditor<MavParamButtonPropertyViewModel, PropertyButtonView>(
                     MavParamButtonPropertyViewModel.TypeId
                 )

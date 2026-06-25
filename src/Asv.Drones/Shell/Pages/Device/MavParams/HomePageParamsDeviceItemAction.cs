@@ -9,6 +9,10 @@ namespace Asv.Drones;
 
 public class HomePageParamsDeviceItemAction : HomePageDeviceItemAction
 {
+    public const string StaticId = "ext.home.device-action.params";
+
+    public override string Id => StaticId;
+
     protected override IActionViewModel? TryCreateAction(
         IClientDevice device,
         HomePageDeviceItem context

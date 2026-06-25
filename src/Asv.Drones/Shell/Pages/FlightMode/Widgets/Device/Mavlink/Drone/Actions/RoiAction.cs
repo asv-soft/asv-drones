@@ -13,6 +13,10 @@ public sealed class RoiAction<TWidget>(IDialogService dialogService)
     : FlightWidgetAction<TWidget>("roi")
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
+    public const string StaticId = "ext.flight-widget.action.roi";
+
+    public override string Id => StaticId;
+
     protected override IMenuItem? TryCreateAction(
         TWidget widget,
         CompositeDisposable contextDispose

@@ -13,6 +13,10 @@ public sealed class ChangeMissionVisibilityAction<TWidget>()
     )
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
+    public const string StaticId = "ext.flight-widget.action.change-mission-visibility";
+
+    public override string Id => StaticId;
+
     protected override ReadOnlyReactiveProperty<bool> GetVisibility(
         IMissionContainerAnchor missionContainer
     )

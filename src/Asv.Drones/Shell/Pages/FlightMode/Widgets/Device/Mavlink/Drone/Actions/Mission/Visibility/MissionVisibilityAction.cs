@@ -16,6 +16,8 @@ public abstract class MissionVisibilityAction<TWidget>(
 ) : FlightWidgetAction<TWidget>(id)
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
+    public abstract override string Id { get; }
+
     protected override IMenuItem? TryCreateAction(
         TWidget widget,
         CompositeDisposable contextDispose

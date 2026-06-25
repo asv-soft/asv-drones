@@ -7,6 +7,10 @@ namespace Asv.Drones;
 
 public class HomePagePlaningExtension : IExtensionFor<IHomePage>
 {
+    public const string StaticId = "ext.home.planing";
+
+    string ISupportId<string>.Id => StaticId;
+
     public void Extend(IHomePage context, CompositeDisposable contextDispose)
     {
         context.Tools.Add(

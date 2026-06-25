@@ -15,6 +15,10 @@ public class FlightModeClientDeviceWidgetExtension(
     IClientDeviceWidgetFactory factory
 ) : IExtensionFor<IFlightModePage>
 {
+    public const string StaticId = "ext.flight-mode.client-device-widget";
+
+    string ISupportId<string>.Id => StaticId;
+
     public void Extend(IFlightModePage context, CompositeDisposable contextDispose)
     {
         conn.Explorer.InitializedDevices.PopulateTo(

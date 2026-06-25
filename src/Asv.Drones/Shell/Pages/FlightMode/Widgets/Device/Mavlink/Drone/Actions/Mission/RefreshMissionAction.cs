@@ -11,6 +11,10 @@ namespace Asv.Drones;
 public sealed class RefreshMissionAction<TWidget>() : FlightWidgetAction<TWidget>("refresh-mission")
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
+    public const string StaticId = "ext.flight-widget.action.refresh-mission";
+
+    public override string Id => StaticId;
+
     protected override IMenuItem? TryCreateAction(
         TWidget widget,
         CompositeDisposable contextDispose

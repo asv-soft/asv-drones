@@ -13,6 +13,10 @@ public sealed class TakeOffAction<TWidget>(IUnitService unitService, ILoggerFact
     : FlightWidgetAction<TWidget>("take-off")
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
+    public const string StaticId = "ext.flight-widget.action.take-off";
+
+    public override string Id => StaticId;
+
     protected override IMenuItem? TryCreateAction(
         TWidget widget,
         CompositeDisposable contextDispose

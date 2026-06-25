@@ -30,7 +30,6 @@
 
     <ItemGroup>
       <Folder Include="Core\Services\Devices\" />
-      <Folder Include="Core\Services\MavParams\Factory\" />
       <Folder Include="Shell\" />
     </ItemGroup>
 

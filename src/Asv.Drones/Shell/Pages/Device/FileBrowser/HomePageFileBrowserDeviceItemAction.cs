@@ -10,6 +10,10 @@ namespace Asv.Drones;
 
 public class HomePageFileBrowserDeviceItemAction : HomePageDeviceItemAction
 {
+    public const string StaticId = "ext.home.device-action.file-browser";
+
+    public override string Id => StaticId;
+
     protected override IActionViewModel? TryCreateAction(
         IClientDevice device,
         HomePageDeviceItem context

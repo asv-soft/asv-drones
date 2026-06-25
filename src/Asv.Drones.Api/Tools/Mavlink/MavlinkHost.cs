@@ -33,6 +33,8 @@ public class MavlinkDeviceManagerExtensionConfig
 {
     public byte SystemId { get; set; } = 255;
     public byte ComponentId { get; set; } = 255;
+    public BroadcastingFeatureOptions LoopProtection { get; } = new();
+    public bool EnableMavlinkV2WrapFeature { get; set; } = true;
 }
 
 public class MavlinkHost : IDeviceManagerExtension, IMavlinkHost, IHostedService
@@ -82,8 +84,11 @@ public class MavlinkHost : IDeviceManagerExtension, IMavlinkHost, IHostedService
     public void Configure(IProtocolBuilder builder)
     {
         builder.RegisterMavlinkV2Protocol(_messageFactory);
-        builder.Features.RegisterMavlinkV2WrapFeature(_messageFactory);
-        builder.Features.RegisterBroadcastFeature<MavlinkMessage>();
+        if (_cfg.EnableMavlinkV2WrapFeature)
+        {
+            builder.Features.RegisterMavlinkV2WrapFeature(_messageFactory);
+        }
+        builder.Features.RegisterBroadcastFeature<MavlinkMessage>(_cfg.LoopProtection);
     }
 
     public void Configure(IDeviceExplorerBuilder builder)

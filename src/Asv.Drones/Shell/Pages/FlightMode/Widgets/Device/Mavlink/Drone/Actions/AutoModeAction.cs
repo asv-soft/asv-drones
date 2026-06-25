@@ -11,6 +11,10 @@ namespace Asv.Drones;
 public sealed class AutoModeAction<TWidget>() : FlightWidgetAction<TWidget>("auto-mode")
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
+    public const string StaticId = "ext.flight-widget.action.auto-mode";
+
+    public override string Id => StaticId;
+
     protected override IMenuItem? TryCreateAction(
         TWidget widget,
         CompositeDisposable contextDispose
