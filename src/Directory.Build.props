@@ -1,6 +1,5 @@
 <Project>
     <PropertyGroup>
-        <ApiVersion>3.0.0-dev.0</ApiVersion>
         <ProductVersion>3.0.0-dev.2</ProductVersion>
         <TargetFramework>net10.0</TargetFramework>
 
@@ -47,7 +46,7 @@
         </WarningsAsErrors>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(MSBuildProjectName)' == 'Asv.Drones.Api'">
+    <PropertyGroup Condition="'$(MSBuildProjectName)' == 'Asv.Drones.Api' and '$(ApiVersion)' != ''">
         <FileVersion>$(ApiVersion)</FileVersion>
         <Version>$(ApiVersion)</Version>
         <PackageVersion>$(ApiVersion)</PackageVersion>

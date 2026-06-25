@@ -3,20 +3,18 @@ name: Release Api NuGet
 on:
   push:
     tags:
-      - "api-v[0-9]+.[0-9]+.[0-9]+"
-      - "api-v[0-9]+.[0-9]+.[0-9]+-rc.[0-9]+"
-      - "api-v[0-9]+.[0-9]+.[0-9]+-rc"
+      - "api-v*"
 
 env:
   NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
   GITHUB_PACKAGES_URL: 'https://nuget.pkg.github.com/asv-soft/index.json'
   PROJECT_NAME: 'Asv.Drones'
-  PROPS_VERSION_VAR_NAME: 'ApiVersion'
+  PROPS_VERSION_VAR_NAME: 'ProductVersion'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/api-v')
+    if: ${{ startsWith(github.ref_name, 'api-v') && !contains(github.ref_name, '-dev') }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,6 +27,13 @@ jobs:
       - name: Add NuGet source
         run: dotnet nuget add source ${{ env.GITHUB_PACKAGES_URL }} \--username '${{secrets.USER_NAME}}' \--password '${{secrets.GIHUB_NUGET_AUTH_TOKEN}}' \--store-password-in-clear-text
 
+      - name: Set version variable
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          version="${TAG#api-v}"
+          echo "VERSION=${version}" >> $GITHUB_ENV
+
       - name: Install dependencies
         run: | 
           dotnet restore ./src/${{env.PROJECT_NAME}}/${{env.PROJECT_NAME}}.csproj
@@ -36,13 +41,8 @@ jobs:
 
       - name: Build
         run: |
-          dotnet build ./src/${{env.PROJECT_NAME}}/${{env.PROJECT_NAME}}.csproj --configuration Release --no-restore
-          dotnet build ./src/${{env.PROJECT_NAME}}.Api/${{env.PROJECT_NAME}}.Api.csproj --configuration Release --no-restore
-
-      - name: Set version variable
-        env:
-          TAG: ${{ github.ref_name }}
-        run: echo "VERSION=${TAG#api-v}" >> $GITHUB_ENV
+          dotnet build ./src/${{env.PROJECT_NAME}}/${{env.PROJECT_NAME}}.csproj --configuration Release --no-restore /p:ProductVersion=${VERSION} /p:ApiVersion=${VERSION}
+          dotnet build ./src/${{env.PROJECT_NAME}}.Api/${{env.PROJECT_NAME}}.Api.csproj --configuration Release --no-restore /p:ProductVersion=${VERSION} /p:ApiVersion=${VERSION}
         
       - name: Read version from Directory.Build.props
         id: read-version
@@ -59,8 +59,8 @@ jobs:
 
       - name: Pack package
         run: |
-          dotnet pack ./src/${{env.PROJECT_NAME}}/${{env.PROJECT_NAME}}.csproj -c Release /p:ProductVersion=${VERSION} --no-build -o .
-          dotnet pack ./src/${{env.PROJECT_NAME}}.Api/${{env.PROJECT_NAME}}.Api.csproj -c Release /p:ProductVersion=${VERSION} --no-build -o .
+          dotnet pack ./src/${{env.PROJECT_NAME}}/${{env.PROJECT_NAME}}.csproj -c Release /p:ProductVersion=${VERSION} /p:ApiVersion=${VERSION} --no-build -o .
+          dotnet pack ./src/${{env.PROJECT_NAME}}.Api/${{env.PROJECT_NAME}}.Api.csproj -c Release /p:ProductVersion=${VERSION} /p:ApiVersion=${VERSION} --no-build -o .
 
       - name: List output files
         run: ls -la
