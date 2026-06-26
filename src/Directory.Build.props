@@ -5,7 +5,7 @@
 
         <AvaloniaVersion>12.0.4</AvaloniaVersion>
         <AvaloniaDataGridVersion>12.0.0</AvaloniaDataGridVersion>
-        <AsvAvaloniaVersion>3.0.0-dev.65</AsvAvaloniaVersion>
+        <AsvAvaloniaVersion>3.0.0-dev.68</AsvAvaloniaVersion>
         <AsvMavlinkVersion>4.3.0-dev.10</AsvMavlinkVersion>
         <AsvGnssVersion>2.2.0-dev.7</AsvGnssVersion>
         <AsvLauncherApiVersion>0.0.1-dev.1</AsvLauncherApiVersion>
@@ -22,11 +22,11 @@
         <RepositoryType>git</RepositoryType>
         <LangVersion>preview</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable> 
+        <Nullable>enable</Nullable>
         <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)CodeStyle.ruleset</CodeAnalysisRuleSet>
         <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
         <WarningsAsErrors
-            Condition="!$([System.String]::Copy('$(MSBuildProjectName)').EndsWith('.Test'))"
+                Condition="!$([System.String]::Copy('$(MSBuildProjectName)').EndsWith('.Test'))"
         >
             CS0169,
             CS0618,

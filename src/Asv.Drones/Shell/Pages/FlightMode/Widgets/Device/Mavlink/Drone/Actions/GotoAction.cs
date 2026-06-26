@@ -9,8 +9,7 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class GotoAction<TWidget>(IDialogService dialogService)
-    : FlightWidgetAction<TWidget>("goto")
+public sealed class GotoAction<TWidget>() : FlightWidgetAction<TWidget>("goto")
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
     public const string StaticId = "ext.flight-widget.action.goto";
@@ -23,7 +22,9 @@ public sealed class GotoAction<TWidget>(IDialogService dialogService)
     )
     {
         var control = widget.Device.GetMicroservice<IControlClient>();
-        if (control is null)
+        var map = widget.FindParentOfType<IFlightModePage>()?.Map;
+
+        if (control is null || map is null)
         {
             return null;
         }
@@ -38,13 +39,18 @@ public sealed class GotoAction<TWidget>(IDialogService dialogService)
                 item,
                 async ct =>
                 {
-                    var geoPointDialog = dialogService.GetDialogPrefab<GeoPointDialogPrefab>();
+                    var marker = new MapAnchor("goto.preview")
+                    {
+                        Location = position?.Current.CurrentValue ?? GeoPoint.Zero,
+                        Icon = MaterialIconKind.Target,
+                        IconSize = 32,
+                        IsReadOnly = true,
+                    };
 
-                    var point = await geoPointDialog.ShowDialogAsync(
-                        new GeoPointDialogPayload
-                        {
-                            InitialLocation = position?.Current.CurrentValue ?? GeoPoint.Zero,
-                        }
+                    var point = await map.PickPointAsync(
+                        marker,
+                        RS.GotoAction_TryCreateAction_Header,
+                        ct
                     );
                     if (point is null)
                     {
