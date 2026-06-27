@@ -1,22 +1,18 @@
-using System;
+using System.Text;
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
 using Material.Icons;
-using Microsoft.Extensions.Logging;
 using R3;
+using TelemetryHelper = Asv.Drones.Api.TelemetryHelper;
 
 namespace Asv.Drones;
 
-public sealed class BatteryTelemetryItemFactory(
-    IUnitService unitService,
-    ILoggerFactory loggerFactory
-) : ITelemetryItemFactory
+public sealed class BatteryTelemetryItemFactory(IUnitService unitService) : ITelemetryItemFactory
 {
     public const string Id = "battery";
-    private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public string ItemId => Id;
 
@@ -24,7 +20,7 @@ public sealed class BatteryTelemetryItemFactory(
         device.GetMicroservice<IPositionClientEx>() is not null
         && device.GetMicroservice<ITelemetryClientEx>() is not null;
 
-    public IRttBoxViewModel Create(in IClientDevice device)
+    public ITileViewModel Create(in IClientDevice device)
     {
         ArgumentNullException.ThrowIfNull(device);
 
@@ -57,7 +53,7 @@ public sealed class BatteryTelemetryItemFactory(
                             2
                         );
 
-                    return new BatteryRttBoxData(
+                    return new BatteryTelemetryData(
                         charge,
                         amperage,
                         voltage,
@@ -68,88 +64,68 @@ public sealed class BatteryTelemetryItemFactory(
                         voltageUnit
                     );
                 }
-            );
+            )
+            .ObserveOnUIThreadDispatcher()
+            .ThrottleLast(TimeSpan.FromMilliseconds(200));
 
-        return InternalCreate(batteryObservable);
-    }
-
-    public IRttBoxViewModel CreatePreview()
-    {
-        var batteryObservable = unitService
-            .Units[ProgressUnit.Id]
-            .CurrentUnitItem.CombineLatest(
-                unitService.Units[AmperageUnit.Id].CurrentUnitItem,
-                unitService.Units[CapacityUnit.Id].CurrentUnitItem,
-                unitService.Units[VoltageUnit.Id].CurrentUnitItem,
-                (progressUnit, amperageUnit, capacityUnit, voltageUnit) =>
-                    new BatteryRttBoxData(
-                        0.76d,
-                        12.4d,
-                        23.8d,
-                        3.9d,
-                        progressUnit,
-                        amperageUnit,
-                        capacityUnit,
-                        voltageUnit
-                    )
-            );
-
-        return InternalCreate(batteryObservable);
-    }
-
-    private IRttBoxViewModel InternalCreate(Observable<BatteryRttBoxData> observable)
-    {
-        return new KeyValueRttBoxViewModel<BatteryRttBoxData>(Id, loggerFactory, observable, null)
+        return new TelemetryViewModel<BatteryTelemetryData>(Id, batteryObservable, Update)
         {
-            Header = RS.UavRttItem_Battery,
-            Icon = MaterialIconKind.Battery10,
-            UpdateAction = (model, changes) =>
-            {
-                model[
-                    0,
-                    RS.UavWidgetViewModel_BatteryRttBox_BatteryCharge_Header,
-                    changes.ProgressUnit.Symbol
-                ].ValueString = changes.ProgressUnit.PrintFromSi(changes.Charge, "F2");
-                model[
-                    1,
-                    RS.UavWidgetViewModel_BatteryRttBox_BatteryAmperage_Header,
-                    changes.AmperageUnit.Symbol
-                ].ValueString = changes.AmperageUnit.PrintFromSi(changes.Amperage, "F2");
-                model[
-                    2,
-                    RS.UavWidgetViewModel_BatteryRttBox_BatteryVoltage_Header,
-                    changes.VoltageUnit.Symbol
-                ].ValueString = changes.VoltageUnit.PrintFromSi(changes.Voltage, "F2");
-                model[
-                    3,
-                    RS.UavWidgetViewModel_BatteryRttBox_BatteryConsumed_Header,
-                    changes.CapacityUnit.Symbol
-                ].ValueString = changes.CapacityUnit.PrintFromSi(changes.Consumed, "F2");
-
-                ChangeBatteryStatus(model, changes.Charge);
-            },
-            Status = DefaultStatusColor,
+            Density = TileDensity.Regular,
+            Header = RS.BatteryTelemetry_Header,
+            ShortHeader = RS.BatteryTelemetry_Header_Short,
+            Icon = MaterialIconKind.Battery80,
         };
+
+        void Update(TelemetryViewModel<BatteryTelemetryData> t, BatteryTelemetryData changes)
+        {
+            var percentCharge = changes.Charge * 100;
+            t.Text = changes.ProgressUnit.PrintFromSi(percentCharge, "F2");
+            t.Units = changes.ProgressUnit.Symbol;
+            t.Progress = percentCharge;
+            t.StatusText = CreateStatusString(changes);
+            t.StatusColor = GetStatusColor(changes.Charge);
+            t.ProgressColor = GetStatusColor(changes.Charge);
+            t.StatusIcon = GetStatusIcon(changes.Charge);
+            t.StatusIconColor = GetStatusColor(changes.Charge);
+        }
     }
 
-    private static void ChangeBatteryStatus(
-        KeyValueRttBoxViewModel<BatteryRttBoxData> rtt,
-        double percent
-    )
+    private static string CreateStatusString(BatteryTelemetryData changes)
     {
-        rtt.Status = percent switch
+        var sb = new StringBuilder();
+        sb.Append(changes.VoltageUnit.PrintFromSiWithUnits(changes.Voltage, "F2"))
+            .Append('|')
+            .Append(changes.AmperageUnit.PrintFromSiWithUnits(changes.Amperage, "F2"))
+            .Append('|')
+            .Append(changes.CapacityUnit.PrintFromSiWithUnits(changes.Consumed, "F2"));
+        return sb.ToString();
+    }
+
+    private static AsvColorKind GetStatusColor(double percent)
+    {
+        return percent switch
         {
-            > 0.7d => DefaultStatusColor,
+            > 0.7d => AsvColorKind.Success,
             > 0.5d => AsvColorKind.Warning,
             > 0.4d => AsvColorKind.Warning | AsvColorKind.Blink,
             < 0.3d => AsvColorKind.Error | AsvColorKind.Blink,
-            _ => DefaultStatusColor,
+            _ => TelemetryHelper.DefaultStatusColor,
+        };
+    }
+
+    private static MaterialIconKind GetStatusIcon(double percent)
+    {
+        return percent switch
+        {
+            > 0.4d and < 0.7d => MaterialIconKind.AlertCircle,
+            < 0.3d => MaterialIconKind.CloseCircle,
+            _ => MaterialIconKind.CheckCircle,
         };
     }
 }
 
 #pragma warning disable SA1313
-public record BatteryRttBoxData(
+public record BatteryTelemetryData(
     double Charge,
     double Amperage,
     double Voltage,

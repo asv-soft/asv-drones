@@ -1,127 +1,57 @@
-using System;
 using Asv.Avalonia;
-using Asv.Common;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
-using Asv.Mavlink.Common;
 using Material.Icons;
-using Microsoft.Extensions.Logging;
-using ObservableCollections;
 using R3;
+using TelemetryHelper = Asv.Drones.Api.TelemetryHelper;
 
 namespace Asv.Drones;
 
-public sealed class MissionDistanceTelemetryItemFactory(
-    IUnitService unitService,
-    ILoggerFactory loggerFactory
-) : ITelemetryItemFactory
+public sealed class MissionDistanceTelemetryItemFactory(IUnitService unitService)
+    : ITelemetryItemFactory
 {
-    public const string Id = "mission-distance";
+    public const string Id = "mission-path-distance";
 
     public string ItemId => Id;
-    private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public bool CanCreate(in IClientDevice device) =>
-        device.GetMicroservice<IMissionClientEx>() is not null
-        && device.GetMicroservice<IPositionClientEx>() is not null;
+        device.GetMicroservice<IMissionClientEx>() is not null;
 
-    public IRttBoxViewModel Create(in IClientDevice device)
+    public ITileViewModel Create(in IClientDevice device)
     {
         ArgumentNullException.ThrowIfNull(device);
 
-        var missionClient = device.GetRequiredMicroservice<IMissionClientEx>();
-        var positionClient = device.GetRequiredMicroservice<IPositionClientEx>();
-        var distance = missionClient.AllMissionsDistance.CombineLatest(
-            missionClient.MissionItems.ObserveChanged(),
-            positionClient.Home,
-            (distance, _, _) => distance
-        );
+        var missionDistance = device
+            .GetRequiredMicroservice<IMissionClientEx>()
+            .AllMissionsDistance.Select(distance => distance * 1000)
+            .Prepend(double.NaN)
+            .CombineLatest(
+                unitService.Units[DistanceUnit.Id].CurrentUnitItem,
+                (distance, unit) => new MissionPathDistanceTelemetryData(distance, unit)
+            )
+            .ObserveOnUIThreadDispatcher()
+            .ThrottleLast(TimeSpan.FromMilliseconds(200));
 
-        var totalDistance = distance
-            .Select(d => CalculateTotalDistance(d, missionClient, positionClient))
-            .Prepend(double.NaN);
-        var missionDistance = distance
-            .Select(_ => missionClient.AllMissionsDistance.CurrentValue * 1000)
-            .Prepend(double.NaN);
+        return new TelemetryViewModel<MissionPathDistanceTelemetryData>(Id, missionDistance, Update)
+        {
+            Density = TileDensity.Inline,
+            Header = RS.MissionDistanceTelemetry_Header,
+            ShortHeader = RS.MissionDistanceTelemetry_Header_Short,
+            Icon = MaterialIconKind.LocationDistance,
+        };
 
-        return CreateItem(totalDistance, missionDistance);
-    }
-
-    public IRttBoxViewModel CreatePreview()
-    {
-        return CreateItem(
-            Observable.Return(1100d).Concat(Observable.Never<double>()),
-            Observable.Return(1000d).Concat(Observable.Never<double>())
-        );
-    }
-
-    private IRttBoxViewModel CreateItem(
-        Observable<double> totalDistance,
-        Observable<double> missionDistance
-    )
-    {
-        var distanceData = totalDistance.CombineLatest(
-            missionDistance,
-            unitService.Units[DistanceUnit.Id].CurrentUnitItem,
-            (total, mission, unit) => new MissionDistanceRttBoxData(total, mission, unit)
-        );
-
-        return new KeyValueRttBoxViewModel<MissionDistanceRttBoxData>(
-            Id,
-            loggerFactory,
-            distanceData,
-            null
+        static void Update(
+            TelemetryViewModel<MissionPathDistanceTelemetryData> t,
+            MissionPathDistanceTelemetryData changes
         )
         {
-            Header = RS.MissionDistanceTelemetry_Header,
-            Icon = MaterialIconKind.LocationDistance,
-            UpdateAction = (model, changes) =>
-            {
-                model[
-                    0,
-                    RS.MissionDistanceTelemetry_DisplayName,
-                    changes.DistanceUnit.Symbol
-                ].ValueString = changes.DistanceUnit.PrintFromSi(changes.TotalDistance, "F2");
-                model[
-                    1,
-                    RS.MissionDistanceTelemetry_MissionDistance,
-                    changes.DistanceUnit.Symbol
-                ].ValueString = changes.DistanceUnit.PrintFromSi(changes.MissionDistance, "F2");
-            },
-            Status = DefaultStatusColor,
-        };
-    }
-
-    private static double CalculateTotalDistance(
-        double missionDistanceKm,
-        IMissionClientEx missionClient,
-        IPositionClientEx positionClient
-    )
-    {
-        var missionDistance = missionDistanceKm * 1000;
-        var start = missionClient.MissionItems.FirstOrDefault();
-        var stop = missionClient.MissionItems.LastOrDefault(missionItem =>
-            missionItem.Command.Value != MavCmd.MavCmdNavReturnToLaunch
-        );
-
-        if (start is null || stop is null || positionClient.Home.CurrentValue is null)
-        {
-            return missionDistance;
+            t.Text = changes.DistanceUnit.PrintFromSi(changes.Distance, "F2");
+            t.Units = changes.DistanceUnit.Symbol;
         }
-
-        var home = positionClient.Home.CurrentValue.Value;
-
-        return missionDistance
-            + GeoMath.Distance(start.Location.Value, home)
-            + GeoMath.Distance(stop.Location.Value, home);
     }
 }
 
 #pragma warning disable SA1313
-public record MissionDistanceRttBoxData(
-    double TotalDistance,
-    double MissionDistance,
-    IUnitItem DistanceUnit
-);
+public record MissionPathDistanceTelemetryData(double Distance, IUnitItem DistanceUnit);
 #pragma warning restore SA1313

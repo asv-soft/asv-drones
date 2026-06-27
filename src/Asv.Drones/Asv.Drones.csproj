@@ -53,17 +53,19 @@
         <DependentUpon>BurstDownloadDialogView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Shell\Pages\FlightMode\Dialogs\ConfigureTelemetryDialogView.axaml.cs">
+        <DependentUpon>ConfigureTelemetryDialogView.axaml</DependentUpon>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Core\" />
-      <Folder Include="Core\Controls\DeviceTelemetry\AngleUavIndicator\Items\" />
+      <Folder Include="Core\Controls\Telemetry\AngleUavIndicator\Items\" />
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="Core\Controls\DeviceTelemetry\AngleUavIndicator\UavAngleIndicatorStyles.axaml" />
+      <AdditionalFiles Include="Core\Controls\Telemetry\AngleUavIndicator\UavAngleIndicatorStyles.axaml" />
       <AdditionalFiles Include="Shell\Pages\FlightMode\Dialogs\SetAltitudeDialogView.axaml" />
-      <AdditionalFiles Include="Shell\Pages\FlightMode\Widgets\Sections\Telemetry\ConfigureTelemetryDialog\ConfigureTelemetryDialogView.axaml" />
       <AdditionalFiles Include="Shell\Pages\FlightMode\Widgets\Sections\Telemetry\DisplayItem\Add\AddTelemetryDisplayItemView.axaml" />
       <AdditionalFiles Include="Shell\Pages\FlightMode\Widgets\Sections\Telemetry\DisplayItem\Default\TelemetryDisplayItemView.axaml" />
       <AdditionalFiles Include="Shell\Pages\FlightMode\Widgets\Sections\Telemetry\TelemetrySectionView.axaml" />

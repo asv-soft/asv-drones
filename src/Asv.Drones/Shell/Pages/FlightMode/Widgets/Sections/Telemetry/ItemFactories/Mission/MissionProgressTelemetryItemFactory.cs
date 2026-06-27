@@ -8,18 +8,16 @@ using Asv.Mavlink.Common;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
+using TelemetryHelper = Asv.Drones.Api.TelemetryHelper;
 
 namespace Asv.Drones;
 
-public sealed class MissionProgressTelemetryItemFactory(
-    IUnitService unitService,
-    ILoggerFactory loggerFactory
-) : ITelemetryItemFactory
+public sealed class MissionProgressTelemetryItemFactory(IUnitService unitService)
+    : ITelemetryItemFactory
 {
     public const string Id = "mission-progress";
 
     public string ItemId => Id;
-    private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public bool CanCreate(in IClientDevice device) =>
         device.GetMicroservice<IMissionClientEx>() is not null
@@ -27,7 +25,7 @@ public sealed class MissionProgressTelemetryItemFactory(
         && device.GetMicroservice<IModeClient>() is not null
         && device.GetMicroservice<IGnssClientEx>() is not null;
 
-    public IRttBoxViewModel Create(in IClientDevice device)
+    public ITileViewModel Create(in IClientDevice device)
     {
         ArgumentNullException.ThrowIfNull(device);
 
@@ -36,6 +34,10 @@ public sealed class MissionProgressTelemetryItemFactory(
         var positionClient = device.GetRequiredMicroservice<IPositionClientEx>();
         var modeClient = device.GetRequiredMicroservice<IModeClient>();
         var gnssClient = device.GetRequiredMicroservice<IGnssClientEx>();
+        var timeSpanUnit = unitService.Units[TimeSpanUnit.Id].AvailableUnits[
+            TimeSpanHourMinuteSecondUnitItem.Id
+        ];
+
         var progressData = Observable
             .Timer(TimeSpan.Zero, TimeSpan.FromSeconds(1))
             .Select(_ =>
@@ -47,73 +49,51 @@ public sealed class MissionProgressTelemetryItemFactory(
                     gnssClient
                 )
             )
-            .Prepend(new MissionProgressData(double.NaN, double.NaN, double.NaN));
+            .Prepend(new MissionProgressData(double.NaN, double.NaN, double.NaN))
+            .CombineLatest(
+                unitService.Units[DistanceUnit.Id].CurrentUnitItem,
+                (progress, unit) =>
+                    new MissionProgressRttBoxData(
+                        progress.RemainingDistance,
+                        progress.Progress,
+                        progress.RemainingTime,
+                        unit,
+                        timeSpanUnit
+                    )
+            )
+            .ObserveOnUIThreadDispatcher()
+            .ThrottleLast(TimeSpan.FromMilliseconds(200));
 
-        return CreateItem(progressData);
-    }
+        return new TelemetryViewModel<MissionProgressRttBoxData>(Id, progressData, Update)
+        {
+            Density = TileDensity.Regular,
+            Header = RS.MissionProgressTelemetry_Header,
+            ShortHeader = RS.MissionProgressTelemetry_Header_Short,
+            Icon = MaterialIconKind.MapMarkerDistance,
+        };
 
-    public IRttBoxViewModel CreatePreview()
-    {
-        return CreateItem(
-            Observable
-                .Return(new MissionProgressData(900d, 0.7d, 900d))
-                .Concat(Observable.Never<MissionProgressData>())
-        );
-    }
-
-    private IRttBoxViewModel CreateItem(Observable<MissionProgressData> progressData)
-    {
-        var timeSpanUnit = unitService.Units[TimeSpanUnit.Id].AvailableUnits[
-            TimeSpanHourMinuteSecondUnitItem.Id
-        ];
-        var remainingData = progressData.CombineLatest(
-            unitService.Units[DistanceUnit.Id].CurrentUnitItem,
-            (progress, unit) =>
-                new MissionProgressRttBoxData(
-                    progress.RemainingDistance,
-                    progress.Progress,
-                    progress.RemainingTime,
-                    unit,
-                    timeSpanUnit
-                )
-        );
-
-        return new KeyValueRttBoxViewModel<MissionProgressRttBoxData>(
-            Id,
-            loggerFactory,
-            remainingData,
-            null
+        static void Update(
+            TelemetryViewModel<MissionProgressRttBoxData> t,
+            MissionProgressRttBoxData changes
         )
         {
-            Header = RS.MissionProgressTelemetry_DisplayName,
-            Icon = MaterialIconKind.MapMarkerDistance,
-            UpdateAction = (model, changes) =>
-            {
-                model[
-                    0,
-                    RS.MissionProgressTelemetry_RemainingDistance,
-                    changes.DistanceUnit.Symbol
-                ].ValueString = changes.DistanceUnit.PrintFromSi(changes.RemainingDistance, "F2");
-                model[
-                    1,
-                    RS.MissionTelemetry_RemainingTime,
-                    changes.TimeSpanUnit.Symbol
-                ].ValueString =
-                    double.IsNaN(changes.RemainingTime) || double.IsInfinity(changes.RemainingTime)
-                        ? "-"
-                        : changes.TimeSpanUnit.PrintFromSi(changes.RemainingTime, "F0");
-                if (double.IsNaN(changes.Progress) || double.IsInfinity(changes.Progress))
-                {
-                    model.Progress = 0;
-                    model.ProgressStatus = null;
-                    return;
-                }
+            t.Text = changes.DistanceUnit.PrintFromSi(changes.RemainingDistance, "F2");
+            t.Units = changes.DistanceUnit.Symbol;
+            t.StatusText =
+                double.IsNaN(changes.RemainingTime) || double.IsInfinity(changes.RemainingTime)
+                    ? $"{RS.MissionTelemetry_RemainingTime}: -"
+                    : $"{RS.MissionTelemetry_RemainingTime}: {changes.TimeSpanUnit.PrintFromSiWithUnits(changes.RemainingTime, "F0")}";
 
-                model.Progress = changes.Progress;
-                model.ProgressStatus = DefaultStatusColor;
-            },
-            Status = DefaultStatusColor,
-        };
+            if (double.IsNaN(changes.Progress) || double.IsInfinity(changes.Progress))
+            {
+                t.Progress = double.NaN;
+                t.ProgressColor = TelemetryHelper.DefaultStatusColor;
+                return;
+            }
+
+            t.Progress = changes.Progress * 100d;
+            t.ProgressColor = TelemetryHelper.DefaultStatusColor;
+        }
     }
 
     private static MissionProgressData CalculateProgressData(
@@ -241,8 +221,7 @@ public sealed class MissionProgressTelemetryItemFactory(
 
         if (
             missionClient.MissionItems.All(item =>
-                item.Command.Value < MavCmd.MavCmdNavWaypoint
-                || item.Command.Value > MavCmd.MavCmdNavLast
+                item.Command.Value is < MavCmd.MavCmdNavWaypoint or > MavCmd.MavCmdNavLast
             )
         )
         {

@@ -73,5 +73,47 @@ namespace Asv.Drones.Api {
                 return ResourceManager.GetString("FlightWidgetAction_CreateCommand_Title", resourceCulture);
             }
         }
+
+        internal static string ConfigureTelemetryAction_Header {
+            get {
+                return ResourceManager.GetString("ConfigureTelemetryAction_Header", resourceCulture);
+            }
+        }
+
+        internal static string ConfigureTelemetryAction_Description {
+            get {
+                return ResourceManager.GetString("ConfigureTelemetryAction_Description", resourceCulture);
+            }
+        }
+
+        internal static string ConfigureTelemetryAction_DialogTitle {
+            get {
+                return ResourceManager.GetString("ConfigureTelemetryAction_DialogTitle", resourceCulture);
+            }
+        }
+
+        internal static string ConfigureTelemetryAction_DialogPrimaryButtonText {
+            get {
+                return ResourceManager.GetString("ConfigureTelemetryAction_DialogPrimaryButtonText", resourceCulture);
+            }
+        }
+
+        internal static string ConfigureTelemetryAction_DialogCloseButtonText {
+            get {
+                return ResourceManager.GetString("ConfigureTelemetryAction_DialogCloseButtonText", resourceCulture);
+            }
+        }
+
+        internal static string ConfigureTelemetryDialogViewModel_SelectAll_Header {
+            get {
+                return ResourceManager.GetString("ConfigureTelemetryDialogViewModel_SelectAll_Header", resourceCulture);
+            }
+        }
+
+        internal static string ConfigureTelemetryDialogViewModel_ClearSelection_Header {
+            get {
+                return ResourceManager.GetString("ConfigureTelemetryDialogViewModel_ClearSelection_Header", resourceCulture);
+            }
+        }
     }
 }

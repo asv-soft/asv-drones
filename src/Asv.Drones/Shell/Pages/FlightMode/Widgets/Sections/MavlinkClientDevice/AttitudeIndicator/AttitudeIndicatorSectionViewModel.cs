@@ -19,32 +19,6 @@ public class AttitudeIndicatorSectionViewModel : ViewModel, IFlightWidgetSection
         DesignTime.ThrowIfNotDesignMode();
     }
 
-    public double Roll
-    {
-        get;
-        private set => SetField(ref field, value);
-    }
-
-    public double Pitch
-    {
-        get;
-        private set => SetField(ref field, value);
-    }
-
-    public double Heading
-    {
-        get;
-        private set => SetField(ref field, value);
-    }
-
-    public double HomeAzimuth
-    {
-        get;
-        private set => SetField(ref field, value);
-    }
-
-    public int Order => 0;
-
     public AttitudeIndicatorSectionViewModel(MavlinkClientDevice device)
         : base(SectionId)
     {
@@ -74,6 +48,32 @@ public class AttitudeIndicatorSectionViewModel : ViewModel, IFlightWidgetSection
             .Subscribe(x => HomeAzimuth = x)
             .DisposeItWith(Disposable);
     }
+
+    public double Roll
+    {
+        get;
+        private set => SetField(ref field, value);
+    }
+
+    public double Pitch
+    {
+        get;
+        private set => SetField(ref field, value);
+    }
+
+    public double Heading
+    {
+        get;
+        private set => SetField(ref field, value);
+    }
+
+    public double HomeAzimuth
+    {
+        get;
+        private set => SetField(ref field, value);
+    }
+
+    public int Order => 0;
 
     public override IEnumerable<IViewModel> GetChildren()
     {

@@ -1,4 +1,3 @@
-using System;
 using Asv.Avalonia;
 using Asv.Drones.Api;
 using R3;
@@ -15,20 +14,9 @@ public sealed class DroneFlightWidgetTelemetrySectionExtension(IServiceProvider 
     public void Extend(IDroneFlightWidget context, CompositeDisposable contextDispose)
     {
         var device = context.Device ?? throw new NullReferenceException();
-        string[] defaultItemIds =
-        [
-            CurrentFlightModeTelemetryItemFactory.Id,
-            BatteryTelemetryItemFactory.Id,
-            AltitudeTelemetryItemFactory.Id,
-            VelocityTelemetryItemFactory.Id,
-            GnssTelemetryItemFactory.Id,
-            LinkQualityTelemetryItemFactory.Id,
-            HomeAzimuthTelemetryItemFactory.Id,
-            MissionTargetTelemetryItemFactory.Id,
-        ];
 
         var vm = services.CreateViewModel<ITelemetrySection, TelemetrySectionArgs>(
-            new TelemetrySectionArgs(device, defaultItemIds)
+            new TelemetrySectionArgs(device)
         );
 
         context.Sections.Add(vm);

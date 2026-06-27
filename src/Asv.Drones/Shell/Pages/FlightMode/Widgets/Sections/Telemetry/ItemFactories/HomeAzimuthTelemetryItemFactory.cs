@@ -7,23 +7,21 @@ using Asv.Mavlink;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
+using TelemetryHelper = Asv.Drones.Api.TelemetryHelper;
 
 namespace Asv.Drones;
 
-public sealed class HomeAzimuthTelemetryItemFactory(
-    IUnitService unitService,
-    ILoggerFactory loggerFactory
-) : ITelemetryItemFactory
+public sealed class HomeAzimuthTelemetryItemFactory(IUnitService unitService)
+    : ITelemetryItemFactory
 {
     public const string Id = "home-azimuth";
-    private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public string ItemId => Id;
 
     public bool CanCreate(in IClientDevice device) =>
         device.GetMicroservice<IPositionClientEx>() is not null;
 
-    public IRttBoxViewModel Create(in IClientDevice device)
+    public ITileViewModel Create(in IClientDevice device)
     {
         ArgumentNullException.ThrowIfNull(device);
 
@@ -32,34 +30,33 @@ public sealed class HomeAzimuthTelemetryItemFactory(
             .Current.Where(_ => positionClientEx.Home.CurrentValue.HasValue)
             .ThrottleLast(TimeSpan.FromMilliseconds(200))
             .Select(p => p.Azimuth(positionClientEx.Home.CurrentValue ?? GeoPoint.NaN))
-            .Prepend(double.NaN);
+            .Prepend(double.NaN)
+            .CombineLatest(
+                unitService.Units[AngleUnit.Id].CurrentUnitItem,
+                (azimuth, unit) => new HomeAzimuthRttBoxData(azimuth, unit)
+            )
+            .ObserveOnUIThreadDispatcher()
+            .ThrottleLast(TimeSpan.FromMilliseconds(200));
 
-        return InternalCreate(homeAzimuthObservable);
-    }
+        return new TelemetryViewModel<HomeAzimuthRttBoxData>(Id, homeAzimuthObservable, Update)
+        {
+            Density = TileDensity.Inline,
+            Header = RS.HomeAzimuthTelemetry_Header,
+            ShortHeader = RS.HomeAzimuthTelemetry_Header_Short,
+            Icon = MaterialIconKind.Home,
+        };
 
-    public IRttBoxViewModel CreatePreview()
-    {
-        var homeAzimuthObservable = Observable.Return(30d).Concat(Observable.Never<double>());
-
-        return InternalCreate(homeAzimuthObservable);
-    }
-
-    private IRttBoxViewModel InternalCreate(Observable<double> observable)
-    {
-        return new SplitDigitRttBoxViewModel(
-            Id,
-            loggerFactory,
-            unitService,
-            AngleUnit.Id,
-            observable,
-            null
+        static void Update(
+            TelemetryViewModel<HomeAzimuthRttBoxData> t,
+            HomeAzimuthRttBoxData changes
         )
         {
-            Header = RS.HomeAzimuthUavIndicatorViewModel_HomeAzimuth,
-            ShortHeader = RS.HomeAzimuthUavIndicatorViewModel_HomeAzimuth_Short,
-            Icon = MaterialIconKind.Home,
-            Status = DefaultStatusColor,
-            FormatString = "F0",
-        };
+            t.Text = changes.AngleUnit.PrintFromSi(changes.Azimuth, "F0");
+            t.Units = changes.AngleUnit.Symbol;
+        }
     }
 }
+
+#pragma warning disable SA1313
+public record HomeAzimuthRttBoxData(double Azimuth, IUnitItem AngleUnit);
+#pragma warning restore SA1313
