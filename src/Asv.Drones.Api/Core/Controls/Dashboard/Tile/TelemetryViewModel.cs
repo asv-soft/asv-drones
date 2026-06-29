@@ -1,10 +1,8 @@
-﻿using Asv.Avalonia;
-using Asv.Common;
-using Asv.Drones.Api;
+﻿using Asv.Common;
 using Asv.Modeling;
 using R3;
 
-namespace Asv.Drones;
+namespace Asv.Drones.Api;
 
 public class TelemetryViewModel<TData> : TextTileViewModel<TelemetryViewModel<TData>, TData>
 {
