@@ -5,7 +5,7 @@
 
         <AvaloniaVersion>12.0.4</AvaloniaVersion>
         <AvaloniaDataGridVersion>12.0.0</AvaloniaDataGridVersion>
-        <AsvAvaloniaVersion>3.0.0-dev.65</AsvAvaloniaVersion>
+        <AsvAvaloniaVersion>3.0.0-dev.70</AsvAvaloniaVersion>
         <AsvMavlinkVersion>4.3.0-dev.10</AsvMavlinkVersion>
         <AsvGnssVersion>2.2.0-dev.7</AsvGnssVersion>
         <AsvLauncherApiVersion>0.0.1-dev.1</AsvLauncherApiVersion>

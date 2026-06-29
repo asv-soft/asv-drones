@@ -13,7 +13,7 @@ namespace Asv.Drones;
 
 public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightModePage
 {
-    public const string PageId = "flightMode";
+    public const string PageId = "flight-mode";
     public const MaterialIconKind PageIcon = MaterialIconKind.MapSearch;
 
     public FlightModePageViewModel()
@@ -23,7 +23,10 @@ public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightMo
             DesignTime.LoggerFactory,
             DesignTime.DialogService,
             DesignTime.ExtensionService
-        ) { }
+        )
+    {
+        DesignTime.ThrowIfNotDesignMode();
+    }
 
     public FlightModePageViewModel(
         IPageContext context,

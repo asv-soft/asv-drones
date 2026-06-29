@@ -3,7 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
     xmlns:avalonia1="clr-namespace:Asv.Avalonia;assembly=Asv.Avalonia"
     xmlns:drones="clr-namespace:Asv.Drones"
     xmlns:geoMap="clr-namespace:Asv.Avalonia.GeoMap;assembly=Asv.Avalonia.GeoMap"
@@ -18,14 +17,10 @@
     </Design.DataContext>
     <Panel>
         <geoMap:MapView x:Name="PART_Map" DataContext="{CompiledBinding Map}" />
-        <ItemsControl ItemsSource="{Binding WidgetsView}">
+        <avalonia1:Workspace x:Name="PART_Workspace" ItemsSource="{Binding WidgetsView}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <avalonia1:WorkspacePanel
-                        AttachedToVisualTree="WorkspacePanel_OnAttachedToVisualTree"
-                        DetachedFromVisualTree="WorkspacePanel_OnDetachedFromVisualTree"
-                        WorkspaceChanged="OnWorkspaceChanged"
-                    />
+                    <avalonia1:WorkspacePanel />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
@@ -37,7 +32,7 @@
                     />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        </avalonia1:Workspace>
         <geoMap:MapCompass
             Rotation="{Binding Map.Rotation.Value}"
             HorizontalAlignment="Right"
