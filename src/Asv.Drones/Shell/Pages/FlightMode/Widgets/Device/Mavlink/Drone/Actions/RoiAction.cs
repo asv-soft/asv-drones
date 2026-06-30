@@ -9,8 +9,7 @@ using R3;
 
 namespace Asv.Drones;
 
-public sealed class RoiAction<TWidget>(IDialogService dialogService)
-    : FlightWidgetAction<TWidget>("roi")
+public sealed class RoiAction<TWidget>() : FlightWidgetAction<TWidget>("roi")
     where TWidget : class, IDeviceFlightWidget<IClientDevice>
 {
     public const string StaticId = "ext.flight-widget.action.roi";
@@ -23,7 +22,9 @@ public sealed class RoiAction<TWidget>(IDialogService dialogService)
     )
     {
         var position = widget.Device.GetMicroservice<IPositionClientEx>();
-        if (position is null)
+        var map = widget.FindParentOfType<IFlightModePage>()?.Map;
+
+        if (position is null || map is null)
         {
             return null;
         }
@@ -36,13 +37,18 @@ public sealed class RoiAction<TWidget>(IDialogService dialogService)
                 item,
                 async ct =>
                 {
-                    var geoPointDialog = dialogService.GetDialogPrefab<GeoPointDialogPrefab>();
+                    var marker = new MapAnchor("roi.preview")
+                    {
+                        Location = position.Current.CurrentValue,
+                        Icon = MaterialIconKind.ImageFilterCenterFocus,
+                        IconSize = 32,
+                        IsReadOnly = true,
+                    };
 
-                    var point = await geoPointDialog.ShowDialogAsync(
-                        new GeoPointDialogPayload
-                        {
-                            InitialLocation = position.Current.CurrentValue,
-                        }
+                    var point = await map.PickPointAsync(
+                        marker,
+                        RS.RoiAction_TryCreateAction_Header,
+                        ct
                     );
                     if (point is null)
                     {
