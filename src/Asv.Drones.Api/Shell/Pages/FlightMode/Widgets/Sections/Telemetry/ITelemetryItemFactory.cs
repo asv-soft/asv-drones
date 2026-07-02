@@ -9,10 +9,9 @@ public interface ITelemetryItemFactory
 
     bool CanCreate(in IClientDevice device);
 
-    IRttBoxViewModel Create(in IClientDevice device);
-    IRttBoxViewModel CreatePreview();
+    ITileViewModel Create(in IClientDevice device);
 
-    IRttBoxViewModel? TryCreate(in IClientDevice device)
+    ITileViewModel? TryCreate(in IClientDevice device)
     {
         if (!CanCreate(device))
         {

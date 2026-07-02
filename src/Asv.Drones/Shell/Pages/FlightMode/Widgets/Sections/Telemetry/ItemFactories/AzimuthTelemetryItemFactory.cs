@@ -6,56 +6,48 @@ using Asv.Mavlink;
 using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
+using TelemetryHelper = Asv.Drones.Api.TelemetryHelper;
 
 namespace Asv.Drones;
 
-public sealed class AzimuthTelemetryItemFactory(
-    IUnitService unitService,
-    ILoggerFactory loggerFactory
-) : ITelemetryItemFactory
+public sealed class AzimuthTelemetryItemFactory(IUnitService unitService) : ITelemetryItemFactory
 {
     public const string Id = "azimuth";
-    private const AsvColorKind DefaultStatusColor = AsvColorKind.Info5;
 
     public string ItemId => Id;
 
     public bool CanCreate(in IClientDevice device) =>
         device.GetMicroservice<IPositionClientEx>() is not null;
 
-    public IRttBoxViewModel Create(in IClientDevice device)
+    public ITileViewModel Create(in IClientDevice device)
     {
         ArgumentNullException.ThrowIfNull(device);
 
         var azimuthObservable = device
             .GetRequiredMicroservice<IPositionClientEx>()
-            .Yaw.Select(value => Math.Round(value, 2))
-            .Prepend(double.NaN);
+            .Yaw.CombineLatest(
+                unitService.Units[AngleUnit.Id].CurrentUnitItem,
+                (value, unit) => new AzimuthRttBoxData(Math.Round(value, 2), unit)
+            )
+            .ObserveOnUIThreadDispatcher()
+            .ThrottleLast(TimeSpan.FromMilliseconds(200));
 
-        return InternalCreate(azimuthObservable);
-    }
-
-    public IRttBoxViewModel CreatePreview()
-    {
-        var azimuthObservable = Observable.Return(39d).Concat(Observable.Never<double>());
-
-        return InternalCreate(azimuthObservable);
-    }
-
-    private IRttBoxViewModel InternalCreate(Observable<double> observable)
-    {
-        return new SplitDigitRttBoxViewModel(
-            Id,
-            loggerFactory,
-            unitService,
-            AngleUnit.Id,
-            observable,
-            null
-        )
+        return new TelemetryViewModel<AzimuthRttBoxData>(Id, azimuthObservable, Update)
         {
-            Header = RS.UavRttItem_Azimuth,
+            Density = TileDensity.Inline,
+            Header = RS.AzimuthTelemetry_Header,
+            ShortHeader = RS.AzimuthTelemetry_Header,
             Icon = MaterialIconKind.SunAzimuth,
-            Status = DefaultStatusColor,
-            FormatString = "F2",
         };
+
+        static void Update(TelemetryViewModel<AzimuthRttBoxData> t, AzimuthRttBoxData changes)
+        {
+            t.Text = changes.AngleUnit.PrintFromSi(changes.Azimuth, "F2");
+            t.Units = changes.AngleUnit.Symbol;
+        }
     }
 }
+
+#pragma warning disable SA1313
+public record AzimuthRttBoxData(double Azimuth, IUnitItem AngleUnit);
+#pragma warning restore SA1313

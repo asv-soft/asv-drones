@@ -119,25 +119,25 @@
     <data name="MissionDistanceTelemetry_MissionDistance" xml:space="preserve">
         <value>Mission distance</value>
     </data>
-    <data name="MissionDistanceTelemetry_DisplayName" xml:space="preserve">
-        <value>Total distance</value>
+    <data name="MissionTotalDistanceTelemetry_Header" xml:space="preserve">
+        <value>Mission total distance</value>
     </data>
     <data name="MissionProgressTelemetry_RemainingDistance" xml:space="preserve">
         <value>Remaining distance</value>
     </data>
     <data name="MissionTelemetry_RemainingTime" xml:space="preserve">
-        <value>Remaining time</value>
+        <value>Remaining</value>
     </data>
-    <data name="MissionProgressTelemetry_DisplayName" xml:space="preserve">
+    <data name="MissionProgressTelemetry_Header" xml:space="preserve">
         <value>Mission Progress</value>
     </data>
     <data name="MissionDistanceTelemetry_Header" xml:space="preserve">
-        <value>Mission</value>
+        <value>Mission distance</value>
     </data>
-    <data name="HomeDistanceTelemetry_DisplayName" xml:space="preserve">
+    <data name="HomeDistanceTelemetry_Header" xml:space="preserve">
         <value>Home</value>
     </data>
-    <data name="MissionTargetTelemetry_DispayName" xml:space="preserve">
+    <data name="MissionTargetTelemetry_Header" xml:space="preserve">
         <value>Next mission item</value>
     </data>
     <data name="MissionTargetTelemetry_TargetDistance" xml:space="preserve">
@@ -149,31 +149,31 @@
     <data name="MissionProgressView_DownLoadingMission" xml:space="preserve">
         <value>Downloading mission</value>
     </data>
-    <data name="UavRttItem_Mode" xml:space="preserve">
+    <data name="ModeTelemetry_Header" xml:space="preserve">
         <value>Mode</value>
     </data>
-    <data name="UavRttItem_Altitude" xml:space="preserve">
+    <data name="AltitudeTelemetry_Header" xml:space="preserve">
         <value>Altitude</value>
     </data>
-    <data name="UavRttItem_Velocity" xml:space="preserve">
-        <value>Velocity</value>
+    <data name="HorizontalVelocityTelemetry_Header" xml:space="preserve">
+        <value>Horizontal Velocity</value>
     </data>
-    <data name="UavRttItem_Azimuth" xml:space="preserve">
+    <data name="AzimuthTelemetry_Header" xml:space="preserve">
         <value>Azimuth</value>
     </data>
-    <data name="UavRttItem_Battery" xml:space="preserve">
+    <data name="BatteryTelemetry_Header" xml:space="preserve">
         <value>Battery</value>
     </data>
-    <data name="UavRttItem_GNSS" xml:space="preserve">
-        <value>GNSS</value>
+    <data name="GnssTelemetry_Satellites_Header" xml:space="preserve">
+        <value>GNSS satellites</value>
     </data>
-    <data name="UavRttItem_Link" xml:space="preserve">
+    <data name="LinkTelemetry_Header" xml:space="preserve">
         <value>Link</value>
     </data>
     <data name="UavWidgetViewModel_StatusText_Armed" xml:space="preserve">
         <value>Armed</value>
     </data>
-    <data name="UavWidgetViewModel_StatusText_PullUp" xml:space="preserve">
+    <data name="AltitudeTelemetry_StatusText_PullUp" xml:space="preserve">
         <value>Pull Up</value>
     </data>
     <data name="UavWidgetViewModel_StatusText_DisArmed" xml:space="preserve">
@@ -340,9 +340,6 @@
     </data>
     <data name="OpenPacketViewerCommand_CommandInfo_Description" xml:space="preserve">
         <value>Command that opens packet viewer</value>
-    </data>
-    <data name="AltitudeIndicatorStyles_ToolTip_Velocity" xml:space="preserve">
-        <value>Velocity</value>
     </data>
     <data name="AltitudeIndicatorStyles_ToolTip_Altitude" xml:space="preserve">
         <value>Altitude</value>
@@ -560,49 +557,43 @@
     <data name="UavWidgetViewModel_GnssRttBox_SatellitesCount_Header" xml:space="preserve">
         <value>Satellites</value>
     </data>
-    <data name="UavWidgetViewModel_GnssRttBox_Hdop_Header" xml:space="preserve">
-        <value>Hdop</value>
+    <data name="GnssTelemetry_Hdop_Header" xml:space="preserve">
+        <value>GNSS Hdop</value>
     </data>
-    <data name="UavWidgetViewModel_GnssRttBox_Vdop_Header" xml:space="preserve">
-        <value>Vdop</value>
+    <data name="GnssTelemetry_Vdop_Header" xml:space="preserve">
+        <value>GNSS Vdop</value>
     </data>
-    <data name="UavWidgetViewModel_GnssRttBox_Mode_Header" xml:space="preserve">
-        <value>Mode</value>
+    <data name="GnssTelemetry_Mode_Header" xml:space="preserve">
+        <value>GNSS Mode</value>
     </data>
-    <data name="HeadingUavIndicatorViewModel_Heading" xml:space="preserve">
+    <data name="HeadingTelemetry_Header" xml:space="preserve">
         <value>Heading</value>
     </data>
-    <data name="HeadingUavIndicatorViewModel_Heading_Short" xml:space="preserve">
-        <value>HDG</value>
-    </data>
-    <data name="HomeAzimuthUavIndicatorViewModel_HomeAzimuth" xml:space="preserve">
+    <data name="HomeAzimuthTelemetry_Header" xml:space="preserve">
         <value>Home azimuth</value>
     </data>
-    <data name="HomeAzimuthUavIndicatorViewModel_HomeAzimuth_Short" xml:space="preserve">
-        <value>HOME</value>
+    <data name="HomeAzimuthTelemetry_Header_Short" xml:space="preserve">
+        <value>Home</value>
     </data>
-    <data name="VelocityUavIndicatorViewModel_Velocity_Short" xml:space="preserve">
-        <value>GS</value>
+    <data name="VerticalVelocityTelemetry_Header" xml:space="preserve">
+        <value>Vertical Velocity</value>
     </data>
-    <data name="VelocityUavIndicatorViewModel_Vertical_Short" xml:space="preserve">
-        <value>VS</value>
-    </data>
-    <data name="UavRttItem_TimeInAir" xml:space="preserve">
+    <data name="TimeInAirTelemetry_Header" xml:space="preserve">
         <value>Time in air</value>
     </data>
-    <data name="AngleUavRttIndicatorViewModel_Angle" xml:space="preserve">
+    <data name="AngleTelemetry_Header" xml:space="preserve">
         <value>Angle</value>
     </data>
     <data name="AltitudeUavIndicatorViewModel_Agl" xml:space="preserve">
         <value>AGL</value>
     </data>
-    <data name="AltitudeUavIndicatorViewModel_Msl" xml:space="preserve">
-        <value>MSL</value>
+    <data name="MslAltitudeTelemetry_Header" xml:space="preserve">
+        <value>MSL Altitude</value>
     </data>
     <data name="AngleUavRttIndicatorViewModel_Pitch" xml:space="preserve">
         <value>Pitch</value>
     </data>
-    <data name="AngleUavRttIndicatorViewModel_Roll" xml:space="preserve">
+    <data name="AngleTelemetry_Roll" xml:space="preserve">
         <value>Roll</value>
     </data>
     <data name="AddTelemetryItemCommand_CommandInfo_Name" xml:space="preserve">
@@ -610,6 +601,18 @@
     </data>
     <data name="AddTelemetryItemCommand_CommandInfo_Description" xml:space="preserve">
         <value>Add a telemetry indicator to the flight mode widget.</value>
+    </data>
+    <data name="ConfigureTelemetryAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Configure telemetry</value>
+    </data>
+    <data name="ConfigureTelemetryAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Configure how telemetry indicators are displayed.</value>
+    </data>
+    <data name="ConfigureTelemetryDialogViewModel_SelectAll_Header" xml:space="preserve">
+        <value>Select all</value>
+    </data>
+    <data name="ConfigureTelemetryDialogViewModel_ClearSelection_Header" xml:space="preserve">
+        <value>Clear selection</value>
     </data>
     <data name="RemoveTelemetryItemCommand_CommandInfo_Name" xml:space="preserve">
         <value>Remove telemetry indicator</value>
@@ -645,10 +648,10 @@
         <value>Cancel</value>
     </data>
     <data name="TelemetrySectionViewModel_ConfigureTelemetryDialog_Title" xml:space="preserve">
-        <value>Add indicator</value>
+        <value>Configure telemetry</value>
     </data>
     <data name="TelemetrySectionViewModel_ConfigureTelemetryDialog_PrimaryButtonText" xml:space="preserve">
-        <value>Add ({0})</value>
+        <value>Accept</value>
     </data>
     <data name="AutoModeAction_TryCreateAction_Header" xml:space="preserve">
         <value>Auto</value>
@@ -712,5 +715,50 @@
     </data>
     <data name="FlightModePageView_WorkspaceItem_ActionsHeader" xml:space="preserve">
         <value>Actions</value>
+    </data>
+    <data name="MslAltitudeTelemetry_Header_Short" xml:space="preserve">
+        <value>MSL</value>
+    </data>
+    <data name="AltitudeTelemetry_Header_Short" xml:space="preserve">
+        <value>Alt</value>
+    </data>
+    <data name="GnssTelemetry_Hdop_Header_Short" xml:space="preserve">
+        <value>Hdop</value>
+    </data>
+    <data name="GnssTelemetry_Mode_Header_Short" xml:space="preserve">
+        <value>GNSS</value>
+    </data>
+    <data name="GnssTelemetry_Satellites_Header_Short" xml:space="preserve">
+        <value>Sat</value>
+    </data>
+    <data name="GnssTelemetry_Satellites_Unit" xml:space="preserve">
+        <value>sat</value>
+    </data>
+    <data name="GnssTelemetry_Vdop_Header_Short" xml:space="preserve">
+        <value>Vdop</value>
+    </data>
+    <data name="MissionDistanceTelemetry_Header_Short" xml:space="preserve">
+        <value>Mission</value>
+    </data>
+    <data name="MissionProgressTelemetry_Header_Short" xml:space="preserve">
+        <value>Mission</value>
+    </data>
+    <data name="MissionTargetTelemetry_Header_Short" xml:space="preserve">
+        <value>Mis item</value>
+    </data>
+    <data name="VerticalVelocityTelemetry_Header_Short" xml:space="preserve">
+        <value>VS</value>
+    </data>
+    <data name="HorizontalVelocityTelemetry_Header_Short" xml:space="preserve">
+        <value>HV</value>
+    </data>
+    <data name="MissionTotalDistanceTelemetry_Header_Short" xml:space="preserve">
+        <value>Mis Tot</value>
+    </data>
+    <data name="BatteryTelemetry_Header_Short" xml:space="preserve">
+        <value>Bat</value>
+    </data>
+    <data name="TimeInAirTelemetry_Header_Short" xml:space="preserve">
+        <value>In air</value>
     </data>
 </root>

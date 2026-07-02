@@ -150,7 +150,7 @@ public static class AsvDronesMixin
                 IDroneFlightWidget,
                 DroneFlightWidgetTelemetrySectionExtension
             >();
-            builder.ViewLocator.RegisterViewFor<ITelemetrySection, TelemetrySectionView>();
+            builder.ViewLocator.RegisterViewFor<ITelemetrySection, DashboardView>();
             builder.ViewModel.RegisterWithArgs<
                 ITelemetrySection,
                 TelemetrySectionViewModel,
@@ -164,14 +164,23 @@ public static class AsvDronesMixin
                 AddTelemetryDisplayItemViewModel,
                 AddTelemetryDisplayItemView
             >();
+
             builder.ViewLocator.RegisterViewFor<
                 ConfigureTelemetryDialogViewModel,
                 ConfigureTelemetryDialogView
             >();
-
             builder.Services.AddSingleton<ITelemetryItemFactory, AltitudeTelemetryItemFactory>();
+            builder.Services.AddSingleton<ITelemetryItemFactory, MslAltitudeTelemetryItemFactory>();
             builder.Services.AddSingleton<ITelemetryItemFactory, BatteryTelemetryItemFactory>();
-            builder.Services.AddSingleton<ITelemetryItemFactory, VelocityTelemetryItemFactory>();
+
+            builder.Services.AddSingleton<
+                ITelemetryItemFactory,
+                HorizontalVelocityTelemetryItemFactory
+            >();
+            builder.Services.AddSingleton<
+                ITelemetryItemFactory,
+                VerticalVelocityTelemetryItemFactory
+            >();
             builder.Services.AddSingleton<ITelemetryItemFactory, AngleTelemetryItemFactory>();
             builder.Services.AddSingleton<ITelemetryItemFactory, HeadingTelemetryItemFactory>();
             builder.Services.AddSingleton<ITelemetryItemFactory, HomeAzimuthTelemetryItemFactory>();
@@ -179,9 +188,21 @@ public static class AsvDronesMixin
                 ITelemetryItemFactory,
                 CurrentFlightModeTelemetryItemFactory
             >();
+            builder.Services.AddSingleton<ITelemetryItemFactory, TimeInAirTelemetryItemFactory>();
             builder.Services.AddSingleton<ITelemetryItemFactory, AzimuthTelemetryItemFactory>();
+
             builder.Services.AddSingleton<ITelemetryItemFactory, LinkQualityTelemetryItemFactory>();
-            builder.Services.AddSingleton<ITelemetryItemFactory, GnssTelemetryItemFactory>();
+            builder.Services.AddSingleton<
+                ITelemetryItemFactory,
+                GnssSatellitesTelemetryItemFactory
+            >();
+            builder.Services.AddSingleton<ITelemetryItemFactory, GnssModeTelemetryItemFactory>();
+            builder.Services.AddSingleton<ITelemetryItemFactory, GnssHdopTelemetryItemFactory>();
+            builder.Services.AddSingleton<ITelemetryItemFactory, GnssVdopTelemetryItemFactory>();
+            builder.Services.AddSingleton<
+                ITelemetryItemFactory,
+                MissionTotalDistanceTelemetryItemFactory
+            >();
             builder.Services.AddSingleton<
                 ITelemetryItemFactory,
                 MissionDistanceTelemetryItemFactory
@@ -198,7 +219,6 @@ public static class AsvDronesMixin
                 ITelemetryItemFactory,
                 MissionTargetTelemetryItemFactory
             >();
-
             builder.Extensions.Register<
                 IDroneFlightWidget,
                 DroneFlightWidgetAttitudeIndicatorSectionExtension
@@ -236,6 +256,10 @@ public static class AsvDronesMixin
             builder.Extensions.Register<
                 IDroneFlightWidget,
                 ChangePathVisibilityAction<IDroneFlightWidget>
+            >();
+            builder.Extensions.Register<
+                IDroneFlightWidget,
+                ConfigureTelemetryAction<IDroneFlightWidget>
             >();
 
             builder.ViewLocator.RegisterViewFor<

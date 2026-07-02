@@ -65,7 +65,10 @@ internal static class DeviceTelemetryDesignPreview
             )
         );
         unitService.Extend(
-            new TimeSpanUnit(DesignTime.Configuration, [new TimeSpanHourMinuteSecondUnitItem()])
+            new TimeSpanUnit(
+                DesignTime.Configuration,
+                [new TimeSpanSecondUnitItem(), new TimeSpanHourMinuteSecondUnitItem()]
+            )
         );
 
         _isConfigured = true;
