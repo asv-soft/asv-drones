@@ -1,4 +1,3 @@
-using System.Linq;
 using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Controls.Primitives;

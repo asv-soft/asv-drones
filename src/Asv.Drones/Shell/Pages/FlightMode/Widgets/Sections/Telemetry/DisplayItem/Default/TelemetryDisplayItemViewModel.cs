@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using System.Windows.Input;
 using Asv.Avalonia;
 using Asv.Common;
-using Asv.Drones.Api;
 using Asv.Modeling;
 using R3;
 

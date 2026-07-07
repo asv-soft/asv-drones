@@ -4,12 +4,11 @@ using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
 using Asv.Modeling;
-using Microsoft.Extensions.Logging;
 using R3;
 
 namespace Asv.Drones;
 
-public class MotorsSetupPageExtension(ILoggerFactory loggerFactory) : IExtensionFor<ISetupPage>
+public class MotorsSetupPageExtension : IExtensionFor<ISetupPage>
 {
     public const string StaticId = "ext.setup.motors";
 
@@ -32,13 +31,12 @@ public class MotorsSetupPageExtension(ILoggerFactory loggerFactory) : IExtension
                 }
 
                 context.Nodes.Add(
-                    new TreePage(
+                    new TreePageMenuItem(
                         SetupMotorsViewModel.PageId,
                         RS.SetupMotorsViewModel_Name,
                         SetupMotorsViewModel.Icon,
                         new NavId(SetupMotorsViewModel.PageId),
-                        NavId.Empty,
-                        loggerFactory
+                        NavId.Empty
                     ).DisposeItWith(contextDispose)
                 );
             })

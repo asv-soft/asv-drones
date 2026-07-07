@@ -2,7 +2,6 @@
 using Asv.Avalonia.IO;
 using Asv.Gnss;
 using Asv.IO;
-using Avalonia.Media;
 using Material.Icons;
 
 namespace Asv.Drones;

@@ -5,8 +5,6 @@ using Asv.IO;
 using Asv.Mavlink;
 using Asv.Mavlink.Ardupilotmega;
 using Asv.Mavlink.AsvAudio;
-using Asv.Mavlink.AsvAudio;
-using Asv.Mavlink.AsvChart;
 using Asv.Mavlink.AsvChart;
 using Asv.Mavlink.AsvGbs;
 using Asv.Mavlink.AsvRadio;
@@ -24,7 +22,6 @@ using Asv.Mavlink.Ualberta;
 using Asv.Mavlink.Uavionix;
 using Material.Icons;
 using Microsoft.Extensions.Hosting;
-using R3;
 using MavType = Asv.Mavlink.Minimal.MavType;
 
 namespace Asv.Drones.Api;

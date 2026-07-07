@@ -1,5 +1,4 @@
-﻿using System;
-using Asv.Avalonia;
+﻿using Asv.Avalonia;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;

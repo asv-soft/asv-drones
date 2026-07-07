@@ -1,6 +1,5 @@
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
-using Asv.Avalonia.IO;
 using Asv.Common;
 using Asv.Drones.Api;
 using Asv.Modeling;

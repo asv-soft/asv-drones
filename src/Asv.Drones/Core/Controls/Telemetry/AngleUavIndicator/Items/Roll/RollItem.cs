@@ -1,4 +1,3 @@
-using System;
 using Avalonia;
 
 namespace Asv.Drones;

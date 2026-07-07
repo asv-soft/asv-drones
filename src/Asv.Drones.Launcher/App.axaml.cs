@@ -1,4 +1,3 @@
-using System;
 using Asv.Avalonia.Launcher;
 using Avalonia.Markup.Xaml;
 

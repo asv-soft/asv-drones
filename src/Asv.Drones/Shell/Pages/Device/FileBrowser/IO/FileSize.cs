@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Asv.Drones;
+﻿namespace Asv.Drones;
 
 public readonly struct FileSize(long size) : IEquatable<FileSize>
 {

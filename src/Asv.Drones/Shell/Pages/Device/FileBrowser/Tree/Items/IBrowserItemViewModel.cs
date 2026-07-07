@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Asv.Avalonia;
+﻿using Asv.Avalonia;
 using Asv.Mavlink;
 using R3;
 

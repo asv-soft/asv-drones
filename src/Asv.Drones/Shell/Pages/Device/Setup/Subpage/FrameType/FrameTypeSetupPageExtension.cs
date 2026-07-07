@@ -4,12 +4,11 @@ using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
 using Asv.Modeling;
-using Microsoft.Extensions.Logging;
 using R3;
 
 namespace Asv.Drones;
 
-public class FrameTypeSetupPageExtension(ILoggerFactory loggerFactory) : IExtensionFor<ISetupPage>
+public class FrameTypeSetupPageExtension : IExtensionFor<ISetupPage>
 {
     public const string StaticId = "ext.setup.frame-type";
 
@@ -32,13 +31,12 @@ public class FrameTypeSetupPageExtension(ILoggerFactory loggerFactory) : IExtens
                 }
 
                 context.Nodes.Add(
-                    new TreePage(
+                    new TreePageMenuItem(
                         SetupFrameTypeViewModel.PageId,
                         RS.SetupFrameTypeViewModel_Name,
                         SetupFrameTypeViewModel.Icon,
                         new NavId(SetupFrameTypeViewModel.PageId),
-                        NavId.Empty,
-                        loggerFactory
+                        NavId.Empty
                     ).DisposeItWith(contextDispose)
                 );
             })

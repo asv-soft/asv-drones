@@ -1,12 +1,9 @@
-using System;
-using Asv.Avalonia;
+﻿using Asv.Avalonia;
 using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
 using Material.Icons;
-using Microsoft.Extensions.Logging;
 using R3;
-using TelemetryHelper = Asv.Drones.Api.TelemetryHelper;
 
 namespace Asv.Drones;
 

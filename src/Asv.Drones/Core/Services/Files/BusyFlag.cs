@@ -1,5 +1,4 @@
-﻿using System;
-using R3;
+﻿using R3;
 
 namespace Asv.Drones;
 

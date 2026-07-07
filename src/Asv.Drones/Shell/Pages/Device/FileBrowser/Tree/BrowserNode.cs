@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Asv.Avalonia;
+﻿using Asv.Avalonia;
 using ObservableCollections;
 
 namespace Asv.Drones;

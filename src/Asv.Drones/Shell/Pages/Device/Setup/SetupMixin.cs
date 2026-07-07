@@ -84,10 +84,12 @@ public static class SetupMixin
         >(string pageId)
             where TViewModel : class, ISetupSubpage
             where TView : Control
-            where TTreeMenu : class, ITreePage
+            where TTreeMenu : class, ITreePageMenuItem
         {
             AddSubPage<TViewModel, TView>(pageId);
-            builder.Services.AddKeyedTransient<ITreePage, TTreeMenu>(SetupPageViewModel.PageId);
+            builder.Services.AddKeyedTransient<ITreePageMenuItem, TTreeMenu>(
+                SetupPageViewModel.PageId
+            );
             return this;
         }
     }

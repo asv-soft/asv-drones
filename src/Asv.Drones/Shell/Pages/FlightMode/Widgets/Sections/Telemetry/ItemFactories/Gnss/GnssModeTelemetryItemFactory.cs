@@ -4,7 +4,6 @@ using Asv.IO;
 using Asv.Mavlink;
 using Material.Icons;
 using R3;
-using TelemetryHelper = Asv.Drones.Api.TelemetryHelper;
 
 namespace Asv.Drones;
 

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Avalonia;
 
 namespace Asv.Drones;

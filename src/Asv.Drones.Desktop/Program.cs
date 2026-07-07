@@ -1,21 +1,12 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
-using System.Threading.Tasks;
-using Asv.Avalonia;
+﻿using Asv.Avalonia;
 using Asv.Avalonia.Charts;
 using Asv.Avalonia.GeoMap;
 using Asv.Avalonia.IO;
 using Asv.Avalonia.Launcher.Ready;
 using Asv.Avalonia.Plugins;
-using Asv.Common;
 using Asv.Drones.Api;
 using Avalonia;
 using Avalonia.Controls;
-using DotNext;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using R3;
 
 namespace Asv.Drones.Desktop;
 

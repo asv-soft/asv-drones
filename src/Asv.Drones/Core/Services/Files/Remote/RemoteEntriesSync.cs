@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using Asv.Avalonia;
-using Asv.IO;
-using Asv.Mavlink;
+﻿using Asv.Mavlink;
 using Asv.Modeling;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;

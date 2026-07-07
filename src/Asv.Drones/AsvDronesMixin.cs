@@ -1,7 +1,6 @@
 ﻿using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Drones.Api;
-using Asv.Drones.Plane;
 using Asv.Mavlink;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

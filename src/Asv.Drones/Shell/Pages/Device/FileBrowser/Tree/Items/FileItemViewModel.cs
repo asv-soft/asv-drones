@@ -1,9 +1,4 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Asv.Avalonia;
 using Asv.Mavlink;
-using Asv.Modeling;
 using Microsoft.Extensions.Logging;
 
 namespace Asv.Drones;

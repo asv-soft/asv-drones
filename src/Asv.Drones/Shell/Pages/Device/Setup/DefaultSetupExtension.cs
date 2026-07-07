@@ -7,7 +7,7 @@ using R3;
 namespace Asv.Drones;
 
 public class DefaultSetupExtension(
-    [FromKeyedServices(SetupPageViewModel.PageId)] IEnumerable<ITreePage> items
+    [FromKeyedServices(SetupPageViewModel.PageId)] IEnumerable<ITreePageMenuItem> items
 ) : IExtensionFor<ISetupPage>
 {
     public const string StaticId = "ext.setup.tree";

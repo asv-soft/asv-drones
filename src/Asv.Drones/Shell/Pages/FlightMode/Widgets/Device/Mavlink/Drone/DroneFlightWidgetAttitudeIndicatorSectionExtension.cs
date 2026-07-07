@@ -1,5 +1,4 @@
-﻿using System;
-using Asv.Avalonia;
+﻿using Asv.Avalonia;
 using Asv.Drones.Api;
 using Microsoft.Extensions.DependencyInjection;
 using R3;

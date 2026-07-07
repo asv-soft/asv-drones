@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Asv.Drones;
+﻿namespace Asv.Drones;
 
 public sealed class FileBrowserBackend(LocalFilesService local, FtpClientService ftp)
 {

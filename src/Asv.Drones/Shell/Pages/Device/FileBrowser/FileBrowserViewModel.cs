@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Common;
@@ -13,7 +7,6 @@ using Asv.Mavlink;
 using Asv.Modeling;
 using Material.Icons;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using NuGet.Packaging;

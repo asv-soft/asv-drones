@@ -1,4 +1,3 @@
-using System.Threading;
 using Asv.Avalonia;
 using Asv.Modeling;
 

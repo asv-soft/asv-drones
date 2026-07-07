@@ -1,5 +1,4 @@
-﻿using System;
-using Asv.Drones.Api;
+﻿using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
 using Microsoft.Extensions.DependencyInjection;

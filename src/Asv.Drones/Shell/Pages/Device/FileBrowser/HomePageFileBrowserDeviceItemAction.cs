@@ -1,6 +1,5 @@
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
-using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
 using Asv.Modeling;

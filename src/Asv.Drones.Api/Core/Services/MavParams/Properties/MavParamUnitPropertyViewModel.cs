@@ -1,7 +1,6 @@
 using Asv.Avalonia;
 using Asv.Common;
 using Asv.Mavlink;
-using Asv.Modeling;
 using R3;
 
 namespace Asv.Drones.Api;

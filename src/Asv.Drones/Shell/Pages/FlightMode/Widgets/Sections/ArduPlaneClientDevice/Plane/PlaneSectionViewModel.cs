@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Asv.Avalonia;
 using Asv.Drones.Api;
 using Asv.Mavlink;

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Asv.Drones;
+﻿namespace Asv.Drones;
 
 public sealed class BrowserItemComparer : IComparer<IBrowserItemViewModel>
 {
