@@ -3,7 +3,7 @@ using Asv.Common;
 using Microsoft.Extensions.Logging;
 using R3;
 
-namespace Asv.Drones;
+namespace Asv.Drones.Api;
 
 public class SetAltitudeDialogViewModel : DialogViewModelBase
 {

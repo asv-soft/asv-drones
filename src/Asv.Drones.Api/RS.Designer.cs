@@ -115,5 +115,143 @@ namespace Asv.Drones.Api {
                 return ResourceManager.GetString("ConfigureTelemetryDialogViewModel_ClearSelection_Header", resourceCulture);
             }
         }
+
+        internal static string SetAltitudeDialogViewModel_ApplyDialog_PrimaryButton_TakeOff {
+            get {
+                return ResourceManager.GetString("SetAltitudeDialogViewModel_ApplyDialog_PrimaryButton_TakeOff", resourceCulture);
+            }
+        }
+
+        internal static string SetAltitudeDialogViewModel_ApplyDialog_SecondaryButton_Cancel {
+            get {
+                return ResourceManager.GetString("SetAltitudeDialogViewModel_ApplyDialog_SecondaryButton_Cancel", resourceCulture);
+            }
+        }
+
+        internal static string UavWidgetViewModel_SetAltitudeDialog_Title {
+            get {
+                return ResourceManager.GetString("UavWidgetViewModel_SetAltitudeDialog_Title", resourceCulture);
+            }
+        }
+
+        internal static string AutoModeAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("AutoModeAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+
+        internal static string AutoModeAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("AutoModeAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+
+        internal static string RefreshMissionAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("RefreshMissionAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+
+        internal static string RefreshMissionAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("RefreshMissionAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+
+        internal static string StartMissionAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("StartMissionAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+
+        internal static string StartMissionAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("StartMissionAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+
+        internal static string GuidedAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("GuidedAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+
+        internal static string GuidedAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("GuidedAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+
+        internal static string RtlAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("RtlAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+
+        internal static string RtlAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("RtlAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+
+        internal static string LandAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("LandAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+
+        internal static string LandAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("LandAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+
+        internal static string TakeOffAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("TakeOffAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+
+        internal static string TakeOffAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("TakeOffAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+
+        internal static string GotoAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("GotoAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+
+        internal static string GotoAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("GotoAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+
+        internal static string RoiAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("RoiAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+
+        internal static string RoiAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("RoiAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+
+        internal static string FindDroneAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("FindDroneAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+
+        internal static string FindDroneAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("FindDroneAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
     }
 }

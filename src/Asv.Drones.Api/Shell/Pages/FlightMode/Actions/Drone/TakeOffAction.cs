@@ -7,22 +7,22 @@ using Material.Icons;
 using Microsoft.Extensions.Logging;
 using R3;
 
-namespace Asv.Drones;
+namespace Asv.Drones.Api;
 
-public sealed class TakeOffAction<TWidget>(IUnitService unitService, ILoggerFactory loggerFactory)
-    : FlightWidgetAction<TWidget>("take-off")
-    where TWidget : class, IDeviceFlightWidget<IClientDevice>
+public sealed class TakeOffAction<TTarget>(IUnitService unitService, ILoggerFactory loggerFactory)
+    : DroneMenuAction<TTarget>("take-off")
+    where TTarget : class, IDeviceActionTarget<IClientDevice>
 {
-    public const string StaticId = "ext.flight-widget.action.take-off";
+    public const string StaticId = "ext.drone.action.take-off";
 
     public override string Id => StaticId;
 
     protected override IMenuItem? TryCreateAction(
-        TWidget widget,
+        TTarget target,
         CompositeDisposable contextDispose
     )
     {
-        var control = widget.Device.GetMicroservice<IControlClient>();
+        var control = target.Device.GetMicroservice<IControlClient>();
         if (control is null)
         {
             return null;

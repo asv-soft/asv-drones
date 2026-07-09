@@ -227,7 +227,7 @@ public static class AsvDronesMixin
                 AttitudeIndicatorSectionView
             >();
 
-            // Actions for flight widgets
+            // Actions for drone targets
             builder.Extensions.Register<IDroneFlightWidget, AutoModeAction<IDroneFlightWidget>>();
             builder.Extensions.Register<
                 IDroneFlightWidget,
@@ -260,6 +260,19 @@ public static class AsvDronesMixin
                 IDroneFlightWidget,
                 ConfigureTelemetryAction<IDroneFlightWidget>
             >();
+            builder.Extensions.Register<UavAnchor, AutoModeAction<UavAnchor>>();
+            builder.Extensions.Register<UavAnchor, RefreshMissionAction<UavAnchor>>();
+            builder.Extensions.Register<UavAnchor, StartMissionAction<UavAnchor>>();
+            builder.Extensions.Register<UavAnchor, GuidedAction<UavAnchor>>();
+            builder.Extensions.Register<UavAnchor, TakeOffAction<UavAnchor>>();
+            builder.Extensions.Register<UavAnchor, LandAction<UavAnchor>>();
+            builder.Extensions.Register<UavAnchor, RtlAction<UavAnchor>>();
+            builder.Extensions.Register<UavAnchor, GotoAction<UavAnchor>>();
+            builder.Extensions.Register<UavAnchor, RoiAction<UavAnchor>>();
+            builder.Extensions.Register<UavAnchor, FindDroneAction<UavAnchor>>();
+            builder.Extensions.Register<UavAnchor, ChangeMissionVisibilityAction<UavAnchor>>();
+            builder.Extensions.Register<UavAnchor, ChangeAnchorsVisibilityAction<UavAnchor>>();
+            builder.Extensions.Register<UavAnchor, ChangePathVisibilityAction<UavAnchor>>();
 
             builder.ViewLocator.RegisterViewFor<
                 SetAltitudeDialogViewModel,

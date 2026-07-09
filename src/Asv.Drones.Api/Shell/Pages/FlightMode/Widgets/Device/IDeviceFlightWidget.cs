@@ -2,8 +2,7 @@
 
 namespace Asv.Drones.Api;
 
-public interface IDeviceFlightWidget<out TDeviceContext> : IFlightWidget
-    where TDeviceContext : class, IClientDevice
-{
-    public TDeviceContext Device { get; }
-}
+public interface IDeviceFlightWidget<out TDeviceContext>
+    : IFlightWidget,
+        IDeviceActionTarget<TDeviceContext>
+    where TDeviceContext : class, IClientDevice { }

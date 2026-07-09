@@ -6,21 +6,21 @@ using Asv.Mavlink;
 using Material.Icons;
 using R3;
 
-namespace Asv.Drones;
+namespace Asv.Drones.Api;
 
-public sealed class GuidedAction<TWidget>() : FlightWidgetAction<TWidget>("guided")
-    where TWidget : class, IDeviceFlightWidget<IClientDevice>
+public sealed class GuidedAction<TTarget>() : DroneMenuAction<TTarget>("guided")
+    where TTarget : class, IDeviceActionTarget<IClientDevice>
 {
-    public const string StaticId = "ext.flight-widget.action.guided";
+    public const string StaticId = "ext.drone.action.guided";
 
     public override string Id => StaticId;
 
     protected override IMenuItem? TryCreateAction(
-        TWidget widget,
+        TTarget target,
         CompositeDisposable contextDispose
     )
     {
-        var control = widget.Device.GetMicroservice<IControlClient>();
+        var control = target.Device.GetMicroservice<IControlClient>();
         if (control is null)
         {
             return null;

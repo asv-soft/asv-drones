@@ -7,22 +7,22 @@ using Asv.Mavlink;
 using Material.Icons;
 using R3;
 
-namespace Asv.Drones;
+namespace Asv.Drones.Api;
 
-public sealed class RoiAction<TWidget>() : FlightWidgetAction<TWidget>("roi")
-    where TWidget : class, IDeviceFlightWidget<IClientDevice>
+public sealed class RoiAction<TTarget>() : DroneMenuAction<TTarget>("roi")
+    where TTarget : class, IViewModel, IDeviceActionTarget<IClientDevice>
 {
-    public const string StaticId = "ext.flight-widget.action.roi";
+    public const string StaticId = "ext.drone.action.roi";
 
     public override string Id => StaticId;
 
     protected override IMenuItem? TryCreateAction(
-        TWidget widget,
+        TTarget target,
         CompositeDisposable contextDispose
     )
     {
-        var position = widget.Device.GetMicroservice<IPositionClientEx>();
-        var map = widget.FindParentOfType<IFlightModePage>()?.Map;
+        var position = target.Device.GetMicroservice<IPositionClientEx>();
+        var map = target.FindParentOfType<IFlightModePage>()?.Map;
 
         if (position is null || map is null)
         {

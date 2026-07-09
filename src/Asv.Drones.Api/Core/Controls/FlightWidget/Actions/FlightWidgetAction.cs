@@ -1,5 +1,4 @@
 using Asv.Avalonia;
-using Asv.Avalonia.InfoMessage;
 using R3;
 
 namespace Asv.Drones.Api;
@@ -13,61 +12,16 @@ namespace Asv.Drones.Api;
 /// bound to a more specific widget interface simply won't be offered to the others.
 /// </summary>
 /// <typeparam name="TWidget">The widget interface this action attaches to.</typeparam>
-public abstract class FlightWidgetAction<TWidget> : IExtensionFor<TWidget>
+public abstract class FlightWidgetAction<TWidget> : MenuAction<TWidget>
     where TWidget : class, IFlightWidget
 {
     private const string BaseId = "widget-action.";
-    private readonly string _actionId;
 
     protected FlightWidgetAction(string id)
-    {
-        _actionId = BaseId + id;
-    }
+        : base(BaseId, id) { }
 
-    public abstract string Id { get; }
-
-    public void Extend(TWidget context, CompositeDisposable contextDispose)
-    {
-        var action = TryCreateAction(context, contextDispose);
-        if (action is not null)
-        {
-            context.Menu.Add(action);
-        }
-    }
-
-    protected abstract IMenuItem? TryCreateAction(
+    protected abstract override IMenuItem? TryCreateAction(
         TWidget widget,
         CompositeDisposable contextDispose
     );
-
-    protected MenuItem CreateMenuItem(string header)
-    {
-        return new MenuItem(_actionId, header);
-    }
-
-    protected static ReactiveCommand CreateCommand(
-        IViewModel owner,
-        Func<CancellationToken, ValueTask> execute
-    )
-    {
-        return new ReactiveCommand(
-            async (_, ct) =>
-            {
-                try
-                {
-                    await execute(ct);
-                }
-                catch (OperationCanceledException) { }
-                catch (Exception ex)
-                {
-                    await owner.RiseShellErrorMessage(
-                        RS.FlightWidgetAction_CreateCommand_Title,
-                        ex.Message,
-                        ex,
-                        ct
-                    );
-                }
-            }
-        );
-    }
 }

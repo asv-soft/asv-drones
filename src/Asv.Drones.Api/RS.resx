@@ -45,4 +45,73 @@
     <data name="ConfigureTelemetryDialogViewModel_ClearSelection_Header" xml:space="preserve">
         <value>Clear selection</value>
     </data>
+    <data name="SetAltitudeDialogViewModel_ApplyDialog_PrimaryButton_TakeOff" xml:space="preserve">
+        <value>Take off</value>
+    </data>
+    <data name="SetAltitudeDialogViewModel_ApplyDialog_SecondaryButton_Cancel" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="UavWidgetViewModel_SetAltitudeDialog_Title" xml:space="preserve">
+        <value>Input Altitude</value>
+    </data>
+    <data name="AutoModeAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Auto</value>
+    </data>
+    <data name="AutoModeAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Switch to auto flight mode.</value>
+    </data>
+    <data name="RefreshMissionAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Refresh mission</value>
+    </data>
+    <data name="RefreshMissionAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Download the latest mission from the drone.</value>
+    </data>
+    <data name="StartMissionAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Start mission</value>
+    </data>
+    <data name="StartMissionAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Download the latest mission, select the first mission item, and switch to auto mode.</value>
+    </data>
+    <data name="GuidedAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Guided</value>
+    </data>
+    <data name="GuidedAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Switch to guided flight mode.</value>
+    </data>
+    <data name="RtlAction_TryCreateAction_Header" xml:space="preserve">
+        <value>RTL</value>
+    </data>
+    <data name="RtlAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Return to launch.</value>
+    </data>
+    <data name="LandAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Land</value>
+    </data>
+    <data name="LandAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Land the drone at the current location.</value>
+    </data>
+    <data name="TakeOffAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Take off</value>
+    </data>
+    <data name="TakeOffAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Take off to the specified altitude.</value>
+    </data>
+    <data name="GotoAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Go to</value>
+    </data>
+    <data name="GotoAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Send the drone to the specified location.</value>
+    </data>
+    <data name="RoiAction_TryCreateAction_Header" xml:space="preserve">
+        <value>ROI</value>
+    </data>
+    <data name="RoiAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Set region of interest.</value>
+    </data>
+    <data name="FindDroneAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Find drone</value>
+    </data>
+    <data name="FindDroneAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Center the map on the drone's current position.</value>
+    </data>
 </root>
