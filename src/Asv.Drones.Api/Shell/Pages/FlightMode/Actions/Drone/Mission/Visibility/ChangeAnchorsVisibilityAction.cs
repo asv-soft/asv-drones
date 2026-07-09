@@ -1,19 +1,20 @@
+using Asv.Avalonia;
 using Asv.Drones.Api;
 using Asv.IO;
 using R3;
 
-namespace Asv.Drones;
+namespace Asv.Drones.Api;
 
-public sealed class ChangeAnchorsVisibilityAction<TWidget>()
-    : MissionVisibilityAction<TWidget>(
+public sealed class ChangeAnchorsVisibilityAction<TTarget>()
+    : MissionVisibilityAction<TTarget>(
         "change-anchors-visibility",
         "Hide/Show mission anchors",
         "Change visibility of the mission anchors",
         120
     )
-    where TWidget : class, IDeviceFlightWidget<IClientDevice>
+    where TTarget : class, IViewModel, IDeviceActionTarget<IClientDevice>
 {
-    public const string StaticId = "ext.flight-widget.action.change-anchors-visibility";
+    public const string StaticId = "ext.drone.action.change-anchors-visibility";
 
     public override string Id => StaticId;
 

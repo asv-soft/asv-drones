@@ -6,33 +6,33 @@ using Asv.Mavlink;
 using Material.Icons;
 using R3;
 
-namespace Asv.Drones;
+namespace Asv.Drones.Api;
 
-public abstract class MissionVisibilityAction<TWidget>(
+public abstract class MissionVisibilityAction<TTarget>(
     string id,
     string header,
     string description,
     int order
-) : FlightWidgetAction<TWidget>(id)
-    where TWidget : class, IDeviceFlightWidget<IClientDevice>
+) : DroneMenuAction<TTarget>(id)
+    where TTarget : class, IViewModel, IDeviceActionTarget<IClientDevice>
 {
     public abstract override string Id { get; }
 
     protected override IMenuItem? TryCreateAction(
-        TWidget widget,
+        TTarget target,
         CompositeDisposable contextDispose
     )
     {
-        var missionClient = widget.Device.GetMicroservice<IMissionClientEx>();
+        var missionClient = target.Device.GetMicroservice<IMissionClientEx>();
         if (missionClient is null)
         {
             return null;
         }
 
-        var flightMode = widget.FindParentOfType<IFlightModePage>();
+        var flightMode = target.FindParentOfType<IFlightModePage>();
         var mission = flightMode
             ?.Map.Anchors.OfType<IMissionContainerAnchor>()
-            .FirstOrDefault(anchor => anchor.DeviceId == widget.Device.Id);
+            .FirstOrDefault(anchor => anchor.DeviceId == target.Device.Id);
 
         if (mission is null)
         {

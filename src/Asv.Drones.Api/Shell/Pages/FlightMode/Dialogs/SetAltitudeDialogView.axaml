@@ -3,9 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:drones="clr-namespace:Asv.Drones"
+    xmlns:drones="clr-namespace:Asv.Drones.Api"
     mc:Ignorable="d"
-    x:Class="Asv.Drones.SetAltitudeDialogView"
+    x:Class="Asv.Drones.Api.SetAltitudeDialogView"
     x:DataType="drones:SetAltitudeDialogViewModel"
 >
     <Design.DataContext>

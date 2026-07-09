@@ -6,22 +6,22 @@ using Asv.Mavlink;
 using Material.Icons;
 using R3;
 
-namespace Asv.Drones;
+namespace Asv.Drones.Api;
 
-public sealed class LandAction<TWidget>() : FlightWidgetAction<TWidget>("land")
-    where TWidget : class, IDeviceFlightWidget<IClientDevice>
+public sealed class LandAction<TTarget>() : DroneMenuAction<TTarget>("land")
+    where TTarget : class, IDeviceActionTarget<IClientDevice>
 {
-    public const string StaticId = "ext.flight-widget.action.land";
+    public const string StaticId = "ext.drone.action.land";
 
     public override string Id => StaticId;
 
     protected override IMenuItem? TryCreateAction(
-        TWidget widget,
+        TTarget target,
         CompositeDisposable contextDispose
     )
     {
         // TODO: check land support
-        var control = widget.Device.GetMicroservice<IControlClient>();
+        var control = target.Device.GetMicroservice<IControlClient>();
         if (control is null)
         {
             return null;

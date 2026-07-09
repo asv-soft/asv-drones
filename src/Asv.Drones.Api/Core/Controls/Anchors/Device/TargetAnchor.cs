@@ -12,6 +12,10 @@ namespace Asv.Drones.Api;
 public sealed class TargetAnchor : DeviceAnchor<TargetAnchor>
 {
     public const string AnchorIdBase = "target-path";
+    private const double TargetReachedDistanceMeters = 1.0;
+
+    private bool _isTargetReached;
+    private GeoPoint? _lastTarget;
 
     public TargetAnchor()
     {
@@ -35,12 +39,13 @@ public sealed class TargetAnchor : DeviceAnchor<TargetAnchor>
         Location = GeoPoint.NaN;
 
         var position = device.GetRequiredMicroservice<IPositionClientEx>();
+        _lastTarget = position.Target.CurrentValue;
 
         position
-            .Target.Select(target => target.HasValue)
-            .DistinctUntilChanged()
+            .Target.CombineLatest(position.TargetDistance, (_, _) => Unit.Default)
+            .ThrottleLast(TimeSpan.FromMilliseconds(200))
             .ObserveOnUIThreadDispatcher()
-            .Subscribe(UpdateVisibility)
+            .Subscribe(_ => UpdateVisibility(position))
             .DisposeItWith(Disposable);
 
         position
@@ -66,13 +71,33 @@ public sealed class TargetAnchor : DeviceAnchor<TargetAnchor>
             )
             .DisposeItWith(Disposable);
 
-        UpdateVisibility(position.Target.CurrentValue.HasValue);
+        UpdateVisibility(position);
     }
 
-    private void UpdateVisibility(bool hasTarget)
+    private void UpdateVisibility(IPositionClientEx position)
     {
-        IsVisible = hasTarget;
-        if (!hasTarget)
+        var target = position.Target.CurrentValue;
+        var targetChanged = target != _lastTarget;
+        if (targetChanged)
+        {
+            _lastTarget = target;
+            _isTargetReached = false;
+        }
+
+        var distance = position.TargetDistance.CurrentValue;
+        if (
+            target.HasValue
+            && !targetChanged
+            && !_isTargetReached
+            && double.IsFinite(distance)
+            && distance <= TargetReachedDistanceMeters
+        )
+        {
+            _isTargetReached = true;
+        }
+
+        IsVisible = target.HasValue && !_isTargetReached;
+        if (!IsVisible)
         {
             Location = GeoPoint.NaN;
         }

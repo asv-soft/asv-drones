@@ -9,7 +9,7 @@ using R3;
 
 namespace Asv.Drones.Api;
 
-public class DeviceAnchor<TContext> : MapAnchor<TContext>, IDeviceAnchor
+public class DeviceAnchor<TContext> : MapAnchor<TContext>, IDeviceAnchor, IDeviceActionTarget
     where TContext : class, IDeviceAnchor
 {
     public const string BaseId = "device";

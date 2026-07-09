@@ -1,29 +1,28 @@
 using Asv.Avalonia;
 using Asv.Avalonia.GeoMap;
 using Asv.Common;
-using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
 using Material.Icons;
 using R3;
 
-namespace Asv.Drones;
+namespace Asv.Drones.Api;
 
-public sealed class GotoAction<TWidget>() : FlightWidgetAction<TWidget>("goto")
-    where TWidget : class, IDeviceFlightWidget<IClientDevice>
+public sealed class GotoAction<TTarget>() : DroneMenuAction<TTarget>("goto")
+    where TTarget : class, IViewModel, IDeviceActionTarget<IClientDevice>
 {
-    public const string StaticId = "ext.flight-widget.action.goto";
+    public const string StaticId = "ext.drone.action.goto";
 
     public override string Id => StaticId;
 
     protected override IMenuItem? TryCreateAction(
-        TWidget widget,
+        TTarget target,
         CompositeDisposable contextDispose
     )
     {
-        var control = widget.Device.GetMicroservice<IControlClient>();
-        var position = widget.Device.GetMicroservice<IPositionClientEx>();
-        var map = widget.FindParentOfType<IFlightModePage>()?.Map;
+        var control = target.Device.GetMicroservice<IControlClient>();
+        var position = target.Device.GetMicroservice<IPositionClientEx>();
+        var map = target.FindParentOfType<IFlightModePage>()?.Map;
 
         if (control is null || position is null || map is null)
         {

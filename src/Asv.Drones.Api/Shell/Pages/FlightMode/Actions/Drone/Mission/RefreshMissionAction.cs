@@ -6,21 +6,21 @@ using Asv.Mavlink;
 using Material.Icons;
 using R3;
 
-namespace Asv.Drones;
+namespace Asv.Drones.Api;
 
-public sealed class RefreshMissionAction<TWidget>() : FlightWidgetAction<TWidget>("refresh-mission")
-    where TWidget : class, IDeviceFlightWidget<IClientDevice>
+public sealed class RefreshMissionAction<TTarget>() : DroneMenuAction<TTarget>("refresh-mission")
+    where TTarget : class, IDeviceActionTarget<IClientDevice>
 {
-    public const string StaticId = "ext.flight-widget.action.refresh-mission";
+    public const string StaticId = "ext.drone.action.refresh-mission";
 
     public override string Id => StaticId;
 
     protected override IMenuItem? TryCreateAction(
-        TWidget widget,
+        TTarget target,
         CompositeDisposable contextDispose
     )
     {
-        var mission = widget.Device.GetMicroservice<IMissionClientEx>();
+        var mission = target.Device.GetMicroservice<IMissionClientEx>();
         if (mission is null)
         {
             return null;

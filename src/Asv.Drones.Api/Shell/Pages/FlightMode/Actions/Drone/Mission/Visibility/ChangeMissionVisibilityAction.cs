@@ -1,19 +1,20 @@
+using Asv.Avalonia;
 using Asv.Drones.Api;
 using Asv.IO;
 using R3;
 
-namespace Asv.Drones;
+namespace Asv.Drones.Api;
 
-public sealed class ChangeMissionVisibilityAction<TWidget>()
-    : MissionVisibilityAction<TWidget>(
+public sealed class ChangeMissionVisibilityAction<TTarget>()
+    : MissionVisibilityAction<TTarget>(
         "change-mission-visibility",
         "Hide/Show mission",
         "Change visibility of the whole mission",
         119
     )
-    where TWidget : class, IDeviceFlightWidget<IClientDevice>
+    where TTarget : class, IViewModel, IDeviceActionTarget<IClientDevice>
 {
-    public const string StaticId = "ext.flight-widget.action.change-mission-visibility";
+    public const string StaticId = "ext.drone.action.change-mission-visibility";
 
     public override string Id => StaticId;
 
