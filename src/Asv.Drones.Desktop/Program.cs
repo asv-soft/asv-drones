@@ -7,6 +7,7 @@ using Asv.Avalonia.Plugins;
 using Asv.Drones.Api;
 using Avalonia;
 using Avalonia.Controls;
+using DotNext;
 
 namespace Asv.Drones.Desktop;
 
@@ -45,29 +46,59 @@ sealed class Program
             .UseAsv(builder =>
             {
                 builder
-                    .UseDefault()
-                    .UseAppInfo(configure => configure.FillFromAssembly(typeof(App).Assembly))
-                    .UseOptionalLogToFile()
-                    .UseOptionalLogViewer()
-                    .UseOptionalSoloRun(opt => opt.WithArgumentForwarding())
-                    .UsePluginManager(options =>
+                    .EnableLogging()
+                    .RegisterCore(core =>
                     {
-                        options.WithApiPackage(typeof(MavlinkHost).Assembly);
-                        options.WithPluginPrefix("Asv.Drones.Plugin.");
+                        core.RegisterControls();
+                        core.RegisterServices(svc =>
+                        {
+                            svc.RegisterAppArgsStore();
+                            svc.RegisterAppInfo(info =>
+                                info.FillFromAssembly(typeof(App).Assembly)
+                            );
+                            svc.RegisterAppPath();
+                            svc.RegisterRestartFeature();
+                            svc.RegisterDialogs();
+                            svc.RegisterExtensions();
+                            svc.RegisterFileAssociation();
+                            svc.RegisterUnhandledExceptionsHandler();
+                            svc.RegisterHotKeys();
+                            svc.RegisterLocalizationService();
+                            svc.RegisterLogViewer();
+                            svc.RegisterLogToFile();
+                            svc.RegisterSearchService();
+                            svc.RegisterShellHost();
+                            svc.RegisterSoloRun(soloRun => soloRun.WithArgumentForwarding());
+                            svc.RegisterThemeService();
+                            svc.RegisterTimeProvider();
+                            svc.RegisterUnitService();
+                            svc.RegisterUserConfig();
+                            svc.RegisterViewLocator();
+                        });
                     })
-                    .UseDesktopShell()
-                    .UseModulePlugins(configure =>
+                    .RegisterDesktopShell()
+                    .RegisterModulePlugins(configure =>
                     {
-                        configure
-                            .WithApiPackage(typeof(MavlinkHost).Assembly)
-                            .UseOptionalInstalled() // register installed plugins page
-                            .UseOptionalMarket(); // register market plugins page
+                        configure.RegisterCore(core =>
+                            core.RegisterServices(services =>
+                            {
+                                services.RegisterPluginBootloader(bootloader =>
+                                    bootloader.WithApiPackage(typeof(MavlinkHost).Assembly)
+                                );
+                                services.RegisterPluginManager(options =>
+                                {
+                                    options.WithApiPackage(typeof(MavlinkHost).Assembly);
+                                    options.WithPluginPrefix("Asv.Drones.Plugin.");
+                                });
+                            })
+                        );
+                        configure.RegisterShell();
                     })
-                    .UseModuleGeoMap()
-                    .UseModuleCharts()
-                    .UseModuleIo()
-                    .UseLauncher(cfg => cfg.IsOptional())
-                    .UseDronesApp();
+                    .RegisterModuleGeoMap()
+                    .RegisterModuleCharts()
+                    .RegisterModuleIo()
+                    .RegisterLauncher(cfg => cfg.IsOptional())
+                    .RegisterDronesApp();
             });
     }
 }

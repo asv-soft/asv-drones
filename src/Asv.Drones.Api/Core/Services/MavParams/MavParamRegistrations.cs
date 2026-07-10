@@ -6,13 +6,13 @@ using Microsoft.Extensions.Hosting;
 
 namespace Asv.Drones.Api;
 
-public static class MavParamMixin
+public static class MavParamRegistrations
 {
     extension(IHostApplicationBuilder builder)
     {
-        public IHostApplicationBuilder UseMavParam(Action<Builder>? configure = null)
+        public IHostApplicationBuilder RegisterMavParams(Action<Builder>? configure = null)
         {
-            configure ??= x => x.Default();
+            configure ??= x => x.RegisterDefault();
             builder.Services.AddSingleton<IMavParamsEditorFactory, MavParamsEditorFactory>();
             configure(new Builder(builder));
             return builder;
@@ -21,49 +21,51 @@ public static class MavParamMixin
         public Builder MavParams => new(builder);
     }
 
-    public class Builder(IHostApplicationBuilder builder)
+    public class Builder(IHostApplicationBuilder builder) : IDependencyBuilder
     {
-        public Builder Default()
+        public IHostApplicationBuilder AppBuilder => builder;
+
+        public Builder RegisterDefault()
         {
             builder.ViewLocator.RegisterViewFor<
                 MavParamGeoPointPropertyViewModel,
                 PropertyGeoPointView
             >();
 
-            return UseEditor<MavParamTextBoxPropertyViewModel, PropertyTextBoxView>(
+            return RegisterEditor<MavParamTextBoxPropertyViewModel, PropertyTextBoxView>(
                     MavParamTextBoxPropertyViewModel.TypeId
                 )
-                .UseEditor<MavParamAsciiCharPropertyViewModel, PropertyTextBoxView>(
+                .RegisterEditor<MavParamAsciiCharPropertyViewModel, PropertyTextBoxView>(
                     MavParamAsciiCharPropertyViewModel.TypeId
                 )
-                .UseEditor<MavParamComboBoxPropertyViewModel, PropertyComboBoxView>(
+                .RegisterEditor<MavParamComboBoxPropertyViewModel, PropertyComboBoxView>(
                     MavParamComboBoxPropertyViewModel.TypeId
                 )
-                .UseEditor<
+                .RegisterEditor<
                     MavParamToggleButtonGroupPropertyViewModel,
                     PropertyToggleButtonGroupView
                 >(MavParamToggleButtonGroupPropertyViewModel.TypeId)
-                .UseEditor<MavParamToggleSwitchPropertyViewModel, PropertyToggleSwitchView>(
+                .RegisterEditor<MavParamToggleSwitchPropertyViewModel, PropertyToggleSwitchView>(
                     MavParamToggleSwitchPropertyViewModel.TypeId
                 )
-                .UseEditor<MavParamSliderPropertyViewModel, PropertySliderView>(
+                .RegisterEditor<MavParamSliderPropertyViewModel, PropertySliderView>(
                     MavParamSliderPropertyViewModel.TypeId
                 )
-                .UseEditor<MavParamButtonPropertyViewModel, PropertyButtonView>(
+                .RegisterEditor<MavParamButtonPropertyViewModel, PropertyButtonView>(
                     MavParamButtonPropertyViewModel.TypeId
                 )
-                .UseEditor<MavParamAltitudePropertyViewModel, PropertyUnitView>(
+                .RegisterEditor<MavParamAltitudePropertyViewModel, PropertyUnitView>(
                     MavParamAltitudePropertyViewModel.TypeId
                 )
-                .UseEditor<MavParamLatitudePropertyViewModel, PropertyUnitView>(
+                .RegisterEditor<MavParamLatitudePropertyViewModel, PropertyUnitView>(
                     MavParamLatitudePropertyViewModel.TypeId
                 )
-                .UseEditor<MavParamLongitudePropertyViewModel, PropertyUnitView>(
+                .RegisterEditor<MavParamLongitudePropertyViewModel, PropertyUnitView>(
                     MavParamLongitudePropertyViewModel.TypeId
                 );
         }
 
-        public Builder UseEditor<
+        public Builder RegisterEditor<
             [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(
                 System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors
             )]

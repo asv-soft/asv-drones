@@ -53,13 +53,13 @@
         <DependentUpon>BurstDownloadDialogView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="Shell\Pages\FlightMode\Dialogs\ConfigureTelemetryDialogView.axaml.cs">
-        <DependentUpon>ConfigureTelemetryDialogView.axaml</DependentUpon>
+      <Compile Update="Shell\Pages\FlightMode\Actions\Diaogs\SetAltitudeDialogView.axaml.cs">
+        <DependentUpon>SetAltitudeDialogView.axaml</DependentUpon>
+        <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Core\" />
       <Folder Include="Core\Controls\Telemetry\AngleUavIndicator\Items\" />
     </ItemGroup>
 

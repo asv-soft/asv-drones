@@ -54,13 +54,13 @@
         <DependentUpon>FlightWidgetView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="Shell\Pages\FlightMode\Dialogs\SetAltitudeDialogView.axaml.cs">
-        <DependentUpon>SetAltitudeDialogView.axaml</DependentUpon>
+      <Compile Update="Shell\Pages\FlightMode\Widgets\Device\Dialogs\ConfigureTelemetryDialogView.axaml.cs">
+        <DependentUpon>ConfigureTelemetryDialogView.axaml</DependentUpon>
       </Compile>
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="Shell\Pages\FlightMode\Dialogs\SetAltitudeDialogView.axaml" />
+      <AdditionalFiles Include="Shell\Pages\FlightMode\Widgets\Device\Dialogs\ConfigureTelemetryDialogView.axaml" />
     </ItemGroup>
 
 
