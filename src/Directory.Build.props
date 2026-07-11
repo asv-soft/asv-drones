@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <ProductVersion>3.0.0-dev.5</ProductVersion>
+        <ProductVersion>3.0.0-dev.6</ProductVersion>
         <TargetFramework>net10.0</TargetFramework>
 
         <AvaloniaVersion>12.0.4</AvaloniaVersion>
