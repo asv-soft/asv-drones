@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace Asv.Drones.Api;
+namespace Asv.Drones;
 
 public partial class SetAltitudeDialogView : UserControl
 {

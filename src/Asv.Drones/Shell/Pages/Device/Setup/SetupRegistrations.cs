@@ -6,46 +6,48 @@ using Microsoft.Extensions.Hosting;
 
 namespace Asv.Drones;
 
-public static class SetupMixin
+public static class SetupRegistrations
 {
-    extension(AsvDronesMixin.Builder builder)
+    extension(PagesRegistrations.Builder builder)
     {
-        public AsvDronesMixin.Builder UseSetupPage(Action<Builder>? configure = null)
+        public PagesRegistrations.Builder RegisterSetup(Action<Builder>? configure = null)
         {
-            configure ??= x => x.UseDefault();
-            var setup = new Builder(builder.Parent);
+            configure ??= x => x.RegisterDefault();
+            var setup = new Builder(builder);
             configure(setup);
             return builder;
         }
     }
 
-    public class Builder(IHostApplicationBuilder builder)
+    public class Builder(PagesRegistrations.Builder builder) : IDependencyBuilder
     {
-        public Builder UseDefault()
+        public IHostApplicationBuilder AppBuilder => builder.AppBuilder;
+
+        public Builder RegisterDefault()
         {
-            builder.Shell.Pages.Register<SetupPageViewModel, SetupPageView>(
+            AppBuilder.Shell.Pages.Register<SetupPageViewModel, SetupPageView>(
                 SetupPageViewModel.PageId
             );
-            builder.Shell.Pages.Home.UseItemExtension<HomePageSetupDeviceItemAction>();
-            builder.Extensions.Register<ISetupPage, DefaultSetupExtension>();
-            UseFrameTypeSubPage();
-            UseMotorSubPage();
+            AppBuilder.Shell.Pages.Home.UseItemExtension<HomePageSetupDeviceItemAction>();
+            AppBuilder.Extensions.Register<ISetupPage, DefaultSetupExtension>();
+            RegisterFrameTypeSubPage();
+            RegisterMotorSubPage();
             return this;
         }
 
-        public Builder UseFrameTypeSubPage()
+        public Builder RegisterFrameTypeSubPage()
         {
-            builder.Extensions.Register<ISetupPage, FrameTypeSetupPageExtension>();
-            builder.ViewLocator.RegisterViewFor<DroneFrameItemViewModel, DroneFrameItemView>();
+            AppBuilder.Extensions.Register<ISetupPage, FrameTypeSetupPageExtension>();
+            AppBuilder.ViewLocator.RegisterViewFor<DroneFrameItemViewModel, DroneFrameItemView>();
             AddSubPage<SetupFrameTypeViewModel, SetupFrameTypeView>(SetupFrameTypeViewModel.PageId);
             return this;
         }
 
-        public Builder UseMotorSubPage()
+        public Builder RegisterMotorSubPage()
         {
-            builder.ViewLocator.RegisterViewFor<MotorItemViewModel, MotorItemView>();
+            AppBuilder.ViewLocator.RegisterViewFor<MotorItemViewModel, MotorItemView>();
             AddSubPage<SetupMotorsViewModel, SetupMotorsView>(SetupMotorsViewModel.PageId);
-            builder.Extensions.Register<ISetupPage, MotorsSetupPageExtension>();
+            AppBuilder.Extensions.Register<ISetupPage, MotorsSetupPageExtension>();
             return this;
         }
 
@@ -62,9 +64,7 @@ public static class SetupMixin
             where TViewModel : class, ISetupSubpage
             where TView : Control
         {
-            builder.Shell.TreeSubPages.Register<ISetupPage, ISetupSubpage, TViewModel, TView>(
-                pageId
-            );
+            AppBuilder.TreePage.Register<ISetupPage, ISetupSubpage, TViewModel, TView>(pageId);
             return this;
         }
 
@@ -87,7 +87,7 @@ public static class SetupMixin
             where TTreeMenu : class, ITreePageMenuItem
         {
             AddSubPage<TViewModel, TView>(pageId);
-            builder.Services.AddKeyedTransient<ITreePageMenuItem, TTreeMenu>(
+            AppBuilder.Services.AddKeyedTransient<ITreePageMenuItem, TTreeMenu>(
                 SetupPageViewModel.PageId
             );
             return this;

@@ -1,6 +1,7 @@
 using Asv.Avalonia;
 using Asv.Avalonia.IO;
 using Asv.Cfg;
+using Asv.Drones.Api;
 using Asv.IO;
 using Asv.Mavlink;
 using Asv.Mavlink.Ardupilotmega;
@@ -24,7 +25,7 @@ using Material.Icons;
 using Microsoft.Extensions.Hosting;
 using MavType = Asv.Mavlink.Minimal.MavType;
 
-namespace Asv.Drones.Api;
+namespace Asv.Drones;
 
 public class MavlinkDeviceManagerExtensionConfig
 {

@@ -4,12 +4,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:drones="clr-namespace:Asv.Drones.Api"
+    xmlns:api="clr-namespace:Asv.Drones.Api;assembly=Asv.Drones.Api"
     mc:Ignorable="d"
-    x:Class="Asv.Drones.Api.SetAltitudeDialogView"
-    x:DataType="drones:SetAltitudeDialogViewModel"
+    x:Class="Asv.Drones.SetAltitudeDialogView"
+    x:DataType="api:SetAltitudeDialogViewModel"
 >
     <Design.DataContext>
-        <drones:SetAltitudeDialogViewModel />
+        <api:SetAltitudeDialogViewModel />
     </Design.DataContext>
     <Panel>
         <StackPanel>
