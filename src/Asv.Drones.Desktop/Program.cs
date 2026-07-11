@@ -83,11 +83,11 @@ sealed class Program
                             core.RegisterServices(services =>
                             {
                                 services.RegisterPluginBootloader(bootloader =>
-                                    bootloader.WithApiPackage(typeof(MavlinkHost).Assembly)
+                                    bootloader.WithApiPackage(typeof(IMavlinkHost).Assembly)
                                 );
                                 services.RegisterPluginManager(options =>
                                 {
-                                    options.WithApiPackage(typeof(MavlinkHost).Assembly);
+                                    options.WithApiPackage(typeof(IMavlinkHost).Assembly);
                                     options.WithPluginPrefix("Asv.Drones.Plugin.");
                                 });
                             })
