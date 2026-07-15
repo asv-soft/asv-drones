@@ -3,7 +3,9 @@ name: Release Api NuGet
 on:
   push:
     tags:
-      - "api-v*"
+      - 'api-v[0-9]+.[0-9]+.[0-9]+'
+      - 'api-v[0-9]+.[0-9]+.[0-9]+-rc.[0-9]+'
+      - 'api-v[0-9]+.[0-9]+.[0-9]+-rc'
 
 env:
   NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'

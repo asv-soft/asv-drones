@@ -3,7 +3,8 @@ name: Release Api Github only
 on:
   push:
     tags:
-      - "api-v*"
+      - 'api-v[0-9]+.[0-9]+.[0-9]+-dev.[0-9]+'
+      - 'api-v[0-9]+.[0-9]+.[0-9]+-dev'
 
 env:
   GITHUB_PACKAGES_URL: 'https://nuget.pkg.github.com/asv-soft/index.json'
