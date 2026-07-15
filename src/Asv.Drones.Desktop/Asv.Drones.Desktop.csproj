@@ -41,4 +41,36 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
+
+    <Target Name="GeneratePluginDependencies" AfterTargets="Build" Condition="'$(DesignTimeBuild)' != 'true'">
+      <ItemGroup>
+        <_PluginDependency Include="@(ReferencePath->'%(Filename)')" />
+      </ItemGroup>
+      <RemoveDuplicates Inputs="@(_PluginDependency)">
+        <Output TaskParameter="Filtered" ItemName="_DistinctPluginDependency" />
+      </RemoveDuplicates>
+      <PropertyGroup>
+        <_PluginDependenciesJson>@(_DistinctPluginDependency->'&quot;%(Identity)&quot;', ',')</_PluginDependenciesJson>
+      </PropertyGroup>
+      <WriteLinesToFile
+        File="$(TargetDir)dependencies.json"
+        Lines="[$(_PluginDependenciesJson)]"
+        Overwrite="true"
+        Encoding="UTF-8"
+      />
+    </Target>
+
+    <Target
+      Name="IncludePluginDependenciesInPublish"
+      BeforeTargets="ComputeFilesToPublish"
+      DependsOnTargets="GeneratePluginDependencies"
+      Condition="'$(DesignTimeBuild)' != 'true'"
+    >
+      <ItemGroup>
+        <ResolvedFileToPublish Include="$(TargetDir)dependencies.json">
+          <RelativePath>dependencies.json</RelativePath>
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </ResolvedFileToPublish>
+      </ItemGroup>
+    </Target>
 </Project>
