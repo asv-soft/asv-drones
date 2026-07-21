@@ -13,14 +13,14 @@ public abstract class FlightWidgetViewModel<TSelf> : ViewModel<TSelf>, IFlightWi
     protected FlightWidgetViewModel(NavId id, IExtensionService ext)
         : base(id.TypeId, id.Args, ext)
     {
-        Menu.SetRoutableParent(this).DisposeItWith(Disposable);
+        Menu.SetParent(this).DisposeItWith(Disposable);
         Menu.DisposeRemovedItems().DisposeItWith(Disposable);
         MenuView = new MenuTree(Menu).DisposeItWith(Disposable);
 
         Disposable.AddAction(() => Menu.ClearWithItemsDispose());
 
         Sections = [];
-        Sections.SetRoutableParent(this).DisposeItWith(Disposable);
+        Sections.SetParent(this).DisposeItWith(Disposable);
         Sections.DisposeRemovedItems().DisposeItWith(Disposable);
         Sections
             .ObserveAdd()

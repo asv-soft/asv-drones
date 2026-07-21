@@ -29,14 +29,15 @@ public class HomePageFileBrowserDeviceItemAction : HomePageDeviceItemAction
             Description = RS.OpenFileBrowserCommand_CommandInfo_Description,
             Icon = FileBrowserViewModel.PageIcon,
             Command = new ReactiveCommand(
-                async (_, _) =>
+                async (_, cancel) =>
                     await context.GoTo(
                         new NavPath(
                             new NavId(
                                 FileBrowserViewModel.PageId,
                                 DevicePageViewModelMixin.CreateOpenPageArgs(device.Id)
                             )
-                        )
+                        ),
+                        cancel
                     )
             ),
         };

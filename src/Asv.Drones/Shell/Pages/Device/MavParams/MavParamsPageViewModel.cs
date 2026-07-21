@@ -296,7 +296,7 @@ public class MavParamsPageViewModel
         });
         _view.RegisterTo(cancel);
         _view.DisposeMany().RegisterTo(cancel);
-        _view.SetRoutableParent(this).RegisterTo(cancel);
+        _view.SetParent(this).RegisterTo(cancel);
 
         foreach (var item in _view.Where(item => item.IsPinned.ViewValue.Value))
         {

@@ -20,9 +20,10 @@ public class HomePageFlightModeExtension : IExtensionFor<IHomePage>
                 Description = "Opens Flight Mode (BETA)",
                 Icon = FlightModePageViewModel.PageIcon,
                 Command = new ReactiveCommand(
-                    async (_, _) =>
+                    async (_, cancel) =>
                         await context.GoTo(
-                            new NavPath(new NavId(FlightModePageViewModel.PageId, NavArgs.Empty))
+                            new NavPath(new NavId(FlightModePageViewModel.PageId, NavArgs.Empty)),
+                            cancel
                         )
                 ),
             }.DisposeItWith(contextDispose)

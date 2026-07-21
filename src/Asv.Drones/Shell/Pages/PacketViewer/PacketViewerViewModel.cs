@@ -105,9 +105,9 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         _filtersByTypeSet = new ObservableHashSet<TypePacketFilterViewModel>(
             TypePacketFilterComparer.Instance
         );
-        _packetsBuffer.SetRoutableParent(this).DisposeItWith(Disposable);
-        _filtersBySourceSet.SetRoutableParent(this).DisposeItWith(Disposable);
-        _filtersByTypeSet.SetRoutableParent(this).DisposeItWith(Disposable);
+        _packetsBuffer.SetParent(this).DisposeItWith(Disposable);
+        _filtersBySourceSet.SetParent(this).DisposeItWith(Disposable);
+        _filtersByTypeSet.SetParent(this).DisposeItWith(Disposable);
         _packetsBuffer.DisposeRemovedItems().DisposeItWith(Disposable);
         _filtersBySourceSet.DisposeRemovedItems().DisposeItWith(Disposable);
         _filtersByTypeSet.DisposeRemovedItems().DisposeItWith(Disposable);

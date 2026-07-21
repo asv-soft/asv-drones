@@ -96,7 +96,7 @@ public sealed class SetupMotorsViewModel : SetupSubpage
             ))
             .DisposeItWith(Disposable);
 
-        _motorsView.SetRoutableParent(this).DisposeItWith(Disposable);
+        _motorsView.SetParent(this).DisposeItWith(Disposable);
         _motorsView.DisposeMany().DisposeItWith(Disposable);
 
         Motors = _motorsView

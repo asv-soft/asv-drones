@@ -89,7 +89,7 @@ public class MavParamTextBoxPropertyViewModel
         return Info.ValidateString(valueAsString ?? string.Empty, out value);
     }
 
-    protected override async ValueTask ApplyFromUser(CancellationToken cancel)
+    protected override async ValueTask ApplyFromUserCore(CancellationToken cancel)
     {
         var error = TextToValue(Text.Value, out var value);
         if (error is not null)

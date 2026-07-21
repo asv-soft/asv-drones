@@ -40,7 +40,7 @@ public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightMo
         Icon = PageIcon;
 
         Widgets = [];
-        Widgets.SetRoutableParent(this).DisposeItWith(Disposable);
+        Widgets.SetParent(this).DisposeItWith(Disposable);
         Widgets.DisposeRemovedItems().DisposeItWith(Disposable);
         Widgets
             .ObserveAdd()

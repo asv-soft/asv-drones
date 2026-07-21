@@ -86,7 +86,7 @@ public sealed class SetupFrameTypeViewModel : SetupSubpage
         _framesView = _frameClient
             .Frames.CreateView(droneFrame => new DroneFrameItemViewModel(droneFrame.Value))
             .DisposeItWith(Disposable);
-        _framesView.SetRoutableParent(this).DisposeItWith(Disposable);
+        _framesView.SetParent(this).DisposeItWith(Disposable);
         _framesView.DisposeMany().DisposeItWith(Disposable);
 
         Frames = _framesView
