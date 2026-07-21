@@ -33,6 +33,7 @@ public class FileBrowserViewModel
         ISupportRefresh
 {
     public const string PageId = "filesBrowser";
+    public const string FolderName = "ftp";
     public const MaterialIconKind PageIcon = MaterialIconKind.FolderEye;
     private const int SearchThrottleMs = 500;
 
@@ -182,7 +183,7 @@ public class FileBrowserViewModel
     )
         : base(PageId, context, devices, loggerFactory, dialogService, ext)
     {
-        _localRootPath = appPath.GetAppPathFolder(string.Empty);
+        _localRootPath = appPath.GetAppPathFolder(FolderName);
         _remoteRootPath = MavlinkFtpHelper.DirectorySeparator.ToString();
         _loggerFactory = loggerFactory;
         _yesNoDialog = dialogService.GetDialogPrefab<YesOrNoDialogPrefab>();
