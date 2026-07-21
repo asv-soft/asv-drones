@@ -23,14 +23,15 @@ public class HomePageSetupDeviceItemAction : HomePageDeviceItemAction
             Description = RS.OpenSetupCommand_CommandInfo_Description,
             Icon = SetupPageViewModel.PageIcon,
             Command = new ReactiveCommand(
-                async (_, _) =>
+                async (_, cancel) =>
                     await context.GoTo(
                         new NavPath(
                             new NavId(
                                 SetupPageViewModel.PageId,
                                 DevicePageViewModelMixin.CreateOpenPageArgs(device.Id)
                             )
-                        )
+                        ),
+                        cancel
                     )
             ),
         };

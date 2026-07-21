@@ -33,14 +33,13 @@ public class PlaningPageViewModel : PageViewModel<IPlaningPage>, IPlaningPage
         : base(PageId, context, loggerFactory, dialogService, ext)
     {
         Widgets = [];
-        Widgets.SetRoutableParent(this).DisposeItWith(Disposable);
+        Widgets.SetParent(this).DisposeItWith(Disposable);
         Widgets.DisposeRemovedItems().DisposeItWith(Disposable);
 
         WidgetsView = Widgets.ToNotifyCollectionChangedSlim().DisposeItWith(Disposable);
 
-        Map = new MapViewModel(nameof(Map), mapService)
-            .SetRoutableParent(this)
-            .DisposeItWith(Disposable);
+        Map = new MapViewModel(nameof(Map), mapService).DisposeItWith(Disposable);
+        Map.SetParent(this);
     }
 
     public IMap Map { get; }

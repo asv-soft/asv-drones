@@ -29,14 +29,15 @@ public class HomePageParamsDeviceItemAction : HomePageDeviceItemAction
             Header = RS.OpenMavParamsCommand_CommandInfo_Name,
             Description = RS.OpenMavParamsCommand_CommandInfo_Description,
             Command = new ReactiveCommand(
-                async (_, _) =>
+                async (_, cancel) =>
                     await context.GoTo(
                         new NavPath(
                             new NavId(
                                 MavParamsPageViewModel.PageId,
                                 DevicePageViewModelMixin.CreateOpenPageArgs(device.Id)
                             )
-                        )
+                        ),
+                        cancel
                     )
             ),
         };

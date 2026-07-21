@@ -20,9 +20,10 @@ public class HomePagePlaningExtension : IExtensionFor<IHomePage>
                 Description = "Tool for create missions and planing flights",
                 Icon = FlightModePageViewModel.PageIcon,
                 Command = new ReactiveCommand(
-                    async (_, _) =>
+                    async (_, cancel) =>
                         await context.GoTo(
-                            new NavPath(new NavId(PlaningPageViewModel.PageId, NavArgs.Empty))
+                            new NavPath(new NavId(PlaningPageViewModel.PageId, NavArgs.Empty)),
+                            cancel
                         )
                 ),
             }.DisposeItWith(contextDispose)

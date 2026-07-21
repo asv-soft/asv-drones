@@ -235,8 +235,8 @@ public class FileBrowserViewModel
         _remoteItems = [];
         _localItems.DisposeRemovedItems().DisposeItWith(Disposable);
         _remoteItems.DisposeRemovedItems().DisposeItWith(Disposable);
-        _localItems.SetRoutableParent(this).DisposeItWith(Disposable);
-        _remoteItems.SetRoutableParent(this).DisposeItWith(Disposable);
+        _localItems.SetParent(this).DisposeItWith(Disposable);
+        _remoteItems.SetParent(this).DisposeItWith(Disposable);
 
         // TODO: The sync may be done by ObservableTree in Asv.Avalonia instead
         _rawRemoteEntries = new ObservableDictionary<string, IFtpEntry>();
@@ -307,7 +307,9 @@ public class FileBrowserViewModel
             .Where(w => w.HasValue)
             .Select(w => w!.Value)
             .ObserveOnUIThreadDispatcher()
-            .Subscribe(w => OnDeviceConnected(w.Device, w.WhenDisconnectedToken))
+            .SubscribeAwait(
+                async (w, ct) => await OnDeviceConnected(w.Device, w.WhenDisconnectedToken, ct)
+            )
             .DisposeItWith(Disposable);
     }
 
@@ -981,12 +983,6 @@ public class FileBrowserViewModel
 
     #endregion
 
-    public void Refresh()
-    {
-        RefreshLocalCommand.Execute(Unit.Default);
-        RefreshRemoteCommand.Execute(Unit.Default);
-    }
-
     #region Helpers
 
     private Task PerformLocalSearch(
@@ -1125,10 +1121,10 @@ public class FileBrowserViewModel
         }
     }
 
-    public ValueTask Refresh(CancellationToken cancel)
+    public async ValueTask Refresh(CancellationToken cancel)
     {
-        Refresh();
-        return ValueTask.CompletedTask;
+        await RefreshLocalImpl(Unit.Default, cancel);
+        await RefreshRemoteImpl(cancel);
     }
 
     protected override void AfterLoadExtensions()
@@ -1343,7 +1339,11 @@ public class FileBrowserViewModel
 
     #endregion
 
-    private void OnDeviceConnected(IClientDevice device, CancellationToken onDisconnectedToken)
+    private ValueTask OnDeviceConnected(
+        IClientDevice device,
+        CancellationToken onDisconnectedToken,
+        CancellationToken cancel
+    )
     {
         Header = $"{RS.FileBrowserViewModel_Title}[{device.Id}]";
         Icon = DeviceIconMixin.GetIcon(device.Id) ?? PageIcon;
@@ -1357,7 +1357,7 @@ public class FileBrowserViewModel
 
         _ftpService
             .RemoteChanged.ThrottleLast(TimeSpan.FromMilliseconds(200))
-            .SubscribeAwait(async (_, _) => await RefreshRemoteImpl(onDisconnectedToken))
+            .SubscribeAwait(async (_, c) => await RefreshRemoteImpl(c))
             .RegisterTo(onDisconnectedToken);
         _ftpService
             .RemoteChanging.Subscribe(isBusy => IsUiBlocked.OnNext(isBusy))
@@ -1387,6 +1387,11 @@ public class FileBrowserViewModel
             _ftpService = null;
         });
 
-        Refresh(onDisconnectedToken);
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(
+            onDisconnectedToken,
+            cancel
+        );
+
+        return Refresh(cts.Token);
     }
 }
