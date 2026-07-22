@@ -1,8 +1,6 @@
-![linkedin](https://github.com/user-attachments/assets/4fa5221e-7ae5-4b6b-98a8-1c1e39b49afb)
+# Asv.Drones
 
-
-
-[//]: [![Release](https://github.com/asv-soft/asv-drones/actions/workflows/ReleaseDeployAction.yml/badge.svg)](https://github.com/asv-soft/asv-drones/actions/workflows/ReleaseDeployAction.yml)
+![asv-drones](https://github.com/user-attachments/assets/4fa5221e-7ae5-4b6b-98a8-1c1e39b49afb)
 
 ## 1. Introduction
 
@@ -13,65 +11,59 @@ Committed to fostering innovation and collaboration, Asv.Drones is not just a dr
 
 Key Features:
 
-1. **Modularity:**
-   Asv.Drones embraces a modular architecture, allowing users to tailor the application to their specific needs. Each module serves a distinct purpose, contributing to the overall functionality and versatility of the platform.
+1. **Plugins:**
+   Asv.Drones supports plugins that extend the application without modifying its core. 
+   Plugins are loaded from the `plugins` directory and use the `Asv.Drones.Plugin.` assembly prefix.
 
 2. **Open Source Philosophy:**
    Transparency and collaboration lie at the heart of Asv.Drones. The entire application, along with its constituent modules, is open source. This means that not only can users benefit from the software, but they can also actively contribute to its enhancement and evolution.
 
-3. **Modules Overview:**
-
-  - **[Asv.Drones.Gbs](https://github.com/asv-soft/asv-drones-gbs) (Ground Base Station Service):**
-    This module provides a robust ground base station service, ensuring seamless communication between the drone and the operator on the ground. Open source nature encourages customization for specific ground station requirements.
-
-  - **Obsolete [Asv.Drones.Sdr](https://github.com/asv-soft/asv-drones-sdr) (SDR Payload Example Project):**
-    Explore the possibilities of Software-Defined Radio (SDR) payloads with this open-source example project. Asv.Drones.Sdr serves as a foundation for integrating cutting-edge SDR technologies into unmanned aerial systems.
-
-  - **[Asv.Gnss](https://github.com/asv-soft/asv-gnss) (GNSS Library):**
-    The Asv.Gnss module is a comprehensive GNSS library that parses RTCMv2, RTCMv3 and NMEA protocols. It goes a step further by providing control over receivers through SBF, ComNav and UBX protocols, all tailored for .NET environments.
-
-  - **[Asv.Mavlink](https://github.com/asv-soft/asv-mavlink) (MAVLink Library for .NET 9.0):**
-    For seamless communication and control, Asv.MAVLink is a dedicated library compatible with .NET 9.0. It ensures that your drone's communication adheres to the MAVLink protocol standards.
-
-  - **[Asv.Common](https://github.com/asv-soft/asv-common):**
-    Asv.Common serves as the backbone, offering common types and extensions for all Asv-based libraries. It streamlines development, ensuring consistency and efficiency across different modules.
-
-  - **[Asv.Avalonia](https://github.com/asv-soft/asv-avalonia):**
-    Asv.Avalonia is a custom framework built on top of Avalonia. It defines the fundamental rules for cross-platform applications and allows for their rapid assembly. 
-    Out of the box, the framework provides an event system for ViewModels, a powerful undo/redo mechanism for various user actions, a theme with diverse styles, a cross-platform dialog system and more. 
-    Asv.Avalonia features various additional modules that extend its functionality.
-    
-  Here's a schematic representation of the whole project:
-<p align="center">
-    <img src="img/screenshot-asv-drones-structure.png" alt="structure" width="650" />
-</p>
-
-4. **Community Collaboration:**
+3. **Community Collaboration:**
    Asv.Drones thrives on community collaboration. Developers, enthusiasts and innovators are encouraged to contribute, share insights and collectively shape the future of unmanned aerial systems.
 
 Embark on a journey of exploration, experimentation and innovation with Asv.Drones. Whether you're a developer, researcher or drone enthusiast, this open-source platform invites you to redefine the possibilities of unmanned aerial systems.
 
 <p align="center">
     <img src="img/screenshot-windows-flights.png" alt="win" width="650" />
-    <img src="img/screenshot-flight-many-drones.png" alt="win" width="650" />
+    <img src="img/screenshot-flight-many-drones.png" alt="flight-many" width="650" />
     <img src="img/screenshot-packet-viewer.png" alt="packet-viewer" width="650" />
     <img src="img/screenshot-connections.png" alt="connections" width="650" />
     <img src="img/screenshot-settings-commands.png" alt="settings" width="650" />
 </p>
 
-## 2. Different sets of components
-Asv.Drones can work with different combinations of its components
+**Plugins overview:**
+- **[Asv.Drones.Gbs](https://github.com/asv-soft/asv-drones-gbs) (Ground Base Station Service):**
+This module provides a robust ground base station service, ensuring seamless communication between the drone and the operator on the ground. Open source nature encourages customization for specific ground station requirements.
 
-### Example Of Usage With GBS
+**Main Libraries Overview:**
+- **[Asv.Gnss](https://github.com/asv-soft/asv-gnss) (GNSS Library):**
+  The Asv.Gnss module is a comprehensive GNSS library that parses RTCMv2, RTCMv3 and NMEA protocols. It goes a step further by providing control over receivers through SBF, ComNav and UBX protocols, all tailored for .NET environments.
+
+- **[Asv.Mavlink](https://github.com/asv-soft/asv-mavlink) (MAVLink Library for .NET 10.0):**
+  For seamless communication and control, Asv.MAVLink is a dedicated library compatible with .NET 10.0. It ensures that your drone's communication adheres to the MAVLink protocol standards.
+
+- **[Asv.Common](https://github.com/asv-soft/asv-common):**
+  Asv.Common serves as the backbone, offering common types and extensions for all Asv-based libraries. It streamlines development, ensuring consistency and efficiency across different modules.
+
+- **[Asv.Avalonia](https://github.com/asv-soft/asv-avalonia):**
+  Asv.Avalonia is a custom framework built on top of Avalonia. It defines the fundamental rules for cross-platform applications and allows for their rapid assembly.
+  Out of the box, the framework provides an event system for ViewModels, a powerful undo/redo mechanism for various user actions, a theme with diverse styles, a cross-platform dialog system and more.
+  Asv.Avalonia features various additional modules that extend its functionality.
+
+## 2. Different Sets of Components
+Asv.Drones can work with different combinations of its components.
+
+### Example of Usage with GBS
 
 **Ground Base Station Integration:** Asv.Drones offers seamless integration with ground base stations through our proprietary implementation called [Asv.Drones.Gbs](https://github.com/asv-soft/asv-drones-gbs). 
 Built to operate via the MAVLink protocol, Asv.Drones.Gbs allows users to remotely manage and monitor drone operations from a centralized platform. 
 Moreover, any other ground base station software compatible with MAVLink can seamlessly interface with our application, ensuring flexibility and interoperability across different systems (development of additional UI controls may be required).
 With Asv.Drones.Gbs, users can plan missions, monitor telemetry data and adjust flight parameters with ease.
-To connect to a gbs, create a new connection (usually tcp) in the connection settings.
+To connect to a GBS, create a new connection (usually TCP) in the connection settings.
 
 <div align="center">
-   <img src="img/asv-drones-gbs-packets.png" alt="gbs-packets" width="650" />
+   <img src="img/asv-drones-packets.png" alt="gbs-packets" width="650" />
+   <img src="img/gbs-widget.png" alt="gbs-widget" width="650" />
 </div>
 
 ## 3. Getting Started
@@ -80,53 +72,51 @@ To connect to a gbs, create a new connection (usually tcp) in the connection set
 
 To ensure a smooth development experience, follow the steps below to set up your development environment:
 
-### 3.1 Prerequisites:
+### 3.1 Prerequisites
 - **Operating System:** This project is compatible with Windows, macOS and Linux. Ensure that your development machine runs one of these supported operating systems.
 - **IDE (Integrated Development Environment):** We recommend using [Visual Studio](https://visualstudio.microsoft.com/) or [JetBrains Rider](https://www.jetbrains.com/rider/) as your IDE for C# development. 
 - Make sure to install the necessary extensions and plugins for a better development experience.
 
-### 3.2 .NET Installation:
-- This project is built using [.NET 9.0](https://dotnet.microsoft.com/download/dotnet/9.0), the latest version of the .NET platform. 
-We recommend installing .NET 9.0 by following the instructions provided on the official [.NET website](https://dotnet.microsoft.com/download/dotnet/9.0).
+### 3.2 .NET Installation
+- This project is built using [.NET 10.0](https://dotnet.microsoft.com/download/dotnet/10.0).
+We recommend installing .NET 10.0 by following the instructions provided on the official [.NET website](https://dotnet.microsoft.com/download/dotnet/10.0).
 
    ```bash
    # Check your current .NET version
    dotnet --version
    ```
 
-### 3.3 Version Control:
+### 3.3 Version Control
 - If you haven't already, install a version control system such as [Git](https://git-scm.com/) to track changes and collaborate with other developers.
 
-### 3.4 Clone the Repository:
+### 3.4 Clone the Repository
 - Clone the project repository to your local machine using the following command:
 
    ```bash
    git clone https://github.com/asv-soft/asv-drones.git
    ```
 
-### 3.5 Restore Dependencies:
-- Navigate to the platform project directory and restore the required dependencies. 
+### 3.5 Restore Dependencies
+- Navigate to the `src` directory and restore the dependencies for the desktop project.
 There are three possible platform directories to build and debug our app: __Asv.Drones.Desktop__, __Asv.Drones.Android__, __Asv.Drones.iOS__.
 Currently, we support only the desktop platform.
-For example, we will use __Asv.Drones.Desktop__ platform, so you have to execute the following command:
 
    ```bash
-   cd asv-drones/src/Asv.Drones.Desktop
-   dotnet workload restore
-   dotnet workload repair
+   cd asv-drones/src
+   dotnet restore Asv.Drones.Desktop/Asv.Drones.Desktop.csproj
    ```
 
-### 3.6 Build and Run:
-- After restoring, you have to build the project to ensure that everything is set up correctly, and if it's not - try to restore workloads again:
+### 3.6 Build and Run
+- Build the desktop project:
 
    ```bash
-   dotnet build
+   dotnet build Asv.Drones.Desktop/Asv.Drones.Desktop.csproj
    ```
 
-- Run the project:
+- Run the desktop project:
 
    ```bash
-   dotnet run
+   dotnet run --project Asv.Drones.Desktop/Asv.Drones.Desktop.csproj
    ```
 
 Congratulations! Your development environment is now set up, and you are ready to start contributing to the project. 
@@ -148,21 +138,21 @@ Our solution is organized the following way:
 - **`src/`:** This directory contains the source code of the application. 
 The code is further organized into projects, each residing in its own subdirectory. The goal is to promote modularity and maintainability.
 
-  ```
+```
   src/
+  ├── Asv.Drones.Launcher/
   ├── Asv.Drones.Android/
   ├── Asv.Drones.Desktop/
   ├── Asv.Drones.iOS/
   ├── Asv.Drones/
-  │   ├── Commands/
-  │   ├── Controls/
+  │   ├── Core/
   │   ├── Shell/
   │   └── ...
   └── Asv.Drones.Api/
-      ├── Commands/
-      ├── Controls/
+      ├── Core/
       ├── Shell/
       └── ...
+```
 
 ### 4.2 Naming Conventions
 
@@ -185,7 +175,7 @@ The following guidelines outline our preferred coding style for C#:
 #### 5.1.1 Formatting
 
 - **Indentation:** Use tabs for indentation. Each level of indentation should consist of one tab.
-- **Brace Placement:** Place opening braces on the same line as the statement they belong to, and closing braces on a new line.
+- **Brace Placement:** Place opening and closing braces on new lines.
 
     ```c#
     // Good
@@ -253,10 +243,6 @@ Usually you place public members after private members, but we have some excepti
   public const string PageId = "files.browser";
   public const MaterialIconKind PageIcon = MaterialIconKind.FolderEye;
   ```
-- **Export information:** We place export information at the end of the class.
-  ```c#
-  
-  ```
 
 #### 5.1.5 Husky
 
@@ -321,7 +307,7 @@ The branch name should be descriptive of the feature or issue it addresses.
 
 ```bash
 # Example: Creating a new feature branch
-git checkout -b feature/my-new-feature
+git checkout -b feat/my-new-feature
 ```
 
 #### 6.1.2 Hotfix Branches
@@ -347,7 +333,7 @@ Example:
 
 ```bash
 # Good
-git commit -m "fix: add user authentication feature"
+git commit -m "feat: add user authentication feature"
 
 # Bad
 git commit -m "Updated stuff"
@@ -372,7 +358,7 @@ Adopt a merging strategy based on the nature of the changes:
 ```bash
 # Example: Merging a feature branch
 git checkout main
-git merge --no-ff feature/my-new-feature
+git merge --no-ff feat/my-new-feature
 ```
 
 ### 6.5 Repository Hosting
@@ -417,32 +403,32 @@ All code changes undergo a review process to ensure quality and consistency. Her
 2. **Create a Feature Branch:** Create a new branch for your feature or bug fix.
 
    ```bash
-   git checkout -b feature/my-feature
+   git checkout -b feat/my-feature
    ```
 
 3. **Commit Changes:** Make your changes, commit them with clear and concise messages, and push the branch to your forked repository.
 
    ```bash
    git commit -m "feat: add new feature"
-   git push origin feature/my-feature
+   git push origin feat/my-feature
    ```
 
 4. **Squash your commit:** Squash your commits into a single commit before submitting a pull request.
 
- ```bash
+```bash
    git rebase -i main
    
     # squash your commits into a single commit by leaving the first line as "pick" and changing the rest to "squash"
    
-   git push --force
+   git push --force-with-lease
 ```
 
-5**Open a Pull Request (PR):** Submit a pull request to the main repository, detailing the changes made and any relevant information. Ensure your PR adheres to the established coding standards.
+5. **Open a Pull Request (PR):** Submit a pull request to the main repository, detailing the changes made and any relevant information. Ensure your PR adheres to the established coding standards.
 
-6**Code Review:** Participate in the code review process by responding to feedback and making necessary adjustments. 
+6. **Code Review:** Participate in the code review process by responding to feedback and making necessary adjustments. 
 Addressing comments promptly helps streamline the review process.
 
-7**Merge:** Once the code review is complete and the changes are approved, your pull request will be merged into the main branch.
+7. **Merge:** Once the code review is complete and the changes are approved, your pull request will be merged into the main branch.
 
 ### 8.2 Submitting Changes
 
@@ -596,10 +582,10 @@ Follow principles such as the [OWASP Top Ten](https://owasp.org/www-project-top-
 
 ### 10.5 Reporting Security Issues
 
-If you discover a security vulnerability or have concerns about the security of the project, please report it immediately to our team at [our telegram channel](https://t.me/asvsoft).
+If you discover a security vulnerability or have concerns about the security of the project, please report it privately to [me@asv.me](mailto:me@asv.me).
 Do not disclose security-related issues publicly until they have been addressed.
 
-### 9.6 Security Training
+### 10.6 Security Training
 
 Encourage ongoing security training for all team members to stay informed about the latest security threats and best practices. 
 Knowledgeable developers are key to maintaining a secure codebase.
@@ -609,7 +595,7 @@ By incorporating security practices into our development process, we aim to crea
 ## 11. License
 
 This project is licensed under the terms of the MIT License. 
-A copy of the MIT License is provided in the [LICENSE](https://github.com/asv-soft/asv-drones?tab=MIT-1-ov-file#) file.
+A copy of the MIT License is provided in the [LICENSE](LICENSE) file.
 
 ### MIT License
 
@@ -667,7 +653,7 @@ Please check existing issues before creating new ones to avoid duplication.
 
 ### 12.3 Security Concerns
 
-If you discover a security vulnerability or have concerns about the security of the project, please report it immediately to our telegram channel: [ASVSoft on Telegram](https://t.me/asvsoft). 
+If you discover a security vulnerability or have concerns about the security of the project, please report it privately to [me@asv.me](mailto:me@asv.me).
 Do not disclose security-related issues publicly until they have been addressed.
 
 ### 12.4 General Inquiries

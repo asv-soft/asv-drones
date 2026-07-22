@@ -154,9 +154,13 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         ExportToCsv = new ReactiveCommand((_, c) => ExportToCsvImpl(c)).DisposeItWith(Disposable);
         ClearAll = new ReactiveCommand(_ => ClearAllImpl()).DisposeItWith(Disposable);
 
-        IsPaused.ViewValue.Subscribe(_ => SelectedPacket.Value = null).DisposeItWith(Disposable);
+        IsPaused
+            .ViewValue.ObserveOnUIThreadDispatcher()
+            .Subscribe(_ => SelectedPacket.Value = null)
+            .DisposeItWith(Disposable);
         IsCheckedAllSources
-            .ViewValue.Subscribe(isChecked =>
+            .ViewValue.ObserveOnUIThreadDispatcher()
+            .Subscribe(isChecked =>
             {
                 foreach (var filter in _filtersBySourceSet)
                 {
@@ -165,7 +169,8 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
             })
             .DisposeItWith(Disposable);
         IsCheckedAllTypes
-            .ViewValue.Subscribe(isChecked =>
+            .ViewValue.ObserveOnUIThreadDispatcher()
+            .Subscribe(isChecked =>
             {
                 foreach (var filter in _filtersByTypeSet)
                 {
@@ -176,11 +181,14 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
 
         _packetsBuffer
             .ObserveAdd()
+            .ObserveOnUIThreadDispatcher()
             .Subscribe(item => UpdateFilters(item.Value))
             .DisposeItWith(Disposable);
+
         _deviceManager
             .Router.OnRxMessage.Where(_ => !IsPaused.ViewValue.Value)
             .FilterByType<MavlinkMessage>()
+            .ObserveOnUIThreadDispatcher()
             .Chunk(TimeSpan.FromSeconds(PacketsReceiveDelayInSeconds))
             .Select(ConvertToPacketMessage)
             .Subscribe(_packetsBuffer.AddLastRange)
@@ -188,6 +196,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         _deviceManager
             .Router.OnTxMessage.Where(_ => !IsPaused.ViewValue.Value)
             .FilterByType<MavlinkMessage>()
+            .ObserveOnUIThreadDispatcher()
             .Chunk(TimeSpan.FromSeconds(PacketsReceiveDelayInSeconds))
             .Select(ConvertToPacketMessage)
             .Subscribe(_packetsBuffer.AddLastRange)
@@ -195,6 +204,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
 
         SelectedPacket
             .WhereNotNull()
+            .ObserveOnUIThreadDispatcher()
             .Subscribe(selectedPacket =>
             {
                 foreach (var item in _packetsBuffer)
@@ -208,6 +218,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
 
         _filtersBySourceSet // TODO: Switch to a special routable event when ready
             .ObserveAdd()
+            .ObserveOnUIThreadDispatcher()
             .Subscribe(filter =>
             {
                 filter
@@ -219,6 +230,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
             .DisposeItWith(Disposable);
         _filtersByTypeSet // TODO: Switch to a special routable event when ready
             .ObserveAdd()
+            .ObserveOnUIThreadDispatcher()
             .Subscribe(filter =>
             {
                 filter
@@ -236,6 +248,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
                 Search.Text.ViewValue.Select(_ => Unit.Default),
                 _filterChangeTrigger.Select(_ => Unit.Default)
             )
+            .ObserveOnUIThreadDispatcher()
             .ThrottleLast(TimeSpan.FromMilliseconds(500))
             .Subscribe(_ =>
             {

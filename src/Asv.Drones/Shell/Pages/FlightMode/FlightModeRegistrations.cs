@@ -13,7 +13,9 @@ public static class FlightModeRegistrations
                 FlightModePageViewModel.PageId
             );
             builder.AppBuilder.Shell.Pages.Home.UseExtension<HomePageFlightModeExtension>();
-            configure?.Invoke(new Builder(builder));
+
+            configure ??= b => b.RegisterDefault();
+            configure.Invoke(new Builder(builder));
             return builder;
         }
     }
