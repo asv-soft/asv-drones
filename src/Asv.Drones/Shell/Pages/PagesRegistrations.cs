@@ -25,7 +25,7 @@ public static class PagesRegistrations
         {
             this.RegisterMavParams();
             this.RegisterPacketViewer();
-            this.RegisterFlightMode(flightMode => flightMode.RegisterDefault());
+            this.RegisterFlightMode();
             this.RegisterPlaning();
             this.RegisterFileBrowser();
             this.RegisterSetup();
