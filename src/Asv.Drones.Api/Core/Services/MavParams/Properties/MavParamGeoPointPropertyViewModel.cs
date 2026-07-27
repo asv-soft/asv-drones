@@ -162,7 +162,13 @@ public sealed class MavParamGeoPointPropertyViewModel
     private void AddMenuItems()
     {
         Menu.Add(
-            new MenuItem($"{Id}.set-default", $"Set default ({GetDefaultValueDisplay()})")
+            new MenuItem(
+                $"{Id}.set-default",
+                string.Format(
+                    RS.MavParamGeoPointPropertyViewModel_SetDefaultMenuItem_Header,
+                    GetDefaultValueDisplay()
+                )
+            )
             {
                 Icon = MaterialIconKind.Restore,
                 Order = 10,
@@ -176,7 +182,10 @@ public sealed class MavParamGeoPointPropertyViewModel
             }
         );
         Menu.Add(
-            new MenuItem($"{Id}.refresh", "Refresh")
+            new MenuItem(
+                $"{Id}.refresh",
+                RS.MavParamGeoPointPropertyViewModel_RefreshMenuItem_Header
+            )
             {
                 Icon = MaterialIconKind.Refresh,
                 Order = 20,

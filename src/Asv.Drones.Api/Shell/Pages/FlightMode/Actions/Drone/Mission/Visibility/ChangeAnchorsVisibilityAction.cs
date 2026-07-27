@@ -8,8 +8,8 @@ namespace Asv.Drones.Api;
 public sealed class ChangeAnchorsVisibilityAction<TTarget>()
     : MissionVisibilityAction<TTarget>(
         "change-anchors-visibility",
-        "Hide/Show mission anchors",
-        "Change visibility of the mission anchors",
+        RS.ChangeAnchorsVisibilityAction_TryCreateAction_Header,
+        RS.ChangeAnchorsVisibilityAction_TryCreateAction_Description,
         120
     )
     where TTarget : class, IViewModel, IDeviceActionTarget<IClientDevice>
