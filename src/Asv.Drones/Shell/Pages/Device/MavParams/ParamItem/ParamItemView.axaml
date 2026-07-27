@@ -51,7 +51,7 @@
                 </Button>
                 <Panel DockPanel.Dock="Right" IsVisible="{Binding !IsSynced.Value}">
                     <avalonia:MaterialIcon
-                        avalonia1:AsvPallete.Color="Success"
+                        avalonia1:AsvPalette.Color="Success"
                         Kind="FloppyDisk"
                         Classes="big"
                     />
@@ -111,7 +111,7 @@
                 Margin="10 5"
                 HorizontalAlignment="Left"
                 Padding="5"
-                avalonia1:AsvPallete.Color="Error"
+                avalonia1:AsvPalette.Color="Error"
                 CornerRadius="{StaticResource ControlCornerRadius}"
             >
                 <TextBlock

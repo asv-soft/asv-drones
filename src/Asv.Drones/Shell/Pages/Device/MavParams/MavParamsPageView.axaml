@@ -149,7 +149,7 @@
                                         Margin="10 0 0 0"
                                         DockPanel.Dock="Right"
                                         Kind="FloppyDisk"
-                                        avalonia1:AsvPallete.Color="Success"
+                                        avalonia1:AsvPalette.Color="Success"
                                     />
                                     <TextBlock
                                         HorizontalAlignment="Stretch"
