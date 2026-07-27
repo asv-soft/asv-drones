@@ -29,31 +29,31 @@
         </Style>
         <Style Selector="avalonia|MaterialIcon.folder">
             <Setter Property="Kind" Value="FolderOutline" />
-            <Setter Property="avalonia1:AsvPallete.Color" Value="{StaticResource FolderColor}" />
+            <Setter Property="avalonia1:AsvPalette.Color" Value="{StaticResource FolderColor}" />
         </Style>
         <Style Selector="avalonia|MaterialIcon.folder.selected">
             <Setter Property="Kind" Value="Folder" />
-            <Setter Property="avalonia1:AsvPallete.Color" Value="{StaticResource FolderColor}" />
+            <Setter Property="avalonia1:AsvPalette.Color" Value="{StaticResource FolderColor}" />
         </Style>
         <Style Selector="avalonia|MaterialIcon.folder.expanded">
             <Setter Property="Kind" Value="FolderOpenOutline" />
-            <Setter Property="avalonia1:AsvPallete.Color" Value="{StaticResource FolderColor}" />
+            <Setter Property="avalonia1:AsvPalette.Color" Value="{StaticResource FolderColor}" />
         </Style>
         <Style Selector="avalonia|MaterialIcon.file">
             <Setter Property="Kind" Value="FileMarkerOutline" />
-            <Setter Property="avalonia1:AsvPallete.Color" Value="{StaticResource FileColor}" />
+            <Setter Property="avalonia1:AsvPalette.Color" Value="{StaticResource FileColor}" />
         </Style>
         <Style Selector="avalonia|MaterialIcon.file.selected" x:DataType="drones:BrowserNode">
             <Setter Property="Kind" Value="FileMarker" />
         </Style>
         <Style Selector="Button avalonia|MaterialIcon, Button avalonia|MaterialIconExt">
-            <Setter Property="avalonia1:AsvPallete.Color" Value="{StaticResource IconColor}" />
+            <Setter Property="avalonia1:AsvPalette.Color" Value="{StaticResource IconColor}" />
         </Style>
         <Style Selector="Button.delete avalonia|MaterialIcon, Button.delete avalonia|MaterialIconExt">
-            <Setter Property="avalonia1:AsvPallete.Color" Value="Error" />
+            <Setter Property="avalonia1:AsvPalette.Color" Value="Error" />
         </Style>
         <Style Selector="Button:disabled avalonia|MaterialIcon, Button:disabled avalonia|MaterialIconExt">
-            <Setter Property="avalonia1:AsvPallete.Color" Value="Unknown" />
+            <Setter Property="avalonia1:AsvPalette.Color" Value="Unknown" />
             <Setter Property="Button.Opacity" Value="0.4" />
         </Style>
         <Style Selector="Button">
@@ -88,7 +88,7 @@
                                 >
                                     <avalonia:MaterialIcon
                                         Kind="FolderPlusOutline"
-                                        avalonia1:AsvPallete.Color="{StaticResource FolderColor}"
+                                        avalonia1:AsvPalette.Color="{StaticResource FolderColor}"
                                     />
                                 </Button>
                                 <Button
@@ -125,7 +125,7 @@
                                 >
                                     <avalonia:MaterialIcon
                                         Kind="Refresh"
-                                        avalonia1:AsvPallete.Color="{StaticResource IconColor}"
+                                        avalonia1:AsvPalette.Color="{StaticResource IconColor}"
                                     />
                                 </Button>
                             </Grid>
@@ -184,7 +184,7 @@
                                             VerticalAlignment="Center"
                                             HorizontalAlignment="Right"
                                             Text="{Binding Base.Crc32Hex}"
-                                            avalonia1:AsvPallete.Color="{CompiledBinding Base.Crc32Status, Converter={StaticResource Crc32StatusToColorConverter}}"
+                                            avalonia1:AsvPalette.Color="{CompiledBinding Base.Crc32Status, Converter={StaticResource Crc32StatusToColorConverter}}"
                                         ></TextBlock>
                                         <TextBlock
                                             Grid.Column="3"
@@ -246,7 +246,7 @@
                         HorizontalOffset="12"
                         Topmost="True"
                     >
-                        <Border Padding="10" CornerRadius="6" avalonia1:AsvPallete.Color="Unknown">
+                        <Border Padding="10" CornerRadius="6" avalonia1:AsvPalette.Color="Unknown">
                             <StackPanel>
                                 <Button
                                     Content="{x:Static drones:RS.FileBrowserView_Button_Download_Content}"
@@ -280,7 +280,7 @@
                                 >
                                     <avalonia:MaterialIcon
                                         Kind="FolderPlusOutline"
-                                        avalonia1:AsvPallete.Color="{StaticResource FolderColor}"
+                                        avalonia1:AsvPalette.Color="{StaticResource FolderColor}"
                                     />
                                 </Button>
                                 <Button
@@ -326,7 +326,7 @@
                                 >
                                     <avalonia:MaterialIcon
                                         Kind="Refresh"
-                                        avalonia1:AsvPallete.Color="{StaticResource IconColor}"
+                                        avalonia1:AsvPalette.Color="{StaticResource IconColor}"
                                     />
                                 </Button>
                             </Grid>
@@ -385,7 +385,7 @@
                                             VerticalAlignment="Center"
                                             HorizontalAlignment="Right"
                                             Text="{Binding Base.Crc32Hex}"
-                                            avalonia1:AsvPallete.Color="{CompiledBinding Base.Crc32Status, Converter={StaticResource Crc32StatusToColorConverter}}"
+                                            avalonia1:AsvPalette.Color="{CompiledBinding Base.Crc32Status, Converter={StaticResource Crc32StatusToColorConverter}}"
                                         ></TextBlock>
                                         <TextBlock
                                             Grid.Column="3"
@@ -410,7 +410,7 @@
                 <ProgressBar
                     Grid.Column="0"
                     Height="10"
-                    avalonia1:AsvPallete.Color="{StaticResource IconColor}"
+                    avalonia1:AsvPalette.Color="{StaticResource IconColor}"
                     Value="{Binding Progress.Value}"
                     Minimum="0"
                     Maximum="1"
