@@ -27,6 +27,7 @@ public sealed class AutoModeAction<TTarget>() : DroneMenuAction<TTarget>("auto-m
         }
 
         var item = CreateMenuItem(RS.AutoModeAction_TryCreateAction_Header);
+        item.StaysOpenOnClick = true;
         item.Icon = MaterialIconKind.Automatic;
         item.Description = RS.AutoModeAction_TryCreateAction_Description;
         item.Order = 10;

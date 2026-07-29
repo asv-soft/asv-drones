@@ -27,6 +27,7 @@ public sealed class RtlAction<TTarget>() : DroneMenuAction<TTarget>("rtl")
         }
 
         var item = CreateMenuItem(RS.RtlAction_TryCreateAction_Header);
+        item.StaysOpenOnClick = true;
         item.Icon = MaterialIconKind.Home;
         item.Description = RS.RtlAction_TryCreateAction_Description;
         item.Order = 60;

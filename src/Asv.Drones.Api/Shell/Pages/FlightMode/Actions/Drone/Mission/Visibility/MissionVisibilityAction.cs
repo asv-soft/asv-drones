@@ -41,6 +41,7 @@ public abstract class MissionVisibilityAction<TTarget>(
 
         var visibility = GetVisibility(mission);
         var item = CreateMenuItem(header);
+        item.StaysOpenOnClick = true;
         item.Icon = GetVisibilityIcon(visibility.CurrentValue);
         item.Description = description;
         item.Order = order;

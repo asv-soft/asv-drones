@@ -27,6 +27,7 @@ public sealed class GuidedAction<TTarget>() : DroneMenuAction<TTarget>("guided")
         }
 
         var item = CreateMenuItem(RS.GuidedAction_TryCreateAction_Header);
+        item.StaysOpenOnClick = true;
         item.Icon = MaterialIconKind.Controller;
         item.Description = RS.GuidedAction_TryCreateAction_Description;
         item.Order = 30;
