@@ -8,8 +8,8 @@ namespace Asv.Drones.Api;
 public sealed class ChangePathVisibilityAction<TTarget>()
     : MissionVisibilityAction<TTarget>(
         "change-path-visibility",
-        "Hide/Show mission path",
-        "Change visibility of the mission path",
+        RS.ChangePathVisibilityAction_TryCreateAction_Header,
+        RS.ChangePathVisibilityAction_TryCreateAction_Description,
         121
     )
     where TTarget : class, IViewModel, IDeviceActionTarget<IClientDevice>

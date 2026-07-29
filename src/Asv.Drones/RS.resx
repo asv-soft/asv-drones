@@ -179,7 +179,7 @@
     <data name="UavWidgetViewModel_StatusText_DisArmed" xml:space="preserve">
         <value>Disarmed</value>
     </data>
-    <data name="FlightPageViewModel_Title" xml:space="preserve">
+    <data name="FlightModePageViewModel_Title" xml:space="preserve">
         <value>Flight</value>
     </data>
     <data name="GpsFixType_GpsFixType2dFix" xml:space="preserve">
@@ -760,5 +760,11 @@
     </data>
     <data name="TimeInAirTelemetry_Header_Short" xml:space="preserve">
         <value>In air</value>
+    </data>
+    <data name="HomePageFlightModeExtension_ActionViewModel_Header" xml:space="preserve">
+        <value>Flight Mode</value>
+    </data>
+    <data name="HomePageFlightModeExtension_ActionViewModel_Description" xml:space="preserve">
+        <value>Opens Flight Mode</value>
     </data>
 </root>

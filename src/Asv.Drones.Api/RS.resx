@@ -114,4 +114,34 @@
     <data name="FindDroneAction_TryCreateAction_Description" xml:space="preserve">
         <value>Center the map on the drone's current position.</value>
     </data>
+    <data name="ChangeMissionVisibilityAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Hide/Show mission</value>
+    </data>
+    <data name="ChangeMissionVisibilityAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Change visibility of the whole mission.</value>
+    </data>
+    <data name="ChangeAnchorsVisibilityAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Hide/Show mission anchors</value>
+    </data>
+    <data name="ChangeAnchorsVisibilityAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Change visibility of the mission anchors.</value>
+    </data>
+    <data name="ChangePathVisibilityAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Hide/Show mission path</value>
+    </data>
+    <data name="ChangePathVisibilityAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Change visibility of the mission path.</value>
+    </data>
+    <data name="MavParamPropertyEditorMetadata_SetDefaultMenuItem_Header" xml:space="preserve">
+        <value>Set default ({0})</value>
+    </data>
+    <data name="MavParamPropertyEditorMetadata_RefreshMenuItem_Header" xml:space="preserve">
+        <value>Refresh</value>
+    </data>
+    <data name="MavParamGeoPointPropertyViewModel_SetDefaultMenuItem_Header" xml:space="preserve">
+        <value>Set default ({0})</value>
+    </data>
+    <data name="MavParamGeoPointPropertyViewModel_RefreshMenuItem_Header" xml:space="preserve">
+        <value>Refresh</value>
+    </data>
 </root>
