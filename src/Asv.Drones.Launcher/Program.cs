@@ -1,5 +1,4 @@
-﻿using Asv.Avalonia.Launcher.Api;
-using Asv.Avalonia.Launcher.Orchestration;
+﻿using Asv.Avalonia.Launcher.Orchestration;
 using Avalonia;
 using Avalonia.Controls;
 
@@ -15,30 +14,10 @@ static class Program
     [STAThread]
     public static void Main(string[] args) =>
         BuildAvaloniaApp()
-            .StartWithClassicDesktopLifetime(GetLauncherArgs(args), ShutdownMode.OnMainWindowClose);
-
-    private static string[] GetLauncherArgs(string[] args)
-    {
-        if (
-            LauncherCommandLineParser.TryParse(args, out var options, out _)
-            && options is not null
-            && !string.IsNullOrWhiteSpace(options.TargetPath)
-        )
-        {
-            return args;
-        }
-
-        var launcherArgs = new string[args.Length + 2];
-        for (var i = 0; i < args.Length; i++)
-        {
-            launcherArgs[i] = args[i];
-        }
-
-        launcherArgs[^2] = LauncherCommandLineArguments.TargetArg;
-        launcherArgs[^1] = Path.Combine(AppContext.BaseDirectory, DefaultTargetExecutableName);
-
-        return launcherArgs;
-    }
+            .StartWithClassicDesktopLifetime(
+                LauncherCommandLineParser.WithDefaultTarget(args, DefaultTargetExecutableName),
+                ShutdownMode.OnMainWindowClose
+            );
 
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp() =>
