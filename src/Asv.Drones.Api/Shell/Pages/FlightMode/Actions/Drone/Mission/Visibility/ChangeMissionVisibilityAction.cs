@@ -8,8 +8,8 @@ namespace Asv.Drones.Api;
 public sealed class ChangeMissionVisibilityAction<TTarget>()
     : MissionVisibilityAction<TTarget>(
         "change-mission-visibility",
-        "Hide/Show mission",
-        "Change visibility of the whole mission",
+        RS.ChangeMissionVisibilityAction_TryCreateAction_Header,
+        RS.ChangeMissionVisibilityAction_TryCreateAction_Description,
         119
     )
     where TTarget : class, IViewModel, IDeviceActionTarget<IClientDevice>

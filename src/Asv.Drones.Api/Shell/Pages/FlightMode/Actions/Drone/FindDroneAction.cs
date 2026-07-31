@@ -28,6 +28,7 @@ public sealed class FindDroneAction<TTarget>() : DroneMenuAction<TTarget>("find-
         }
 
         var item = CreateMenuItem(RS.FindDroneAction_TryCreateAction_Header);
+        item.StaysOpenOnClick = true;
         item.Icon = MaterialIconKind.Crosshairs;
         item.Description = RS.FindDroneAction_TryCreateAction_Description;
         item.Order = 90;

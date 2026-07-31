@@ -27,6 +27,7 @@ public sealed class RefreshMissionAction<TTarget>() : DroneMenuAction<TTarget>("
         }
 
         var item = CreateMenuItem(RS.RefreshMissionAction_TryCreateAction_Header);
+        item.StaysOpenOnClick = true;
         item.Icon = MaterialIconKind.Refresh;
         item.Description = RS.RefreshMissionAction_TryCreateAction_Description;
         item.Order = 100;

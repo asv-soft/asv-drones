@@ -193,42 +193,6 @@ namespace Asv.Drones {
                 return ResourceManager.GetString("AutoModeAction_TryCreateAction_Header", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Configure how telemetry indicators are displayed..
-        /// </summary>
-        public static string ConfigureTelemetryAction_TryCreateAction_Description {
-            get {
-                return ResourceManager.GetString("ConfigureTelemetryAction_TryCreateAction_Description", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Configure telemetry.
-        /// </summary>
-        public static string ConfigureTelemetryAction_TryCreateAction_Header {
-            get {
-                return ResourceManager.GetString("ConfigureTelemetryAction_TryCreateAction_Header", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Clear selection.
-        /// </summary>
-        public static string ConfigureTelemetryDialogViewModel_ClearSelection_Header {
-            get {
-                return ResourceManager.GetString("ConfigureTelemetryDialogViewModel_ClearSelection_Header", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Select all.
-        /// </summary>
-        public static string ConfigureTelemetryDialogViewModel_SelectAll_Header {
-            get {
-                return ResourceManager.GetString("ConfigureTelemetryDialogViewModel_SelectAll_Header", resourceCulture);
-            }
-        }
         
         /// <summary>
         ///   Looks up a localized string similar to Azimuth.
@@ -335,6 +299,42 @@ namespace Asv.Drones {
         public static string ClearAllPacketsCommand_CommandInfo_Name {
             get {
                 return ResourceManager.GetString("ClearAllPacketsCommand_CommandInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configure how telemetry indicators are displayed..
+        /// </summary>
+        public static string ConfigureTelemetryAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("ConfigureTelemetryAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configure telemetry.
+        /// </summary>
+        public static string ConfigureTelemetryAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("ConfigureTelemetryAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear selection.
+        /// </summary>
+        public static string ConfigureTelemetryDialogViewModel_ClearSelection_Header {
+            get {
+                return ResourceManager.GetString("ConfigureTelemetryDialogViewModel_ClearSelection_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select all.
+        /// </summary>
+        public static string ConfigureTelemetryDialogViewModel_SelectAll_Header {
+            get {
+                return ResourceManager.GetString("ConfigureTelemetryDialogViewModel_SelectAll_Header", resourceCulture);
             }
         }
         
@@ -629,9 +629,9 @@ namespace Asv.Drones {
         /// <summary>
         ///   Looks up a localized string similar to Flight.
         /// </summary>
-        public static string FlightPageViewModel_Title {
+        public static string FlightModePageViewModel_Title {
             get {
-                return ResourceManager.GetString("FlightPageViewModel_Title", resourceCulture);
+                return ResourceManager.GetString("FlightModePageViewModel_Title", resourceCulture);
             }
         }
         
@@ -929,6 +929,24 @@ namespace Asv.Drones {
         public static string HomeDistanceTelemetry_Header {
             get {
                 return ResourceManager.GetString("HomeDistanceTelemetry_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opens Flight Mode.
+        /// </summary>
+        public static string HomePageFlightModeExtension_ActionViewModel_Description {
+            get {
+                return ResourceManager.GetString("HomePageFlightModeExtension_ActionViewModel_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flight Mode.
+        /// </summary>
+        public static string HomePageFlightModeExtension_ActionViewModel_Header {
+            get {
+                return ResourceManager.GetString("HomePageFlightModeExtension_ActionViewModel_Header", resourceCulture);
             }
         }
         
@@ -2040,7 +2058,7 @@ namespace Asv.Drones {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add indicator.
+        ///   Looks up a localized string similar to Configure telemetry.
         /// </summary>
         public static string TelemetrySectionViewModel_ConfigureTelemetryDialog_Title {
             get {

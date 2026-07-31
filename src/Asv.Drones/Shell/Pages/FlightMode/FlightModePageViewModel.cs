@@ -36,7 +36,7 @@ public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightMo
     )
         : base(PageId, context, loggerFactory, dialogService, ext)
     {
-        Header = "Flight (BETA)";
+        Header = RS.FlightModePageViewModel_Title;
         Icon = PageIcon;
 
         Widgets = [];

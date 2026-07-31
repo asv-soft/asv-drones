@@ -28,6 +28,7 @@ public sealed class StartMissionAction<TTarget>() : DroneMenuAction<TTarget>("st
         }
 
         var item = CreateMenuItem(RS.StartMissionAction_TryCreateAction_Header);
+        item.StaysOpenOnClick = true;
         item.Icon = MaterialIconKind.MapMarkerPath;
         item.Description = RS.StartMissionAction_TryCreateAction_Description;
         item.Order = 110;

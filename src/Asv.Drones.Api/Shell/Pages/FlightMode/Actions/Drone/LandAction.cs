@@ -28,6 +28,7 @@ public sealed class LandAction<TTarget>() : DroneMenuAction<TTarget>("land")
         }
 
         var item = CreateMenuItem(RS.LandAction_TryCreateAction_Header);
+        item.StaysOpenOnClick = true;
         item.Icon = MaterialIconKind.FlightLand;
         item.Description = RS.LandAction_TryCreateAction_Description;
         item.Order = 50;

@@ -16,8 +16,8 @@ public class HomePageFlightModeExtension : IExtensionFor<IHomePage>
         context.Tools.Add(
             new ActionViewModel(FlightModePageViewModel.PageId)
             {
-                Header = "Flight Mode (BETA)",
-                Description = "Opens Flight Mode (BETA)",
+                Header = RS.HomePageFlightModeExtension_ActionViewModel_Header,
+                Description = RS.HomePageFlightModeExtension_ActionViewModel_Description,
                 Icon = FlightModePageViewModel.PageIcon,
                 Command = new ReactiveCommand(
                     async (_, cancel) =>

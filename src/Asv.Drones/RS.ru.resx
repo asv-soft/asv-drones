@@ -179,8 +179,8 @@
     <data name="UavWidgetViewModel_StatusText_DisArmed" xml:space="preserve">
         <value>Заблокировано</value>
     </data>
-    <data name="FlightPageViewModel_Title" xml:space="preserve">
-        <value>Полет</value>
+    <data name="FlightModePageViewModel_Title" xml:space="preserve">
+        <value>Полёт</value>
     </data>
     <data name="GpsFixType_GpsFixType2dFix" xml:space="preserve">
         <value>2Д позиция Фикс</value>
@@ -748,5 +748,11 @@
     </data>
     <data name="TimeInAirTelemetry_Header_Short" xml:space="preserve">
         <value>В воздухе</value>
+    </data>
+    <data name="HomePageFlightModeExtension_ActionViewModel_Header" xml:space="preserve">
+        <value>Режим полёта</value>
+    </data>
+    <data name="HomePageFlightModeExtension_ActionViewModel_Description" xml:space="preserve">
+        <value>Открывает режим полёта</value>
     </data>
 </root>

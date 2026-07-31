@@ -60,6 +60,240 @@ namespace Asv.Drones.Api {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Switch to auto flight mode..
+        /// </summary>
+        internal static string AutoModeAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("AutoModeAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto.
+        /// </summary>
+        internal static string AutoModeAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("AutoModeAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change visibility of the mission anchors..
+        /// </summary>
+        internal static string ChangeAnchorsVisibilityAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("ChangeAnchorsVisibilityAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide/Show mission anchors.
+        /// </summary>
+        internal static string ChangeAnchorsVisibilityAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("ChangeAnchorsVisibilityAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change visibility of the whole mission..
+        /// </summary>
+        internal static string ChangeMissionVisibilityAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("ChangeMissionVisibilityAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide/Show mission.
+        /// </summary>
+        internal static string ChangeMissionVisibilityAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("ChangeMissionVisibilityAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change visibility of the mission path..
+        /// </summary>
+        internal static string ChangePathVisibilityAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("ChangePathVisibilityAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide/Show mission path.
+        /// </summary>
+        internal static string ChangePathVisibilityAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("ChangePathVisibilityAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configure how telemetry indicators are displayed..
+        /// </summary>
+        internal static string ConfigureTelemetryAction_Description {
+            get {
+                return ResourceManager.GetString("ConfigureTelemetryAction_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string ConfigureTelemetryAction_DialogCloseButtonText {
+            get {
+                return ResourceManager.GetString("ConfigureTelemetryAction_DialogCloseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accept.
+        /// </summary>
+        internal static string ConfigureTelemetryAction_DialogPrimaryButtonText {
+            get {
+                return ResourceManager.GetString("ConfigureTelemetryAction_DialogPrimaryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configure telemetry.
+        /// </summary>
+        internal static string ConfigureTelemetryAction_DialogTitle {
+            get {
+                return ResourceManager.GetString("ConfigureTelemetryAction_DialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configure telemetry.
+        /// </summary>
+        internal static string ConfigureTelemetryAction_Header {
+            get {
+                return ResourceManager.GetString("ConfigureTelemetryAction_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear selection.
+        /// </summary>
+        internal static string ConfigureTelemetryDialogViewModel_ClearSelection_Header {
+            get {
+                return ResourceManager.GetString("ConfigureTelemetryDialogViewModel_ClearSelection_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select all.
+        /// </summary>
+        internal static string ConfigureTelemetryDialogViewModel_SelectAll_Header {
+            get {
+                return ResourceManager.GetString("ConfigureTelemetryDialogViewModel_SelectAll_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Center the map on the drone&apos;s current position..
+        /// </summary>
+        internal static string FindDroneAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("FindDroneAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find drone.
+        /// </summary>
+        internal static string FindDroneAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("FindDroneAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command failed.
+        /// </summary>
+        internal static string FlightWidgetAction_CreateCommand_Title {
+            get {
+                return ResourceManager.GetString("FlightWidgetAction_CreateCommand_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send the drone to the specified location..
+        /// </summary>
+        internal static string GotoAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("GotoAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to.
+        /// </summary>
+        internal static string GotoAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("GotoAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch to guided flight mode..
+        /// </summary>
+        internal static string GuidedAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("GuidedAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guided.
+        /// </summary>
+        internal static string GuidedAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("GuidedAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Land the drone at the current location..
+        /// </summary>
+        internal static string LandAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("LandAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Land.
+        /// </summary>
+        internal static string LandAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("LandAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        internal static string MavParamGeoPointPropertyViewModel_RefreshMenuItem_Header {
+            get {
+                return ResourceManager.GetString("MavParamGeoPointPropertyViewModel_RefreshMenuItem_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set default ({0}).
+        /// </summary>
+        internal static string MavParamGeoPointPropertyViewModel_SetDefaultMenuItem_Header {
+            get {
+                return ResourceManager.GetString("MavParamGeoPointPropertyViewModel_SetDefaultMenuItem_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value must be a number with optional suffix (K, M, G).
         /// </summary>
         internal static string MavParamInfo_ValidationException_InvalidFormat {
@@ -67,190 +301,139 @@ namespace Asv.Drones.Api {
                 return ResourceManager.GetString("MavParamInfo_ValidationException_InvalidFormat", resourceCulture);
             }
         }
-
-        internal static string FlightWidgetAction_CreateCommand_Title {
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        internal static string MavParamPropertyEditorMetadata_RefreshMenuItem_Header {
             get {
-                return ResourceManager.GetString("FlightWidgetAction_CreateCommand_Title", resourceCulture);
+                return ResourceManager.GetString("MavParamPropertyEditorMetadata_RefreshMenuItem_Header", resourceCulture);
             }
         }
-
-        internal static string ConfigureTelemetryAction_Header {
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set default ({0}).
+        /// </summary>
+        internal static string MavParamPropertyEditorMetadata_SetDefaultMenuItem_Header {
             get {
-                return ResourceManager.GetString("ConfigureTelemetryAction_Header", resourceCulture);
+                return ResourceManager.GetString("MavParamPropertyEditorMetadata_SetDefaultMenuItem_Header", resourceCulture);
             }
         }
-
-        internal static string ConfigureTelemetryAction_Description {
-            get {
-                return ResourceManager.GetString("ConfigureTelemetryAction_Description", resourceCulture);
-            }
-        }
-
-        internal static string ConfigureTelemetryAction_DialogTitle {
-            get {
-                return ResourceManager.GetString("ConfigureTelemetryAction_DialogTitle", resourceCulture);
-            }
-        }
-
-        internal static string ConfigureTelemetryAction_DialogPrimaryButtonText {
-            get {
-                return ResourceManager.GetString("ConfigureTelemetryAction_DialogPrimaryButtonText", resourceCulture);
-            }
-        }
-
-        internal static string ConfigureTelemetryAction_DialogCloseButtonText {
-            get {
-                return ResourceManager.GetString("ConfigureTelemetryAction_DialogCloseButtonText", resourceCulture);
-            }
-        }
-
-        internal static string ConfigureTelemetryDialogViewModel_SelectAll_Header {
-            get {
-                return ResourceManager.GetString("ConfigureTelemetryDialogViewModel_SelectAll_Header", resourceCulture);
-            }
-        }
-
-        internal static string ConfigureTelemetryDialogViewModel_ClearSelection_Header {
-            get {
-                return ResourceManager.GetString("ConfigureTelemetryDialogViewModel_ClearSelection_Header", resourceCulture);
-            }
-        }
-
-        internal static string SetAltitudeDialogViewModel_ApplyDialog_PrimaryButton_TakeOff {
-            get {
-                return ResourceManager.GetString("SetAltitudeDialogViewModel_ApplyDialog_PrimaryButton_TakeOff", resourceCulture);
-            }
-        }
-
-        internal static string SetAltitudeDialogViewModel_ApplyDialog_SecondaryButton_Cancel {
-            get {
-                return ResourceManager.GetString("SetAltitudeDialogViewModel_ApplyDialog_SecondaryButton_Cancel", resourceCulture);
-            }
-        }
-
-        internal static string UavWidgetViewModel_SetAltitudeDialog_Title {
-            get {
-                return ResourceManager.GetString("UavWidgetViewModel_SetAltitudeDialog_Title", resourceCulture);
-            }
-        }
-
-        internal static string AutoModeAction_TryCreateAction_Header {
-            get {
-                return ResourceManager.GetString("AutoModeAction_TryCreateAction_Header", resourceCulture);
-            }
-        }
-
-        internal static string AutoModeAction_TryCreateAction_Description {
-            get {
-                return ResourceManager.GetString("AutoModeAction_TryCreateAction_Description", resourceCulture);
-            }
-        }
-
-        internal static string RefreshMissionAction_TryCreateAction_Header {
-            get {
-                return ResourceManager.GetString("RefreshMissionAction_TryCreateAction_Header", resourceCulture);
-            }
-        }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download the latest mission from the drone..
+        /// </summary>
         internal static string RefreshMissionAction_TryCreateAction_Description {
             get {
                 return ResourceManager.GetString("RefreshMissionAction_TryCreateAction_Description", resourceCulture);
             }
         }
-
-        internal static string StartMissionAction_TryCreateAction_Header {
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh mission.
+        /// </summary>
+        internal static string RefreshMissionAction_TryCreateAction_Header {
             get {
-                return ResourceManager.GetString("StartMissionAction_TryCreateAction_Header", resourceCulture);
+                return ResourceManager.GetString("RefreshMissionAction_TryCreateAction_Header", resourceCulture);
             }
         }
-
-        internal static string StartMissionAction_TryCreateAction_Description {
-            get {
-                return ResourceManager.GetString("StartMissionAction_TryCreateAction_Description", resourceCulture);
-            }
-        }
-
-        internal static string GuidedAction_TryCreateAction_Header {
-            get {
-                return ResourceManager.GetString("GuidedAction_TryCreateAction_Header", resourceCulture);
-            }
-        }
-
-        internal static string GuidedAction_TryCreateAction_Description {
-            get {
-                return ResourceManager.GetString("GuidedAction_TryCreateAction_Description", resourceCulture);
-            }
-        }
-
-        internal static string RtlAction_TryCreateAction_Header {
-            get {
-                return ResourceManager.GetString("RtlAction_TryCreateAction_Header", resourceCulture);
-            }
-        }
-
-        internal static string RtlAction_TryCreateAction_Description {
-            get {
-                return ResourceManager.GetString("RtlAction_TryCreateAction_Description", resourceCulture);
-            }
-        }
-
-        internal static string LandAction_TryCreateAction_Header {
-            get {
-                return ResourceManager.GetString("LandAction_TryCreateAction_Header", resourceCulture);
-            }
-        }
-
-        internal static string LandAction_TryCreateAction_Description {
-            get {
-                return ResourceManager.GetString("LandAction_TryCreateAction_Description", resourceCulture);
-            }
-        }
-
-        internal static string TakeOffAction_TryCreateAction_Header {
-            get {
-                return ResourceManager.GetString("TakeOffAction_TryCreateAction_Header", resourceCulture);
-            }
-        }
-
-        internal static string TakeOffAction_TryCreateAction_Description {
-            get {
-                return ResourceManager.GetString("TakeOffAction_TryCreateAction_Description", resourceCulture);
-            }
-        }
-
-        internal static string GotoAction_TryCreateAction_Header {
-            get {
-                return ResourceManager.GetString("GotoAction_TryCreateAction_Header", resourceCulture);
-            }
-        }
-
-        internal static string GotoAction_TryCreateAction_Description {
-            get {
-                return ResourceManager.GetString("GotoAction_TryCreateAction_Description", resourceCulture);
-            }
-        }
-
-        internal static string RoiAction_TryCreateAction_Header {
-            get {
-                return ResourceManager.GetString("RoiAction_TryCreateAction_Header", resourceCulture);
-            }
-        }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set region of interest..
+        /// </summary>
         internal static string RoiAction_TryCreateAction_Description {
             get {
                 return ResourceManager.GetString("RoiAction_TryCreateAction_Description", resourceCulture);
             }
         }
-
-        internal static string FindDroneAction_TryCreateAction_Header {
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ROI.
+        /// </summary>
+        internal static string RoiAction_TryCreateAction_Header {
             get {
-                return ResourceManager.GetString("FindDroneAction_TryCreateAction_Header", resourceCulture);
+                return ResourceManager.GetString("RoiAction_TryCreateAction_Header", resourceCulture);
             }
         }
-
-        internal static string FindDroneAction_TryCreateAction_Description {
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return to launch..
+        /// </summary>
+        internal static string RtlAction_TryCreateAction_Description {
             get {
-                return ResourceManager.GetString("FindDroneAction_TryCreateAction_Description", resourceCulture);
+                return ResourceManager.GetString("RtlAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RTL.
+        /// </summary>
+        internal static string RtlAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("RtlAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take off.
+        /// </summary>
+        internal static string SetAltitudeDialogViewModel_ApplyDialog_PrimaryButton_TakeOff {
+            get {
+                return ResourceManager.GetString("SetAltitudeDialogViewModel_ApplyDialog_PrimaryButton_TakeOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string SetAltitudeDialogViewModel_ApplyDialog_SecondaryButton_Cancel {
+            get {
+                return ResourceManager.GetString("SetAltitudeDialogViewModel_ApplyDialog_SecondaryButton_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download the latest mission, select the first mission item, and switch to auto mode..
+        /// </summary>
+        internal static string StartMissionAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("StartMissionAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start mission.
+        /// </summary>
+        internal static string StartMissionAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("StartMissionAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take off to the specified altitude..
+        /// </summary>
+        internal static string TakeOffAction_TryCreateAction_Description {
+            get {
+                return ResourceManager.GetString("TakeOffAction_TryCreateAction_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take off.
+        /// </summary>
+        internal static string TakeOffAction_TryCreateAction_Header {
+            get {
+                return ResourceManager.GetString("TakeOffAction_TryCreateAction_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input Altitude.
+        /// </summary>
+        internal static string UavWidgetViewModel_SetAltitudeDialog_Title {
+            get {
+                return ResourceManager.GetString("UavWidgetViewModel_SetAltitudeDialog_Title", resourceCulture);
             }
         }
     }

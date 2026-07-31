@@ -41,7 +41,10 @@ internal static class MavParamPropertyEditorMetadata
         editor.Menu.Add(
             new MenuItem(
                 $"{editor.Id}.set-default",
-                $"Set default ({GetDefaultValueDisplay(info)})"
+                string.Format(
+                    RS.MavParamPropertyEditorMetadata_SetDefaultMenuItem_Header,
+                    GetDefaultValueDisplay(info)
+                )
             )
             {
                 Icon = MaterialIconKind.Restore,
@@ -58,7 +61,10 @@ internal static class MavParamPropertyEditorMetadata
             }
         );
         editor.Menu.Add(
-            new MenuItem($"{editor.Id}.refresh", "Refresh")
+            new MenuItem(
+                $"{editor.Id}.refresh",
+                RS.MavParamPropertyEditorMetadata_RefreshMenuItem_Header
+            )
             {
                 Icon = MaterialIconKind.Refresh,
                 Order = 20,

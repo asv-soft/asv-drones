@@ -107,4 +107,34 @@
     <data name="FindDroneAction_TryCreateAction_Description" xml:space="preserve">
         <value>Центрировать карту на текущей позиции дрона.</value>
     </data>
+    <data name="ChangeMissionVisibilityAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Скрыть/показать миссию</value>
+    </data>
+    <data name="ChangeMissionVisibilityAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Изменить видимость миссии целиком.</value>
+    </data>
+    <data name="ChangeAnchorsVisibilityAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Скрыть/показать точки миссии</value>
+    </data>
+    <data name="ChangeAnchorsVisibilityAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Изменить видимость точек миссии.</value>
+    </data>
+    <data name="ChangePathVisibilityAction_TryCreateAction_Header" xml:space="preserve">
+        <value>Скрыть/показать маршрут миссии</value>
+    </data>
+    <data name="ChangePathVisibilityAction_TryCreateAction_Description" xml:space="preserve">
+        <value>Изменить видимость маршрута миссии.</value>
+    </data>
+    <data name="MavParamPropertyEditorMetadata_SetDefaultMenuItem_Header" xml:space="preserve">
+        <value>Задать по умолчанию ({0})</value>
+    </data>
+    <data name="MavParamPropertyEditorMetadata_RefreshMenuItem_Header" xml:space="preserve">
+        <value>Обновить</value>
+    </data>
+    <data name="MavParamGeoPointPropertyViewModel_SetDefaultMenuItem_Header" xml:space="preserve">
+        <value>Задать по умолчанию ({0})</value>
+    </data>
+    <data name="MavParamGeoPointPropertyViewModel_RefreshMenuItem_Header" xml:space="preserve">
+        <value>Обновить</value>
+    </data>
 </root>
