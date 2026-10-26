@@ -15,8 +15,8 @@
         <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)"/>
         <PackageReference Include="Asv.Avalonia.LauncherReady" Version="$(AsvAvaloniaVersion)"/>
         <!--Condition below is needed to remove AvaloniaUI.DiagnosticsSupport package from build output in Release configuration.-->
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.1"/>
-        <PackageReference Include="Roslynator.Analyzers" Version="4.15.0">
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3"/>
+        <PackageReference Include="Roslynator.Analyzers" Version="5.0.1">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
@@ -27,6 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Content Include="../../assets/icon.png" Link="app-icon.png" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest"/>
         <ProjectReference Include="..\Asv.Drones\Asv.Drones.csproj"/>
     </ItemGroup>
 

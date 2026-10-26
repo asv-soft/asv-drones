@@ -10,5 +10,8 @@
         <StyleInclude Source="avares://Asv.Drones/Core/Controls/Telemetry/CompassUavIndicator/CompassUavIndicatorStyles.axaml" />
         <StyleInclude Source="avares://Asv.Avalonia/Theme.axaml" />
         <StyleInclude Source="avares://Asv.Avalonia.GeoMap/Theme.axaml" />
+        <Style Selector=":is(Window)">
+            <Setter Property="Icon" Value="avares://Asv.Drones/Assets/app.ico" />
+        </Style>
     </Application.Styles>
 </Application>

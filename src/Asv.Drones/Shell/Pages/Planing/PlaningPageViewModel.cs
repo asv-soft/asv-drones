@@ -10,6 +10,7 @@ namespace Asv.Drones;
 public class PlaningPageViewModel : PageViewModel<IPlaningPage>, IPlaningPage
 {
     public const string PageId = "planing";
+    public const AsvColorKind PageIconColor = AsvColorKind.Info8;
 
     public PlaningPageViewModel()
         : this(
@@ -32,6 +33,7 @@ public class PlaningPageViewModel : PageViewModel<IPlaningPage>, IPlaningPage
     )
         : base(PageId, context, loggerFactory, dialogService, ext)
     {
+        IconColor = PageIconColor;
         Widgets = [];
         Widgets.SetParent(this).DisposeItWith(Disposable);
         Widgets.DisposeRemovedItems().DisposeItWith(Disposable);

@@ -1,6 +1,31 @@
 # Asv.Drones
 
+[![Asv.Drones NuGet version](https://img.shields.io/nuget/v/Asv.Drones)](https://www.nuget.org/packages/Asv.Drones)
+[![Asv.Drones.Api NuGet version](https://img.shields.io/nuget/v/Asv.Drones.Api)](https://www.nuget.org/packages/Asv.Drones.Api)
+[![Build and tests](https://github.com/asv-soft/asv-drones/actions/workflows/code-quality.yml/badge.svg?branch=main)](https://github.com/asv-soft/asv-drones/actions/workflows/code-quality.yml)
+[![Documentation](https://github.com/asv-soft/asv-drones/actions/workflows/docs.yml/badge.svg?branch=main)](https://asv.me/asv-drones/)
+[![GitHub Packages](https://img.shields.io/badge/GitHub-Packages-blue?logo=github)](https://github.com/orgs/asv-soft/packages/nuget/package/Asv.Drones)
+
 ![asv-drones](https://github.com/user-attachments/assets/4fa5221e-7ae5-4b6b-98a8-1c1e39b49afb)
+
+## Documentation and Packages
+
+Read the [Asv.Drones documentation](https://asv.me/asv-drones/) for
+[getting started](https://asv.me/asv-drones/getting-started.html),
+[development](https://asv.me/asv-drones/development.html), and
+[documentation publishing](https://asv.me/asv-drones/documentation.html).
+
+Packages are available on NuGet as [Asv.Drones](https://www.nuget.org/packages/Asv.Drones)
+and [Asv.Drones.Api](https://www.nuget.org/packages/Asv.Drones.Api), and on GitHub Packages
+as [Asv.Drones](https://github.com/orgs/asv-soft/packages/nuget/package/Asv.Drones)
+and [Asv.Drones.Api](https://github.com/orgs/asv-soft/packages/nuget/package/Asv.Drones.Api).
+
+GitHub Packages links require a signed-in GitHub account. The NuGet packages are
+publicly accessible.
+
+The build workflow validates the desktop application and launcher. This repository
+currently has no automated test project; the workflow reports this explicitly and
+runs test projects when they are present.
 
 ## 1. Introduction
 
@@ -157,7 +182,7 @@ The code is further organized into projects, each residing in its own subdirecto
 ### 4.2 Naming Conventions
 
 Consistent naming conventions are essential for code readability. 
-Throughout the codebase, we follow the guidelines outlined [in our documentation](https://docs.asv.me/use-cases/for-developers)
+Throughout the codebase, we follow the guidelines outlined [in our documentation](https://asv.me/asv-drones/development.html).
 
 These conventions contribute to a unified and coherent codebase.
 

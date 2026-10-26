@@ -1,0 +1,101 @@
+name: Publish documentation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/Writerside/**'
+      - 'src/Directory.Build.props'
+      - '.github/workflows/docs.yml'
+  pull_request:
+    paths:
+      - 'src/Writerside/**'
+      - 'src/Directory.Build.props'
+      - '.github/workflows/docs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  INSTANCE: Writerside/asv-drones
+  ARTIFACT: webHelpASV-DRONES2-all.zip
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set documentation version from ProductVersion
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          from xml.dom import minidom
+
+          props = ET.parse('src/Directory.Build.props')
+          versions = props.findall('./PropertyGroup/ProductVersion')
+          if len(versions) != 1 or not (version := (versions[0].text or '').strip()):
+              raise SystemExit('Expected one non-empty ProductVersion in src/Directory.Build.props')
+
+          path = Path('src/Writerside/writerside.cfg')
+          document = minidom.parse(str(path))
+          instances = [node for node in document.getElementsByTagName('instance')
+                       if node.getAttribute('src') == 'asv-drones.tree']
+          if len(instances) != 1:
+              raise SystemExit('Expected one asv-drones.tree instance in writerside.cfg')
+          instances[0].setAttribute('version', version)
+          path.write_bytes(document.toxml(encoding='UTF-8'))
+          print(f'Documentation version: {version}')
+          PY
+
+      - name: Build Writerside documentation
+        run: |
+          mkdir -p artifacts
+          docker run --rm \
+            -v "$GITHUB_WORKSPACE:/opt/sources" \
+            -e SOURCE_DIR=/opt/sources/src \
+            -e MODULE_INSTANCE="$INSTANCE" \
+            -e OUTPUT_DIR=/opt/sources/artifacts \
+            -e RUNNER=other \
+            jetbrains/writerside-builder:2026.08.0328
+
+      - name: Check documentation
+        uses: JetBrains/writerside-checker-action@v1
+        with:
+          instance: ${{ env.INSTANCE }}
+
+      - name: Unpack website
+        run: |
+          unzip -q "artifacts/$ARTIFACT" -d site
+          test -f site/index.html
+          touch site/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

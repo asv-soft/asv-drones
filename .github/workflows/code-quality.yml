@@ -1,0 +1,58 @@
+name: Build and tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - '.github/workflows/code-quality.yml'
+  pull_request:
+    paths:
+      - 'src/**'
+      - '.github/workflows/code-quality.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: code-quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-tests:
+    runs-on: ubuntu-latest
+    env:
+      UsedAvaloniaProducts: ''
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.x.x'
+
+      - name: Restore desktop and launcher
+        run: |
+          dotnet restore src/Asv.Drones.Desktop/Asv.Drones.Desktop.csproj -p:Configuration=Release
+          dotnet restore src/Asv.Drones.Launcher/Asv.Drones.Launcher.csproj -p:Configuration=Release
+
+      - name: Build desktop and launcher
+        run: |
+          dotnet build src/Asv.Drones.Desktop/Asv.Drones.Desktop.csproj -c Release --no-restore -m:1 -p:UseSharedCompilation=false -p:GeneratePackageOnBuild=false
+          dotnet build src/Asv.Drones.Launcher/Asv.Drones.Launcher.csproj -c Release --no-restore -m:1 -p:UseSharedCompilation=false -p:GeneratePackageOnBuild=false
+
+      - name: Run available test projects
+        shell: bash
+        run: |
+          mapfile -t test_projects < <(find src -type f \( -name '*.Test.csproj' -o -name '*.Tests.csproj' \) | sort)
+          if [ "${#test_projects[@]}" -eq 0 ]; then
+            echo '::notice::No automated test projects are currently configured in this repository.'
+            echo '### Automated tests' >> "$GITHUB_STEP_SUMMARY"
+            echo 'Not configured: this repository currently contains no automated test projects.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            for project in "${test_projects[@]}"; do
+              dotnet test "$project" -c Release -m:1 -p:UseSharedCompilation=false -p:GeneratePackageOnBuild=false
+            done
+          fi

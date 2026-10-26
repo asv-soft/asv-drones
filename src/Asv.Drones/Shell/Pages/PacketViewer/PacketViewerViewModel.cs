@@ -21,6 +21,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
 {
     public const string PageId = "packetViewer";
     public const MaterialIconKind PageIcon = MaterialIconKind.Package;
+    public const AsvColorKind PageIconColor = AsvColorKind.Info9;
     private const int MaxPacketsAmount = 1000;
     private const int PacketsReceiveDelayInSeconds = 1;
 
@@ -85,6 +86,7 @@ public class PacketViewerViewModel : PageViewModel<PacketViewerViewModel>
         : base(PageId, context, loggerFactory, dialogService, ext)
     {
         Header = RS.PacketViewerViewModel_Title;
+        IconColor = PageIconColor;
         _app = app;
         _unit = unit;
         _converters = converters;

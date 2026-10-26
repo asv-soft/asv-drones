@@ -13,6 +13,16 @@ public class GnssDeviceManagerExtension : IDeviceManagerExtension
         builder.Features.RegisterEndpointIdTagFeature();
 
         builder.Protocols.RegisterNmeaProtocol();
+        builder.Protocols.RegisterUbxProtocol();
+        builder.Protocols.RegisterRtcmV3Protocol();
+        builder.Protocols.RegisterSbfProtocol();
+        builder.Protocols.RegisterComNavProtocol();
+        builder.Protocols.RegisterJavadProtocol();
+        builder.Protocols.RegisterAsvProtocol();
+        builder.Protocols.RegisterAdsbProtocol();
+        builder.Protocols.RegisterAsterixProtocol();
+        builder.Protocols.RegisterGbasProtocol();
+        builder.Protocols.RegisterRinexProtocol();
     }
 
     public void Configure(IDeviceExplorerBuilder builder)

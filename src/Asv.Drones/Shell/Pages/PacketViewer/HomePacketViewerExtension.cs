@@ -19,6 +19,7 @@ public class HomePacketViewerExtension : IExtensionFor<IHomePage>
                 Header = RS.OpenPacketViewerCommand_CommandInfo_Name,
                 Description = RS.OpenPacketViewerCommand_CommandInfo_Description,
                 Icon = PacketViewerViewModel.PageIcon,
+                IconColor = PacketViewerViewModel.PageIconColor,
                 Command = new ReactiveCommand(
                     async (_, cancel) =>
                         await context.GoTo(

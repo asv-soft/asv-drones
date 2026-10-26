@@ -19,6 +19,7 @@ public class HomePageFlightModeExtension : IExtensionFor<IHomePage>
                 Header = RS.HomePageFlightModeExtension_ActionViewModel_Header,
                 Description = RS.HomePageFlightModeExtension_ActionViewModel_Description,
                 Icon = FlightModePageViewModel.PageIcon,
+                IconColor = FlightModePageViewModel.PageIconColor,
                 Command = new ReactiveCommand(
                     async (_, cancel) =>
                         await context.GoTo(

@@ -19,6 +19,7 @@ public class HomePagePlaningExtension : IExtensionFor<IHomePage>
                 Header = "Planing",
                 Description = "Tool for create missions and planing flights",
                 Icon = FlightModePageViewModel.PageIcon,
+                IconColor = PlaningPageViewModel.PageIconColor,
                 Command = new ReactiveCommand(
                     async (_, cancel) =>
                         await context.GoTo(

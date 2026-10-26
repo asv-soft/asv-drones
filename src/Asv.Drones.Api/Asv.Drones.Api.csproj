@@ -14,11 +14,12 @@
         <PackageReference Include="Asv.Avalonia.Charts" Version="$(AsvAvaloniaVersion)" />
         <PackageReference Include="Asv.Mavlink" Version="$(AsvMavlinkVersion)" />
         <PackageReference Include="Asv.Gnss" Version="$(AsvGnssVersion)" />
-        <PackageReference Include="ScottPlot.Avalonia" Version="5.1.58" />
+        <PackageReference Include="ScottPlot.Avalonia" Version="5.1.59" />
+        <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Roslynator.Analyzers" Version="4.15.0">
+      <PackageReference Include="Roslynator.Analyzers" Version="5.0.1">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>

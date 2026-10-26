@@ -33,6 +33,37 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </avalonia1:Workspace>
+        <StackPanel
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Margin="8"
+            Spacing="8"
+        >
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <geoMap:MapZoomControl
+                    VerticalAlignment="Bottom"
+                    Zoom="{Binding Map.Zoom.Value, Mode=TwoWay}"
+                    MinZoom="{Binding Map.MinZoom.Value}"
+                    MaxZoom="{Binding Map.MaxZoom.Value}"
+                />
+                <geoMap:TileProviderSelectorView
+                    VerticalAlignment="Bottom"
+                    DataContext="{Binding TileProviderSelectorViewModel}"
+                />
+            </StackPanel>
+            <geoMap:MapScaleControl
+                HorizontalAlignment="Left"
+                CenterMap="{Binding Map.CenterMap.Value}"
+                Zoom="{Binding Map.Zoom.Value}"
+                Provider="{Binding Map.CurrentProvider.Value}"
+                UnitService="{Binding UnitService}"
+            />
+            <geoMap:MapRuler
+                HorizontalAlignment="Left"
+                Map="{Binding Map}"
+                UnitService="{Binding UnitService}"
+            />
+        </StackPanel>
         <geoMap:MapCompass
             Rotation="{Binding Map.Rotation.Value}"
             HorizontalAlignment="Right"

@@ -1,13 +1,13 @@
 <Project>
     <PropertyGroup>
-        <ProductVersion>3.0.1-dev.2</ProductVersion>
+        <ProductVersion>3.0.1</ProductVersion>
         <TargetFramework>net10.0</TargetFramework>
 
-        <AvaloniaVersion>12.1.1</AvaloniaVersion>
+        <AvaloniaVersion>12.1.4</AvaloniaVersion>
         <AvaloniaDataGridVersion>12.1.2</AvaloniaDataGridVersion>
-        <AsvAvaloniaVersion>3.0.3-dev.1</AsvAvaloniaVersion>
-        <AsvMavlinkVersion>4.3.0</AsvMavlinkVersion>
-        <AsvGnssVersion>2.2.0</AsvGnssVersion>
+        <AsvAvaloniaVersion>3.1.1</AsvAvaloniaVersion>
+        <AsvMavlinkVersion>4.4.3</AsvMavlinkVersion>
+        <AsvGnssVersion>2.5.2</AsvGnssVersion>
         <AsvLauncherApiVersion>0.0.1</AsvLauncherApiVersion>
 
         <FileVersion>$(ProductVersion)</FileVersion>
@@ -17,6 +17,7 @@
         <Company>https://github.com/asv-soft</Company>
         <Copyright>https://github.com/asv-soft</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageIcon>icon.png</PackageIcon>
         <PackageProjectUrl>https://github.com/asv-soft/asv-drones</PackageProjectUrl>
         <RepositoryUrl>https://github.com/asv-soft/asv-drones</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
@@ -51,4 +52,7 @@
         <Version>$(ApiVersion)</Version>
         <PackageVersion>$(ApiVersion)</PackageVersion>
     </PropertyGroup>
+    <ItemGroup>
+        <None Include="$(MSBuildThisFileDirectory)../assets/icon.png" Pack="true" PackagePath="/" Link="icon.png" />
+    </ItemGroup>
 </Project>

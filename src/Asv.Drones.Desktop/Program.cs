@@ -41,6 +41,7 @@ sealed class Program
             .With(new Win32PlatformOptions { OverlayPopups = true }) // Windows
             .With(new X11PlatformOptions { OverlayPopups = true, UseDBusFilePicker = false }) // Unix/Linux
             .With(new AvaloniaNativePlatformOptions { OverlayPopups = true }) // Mac
+            .AfterSetup(_ => MacOsDockIcon.Apply())
             .WithInterFont()
             .LogToTrace()
             .UseAsv(builder =>

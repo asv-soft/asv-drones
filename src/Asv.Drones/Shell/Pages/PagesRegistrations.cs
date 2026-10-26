@@ -24,7 +24,6 @@ public static class PagesRegistrations
         public Builder RegisterDefault()
         {
             this.RegisterMavParams();
-            this.RegisterPacketViewer();
             this.RegisterFlightMode();
             this.RegisterPlaning();
             this.RegisterFileBrowser();

@@ -14,11 +14,13 @@ public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightMo
 {
     public const string PageId = "flight-mode";
     public const MaterialIconKind PageIcon = MaterialIconKind.MapSearch;
+    public const AsvColorKind PageIconColor = AsvColorKind.Info4;
 
     public FlightModePageViewModel()
         : this(
             DesignTime.PageContext,
             NullMapService.Instance,
+            DesignTime.UnitService,
             DesignTime.LoggerFactory,
             DesignTime.DialogService,
             DesignTime.ExtensionService
@@ -30,6 +32,7 @@ public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightMo
     public FlightModePageViewModel(
         IPageContext context,
         IMapService mapService,
+        IUnitService unitService,
         ILoggerFactory loggerFactory,
         IDialogService dialogService,
         IExtensionService ext
@@ -38,6 +41,8 @@ public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightMo
     {
         Header = RS.FlightModePageViewModel_Title;
         Icon = PageIcon;
+        IconColor = PageIconColor;
+        UnitService = unitService;
 
         Widgets = [];
         Widgets.SetParent(this).DisposeItWith(Disposable);
@@ -53,15 +58,22 @@ public class FlightModePageViewModel : PageViewModel<IFlightModePage>, IFlightMo
         Map = new MapViewModel(nameof(Map), mapService)
             .SetRoutableParent(this)
             .DisposeItWith(Disposable);
+        TileProviderSelectorViewModel = new TileProviderSelectorViewModel(mapService, loggerFactory)
+            .SetRoutableParent(this)
+            .DisposeItWith(Disposable);
     }
 
     public ObservableList<IFlightWidget> Widgets { get; }
     public NotifyCollectionChangedSynchronizedViewList<IFlightWidget> WidgetsView { get; }
-    public IMap Map { get; }
+    public MapViewModel Map { get; }
+    IMap IFlightModePage.Map => Map;
+    public IUnitService UnitService { get; }
+    public TileProviderSelectorViewModel TileProviderSelectorViewModel { get; }
 
     public override IEnumerable<IViewModel> GetChildren()
     {
         yield return Map;
+        yield return TileProviderSelectorViewModel;
 
         foreach (var widget in WidgetsView)
         {
