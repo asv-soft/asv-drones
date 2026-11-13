@@ -15,6 +15,9 @@ env:
 
 jobs:
   build:
+    permissions:
+      contents: read
+      id-token: write
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.ref_name, 'api-v') && !contains(github.ref_name, '-dev') }}
     steps:
@@ -72,7 +75,13 @@ jobs:
           dotnet nuget push ${{env.PROJECT_NAME}}.${{ env.VERSION }}.nupkg --api-key ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }} --skip-duplicate --source ${{ env.GITHUB_PACKAGES_URL }}
           dotnet nuget push ${{env.PROJECT_NAME}}.Api.${{ env.VERSION }}.nupkg --api-key ${{ secrets.GIHUB_NUGET_AUTH_TOKEN }} --skip-duplicate --source ${{ env.GITHUB_PACKAGES_URL }}
 
+      - name: Authenticate to NuGet.org
+        uses: NuGet/login@v1
+        id: nuget_login
+        with:
+          user: asvol
+
       - name: Push package to Nuget
         run: |
-          dotnet nuget push ${{env.PROJECT_NAME}}.${{ env.VERSION }}.nupkg --api-key ${{ secrets.NUGET_AUTH_TOKEN }} --skip-duplicate --source ${{ env.NUGET_SOURCE_URL }}
-          dotnet nuget push ${{env.PROJECT_NAME}}.Api.${{ env.VERSION }}.nupkg --api-key ${{ secrets.NUGET_AUTH_TOKEN }} --skip-duplicate --source ${{ env.NUGET_SOURCE_URL }}
+          dotnet nuget push ${{env.PROJECT_NAME}}.${{ env.VERSION }}.nupkg --api-key ${{ steps.nuget_login.outputs.NUGET_API_KEY }} --skip-duplicate --source ${{ env.NUGET_SOURCE_URL }}
+          dotnet nuget push ${{env.PROJECT_NAME}}.Api.${{ env.VERSION }}.nupkg --api-key ${{ steps.nuget_login.outputs.NUGET_API_KEY }} --skip-duplicate --source ${{ env.NUGET_SOURCE_URL }}
